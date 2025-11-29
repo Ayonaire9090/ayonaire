@@ -250,19 +250,19 @@ export default function Page() {
           height: "156px",
           opacity: 1,
           borderRadius: "16px",
-          margin: "64px auto 24px auto", // more space above, less below
+          margin: "64px auto 24px auto",
         }}
         className="flex items-center justify-center bg-transparent"
       >
         <div
-          className="flex flex-col md:flex-row justify-between items-center shadow-lg px-12 py-8 gap-6 md:gap-0 bg-white w-full h-full"
+          className="flex flex-col md:flex-row justify-between items-center bg-white w-full h-full px-12 py-8 gap-6 md:gap-0"
           style={{
             borderRadius: "16px",
             height: "156px",
             minHeight: "156px",
             maxHeight: "156px",
             opacity: 1,
-            boxShadow: "0px 8px 32px 0px rgba(246, 114, 25, 0.08)",
+            boxShadow: "0px 11px 60px 0px #00000014",
           }}
         >
           {/* Next Cohort */}
@@ -361,88 +361,8 @@ export default function Page() {
           </div>
           {/* Divider */}
           <div className="hidden md:block w-px h-12 bg-gradient-to-b from-transparent to-[#F67219]"></div>
-          {/* Upcoming Events */}
-          <div className="flex-1 flex items-center gap-4 min-w-[180px]">
-            <span>
-              {/* Gradient Event Icon */}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="40"
-                height="40"
-                viewBox="0 0 40 40"
-                fill="none"
-              >
-                <path
-                  d="M20 10V30"
-                  stroke="url(#paint4_linear_287_4134)"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M10 20H30"
-                  stroke="url(#paint5_linear_287_4134)"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M5 10H35V30H5V10Z"
-                  stroke="url(#paint6_linear_287_4134)"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <defs>
-                  <linearGradient
-                    id="paint4_linear_287_4134"
-                    x1="20"
-                    y1="10"
-                    x2="20"
-                    y2="30"
-                    gradientUnits="userSpaceOnUse"
-                  >
-                    <stop stopColor="#F25E25" />
-                    <stop offset="1" stopColor="#F97F11" />
-                  </linearGradient>
-                  <linearGradient
-                    id="paint5_linear_287_4134"
-                    x1="10"
-                    y1="20"
-                    x2="30"
-                    y2="20"
-                    gradientUnits="userSpaceOnUse"
-                  >
-                    <stop stopColor="#F25E25" />
-                    <stop offset="1" stopColor="#F97F11" />
-                  </linearGradient>
-                  <linearGradient
-                    id="paint6_linear_287_4134"
-                    x1="5"
-                    y1="10"
-                    x2="35"
-                    y2="30"
-                    gradientUnits="userSpaceOnUse"
-                  >
-                    <stop stopColor="#F25E25" />
-                    <stop offset="1" stopColor="#F97F11" />
-                  </linearGradient>
-                </defs>
-              </svg>
-            </span>
-            <div>
-              <div className="font-bold text-base text-gray-900">
-                Upcoming Events
-              </div>
-              <div className="text-sm text-gray-500 mt-1">
-                Webinar on AI Trends
-              </div>
-            </div>
-          </div>
-          {/* Divider */}
-          <div className="hidden md:block w-px h-12 bg-gradient-to-b from-transparent to-[#F67219]"></div>
-          {/* Duration */}
-          <div className="flex-1 flex items-center gap-4 min-w-[180px]">
+          {/* Duration (center) */}
+          <div className="flex-1 flex items-center gap-4 min-w-[180px] justify-center">
             <span>
               {/* Gradient Duration Icon */}
               <svg
@@ -512,8 +432,199 @@ export default function Page() {
               <div className="text-sm text-gray-500 mt-1">6 Months</div>
             </div>
           </div>
+          {/* Divider */}
+          <div className="hidden md:block w-px h-12 bg-gradient-to-b from-transparent to-[#F67219]"></div>
+          {/* Format (right/end) */}
+          <div className="flex-1 flex items-center gap-4 min-w-[180px] justify-end">
+            <span>
+              {/* Format PNG Icon */}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="40"
+                height="40"
+                viewBox="0 0 40 40"
+                fill="none"
+              >
+                <path
+                  d="M18.333 13.3335H21.6663"
+                  stroke="url(#paint0_linear_287_4153)"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                />
+                <path
+                  d="M3.33301 18.3332C3.33301 12.8335 3.33301 10.0836 5.04156 8.37505C6.75009 6.6665 9.49996 6.6665 14.9997 6.6665H16.6663C22.166 6.6665 24.9158 6.6665 26.6245 8.37505C28.333 10.0836 28.333 12.8335 28.333 18.3332V21.6665C28.333 27.1662 28.333 29.916 26.6245 31.6247C24.9158 33.3332 22.166 33.3332 16.6663 33.3332H14.9997C9.49996 33.3332 6.75009 33.3332 5.04156 31.6247C3.33301 29.916 3.33301 27.1662 3.33301 21.6665V18.3332Z"
+                  stroke="url(#paint1_linear_287_4153)"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                />
+                <path
+                  d="M28.333 14.8433L28.5428 14.6701C32.0692 11.7606 33.8323 10.3058 35.2493 11.0082C36.6663 11.7106 36.6663 14.0394 36.6663 18.697V21.3033C36.6663 25.961 36.6663 28.2897 35.2493 28.9922C33.8323 29.6945 32.0692 28.2398 28.5428 25.3302L28.333 25.157"
+                  stroke="url(#paint2_linear_287_4153)"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                />
+                <defs>
+                  <linearGradient
+                    id="paint0_linear_287_4153"
+                    x1="18.333"
+                    y1="13.8335"
+                    x2="21.6663"
+                    y2="13.8335"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stop-color="#F25E25" />
+                    <stop offset="1" stop-color="#F97F11" />
+                  </linearGradient>
+                  <linearGradient
+                    id="paint1_linear_287_4153"
+                    x1="3.33301"
+                    y1="19.9998"
+                    x2="28.333"
+                    y2="19.9998"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stop-color="#F25E25" />
+                    <stop offset="1" stop-color="#F97F11" />
+                  </linearGradient>
+                  <linearGradient
+                    id="paint2_linear_287_4153"
+                    x1="28.333"
+                    y1="20.0002"
+                    x2="36.6663"
+                    y2="20.0002"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stop-color="#F25E25" />
+                    <stop offset="1" stop-color="#F97F11" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </span>
+            <div>
+              <div className="font-bold text-base text-gray-900">Format</div>
+              <div className="text-sm text-gray-500 mt-1">
+                Live, Online, Interactive
+              </div>
+            </div>
+          </div>
         </div>
       </section>
+
+      {/* Why This Is The Most Effective AI Engineering Course */}
+      <section
+        className="w-full flex flex-col items-center"
+        style={{ margin: "48px 0" }}
+      >
+        <button
+          className="px-5 py-2 bg-orange-50 text-orange-500 rounded-full font-medium mb-4 border border-orange-100 flex items-center gap-2"
+          style={{ fontSize: "16px" }}
+        >
+          <svg width="18" height="18" fill="none" viewBox="0 0 20 20">
+            <circle cx="10" cy="10" r="9" stroke="#F67219" strokeWidth="2" />
+            <path
+              d="M6.5 10.5L9 13L13.5 8.5"
+              stroke="#F67219"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+          Our Reviews
+        </button>
+        <h2
+          className="text-center font-bold"
+          style={{
+            fontFamily: "Spline Sans, sans-serif",
+            fontWeight: 700,
+            fontSize: "40px",
+            lineHeight: "52px",
+            color: "#1a1a1a",
+            marginBottom: "12px",
+            maxWidth: "700px",
+          }}
+        >
+          Why This Is The Most Effective AI Engineering Course
+        </h2>
+        <div
+          className="text-center"
+          style={{
+            fontFamily: "Satoshi, sans-serif",
+            fontWeight: 400,
+            fontSize: "20px",
+            color: "#666",
+            marginBottom: "36px",
+            maxWidth: "700px",
+          }}
+        >
+          AI Is Reshaping Industries, And This Program Helps You Step Into
+          Top-Growth, Top-Paying Roles.
+        </div>
+        <div
+          className="w-full max-w-5xl"
+          style={{
+            background: "transparent",
+            borderRadius: "16px",
+            padding: "0",
+          }}
+        >
+          <div
+            className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-6"
+            style={{ marginTop: "12px" }}
+          >
+            {/* Column 1 */}
+            <div className="flex flex-col gap-6">
+              <FeatureItem text="No Tech Or Coding Background Required. We'll Teach You From The Ground Up" />
+              <FeatureItem text="Globally Recognized Certification To Showcase Your AI Readiness" />
+              <FeatureItem text="Access To Our AI Cloud Lab For Continuous Practice And Experimentation" />
+              <FeatureItem text="Peer Community For Networking, Collaboration, And Accountability" />
+            </div>
+            {/* Column 2 */}
+            <div className="flex flex-col gap-6">
+              <FeatureItem text="Hands-On Learning With Real AI Tools Like TensorFlow, OpenAI, Hugging Face, And LangChain" />
+              <FeatureItem text="Career-Focused Curriculum With Resume, Portfolio, And LinkedIn Optimization" />
+              <FeatureItem text="1-On-1 Mentorship, Weekly Support, And Expert Feedback" />
+              <FeatureItem text="Mock Interviews, Job Mapping, And Career Coaching From Industry Professionals" />
+            </div>
+            {/* Column 3 */}
+            <div className="flex flex-col gap-6">
+              <FeatureItem text="Projects That Mirror Real World Use Cases: Chatbots, Image Classifiers, NLP Apps, And More" />
+              <FeatureItem text="Live Instructor-Led Training + Self-Paced Content For Full Flexibility" />
+              <FeatureItem text="Tools And Frameworks Aligned To Top Roles: AI Engineer, ML Engineer, Prompt Engineer" />
+              <FeatureItem text="Virtual Internship And Job Assistance Through Our Placement Assistance Team (PAT)" />
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+// Helper component for feature items
+function FeatureItem({ text }: { text: string }) {
+  return (
+    <div className="flex items-start gap-3">
+      <span style={{ marginTop: "2px" }}>
+        <svg width="22" height="22" fill="none" viewBox="0 0 20 20">
+          <circle cx="10" cy="10" r="9" stroke="#F67219" strokeWidth="2" />
+          <path
+            d="M6.5 10.5L9 13L13.5 8.5"
+            stroke="#F67219"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </span>
+      <span
+        style={{
+          fontFamily: "Satoshi, sans-serif",
+          fontWeight: 400,
+          fontSize: "18px",
+          color: "#222",
+        }}
+      >
+        {text}
+      </span>
     </div>
   );
 }
