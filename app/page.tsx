@@ -13,10 +13,11 @@ export default function Page() {
           <div className="flex items-center gap-10">
             <a href="#" className="flex items-center gap-2">
               <Image
-                src="/ayonaire-logo.png"
+                src="/ayonaire-logo-new.png"
                 alt="Ayonaire Logo"
-                width={120}
+                width={159}
                 height={40}
+                priority
               />
             </a>
             {/* Nav Links */}
@@ -277,6 +278,73 @@ export default function Page() {
           </div>
         </div>
       </section>
+
+      {/* Carousel Dots and Arrow - custom positioning */}
+      <div
+        className="flex w-full max-w-6xl mx-auto px-8"
+        style={{ marginTop: "32px" }}
+      >
+        {/* Left: Dots under buttons */}
+        <div className="md:w-1/2 flex flex-col">
+          <div style={{ height: "48px" }}></div>{" "}
+          {/* Spacer to align with buttons */}
+          <div className="flex gap-2 mt-2">
+            <span
+              style={{
+                width: "12px",
+                height: "12px",
+                borderRadius: "50%",
+                background: "#F67219",
+                display: "inline-block",
+              }}
+            ></span>
+            <span
+              style={{
+                width: "12px",
+                height: "12px",
+                borderRadius: "50%",
+                background: "#FFDCC4",
+                display: "inline-block",
+              }}
+            ></span>
+            <span
+              style={{
+                width: "12px",
+                height: "12px",
+                borderRadius: "50%",
+                background: "#FFE7D6",
+                display: "inline-block",
+              }}
+            ></span>
+          </div>
+        </div>
+        {/* Right: Arrow under video */}
+        <div className="md:w-1/2 flex justify-end items-end">
+          <button
+            style={{
+              width: "32px",
+              height: "32px",
+              borderRadius: "50%",
+              background: "#FFE7D6",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              border: "none",
+              marginBottom: "0",
+            }}
+          >
+            <svg width="18" height="18" fill="none" viewBox="0 0 20 20">
+              <path
+                d="M7 10H13M13 10L10 7M13 10L10 13"
+                stroke="#F67219"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
 
       {/* Cohort Info Bar */}
       <section className="max-w-4xl mx-auto mb-12">
