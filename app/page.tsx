@@ -3,7 +3,12 @@ import Header from "./header";
 
 export default function Page() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-orange-200 to-orange-100 font-sans">
+    <div
+      className="min-h-screen font-sans"
+      style={{
+        background: "linear-gradient(178.47deg, #FFAC74 1.3%, #FFFFFF 45.22%)",
+      }}
+    >
       {/* Header */}
       <Header />
 
@@ -239,27 +244,273 @@ export default function Page() {
       </div>
 
       {/* Cohort Info Bar */}
-      <section className="max-w-4xl mx-auto mb-12">
-        <div className="flex flex-col md:flex-row justify-between items-center bg-white rounded-xl shadow-lg px-8 py-6 gap-6">
-          <div className="flex flex-col items-center">
-            <span className="text-orange-500 font-bold text-lg">
-              Next Cohort
+      <section
+        style={{
+          width: "1150px",
+          height: "156px",
+          opacity: 1,
+          borderRadius: "16px",
+          margin: "64px auto 24px auto", // more space above, less below
+        }}
+        className="flex items-center justify-center bg-transparent"
+      >
+        <div
+          className="flex flex-col md:flex-row justify-between items-center shadow-lg px-12 py-8 gap-6 md:gap-0 bg-white w-full h-full"
+          style={{
+            borderRadius: "16px",
+            height: "156px",
+            minHeight: "156px",
+            maxHeight: "156px",
+            opacity: 1,
+            boxShadow: "0px 8px 32px 0px rgba(246, 114, 25, 0.08)",
+          }}
+        >
+          {/* Next Cohort */}
+          <div className="flex-1 flex items-center gap-4 min-w-[180px]">
+            <span>
+              {/* Gradient Calendar Icon */}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="40"
+                height="40"
+                viewBox="0 0 40 40"
+                fill="none"
+              >
+                <path
+                  d="M26.6663 3.3335V10.0002M13.333 3.3335V10.0002"
+                  stroke="url(#paint0_linear_287_4134)"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M21.6667 6.66666H18.3333C12.0479 6.66666 8.90525 6.66666 6.95262 8.61927C5 10.5719 5 13.7146 5 20V23.3333C5 29.6187 5 32.7615 6.95262 34.714C8.90525 36.6667 12.0479 36.6667 18.3333 36.6667H21.6667C27.952 36.6667 31.0948 36.6667 33.0473 34.714C35 32.7615 35 29.6187 35 23.3333V20C35 13.7146 35 10.5719 33.0473 8.61927C31.0948 6.66666 27.952 6.66666 21.6667 6.66666Z"
+                  stroke="url(#paint1_linear_287_4134)"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M5 16.6667H35"
+                  stroke="url(#paint2_linear_287_4134)"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M19.9922 23.3335H20.0072M19.9922 30.0002H20.0072M26.6513 23.3335H26.6663M13.333 23.3335H13.348M13.333 30.0002H13.348"
+                  stroke="url(#paint3_linear_287_4134)"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <defs>
+                  <linearGradient
+                    id="paint0_linear_287_4134"
+                    x1="13.333"
+                    y1="6.66683"
+                    x2="26.6663"
+                    y2="6.66683"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stopColor="#F25E25" />
+                    <stop offset="1" stopColor="#F97F11" />
+                  </linearGradient>
+                  <linearGradient
+                    id="paint1_linear_287_4134"
+                    x1="5"
+                    y1="21.6667"
+                    x2="35"
+                    y2="21.6667"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stopColor="#F25E25" />
+                    <stop offset="1" stopColor="#F97F11" />
+                  </linearGradient>
+                  <linearGradient
+                    id="paint2_linear_287_4134"
+                    x1="5"
+                    y1="17.1667"
+                    x2="35"
+                    y2="17.1667"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stopColor="#F25E25" />
+                    <stop offset="1" stopColor="#F97F11" />
+                  </linearGradient>
+                  <linearGradient
+                    id="paint3_linear_287_4134"
+                    x1="13.333"
+                    y1="26.6668"
+                    x2="26.6663"
+                    y2="26.6668"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stopColor="#F25E25" />
+                    <stop offset="1" stopColor="#F97F11" />
+                  </linearGradient>
+                </defs>
+              </svg>
             </span>
-            <span className="text-gray-800 font-semibold text-xl">
-              15 January, 2026
-            </span>
+            <div>
+              <div className="font-bold text-base text-gray-900">
+                Next Cohort
+              </div>
+              <div className="text-sm text-gray-500 mt-1">15 January, 2026</div>
+            </div>
           </div>
-          <div className="flex flex-col items-center">
-            <span className="text-orange-500 font-bold text-lg">Duration</span>
-            <span className="text-gray-800 font-semibold text-xl">
-              6 Months
+          {/* Divider */}
+          <div className="hidden md:block w-px h-12 bg-gradient-to-b from-transparent to-[#F67219]"></div>
+          {/* Upcoming Events */}
+          <div className="flex-1 flex items-center gap-4 min-w-[180px]">
+            <span>
+              {/* Gradient Event Icon */}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="40"
+                height="40"
+                viewBox="0 0 40 40"
+                fill="none"
+              >
+                <path
+                  d="M20 10V30"
+                  stroke="url(#paint4_linear_287_4134)"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M10 20H30"
+                  stroke="url(#paint5_linear_287_4134)"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M5 10H35V30H5V10Z"
+                  stroke="url(#paint6_linear_287_4134)"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <defs>
+                  <linearGradient
+                    id="paint4_linear_287_4134"
+                    x1="20"
+                    y1="10"
+                    x2="20"
+                    y2="30"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stopColor="#F25E25" />
+                    <stop offset="1" stopColor="#F97F11" />
+                  </linearGradient>
+                  <linearGradient
+                    id="paint5_linear_287_4134"
+                    x1="10"
+                    y1="20"
+                    x2="30"
+                    y2="20"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stopColor="#F25E25" />
+                    <stop offset="1" stopColor="#F97F11" />
+                  </linearGradient>
+                  <linearGradient
+                    id="paint6_linear_287_4134"
+                    x1="5"
+                    y1="10"
+                    x2="35"
+                    y2="30"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stopColor="#F25E25" />
+                    <stop offset="1" stopColor="#F97F11" />
+                  </linearGradient>
+                </defs>
+              </svg>
             </span>
+            <div>
+              <div className="font-bold text-base text-gray-900">
+                Upcoming Events
+              </div>
+              <div className="text-sm text-gray-500 mt-1">
+                Webinar on AI Trends
+              </div>
+            </div>
           </div>
-          <div className="flex flex-col items-center">
-            <span className="text-orange-500 font-bold text-lg">Format</span>
-            <span className="text-gray-800 font-semibold text-xl">
-              Live, Online, Interactive
+          {/* Divider */}
+          <div className="hidden md:block w-px h-12 bg-gradient-to-b from-transparent to-[#F67219]"></div>
+          {/* Duration */}
+          <div className="flex-1 flex items-center gap-4 min-w-[180px]">
+            <span>
+              {/* Gradient Duration Icon */}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="40"
+                height="40"
+                viewBox="0 0 40 40"
+                fill="none"
+              >
+                <path
+                  d="M20 13.3333V20L22.5 22.5"
+                  stroke="url(#paint0_linear_287_4144)"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M32.576 27.4223C35.3034 28.8949 36.667 29.6314 36.667 30.8333C36.667 32.0351 35.3034 32.7716 32.576 34.2443L30.7189 35.2473C28.6244 36.3783 27.5772 36.9438 27.0735 36.5326C25.8404 35.5256 27.7615 32.9268 28.2342 32.0061C28.7132 31.0733 28.7045 30.5764 28.2342 29.6604C27.7615 28.7398 25.8404 26.1409 27.0735 25.1339C27.5772 24.7228 28.6244 25.2883 30.7189 26.4193L32.576 27.4223Z"
+                  stroke="url(#paint1_linear_287_4144)"
+                  strokeWidth="2.5"
+                />
+                <path
+                  d="M21.7098 36.5802C21.1477 36.6375 20.577 36.6668 19.9997 36.6668C10.7949 36.6668 3.33301 29.2048 3.33301 20.0002C3.33301 10.7954 10.7949 3.3335 19.9997 3.3335C29.2043 3.3335 36.6663 10.7954 36.6663 20.0002C36.6663 21.1417 36.5515 22.2565 36.333 23.3335"
+                  stroke="url(#paint2_linear_287_4144)"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                />
+                <defs>
+                  <linearGradient
+                    id="paint0_linear_287_4144"
+                    x1="20"
+                    y1="17.9167"
+                    x2="22.5"
+                    y2="17.9167"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stopColor="#F25E25" />
+                    <stop offset="1" stopColor="#F97F11" />
+                  </linearGradient>
+                  <linearGradient
+                    id="paint1_linear_287_4144"
+                    x1="26.667"
+                    y1="30.8333"
+                    x2="36.667"
+                    y2="30.8333"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stopColor="#F25E25" />
+                    <stop offset="1" stopColor="#F97F11" />
+                  </linearGradient>
+                  <linearGradient
+                    id="paint2_linear_287_4144"
+                    x1="3.33301"
+                    y1="20.0002"
+                    x2="36.6663"
+                    y2="20.0002"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stopColor="#F25E25" />
+                    <stop offset="1" stopColor="#F97F11" />
+                  </linearGradient>
+                </defs>
+              </svg>
             </span>
+            <div>
+              <div className="font-bold text-base text-gray-900">Duration</div>
+              <div className="text-sm text-gray-500 mt-1">6 Months</div>
+            </div>
           </div>
         </div>
       </section>
