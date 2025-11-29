@@ -512,8 +512,18 @@ export default function Page() {
 
       {/* Why This Is The Most Effective AI Engineering Course */}
       <section
-        className="w-full flex flex-col items-center"
-        style={{ margin: "48px 0" }}
+        className="flex flex-col items-center w-full"
+        style={{
+          maxWidth: "1280px",
+          width: "100%",
+          opacity: 1,
+          gap: "40px",
+          margin: "48px auto 0 auto",
+          position: "static",
+          top: undefined,
+          left: undefined,
+          height: "auto",
+        }}
       >
         <button
           className="px-5 py-2 bg-orange-50 text-orange-500 rounded-full font-medium mb-4 border border-orange-100 flex items-center gap-2"
@@ -560,16 +570,20 @@ export default function Page() {
           Top-Growth, Top-Paying Roles.
         </div>
         <div
-          className="w-full max-w-5xl"
+          className="w-full"
           style={{
             background: "transparent",
             borderRadius: "16px",
             padding: "0",
+            flex: 1,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
           <div
-            className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-6"
-            style={{ marginTop: "12px" }}
+            className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-6 w-full"
+            style={{ marginTop: "12px", gap: "40px" }}
           >
             {/* Column 1 */}
             <div className="flex flex-col gap-6">
@@ -619,8 +633,11 @@ function FeatureItem({ text }: { text: string }) {
         style={{
           fontFamily: "Satoshi, sans-serif",
           fontWeight: 400,
-          fontSize: "18px",
-          color: "#222",
+          fontStyle: "normal",
+          fontSize: "16px",
+          lineHeight: "100%",
+          letterSpacing: "0",
+          textTransform: "capitalize",
         }}
       >
         {text}
