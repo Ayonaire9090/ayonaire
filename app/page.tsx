@@ -593,34 +593,40 @@ export default function Page() {
         {/* Features Grid */}
         <div
           style={{
-            width: "100%",
-            maxWidth: "1280px",
+            width: "1280px",
+            height: "336px",
+            opacity: 1,
             margin: "0 auto",
+            transform: "rotate(0deg)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
           <div
             className="grid grid-cols-1 md:grid-cols-3"
             style={{
-              gap: "0px",
-              margin: "0",
+              gap: "40px",
+              width: "100%",
+              height: "100%",
             }}
           >
             {/* Column 1 */}
-            <div className="flex flex-col" style={{ gap: "0px" }}>
+            <div className="flex flex-col" style={{ gap: "40px" }}>
               <FeatureItem text="No Tech Or Coding Background Required. We'll Teach You From The Ground Up" />
               <FeatureItem text="Globally Recognized Certification To Showcase Your AI Readiness" />
               <FeatureItem text="Access To Our AI Cloud Lab For Continuous Practice And Experimentation" />
               <FeatureItem text="Peer Community For Networking, Collaboration, And Accountability" />
             </div>
             {/* Column 2 */}
-            <div className="flex flex-col" style={{ gap: "0px" }}>
+            <div className="flex flex-col" style={{ gap: "40px" }}>
               <FeatureItem text="Hands-On Learning With Real AI Tools Like TensorFlow, OpenAI, Hugging Face, And LangChain" />
               <FeatureItem text="Career-Focused Curriculum With Resume, Portfolio, And LinkedIn Optimization" />
               <FeatureItem text="1-On-1 Mentorship, Weekly Support, And Expert Feedback" />
               <FeatureItem text="Mock Interviews, Job Mapping, And Career Coaching From Industry Professionals" />
             </div>
             {/* Column 3 */}
-            <div className="flex flex-col" style={{ gap: "0px" }}>
+            <div className="flex flex-col" style={{ gap: "40px" }}>
               <FeatureItem text="Projects That Mirror Real World Use Cases: Chatbots, Image Classifiers, NLP Apps, And More" />
               <FeatureItem text="Live Instructor-Led Training + Self-Paced Content For Full Flexibility" />
               <FeatureItem text="Tools And Frameworks Aligned To Top Roles: AI Engineer, ML Engineer, Prompt Engineer" />
