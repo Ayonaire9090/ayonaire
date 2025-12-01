@@ -521,20 +521,48 @@ export default function Page() {
           margin: "48px auto 0 auto",
           position: "static",
           height: "auto",
+          marginTop: "148px",
         }}
       >
         <button
-          className="px-5 py-2 bg-orange-50 text-orange-500 rounded-full font-medium mb-4 border border-orange-100 flex items-center gap-2"
-          style={{ fontSize: "16px" }}
+          className="flex items-center gap-2 shadow"
+          style={{
+            justifyContent: "center",
+            width: "176px",
+            height: "52px",
+            opacity: 1,
+            borderRadius: "100px",
+            borderWidth: "1px",
+            borderStyle: "solid",
+            borderColor: "#E5E5E5",
+            fontSize: "19px",
+            fontFamily: "Satoshi, sans-serif",
+            fontWeight: 500,
+            fontStyle: "normal",
+            boxShadow: "0px 4px 24px 0px #00000014",
+            color: "#F25E25",
+            background: "#FFF",
+          }}
         >
-          <svg width="18" height="18" fill="none" viewBox="0 0 20 20">
-            <circle cx="10" cy="10" r="9" stroke="#F67219" strokeWidth="2" />
+          {/* Replace with sparkle icon */}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            viewBox="0 0 18 18"
+            fill="none"
+          >
             <path
-              d="M6.5 10.5L9 13L13.5 8.5"
-              stroke="#F67219"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M9.18753 4.14892C8.15958 6.4807 6.2932 8.34705 3.96142 9.37508C6.2932 10.4031 8.15958 12.2694 9.1876 14.6012C10.2156 12.2694 12.0819 10.4031 14.4137 9.37508C12.0819 8.34705 10.2156 6.4807 9.18753 4.14892ZM8.64288 2.29706H9.73225C10.5588 5.50149 13.0611 8.00378 16.2656 8.83043V9.91973C13.0611 10.7463 10.5588 13.2487 9.73225 16.4531H8.64288C7.8163 13.2487 5.31399 10.7463 2.10956 9.91973V8.83043C5.31399 8.00378 7.8163 5.50149 8.64288 2.29706Z"
+              fill="#6E6E6E"
+            />
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M12.377 4.87377V3.74877C12.6231 3.74877 12.9563 3.59736 13.2487 3.30161C13.542 3.00499 13.6882 2.67056 13.6882 2.4375H14.8132C14.8132 2.66905 14.9601 3.00332 15.2554 3.30101C15.55 3.59806 15.8833 3.74877 16.1245 3.74877V4.87377C15.8616 4.87377 15.5291 5.02637 15.2442 5.31592C14.9582 5.60677 14.8132 5.94137 14.8132 6.18503H13.6882C13.6882 5.94853 13.538 5.61508 13.2394 5.31834C12.9403 5.02113 12.6062 4.87377 12.377 4.87377ZM14.2426 4.75183C14.306 4.67263 14.3729 4.59749 14.4422 4.52705C14.5185 4.44946 14.6007 4.3745 14.6882 4.30377C14.6061 4.23656 14.5287 4.1659 14.4566 4.09322C14.3859 4.02196 14.3173 3.94565 14.252 3.86501C14.1872 3.94538 14.119 4.02149 14.0486 4.09262C13.9726 4.16952 13.8906 4.24411 13.8035 4.31472C13.8844 4.38039 13.961 4.44939 14.0324 4.52037C14.1049 4.59241 14.1755 4.66981 14.2426 4.75183Z"
+              fill="#6E6E6E"
             />
           </svg>
           Our Reviews
@@ -580,9 +608,13 @@ export default function Page() {
           <h3
             style={{
               fontFamily: "Spline Sans, sans-serif",
-              fontWeight: 700,
-              fontSize: "24px",
-              color: "#1a1a1a",
+              fontWeight: 500,
+              fontStyle: "normal",
+              fontSize: "32px",
+              lineHeight: "56px",
+              letterSpacing: "0%",
+              textTransform: "capitalize",
+              verticalAlign: "middle",
               marginBottom: "24px",
               marginLeft: "0",
             }}
@@ -631,6 +663,639 @@ export default function Page() {
               <FeatureItem text="Live Instructor-Led Training + Self-Paced Content For Full Flexibility" />
               <FeatureItem text="Tools And Frameworks Aligned To Top Roles: AI Engineer, ML Engineer, Prompt Engineer" />
               <FeatureItem text="Virtual Internship And Job Assistance Through Our Placement Assistance Team (PAT)" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Screenshot Section */}
+      <section
+        style={{
+          width: "100%",
+          minHeight: "322px",
+          background: "linear-gradient(90deg, #F25E25 0%, #FFAC74 100%)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          position: "relative",
+          padding: "0",
+          margin: "0 auto",
+        }}
+      >
+        <h1
+          style={{
+            fontFamily: "Spline Sans, sans-serif",
+            fontWeight: 700,
+            fontStyle: "bold",
+            fontSize: "60px",
+            lineHeight: "76px",
+            letterSpacing: "0%",
+            textAlign: "center",
+            verticalAlign: "middle",
+            textTransform: "capitalize",
+            color: "#fff",
+            marginBottom: "18px",
+            marginTop: "32px",
+            maxWidth: "100%",
+            width: "100%",
+          }}
+        >
+          No Tech Background? You Can Still Break Into AI
+        </h1>
+        <div
+          style={{
+            fontFamily: "Satoshi, sans-serif",
+            fontWeight: 400,
+            fontSize: "18px",
+            lineHeight: "28px",
+            color: "#fff",
+            textAlign: "center",
+            marginBottom: "24px",
+            maxWidth: "100%",
+            width: "100%",
+          }}
+        >
+          We'll Teach You Everything From Scratch Get Guidance Directly From Our
+          Advisors.
+        </div>
+        <button
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "8px",
+            background: "#fff",
+            color: "#FF6A00",
+            fontFamily: "Satoshi, sans-serif",
+            fontWeight: 700,
+            fontSize: "16px",
+            borderRadius: "8px",
+            border: "none",
+            padding: "12px 24px",
+            boxShadow: "0px 2px 8px 0px #00000014",
+            margin: "0 auto",
+            cursor: "pointer",
+            maxWidth: "100%",
+            width: "fit-content",
+          }}
+        >
+          Talk to an Advisor
+          <span
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              background: "#FF6A00",
+              borderRadius: "6px",
+              width: "28px",
+              height: "28px",
+              marginLeft: "8px",
+            }}
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path
+                d="M6 4L10 8L6 12"
+                stroke="#fff"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </span>
+        </button>
+      </section>
+
+      {/* Add new sections below the screenshot section */}
+      <section
+        style={{
+          width: "100%",
+          background: "#fff",
+          padding: "96px 0 0 0",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "48px",
+        }}
+      >
+        {/* Most Demanded Badge */}
+        <div
+          style={{
+            background: "#FFF5ED",
+            color: "#F25E25",
+            borderRadius: "100px",
+            padding: "8px 24px",
+            fontFamily: "Satoshi, sans-serif",
+            fontWeight: 700,
+            fontSize: "16px",
+            marginBottom: "24px",
+            display: "inline-block",
+          }}
+        >
+          Most Demanded
+        </div>
+        {/* Section Title */}
+        <h2
+          style={{
+            fontFamily: "Spline Sans, sans-serif",
+            fontWeight: 700,
+            fontSize: "36px",
+            textAlign: "center",
+            marginBottom: "32px",
+            color: "#1a1a1a",
+          }}
+        >
+          Why AI Engineering Is One Of The Most In-Demand Careers Right Now
+        </h2>
+        {/* Features Row */}
+        <div
+          style={{
+            display: "flex",
+            gap: "32px",
+            justifyContent: "center",
+            marginBottom: "0",
+          }}
+        >
+          {/* Feature Card 1 */}
+          <div
+            style={{
+              background: "#fff",
+              border: "1px solid #FFDCC4",
+              borderRadius: "16px",
+              padding: "32px 24px",
+              width: "240px",
+              textAlign: "center",
+              boxShadow: "0px 2px 16px 0px #FFDCC433",
+            }}
+          >
+            <div
+              style={{
+                fontWeight: 700,
+                fontSize: "18px",
+                color: "#F25E25",
+                marginBottom: "12px",
+              }}
+            >
+              Explosive Market Growth
+            </div>
+            <div style={{ fontSize: "15px", color: "#6E6E6E" }}>
+              AI is expanding rapidly across industries, creating new
+              opportunities.
+            </div>
+          </div>
+          {/* Feature Card 2 */}
+          <div
+            style={{
+              background: "#fff",
+              border: "1px solid #FFDCC4",
+              borderRadius: "16px",
+              padding: "32px 24px",
+              width: "240px",
+              textAlign: "center",
+              boxShadow: "0px 2px 16px 0px #FFDCC433",
+            }}
+          >
+            <div
+              style={{
+                fontWeight: 700,
+                fontSize: "18px",
+                color: "#F25E25",
+                marginBottom: "12px",
+              }}
+            >
+              Hiring is Accelerating Worldwide
+            </div>
+            <div style={{ fontSize: "15px", color: "#6E6E6E" }}>
+              Companies are seeking AI talent globally, from startups to tech
+              giants.
+            </div>
+          </div>
+          {/* Feature Card 3 */}
+          <div
+            style={{
+              background: "#fff",
+              border: "1px solid #FFDCC4",
+              borderRadius: "16px",
+              padding: "32px 24px",
+              width: "240px",
+              textAlign: "center",
+              boxShadow: "0px 2px 16px 0px #FFDCC433",
+            }}
+          >
+            <div
+              style={{
+                fontWeight: 700,
+                fontSize: "18px",
+                color: "#F25E25",
+                marginBottom: "12px",
+              }}
+            >
+              High Earning Potential
+            </div>
+            <div style={{ fontSize: "15px", color: "#6E6E6E" }}>
+              AI roles offer competitive salaries and strong career growth.
+            </div>
+          </div>
+          {/* Feature Card 4 */}
+          <div
+            style={{
+              background: "#fff",
+              border: "1px solid #FFDCC4",
+              borderRadius: "16px",
+              padding: "32px 24px",
+              width: "240px",
+              textAlign: "center",
+              boxShadow: "0px 2px 16px 0px #FFDCC433",
+            }}
+          >
+            <div
+              style={{
+                fontWeight: 700,
+                fontSize: "18px",
+                color: "#F25E25",
+                marginBottom: "12px",
+              }}
+            >
+              A Future-Proof Career Path
+            </div>
+            <div style={{ fontSize: "15px", color: "#6E6E6E" }}>
+              AI skills are in demand for years to come, ensuring job security.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        style={{
+          width: "100%",
+          background: "#FFF5ED",
+          padding: "96px 0 0 0",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "48px",
+          marginTop: "48px",
+        }}
+      >
+        {/* Learn & Job Badge */}
+        <div
+          style={{
+            background: "#fff",
+            color: "#F25E25",
+            borderRadius: "100px",
+            padding: "8px 24px",
+            fontFamily: "Satoshi, sans-serif",
+            fontWeight: 700,
+            fontSize: "16px",
+            marginBottom: "24px",
+            display: "inline-block",
+            border: "1px solid #FFDCC4",
+          }}
+        >
+          Learn & Job
+        </div>
+        {/* Section Title */}
+        <h2
+          style={{
+            fontFamily: "Spline Sans, sans-serif",
+            fontWeight: 700,
+            fontSize: "36px",
+            textAlign: "center",
+            marginBottom: "32px",
+            color: "#1a1a1a",
+          }}
+        >
+          What You’ll Learn And Get In This Job-Ready AI Engineering Course
+        </h2>
+        {/* Features Row */}
+        <div
+          style={{
+            display: "flex",
+            gap: "32px",
+            justifyContent: "center",
+            marginBottom: "0",
+          }}
+        >
+          {/* Feature Card 1 */}
+          <div
+            style={{
+              background: "#fff",
+              border: "1px solid #FFDCC4",
+              borderRadius: "16px",
+              padding: "32px 24px",
+              width: "320px",
+              textAlign: "center",
+              boxShadow: "0px 2px 16px 0px #FFDCC433",
+            }}
+          >
+            <div
+              style={{
+                fontWeight: 700,
+                fontSize: "18px",
+                color: "#F25E25",
+                marginBottom: "12px",
+              }}
+            >
+              Start From Scratch, Grow To Expert
+            </div>
+            <div style={{ fontSize: "15px", color: "#6E6E6E" }}>
+              No prior experience needed. We teach you everything from the
+              ground up.
+            </div>
+          </div>
+          {/* Feature Card 2 */}
+          <div
+            style={{
+              background: "#fff",
+              border: "1px solid #FFDCC4",
+              borderRadius: "16px",
+              padding: "32px 24px",
+              width: "320px",
+              textAlign: "center",
+              boxShadow: "0px 2px 16px 0px #FFDCC433",
+            }}
+          >
+            <div
+              style={{
+                fontWeight: 700,
+                fontSize: "18px",
+                color: "#F25E25",
+                marginBottom: "12px",
+              }}
+            >
+              Robust AI Curriculum
+            </div>
+            <div style={{ fontSize: "15px", color: "#6E6E6E" }}>
+              Learn the latest AI tools, frameworks, and best practices.
+            </div>
+          </div>
+          {/* Feature Card 3 */}
+          <div
+            style={{
+              background: "#fff",
+              border: "1px solid #FFDCC4",
+              borderRadius: "16px",
+              padding: "32px 24px",
+              width: "320px",
+              textAlign: "center",
+              boxShadow: "0px 2px 16px 0px #FFDCC433",
+            }}
+          >
+            <div
+              style={{
+                fontWeight: 700,
+                fontSize: "18px",
+                color: "#F25E25",
+                marginBottom: "12px",
+              }}
+            >
+              Join Live Weekly Classes
+            </div>
+            <div style={{ fontSize: "15px", color: "#6E6E6E" }}>
+              Interactive sessions with instructors and peers for hands-on
+              learning.
+            </div>
+          </div>
+          {/* Feature Card 4 */}
+          <div
+            style={{
+              background: "#fff",
+              border: "1px solid #FFDCC4",
+              borderRadius: "16px",
+              padding: "32px 24px",
+              width: "320px",
+              textAlign: "center",
+              boxShadow: "0px 2px 16px 0px #FFDCC433",
+            }}
+          >
+            <div
+              style={{
+                fontWeight: 700,
+                fontSize: "18px",
+                color: "#F25E25",
+                marginBottom: "12px",
+              }}
+            >
+              Build Real-World Projects
+            </div>
+            <div style={{ fontSize: "15px", color: "#6E6E6E" }}>
+              Apply your skills to projects that mirror industry use cases.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        style={{
+          width: "100%",
+          background: "#fff",
+          padding: "96px 0 0 0",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "48px",
+          marginTop: "48px",
+        }}
+      >
+        {/* Who Should Enroll Badge */}
+        <div
+          style={{
+            background: "#FFF5ED",
+            color: "#F25E25",
+            borderRadius: "100px",
+            padding: "8px 24px",
+            fontFamily: "Satoshi, sans-serif",
+            fontWeight: 700,
+            fontSize: "16px",
+            marginBottom: "24px",
+            display: "inline-block",
+          }}
+        >
+          Who Should Enroll
+        </div>
+        {/* Section Title */}
+        <h2
+          style={{
+            fontFamily: "Spline Sans, sans-serif",
+            fontWeight: 700,
+            fontSize: "32px",
+            textAlign: "center",
+            marginBottom: "32px",
+            color: "#1a1a1a",
+          }}
+        >
+          Who Should Enroll In This Certified AI Engineering Course?
+        </h2>
+        {/* Features Row */}
+        <div
+          style={{
+            display: "flex",
+            gap: "32px",
+            justifyContent: "center",
+            flexWrap: "wrap",
+            marginBottom: "0",
+          }}
+        >
+          {/* Card 1 */}
+          <div
+            style={{
+              background: "#fff",
+              border: "1px solid #FFDCC4",
+              borderRadius: "16px",
+              padding: "32px 24px",
+              width: "220px",
+              textAlign: "center",
+              boxShadow: "0px 2px 16px 0px #FFDCC433",
+              marginBottom: "24px",
+            }}
+          >
+            <div
+              style={{
+                fontWeight: 700,
+                fontSize: "16px",
+                color: "#F25E25",
+                marginBottom: "12px",
+              }}
+            >
+              Beginners
+            </div>
+            <div style={{ fontSize: "14px", color: "#6E6E6E" }}>
+              No tech background needed. Start your AI journey here.
+            </div>
+          </div>
+          {/* Card 2 */}
+          <div
+            style={{
+              background: "#fff",
+              border: "1px solid #FFDCC4",
+              borderRadius: "16px",
+              padding: "32px 24px",
+              width: "220px",
+              textAlign: "center",
+              boxShadow: "0px 2px 16px 0px #FFDCC433",
+              marginBottom: "24px",
+            }}
+          >
+            <div
+              style={{
+                fontWeight: 700,
+                fontSize: "16px",
+                color: "#F25E25",
+                marginBottom: "12px",
+              }}
+            >
+              Career Switchers
+            </div>
+            <div style={{ fontSize: "14px", color: "#6E6E6E" }}>
+              Transition to AI roles from other industries.
+            </div>
+          </div>
+          {/* Card 3 */}
+          <div
+            style={{
+              background: "#fff",
+              border: "1px solid #FFDCC4",
+              borderRadius: "16px",
+              padding: "32px 24px",
+              width: "220px",
+              textAlign: "center",
+              boxShadow: "0px 2px 16px 0px #FFDCC433",
+              marginBottom: "24px",
+            }}
+          >
+            <div
+              style={{
+                fontWeight: 700,
+                fontSize: "16px",
+                color: "#F25E25",
+                marginBottom: "12px",
+              }}
+            >
+              Engineers
+            </div>
+            <div style={{ fontSize: "14px", color: "#6E6E6E" }}>
+              Upskill for AI, ML, and data science roles.
+            </div>
+          </div>
+          {/* Card 4 */}
+          <div
+            style={{
+              background: "#fff",
+              border: "1px solid #FFDCC4",
+              borderRadius: "16px",
+              padding: "32px 24px",
+              width: "220px",
+              textAlign: "center",
+              boxShadow: "0px 2px 16px 0px #FFDCC433",
+              marginBottom: "24px",
+            }}
+          >
+            <div
+              style={{
+                fontWeight: 700,
+                fontSize: "16px",
+                color: "#F25E25",
+                marginBottom: "12px",
+              }}
+            >
+              Freelancers
+            </div>
+            <div style={{ fontSize: "14px", color: "#6E6E6E" }}>
+              Add AI projects & services to your freelance portfolio.
+            </div>
+          </div>
+          {/* Card 5 */}
+          <div
+            style={{
+              background: "#fff",
+              border: "1px solid #FFDCC4",
+              borderRadius: "16px",
+              padding: "32px 24px",
+              width: "220px",
+              textAlign: "center",
+              boxShadow: "0px 2px 16px 0px #FFDCC433",
+              marginBottom: "24px",
+            }}
+          >
+            <div
+              style={{
+                fontWeight: 700,
+                fontSize: "16px",
+                color: "#F25E25",
+                marginBottom: "12px",
+              }}
+            >
+              Founders & Creators
+            </div>
+            <div style={{ fontSize: "14px", color: "#6E6E6E" }}>
+              Build AI-powered products, startups, and apps.
+            </div>
+          </div>
+          {/* Card 6 */}
+          <div
+            style={{
+              background: "#fff",
+              border: "1px solid #FFDCC4",
+              borderRadius: "16px",
+              padding: "32px 24px",
+              width: "220px",
+              textAlign: "center",
+              boxShadow: "0px 2px 16px 0px #FFDCC433",
+              marginBottom: "24px",
+            }}
+          >
+            <div
+              style={{
+                fontWeight: 700,
+                fontSize: "16px",
+                color: "#F25E25",
+                marginBottom: "12px",
+              }}
+            >
+              Students
+            </div>
+            <div style={{ fontSize: "14px", color: "#6E6E6E" }}>
+              Get ready for competitive AI roles and internships.
             </div>
           </div>
         </div>
@@ -695,20 +1360,19 @@ function FeatureItem({ text }: { text: string }) {
           </defs>
         </svg>
       </span>
-      <span
+      <div
         style={{
-          fontFamily: "Satoshi",
+          fontFamily: "Satoshi, sans-serif",
           fontWeight: 400,
-          fontStyle: "normal",
-          fontSize: "16px",
+          fontSize: "15px",
           lineHeight: "100%",
-          letterSpacing: "0",
-          textTransform: "none",
           color: "#6E6E6E",
+          marginBottom: "0",
+          letterSpacing: "0%",
         }}
       >
         {text}
-      </span>
+      </div>
     </div>
   );
 }
