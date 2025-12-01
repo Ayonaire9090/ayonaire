@@ -5,9 +5,11 @@ export default function Page() {
   return (
     <div
       className="min-h-screen font-sans"
-      style={{
-        background: "linear-gradient(178.47deg, #FFAC74 1.3%, #FFFFFF 45.22%)",
-      }}
+      style={
+        {
+          //background: "linear-gradient(178.47deg, #FFAC74 1.3%, #FFFFFF 45.22%)",
+        }
+      }
     >
       {/* Header */}
       <Header />
