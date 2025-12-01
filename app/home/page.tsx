@@ -424,6 +424,8 @@ export default function Home() {
 function BootcampCarousel() {
   const [activeTab, setActiveTab] = useState(0);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [activeCardIndex, setActiveCardIndex] = useState(0);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const tabs = [
     'School of AI',
@@ -435,58 +437,285 @@ function BootcampCarousel() {
     'School of Product',
   ];
 
-  const bootcamps = [
-    {
-      image: '/images/card-image1.png',
-      title: 'AI Engineering',
-      description: 'Whether you\'re starting from scratch or switching careers, there\'s a path here for you.',
-      nextCohort: 'Jan 15, 2025',
-      duration: '6 Months',
-    },
-    {
-      image: '/images/card-image2.png',
-      title: 'Generative AI Engineering',
-      description: 'Whether you\'re starting from scratch or switching careers, there\'s a path here for you.',
-      nextCohort: 'Jan 15, 2025',
-      duration: '6 Months',
-    },
-    {
-      image: '/images/card-image3.png',
-      title: 'Agentic AI Engineering',
-      description: 'Whether you\'re starting from scratch or switching careers, there\'s a path here for you.',
-      nextCohort: 'Jan 15, 2025',
-      duration: '6 Months',
-    },
-    {
-      image: '/images/card-image1.png',
-      title: 'AI Engineering',
-      description: 'Whether you\'re starting from scratch or switching careers, there\'s a path here for you.',
-      nextCohort: 'Jan 15, 2025',
-      duration: '6 Months',
-    },
-    {
-      image: '/images/card-image2.png',
-      title: 'Generative AI Engineering',
-      description: 'Whether you\'re starting from scratch or switching careers, there\'s a path here for you.',
-      nextCohort: 'Jan 15, 2025',
-      duration: '6 Months',
-    },
-    {
-      image: '/images/card-image3.png',
-      title: 'Agentic AI Engineering',
-      description: 'Whether you\'re starting from scratch or switching careers, there\'s a path here for you.',
-      nextCohort: 'Jan 15, 2025',
-      duration: '6 Months',
-    },
-  ];
+  const bootcampsData = {
+    'School of AI': [
+      {
+        image: '/images/SCHOOL-OF-AI/ai-engineering.jpg',
+        title: 'AI Engineering',
+        description: 'Whether you\'re starting from scratch or switching careers, there\'s a path here for you.',
+        nextCohort: 'Jan 15, 2025',
+        duration: '6 Months',
+      },
+      {
+        image: '/images/SCHOOL-OF-AI/generative-ai.jpg',
+        title: 'Generative AI Engineering',
+        description: 'Whether you\'re starting from scratch or switching careers, there\'s a path here for you.',
+        nextCohort: 'Jan 15, 2025',
+        duration: '6 Months',
+      },
+      {
+        image: '/images/SCHOOL-OF-AI/agentic-ai.jpg',
+        title: 'Agentic AI Engineering',
+        description: 'Whether you\'re starting from scratch or switching careers, there\'s a path here for you.',
+        nextCohort: 'Jan 15, 2025',
+        duration: '6 Months',
+      },
+      {
+        image: '/images/SCHOOL-OF-AI/nlp-expert.jpg',
+        title: 'Certified NLP Expert',
+        description: 'Master natural language processing and build intelligent language applications.',
+        nextCohort: 'Feb 1, 2025',
+        duration: '4 Months',
+      },
+      {
+        image: '/images/SCHOOL-OF-AI/machine-learning.jpg',
+        title: 'Certified ML for AI',
+        description: 'Learn machine learning fundamentals and advanced AI techniques.',
+        nextCohort: 'Jan 20, 2025',
+        duration: '5 Months',
+      },
+      {
+        image: '/images/SCHOOL-OF-AI/deep-learning.jpg',
+        title: 'Certified Deep Learning',
+        description: 'Dive deep into neural networks and advanced deep learning architectures.',
+        nextCohort: 'Feb 10, 2025',
+        duration: '6 Months',
+      },
+      {
+        image: '/images/SCHOOL-OF-AI/maths-AI.jpg',
+        title: 'Math & Stats for AI',
+        description: 'Build a strong mathematical foundation for artificial intelligence.',
+        nextCohort: 'Jan 25, 2025',
+        duration: '3 Months',
+      },
+      {
+        image: '/images/SCHOOL-OF-AI/prompt-engineering.jpg',
+        title: 'Prompt Engineering',
+        description: 'Master the art of crafting effective prompts for AI systems.',
+        nextCohort: 'Jan 18, 2025',
+        duration: '2 Months',
+      },
+    ],
+    'School of Data': [
+      {
+        image: '/images/SCHOOL-OF-DATA/data-science.jpg',
+        title: 'Certified Data Science',
+        description: 'Whether you\'re starting from scratch or switching careers, there\'s a path here for you.',
+        nextCohort: 'Jan 15, 2025',
+        duration: '6 Months',
+      },
+      {
+        image: '/images/SCHOOL-OF-DATA/data-analytics.jpg',
+        title: 'Certified Data Analytics',
+        description: 'Transform raw data into actionable insights and make data-driven decisions.',
+        nextCohort: 'Jan 22, 2025',
+        duration: '5 Months',
+      },
+      {
+        image: '/images/SCHOOL-OF-DATA/data-engineering.jpg',
+        title: 'Certified Data Engineering',
+        description: 'Build robust data pipelines and infrastructure for modern applications.',
+        nextCohort: 'Feb 5, 2025',
+        duration: '6 Months',
+      },
+      {
+        image: '/images/SCHOOL-OF-DATA/data-analysis.jpg',
+        title: 'Power BI Analytics',
+        description: 'Create stunning visualizations and reports with Microsoft Power BI.',
+        nextCohort: 'Jan 28, 2025',
+        duration: '3 Months',
+      },
+      {
+        image: '/images/SCHOOL-OF-DATA/data-analysis-tableau.jpg',
+        title: 'Tableau Analytics',
+        description: 'Master data visualization and storytelling with Tableau.',
+        nextCohort: 'Feb 1, 2025',
+        duration: '3 Months',
+      },
+      {
+        image: '/images/SCHOOL-OF-DATA/machine-learning.jpg',
+        title: 'ML for Data Analysis',
+        description: 'Apply machine learning techniques to solve complex data problems.',
+        nextCohort: 'Jan 30, 2025',
+        duration: '5 Months',
+      },
+      {
+        image: '/images/SCHOOL-OF-DATA/math-stats.jpg',
+        title: 'Math & Stats for Data Science',
+        description: 'Master the mathematical foundations of data science and analytics.',
+        nextCohort: 'Jan 20, 2025',
+        duration: '4 Months',
+      },
+      {
+        image: '/images/SCHOOL-OF-DATA/sql.jpg',
+        title: 'SQL for Data Analysis',
+        description: 'Become proficient in SQL for data querying and manipulation.',
+        nextCohort: 'Jan 25, 2025',
+        duration: '2 Months',
+      },
+      {
+        image: '/images/SCHOOL-OF-DATA/python.jpg',
+        title: 'Python for Data Analysis',
+        description: 'Learn Python programming for data analysis and visualization.',
+        nextCohort: 'Jan 18, 2025',
+        duration: '3 Months',
+      },
+      {
+        image: '/images/SCHOOL-OF-DATA/big-data.jpg',
+        title: 'Big Data with Apache Spark',
+        description: 'Process and analyze massive datasets with Apache Spark.',
+        nextCohort: 'Feb 8, 2025',
+        duration: '4 Months',
+      },
+    ],
+    'School of Software Engineering': [
+      {
+        image: '/images/SCHOOL-OF-SOFTWARE-ENGINEERING/fullstack.jpg',
+        title: 'Full-Stack Development',
+        description: 'Whether you\'re starting from scratch or switching careers, there\'s a path here for you.',
+        nextCohort: 'Jan 15, 2025',
+        duration: '6 Months',
+      },
+      {
+        image: '/images/SCHOOL-OF-SOFTWARE-ENGINEERING/frontend.jpg',
+        title: 'Front-End Development',
+        description: 'Build beautiful and responsive user interfaces with modern frameworks.',
+        nextCohort: 'Jan 20, 2025',
+        duration: '4 Months',
+      },
+      {
+        image: '/images/SCHOOL-OF-SOFTWARE-ENGINEERING/fullstack.jpg',
+        title: 'Back-End Development',
+        description: 'Master server-side programming and database management.',
+        nextCohort: 'Jan 25, 2025',
+        duration: '5 Months',
+      },
+      {
+        image: '/images/SCHOOL-OF-SOFTWARE-ENGINEERING/python.jpg',
+        title: 'Certified Python Expert',
+        description: 'Become a Python expert and build powerful applications.',
+        nextCohort: 'Feb 1, 2025',
+        duration: '4 Months',
+      },
+      {
+        image: '/images/SCHOOL-OF-SOFTWARE-ENGINEERING/python.jpg',
+        title: 'Software Engineering with Python',
+        description: 'Learn professional software development practices with Python.',
+        nextCohort: 'Jan 28, 2025',
+        duration: '6 Months',
+      },
+      {
+        image: '/images/SCHOOL-OF-SOFTWARE-ENGINEERING/java.jpg',
+        title: 'Software Engineering with Java',
+        description: 'Master enterprise-level software development with Java.',
+        nextCohort: 'Feb 5, 2025',
+        duration: '6 Months',
+      },
+    ],
+    'School of Cyber Security': [
+      {
+        image: '/images/School-of-Cyber/cyber-security.jpg',
+        title: 'Certified Cyber Security',
+        description: 'Whether you\'re starting from scratch or switching careers, there\'s a path here for you.',
+        nextCohort: 'Jan 15, 2025',
+        duration: '6 Months',
+      },
+      {
+        image: '/images/School-of-Cyber/ethical-hacking.jpg',
+        title: 'Certified Ethical Hacking',
+        description: 'Learn to think like a hacker to protect systems and networks.',
+        nextCohort: 'Jan 22, 2025',
+        duration: '5 Months',
+      },
+    ],
+    'School of Cloud & DevOps': [
+      {
+        image: '/images/School-of-Cloud-DevOps/cloud-computing.jpg',
+        title: 'Certified Cloud Engineering',
+        description: 'Whether you\'re starting from scratch or switching careers, there\'s a path here for you.',
+        nextCohort: 'Jan 15, 2025',
+        duration: '6 Months',
+      },
+      {
+        image: '/images/School-of-Cloud-DevOps/devops.jpg',
+        title: 'Certified DevOps Engineering',
+        description: 'Master continuous integration, deployment, and infrastructure automation.',
+        nextCohort: 'Jan 20, 2025',
+        duration: '5 Months',
+      },
+    ],
+    'School of Digital Marketing': [
+      {
+        image: '/images/School-of-Digital-Marketing/digital-marketing.jpg',
+        title: 'AI in Digital Marketing',
+        description: 'Whether you\'re starting from scratch or switching careers, there\'s a path here for you.',
+        nextCohort: 'Jan 15, 2025',
+        duration: '4 Months',
+      },
+      {
+        image: '/images/School-of-Digital-Marketing/ai-rankings.jpg',
+        title: 'AI SEO & GEO',
+        description: 'Master search engine optimization with AI-powered strategies.',
+        nextCohort: 'Jan 22, 2025',
+        duration: '3 Months',
+      },
+      {
+        image: '/images/School-of-Digital-Marketing/social-media.jpg',
+        title: 'AI in Social Media Marketing',
+        description: 'Leverage AI tools to create engaging social media campaigns.',
+        nextCohort: 'Jan 28, 2025',
+        duration: '3 Months',
+      },
+      {
+        image: '/images/School-of-Digital-Marketing/search-marketing.jpg',
+        title: 'AI in Search Marketing',
+        description: 'Use artificial intelligence to optimize search marketing strategies.',
+        nextCohort: 'Feb 1, 2025',
+        duration: '3 Months',
+      },
+    ],
+    'School of Product': [
+      {
+        image: '/images/School-Of-Marketing/product-design.jpg',
+        title: 'Product Design',
+        description: 'Whether you\'re starting from scratch or switching careers, there\'s a path here for you.',
+        nextCohort: 'Jan 15, 2025',
+        duration: '5 Months',
+      },
+      {
+        image: '/images/School-Of-Marketing/business-development.jpg',
+        title: 'Product Development',
+        description: 'Learn to build products that users love from concept to launch.',
+        nextCohort: 'Jan 20, 2025',
+        duration: '6 Months',
+      },
+      {
+        image: '/images/School-Of-Marketing/product management.jpg',
+        title: 'Project Management',
+        description: 'Master project management methodologies and lead successful teams.',
+        nextCohort: 'Jan 25, 2025',
+        duration: '4 Months',
+      },
+    ],
+  };
+
+  const currentBootcamps = bootcampsData[tabs[activeTab] as keyof typeof bootcampsData] || bootcampsData['School of AI'];
+
+  const totalSlides = Math.ceil(currentBootcamps.length / 3);
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => Math.min(prev + 1, Math.floor(bootcamps.length / 3) - 1));
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: 420, behavior: 'smooth' });
+    }
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => Math.max(prev - 1, 0));
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: -420, behavior: 'smooth' });
+    }
   };
+
+  const visibleBootcamps = currentBootcamps.slice(currentSlide * 3, (currentSlide + 1) * 3);
 
   return (
     <div 
@@ -496,6 +725,7 @@ function BootcampCarousel() {
         borderRadius: '20px',
         background: '#FFFFFF',
         border: '1px solid #0000001A',
+        overflow: 'visible',
       }}
     >
       <div 
@@ -512,6 +742,7 @@ function BootcampCarousel() {
               onClick={() => {
                 setActiveTab(index);
                 setCurrentSlide(0);
+                setActiveCardIndex(0);
               }}
               className="px-6 py-4 rounded-sm whitespace-nowrap transition-all duration-300 hover:bg-white/50"
               style={
@@ -541,18 +772,22 @@ function BootcampCarousel() {
         </div>
       </div>
 
-      <div className="relative">
+      <div className="relative -mx-6">
         <div 
-          className="flex gap-6 overflow-x-auto scrollbar-hide pb-4 cursor-grab active:cursor-grabbing"
+          ref={scrollContainerRef}
+          className="flex gap-6 overflow-x-auto scrollbar-hide pb-4 px-6"
           style={{
             scrollBehavior: 'smooth',
+            paddingTop: '10px',
+            marginTop: '-10px',
           }}
         >
-          {bootcamps.map((bootcamp, index) => (
+          {currentBootcamps.map((bootcamp, index) => (
             <div key={index} className="flex-shrink-0">
               <BootcampCard 
                 {...bootcamp} 
-                isActive={index === 0} 
+                isActive={index === activeCardIndex}
+                onClick={() => setActiveCardIndex(index)}
               />
             </div>
           ))}
@@ -565,7 +800,7 @@ function BootcampCarousel() {
             </svg>
           </button>
           <div className="flex gap-2">
-            {Array.from({ length: 2 }).map((_, index) => (
+            {Array.from({ length: totalSlides }).map((_, index) => (
               <div
                 key={index}
                 className="cursor-pointer"
@@ -601,131 +836,131 @@ function BootcampCarousel() {
   );
 }
 
-function BootcampCard({ image, title, description, nextCohort, duration, isActive }: {
+function BootcampCard({ image, title, description, nextCohort, duration, isActive, onClick }: {
   image: string;
   title: string;
   description: string;
   nextCohort: string;
   duration: string;
   isActive: boolean;
+  onClick: () => void;
 }) {
   return (
     <div 
-      className="relative rounded-[20px] overflow-hidden"
+      onClick={onClick}
+      className="relative cursor-pointer transition-all hover:scale-[1.02]"
       style={{
         width: '406px',
-        borderWidth: '0px',
-        borderStyle: 'solid',
-        borderColor: '#F25E253D',
+        borderRadius: '26.02px',
+        background: isActive ? 'linear-gradient(132.4deg, #F67219 57.76%, #FFE6D5 98.88%)' : '#FAFAFA',
+        padding: '4px',
+        boxShadow: isActive ? 'none' : '0px 13px 20px 0px #00000014',
       }}
     >
       <div 
-        className="relative bg-white rounded-t-[16px]"
+        className="relative bg-white"
         style={{
-          width: '399.5px',
-          margin: '4px 4px 0 4px',
-          borderRadius: '16px 16px 0 0',
-          boxShadow: isActive ? 'none' : '0px 8px 14px 0px #0000001A',
+          width: '398px',
+          borderRadius: '22.12px',
+          paddingTop: '10px',
         }}
       >
-        <div className="absolute top-0 right-0 w-20 h-20 overflow-hidden z-10" style={{ borderTopRightRadius: '16px' }}>
-          <div 
-            className="absolute top-0 right-0 w-full h-full"
-            style={{
-              background: isActive ? 'linear-gradient(135deg, #F67219 0%, #FFDCC4 100%)' : '#E1E1E1',
-              clipPath: 'polygon(100% 0, 100% 100%, 0 0)',
-            }}
+        <div 
+          className="relative overflow-hidden mx-auto"
+          style={{
+            width: '378px',
+            height: '242px',
+            borderRadius: '15.61px',
+            boxShadow: '2px 8px 22px 0px #BF744085',
+          }}
+        >
+          <Image
+            src={image}
+            alt={title}
+            fill
+            className="object-cover object-top"
           />
         </div>
 
-        <div className="p-2">
-          <div 
-            className="relative overflow-hidden mb-4"
+        <div 
+          className="px-[10px]"
+          style={{ 
+            display: 'flex', 
+            flexDirection: 'column', 
+            gap: '17px',
+            marginTop: '23px',
+            paddingTop: '15px',
+            paddingBottom: '40px',
+          }}
+        >
+          <h3 
             style={{
-              width: '392.5px',
-              height: '299px',
-              borderRadius: '12px',
+              fontFamily: 'Spline Sans, sans-serif',
+              fontWeight: 700,
+              fontSize: '23.42px',
+              lineHeight: '100%',
+              letterSpacing: '0%',
+              color: '#141219',
             }}
           >
-            <Image
-              src={image}
-              alt={title}
-              fill
-              className="object-cover"
-            />
-          </div>
+            {title}
+          </h3>
 
-          <div className="px-4 pb-4">
-            <h3 
-              className="mb-3"
-              style={{
-                fontFamily: 'Spline Sans, sans-serif',
-                fontWeight: 700,
-                fontSize: '23.42px',
-                lineHeight: '100%',
-                letterSpacing: '0%',
-                color: '#141219',
-              }}
-            >
-              {title}
-            </h3>
+          <p 
+            style={{
+              fontFamily: 'Satoshi, sans-serif',
+              fontWeight: 500,
+              fontSize: '18.21px',
+              lineHeight: '22.12px',
+              letterSpacing: '-0.03em',
+              color: '#141414CC',
+            }}
+          >
+            {description}
+          </p>
 
-            <p 
-              className="mb-4"
+          <div className="flex items-center gap-2">
+            <Image src="/icons/calendar.svg" alt="Calendar" width={20} height={20} />
+            <span 
               style={{
                 fontFamily: 'Satoshi, sans-serif',
                 fontWeight: 500,
                 fontSize: '18.21px',
-                lineHeight: '22.12px',
-                letterSpacing: '-0.03em',
-                color: '#141414CC',
+                lineHeight: '100%',
+                letterSpacing: '0%',
+                color: 'gray',
               }}
             >
-              {description}
-            </p>
+              Next Cohort: <strong style={{ color: '#141414' }}>{nextCohort}</strong>
+            </span>
+          </div>
 
-            <div className="flex items-center gap-2 mb-3">
-              <Image src="/icons/calendar.svg" alt="Calendar" width={20} height={20} />
-              <span 
-                style={{
-                  fontFamily: 'Satoshi, sans-serif',
-                  fontWeight: 500,
-                  fontSize: '18.21px',
-                  lineHeight: '100%',
-                  letterSpacing: '0%',
-                  color: 'gray',
-                }}
-              >
-                Next Cohort: <strong style={{ color: '#141414' }}>{nextCohort}</strong>
-              </span>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <Image src="/icons/duration.svg" alt="Duration" width={20} height={20} />
-              <span 
-                style={{
-                  fontFamily: 'Satoshi, sans-serif',
-                  fontWeight: 500,
-                  fontSize: '18.21px',
-                  lineHeight: '100%',
-                  letterSpacing: '0%',
-                  color: 'gray',
-                }}
-              >
-                Duration: <strong style={{ color: '#141414' }}>{duration}</strong>
-              </span>
-            </div>
+          <div className="flex items-center gap-2">
+            <Image src="/icons/duration.svg" alt="Duration" width={20} height={20} />
+            <span 
+              style={{
+                fontFamily: 'Satoshi, sans-serif',
+                fontWeight: 500,
+                fontSize: '18.21px',
+                lineHeight: '100%',
+                letterSpacing: '0%',
+                color: 'gray',
+              }}
+            >
+              Duration: <strong style={{ color: '#141414' }}>{duration}</strong>
+            </span>
           </div>
         </div>
       </div>
 
       <div 
-        className="flex items-center justify-between px-6 py-6 rounded-b-[20px]"
+        className="flex items-center justify-between px-6 py-6"
         style={{
+          width: '398px',
           background: isActive 
             ? 'linear-gradient(90deg, #F67219 0%, #FFDCC4 118.57%)'
             : '#FFFFFF',
-          margin: '0 4px 4px 4px',
+          borderRadius: '0 0 18px 18px',
         }}
       >
         <span 
@@ -741,18 +976,18 @@ function BootcampCard({ image, title, description, nextCohort, duration, isActiv
           View Program
         </span>
         <div 
-          className="flex items-center"
+          className="relative flex items-center"
           style={{
             width: '80.67px',
             borderRadius: '36.43px',
             padding: '8.46px 8.46px 8.46px 25.37px',
             gap: '18.21px',
-            background: isActive ? 'transparent' : 'transparent',
+            background: isActive ? 'linear-gradient(90deg, #F67219 0%, #FFDCC4 118.57%)' : 'transparent',
             border: isActive ? 'none' : '1.3px solid #E7E7E7',
           }}
         >
           <div 
-            className="flex items-center justify-center"
+            className="flex items-center justify-center relative"
             style={{
               width: '46.84px',
               height: '46.84px',
