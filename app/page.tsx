@@ -572,14 +572,17 @@ export default function Page() {
           style={{
             fontFamily: "Spline Sans, sans-serif",
             fontWeight: 700,
-            fontSize: "40px",
-            lineHeight: "52px",
+            fontSize: "48px",
+            lineHeight: "56px",
+            letterSpacing: "0%",
+            textAlign: "center",
+            verticalAlign: "middle",
+            textTransform: "capitalize",
+            marginBottom: "40px",
             color: "#1a1a1a",
-            marginBottom: "12px",
-            maxWidth: "700px",
           }}
         >
-          Why This Is The Most Effective AI Engineering Course
+          Why AI Engineering Is One of the Most In-Demand Careers Ri ght Now
         </h2>
         <div
           className="text-center"
@@ -766,19 +769,17 @@ export default function Page() {
         </button>
       </section>
 
-      {/* Add new sections below the screenshot section */}
+      {/* Most Demanded Section */}
       <section
         style={{
           width: "100%",
           background: "#fff",
-          padding: "96px 0 0 0",
+          padding: "80px 0 0 0",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          gap: "48px",
         }}
       >
-        {/* Most Demanded Badge */}
         <div
           style={{
             background: "#FFF5ED",
@@ -788,53 +789,136 @@ export default function Page() {
             fontFamily: "Satoshi, sans-serif",
             fontWeight: 700,
             fontSize: "16px",
-            marginBottom: "24px",
+            marginBottom: "32px",
             display: "inline-block",
+            letterSpacing: "0.02em",
           }}
         >
           Most Demanded
         </div>
-        {/* Section Title */}
         <h2
           style={{
-            fontFamily: "Spline Sans, sans-serif",
+            fontFamily: "Spline Sans, ",
             fontWeight: 700,
-            fontSize: "36px",
+            fontSize: "47px",
             textAlign: "center",
-            marginBottom: "32px",
+            marginBottom: "40px",
             color: "#1a1a1a",
+            letterSpacing: "0",
+            width: "897px",
+            lineHeight: "56px",
+            height: "111",
+
+            opacity: 1,
           }}
         >
           Why AI Engineering Is One Of The Most In-Demand Careers Right Now
         </h2>
-        {/* Features Row */}
         <div
           style={{
             display: "flex",
             gap: "32px",
             justifyContent: "center",
             marginBottom: "0",
+            maxWidth: "1066px",
+            width: "100%",
           }}
         >
-          {/* Feature Card 1 */}
+          {/* Card 1 */}
           <div
             style={{
               background: "#fff",
               border: "1px solid #FFDCC4",
-              borderRadius: "16px",
+              borderRight: "3px solid #F25E254D",
+              borderRadius: "12px",
               padding: "32px 24px",
-              width: "240px",
-              textAlign: "center",
+              width: "310px",
+              height: "239.19px",
+              textAlign: "left",
               boxShadow: "0px 2px 16px 0px #FFDCC433",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              gap: "12px",
+              opacity: 1,
+              position: "relative",
+              top: "0.9px",
+              left: "2px",
+              transform: "rotate(0deg)",
             }}
           >
+            <span style={{ color: "#F25E25", fontSize: "24px" }}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="50"
+                height="50"
+                viewBox="0 0 50 50"
+                fill="none"
+              >
+                <mask
+                  id="mask0_287_4369"
+                  maskUnits="userSpaceOnUse"
+                  x="0"
+                  y="0"
+                  width="50"
+                  height="50"
+                >
+                  <path d="M0 0H50V50H0V0Z" fill="white" />
+                </mask>
+                <g mask="url(#mask0_287_4369)">
+                  <mask
+                    id="mask1_287_4369"
+                    maskUnits="userSpaceOnUse"
+                    x="0"
+                    y="0"
+                    width="50"
+                    height="50"
+                  >
+                    <path d="M0 0H50V50H0V0Z" fill="white" />
+                  </mask>
+                  <g mask="url(#mask1_287_4369)">
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M32.8125 14.0625C32.8125 14.9254 33.5121 15.625 34.375 15.625H43.75V25C43.75 25.8629 44.4496 26.5625 45.3125 26.5625C46.1754 26.5625 46.875 25.8629 46.875 25V14.0625C46.875 13.9599 46.865 13.8583 46.845 13.7577C46.8249 13.657 46.7953 13.5593 46.7561 13.4646C46.7168 13.3698 46.6687 13.2797 46.6117 13.1944C46.5547 13.1091 46.4899 13.0302 46.4173 12.9576C46.3448 12.8851 46.2659 12.8203 46.1806 12.7633C46.0953 12.7063 46.0052 12.6582 45.9104 12.6189C45.8156 12.5797 45.7179 12.55 45.6173 12.53C45.5167 12.51 45.4151 12.5 45.3125 12.5H34.375C33.5121 12.5 32.8125 13.1996 32.8125 14.0625Z"
+                      fill="url(#paint0_linear_287_4369)"
+                    />
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M44.855 14.5201C44.2447 13.91 43.2553 13.91 42.645 14.5201L29.23 27.9353C28.9249 28.2405 28.5565 28.3931 28.125 28.3931C27.6935 28.3931 27.3251 28.2405 27.0199 27.9352L22.0649 22.9802C21.1496 22.0647 20.0446 21.6069 18.75 21.6069C17.4554 21.6069 16.3504 22.0646 15.4352 22.9801L3.58264 34.8327C2.97245 35.4428 2.97245 36.4322 3.58264 37.0423C4.19283 37.6525 5.18216 37.6525 5.79235 37.0423L17.6449 25.1898C17.9501 24.8845 18.3185 24.7319 18.75 24.7319C19.1815 24.7319 19.5499 24.8845 19.855 25.1897L24.8102 30.1449C25.7254 31.0604 26.8304 31.5181 28.125 31.5181C29.4196 31.5181 30.5246 31.0603 31.4399 30.1448L44.855 16.7298C45.465 16.1197 45.465 15.1303 44.855 14.5201Z"
+                      fill="url(#paint1_linear_287_4369)"
+                    />
+                  </g>
+                </g>
+                <defs>
+                  <linearGradient
+                    id="paint0_linear_287_4369"
+                    x1="32.8125"
+                    y1="19.5312"
+                    x2="46.875"
+                    y2="19.5312"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stop-color="#F25E25" />
+                    <stop offset="1" stop-color="#F97F11" />
+                  </linearGradient>
+                  <linearGradient
+                    id="paint1_linear_287_4369"
+                    x1="3.125"
+                    y1="25.7812"
+                    x2="45.3125"
+                    y2="25.7812"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stop-color="#F25E25" />
+                    <stop offset="1" stop-color="#F97F11" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </span>
             <div
-              style={{
-                fontWeight: 700,
-                fontSize: "18px",
-                color: "#F25E25",
-                marginBottom: "12px",
-              }}
+              style={{ fontWeight: 700, fontSize: "18px", color: "#1a1a1a" }}
             >
               Explosive Market Growth
             </div>
@@ -843,25 +927,115 @@ export default function Page() {
               opportunities.
             </div>
           </div>
-          {/* Feature Card 2 */}
+          {/* Card 2 */}
           <div
             style={{
               background: "#fff",
               border: "1px solid #FFDCC4",
-              borderRadius: "16px",
+              borderRight: "3px solid #F25E254D",
+              borderRadius: "12px",
               padding: "32px 24px",
-              width: "240px",
-              textAlign: "center",
+              width: "312px",
+              height: "241px",
+              textAlign: "left",
               boxShadow: "0px 2px 16px 0px #FFDCC433",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              gap: "12px",
+              opacity: 1,
+              position: "relative",
+              top: "0.9px",
+              left: "2px",
+              transform: "rotate(0deg)",
             }}
           >
+            <span style={{ color: "#F25E25", fontSize: "24px" }}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="50"
+                height="50"
+                viewBox="0 0 50 50"
+                fill="none"
+              >
+                <path
+                  d="M27.0837 22.9168C27.0837 18.3145 23.3526 14.5835 18.7503 14.5835C14.148 14.5835 10.417 18.3145 10.417 22.9168C10.417 27.5191 14.148 31.2502 18.7503 31.2502C23.3526 31.2502 27.0837 27.5191 27.0837 22.9168Z"
+                  stroke="url(#paint0_linear_287_4386)"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M22.9974 15.7453C22.9443 15.3656 22.917 14.9776 22.917 14.5833C22.917 9.98096 26.648 6.25 31.2503 6.25C35.8526 6.25 39.5837 9.98096 39.5837 14.5833C39.5837 19.1857 35.8526 22.9167 31.2503 22.9167C29.6991 22.9167 28.247 22.4929 27.0032 21.7548"
+                  stroke="url(#paint1_linear_287_4386)"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M31.25 43.75C31.25 36.8465 25.6535 31.25 18.75 31.25C11.8464 31.25 6.25 36.8465 6.25 43.75"
+                  stroke="url(#paint2_linear_287_4386)"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M43.75 35.4166C43.75 28.5131 38.1535 22.9166 31.25 22.9166"
+                  stroke="url(#paint3_linear_287_4386)"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <defs>
+                  <linearGradient
+                    id="paint0_linear_287_4386"
+                    x1="10.417"
+                    y1="22.9168"
+                    x2="27.0837"
+                    y2="22.9168"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stop-color="#F25E25" />
+                    <stop offset="1" stop-color="#F97F11" />
+                  </linearGradient>
+                  <linearGradient
+                    id="paint1_linear_287_4386"
+                    x1="22.917"
+                    y1="14.5833"
+                    x2="39.5837"
+                    y2="14.5833"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stop-color="#F25E25" />
+                    <stop offset="1" stop-color="#F97F11" />
+                  </linearGradient>
+                  <linearGradient
+                    id="paint2_linear_287_4386"
+                    x1="6.25"
+                    y1="37.5"
+                    x2="31.25"
+                    y2="37.5"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stop-color="#F25E25" />
+                    <stop offset="1" stop-color="#F97F11" />
+                  </linearGradient>
+                  <linearGradient
+                    id="paint3_linear_287_4386"
+                    x1="31.25"
+                    y1="29.1666"
+                    x2="43.75"
+                    y2="29.1666"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stop-color="#F25E25" />
+                    <stop offset="1" stop-color="#F97F11" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </span>
             <div
-              style={{
-                fontWeight: 700,
-                fontSize: "18px",
-                color: "#F25E25",
-                marginBottom: "12px",
-              }}
+              style={{ fontWeight: 700, fontSize: "18px", color: "#1a1a1a" }}
             >
               Hiring is Accelerating Worldwide
             </div>
@@ -870,25 +1044,94 @@ export default function Page() {
               giants.
             </div>
           </div>
-          {/* Feature Card 3 */}
+          {/* Card 3 */}
           <div
             style={{
               background: "#fff",
               border: "1px solid #FFDCC4",
-              borderRadius: "16px",
+              borderRight: "3px solid #F25E254D",
+              borderRadius: "12px",
               padding: "32px 24px",
-              width: "240px",
-              textAlign: "center",
+              width: "310px",
+              height: "239.19px",
+              textAlign: "left",
               boxShadow: "0px 2px 16px 0px #FFDCC433",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              gap: "12px",
+              opacity: 1,
+              position: "relative",
+              top: "0.9px",
+              left: "2px",
+              transform: "rotate(0deg)",
             }}
           >
+            <span style={{ color: "#F25E25", fontSize: "24px" }}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="50"
+                height="50"
+                viewBox="0 0 50 50"
+                fill="none"
+              >
+                <path
+                  d="M29.1667 37.5C38.3715 37.5 45.8333 30.0381 45.8333 20.8333C45.8333 11.6285 38.3715 4.16663 29.1667 4.16663C19.9619 4.16663 12.5 11.6285 12.5 20.8333C12.5 30.0381 19.9619 37.5 29.1667 37.5Z"
+                  stroke="url(#paint0_linear_287_4398)"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                />
+                <path
+                  d="M6.57651 22.9165C5.05289 25.2448 4.16699 28.028 4.16699 31.0182C4.16699 39.2003 10.7999 45.8332 18.9819 45.8332C21.9722 45.8332 24.7553 44.9473 27.0837 43.4236"
+                  stroke="url(#paint1_linear_287_4398)"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                />
+                <path
+                  d="M32.8564 17.0943C32.406 15.194 30.1135 13.4793 27.3616 14.7621C24.6097 16.0449 24.1727 20.1723 28.3352 20.6107C30.2166 20.8089 31.4431 20.3808 32.5662 21.5919C33.6891 22.8029 33.8979 26.1709 31.027 27.0786C28.1562 27.9863 25.3135 26.5679 25.0039 24.5542M29.1377 12.5088V14.3193M29.1377 27.3579V29.1754"
+                  stroke="url(#paint2_linear_287_4398)"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                />
+                <defs>
+                  <linearGradient
+                    id="paint0_linear_287_4398"
+                    x1="12.5"
+                    y1="20.8333"
+                    x2="45.8333"
+                    y2="20.8333"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stop-color="#F25E25" />
+                    <stop offset="1" stop-color="#F97F11" />
+                  </linearGradient>
+                  <linearGradient
+                    id="paint1_linear_287_4398"
+                    x1="4.16699"
+                    y1="34.3748"
+                    x2="27.0837"
+                    y2="34.3748"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stop-color="#F25E25" />
+                    <stop offset="1" stop-color="#F97F11" />
+                  </linearGradient>
+                  <linearGradient
+                    id="paint2_linear_287_4398"
+                    x1="25.0039"
+                    y1="20.8421"
+                    x2="33.3372"
+                    y2="20.8421"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stop-color="#F25E25" />
+                    <stop offset="1" stop-color="#F97F11" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </span>
             <div
-              style={{
-                fontWeight: 700,
-                fontSize: "18px",
-                color: "#F25E25",
-                marginBottom: "12px",
-              }}
+              style={{ fontWeight: 700, fontSize: "18px", color: "#1a1a1a" }}
             >
               High Earning Potential
             </div>
@@ -896,25 +1139,79 @@ export default function Page() {
               AI roles offer competitive salaries and strong career growth.
             </div>
           </div>
-          {/* Feature Card 4 */}
+          {/* Card 4 */}
           <div
             style={{
               background: "#fff",
               border: "1px solid #FFDCC4",
-              borderRadius: "16px",
+              borderRight: "3px solid #F25E254D",
+              borderRadius: "12px",
               padding: "32px 24px",
-              width: "240px",
-              textAlign: "center",
+              width: "310px",
+              height: "239.19px",
+              textAlign: "left",
               boxShadow: "0px 2px 16px 0px #FFDCC433",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              gap: "12px",
+              opacity: 1,
+              position: "relative",
+              top: "0.9px",
+              left: "2px",
+              transform: "rotate(0deg)",
             }}
           >
+            <span style={{ color: "#F25E25", fontSize: "24px" }}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="60"
+                height="60"
+                viewBox="0 0 60 60"
+                fill="none"
+              >
+                <path
+                  d="M17.5 45V40M30 45V37.5M42.5 45V32.5M6.25 30C6.25 18.8041 6.25 13.2062 9.7281 9.7281C13.2062 6.25 18.8041 6.25 30 6.25C41.1958 6.25 46.7938 6.25 50.272 9.7281C53.75 13.2062 53.75 18.8041 53.75 30C53.75 41.1958 53.75 46.7938 50.272 50.272C46.7938 53.75 41.1958 53.75 30 53.75C18.8041 53.75 13.2062 53.75 9.7281 50.272C6.25 46.7938 6.25 41.1958 6.25 30Z"
+                  stroke="url(#paint0_linear_287_4409)"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M14.9805 28.7158C20.3682 28.8953 32.5852 28.082 39.5342 17.0533M34.9807 15.7209L39.6695 14.9662C40.241 14.8935 41.08 15.3446 41.2862 15.8825L42.526 19.9786"
+                  stroke="url(#paint1_linear_287_4409)"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <defs>
+                  <linearGradient
+                    id="paint0_linear_287_4409"
+                    x1="6.25"
+                    y1="30"
+                    x2="53.75"
+                    y2="30"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stop-color="#F25E25" />
+                    <stop offset="1" stop-color="#F97F11" />
+                  </linearGradient>
+                  <linearGradient
+                    id="paint1_linear_287_4409"
+                    x1="14.9805"
+                    y1="21.8471"
+                    x2="42.526"
+                    y2="21.8471"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stop-color="#F25E25" />
+                    <stop offset="1" stop-color="#F97F11" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </span>
             <div
-              style={{
-                fontWeight: 700,
-                fontSize: "18px",
-                color: "#F25E25",
-                marginBottom: "12px",
-              }}
+              style={{ fontWeight: 700, fontSize: "18px", color: "#1a1a1a" }}
             >
               A Future-Proof Career Path
             </div>
@@ -925,19 +1222,17 @@ export default function Page() {
         </div>
       </section>
 
+      {/* Learn & Job Section */}
       <section
         style={{
           width: "100%",
           background: "#FFF5ED",
-          padding: "96px 0 0 0",
+          padding: "80px 0 0 0",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          gap: "48px",
-          marginTop: "48px",
         }}
       >
-        {/* Learn & Job Badge */}
         <div
           style={{
             background: "#fff",
@@ -947,54 +1242,60 @@ export default function Page() {
             fontFamily: "Satoshi, sans-serif",
             fontWeight: 700,
             fontSize: "16px",
-            marginBottom: "24px",
+            marginBottom: "32px",
             display: "inline-block",
             border: "1px solid #FFDCC4",
+            letterSpacing: "0.02em",
           }}
         >
           Learn & Job
         </div>
-        {/* Section Title */}
         <h2
           style={{
             fontFamily: "Spline Sans, sans-serif",
             fontWeight: 700,
-            fontSize: "36px",
+            fontSize: "32px",
             textAlign: "center",
-            marginBottom: "32px",
+            marginBottom: "40px",
             color: "#1a1a1a",
+            letterSpacing: "0.01em",
           }}
         >
           What You’ll Learn And Get In This Job-Ready AI Engineering Course
         </h2>
-        {/* Features Row */}
         <div
           style={{
             display: "flex",
             gap: "32px",
             justifyContent: "center",
             marginBottom: "0",
+            maxWidth: "1066px",
+            width: "100%",
+            background: "#FFF5ED",
+            padding: "0 0 48px 0",
+            borderRadius: "24px",
+            position: "relative",
           }}
         >
-          {/* Feature Card 1 */}
+          {/* Card 1 */}
           <div
             style={{
               background: "#fff",
               border: "1px solid #FFDCC4",
               borderRadius: "16px",
               padding: "32px 24px",
-              width: "320px",
-              textAlign: "center",
+              width: "240px",
+              textAlign: "left",
               boxShadow: "0px 2px 16px 0px #FFDCC433",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              gap: "12px",
             }}
           >
+            <span style={{ color: "#F25E25", fontSize: "24px" }}>📈</span>
             <div
-              style={{
-                fontWeight: 700,
-                fontSize: "18px",
-                color: "#F25E25",
-                marginBottom: "12px",
-              }}
+              style={{ fontWeight: 700, fontSize: "18px", color: "#1a1a1a" }}
             >
               Start From Scratch, Grow To Expert
             </div>
@@ -1003,25 +1304,25 @@ export default function Page() {
               ground up.
             </div>
           </div>
-          {/* Feature Card 2 */}
+          {/* Card 2 */}
           <div
             style={{
               background: "#fff",
               border: "1px solid #FFDCC4",
               borderRadius: "16px",
               padding: "32px 24px",
-              width: "320px",
-              textAlign: "center",
+              width: "240px",
+              textAlign: "left",
               boxShadow: "0px 2px 16px 0px #FFDCC433",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              gap: "12px",
             }}
           >
+            <span style={{ color: "#F25E25", fontSize: "24px" }}>🧠</span>
             <div
-              style={{
-                fontWeight: 700,
-                fontSize: "18px",
-                color: "#F25E25",
-                marginBottom: "12px",
-              }}
+              style={{ fontWeight: 700, fontSize: "18px", color: "#1a1a1a" }}
             >
               Robust AI Curriculum
             </div>
@@ -1029,25 +1330,25 @@ export default function Page() {
               Learn the latest AI tools, frameworks, and best practices.
             </div>
           </div>
-          {/* Feature Card 3 */}
+          {/* Card 3 */}
           <div
             style={{
               background: "#fff",
               border: "1px solid #FFDCC4",
               borderRadius: "16px",
               padding: "32px 24px",
-              width: "320px",
-              textAlign: "center",
+              width: "240px",
+              textAlign: "left",
               boxShadow: "0px 2px 16px 0px #FFDCC433",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              gap: "12px",
             }}
           >
+            <span style={{ color: "#F25E25", fontSize: "24px" }}>🎓</span>
             <div
-              style={{
-                fontWeight: 700,
-                fontSize: "18px",
-                color: "#F25E25",
-                marginBottom: "12px",
-              }}
+              style={{ fontWeight: 700, fontSize: "18px", color: "#1a1a1a" }}
             >
               Join Live Weekly Classes
             </div>
@@ -1056,25 +1357,25 @@ export default function Page() {
               learning.
             </div>
           </div>
-          {/* Feature Card 4 */}
+          {/* Card 4 */}
           <div
             style={{
               background: "#fff",
               border: "1px solid #FFDCC4",
               borderRadius: "16px",
               padding: "32px 24px",
-              width: "320px",
-              textAlign: "center",
+              width: "240px",
+              textAlign: "left",
               boxShadow: "0px 2px 16px 0px #FFDCC433",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              gap: "12px",
             }}
           >
+            <span style={{ color: "#F25E25", fontSize: "24px" }}>🛠️</span>
             <div
-              style={{
-                fontWeight: 700,
-                fontSize: "18px",
-                color: "#F25E25",
-                marginBottom: "12px",
-              }}
+              style={{ fontWeight: 700, fontSize: "18px", color: "#1a1a1a" }}
             >
               Build Real-World Projects
             </div>
@@ -1082,22 +1383,59 @@ export default function Page() {
               Apply your skills to projects that mirror industry use cases.
             </div>
           </div>
+          {/* Carousel Dots */}
+          <div
+            style={{
+              position: "absolute",
+              left: "50%",
+              bottom: "-32px",
+              transform: "translateX(-50%)",
+              display: "flex",
+              gap: "8px",
+            }}
+          >
+            <span
+              style={{
+                width: "16px",
+                height: "4px",
+                borderRadius: "2px",
+                background: "#F25E25",
+                display: "inline-block",
+              }}
+            ></span>
+            <span
+              style={{
+                width: "16px",
+                height: "4px",
+                borderRadius: "2px",
+                background: "#FFDCC4",
+                display: "inline-block",
+              }}
+            ></span>
+            <span
+              style={{
+                width: "16px",
+                height: "4px",
+                borderRadius: "2px",
+                background: "#FFE7D6",
+                display: "inline-block",
+              }}
+            ></span>
+          </div>
         </div>
       </section>
 
+      {/* Who Should Enroll Section */}
       <section
         style={{
           width: "100%",
           background: "#fff",
-          padding: "96px 0 0 0",
+          padding: "80px 0 0 0",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          gap: "48px",
-          marginTop: "48px",
         }}
       >
-        {/* Who Should Enroll Badge */}
         <div
           style={{
             background: "#FFF5ED",
@@ -1107,26 +1445,26 @@ export default function Page() {
             fontFamily: "Satoshi, sans-serif",
             fontWeight: 700,
             fontSize: "16px",
-            marginBottom: "24px",
+            marginBottom: "32px",
             display: "inline-block",
+            letterSpacing: "0.02em",
           }}
         >
           Who Should Enroll
         </div>
-        {/* Section Title */}
         <h2
           style={{
             fontFamily: "Spline Sans, sans-serif",
             fontWeight: 700,
             fontSize: "32px",
             textAlign: "center",
-            marginBottom: "32px",
+            marginBottom: "40px",
             color: "#1a1a1a",
+            letterSpacing: "0.01em",
           }}
         >
           Who Should Enroll In This Certified AI Engineering Course?
         </h2>
-        {/* Features Row */}
         <div
           style={{
             display: "flex",
@@ -1134,6 +1472,8 @@ export default function Page() {
             justifyContent: "center",
             flexWrap: "wrap",
             marginBottom: "0",
+            maxWidth: "1066px",
+            width: "100%",
           }}
         >
           {/* Card 1 */}
@@ -1144,18 +1484,18 @@ export default function Page() {
               borderRadius: "16px",
               padding: "32px 24px",
               width: "220px",
-              textAlign: "center",
+              textAlign: "left",
               boxShadow: "0px 2px 16px 0px #FFDCC433",
               marginBottom: "24px",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              gap: "12px",
             }}
           >
+            <span style={{ color: "#F25E25", fontSize: "24px" }}>👶</span>
             <div
-              style={{
-                fontWeight: 700,
-                fontSize: "16px",
-                color: "#F25E25",
-                marginBottom: "12px",
-              }}
+              style={{ fontWeight: 700, fontSize: "16px", color: "#1a1a1a" }}
             >
               Beginners
             </div>
@@ -1171,18 +1511,18 @@ export default function Page() {
               borderRadius: "16px",
               padding: "32px 24px",
               width: "220px",
-              textAlign: "center",
+              textAlign: "left",
               boxShadow: "0px 2px 16px 0px #FFDCC433",
               marginBottom: "24px",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              gap: "12px",
             }}
           >
+            <span style={{ color: "#F25E25", fontSize: "24px" }}>🔄</span>
             <div
-              style={{
-                fontWeight: 700,
-                fontSize: "16px",
-                color: "#F25E25",
-                marginBottom: "12px",
-              }}
+              style={{ fontWeight: 700, fontSize: "16px", color: "#1a1a1a" }}
             >
               Career Switchers
             </div>
@@ -1198,18 +1538,18 @@ export default function Page() {
               borderRadius: "16px",
               padding: "32px 24px",
               width: "220px",
-              textAlign: "center",
+              textAlign: "left",
               boxShadow: "0px 2px 16px 0px #FFDCC433",
               marginBottom: "24px",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              gap: "12px",
             }}
           >
+            <span style={{ color: "#F25E25", fontSize: "24px" }}>🛠️</span>
             <div
-              style={{
-                fontWeight: 700,
-                fontSize: "16px",
-                color: "#F25E25",
-                marginBottom: "12px",
-              }}
+              style={{ fontWeight: 700, fontSize: "16px", color: "#1a1a1a" }}
             >
               Engineers
             </div>
@@ -1225,18 +1565,18 @@ export default function Page() {
               borderRadius: "16px",
               padding: "32px 24px",
               width: "220px",
-              textAlign: "center",
+              textAlign: "left",
               boxShadow: "0px 2px 16px 0px #FFDCC433",
               marginBottom: "24px",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              gap: "12px",
             }}
           >
+            <span style={{ color: "#F25E25", fontSize: "24px" }}>💼</span>
             <div
-              style={{
-                fontWeight: 700,
-                fontSize: "16px",
-                color: "#F25E25",
-                marginBottom: "12px",
-              }}
+              style={{ fontWeight: 700, fontSize: "16px", color: "#1a1a1a" }}
             >
               Freelancers
             </div>
@@ -1252,18 +1592,18 @@ export default function Page() {
               borderRadius: "16px",
               padding: "32px 24px",
               width: "220px",
-              textAlign: "center",
+              textAlign: "left",
               boxShadow: "0px 2px 16px 0px #FFDCC433",
               marginBottom: "24px",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              gap: "12px",
             }}
           >
+            <span style={{ color: "#F25E25", fontSize: "24px" }}>🚀</span>
             <div
-              style={{
-                fontWeight: 700,
-                fontSize: "16px",
-                color: "#F25E25",
-                marginBottom: "12px",
-              }}
+              style={{ fontWeight: 700, fontSize: "16px", color: "#1a1a1a" }}
             >
               Founders & Creators
             </div>
@@ -1279,18 +1619,18 @@ export default function Page() {
               borderRadius: "16px",
               padding: "32px 24px",
               width: "220px",
-              textAlign: "center",
+              textAlign: "left",
               boxShadow: "0px 2px 16px 0px #FFDCC433",
               marginBottom: "24px",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              gap: "12px",
             }}
           >
+            <span style={{ color: "#F25E25", fontSize: "24px" }}>🎓</span>
             <div
-              style={{
-                fontWeight: 700,
-                fontSize: "16px",
-                color: "#F25E25",
-                marginBottom: "12px",
-              }}
+              style={{ fontWeight: 700, fontSize: "16px", color: "#1a1a1a" }}
             >
               Students
             </div>
