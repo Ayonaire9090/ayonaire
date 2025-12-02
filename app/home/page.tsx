@@ -7,7 +7,10 @@ import Header from '../header';
 export default function Home() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupAnimated, setPopupAnimated] = useState(false);
   const statsRef = useRef<HTMLElement>(null);
+  const bootcampRef = useRef<HTMLElement>(null);
 
   const featuredLogos = [
     { name: 'Ify', url: '/images/logos/ify.png' },
@@ -16,6 +19,26 @@ export default function Home() {
     { name: 'Forbes', url: '/images/logos/forbes.png' },
     { name: 'Technext', url: '/images/logos/technext.png' },
   ];
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (bootcampRef.current) {
+        const rect = bootcampRef.current.getBoundingClientRect();
+        if (rect.bottom < 0 && !showPopup) {
+          setShowPopup(true);
+          setTimeout(() => setPopupAnimated(true), 10);
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [showPopup]);
+
+  const handleClosePopup = () => {
+    setPopupAnimated(false);
+    setTimeout(() => setShowPopup(false), 400);
+  };
 
   useEffect(() => {
     const currentRef = statsRef.current;
@@ -346,7 +369,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="py-16" style={{ background: 'linear-gradient(180deg, #FFFFFF 0%, #FFE7DE 100%)' }}>
+      <section ref={bootcampRef} className="py-16" style={{ background: 'linear-gradient(180deg, #FFFFFF 0%, #FFE7DE 100%)', borderRadius: '60px' }}>
         <div className="max-w-[1740px] mx-auto px-6 md:px-12 lg:px-20">
           <div className="flex flex-col items-center">
             <div 
@@ -417,6 +440,169 @@ export default function Home() {
           <BootcampCarousel />
         </div>
       </section>
+
+      <section className="py-16">
+        <div className="max-w-[1280px] mx-auto px-6">
+          <h2 
+            style={{
+              width: '796px',
+              margin: '0 auto',
+              fontFamily: 'Spline Sans, sans-serif',
+              fontWeight: 700,
+              fontSize: '44px',
+              lineHeight: '55px',
+              letterSpacing: '0%',
+              textAlign: 'center',
+              color: '#141414',
+              marginBottom: '48px',
+            }}
+          >
+            Our Talents Have Worked With Many of These Top Leading Companies
+          </h2>
+
+          <div 
+            className="grid grid-cols-5"
+            style={{
+              maxWidth: '1280px',
+              margin: '0 auto',
+              gap: '20px',
+            }}
+          >
+            {[
+              'microsoft',
+              'google',
+              'meta',
+              'ibm',
+              'nvidia',
+              'palantir',
+              'accenture',
+              'deloitte',
+              'mckinsey',
+              'stripe',
+              'spotify',
+              'cgi',
+              'tdbank',
+              'salesforce',
+              'wise',
+            ].map((company) => (
+              <div
+                key={company}
+                className="flex items-center justify-center"
+                style={{
+                  width: '240px',
+                  height: '100px',
+                  borderRadius: '20px',
+                  background: '#FFFFFF',
+                  boxShadow: '0px 13px 20px 0px #00000014',
+                }}
+              >
+                <Image
+                  src={`/logos/${company}.png`}
+                  alt={company}
+                  width={120}
+                  height={40}
+                  style={{ objectFit: 'contain' }}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {showPopup && (
+        <div 
+          className="fixed bottom-0 left-0 right-0 z-50"
+          style={{
+            maxWidth: '1440px',
+            margin: '0 auto',
+            background: '#FFFFFF',
+            borderTop: '2px solid transparent',
+            borderImage: 'linear-gradient(90deg, #F25E25 0%, #F97F11 100%) 1',
+            transform: popupAnimated ? 'translateY(0)' : 'translateY(100%)',
+            opacity: popupAnimated ? 1 : 0,
+            transition: 'transform 0.4s ease-out, opacity 0.4s ease-out',
+          }}
+        >
+          <div className="flex items-center justify-between px-12 py-6">
+            <div className="flex items-center gap-4">
+              <svg width="123" height="1" viewBox="0 0 123 1" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="123" height="1" fill="#6E6E6E"/>
+              </svg>
+              
+              <svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20.5001 37.5834C29.9349 37.5834 37.5834 29.9349 37.5834 20.5001C37.5834 11.0652 29.9349 3.41675 20.5001 3.41675C11.0652 3.41675 3.41675 11.0652 3.41675 20.5001C3.41675 29.9349 11.0652 37.5834 20.5001 37.5834Z" stroke="url(#paint0_linear_232_309)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M16.2292 16.2291C16.2292 13.8704 18.1414 11.9583 20.5001 11.9583C22.8588 11.9583 24.7709 13.8704 24.7709 16.2291C24.7709 17.693 24.0345 18.9848 22.9117 19.7544C21.7443 20.5544 20.5001 21.6472 20.5001 23.0624" stroke="url(#paint1_linear_232_309)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M20.5002 29.0417H20.5154" stroke="url(#paint2_linear_232_309)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <defs>
+                  <linearGradient id="paint0_linear_232_309" x1="3.41675" y1="20.5001" x2="37.5834" y2="20.5001" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="#F25E25"/>
+                    <stop offset="1" stopColor="#F97F11"/>
+                  </linearGradient>
+                  <linearGradient id="paint1_linear_232_309" x1="16.2292" y1="17.5103" x2="24.7709" y2="17.5103" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="#F25E25"/>
+                    <stop offset="1" stopColor="#F97F11"/>
+                  </linearGradient>
+                  <linearGradient id="paint2_linear_232_309" x1="20.5002" y1="29.5417" x2="20.5154" y2="29.5417" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="#F25E25"/>
+                    <stop offset="1" stopColor="#F97F11"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+
+              <h3
+                style={{
+                  fontFamily: 'Spline Sans, sans-serif',
+                  fontWeight: 600,
+                  fontSize: '32px',
+                  lineHeight: '55px',
+                  letterSpacing: '0%',
+                  color: '#141414',
+                }}
+              >
+                Lost in the noise and confused where to Start?
+              </h3>
+            </div>
+
+            <div className="flex items-center gap-6">
+              <button
+                className="flex items-center gap-2 px-8 py-4 rounded-full transition-all hover:scale-105"
+                style={{
+                  background: 'linear-gradient(90deg, #F25E25 0%, #F97F11 100%)',
+                  fontFamily: 'Satoshi, sans-serif',
+                  fontWeight: 700,
+                  fontSize: '18px',
+                  color: '#FFFFFF',
+                }}
+              >
+                Take Our Survey
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M10.5 4.5L15 9M15 9L10.5 13.5M15 9H3" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </button>
+
+              <button
+                onClick={handleClosePopup}
+                className="transition-all hover:scale-110"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12Z" stroke="url(#paint0_linear_226_746)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M14.9994 15L9 9M9.00064 15L15 9" stroke="url(#paint1_linear_226_746)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  <defs>
+                    <linearGradient id="paint0_linear_226_746" x1="2" y1="12" x2="22" y2="12" gradientUnits="userSpaceOnUse">
+                      <stop stopColor="#F25E25"/>
+                      <stop offset="1" stopColor="#F97F11"/>
+                    </linearGradient>
+                    <linearGradient id="paint1_linear_226_746" x1="9" y1="12" x2="15" y2="12" gradientUnits="userSpaceOnUse">
+                      <stop stopColor="#F25E25"/>
+                      <stop offset="1" stopColor="#F97F11"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
@@ -722,7 +908,7 @@ function BootcampCarousel() {
       className="mt-12 mx-auto p-6"
       style={{
         maxWidth: '1361px',
-        borderRadius: '20px',
+        borderRadius: '60px',
         background: '#FFFFFF',
         border: '1px solid #0000001A',
         overflow: 'visible',
@@ -845,16 +1031,21 @@ function BootcampCard({ image, title, description, nextCohort, duration, isActiv
   isActive: boolean;
   onClick: () => void;
 }) {
+  const [isHovered, setIsHovered] = useState(false);
+  const isActiveOrHovered = isActive || isHovered;
+
   return (
     <div 
       onClick={onClick}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       className="relative cursor-pointer transition-all hover:scale-[1.02]"
       style={{
         width: '406px',
         borderRadius: '26.02px',
-        background: isActive ? 'linear-gradient(132.4deg, #F67219 57.76%, #FFE6D5 98.88%)' : '#FAFAFA',
+        background: isActiveOrHovered ? 'linear-gradient(132.4deg, #F67219 57.76%, #FFE6D5 98.88%)' : '#FAFAFA',
         padding: '4px',
-        boxShadow: isActive ? 'none' : '0px 13px 20px 0px #00000014',
+        boxShadow: isActiveOrHovered ? 'none' : '0px 13px 20px 0px #00000014',
       }}
     >
       <div 
@@ -957,7 +1148,7 @@ function BootcampCard({ image, title, description, nextCohort, duration, isActiv
         className="flex items-center justify-between px-6 py-6"
         style={{
           width: '398px',
-          background: isActive 
+          background: isActiveOrHovered 
             ? 'linear-gradient(90deg, #F67219 0%, #FFDCC4 118.57%)'
             : '#FFFFFF',
           borderRadius: '0 0 18px 18px',
@@ -970,7 +1161,7 @@ function BootcampCard({ image, title, description, nextCohort, duration, isActiv
             fontSize: '23.42px',
             lineHeight: '100%',
             letterSpacing: '0%',
-            color: isActive ? '#FFFFFF' : '#141414',
+            color: isActiveOrHovered ? '#FFFFFF' : '#141414',
           }}
         >
           View Program
@@ -982,8 +1173,8 @@ function BootcampCard({ image, title, description, nextCohort, duration, isActiv
             borderRadius: '36.43px',
             padding: '8.46px 8.46px 8.46px 25.37px',
             gap: '18.21px',
-            background: isActive ? 'linear-gradient(90deg, #F67219 0%, #FFDCC4 118.57%)' : 'transparent',
-            border: isActive ? 'none' : '1.3px solid #E7E7E7',
+            background: isActiveOrHovered ? 'linear-gradient(90deg, #F67219 0%, #FFDCC4 118.57%)' : 'transparent',
+            border: isActiveOrHovered ? 'none' : '1.3px solid #E7E7E7',
           }}
         >
           <div 
@@ -992,7 +1183,7 @@ function BootcampCard({ image, title, description, nextCohort, duration, isActiv
               width: '46.84px',
               height: '46.84px',
               borderRadius: '50%',
-              background: isActive ? '#0000001A' : '#E1E1E1',
+              background: isActiveOrHovered ? '#0000001A' : '#E1E1E1',
             }}
           >
             <Image 
