@@ -17,6 +17,7 @@ export default function Page() {
       {/* Hero Section */}
       <section className="flex flex-col md:flex-row items-center justify-between px-8 py-16 max-w-6xl mx-auto">
         {/* Left: Text */}
+
         <div className="md:w-1/2 mb-10 md:mb-0">
           <h1
             style={{
@@ -796,6 +797,26 @@ export default function Page() {
             letterSpacing: "0.02em",
           }}
         >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            viewBox="0 0 18 18"
+            fill="none"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M9.18753 4.14886C8.15958 6.48064 6.2932 8.34699 3.96142 9.37502C6.2932 10.403 8.15958 12.2693 9.1876 14.6012C10.2156 12.2693 12.0819 10.403 14.4137 9.37502C12.0819 8.34699 10.2156 6.48064 9.18753 4.14886ZM8.64288 2.297H9.73225C10.5588 5.50142 13.0611 8.00372 16.2656 8.83037V9.91967C13.0611 10.7462 10.5588 13.2486 9.73225 16.453H8.64288C7.8163 13.2486 5.31399 10.7462 2.10956 9.91967V8.83037C5.31399 8.00372 7.8163 5.50142 8.64288 2.297Z"
+              fill="#6E6E6E"
+            />
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M12.377 4.87377V3.74877C12.6231 3.74877 12.9563 3.59736 13.2487 3.30161C13.542 3.00499 13.6882 2.67056 13.6882 2.4375H14.8132C14.8132 2.66905 14.9601 3.00332 15.2554 3.30101C15.55 3.59806 15.8833 3.74877 16.1245 3.74877V4.87377C15.8616 4.87377 15.5291 5.02637 15.2442 5.31592C14.9582 5.60677 14.8132 5.94137 14.8132 6.18503H13.6882C13.6882 5.94853 13.538 5.61508 13.2394 5.31834C12.9403 5.02113 12.6062 4.87377 12.377 4.87377ZM14.2426 4.75183C14.306 4.67263 14.3729 4.59749 14.4422 4.52705C14.5185 4.44946 14.6007 4.3745 14.6882 4.30377C14.6061 4.23656 14.5287 4.1659 14.4566 4.09322C14.3859 4.02196 14.3173 3.94565 14.252 3.86501C14.1872 3.94538 14.119 4.02149 14.0486 4.09262C13.9726 4.16952 13.8906 4.24411 13.8035 4.31472C13.8844 4.38039 13.961 4.44939 14.0324 4.52037C14.1049 4.59241 14.1755 4.66981 14.2426 4.75183Z"
+              fill="#6E6E6E"
+            />
+          </svg>
           Most Demanded
         </div>
         <h2
@@ -822,7 +843,7 @@ export default function Page() {
             gap: "32px",
             justifyContent: "center",
             marginBottom: "0",
-            maxWidth: "1066px",
+            maxWidth: "1283px",
             width: "100%",
           }}
         >
@@ -836,11 +857,11 @@ export default function Page() {
               padding: "32px 24px",
               width: "310px",
               height: "239.19px",
-              textAlign: "left",
+              textAlign: "center",
               boxShadow: "0px 2px 16px 0px #FFDCC433",
               display: "flex",
               flexDirection: "column",
-              alignItems: "flex-start",
+              alignItems: "center",
               gap: "12px",
               opacity: 1,
               position: "relative",
@@ -924,9 +945,9 @@ export default function Page() {
             >
               Explosive Market Growth
             </div>
-            <div style={{ fontSize: "15px", color: "#6E6E6E" }}>
-              AI is expanding rapidly across industries, creating new
-              opportunities.
+            <div style={{ fontSize: "12px", color: "#6E6E6E" }}>
+              The global AI industry is projected to exceed $500 billion by
+              2027, creating new opportunities across nearly every sector.
             </div>
           </div>
           {/* Card 2 */}
@@ -939,11 +960,11 @@ export default function Page() {
               padding: "32px 24px",
               width: "312px",
               height: "241px",
-              textAlign: "left",
+              textAlign: "center",
               boxShadow: "0px 2px 16px 0px #FFDCC433",
               display: "flex",
               flexDirection: "column",
-              alignItems: "flex-start",
+              alignItems: "center",
               gap: "12px",
               opacity: 1,
               position: "relative",
@@ -1041,9 +1062,9 @@ export default function Page() {
             >
               Hiring is Accelerating Worldwide
             </div>
-            <div style={{ fontSize: "15px", color: "#6E6E6E" }}>
-              Companies are seeking AI talent globally, from startups to tech
-              giants.
+            <div style={{ fontSize: "12px", color: "#6E6E6E" }}>
+              Top companies in the U.S., Europe, and Africa are hiring AI
+              professionals at record pace to power innovation and automation.
             </div>
           </div>
           {/* Card 3 */}
@@ -1056,11 +1077,11 @@ export default function Page() {
               padding: "32px 24px",
               width: "310px",
               height: "239.19px",
-              textAlign: "left",
+              textAlign: "center",
               boxShadow: "0px 2px 16px 0px #FFDCC433",
               display: "flex",
               flexDirection: "column",
-              alignItems: "flex-start",
+              alignItems: "center",
               gap: "12px",
               opacity: 1,
               position: "relative",
@@ -1137,8 +1158,10 @@ export default function Page() {
             >
               High Earning Potential
             </div>
-            <div style={{ fontSize: "15px", color: "#6E6E6E" }}>
-              AI roles offer competitive salaries and strong career growth.
+            <div style={{ fontSize: "12px", color: "#6E6E6E" }}>
+              AI Engineer salaries range from $80,000 to over $200,000 per year
+              globally, with experienced professionals in Africa earning
+              $1,000–$5,000/month remotely.
             </div>
           </div>
           {/* Card 4 */}
@@ -1151,11 +1174,11 @@ export default function Page() {
               padding: "32px 24px",
               width: "310px",
               height: "239.19px",
-              textAlign: "left",
+              textAlign: "center",
               boxShadow: "0px 2px 16px 0px #FFDCC433",
               display: "flex",
               flexDirection: "column",
-              alignItems: "flex-start",
+              alignItems: "center",
               gap: "12px",
               opacity: 1,
               position: "relative",
@@ -1217,8 +1240,10 @@ export default function Page() {
             >
               A Future-Proof Career Path
             </div>
-            <div style={{ fontSize: "15px", color: "#6E6E6E" }}>
-              AI skills are in demand for years to come, ensuring job security.
+            <div style={{ fontSize: "12px", color: "#6E6E6E" }}>
+              As governments and Fortune 500 companies invest heavily in AI, the
+              shortage of skilled talent makes now the best time to enter the
+              field.
             </div>
           </div>
         </div>
@@ -1268,10 +1293,10 @@ export default function Page() {
         <div
           style={{
             display: "flex",
-            gap: "32px",
+            gap: "17px",
             justifyContent: "center",
             marginBottom: "0",
-            maxWidth: "1066px",
+            maxWidth: "1280px",
             width: "100%",
             background: "#FFF5ED",
             padding: "0 0 48px 0",
@@ -1286,7 +1311,8 @@ export default function Page() {
               border: "1px solid #FFDCC4",
               borderRadius: "16px",
               padding: "32px 24px",
-              width: "240px",
+              width: "310px",
+              height: "256px",
               textAlign: "left",
               boxShadow: "0px 2px 16px 0px #FFDCC433",
               display: "flex",
@@ -1295,7 +1321,54 @@ export default function Page() {
               gap: "12px",
             }}
           >
-            <span style={{ color: "#F25E25", fontSize: "24px" }}>📈</span>
+            <span style={{ color: "#F25E25", fontSize: "24px" }}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="60"
+                height="60"
+                viewBox="0 0 60 60"
+                fill="none"
+              >
+                <path
+                  d="M17.5 45V40M30 45V37.5M42.5 45V32.5M6.25 30C6.25 18.8041 6.25 13.2062 9.7281 9.7281C13.2062 6.25 18.8041 6.25 30 6.25C41.1958 6.25 46.7938 6.25 50.272 9.7281C53.75 13.2062 53.75 18.8041 53.75 30C53.75 41.1958 53.75 46.7938 50.272 50.272C46.7938 53.75 41.1958 53.75 30 53.75C18.8041 53.75 13.2062 53.75 9.7281 50.272C6.25 46.7938 6.25 41.1958 6.25 30Z"
+                  stroke="url(#paint0_linear_287_4409)"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M14.9805 28.7158C20.3682 28.8953 32.5852 28.082 39.5342 17.0533M34.9807 15.7209L39.6695 14.9662C40.241 14.8935 41.08 15.3446 41.2862 15.8825L42.526 19.9786"
+                  stroke="url(#paint1_linear_287_4409)"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <defs>
+                  <linearGradient
+                    id="paint0_linear_287_4409"
+                    x1="6.25"
+                    y1="30"
+                    x2="53.75"
+                    y2="30"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stop-color="#F25E25" />
+                    <stop offset="1" stop-color="#F97F11" />
+                  </linearGradient>
+                  <linearGradient
+                    id="paint1_linear_287_4409"
+                    x1="14.9805"
+                    y1="21.8471"
+                    x2="42.526"
+                    y2="21.8471"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stop-color="#F25E25" />
+                    <stop offset="1" stop-color="#F97F11" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </span>
             <div
               style={{ fontWeight: 700, fontSize: "18px", color: "#1a1a1a" }}
             >
@@ -1313,7 +1386,8 @@ export default function Page() {
               border: "1px solid #FFDCC4",
               borderRadius: "16px",
               padding: "32px 24px",
-              width: "240px",
+              width: "310px",
+              height: "256px",
               textAlign: "left",
               boxShadow: "0px 2px 16px 0px #FFDCC433",
               display: "flex",
@@ -1322,7 +1396,38 @@ export default function Page() {
               gap: "12px",
             }}
           >
-            <span style={{ color: "#F25E25", fontSize: "24px" }}>🧠</span>
+            <span style={{ color: "#F25E25", fontSize: "24px" }}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="50"
+                height="50"
+                viewBox="0 0 50 50"
+                fill="none"
+              >
+                <g clip-path="url(#clip0_287_4436)">
+                  <path
+                    d="M25.5625 48.4375H24.4375V45.3125H25.5625V48.4375ZM41.175 41.9703L38.9656 39.7609L39.7625 38.9641L41.9719 41.1734L41.175 41.9703ZM8.825 41.9703L8.02969 41.1734L10.2391 38.9641L11.0344 39.7609L8.825 41.9703ZM28.9062 41.1875C27.2297 41.1875 25.7641 40.2578 25 38.8859C24.2359 40.2578 22.7719 41.1875 21.0938 41.1875C19.075 41.1875 17.3359 39.8203 16.8062 37.9156C13.4562 38.7406 10.3766 36.0969 10.375 32.8125C10.375 32.175 10.4984 31.5438 10.7406 30.9328C8.60313 29.7344 7.25 27.4641 7.25 25C7.25 22.5375 8.60313 20.2656 10.7406 19.0672C10.4984 18.4562 10.375 17.825 10.375 17.1875C10.375 13.9031 13.4344 11.2609 16.8062 12.0828C17.3344 10.1797 19.075 8.8125 21.0938 8.8125C22.7719 8.8125 24.2359 9.74219 25 11.1125C25.7641 9.74219 27.2297 8.8125 28.9062 8.8125C30.925 8.8125 32.6641 10.1797 33.1922 12.0828C36.5187 11.2703 39.625 13.9 39.625 17.1875C39.625 17.825 39.5016 18.4547 39.2594 19.0672C41.3969 20.2656 42.75 22.5359 42.75 25C42.75 27.4641 41.3969 29.7344 39.2594 30.9328C39.5016 31.5453 39.625 32.175 39.625 32.8125C39.625 36.0969 36.5516 38.7359 33.1922 37.9172C32.6641 39.8203 30.925 41.1875 28.9062 41.1875ZM25.5625 36.7188C25.5625 38.5625 27.0625 40.0625 28.9062 40.0625C30.5797 40.0625 31.9984 38.8016 32.2047 37.1297C32.2266 36.9594 32.3234 36.8078 32.4703 36.7172C32.6187 36.6297 32.7984 36.6125 32.9578 36.6703C35.8297 37.7297 38.5 35.5531 38.5 32.8125C38.5 32.1766 38.3391 31.5438 38.0234 30.9328C37.9531 30.7969 37.9422 30.6375 37.9922 30.4906C38.0422 30.3453 38.15 30.2266 38.2891 30.1641C40.3156 29.2391 41.6234 27.2125 41.6234 25C41.6234 22.7875 40.3141 20.7625 38.2891 19.8359C38.1484 19.7719 38.0406 19.6531 37.9922 19.5078C37.9422 19.3625 37.9531 19.2031 38.025 19.0656C38.3391 18.4547 38.5 17.8234 38.5 17.1875C38.5 14.45 35.8625 12.2688 32.9578 13.3297C32.7969 13.3875 32.6156 13.3719 32.4703 13.2812C32.3234 13.1922 32.2266 13.0406 32.2047 12.8703C31.9984 11.1984 30.5797 9.9375 28.9062 9.9375C27.0625 9.9375 25.5625 11.4375 25.5625 13.2812V15.625H24.4375V13.2812C24.4375 11.4375 22.9375 9.9375 21.0938 9.9375C19.4203 9.9375 18.0016 11.1984 17.7937 12.8719C17.7719 13.0422 17.675 13.1938 17.5281 13.2828C17.3813 13.3734 17.2016 13.3891 17.0406 13.3312C14.1469 12.2672 11.5 14.45 11.5 17.1875C11.5 17.825 11.6609 18.4562 11.975 19.0656C12.0172 19.1469 12.0375 19.2344 12.0375 19.325C12.0375 19.3875 12.0281 19.4484 12.0063 19.5094C11.9563 19.6547 11.8484 19.7734 11.7078 19.8375C9.68437 20.7625 8.375 22.7891 8.375 25C8.375 27.2125 9.68437 29.2391 11.7094 30.1641C11.85 30.2281 11.9578 30.3453 12.0078 30.4922C12.0281 30.5516 12.0391 30.6125 12.0391 30.675C12.0391 30.7641 12.0188 30.8516 11.9766 30.9328C11.6594 31.5438 11.5 32.1766 11.5 32.8125C11.5 35.5531 14.1703 37.7281 17.0406 36.6703C17.1984 36.6109 17.3813 36.6297 17.5281 36.7172C17.675 36.8078 17.7734 36.9578 17.7937 37.1297C18 38.8016 19.4203 40.0625 21.0938 40.0625C22.9375 40.0625 24.4375 38.5625 24.4375 36.7188V34.375H25.5625V36.7188ZM18.1719 33.375C18.0266 33.375 17.8828 33.3187 17.775 33.2109L16.7906 32.2266C16.6125 32.0484 16.5734 31.7719 16.6984 31.5516L17.9047 29.4109C17.9906 29.2563 18.1437 29.1531 18.3188 29.1297C18.4969 29.0969 18.6688 29.1641 18.7938 29.2906L19.3531 29.85L22.2594 26.9453L23.0547 27.7422L20.1469 30.6469L20.7109 31.2125C20.8359 31.3359 20.8938 31.5109 20.8703 31.6875C20.8469 31.8609 20.7422 32.0141 20.5891 32.1L18.4484 33.3031C18.3609 33.3516 18.2656 33.375 18.1719 33.375ZM17.8875 31.7328L18.2688 32.1141L19.3922 31.4828L18.5219 30.6109L17.8875 31.7328ZM29.7172 33.3734C28.7656 33.3734 27.825 33.0047 27.1234 32.3016C26.2031 31.3797 25.8453 30.0359 26.1687 28.7891L21.2109 23.8312C19.9656 24.15 18.6187 23.7984 17.6984 22.875C16.6031 21.7797 16.3156 20.1047 16.9828 18.7062C17.0609 18.5422 17.2156 18.425 17.3953 18.3938C17.5781 18.3609 17.7594 18.4219 17.8875 18.5516L19.9547 20.6187C20.1344 20.7953 20.4453 20.7938 20.6203 20.6187C20.8031 20.4344 20.8031 20.1359 20.6203 19.9531L18.5531 17.8859C18.4234 17.7562 18.3656 17.5734 18.3953 17.3938C18.4266 17.2141 18.5422 17.0609 18.7078 16.9812C20.1062 16.3156 21.7812 16.6016 22.8766 17.6969C23.7984 18.6187 24.1547 19.9641 23.8312 21.2109L28.7891 26.1672C30.0344 25.8422 31.3781 26.2 32.3016 27.1219C33.3969 28.2188 33.6844 29.8922 33.0172 31.2906C32.9375 31.4547 32.7844 31.5719 32.6031 31.6016C32.4312 31.6375 32.2406 31.5734 32.1109 31.4453L30.0438 29.3781C29.8609 29.1953 29.5625 29.1953 29.3766 29.3781C29.1953 29.5609 29.1953 29.8609 29.3781 30.0438L31.4453 32.1109C31.5734 32.2406 31.6328 32.4234 31.6016 32.6031C31.5703 32.7828 31.4547 32.9375 31.2906 33.0172C30.7891 33.2578 30.25 33.3734 29.7172 33.3734ZM21.3672 22.6313C21.5141 22.6313 21.6578 22.6891 21.7641 22.7953L27.2031 28.2328C27.3594 28.3891 27.4094 28.6203 27.3328 28.8266C26.9891 29.7547 27.2188 30.8062 27.9188 31.5047C28.4688 32.0578 29.2422 32.3078 29.9781 32.2344L28.5812 30.8391C27.9609 30.2188 27.9609 29.2047 28.5812 28.5828C29.2062 27.9609 30.2172 27.9625 30.8391 28.5812L32.2344 29.9781C32.3125 29.2313 32.0578 28.4688 31.5047 27.9188C30.8047 27.2188 29.7516 26.9875 28.8266 27.3328C28.6203 27.4062 28.3906 27.3578 28.2328 27.2031L22.7953 21.7656C22.6391 21.6109 22.5891 21.3781 22.6656 21.1734C23.0094 20.2453 22.7797 19.1922 22.0797 18.4938C21.5281 17.9422 20.7656 17.6875 20.0188 17.7641L21.4141 19.1609C22.0359 19.7828 22.0359 20.7953 21.4141 21.4172C20.8125 22.0187 19.7578 22.0187 19.1578 21.4172L17.7625 20.0219C17.6844 20.7687 17.9406 21.5312 18.4922 22.0828C19.1922 22.7828 20.2437 23.0125 21.1703 22.6688C21.2344 22.6438 21.3016 22.6313 21.3672 22.6313ZM48.4375 25.5625H45.3125V24.4375H48.4375V25.5625ZM4.6875 25.5625H1.5625V24.4375H4.6875V25.5625ZM28.7047 23.8344L27.9078 23.0391L32.0516 18.8937C32.1797 18.7656 32.2484 18.5984 32.2484 18.4188C32.2484 18.2391 32.1797 18.0719 32.0531 17.9453C31.7969 17.6906 31.3594 17.6906 31.1063 17.9453L26.9641 22.0891L26.1687 21.2938L30.3109 17.15C30.9891 16.4703 32.1719 16.4703 32.85 17.15C33.1891 17.4891 33.3766 17.9391 33.3766 18.4188C33.3766 18.8984 33.1891 19.35 32.8484 19.6891L28.7047 23.8344ZM39.7609 11.0344L38.9641 10.2391L41.1734 8.02969L41.9703 8.825L39.7609 11.0344ZM10.2391 11.0344L8.02969 8.825L8.825 8.02969L11.0344 10.2391L10.2391 11.0344ZM25.5625 4.6875H24.4375V1.5625H25.5625V4.6875Z"
+                    fill="url(#paint0_linear_287_4436)"
+                  />
+                </g>
+                <defs>
+                  <linearGradient
+                    id="paint0_linear_287_4436"
+                    x1="1.5625"
+                    y1="25"
+                    x2="48.4375"
+                    y2="25"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stop-color="#F25E25" />
+                    <stop offset="1" stop-color="#F97F11" />
+                  </linearGradient>
+                  <clipPath id="clip0_287_4436">
+                    <rect width="50" height="50" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+            </span>
             <div
               style={{ fontWeight: 700, fontSize: "18px", color: "#1a1a1a" }}
             >
@@ -1339,7 +1444,8 @@ export default function Page() {
               border: "1px solid #FFDCC4",
               borderRadius: "16px",
               padding: "32px 24px",
-              width: "240px",
+              width: "310px",
+              height: "256px",
               textAlign: "left",
               boxShadow: "0px 2px 16px 0px #FFDCC433",
               display: "flex",
@@ -1348,7 +1454,69 @@ export default function Page() {
               gap: "12px",
             }}
           >
-            <span style={{ color: "#F25E25", fontSize: "24px" }}>🎓</span>
+            <span style={{ color: "#F25E25", fontSize: "24px" }}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="50"
+                height="50"
+                viewBox="0 0 50 50"
+                fill="none"
+              >
+                <path
+                  d="M22.917 16.6667H27.0837"
+                  stroke="url(#paint0_linear_287_4444)"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                />
+                <path
+                  d="M4.16699 22.9166C4.16699 16.0419 4.16699 12.6046 6.30268 10.4689C8.43835 8.33325 11.8757 8.33325 18.7503 8.33325H20.8337C27.7082 8.33325 31.1455 8.33325 33.2814 10.4689C35.417 12.6046 35.417 16.0419 35.417 22.9166V27.0833C35.417 33.9578 35.417 37.3951 33.2814 39.531C31.1455 41.6666 27.7082 41.6666 20.8337 41.6666H18.7503C11.8757 41.6666 8.43835 41.6666 6.30268 39.531C4.16699 37.3951 4.16699 33.9578 4.16699 27.0833V22.9166Z"
+                  stroke="url(#paint1_linear_287_4444)"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                />
+                <path
+                  d="M35.417 18.5539L35.6793 18.3375C40.0872 14.7006 42.2912 12.8821 44.0624 13.7601C45.8337 14.6382 45.8337 17.5491 45.8337 23.3711V26.629C45.8337 32.4511 45.8337 35.362 44.0624 36.2401C42.2912 37.118 40.0872 35.2997 35.6793 31.6626L35.417 31.4461"
+                  stroke="url(#paint2_linear_287_4444)"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                />
+                <defs>
+                  <linearGradient
+                    id="paint0_linear_287_4444"
+                    x1="22.917"
+                    y1="17.1667"
+                    x2="27.0837"
+                    y2="17.1667"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stop-color="#F25E25" />
+                    <stop offset="1" stop-color="#F97F11" />
+                  </linearGradient>
+                  <linearGradient
+                    id="paint1_linear_287_4444"
+                    x1="4.16699"
+                    y1="24.9999"
+                    x2="35.417"
+                    y2="24.9999"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stop-color="#F25E25" />
+                    <stop offset="1" stop-color="#F97F11" />
+                  </linearGradient>
+                  <linearGradient
+                    id="paint2_linear_287_4444"
+                    x1="35.417"
+                    y1="25.0001"
+                    x2="45.8337"
+                    y2="25.0001"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stop-color="#F25E25" />
+                    <stop offset="1" stop-color="#F97F11" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </span>
             <div
               style={{ fontWeight: 700, fontSize: "18px", color: "#1a1a1a" }}
             >
@@ -1366,7 +1534,8 @@ export default function Page() {
               border: "1px solid #FFDCC4",
               borderRadius: "16px",
               padding: "32px 24px",
-              width: "240px",
+              width: "310px",
+              height: "256px",
               textAlign: "left",
               boxShadow: "0px 2px 16px 0px #FFDCC433",
               display: "flex",
@@ -1375,7 +1544,66 @@ export default function Page() {
               gap: "12px",
             }}
           >
-            <span style={{ color: "#F25E25", fontSize: "24px" }}>🛠️</span>
+            <span style={{ color: "#F25E25", fontSize: "24px" }}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="50"
+                height="50"
+                viewBox="0 0 50 50"
+                fill="none"
+              >
+                <path
+                  d="M9.375 20.8334C9.375 12.9767 9.375 9.04831 11.8158 6.60752C14.2566 4.16675 18.1849 4.16675 26.0417 4.16675H29.1667C37.0233 4.16675 40.9519 4.16675 43.3925 6.60752C45.8333 9.04831 45.8333 12.9767 45.8333 20.8334V29.1667C45.8333 37.0234 45.8333 40.952 43.3925 43.3926C40.9519 45.8334 37.0233 45.8334 29.1667 45.8334H26.0417C18.1849 45.8334 14.2566 45.8334 11.8158 43.3926C9.375 40.952 9.375 37.0234 9.375 29.1667V20.8334Z"
+                  stroke="url(#paint0_linear_287_4453)"
+                  stroke-width="3"
+                />
+                <path
+                  d="M31.7708 20.8337V26.042C31.7708 27.7678 33.17 29.167 34.8958 29.167C36.6217 29.167 38.0208 27.7678 38.0208 26.042V24.9999C38.0208 19.247 33.3571 14.5833 27.6042 14.5833C21.8513 14.5833 17.1875 19.247 17.1875 24.9999C17.1875 30.7528 21.8513 35.4166 27.6042 35.4166C29.9496 35.4166 32.114 34.6414 33.8552 33.3333M31.7708 25.0003C31.7708 27.3016 29.9054 29.167 27.6042 29.167C25.3029 29.167 23.4375 27.3016 23.4375 25.0003C23.4375 22.6991 25.3029 20.8337 27.6042 20.8337C29.9054 20.8337 31.7708 22.6991 31.7708 25.0003Z"
+                  stroke="url(#paint1_linear_287_4453)"
+                  stroke-width="3"
+                />
+                <path
+                  d="M9.37533 12.5H4.16699M9.37533 25H4.16699M9.37533 37.5H4.16699"
+                  stroke="url(#paint2_linear_287_4453)"
+                  stroke-width="3"
+                />
+                <defs>
+                  <linearGradient
+                    id="paint0_linear_287_4453"
+                    x1="9.375"
+                    y1="25.0001"
+                    x2="45.8333"
+                    y2="25.0001"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stop-color="#F25E25" />
+                    <stop offset="1" stop-color="#F97F11" />
+                  </linearGradient>
+                  <linearGradient
+                    id="paint1_linear_287_4453"
+                    x1="17.1875"
+                    y1="24.9999"
+                    x2="38.0208"
+                    y2="24.9999"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stop-color="#F25E25" />
+                    <stop offset="1" stop-color="#F97F11" />
+                  </linearGradient>
+                  <linearGradient
+                    id="paint2_linear_287_4453"
+                    x1="4.16699"
+                    y1="25"
+                    x2="9.37533"
+                    y2="25"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stop-color="#F25E25" />
+                    <stop offset="1" stop-color="#F97F11" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </span>
             <div
               style={{ fontWeight: 700, fontSize: "18px", color: "#1a1a1a" }}
             >
@@ -1474,7 +1702,7 @@ export default function Page() {
             justifyContent: "center",
             flexWrap: "wrap",
             marginBottom: "0",
-            maxWidth: "1066px",
+            maxWidth: "1283px",
             width: "100%",
           }}
         >
@@ -1620,7 +1848,8 @@ export default function Page() {
               border: "1px solid #FFDCC4",
               borderRadius: "16px",
               padding: "32px 24px",
-              width: "220px",
+              width: "310px",
+              height: "265px",
               textAlign: "left",
               boxShadow: "0px 2px 16px 0px #FFDCC433",
               marginBottom: "24px",
