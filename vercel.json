@@ -1,0 +1,15 @@
+{
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.ayonaire.com"
+        }
+      ],
+      "destination": "https://ayonaire.com/$1",
+      "permanent": true
+    }
+  ]
+}

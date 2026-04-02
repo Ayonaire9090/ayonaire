@@ -1,0 +1,24 @@
+{
+  "name": "Ayonaire - Build a Future-Proof Career in Tech",
+  "short_name": "Ayonaire",
+  "description": "Transform your career with Ayonaire's comprehensive tech training programs",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#FF6B35",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "start_url": "/",
+  "scope": "/",
+  "orientation": "portrait-primary",
+  "categories": ["education", "productivity"]
+}
