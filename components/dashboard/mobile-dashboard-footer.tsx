@@ -8,6 +8,13 @@ import { MoreVertical } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useSidebar } from "@/components/ui/sidebar";
 import { dashboardData } from "@/constants";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import Image from "next/image";
 
 interface FooterNavItem {
   title: string;
@@ -122,30 +129,70 @@ export function MobileDashboardFooter({
 
         {/* Fixed profile section – always visible at far right */}
         {profile && (
-          <Link
-            href={profile.href}
-            className={cn(
-              "flex flex-col items-center justify-center gap-1 min-w-[72px] px-3 py-2 shrink-0 transition-colors",
-              pathname.startsWith(profile.href)
-                ? "text-primary"
-                : "text-gray-500 hover:text-gray-700",
-            )}
-          >
-            <Avatar className="h-7 w-7 border border-gray-200">
-              <AvatarImage src={profile.avatar} alt={profile.name} />
-              <AvatarFallback className="text-[10px]">
-                {profile.fallback}
-              </AvatarFallback>
-            </Avatar>
-            <span
-              className={cn(
-                "text-xs leading-tight whitespace-nowrap",
-                pathname.startsWith(profile.href) && "font-semibold",
-              )}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <div
+                className={cn(
+                  "flex flex-col items-center justify-center gap-1 min-w-[72px] px-3 py-2 shrink-0 transition-colors cursor-pointer",
+                  pathname.startsWith(profile.href)
+                    ? "text-primary"
+                    : "text-gray-500 hover:text-gray-700",
+                )}
+              >
+                <Avatar className="h-7 w-7 border border-gray-200">
+                  <AvatarImage src={profile.avatar} alt={profile.name} />
+                  <AvatarFallback className="text-[10px]">
+                    {profile.fallback}
+                  </AvatarFallback>
+                </Avatar>
+                <span
+                  className={cn(
+                    "text-xs leading-tight whitespace-nowrap",
+                    pathname.startsWith(profile.href) && "font-semibold",
+                  )}
+                >
+                  Profile
+                </span>
+              </div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              align="end"
+              side="top"
+              sideOffset={8}
+              className="w-48 rounded-xl border-0 bg-[#F2F2F2] shadow-sm p-2 space-y-1 mb-1 z-50"
             >
-              Profile
-            </span>
-          </Link>
+              <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-sm font-medium text-gray-800 hover:bg-white focus:bg-white">
+                <Image
+                  src="/assets/icons/user-solid.svg"
+                  alt="View Profile"
+                  width={20}
+                  height={20}
+                  className="h-5 w-5 text-gray-700"
+                />
+                View Profile
+              </DropdownMenuItem>
+              <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-sm font-medium text-gray-800 hover:bg-white focus:bg-white">
+                <Image
+                  src="/assets/icons/account-solid.svg"
+                  alt="My account"
+                  width={20}
+                  height={20}
+                  className="h-5 w-5 text-gray-700"
+                />
+                My account
+              </DropdownMenuItem>
+              <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-sm font-medium text-red-500 hover:bg-white focus:bg-white hover:text-red-500 focus:text-red-500">
+                <Image
+                  src="/assets/icons/round-logout.svg"
+                  alt="Logout"
+                  width={20}
+                  height={20}
+                  className="h-5 w-5 text-[#EF4444]"
+                />
+                Logout
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         )}
       </div>
     </footer>

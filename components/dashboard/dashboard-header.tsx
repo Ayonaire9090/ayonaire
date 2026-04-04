@@ -69,13 +69,55 @@ export function DashboardHeader() {
 
         {/* Row 2: Avatar + welcome text */}
         <div className="flex items-center gap-3">
-          <Avatar className="h-12 w-12 border-2 border-orange-200 shrink-0">
-            <AvatarImage
-              src={dashboardData.user.avatar}
-              alt={dashboardData.user.name}
-            />
-            <AvatarFallback>AY</AvatarFallback>
-          </Avatar>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <div className="cursor-pointer">
+                <Avatar className="h-12 w-12 border-2 border-orange-200 shrink-0">
+                  <AvatarImage
+                    src={dashboardData.user.avatar}
+                    alt={dashboardData.user.name}
+                  />
+                  <AvatarFallback>AY</AvatarFallback>
+                </Avatar>
+              </div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              align="start"
+              sideOffset={8}
+              className="w-48 rounded-xl border-0 bg-[#F2F2F2] shadow-sm p-2 space-y-1"
+            >
+              <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-sm font-medium text-gray-800 hover:bg-white focus:bg-white">
+                <Image
+                  src="/assets/icons/user-solid.svg"
+                  alt="View Profile"
+                  width={20}
+                  height={20}
+                  className="h-5 w-5 text-gray-700"
+                />
+                View Profile
+              </DropdownMenuItem>
+              <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-sm font-medium text-gray-800 hover:bg-white focus:bg-white">
+                <Image
+                  src="/assets/icons/account-solid.svg"
+                  alt="My account"
+                  width={20}
+                  height={20}
+                  className="h-5 w-5 text-gray-700"
+                />
+                My account
+              </DropdownMenuItem>
+              <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-sm font-medium text-red-500 hover:bg-white focus:bg-white hover:text-red-500 focus:text-red-500">
+                <Image
+                  src="/assets/icons/round-logout.svg"
+                  alt="Logout"
+                  width={20}
+                  height={20}
+                  className="h-5 w-5 text-[#EF4444]"
+                />
+                Logout
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
           <div className="flex flex-col gap-0.5">
             <h1 className="text-xl font-bold tracking-tight text-gray-900">
               Welcome Back, {firstName} <span>👋</span>
@@ -139,15 +181,33 @@ export function DashboardHeader() {
                 className="w-48 rounded-xl border-0 bg-[#F2F2F2] shadow-sm p-2 space-y-1"
               >
                 <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-sm font-medium text-gray-800 hover:bg-white focus:bg-white">
-                  <User className="h-5 w-5 text-gray-700" />
+                  <Image
+                    src="/assets/icons/user-solid.svg"
+                    alt="View Profile"
+                    width={20}
+                    height={20}
+                    className="h-5 w-5 text-gray-700"
+                  />
                   View Profile
                 </DropdownMenuItem>
                 <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-sm font-medium text-gray-800 hover:bg-white focus:bg-white">
-                  <UserCircle className="h-5 w-5 text-gray-700" />
+                  <Image
+                    src="/assets/icons/account-solid.svg"
+                    alt="My account"
+                    width={20}
+                    height={20}
+                    className="h-5 w-5 text-gray-700"
+                  />
                   My account
                 </DropdownMenuItem>
                 <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-sm font-medium text-red-500 hover:bg-white focus:bg-white hover:text-red-500 focus:text-red-500">
-                  <LogOut className="h-5 w-5 text-red-500" />
+                  <Image
+                    src="/assets/icons/round-logout.svg"
+                    alt="Logout"
+                    width={20}
+                    height={20}
+                    className="h-5 w-5 text-[#EF4444]"
+                  />
                   Logout
                 </DropdownMenuItem>
               </DropdownMenuContent>
