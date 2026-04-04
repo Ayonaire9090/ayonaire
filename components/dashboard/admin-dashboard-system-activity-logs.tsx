@@ -65,8 +65,8 @@ export const AdminDashboardSystemActivityLogs = () => {
             System Activity Feed (Audit Log)
           </h3>
         </div>
-        <button className="flex items-center gap-1.5 text-sm font-medium text-gray-600 border border-gray-200 rounded-full px-3 py-1.5 hover:bg-gray-50 transition-colors">
-          <Filter className="size-3.5" />
+        <button className="flex items-center gap-1.5 text-xs font-semibold text-gray-900 border border-gray-200 rounded-md px-2 py-1 bg-[#F5F5F5] hover:bg-[#ececec] transition-colors">
+          <Filter className="size-2" />
           Filter Logs
         </button>
       </div>
@@ -88,13 +88,17 @@ export const AdminDashboardSystemActivityLogs = () => {
             </div>
 
             {/* Content */}
-            <div className="flex-1 flex items-center justify-between pb-6">
-              <p className="text-sm text-gray-600 leading-relaxed">
-                {log.message}
-              </p>
-              <span className="text-xs text-gray-400 shrink-0 ml-4 tabular-nums">
-                {log.timestamp}
-              </span>
+            <div className="flex-1 pb-6">
+              <div className="w-full flex-1 flex flex-col items-start gap-2 bg-[#F5F5F5] p-3 rounded-lg">
+                <div className="flex justify-between items-center w-full">
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    {log.message}
+                  </p>
+                  <span className="text-xs text-gray-400 shrink-0 ml-4 tabular-nums">
+                    {log.timestamp}
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         ))}

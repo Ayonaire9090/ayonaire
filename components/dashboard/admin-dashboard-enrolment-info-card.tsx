@@ -43,11 +43,12 @@ export const AdminDashboardEnrolmentInfoCard = () => {
       </div>
 
       {/* Enrolment List */}
-      <div className="divide-y divide-gray-100">
+      {/* Add divide-y divide-gray-100 for separator */}
+      <div className="space-y-2">
         {recentEnrolments.map((enrolment, index) => (
           <div
             key={index}
-            className="flex items-center justify-between py-4 hover:bg-gray-50/50 transition-colors cursor-pointer -mx-2 px-2 rounded-lg"
+            className="flex items-center justify-between py-4 bg-[#FBFBFB] hover:bg-[#F5F5F5] transition-colors cursor-pointer -mx-2 px-2 rounded-lg"
           >
             <div className="flex items-center gap-3">
               <div className="relative size-11 rounded-full overflow-hidden shrink-0">

@@ -1,10 +1,11 @@
 import {
   LucideIcon,
-  MonitorSmartphone,
   UserPlus,
   ShieldCheck,
   BookOpenCheck,
   Award,
+  Banknote,
+  CalendarClock,
 } from "lucide-react";
 
 const pendingActions = [
@@ -12,7 +13,7 @@ const pendingActions = [
     title: "Manual Payments",
     description: "Requires verification from bank receipt",
     count: "08",
-    icon: MonitorSmartphone,
+    icon: Banknote,
     iconColor: "text-[#F86432]",
     iconBg: "bg-[#F86432]/10",
   },
@@ -57,19 +58,19 @@ export const AdminDashboardPendingActionCard = () => {
       <div className="flex items-center justify-between px-5 py-4 bg-[#FFF5F1]">
         <div className="flex items-center gap-2">
           <div className="p-1.5 rounded-lg">
-            <MonitorSmartphone className="size-5 text-primary" />
+            <CalendarClock className="size-5 text-[#F86432]" />
           </div>
           <h3 className="text-lg font-semibold text-gray-900">
             Pending Actions Queue
           </h3>
         </div>
-        <span className="text-xs font-bold tracking-wider text-primary border-0 bg-[#F59E0B]/20 rounded-full px-3 py-1 uppercase">
+        <span className="text-xs font-bold tracking-wider text-[#F86432] border-0 bg-[#F86432]/10 rounded-full px-3 py-1 uppercase">
           Priority Actions
         </span>
       </div>
 
       {/* Action Items */}
-      <div className="divide-y divide-gray-100">
+      <div className="flex flex-col">
         {pendingActions.map((action, index) => (
           <PendingActionItem
             key={index}
@@ -79,6 +80,7 @@ export const AdminDashboardPendingActionCard = () => {
             icon={action.icon}
             iconColor={action.iconColor}
             iconBg={action.iconBg}
+            isLast={index === pendingActions.length - 1}
           />
         ))}
       </div>
@@ -93,6 +95,7 @@ interface PendingActionItemProps {
   icon: LucideIcon;
   iconColor: string;
   iconBg: string;
+  isLast?: boolean;
 }
 
 const PendingActionItem = ({
@@ -102,24 +105,30 @@ const PendingActionItem = ({
   icon: Icon,
   iconColor,
   iconBg,
+  isLast,
 }: PendingActionItemProps) => {
   return (
-    <div className="flex items-center justify-between px-5 py-4 hover:bg-gray-50/50 transition-colors cursor-pointer">
-      <div className="flex items-center gap-3">
-        <div className={`p-2.5 rounded-xl ${iconBg}`}>
-          <Icon className={`size-5 ${iconColor}`} />
+    <div className="flex flex-col">
+      <div className="flex items-center justify-between px-5 py-4 hover:bg-gray-50/50 transition-colors cursor-pointer">
+        <div className="flex items-center gap-4">
+          <div className={`p-3 rounded-2xl ${iconBg}`}>
+            <Icon className={`size-6 ${iconColor}`} />
+          </div>
+          <div>
+            <p className="font-semibold text-gray-900 text-base">{title}</p>
+            <p className="text-sm text-gray-400 mt-0.5">{description}</p>
+          </div>
         </div>
-        <div>
-          <p className="font-semibold text-gray-900 text-sm">{title}</p>
-          <p className="text-xs text-gray-400 mt-0.5">{description}</p>
+        <div className="flex flex-col items-center justify-center gap-1.5">
+          <div className="bg-[#F6F6F6] rounded-lg px-3 py-1.5 min-w-[40px] text-center">
+            <p className="text-lg font-bold text-gray-900 tabular-nums leading-none">
+              {count}
+            </p>
+          </div>
+          <p className="text-[13px] text-gray-400">Pending</p>
         </div>
       </div>
-      <div className="text-right">
-        <p className="text-xl font-semibold text-gray-800 tabular-nums">
-          {count}
-        </p>
-        <p className="text-xs text-gray-400">Pending</p>
-      </div>
+      {!isLast && <div className="mx-5 border-b-2 border-gray-100" />}
     </div>
   );
 };

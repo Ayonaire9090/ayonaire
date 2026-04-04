@@ -1,4 +1,11 @@
+"use client";
+
 import { Badge } from "@/components/ui/badge";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
 import {
   BookOpen,
   GraduationCap,
@@ -72,18 +79,51 @@ const BasicAnalytics = [
 
 export const AdminDashboardAnalyticsCards = () => {
   return (
-    <div className="grid grid-cols-1 gap-4 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
-      {BasicAnalytics.map((analytic, index) => (
-        <AdminDashboardSectionFeatureCard
-          key={index}
-          heading={analytic.heading}
-          title={analytic.title}
-          icon={analytic.icon}
-          rate={analytic.rate}
-          description={analytic.description}
-        />
-      ))}
-    </div>
+    <>
+      {/* ── Mobile / Tablet: Embla carousel with peeking ── */}
+      <div className="lg:hidden">
+        <Carousel
+          opts={{
+            align: "start",
+            dragFree: true,
+          }}
+          className="w-full"
+        >
+          <CarouselContent className="-ml-3">
+            {BasicAnalytics.map((analytic, index) => (
+              <CarouselItem
+                key={index}
+                // mobile: ~75% → 1 card + peek of 2nd
+                // tablet (sm/md): ~31% → 3 cards + peek of 4th
+                className="pl-3 basis-[75%] sm:basis-[31%] md:basis-[31%]"
+              >
+                <AdminDashboardSectionFeatureCard
+                  heading={analytic.heading}
+                  title={analytic.title}
+                  icon={analytic.icon}
+                  rate={analytic.rate}
+                  description={analytic.description}
+                />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </Carousel>
+      </div>
+
+      {/* ── Desktop: 4-column grid (unchanged) ── */}
+      <div className="hidden lg:grid grid-cols-4 gap-4">
+        {BasicAnalytics.map((analytic, index) => (
+          <AdminDashboardSectionFeatureCard
+            key={index}
+            heading={analytic.heading}
+            title={analytic.title}
+            icon={analytic.icon}
+            rate={analytic.rate}
+            description={analytic.description}
+          />
+        ))}
+      </div>
+    </>
   );
 };
 
@@ -103,7 +143,7 @@ export const AdminDashboardSectionFeatureCard = ({
   description,
 }: AdminDashboardAnalyticsCardsProps) => {
   return (
-    <div className="rounded-[16px]! px-4 py-5 space-y-3 bg-white shadow-sm">
+    <div className="rounded-[16px]! px-4 py-5 space-y-3 bg-white h-full">
       <div>
         <p className="flex justify-between items-center text-sm text-gray-500 pb-2">
           {heading}

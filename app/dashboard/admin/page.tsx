@@ -8,38 +8,32 @@ import { AdminDashboardSystemHealthCard } from "@/components/dashboard/admin-das
 import { AdminDashboardOrderInfoCard } from "@/components/dashboard/admin-dashboard-order-info-card";
 import { AdminDashboardEnrolmentInfoCard } from "@/components/dashboard/admin-dashboard-enrolment-info-card";
 import { Plus } from "lucide-react";
-import { AdminClassRecordings } from "@/components/dashboard/admin-class-recordings";
 import { AdminDashboardSystemActivityLogs } from "@/components/dashboard/admin-dashboard-system-activity-logs";
 
 export default function AdminDashboardPage() {
   return (
-    <div className="pb-6">
-      <div className="flex justify-between items-center gap-4 flex-wrap pb-6">
+    <div className="py-6">
+      <div className="hidden md:flex justify-between items-center gap-4 flex-wrap pb-6">
         <DashboardSearch />
         <AdminDashboardUploadButton title="Upload Live Class" icon={Plus} />
       </div>
       <AdminDashboardAnalyticsCards />
 
-      <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1.8fr] gap-4 section-spacing">
+      <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1.8fr] gap-4 py-6">
         <AdminDashboardRevenueAnalytics />
         <AdminDashbordEnrolmentAnalytics />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 section-spacing">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 py-6">
         <AdminDashboardPendingActionCard />
         <AdminDashboardSystemHealthCard />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1.8fr] gap-4 section-spacing">
+      <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1.8fr] gap-4 py-6">
         <AdminDashboardOrderInfoCard />
         <AdminDashboardEnrolmentInfoCard />
       </div>
-
       <AdminDashboardSystemActivityLogs />
-
-      <div className="section-spacing">
-        <AdminClassRecordings />
-      </div>
     </div>
   );
 }

@@ -11,6 +11,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import Image from "next/image";
 
 export function NavMain({
   items,
@@ -18,7 +19,7 @@ export function NavMain({
   items: {
     title: string;
     url: string;
-    icon?: React.ElementType;
+    icon?: any;
   }[];
 }) {
   const pathname = usePathname();
@@ -62,7 +63,8 @@ export function NavMain({
                   <Link href={item.url}>
                     {item.icon && (
                       <item.icon
-                        className={`${isActive && "text-primary"} h-5! w-5!`}
+                        className={cn("h-5 w-5", isActive && "text-primary")}
+                        {...(isActive ? { fill: "currentColor", stroke: "currentColor" } : {})}
                       />
                     )}
                     <span className="text-base">{item.title}</span>

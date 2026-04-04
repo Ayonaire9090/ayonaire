@@ -95,8 +95,8 @@ export const AdminDashboardRevenueAnalytics = () => {
     <div className="rounded-[16px]! px-5 py-5 space-y-4 bg-white shadow-sm">
       {/* Header */}
       <div className="space-y-1">
-        <p className="text-sm font-medium text-gray-500">Revenue (Monthly)</p>
-        <p className="text-3xl font-bold tabular-nums tracking-tight">10,213</p>
+        <p className="text-2xl font-semibold">Revenue (Monthly)</p>
+        <p className="text-2xl font-bold tabular-nums tracking-tight">10,213</p>
         <div className="flex items-center gap-1.5 text-sm">
           <Badge
             variant="outline"

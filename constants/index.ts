@@ -32,6 +32,7 @@ import {
   Mail,
   MessageCircle,
   Settings,
+  MessageCircleMore,
 } from "lucide-react";
 import {
   IconCalendarEvent,
@@ -42,6 +43,22 @@ import {
   IconReceipt2,
 } from "@tabler/icons-react";
 import { IoGrid } from "react-icons/io5";
+
+import { DashboardWindowIcon } from "@/public/assets/icons/dashboard-window-icon";
+import { DashboardUsersIcon } from "@/public/assets/icons/dashboard-users-icon";
+import { DashboardInstructorsIcon } from "@/public/assets/icons/dashboard-instructors-icon";
+import { DashboardCoursesIcon } from "@/public/assets/icons/dashboard-courses-icon";
+import { DashboardContentIcon } from "@/public/assets/icons/dashboard-content-icon";
+import { DashboardPeopleIcon } from "@/public/assets/icons/dashboard-people-icon";
+import { DashboardUserCheckIcon } from "@/public/assets/icons/dashboard-user-check-icon";
+import { DashboardAssesmentIcon } from "@/public/assets/icons/dashboard-assesment-icon";
+import { DashboardAttendanceIcon } from "@/public/assets/icons/dashboard-attendance-icon";
+import { DashboardPaymentIcon } from "@/public/assets/icons/dashboard-payment-icon";
+import { DashboardCertificateIcon } from "@/public/assets/icons/dashboard-certificate-icon";
+import { DashboardSupportIcon } from "@/public/assets/icons/dashboard-support-icon";
+import { DashboardEmailIcon } from "@/public/assets/icons/dashboard-email-icon";
+import { DashboardTalkIcon } from "@/public/assets/icons/dashboard-talk-icon";
+import { DashboardSettingsIcon } from "@/public/assets/icons/dashboard-settings-icon";
 
 export const navItems = [
   {
@@ -72,77 +89,77 @@ export const dashboardData = {
     {
       title: "Dashboard",
       url: "/dashboard/admin",
-      icon: IoGrid,
+      icon: DashboardWindowIcon,
     },
     {
       title: "Users",
       url: "/dashboard/admin/users",
-      icon: Users2Icon,
+      icon: DashboardUsersIcon,
     },
     {
       title: "Instructors",
       url: "/dashboard/admin/instructors",
-      icon: GraduationCap,
+      icon: DashboardInstructorsIcon,
     },
     {
       title: "Courses",
       url: "/dashboard/admin/courses",
-      icon: IconDeviceLaptop,
+      icon: DashboardCoursesIcon,
     },
     {
       title: "Content",
       url: "/dashboard/admin/content",
-      icon: FileText,
+      icon: DashboardContentIcon,
     },
     {
       title: "Classes",
       url: "/dashboard/admin/classes",
-      icon: IconUsersGroup,
+      icon: DashboardPeopleIcon,
     },
     {
       title: "Enrollments",
       url: "/dashboard/admin/enrollments",
-      icon: UserCheck,
+      icon: DashboardUserCheckIcon,
     },
     {
       title: "Assessments",
       url: "/dashboard/admin/assessments",
-      icon: ClipboardList,
+      icon: DashboardAssesmentIcon,
     },
     {
       title: "Attendance",
       url: "/dashboard/admin/attendance",
-      icon: IconCalendarEvent,
+      icon: DashboardAttendanceIcon,
     },
     {
       title: "Payments",
       url: "/dashboard/admin/payments",
-      icon: CreditCard,
+      icon: DashboardPaymentIcon,
     },
     {
       title: "Certificates",
       url: "/dashboard/admin/certificates",
-      icon: Award,
+      icon: DashboardCertificateIcon,
     },
     {
       title: "Support",
       url: "/dashboard/admin/support",
-      icon: HelpCircle,
+      icon: DashboardSupportIcon,
     },
     {
       title: "Email Broadcast",
       url: "/dashboard/admin/email-broadcast",
-      icon: Mail,
+      icon: DashboardEmailIcon,
     },
     {
       title: "Communication",
       url: "/dashboard/admin/communication",
-      icon: MessageCircle,
+      icon: DashboardTalkIcon,
     },
     {
       title: "System Settings",
       url: "/dashboard/admin/settings",
-      icon: Settings,
+      icon: DashboardSettingsIcon,
     },
   ],
   studentNavMain: [

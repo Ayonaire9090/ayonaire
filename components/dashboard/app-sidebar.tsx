@@ -19,7 +19,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname();
 
   // Determine which navigation to use based on the pathname
-  let navItems: { title: string; url: string; icon?: React.ElementType }[] =
+  let navItems: { title: string; url: string; icon?: any }[] =
     dashboardData.studentNavMain;
   if (pathname.includes("/dashboard/admin")) {
     navItems = dashboardData.adminNavMain;
@@ -28,7 +28,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   }
 
   return (
-    <Sidebar collapsible="none" className="bg-white" {...props}>
+    <Sidebar className="bg-white" {...props}>
       <SidebarHeader className="bg-transparent">
         <SidebarMenu>
           <SidebarMenuItem>
@@ -38,8 +38,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             >
               <a href="/dashboard">
                 <Image
-                  src="/assets/logos/dashboard-logo.svg"
-                  width={120}
+                  src="/assets/logos/full-logo-dark.svg"
+                  width={150}
                   height={120}
                   alt="logo"
                 />

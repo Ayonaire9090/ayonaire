@@ -1,7 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
+import {
+  Bar,
+  ComposedChart,
+  CartesianGrid,
+  Line,
+  XAxis,
+  YAxis,
+} from "recharts";
 import {
   ChartConfig,
   ChartContainer,
@@ -10,16 +17,26 @@ import {
 } from "@/components/ui/chart";
 
 const enrolmentData = [
-  { month: "Jan", students: 920, instructors: 450 },
-  { month: "Feb", students: 940, instructors: 480 },
-  { month: "Mar", students: 800, instructors: 520 },
-  { month: "Apr", students: 720, instructors: 700 },
-  { month: "May", students: 680, instructors: 520 },
-  { month: "Jun", students: 500, instructors: 600 },
-  { month: "Jul", students: 700, instructors: 650 },
-  { month: "Aug", students: 680, instructors: 820 },
-  { month: "Sep", students: 250, instructors: 980 },
+  { month: "Jan", students: 700, instructors: 900 },
+  { month: "Feb", students: 460, instructors: 850 },
+  { month: "Mar", students: 400, instructors: 800 },
+  { month: "Apr", students: 570, instructors: 920 },
+  { month: "May", students: 520, instructors: 950 },
+  { month: "Jun", students: 580, instructors: 830 },
+  { month: "Jul", students: 410, instructors: 750 },
+  { month: "Aug", students: 400, instructors: 700 },
+  { month: "Sep", students: 300, instructors: 600 },
 ];
+
+// Determine which month gets the orange highlight bar
+const HIGHLIGHT_MONTH = "Aug";
+
+// Pre-process data to split students into highlighted vs normal
+const processedData = enrolmentData.map((item) => ({
+  ...item,
+  studentsHighlight: item.month === HIGHLIGHT_MONTH ? item.instructors : 0,
+  instructorsBar: item.month === HIGHLIGHT_MONTH ? 0 : item.instructors,
+}));
 
 const chartConfig = {
   students: {
@@ -28,7 +45,7 @@ const chartConfig = {
   },
   instructors: {
     label: "Instructors",
-    color: "#d4d4d4",
+    color: "#E5E5E5",
   },
 } satisfies ChartConfig;
 
@@ -50,7 +67,7 @@ export const AdminDashbordEnrolmentAnalytics = () => {
               Students
             </div>
             <div className="flex items-center gap-1.5">
-              <span className="inline-block size-3 rounded-[3px] bg-[#d4d4d4]" />
+              <span className="inline-block size-3 rounded-[3px] bg-[#E5E5E5]" />
               Instructors
             </div>
           </div>
@@ -85,37 +102,17 @@ export const AdminDashbordEnrolmentAnalytics = () => {
       {/* Chart */}
       <ChartContainer
         config={chartConfig}
-        className="aspect-auto h-[260px] w-full"
+        className="aspect-auto h-[280px] w-full"
       >
-        <AreaChart
-          data={enrolmentData}
-          margin={{ top: 10, right: 0, left: -10, bottom: 0 }}
+        <ComposedChart
+          data={processedData}
+          margin={{ top: 10, right: 10, left: -10, bottom: 0 }}
+          barGap={0}
+          barCategoryGap="25%"
         >
-          <defs>
-            <linearGradient
-              id="enrol-students-grad"
-              x1="0"
-              y1="0"
-              x2="0"
-              y2="1"
-            >
-              <stop offset="0%" stopColor="#F86432" stopOpacity={0.3} />
-              <stop offset="100%" stopColor="#F86432" stopOpacity={0.02} />
-            </linearGradient>
-            <linearGradient
-              id="enrol-instructors-grad"
-              x1="0"
-              y1="0"
-              x2="0"
-              y2="1"
-            >
-              <stop offset="0%" stopColor="#d4d4d4" stopOpacity={0.15} />
-              <stop offset="100%" stopColor="#d4d4d4" stopOpacity={0.01} />
-            </linearGradient>
-          </defs>
-
           <CartesianGrid
-            vertical={true}
+            horizontal={true}
+            vertical={false}
             strokeDasharray="4 4"
             stroke="#e5e5e5"
           />
@@ -133,33 +130,51 @@ export const AdminDashbordEnrolmentAnalytics = () => {
             axisLine={false}
             tick={{ fill: "#9ca3af", fontSize: 12 }}
             tickCount={6}
-            domain={[0, "auto"]}
+            domain={[0, 1000]}
             tickFormatter={(v) => (v >= 1000 ? `${v / 1000}K` : `${v}`)}
           />
 
           <ChartTooltip content={<ChartTooltipContent />} />
 
-          {/* Instructors behind students */}
-          <Area
-            dataKey="instructors"
-            type="stepAfter"
-            stroke="#d4d4d4"
-            strokeWidth={2.5}
-            fill="url(#enrol-instructors-grad)"
-            dot={false}
-            activeDot={false}
+          {/* Gray instructor bars */}
+          <Bar
+            dataKey="instructorsBar"
+            name="instructors"
+            fill="#E5E5E5"
+            radius={[10, 10, 10, 10]}
+            barSize={50}
           />
 
-          <Area
-            dataKey="students"
-            type="stepAfter"
-            stroke="#F86432"
-            strokeWidth={2.5}
-            fill="url(#enrol-students-grad)"
-            dot={false}
-            activeDot={false}
+          {/* Orange highlight bar (only for the highlighted month) */}
+          <Bar
+            dataKey="studentsHighlight"
+            name="students"
+            fill="#F86432"
+            radius={[10, 10, 10, 10]}
+            barSize={50}
+            stackId="highlight"
           />
-        </AreaChart>
+
+          {/* Line overlay for students trend */}
+          <Line
+            dataKey="students"
+            type="monotone"
+            stroke="#1a1a1a"
+            strokeWidth={3}
+            dot={{
+              r: 5,
+              fill: "#ffffff",
+              stroke: "#1a1a1a",
+              strokeWidth: 3,
+            }}
+            activeDot={{
+              r: 6,
+              fill: "#ffffff",
+              stroke: "#1a1a1a",
+              strokeWidth: 3,
+            }}
+          />
+        </ComposedChart>
       </ChartContainer>
     </div>
   );

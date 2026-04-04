@@ -3,9 +3,9 @@ import {
   Play,
   CalendarDays,
   Users,
-  Headset,
   Waypoints,
 } from "lucide-react";
+import Image from "next/image";
 
 const statsGrid = [
   {
@@ -41,7 +41,12 @@ export const AdminDashboardSystemHealthCard = () => {
       <div className="flex items-center justify-between px-5 py-4 bg-[#FFF5F1]">
         <div className="flex items-center gap-2">
           <div className="p-1.5 rounded-lg">
-            <Waypoints className="size-5 text-primary" />
+            <Image
+              src="/assets/icons/waypoints.png"
+              alt="System Health"
+              width={20}
+              height={20}
+            />
           </div>
           <h3 className="text-lg font-semibold text-gray-900">
             System Health & Live Ops
@@ -85,7 +90,12 @@ export const AdminDashboardSystemHealthCard = () => {
         <div className="flex items-center justify-between rounded-xl bg-red-50 border border-red-100 px-4 py-3.5">
           <div className="flex items-center gap-3">
             <div className="p-2.5 rounded-xl bg-red-100">
-              <Headset className="size-5 text-red-400" />
+              <Image
+                src="/assets/icons/support-face.png"
+                alt="Support"
+                width={20}
+                height={20}
+              />
             </div>
             <div>
               <p className="font-semibold text-gray-900 text-sm">

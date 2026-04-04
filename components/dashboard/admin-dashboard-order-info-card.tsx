@@ -1,5 +1,10 @@
 import { MoreVertical } from "lucide-react";
-
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 type OrderStatus = "PAID" | "PENDING" | "VERIFIED";
 
 interface Order {
@@ -15,16 +20,16 @@ const recentOrders: Order[] = [
 ];
 
 const statusStyles: Record<OrderStatus, string> = {
-  PAID: "bg-green-50 text-green-600",
-  PENDING: "bg-amber-50 text-amber-600",
-  VERIFIED: "bg-green-50 text-green-600",
+  PAID: "bg-emerald-50 text-emerald-500",
+  PENDING: "bg-orange-50 text-orange-500",
+  VERIFIED: "bg-indigo-50 text-indigo-500",
 };
 
 export const AdminDashboardOrderInfoCard = () => {
   return (
-    <div className="rounded-2xl bg-white overflow-hidden py-5 px-5">
+    <div className="rounded-2xl bg-white overflow-hidden py-5">
       {/* Header */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-4 px-5">
         <h3 className="text-lg font-semibold text-gray-900">Recent Orders</h3>
         <button className="text-sm font-medium text-primary hover:underline">
           View All
@@ -32,20 +37,20 @@ export const AdminDashboardOrderInfoCard = () => {
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto relative">
         <table className="w-full">
           <thead>
-            <tr className="bg-[#766E6E]/10">
-              <th className="text-left text-sm font-semibold text-gray-500 py-3 px-4 rounded-l-lg">
+            <tr className="bg-[#F6F6F6] relative w-full">
+              <th className="text-left text-base font-semibold text-gray-900 py-4 px-5">
                 Order ID
               </th>
-              <th className="text-left text-sm font-semibold text-gray-500 py-3 px-4">
+              <th className="text-left text-base font-semibold text-gray-900 py-4 px-4">
                 Status
               </th>
-              <th className="text-left text-sm font-semibold text-gray-500 py-3 px-4">
+              <th className="text-left text-base font-semibold text-gray-900 py-4 px-4">
                 Amount
               </th>
-              <th className="text-right text-sm font-semibold text-gray-500 py-3 px-4 rounded-r-lg">
+              <th className="text-right text-base font-semibold text-gray-900 py-4 px-5">
                 Action
               </th>
             </tr>
@@ -56,11 +61,11 @@ export const AdminDashboardOrderInfoCard = () => {
                 key={order.id}
                 className={
                   index < recentOrders.length - 1
-                    ? "border-b border-gray-100"
+                    ? "border-b border-gray-50"
                     : ""
                 }
               >
-                <td className="py-5 px-4 text-base font-semibold text-gray-900">
+                <td className="py-5 px-5 text-base font-semibold text-gray-900">
                   {order.id}
                 </td>
                 <td className="py-5 px-4">
@@ -73,10 +78,29 @@ export const AdminDashboardOrderInfoCard = () => {
                 <td className="py-5 px-4 text-base font-bold text-gray-900">
                   {order.amount}
                 </td>
-                <td className="py-5 px-4 text-right">
-                  <button className="text-gray-400 hover:text-gray-600 transition-colors">
-                    <MoreVertical className="size-5 inline-block" />
-                  </button>
+                <td className="py-5 px-5 text-right">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <button className="text-gray-400 hover:text-gray-600 transition-colors">
+                        <MoreVertical className="size-5 inline-block" />
+                      </button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent
+                      align="end"
+                      sideOffset={8}
+                      className="w-40 rounded-xl border-0 bg-[#F2F2F2] shadow-sm p-2 space-y-1"
+                    >
+                      <DropdownMenuItem className="px-3 py-2 cursor-pointer text-[15px] font-medium text-gray-900 hover:bg-white focus:bg-white rounded-lg">
+                        View detail
+                      </DropdownMenuItem>
+                      <DropdownMenuItem className="px-3 py-2 cursor-pointer text-[15px] font-medium text-gray-900 hover:bg-white focus:bg-white rounded-lg">
+                        Edit order
+                      </DropdownMenuItem>
+                      <DropdownMenuItem className="px-3 py-2 cursor-pointer text-[15px] font-medium text-[#EF4444] hover:bg-white focus:bg-white hover:text-[#EF4444] focus:text-[#EF4444] rounded-lg">
+                        Delete order
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </td>
               </tr>
             ))}
