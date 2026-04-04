@@ -56,16 +56,16 @@ const activityLogs: ActivityLog[] = [
 
 export const AdminDashboardSystemActivityLogs = () => {
   return (
-    <div className="rounded-2xl bg-white overflow-hidden p-8">
+    <div className="rounded-2xl bg-white overflow-hidden p-4 lg:p-8">
       {/* Header */}
-      <div className="flex items-center justify-between mb-5">
+      <div className="flex items-center justify-between mb-5 gap-3">
         <div className="flex items-center gap-2">
-          <History className="size-5 text-primary" />
-          <h3 className="text-lg font-semibold text-gray-900">
+          <History className="size-5 text-primary shrink-0" />
+          <h3 className="text-base lg:text-lg font-semibold text-gray-900">
             System Activity Feed (Audit Log)
           </h3>
         </div>
-        <button className="flex items-center gap-1.5 text-xs font-semibold text-gray-900 border border-gray-200 rounded-md px-2 py-1 bg-[#F5F5F5] hover:bg-[#ececec] transition-colors">
+        <button className="flex items-center shrink-0 gap-1.5 text-xs font-semibold text-gray-900 border border-gray-200 rounded-md px-2 py-1 bg-[#F5F5F5] hover:bg-[#ececec] transition-colors">
           <Filter className="size-2" />
           Filter Logs
         </button>

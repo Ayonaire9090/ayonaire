@@ -142,6 +142,7 @@ export const AdminDashbordEnrolmentAnalytics = () => {
             name="instructors"
             fill="#E5E5E5"
             radius={[10, 10, 10, 10]}
+            strokeWidth={10}
             barSize={50}
           />
 

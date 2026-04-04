@@ -147,7 +147,7 @@ export const AdminDashboardSectionFeatureCard = ({
       <div>
         <p className="flex justify-between items-center text-sm text-gray-500 pb-2">
           {heading}
-          <Icon className="size-10 text-primary bg-white rounded-lg p-2" />
+          <Icon className="size-10 text-[#F86432] bg-white rounded-lg p-2" />
         </p>
         <p className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
           {title}
@@ -156,7 +156,7 @@ export const AdminDashboardSectionFeatureCard = ({
       <div className="flex items-start gap-1.5 text-sm pt-0!">
         <Badge
           variant="outline"
-          className="text-primary border-0! border-none! bg-[#F86432]/10 rounded-full!"
+          className="text-[#F86432] border-0! border-none! bg-[#F86432]/10 rounded-full!"
         >
           {rate}
         </Badge>
