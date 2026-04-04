@@ -21,7 +21,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MoreVertical, Plus, Search } from "lucide-react";
 
-// ── Types ──────────────────────────────────────────────────────────────────────
 type UserStatus = "Active" | "Suspended";
 type UserRole = "student" | "instructor";
 
@@ -36,7 +35,6 @@ interface UserData {
   role: UserRole;
 }
 
-// ── Mock Data ──────────────────────────────────────────────────────────────────
 const mockUsers: UserData[] = [
   {
     id: "1",
@@ -141,7 +139,6 @@ const mockUsers: UserData[] = [
   },
 ];
 
-// ── Status Badge ───────────────────────────────────────────────────────────────
 function StatusBadge({ status }: { status: UserStatus }) {
   return (
     <span
@@ -156,7 +153,6 @@ function StatusBadge({ status }: { status: UserStatus }) {
   );
 }
 
-// ── User Row Actions ───────────────────────────────────────────────────────────
 function UserActions({ isInstructor }: { isInstructor: boolean }) {
   return (
     <DropdownMenu>
@@ -183,7 +179,6 @@ function UserActions({ isInstructor }: { isInstructor: boolean }) {
   );
 }
 
-// ── Users Table ────────────────────────────────────────────────────────────────
 function UsersTable({
   users,
   isInstructor,
@@ -292,7 +287,6 @@ function UsersTable({
   );
 }
 
-// ── Page Component ─────────────────────────────────────────────────────────────
 export default function AdminUsersPage() {
   const [activeTab, setActiveTab] = useState<"students" | "instructors">(
     "students",
