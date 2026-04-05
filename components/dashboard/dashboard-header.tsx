@@ -1,6 +1,4 @@
 "use client";
-
-import { usePathname } from "next/navigation";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { dashboardData } from "@/constants";
 import {
@@ -16,31 +14,18 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { User, UserCircle, LogOut } from "lucide-react";
-import { DashboardSearch } from "./dashboard-search";
 import Image from "next/image";
 
-export function DashboardHeader() {
-  const pathname = usePathname();
+interface DashboardHeaderProps {
+  title?: React.ReactNode;
+  subTitle?: React.ReactNode;
+}
 
-  let role = "Student";
-  let subtitle = "Continue your learning journey where you left off";
-  let firstName = "Student";
-
-  if (pathname.includes("/dashboard/admin")) {
-    role = "Admin";
-    subtitle = "Monitor platform activity and manage operations efficiently";
-    firstName = "Ayo";
-  } else if (pathname.includes("/dashboard/instructor")) {
-    role = "Instructor";
-    subtitle = "Manage your courses and track student progress";
-    firstName = "Instructor";
-  }
-
+export function DashboardHeader({ title, subTitle }: DashboardHeaderProps) {
   return (
     <>
       {/* ───────── MOBILE HEADER ───────── */}
-      <header className="flex md:hidden flex-col gap-5 px-4 pt-5 pb-2">
+      <header className="flex md:hidden flex-col gap-5 pt-5 pb-2">
         {/* Row 1: Logo + action icons */}
         <div className="flex items-center justify-between">
           <Image
@@ -120,26 +105,23 @@ export function DashboardHeader() {
           </DropdownMenu>
           <div className="flex flex-col gap-0.5">
             <h1 className="text-xl font-bold tracking-tight text-gray-900">
-              Welcome Back, {firstName} <span>👋</span>
+              {title}
             </h1>
-            <p className="text-sm text-gray-400 leading-snug">{subtitle}</p>
+            <p className="text-sm text-gray-400 leading-snug">{subTitle}</p>
           </div>
         </div>
-
-        {/* Row 3: Search bar */}
-        <DashboardSearch />
       </header>
 
       {/* ───────── DESKTOP HEADER ───────── */}
-      <header className="hidden md:flex w-full shrink-0 flex-row items-center justify-between gap-4 border-b-0 px-4 py-6 lg:px-6">
+      <header className="hidden md:flex w-full shrink-0 flex-row items-center justify-between gap-4 border-b-0 py-6">
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-2">
             <SidebarTrigger className="-ml-2 md:hidden" />
             <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 flex items-center gap-2">
-              Welcome Back, {role} <span>👋</span>
+              {title}
             </h1>
           </div>
-          <p className="text-base text-gray-500">{subtitle}</p>
+          <p className="text-base text-gray-500">{subTitle}</p>
         </div>
 
         <div className="flex items-center gap-4 w-auto">

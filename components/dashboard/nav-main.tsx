@@ -64,10 +64,16 @@ export function NavMain({
                     {item.icon && (
                       <item.icon
                         className={cn("h-5 w-5", isActive && "text-primary")}
-                        {...(isActive ? { fill: "currentColor", stroke: "currentColor" } : {})}
+                        {...(isActive
+                          ? { fill: "currentColor", stroke: "currentColor" }
+                          : {})}
                       />
                     )}
-                    <span className="text-base">{item.title}</span>
+                    <span
+                      className={cn("text-base", isActive && "text-primary")}
+                    >
+                      {item.title}
+                    </span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>

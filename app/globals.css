@@ -9,7 +9,8 @@
   font-family: "Satoshi";
   font-style: normal;
   font-weight: 400;
-  src: url("/assets/fonts/satoshi/Satoshi-Regular.woff2") format("woff2"),
+  src:
+    url("/assets/fonts/satoshi/Satoshi-Regular.woff2") format("woff2"),
     url("/assets/fonts/satoshi/Satoshi-Regular.woff") format("woff");
   font-display: swap;
 }
@@ -18,7 +19,8 @@
   font-family: "Satoshi";
   font-style: normal;
   font-weight: 500;
-  src: url("/assets/fonts/satoshi/Satoshi-Medium.woff2") format("woff2"),
+  src:
+    url("/assets/fonts/satoshi/Satoshi-Medium.woff2") format("woff2"),
     url("/assets/fonts/satoshi/Satoshi-Medium.woff") format("woff");
   font-display: swap;
 }
@@ -27,7 +29,8 @@
   font-family: "Satoshi";
   font-style: bold;
   font-weight: 700;
-  src: url("/assets/fonts/satoshi/Satoshi-Bold.woff2") format("woff2"),
+  src:
+    url("/assets/fonts/satoshi/Satoshi-Bold.woff2") format("woff2"),
     url("/assets/fonts/satoshi/Satoshi-Bold.woff") format("woff");
   font-display: swap;
 }
@@ -338,4 +341,39 @@ html {
 
 .brand-enter {
   animation: slideUpFade 600ms ease-out;
+}
+
+@keyframes wave-animation {
+  0% {
+    transform: rotate(0deg);
+  }
+  10% {
+    transform: rotate(14deg);
+  } /* Initial tilt */
+  20% {
+    transform: rotate(-8deg);
+  } /* Wave back */
+  30% {
+    transform: rotate(14deg);
+  } /* Wave forward */
+  40% {
+    transform: rotate(-4deg);
+  } /* Wave back */
+  50% {
+    transform: rotate(10deg);
+  } /* Wave forward */
+  60% {
+    transform: rotate(0deg);
+  } /* Back to center */
+  100% {
+    transform: rotate(0deg);
+  } /* Pause before next loop */
+}
+
+.wave {
+  animation-name: wave-animation; /* Points to keyframes above */
+  animation-duration: 2.5s; /* Speed of the full cycle */
+  animation-iteration-count: infinite; /* Loop forever */
+  transform-origin: 70% 70%; /* Rotates from the wrist area */
+  display: inline-block;
 }

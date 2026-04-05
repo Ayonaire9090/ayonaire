@@ -14,8 +14,6 @@ export default function DashboardLayout({
     <SidebarProvider>
       <AppSidebar variant="sidebar" />
       <SidebarInset className="bg-[#F6F6F6]">
-        {/* Header – responsive (handles mobile/desktop internally) */}
-        <DashboardHeader />
         <div className="flex flex-1 flex-col px-4 lg:px-6 pb-20 md:pb-0">
           <div className="@container/main flex flex-1 flex-col gap-6">
             {children}
