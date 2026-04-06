@@ -1,28 +1,23 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { TabSwitcher } from "@/components/ui/tab-switcher";
+import { DataTable, ColumnDef } from "@/components/ui/data-table";
+import { DataList } from "@/components/ui/data-list";
+import { AddUserModal } from "./_components/add-user-modal";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+  AppDropdown,
+  AppDropdownItem,
+  AppDropdownSeparator,
+} from "@/components/ui/app-dropdown";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
   PopoverClose,
 } from "@/components/ui/popover";
-import { Checkbox } from "@/components/ui/checkbox";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -172,8 +167,10 @@ function StatusBadge({ status }: { status: UserStatus }) {
   };
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+    <AppDropdown
+      variant="gray"
+      align="start"
+      trigger={
         <button
           className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium focus:outline-none transition-colors ${getColors(
             status,
@@ -181,32 +178,22 @@ function StatusBadge({ status }: { status: UserStatus }) {
         >
           {status}
         </button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent
-        align="start"
-        className="w-32 bg-[#F6F6F6] rounded-xl border-gray-200 shadow-sm p-1"
-      >
-        <DropdownMenuItem className="text-gray-500 text-xs justify-center hover:bg-gray-100 rounded-lg cursor-pointer my-0.5">
-          Active
-        </DropdownMenuItem>
-        <DropdownMenuItem className="text-gray-500 text-xs justify-center hover:bg-gray-100 rounded-lg cursor-pointer my-0.5">
-          Deactivate
-        </DropdownMenuItem>
-        <DropdownMenuItem className="text-gray-500 text-xs justify-center hover:bg-gray-100 rounded-lg cursor-pointer my-0.5">
-          Delete
-        </DropdownMenuItem>
-        <DropdownMenuItem className="bg-gray-600 text-white text-xs justify-center rounded-lg cursor-pointer focus:bg-gray-700 focus:text-white my-0.5">
-          suspended
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+      }
+    >
+      <AppDropdownItem variant="badge">Active</AppDropdownItem>
+      <AppDropdownItem variant="badge">Deactivate</AppDropdownItem>
+      <AppDropdownItem variant="badge">Delete</AppDropdownItem>
+      <AppDropdownItem variant="active-badge">suspended</AppDropdownItem>
+    </AppDropdown>
   );
 }
 
 function UserActions() {
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+    <AppDropdown
+      variant="white"
+      align="end"
+      trigger={
         <Button
           variant="ghost"
           size="icon"
@@ -214,144 +201,16 @@ function UserActions() {
         >
           <MoreVertical className="size-[18px] text-black" />
         </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent
-        align="end"
-        className="w-[180px] p-0 py-2 rounded-xl border border-gray-200 shadow-sm bg-white"
-      >
-        <DropdownMenuItem className="cursor-pointer text-[15px] text-gray-600 font-normal px-4 py-2 hover:bg-gray-50 focus:bg-gray-50">
-          View User Profile
-        </DropdownMenuItem>
-        <div className="mx-4 my-1 h-px bg-gray-100" />
-        <DropdownMenuItem className="cursor-pointer text-[15px] text-gray-600 font-normal px-4 py-2 hover:bg-gray-50 focus:bg-gray-50">
-          Duplicate
-        </DropdownMenuItem>
-        <div className="mx-4 my-1 h-px bg-gray-100" />
-        <DropdownMenuItem className="cursor-pointer text-[15px] text-gray-600 font-normal px-4 py-2 hover:bg-gray-50 focus:bg-gray-50">
-          Edit
-        </DropdownMenuItem>
-        <div className="mx-4 my-1 h-px bg-gray-100" />
-        <DropdownMenuItem className="cursor-pointer text-[15px] text-red-500 font-normal px-4 py-2 hover:bg-red-50 focus:bg-red-50 focus:text-red-600">
-          Delete User
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  );
-}
-
-function UsersTable({
-  users,
-  isInstructor,
-}: {
-  users: UserData[];
-  isInstructor: boolean;
-}) {
-  const [selectedUsers, setSelectedUsers] = useState<Set<string>>(new Set());
-
-  const toggleUser = (userId: string) => {
-    setSelectedUsers((prev) => {
-      const next = new Set(prev);
-      if (next.has(userId)) {
-        next.delete(userId);
-      } else {
-        next.add(userId);
       }
-      return next;
-    });
-  };
-
-  const toggleAll = () => {
-    if (selectedUsers.size === users.length) {
-      setSelectedUsers(new Set());
-    } else {
-      setSelectedUsers(new Set(users.map((u) => u.id)));
-    }
-  };
-
-  return (
-    <div className="w-full">
-      <Table className="border-none w-full overflow-hidden">
-        <TableHeader className="bg-[#F6F6F6] [&_th:first-child]:rounded-tl-2xl [&_th:last-child]:rounded-tr-2xl">
-          <TableRow className="border-none hover:bg-transparent">
-            <TableHead className="w-16 pl-6 h-[72px]">
-              <Checkbox
-                className="rounded-[4px] border-gray-300 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
-                checked={
-                  selectedUsers.size === users.length && users.length > 0
-                }
-                onCheckedChange={toggleAll}
-              />
-            </TableHead>
-            <TableHead className="font-medium text-gray-500 h-[72px] text-[15px]">
-              Name
-            </TableHead>
-            <TableHead className="font-medium text-gray-500 h-[72px] text-[15px]">
-              ID
-            </TableHead>
-            <TableHead className="font-medium text-gray-500 h-[72px] text-[15px]">
-              Email
-            </TableHead>
-            <TableHead className="font-medium text-gray-500 h-[72px] text-[15px]">
-              Status
-            </TableHead>
-            <TableHead className="font-medium text-gray-500 h-[72px] text-[15px]">
-              {isInstructor ? "Courses" : "Enrollments"}
-            </TableHead>
-            <TableHead className="font-medium text-gray-500 h-[72px] text-[15px] pr-6">
-              Action
-            </TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {users.map((user) => (
-            <TableRow
-              key={user.id}
-              data-state={selectedUsers.has(user.id) ? "selected" : undefined}
-              className="border-none hover:bg-transparent even:bg-[#F6F6F6] odd:bg-white h-[72px]"
-            >
-              <TableCell className="pl-6">
-                <Checkbox
-                  className="rounded-[4px] border-gray-300 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
-                  checked={selectedUsers.has(user.id)}
-                  onCheckedChange={() => toggleUser(user.id)}
-                />
-              </TableCell>
-              <TableCell>
-                <div className="flex items-center gap-4">
-                  <Avatar className="size-11">
-                    <AvatarImage src={user.avatar} alt={user.name} />
-                    <AvatarFallback className="text-sm font-medium bg-primary/10 text-primary">
-                      {user.name
-                        .split(" ")
-                        .map((n) => n[0])
-                        .join("")}
-                    </AvatarFallback>
-                  </Avatar>
-                  <span className="font-medium text-gray-900 text-[15px] whitespace-nowrap">
-                    {user.name}
-                  </span>
-                </div>
-              </TableCell>
-              <TableCell className="text-gray-500 text-[15px] whitespace-nowrap">
-                {user.uniqueId}
-              </TableCell>
-              <TableCell className="text-gray-900 text-[15px] whitespace-nowrap">
-                {user.email}
-              </TableCell>
-              <TableCell>
-                <StatusBadge status={user.status} />
-              </TableCell>
-              <TableCell className="text-gray-700 text-[15px] pl-4">
-                {user.enrollments}
-              </TableCell>
-              <TableCell className="pr-6">
-                <UserActions />
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </div>
+    >
+      <AppDropdownItem variant="menu">View User Profile</AppDropdownItem>
+      <AppDropdownSeparator />
+      <AppDropdownItem variant="menu">Duplicate</AppDropdownItem>
+      <AppDropdownSeparator />
+      <AppDropdownItem variant="menu">Edit</AppDropdownItem>
+      <AppDropdownSeparator />
+      <AppDropdownItem variant="danger-menu">Delete User</AppDropdownItem>
+    </AppDropdown>
   );
 }
 
@@ -360,6 +219,7 @@ export default function AdminUsersPage() {
     "students",
   );
   const [searchQuery, setSearchQuery] = useState("");
+  const [addUserOpen, setAddUserOpen] = useState(false);
 
   const isInstructor = activeTab === "instructors";
 
@@ -378,6 +238,68 @@ export default function AdminUsersPage() {
   const sectionSubtitle = isInstructor
     ? "Manage instructor accounts and courses"
     : "Manage student accounts and enrollments";
+
+  const tableColumns: ColumnDef<UserData>[] = [
+    {
+      key: "name",
+      header: "Name",
+      cell: (user) => (
+        <div className="flex items-center gap-4">
+          <Avatar className="size-11">
+            <AvatarImage src={user.avatar} alt={user.name} />
+            <AvatarFallback className="text-sm font-medium bg-primary/10 text-primary">
+              {user.name
+                .split(" ")
+                .map((n) => n[0])
+                .join("")}
+            </AvatarFallback>
+          </Avatar>
+          <span className="font-medium text-gray-900 text-[15px] whitespace-nowrap">
+            {user.name}
+          </span>
+        </div>
+      ),
+    },
+    {
+      key: "uniqueId",
+      header: "ID",
+      cell: (user) => (
+        <span className="text-gray-500 text-[15px] whitespace-nowrap">
+          {user.uniqueId}
+        </span>
+      ),
+    },
+    {
+      key: "email",
+      header: "Email",
+      cell: (user) => (
+        <span className="text-gray-900 text-[15px] whitespace-nowrap">
+          {user.email}
+        </span>
+      ),
+    },
+    {
+      key: "status",
+      header: "Status",
+      cell: (user) => <StatusBadge status={user.status} />,
+    },
+    {
+      key: "enrollments",
+      header: isInstructor ? "Courses" : "Enrollments",
+      cell: (user) => (
+        <span className="text-gray-700 text-[15px] pl-4">
+          {user.enrollments}
+        </span>
+      ),
+    },
+    {
+      key: "action",
+      header: "Action",
+      headerClassName: "pr-6",
+      className: "pr-6",
+      cell: () => <UserActions />,
+    },
+  ];
 
   return (
     <div className="pb-8">
@@ -400,28 +322,14 @@ export default function AdminUsersPage() {
         <div className="flex justify-between items-center md:block">
           <div className="flex items-center gap-3">
             {/* Tab Toggle */}
-            <div className="inline-flex items-center gap-0 md:gap-1 bg-white p-1 md:p-2 rounded-lg">
-              <button
-                onClick={() => setActiveTab("students")}
-                className={`rounded-lg px-2 md:px-5 py-2 text-[15px] transition-all ${
-                  activeTab === "students"
-                    ? "bg-[#F6F6F6] text-gray-900 font-medium"
-                    : "text-gray-500 hover:text-gray-700 bg-transparent"
-                }`}
-              >
-                Students
-              </button>
-              <button
-                onClick={() => setActiveTab("instructors")}
-                className={`rounded-lg px-2 md:px-5 py-2 text-[15px] transition-all ${
-                  activeTab === "instructors"
-                    ? "bg-[#F6F6F6] text-gray-900 font-medium"
-                    : "text-gray-500 hover:text-gray-700 bg-transparent"
-                }`}
-              >
-                Instructors
-              </button>
-            </div>
+            <TabSwitcher
+              options={[
+                { value: "students", label: "Students" },
+                { value: "instructors", label: "Instructors" },
+              ]}
+              activeTab={activeTab}
+              onTabChange={setActiveTab}
+            />
           </div>
 
           {/* Bulk Actions Mobile Only */}
@@ -493,13 +401,22 @@ export default function AdminUsersPage() {
           title="Add New User"
           icon={Plus}
           className="hidden md:flex"
+          onClick={() => setAddUserOpen(true)}
         />
       </div>
 
       {/* Add new User Mobile Only */}
       <div className="md:hidden fixed flex justify-center items-center right-3 top-[50%] translate-y-[-50%] z-90">
-        <AdminDashboardButton icon={Plus} />
+        <AdminDashboardButton
+          icon={Plus}
+          onClick={() => setAddUserOpen(true)}
+        />
       </div>
+
+      <AddUserModal
+        isOpen={addUserOpen}
+        onClose={() => setAddUserOpen(false)}
+      />
 
       {/* Section Header + Search + Bulk Actions */}
       <div className="bg-white rounded-xl p-2 lg:p-4">
@@ -578,20 +495,68 @@ export default function AdminUsersPage() {
           </div>
         </div>
 
-        {/* Table */}
-        <UsersTable users={filteredUsers} isInstructor={isInstructor} />
-      </div>
+        {/* Desktop Table */}
+        <div className="hidden md:block w-full overflow-x-auto">
+          <DataTable
+            data={filteredUsers}
+            columns={tableColumns}
+            keyExtractor={(user) => user.id}
+            selectable
+          />
+        </div>
 
-      {/* Pagination */}
-      <div className="flex items-center justify-between mt-8 px-2">
-        <span className="text-gray-900 text-[15px]">Page 1 of 5</span>
-        <div className="flex items-center gap-6">
-          <button className="flex items-center gap-1.5 text-gray-900 text-[15px] hover:text-black transition-colors">
-            <ChevronLeft className="size-4" /> Prev
-          </button>
-          <button className="flex items-center gap-1.5 text-gray-900 text-[15px] hover:text-black transition-colors">
-            Next <ChevronRight className="size-4" />
-          </button>
+        {/* Mobile List */}
+        <div className="md:hidden mt-2">
+          <DataList
+            data={filteredUsers}
+            keyExtractor={(user) => user.id}
+            renderItem={(user) => (
+              <>
+                <Avatar className="size-[56px] shrink-0">
+                  <AvatarImage src={user.avatar} alt={user.name} />
+                  <AvatarFallback className="text-sm font-medium bg-primary/10 text-primary">
+                    {user.name
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")}
+                  </AvatarFallback>
+                </Avatar>
+                <div className="flex-1 flex flex-col gap-0.5 min-w-0 pr-6">
+                  <div className="flex items-center justify-between gap-2 mb-0.5">
+                    <span className="font-medium text-[16px] text-gray-900 truncate">
+                      {user.name}
+                    </span>
+                    <StatusBadge status={user.status} />
+                  </div>
+                  <div className="text-[14px] text-gray-500 truncate">
+                    {user.uniqueId}{" "}
+                    <span className="mx-1.5 text-gray-400">•</span>{" "}
+                    {user.enrollments}{" "}
+                    {isInstructor ? "Courses" : "Enrollments"}
+                  </div>
+                  <div className="text-[14px] text-gray-800 truncate">
+                    {user.email}
+                  </div>
+                </div>
+                <div className="absolute right-1 top-1/2 -translate-y-1/2">
+                  <UserActions />
+                </div>
+              </>
+            )}
+          />
+        </div>
+
+        {/* Pagination */}
+        <div className="flex items-center justify-between mt-8 px-2 py-4">
+          <span className="text-gray-900 text-[15px]">Page 1 of 5</span>
+          <div className="flex items-center gap-6">
+            <button className="flex items-center gap-1.5 text-gray-900 text-[15px] hover:text-black transition-colors">
+              <ChevronLeft className="size-4" /> Prev
+            </button>
+            <button className="flex items-center gap-1.5 text-gray-900 text-[15px] hover:text-black transition-colors">
+              Next <ChevronRight className="size-4" />
+            </button>
+          </div>
         </div>
       </div>
     </div>

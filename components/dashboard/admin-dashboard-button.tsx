@@ -4,16 +4,19 @@ import { Button } from "../ui/button";
 interface AdminDashboardButtonProps {
   title?: string;
   icon?: LucideIcon;
+  onClick?: () => void;
   className?: string;
 }
 
 export const AdminDashboardButton = ({
   title,
   icon: Icon,
+  onClick,
   className,
 }: AdminDashboardButtonProps) => {
   return (
     <Button
+      onClick={onClick}
       variant="outline"
       className={`py-5! flex items-center cursor-pointer justify-center gap-2 
                 rounded-lg bg-primary shadow-sm 
