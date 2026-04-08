@@ -3,11 +3,18 @@ import {
   CourseWaitlistDataTable,
   type CourseWaitlistEntry,
 } from "@/components/dashboard/course-waitlist-data-table";
+import { DashboardHeader } from "@/components/dashboard/dashboard-header";
+import { AdminDashboardButton } from "@/components/dashboard/admin-dashboard-button";
+import { Input } from "@/components/ui/input";
+import { Search, Plus, ChevronLeft, ChevronRight } from "lucide-react";
 import {
   WaitlistDataTable,
   WaitlistEntry,
 } from "@/components/dashboard/waitlist-data-table";
 import { headers } from "next/headers";
+import { StatsSummary } from "../../../../components/dashboard/stats-summary";
+import { CoursesTable } from "./_components/courses-table";
+import { CoursesList } from "./_components/courses-list";
 
 async function getCourseWaitlistData(): Promise<CourseWaitlistEntry[]> {
   try {
@@ -57,13 +64,35 @@ async function getWaitlistData(): Promise<WaitlistEntry[]> {
   }
 }
 
+const mockSummaryData = [
+  { title: "All", number: "44" },
+  { title: "Active", number: "20" },
+  { title: "Pending Cancellation", number: "1" },
+  { title: "Pending Payment", number: "3" },
+  { title: "On Hold", number: "4" },
+  { title: "Cancelled", number: "16" },
+];
+
 export default async function AdminCoursesPage() {
   const courseWaitlistData = await getCourseWaitlistData();
   const waitlistData = await getWaitlistData();
 
   return (
     <>
-      <div className="flex flex-col gap-6 py-6">
+      <DashboardHeader
+        title="Course Management"
+        subTitle="Manage course content, pricing, and availability"
+      />
+
+      <StatsSummary data={mockSummaryData} />
+
+      {/* For Desktop */}
+      <CoursesTable />
+
+      {/* For Mobile */}
+      <CoursesList />
+
+      <div className="flex flex-col gap-6 pb-6">
         <div className="">
           <AppHeading
             title="Course Waitlist"

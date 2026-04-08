@@ -2,217 +2,31 @@
 
 import { useState } from "react";
 import { TabSwitcher } from "@/components/ui/tab-switcher";
-import { DataTable, ColumnDef } from "@/components/ui/data-table";
-import { DataList } from "@/components/ui/data-list";
 import { AddUserModal } from "./_components/add-user-modal";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  AppDropdown,
-  AppDropdownItem,
-  AppDropdownSeparator,
-} from "@/components/ui/app-dropdown";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
   PopoverClose,
 } from "@/components/ui/popover";
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  MoreVertical,
-  Plus,
-  Search,
-  ChevronDown,
-  X,
-  ChevronLeft,
-  ChevronRight,
-} from "lucide-react";
+import { Plus, Search, ChevronDown, X } from "lucide-react";
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 import { AdminDashboardButton } from "@/components/dashboard/admin-dashboard-button";
+import { StatsSummary } from "../../../../components/dashboard/stats-summary";
+import { mockUsers } from "./_components/users-data";
+import { UsersTable } from "./_components/users-table";
+import { UsersList } from "./_components/users-list";
 
-type UserStatus = "Active" | "Suspended" | "Deactivate" | "Delete";
-type UserRole = "student" | "instructor";
-
-interface UserData {
-  id: string;
-  name: string;
-  uniqueId: string;
-  email: string;
-  status: UserStatus;
-  enrollments: number;
-  avatar: string;
-  role: UserRole;
-}
-
-const mockUsers: UserData[] = [
-  {
-    id: "1",
-    name: "Jerome Bell",
-    uniqueId: "STU-1823",
-    email: "ryanhen@gmail.com",
-    status: "Deactivate",
-    enrollments: 12,
-    avatar: "https://i.pravatar.cc/150?img=11",
-    role: "student",
-  },
-  {
-    id: "2",
-    name: "Jenny Wilson",
-    uniqueId: "STU-1990",
-    email: "isabella@gmail.com",
-    status: "Suspended",
-    enrollments: 8,
-    avatar: "https://i.pravatar.cc/150?img=5",
-    role: "student",
-  },
-  {
-    id: "3",
-    name: "Dianne Russell",
-    uniqueId: "STU-2104",
-    email: "bessieco@gmail.com",
-    status: "Suspended",
-    enrollments: 16,
-    avatar: "https://i.pravatar.cc/150?img=9",
-    role: "student",
-  },
-  {
-    id: "4",
-    name: "Dianne Russell",
-    uniqueId: "STU-2215",
-    email: "robbert@gmail.com",
-    status: "Suspended",
-    enrollments: 10,
-    avatar: "https://i.pravatar.cc/150?img=20",
-    role: "student",
-  },
-  {
-    id: "5",
-    name: "Eleanor Pena",
-    uniqueId: "STU-2330",
-    email: "leslie@gmail.com",
-    status: "Delete",
-    enrollments: 11,
-    avatar: "https://i.pravatar.cc/150?img=32",
-    role: "student",
-  },
-  {
-    id: "6",
-    name: "Guy Hawkins",
-    uniqueId: "STU-1990",
-    email: "hawkins@gmail.com",
-    status: "Suspended",
-    enrollments: 8,
-    avatar: "https://i.pravatar.cc/150?img=53",
-    role: "student",
-  },
-  {
-    id: "7",
-    name: "Albert Flores",
-    uniqueId: "STU-2219",
-    email: "albert@gmail.com",
-    status: "Active",
-    enrollments: 10,
-    avatar: "https://i.pravatar.cc/150?img=60",
-    role: "student",
-  },
-  // Instructors
-  {
-    id: "8",
-    name: "Sarah Johnson",
-    uniqueId: "INS-1001",
-    email: "sarah.j@gmail.com",
-    status: "Active",
-    enrollments: 24,
-    avatar: "https://i.pravatar.cc/150?img=44",
-    role: "instructor",
-  },
-  {
-    id: "9",
-    name: "Michael Chen",
-    uniqueId: "INS-1002",
-    email: "m.chen@gmail.com",
-    status: "Active",
-    enrollments: 18,
-    avatar: "https://i.pravatar.cc/150?img=12",
-    role: "instructor",
-  },
-  {
-    id: "10",
-    name: "Lisa Park",
-    uniqueId: "INS-1003",
-    email: "lisa.park@gmail.com",
-    status: "Suspended",
-    enrollments: 6,
-    avatar: "https://i.pravatar.cc/150?img=23",
-    role: "instructor",
-  },
+const mockSummaryData = [
+  { title: "All", number: "44" },
+  { title: "Active", number: "20" },
+  { title: "Pending Cancellation", number: "1" },
+  { title: "Pending Payment", number: "3" },
+  { title: "On Hold", number: "4" },
+  { title: "Cancelled", number: "16" },
 ];
-
-function StatusBadge({ status }: { status: UserStatus }) {
-  const getColors = (s: UserStatus) => {
-    switch (s) {
-      case "Deactivate":
-        return "bg-[#FFF9E6] text-[#F9C32B]";
-      case "Suspended":
-        return "bg-[#E6F6EC] text-[#24A164]";
-      case "Active":
-        return "bg-[#FFEBE6] text-[#FF7A59]";
-      case "Delete":
-        return "bg-[#FFE9E9] text-[#FF5A5F]";
-      default:
-        return "bg-gray-100 text-gray-800";
-    }
-  };
-
-  return (
-    <AppDropdown
-      variant="gray"
-      align="start"
-      trigger={
-        <button
-          className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium focus:outline-none transition-colors ${getColors(
-            status,
-          )}`}
-        >
-          {status}
-        </button>
-      }
-    >
-      <AppDropdownItem variant="badge">Active</AppDropdownItem>
-      <AppDropdownItem variant="badge">Deactivate</AppDropdownItem>
-      <AppDropdownItem variant="badge">Delete</AppDropdownItem>
-      <AppDropdownItem variant="active-badge">suspended</AppDropdownItem>
-    </AppDropdown>
-  );
-}
-
-function UserActions() {
-  return (
-    <AppDropdown
-      variant="white"
-      align="end"
-      trigger={
-        <Button
-          variant="ghost"
-          size="icon"
-          className="h-8 w-8 hover:bg-transparent"
-        >
-          <MoreVertical className="size-[18px] text-black" />
-        </Button>
-      }
-    >
-      <AppDropdownItem variant="menu">View User Profile</AppDropdownItem>
-      <AppDropdownSeparator />
-      <AppDropdownItem variant="menu">Duplicate</AppDropdownItem>
-      <AppDropdownSeparator />
-      <AppDropdownItem variant="menu">Edit</AppDropdownItem>
-      <AppDropdownSeparator />
-      <AppDropdownItem variant="danger-menu">Delete User</AppDropdownItem>
-    </AppDropdown>
-  );
-}
 
 export default function AdminUsersPage() {
   const [activeTab, setActiveTab] = useState<"students" | "instructors">(
@@ -239,68 +53,6 @@ export default function AdminUsersPage() {
     ? "Manage instructor accounts and courses"
     : "Manage student accounts and enrollments";
 
-  const tableColumns: ColumnDef<UserData>[] = [
-    {
-      key: "name",
-      header: "Name",
-      cell: (user) => (
-        <div className="flex items-center gap-4">
-          <Avatar className="size-11">
-            <AvatarImage src={user.avatar} alt={user.name} />
-            <AvatarFallback className="text-sm font-medium bg-primary/10 text-primary">
-              {user.name
-                .split(" ")
-                .map((n) => n[0])
-                .join("")}
-            </AvatarFallback>
-          </Avatar>
-          <span className="font-medium text-gray-900 text-[15px] whitespace-nowrap">
-            {user.name}
-          </span>
-        </div>
-      ),
-    },
-    {
-      key: "uniqueId",
-      header: "ID",
-      cell: (user) => (
-        <span className="text-gray-500 text-[15px] whitespace-nowrap">
-          {user.uniqueId}
-        </span>
-      ),
-    },
-    {
-      key: "email",
-      header: "Email",
-      cell: (user) => (
-        <span className="text-gray-900 text-[15px] whitespace-nowrap">
-          {user.email}
-        </span>
-      ),
-    },
-    {
-      key: "status",
-      header: "Status",
-      cell: (user) => <StatusBadge status={user.status} />,
-    },
-    {
-      key: "enrollments",
-      header: isInstructor ? "Courses" : "Enrollments",
-      cell: (user) => (
-        <span className="text-gray-700 text-[15px] pl-4">
-          {user.enrollments}
-        </span>
-      ),
-    },
-    {
-      key: "action",
-      header: "Action",
-      headerClassName: "pr-6",
-      className: "pr-6",
-      cell: () => <UserActions />,
-    },
-  ];
-
   return (
     <div className="pb-8">
       {/* Header */}
@@ -310,13 +62,7 @@ export default function AdminUsersPage() {
       />
 
       {/* Stats Summary */}
-      <div className="hidden md:block text-[15px] mb-6 text-gray-500">
-        All (44) | <span className="text-[#FF7A59]">Active</span> (20) |{" "}
-        <span className="text-[#FF7A59]">Pending Cancellation</span> (1) |{" "}
-        <span className="text-[#FF7A59]">Pending Payment</span> (3) |{" "}
-        <span className="text-[#FF7A59]">On Hold</span> (4) |{" "}
-        <span className="text-[#FF7A59]">Cancelled</span> (16)
-      </div>
+      <StatsSummary data={mockSummaryData} />
 
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8 mt-8 md:mt-0 w-full">
         <div className="flex justify-between items-center md:block">
@@ -396,7 +142,7 @@ export default function AdminUsersPage() {
           />
         </div>
 
-        {/* Add User Button */}
+        {/* Add User Button Desktop Only */}
         <AdminDashboardButton
           title="Add New User"
           icon={Plus}
@@ -495,69 +241,8 @@ export default function AdminUsersPage() {
           </div>
         </div>
 
-        {/* Desktop Table */}
-        <div className="hidden md:block w-full overflow-x-auto">
-          <DataTable
-            data={filteredUsers}
-            columns={tableColumns}
-            keyExtractor={(user) => user.id}
-            selectable
-          />
-        </div>
-
-        {/* Mobile List */}
-        <div className="md:hidden mt-2">
-          <DataList
-            data={filteredUsers}
-            keyExtractor={(user) => user.id}
-            renderItem={(user) => (
-              <>
-                <Avatar className="size-[56px] shrink-0">
-                  <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback className="text-sm font-medium bg-primary/10 text-primary">
-                    {user.name
-                      .split(" ")
-                      .map((n) => n[0])
-                      .join("")}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="flex-1 flex flex-col gap-0.5 min-w-0 pr-6">
-                  <div className="flex items-center justify-between gap-2 mb-0.5">
-                    <span className="font-medium text-[16px] text-gray-900 truncate">
-                      {user.name}
-                    </span>
-                    <StatusBadge status={user.status} />
-                  </div>
-                  <div className="text-[14px] text-gray-500 truncate">
-                    {user.uniqueId}{" "}
-                    <span className="mx-1.5 text-gray-400">•</span>{" "}
-                    {user.enrollments}{" "}
-                    {isInstructor ? "Courses" : "Enrollments"}
-                  </div>
-                  <div className="text-[14px] text-gray-800 truncate">
-                    {user.email}
-                  </div>
-                </div>
-                <div className="absolute right-1 top-1/2 -translate-y-1/2">
-                  <UserActions />
-                </div>
-              </>
-            )}
-          />
-        </div>
-
-        {/* Pagination */}
-        <div className="flex items-center justify-between mt-8 px-2 py-4">
-          <span className="text-gray-900 text-[15px]">Page 1 of 5</span>
-          <div className="flex items-center gap-6">
-            <button className="flex items-center gap-1.5 text-gray-900 text-[15px] hover:text-black transition-colors">
-              <ChevronLeft className="size-4" /> Prev
-            </button>
-            <button className="flex items-center gap-1.5 text-gray-900 text-[15px] hover:text-black transition-colors">
-              Next <ChevronRight className="size-4" />
-            </button>
-          </div>
-        </div>
+        <UsersTable data={filteredUsers} isInstructor={isInstructor} />
+        <UsersList data={filteredUsers} isInstructor={isInstructor} />
       </div>
     </div>
   );

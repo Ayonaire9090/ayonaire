@@ -10,6 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export interface ColumnDef<T> {
   key: string;
@@ -73,13 +74,18 @@ export function DataTable<T>({
               <TableHead className="w-16 pl-6 h-[72px]">
                 <Checkbox
                   className="rounded-[4px] border-gray-300 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
-                  checked={selectedItems.size === data.length && data.length > 0}
+                  checked={
+                    selectedItems.size === data.length && data.length > 0
+                  }
                   onCheckedChange={toggleAll}
                 />
               </TableHead>
             )}
             {columns.map((col) => (
-              <TableHead key={col.key} className={`font-medium text-gray-500 h-[72px] text-[15px] ${col.headerClassName || ""}`}>
+              <TableHead
+                key={col.key}
+                className={`font-medium text-gray-500 h-[72px] text-[15px] ${col.headerClassName || ""}`}
+              >
                 {col.header}
               </TableHead>
             ))}
@@ -114,6 +120,19 @@ export function DataTable<T>({
           })}
         </TableBody>
       </Table>
+
+      {/* Pagination placeholder */}
+      <div className="flex items-center justify-between mt-8 p-4 border-t border-gray-100">
+        <span className="text-gray-900 text-[15px]">Page 1 of 5</span>
+        <div className="flex items-center gap-6">
+          <button className="flex items-center gap-1.5 text-gray-900 text-[15px] hover:text-black transition-colors">
+            <ChevronLeft className="size-4" /> Prev
+          </button>
+          <button className="flex items-center gap-1.5 text-gray-900 text-[15px] hover:text-black transition-colors">
+            Next <ChevronRight className="size-4" />
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
