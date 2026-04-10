@@ -102,6 +102,11 @@ export const dashboardData = {
       icon: DashboardCoursesIcon,
     },
     {
+      title: "Waitlist",
+      url: "/dashboard/admin/waitlist",
+      icon: DashboardCoursesIcon,
+    },
+    {
       title: "Enrollments",
       url: "/dashboard/admin/enrollments",
       icon: DashboardUserCheckIcon,

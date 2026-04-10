@@ -5,15 +5,38 @@ import Image from "next/image";
 import { Search, ChevronLeft, ChevronRight, Minus } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import { AppSimpleModal } from "@/components/modals/app-simple-modal";
 
 // Dummy data using consistent seeds or placeholders for avatars
 const mockStudents = [
-  { id: "1", name: "Iyanuoluwa Awosanya", email: "delightfocus756@gmail.com", avatar: "/assets/profile.png", status: "" },
-  { id: "2", name: "Festus Uwabor", email: "festyuwabs@gmail.com", avatar: "/assets/profile.png", status: "Enrollment Status (Approved)" },
-  { id: "3", name: "Mercy Nwankudu", email: "festyuwabs@gmail.com", avatar: "/assets/profile.png", status: "Enrollment Status (Approved)" },
-  { id: "4", name: "Iyanuoluwa Awosanya 2", email: "delightfocus756@gmail.com", avatar: "/assets/profile.png", status: "" }
+  {
+    id: "1",
+    name: "Iyanuoluwa Awosanya",
+    email: "delightfocus756@gmail.com",
+    avatar: "/assets/profile.png",
+    status: "",
+  },
+  {
+    id: "2",
+    name: "Festus Uwabor",
+    email: "festyuwabs@gmail.com",
+    avatar: "/assets/profile.png",
+    status: "Enrollment Status (Approved)",
+  },
+  {
+    id: "3",
+    name: "Mercy Nwankudu",
+    email: "festyuwabs@gmail.com",
+    avatar: "/assets/profile.png",
+    status: "Enrollment Status (Approved)",
+  },
+  {
+    id: "4",
+    name: "Iyanuoluwa Awosanya 2",
+    email: "delightfocus756@gmail.com",
+    avatar: "/assets/profile.png",
+    status: "",
+  },
 ];
 
 export interface StudentData {
@@ -38,7 +61,7 @@ export const StudentSelectionModal = ({
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
 
-  // Reset internal selection state if opened afresh, or keep it depending on UX. 
+  // Reset internal selection state if opened afresh, or keep it depending on UX.
   // We'll clear it on open for simplicity so we don't carry over old selections accidentally.
   useEffect(() => {
     if (isOpen) {
@@ -49,18 +72,20 @@ export const StudentSelectionModal = ({
 
   const filteredStudents = useMemo(() => {
     return mockStudents.filter((s) =>
-      s.name.toLowerCase().includes(searchQuery.toLowerCase())
+      s.name.toLowerCase().includes(searchQuery.toLowerCase()),
     );
   }, [searchQuery]);
 
-  const allSelected = filteredStudents.length > 0 && selectedIds.size === filteredStudents.length;
-  const someSelected = selectedIds.size > 0 && selectedIds.size < filteredStudents.length;
+  const allSelected =
+    filteredStudents.length > 0 && selectedIds.size === filteredStudents.length;
+  const someSelected =
+    selectedIds.size > 0 && selectedIds.size < filteredStudents.length;
 
   const toggleSelectAll = () => {
     if (allSelected) {
       setSelectedIds(new Set());
     } else {
-      setSelectedIds(new Set(filteredStudents.map(s => s.id)));
+      setSelectedIds(new Set(filteredStudents.map((s) => s.id)));
     }
   };
 
@@ -79,7 +104,8 @@ export const StudentSelectionModal = ({
     onAddStudents(docs);
   };
 
-  const title = selectedIds.size > 0 ? `${selectedIds.size} Selected` : "Selected";
+  const title =
+    selectedIds.size > 0 ? `${selectedIds.size} Selected` : "Selected";
 
   return (
     <AppSimpleModal
@@ -102,24 +128,40 @@ export const StudentSelectionModal = ({
 
         {/* Table Header / Name column */}
         <div className="flex items-center gap-4 py-2 opacity-90 mt-2">
-           <div 
-              role="checkbox"
-              aria-checked={allSelected ? true : someSelected ? "mixed" : false}
-              onClick={toggleSelectAll}
-              className={`flex size-5 items-center justify-center rounded border cursor-pointer border-gray-300 transition-colors ${
-                (allSelected || someSelected) ? "bg-[#F06B30] border-[#F06B30]" : "bg-white"
-              }`}
-            >
-              {allSelected && (
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M10 3L4.5 8.5L2 6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              )}
-              {someSelected && (
-                <Minus className="size-3.5 text-white" strokeWidth={3} />
-              )}
-            </div>
-           <span className="font-semibold text-gray-900 text-[16px] ml-1">Name</span>
+          <div
+            role="checkbox"
+            aria-checked={allSelected ? true : someSelected ? "mixed" : false}
+            onClick={toggleSelectAll}
+            className={`flex size-5 items-center justify-center rounded border cursor-pointer border-gray-300 transition-colors ${
+              allSelected || someSelected
+                ? "bg-[#F06B30] border-[#F06B30]"
+                : "bg-white"
+            }`}
+          >
+            {allSelected && (
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 12 12"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M10 3L4.5 8.5L2 6"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            )}
+            {someSelected && (
+              <Minus className="size-3.5 text-white" strokeWidth={3} />
+            )}
+          </div>
+          <span className="font-semibold text-gray-900 text-[16px] ml-1">
+            Name
+          </span>
         </div>
 
         {/* List */}
@@ -128,22 +170,33 @@ export const StudentSelectionModal = ({
             filteredStudents.map((student) => {
               const isChecked = selectedIds.has(student.id);
               return (
-                <div
-                  key={student.id}
-                  className="flex items-center gap-4 py-4"
-                >
+                <div key={student.id} className="flex items-center gap-4 py-4">
                   {/* Custom Styled Checkbox wrapper to match active state orange precisely */}
-                  <div 
+                  <div
                     role="checkbox"
                     aria-checked={isChecked}
                     onClick={() => toggleSelect(student.id)}
                     className={`flex size-5 shrink-0 items-center justify-center rounded border cursor-pointer border-gray-300 transition-colors ${
-                      isChecked ? "bg-[#F06B30] border-[#F06B30] text-white" : "bg-white"
+                      isChecked
+                        ? "bg-[#F06B30] border-[#F06B30] text-white"
+                        : "bg-white"
                     }`}
                   >
                     {isChecked && (
-                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M10 3L4.5 8.5L2 6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      <svg
+                        width="12"
+                        height="12"
+                        viewBox="0 0 12 12"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M10 3L4.5 8.5L2 6"
+                          stroke="white"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
                       </svg>
                     )}
                   </div>
@@ -151,23 +204,23 @@ export const StudentSelectionModal = ({
                   <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-200 shrink-0 relative">
                     {/* Placeholder image, real implementations use next/image optimally */}
                     <Image
-                       src={student.avatar}
-                       alt={student.name}
-                       fill
-                       className="object-cover"
-                     />
+                      src={student.avatar}
+                      alt={student.name}
+                      fill
+                      className="object-cover"
+                    />
                   </div>
 
                   <div className="flex flex-col gap-0.5">
                     <div className="flex items-center flex-wrap gap-2">
-                       <span className="text-[15.5px] font-medium text-gray-900 leading-tight">
-                         {student.name}
-                       </span>
-                       {student.status && (
-                         <span className="bg-gray-100 text-gray-700 text-[11px] px-2 py-0.5 rounded-sm font-medium">
-                           {student.status}
-                         </span>
-                       )}
+                      <span className="text-[15.5px] font-medium text-gray-900 leading-tight">
+                        {student.name}
+                      </span>
+                      {student.status && (
+                        <span className="bg-gray-100 text-gray-700 text-[11px] px-2 py-0.5 rounded-sm font-medium">
+                          {student.status}
+                        </span>
+                      )}
                     </div>
                     <span className="text-[13.5px] text-gray-400">
                       {student.email}
@@ -211,8 +264,8 @@ export const StudentSelectionModal = ({
               onClick={handleAdd}
               /* the Add button uses primary color when items are selected otherwise default/muted */
               className={`h-10 px-8 rounded-md shadow-none font-medium text-[14px] text-white ${
-                selectedIds.size > 0 
-                  ? "bg-[#F06B30] hover:bg-[#F06B30]/90" 
+                selectedIds.size > 0
+                  ? "bg-[#F06B30] hover:bg-[#F06B30]/90"
                   : "bg-gray-200 text-gray-400 hover:bg-gray-200 cursor-not-allowed border-0"
               }`}
             >
