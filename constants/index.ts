@@ -97,24 +97,9 @@ export const dashboardData = {
       icon: DashboardUsersIcon,
     },
     {
-      title: "Instructors",
-      url: "/dashboard/admin/instructors",
-      icon: DashboardInstructorsIcon,
-    },
-    {
       title: "Courses",
       url: "/dashboard/admin/courses",
       icon: DashboardCoursesIcon,
-    },
-    {
-      title: "Content",
-      url: "/dashboard/admin/content",
-      icon: DashboardContentIcon,
-    },
-    {
-      title: "Classes",
-      url: "/dashboard/admin/classes",
-      icon: DashboardPeopleIcon,
     },
     {
       title: "Enrollments",
