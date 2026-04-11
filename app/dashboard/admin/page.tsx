@@ -22,15 +22,9 @@ export default function AdminDashboardPage() {
         }
         subTitle="Monitor platform activity and manage operations efficiently"
       />
-      <div className="lg:hidden relative">
-        <DashboardSearch />
-        <div className="fixed flex justify-center items-center right-3 top-[50%] translate-y-[-50%] z-90">
-          <AdminDashboardButton icon={Plus} />
-        </div>
-      </div>
 
       <div className="py-3 md:py-6">
-        <div className="hidden lg:flex justify-between items-center gap-4 flex-wrap pb-6">
+        <div className="flex justify-between items-center gap-4 flex-wrap pb-6">
           <DashboardSearch />
           <AdminDashboardButton title="Upload Live Class" icon={Plus} />
         </div>

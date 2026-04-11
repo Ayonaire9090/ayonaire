@@ -146,15 +146,6 @@ export default function AdminUsersPage() {
         <AdminDashboardButton
           title="Add New User"
           icon={Plus}
-          className="hidden md:flex"
-          onClick={() => setAddUserOpen(true)}
-        />
-      </div>
-
-      {/* Add new User Mobile Only */}
-      <div className="md:hidden fixed flex justify-center items-center right-3 top-[50%] translate-y-[-50%] z-90">
-        <AdminDashboardButton
-          icon={Plus}
           onClick={() => setAddUserOpen(true)}
         />
       </div>
