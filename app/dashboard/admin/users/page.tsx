@@ -97,10 +97,18 @@ export default function AdminUsersPage() {
   const [addUserOpen, setAddUserOpen] = useState(false);
 
   // Instructor filter states
-  const [selectedStatuses, setSelectedStatuses] = useState<Set<string>>(new Set());
-  const [selectedCourses, setSelectedCourses] = useState<Set<string>>(new Set());
-  const [selectedCohorts, setSelectedCohorts] = useState<Set<string>>(new Set());
-  const [selectedBulkActions, setSelectedBulkActions] = useState<Set<string>>(new Set());
+  const [selectedStatuses, setSelectedStatuses] = useState<Set<string>>(
+    new Set(),
+  );
+  const [selectedCourses, setSelectedCourses] = useState<Set<string>>(
+    new Set(),
+  );
+  const [selectedCohorts, setSelectedCohorts] = useState<Set<string>>(
+    new Set(),
+  );
+  const [selectedBulkActions, setSelectedBulkActions] = useState<Set<string>>(
+    new Set(),
+  );
 
   const toggleSet = (
     set: Set<string>,
@@ -116,8 +124,10 @@ export default function AdminUsersPage() {
   };
 
   const getDynamicBulkActions = () => {
-    if (selectedStatuses.has("Suspended")) return ["Reactivate", "Delete", "Publish"];
-    if (selectedStatuses.has("Pending")) return ["Approve", "Reject", "Publish"];
+    if (selectedStatuses.has("Suspended"))
+      return ["Reactivate", "Delete", "Publish"];
+    if (selectedStatuses.has("Pending"))
+      return ["Approve", "Reject", "Publish"];
     return ["Suspend", "Delete", "Publish"]; // Default / Active
   };
 
@@ -130,7 +140,7 @@ export default function AdminUsersPage() {
     "DevOps Engineering",
     "Project Management",
   ];
-  
+
   const cohortsItems = ["Cohort A", "Cohort B", "Cohort C"];
   const statusesItems = ["Active", "Pending", "Suspended", "Rejected"];
 
@@ -151,6 +161,137 @@ export default function AdminUsersPage() {
   const sectionSubtitle = isInstructor
     ? "Manage instructor accounts and courses"
     : "Manage student accounts and enrollments";
+
+  const instructorFiltersContent = (
+    <>
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            className="h-11 px-4 bg-white md:bg-[#F6F6F6] border-none text-gray-600 font-normal hover:bg-gray-100 rounded-lg shadow-none text-[14px] shrink-0"
+          >
+            Status <ChevronDown className="ml-1.5 size-4 text-gray-500" />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent
+          align="start"
+          className="w-[280px] p-0 rounded-[20px] border-gray-100 shadow-lg bg-[#F6F6F6]"
+        >
+          <FilterPopoverHeader title="Status" />
+          <div className="pb-3 flex flex-col gap-0.5">
+            {statusesItems.map((s) => (
+              <CheckboxItem
+                key={s}
+                label={s}
+                checked={selectedStatuses.has(s)}
+                onToggle={() =>
+                  toggleSet(selectedStatuses, setSelectedStatuses, s)
+                }
+              />
+            ))}
+          </div>
+        </PopoverContent>
+      </Popover>
+
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            className="h-11 px-4 bg-white md:bg-[#F6F6F6] border-none text-gray-600 font-normal hover:bg-gray-100 rounded-lg shadow-none text-[14px] shrink-0"
+          >
+            All Courses <ChevronDown className="ml-1.5 size-4 text-gray-500" />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent
+          align="start"
+          className="w-[320px] p-0 rounded-[20px] border-gray-100 shadow-lg bg-[#F6F6F6] max-h-[420px] overflow-y-auto"
+        >
+          <FilterPopoverHeader title="All Courses" />
+          <div className="pb-3 flex flex-col gap-0.5">
+            {coursesItems.map((c) => (
+              <CheckboxItem
+                key={c}
+                label={c}
+                checked={selectedCourses.has(c)}
+                onToggle={() =>
+                  toggleSet(selectedCourses, setSelectedCourses, c)
+                }
+              />
+            ))}
+          </div>
+        </PopoverContent>
+      </Popover>
+
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            className="h-11 px-4 bg-white md:bg-[#F6F6F6] border-none text-gray-600 font-normal hover:bg-gray-100 rounded-lg shadow-none text-[14px] shrink-0"
+          >
+            Cohort <ChevronDown className="ml-1.5 size-4 text-gray-500" />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent
+          align="start"
+          className="w-[280px] p-0 rounded-[20px] border-gray-100 shadow-lg bg-[#F6F6F6]"
+        >
+          <FilterPopoverHeader title="Cohort" />
+          <div className="pb-3 flex flex-col gap-0.5">
+            {cohortsItems.map((c) => (
+              <CheckboxItem
+                key={c}
+                label={c}
+                checked={selectedCohorts.has(c)}
+                onToggle={() =>
+                  toggleSet(selectedCohorts, setSelectedCohorts, c)
+                }
+              />
+            ))}
+          </div>
+        </PopoverContent>
+      </Popover>
+
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            className="h-11 px-4 bg-white md:bg-[#F6F6F6] border-none text-gray-600 font-normal hover:bg-gray-100 rounded-lg shadow-none text-[14px] shrink-0"
+          >
+            Bulk Actions <ChevronDown className="ml-1.5 size-4 text-gray-500" />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent
+          align="start"
+          className="w-[280px] p-0 rounded-[20px] border-gray-100 shadow-lg bg-[#F6F6F6]"
+        >
+          <FilterPopoverHeader title="Bulk Actions" />
+          <div className="pb-3 flex flex-col gap-0.5">
+            {getDynamicBulkActions().map((action) => (
+              <CheckboxItem
+                key={action}
+                label={action}
+                checked={selectedBulkActions.has(action)}
+                onToggle={() =>
+                  toggleSet(selectedBulkActions, setSelectedBulkActions, action)
+                }
+                danger={action === "Delete" || action === "Reject"}
+              />
+            ))}
+          </div>
+        </PopoverContent>
+      </Popover>
+
+      {/* Apply Button */}
+      <Button
+        variant="outline"
+        className={`py-5! flex  items-center cursor-pointer justify-center gap-2 
+                rounded-lg bg-primary shadow-sm 
+                text-white focus:outline-0! shadow-0!`}
+      >
+        <p className="text-sm text-white">Apply</p>
+      </Button>
+    </>
+  );
 
   return (
     <div className="pb-8">
@@ -241,6 +382,13 @@ export default function AdminUsersPage() {
           />
         </div>
 
+        {/* Instructor Filters Mobile Only */}
+        {isInstructor && (
+          <div className="md:hidden flex gap-3 items-center overflow-x-auto overflow-y-hidden py-2 hide-scrollbar">
+            {instructorFiltersContent}
+          </div>
+        )}
+
         {/* Add User Button Desktop Only */}
         <AdminDashboardButton
           title={isInstructor ? "Add New Instructor" : "Add New User"}
@@ -276,113 +424,7 @@ export default function AdminUsersPage() {
                 className="pl-11 rounded-full border-none bg-[#F6F6F6] h-11 text-[15px] placeholder:text-gray-400 focus-visible:ring-0 focus-visible:bg-gray-100 shadow-none"
               />
             </div>
-
-            {/* Custom Filters for Instructors */}
-            {isInstructor ? (
-              <div className="hidden md:flex items-center gap-3">
-                {/* Status Filter */}
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className="h-11 px-4 bg-[#F6F6F6] border-none text-gray-600 font-normal hover:bg-gray-100 rounded-lg shadow-none text-[14px]"
-                    >
-                      Status <ChevronDown className="ml-1.5 size-4 text-gray-500" />
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent align="start" className="w-[280px] p-0 rounded-[20px] border-gray-100 shadow-lg bg-[#F6F6F6]">
-                    <FilterPopoverHeader title="Status" />
-                    <div className="pb-3 flex flex-col gap-0.5">
-                      {statusesItems.map((s) => (
-                        <CheckboxItem
-                          key={s}
-                          label={s}
-                          checked={selectedStatuses.has(s)}
-                          onToggle={() => toggleSet(selectedStatuses, setSelectedStatuses, s)}
-                        />
-                      ))}
-                    </div>
-                  </PopoverContent>
-                </Popover>
-
-                {/* Dynamic Bulk Actions */}
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className="h-11 px-4 bg-[#F6F6F6] border-none text-gray-600 font-normal hover:bg-gray-100 rounded-lg shadow-none text-[14px]"
-                    >
-                      Bulk Actions <ChevronDown className="ml-1.5 size-4 text-gray-500" />
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent align="start" className="w-[280px] p-0 rounded-[20px] border-gray-100 shadow-lg bg-[#F6F6F6]">
-                    <FilterPopoverHeader title="Bulk Actions" />
-                    <div className="pb-3 flex flex-col gap-0.5">
-                      {getDynamicBulkActions().map((action) => (
-                        <CheckboxItem
-                          key={action}
-                          label={action}
-                          checked={selectedBulkActions.has(action)}
-                          onToggle={() => toggleSet(selectedBulkActions, setSelectedBulkActions, action)}
-                          danger={action === "Delete" || action === "Reject"}
-                        />
-                      ))}
-                    </div>
-                  </PopoverContent>
-                </Popover>
-
-                {/* All Courses */}
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className="h-11 px-4 bg-[#F6F6F6] border-none text-gray-600 font-normal hover:bg-gray-100 rounded-lg shadow-none text-[14px]"
-                    >
-                      All Courses <ChevronDown className="ml-1.5 size-4 text-gray-500" />
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent align="start" className="w-[320px] p-0 rounded-[20px] border-gray-100 shadow-lg bg-[#F6F6F6] max-h-[420px] overflow-y-auto">
-                    <FilterPopoverHeader title="All Courses" />
-                    <div className="pb-3 flex flex-col gap-0.5">
-                      {coursesItems.map((c) => (
-                        <CheckboxItem
-                          key={c}
-                          label={c}
-                          checked={selectedCourses.has(c)}
-                          onToggle={() => toggleSet(selectedCourses, setSelectedCourses, c)}
-                        />
-                      ))}
-                    </div>
-                  </PopoverContent>
-                </Popover>
-
-                {/* Cohort */}
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className="h-11 px-4 bg-[#F6F6F6] border-none text-gray-600 font-normal hover:bg-gray-100 rounded-lg shadow-none text-[14px]"
-                    >
-                      Cohort <ChevronDown className="ml-1.5 size-4 text-gray-500" />
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent align="start" className="w-[280px] p-0 rounded-[20px] border-gray-100 shadow-lg bg-[#F6F6F6]">
-                    <FilterPopoverHeader title="Cohort" />
-                    <div className="pb-3 flex flex-col gap-0.5">
-                      {cohortsItems.map((c) => (
-                        <CheckboxItem
-                          key={c}
-                          label={c}
-                          checked={selectedCohorts.has(c)}
-                          onToggle={() => toggleSet(selectedCohorts, setSelectedCohorts, c)}
-                        />
-                      ))}
-                    </div>
-                  </PopoverContent>
-                </Popover>
-              </div>
-            ) : (
-              /* Generic Users Bulk Actions */
+            {!isInstructor && (
               <div className="hidden md:block">
                 <Popover>
                   <PopoverTrigger asChild>
@@ -390,7 +432,8 @@ export default function AdminUsersPage() {
                       variant="outline"
                       className="h-11 px-6 bg-[#F6F6F6] border-none text-gray-600 font-normal hover:bg-gray-100 rounded-[8px] shadow-none"
                     >
-                      Bulk Action <ChevronDown className="ml-2 size-4 text-gray-500" />
+                      Bulk Action{" "}
+                      <ChevronDown className="ml-2 size-4 text-gray-500" />
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent
@@ -435,6 +478,14 @@ export default function AdminUsersPage() {
               </div>
             )}
           </div>
+        </div>
+        {/* Custom Filters for Instructors */}
+        <div className="pb-4">
+          {isInstructor && (
+            <div className="hidden md:flex items-center gap-3">
+              {instructorFiltersContent}
+            </div>
+          )}
         </div>
 
         <UsersTable data={filteredUsers} isInstructor={isInstructor} />
