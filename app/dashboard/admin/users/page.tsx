@@ -15,7 +15,7 @@ import { Plus, Search, ChevronDown, X } from "lucide-react";
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 import { AdminDashboardButton } from "@/components/dashboard/admin-dashboard-button";
 import { StatsSummary } from "../../../../components/dashboard/stats-summary";
-import { mockUsers } from "./_components/users-data";
+import { usersData } from "./_components/users-data";
 import { UsersTable } from "./_components/users-table";
 import { UsersList } from "./_components/users-list";
 
@@ -28,6 +28,67 @@ const mockSummaryData = [
   { title: "Cancelled", number: "16" },
 ];
 
+function FilterPopoverHeader({ title }: { title: string }) {
+  return (
+    <div className="flex items-start justify-between p-5 pb-4">
+      <span className="text-[20px] font-bold text-gray-900 leading-tight">
+        {title}
+      </span>
+      <PopoverClose asChild>
+        <button className="size-9 flex items-center justify-center bg-[#EBEBEB] rounded-full hover:bg-gray-300 transition-colors shrink-0 mt-0.5">
+          <X className="size-[16px] text-gray-700" />
+        </button>
+      </PopoverClose>
+    </div>
+  );
+}
+
+function CheckboxItem({
+  label,
+  checked,
+  onToggle,
+  danger,
+}: {
+  label: string;
+  checked: boolean;
+  onToggle: () => void;
+  danger?: boolean;
+}) {
+  return (
+    <button
+      onClick={onToggle}
+      className="flex items-center gap-3.5 w-full px-5 py-3 hover:bg-white/60 transition-colors text-left rounded-xl"
+    >
+      <div
+        className={`size-5 rounded-[5px] border-2 flex items-center justify-center shrink-0 transition-colors ${
+          checked ? "bg-primary border-primary" : "bg-white border-gray-300"
+        }`}
+      >
+        {checked && (
+          <svg
+            className="size-3 text-white"
+            viewBox="0 0 12 10"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <polyline points="1 5 4.5 8.5 11 1" />
+          </svg>
+        )}
+      </div>
+      <span
+        className={`text-[15px] font-normal ${
+          danger ? "text-red-500" : "text-gray-600"
+        }`}
+      >
+        {label}
+      </span>
+    </button>
+  );
+}
+
 export default function AdminUsersPage() {
   const [activeTab, setActiveTab] = useState<"students" | "instructors">(
     "students",
@@ -35,9 +96,47 @@ export default function AdminUsersPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [addUserOpen, setAddUserOpen] = useState(false);
 
+  // Instructor filter states
+  const [selectedStatuses, setSelectedStatuses] = useState<Set<string>>(new Set());
+  const [selectedCourses, setSelectedCourses] = useState<Set<string>>(new Set());
+  const [selectedCohorts, setSelectedCohorts] = useState<Set<string>>(new Set());
+  const [selectedBulkActions, setSelectedBulkActions] = useState<Set<string>>(new Set());
+
+  const toggleSet = (
+    set: Set<string>,
+    setter: React.Dispatch<React.SetStateAction<Set<string>>>,
+    value: string,
+  ) => {
+    setter((prev) => {
+      const next = new Set(prev);
+      if (next.has(value)) next.delete(value);
+      else next.add(value);
+      return next;
+    });
+  };
+
+  const getDynamicBulkActions = () => {
+    if (selectedStatuses.has("Suspended")) return ["Reactivate", "Delete", "Publish"];
+    if (selectedStatuses.has("Pending")) return ["Approve", "Reject", "Publish"];
+    return ["Suspend", "Delete", "Publish"]; // Default / Active
+  };
+
+  const coursesItems = [
+    "AI Engineering",
+    "Data Science",
+    "Data Analysis",
+    "Digital Marketing",
+    "Cloud Computing",
+    "DevOps Engineering",
+    "Project Management",
+  ];
+  
+  const cohortsItems = ["Cohort A", "Cohort B", "Cohort C"];
+  const statusesItems = ["Active", "Pending", "Suspended", "Rejected"];
+
   const isInstructor = activeTab === "instructors";
 
-  const filteredUsers = mockUsers
+  const filteredUsers = usersData
     .filter((user) =>
       isInstructor ? user.role === "instructor" : user.role === "student",
     )
@@ -144,7 +243,7 @@ export default function AdminUsersPage() {
 
         {/* Add User Button Desktop Only */}
         <AdminDashboardButton
-          title="Add New User"
+          title={isInstructor ? "Add New Instructor" : "Add New User"}
           icon={Plus}
           onClick={() => setAddUserOpen(true)}
         />
@@ -153,6 +252,7 @@ export default function AdminUsersPage() {
       <AddUserModal
         isOpen={addUserOpen}
         onClose={() => setAddUserOpen(false)}
+        isInstructor={isInstructor}
       />
 
       {/* Section Header + Search + Bulk Actions */}
@@ -177,58 +277,163 @@ export default function AdminUsersPage() {
               />
             </div>
 
-            {/* Bulk Actions */}
-            <div className="hidden md:block">
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className="h-11 px-6 bg-[#F6F6F6] border-none text-gray-600 font-normal hover:bg-gray-100 rounded-[8px] shadow-none"
+            {/* Custom Filters for Instructors */}
+            {isInstructor ? (
+              <div className="hidden md:flex items-center gap-3">
+                {/* Status Filter */}
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className="h-11 px-4 bg-[#F6F6F6] border-none text-gray-600 font-normal hover:bg-gray-100 rounded-lg shadow-none text-[14px]"
+                    >
+                      Status <ChevronDown className="ml-1.5 size-4 text-gray-500" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent align="start" className="w-[280px] p-0 rounded-[20px] border-gray-100 shadow-lg bg-[#F6F6F6]">
+                    <FilterPopoverHeader title="Status" />
+                    <div className="pb-3 flex flex-col gap-0.5">
+                      {statusesItems.map((s) => (
+                        <CheckboxItem
+                          key={s}
+                          label={s}
+                          checked={selectedStatuses.has(s)}
+                          onToggle={() => toggleSet(selectedStatuses, setSelectedStatuses, s)}
+                        />
+                      ))}
+                    </div>
+                  </PopoverContent>
+                </Popover>
+
+                {/* Dynamic Bulk Actions */}
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className="h-11 px-4 bg-[#F6F6F6] border-none text-gray-600 font-normal hover:bg-gray-100 rounded-lg shadow-none text-[14px]"
+                    >
+                      Bulk Actions <ChevronDown className="ml-1.5 size-4 text-gray-500" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent align="start" className="w-[280px] p-0 rounded-[20px] border-gray-100 shadow-lg bg-[#F6F6F6]">
+                    <FilterPopoverHeader title="Bulk Actions" />
+                    <div className="pb-3 flex flex-col gap-0.5">
+                      {getDynamicBulkActions().map((action) => (
+                        <CheckboxItem
+                          key={action}
+                          label={action}
+                          checked={selectedBulkActions.has(action)}
+                          onToggle={() => toggleSet(selectedBulkActions, setSelectedBulkActions, action)}
+                          danger={action === "Delete" || action === "Reject"}
+                        />
+                      ))}
+                    </div>
+                  </PopoverContent>
+                </Popover>
+
+                {/* All Courses */}
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className="h-11 px-4 bg-[#F6F6F6] border-none text-gray-600 font-normal hover:bg-gray-100 rounded-lg shadow-none text-[14px]"
+                    >
+                      All Courses <ChevronDown className="ml-1.5 size-4 text-gray-500" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent align="start" className="w-[320px] p-0 rounded-[20px] border-gray-100 shadow-lg bg-[#F6F6F6] max-h-[420px] overflow-y-auto">
+                    <FilterPopoverHeader title="All Courses" />
+                    <div className="pb-3 flex flex-col gap-0.5">
+                      {coursesItems.map((c) => (
+                        <CheckboxItem
+                          key={c}
+                          label={c}
+                          checked={selectedCourses.has(c)}
+                          onToggle={() => toggleSet(selectedCourses, setSelectedCourses, c)}
+                        />
+                      ))}
+                    </div>
+                  </PopoverContent>
+                </Popover>
+
+                {/* Cohort */}
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className="h-11 px-4 bg-[#F6F6F6] border-none text-gray-600 font-normal hover:bg-gray-100 rounded-lg shadow-none text-[14px]"
+                    >
+                      Cohort <ChevronDown className="ml-1.5 size-4 text-gray-500" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent align="start" className="w-[280px] p-0 rounded-[20px] border-gray-100 shadow-lg bg-[#F6F6F6]">
+                    <FilterPopoverHeader title="Cohort" />
+                    <div className="pb-3 flex flex-col gap-0.5">
+                      {cohortsItems.map((c) => (
+                        <CheckboxItem
+                          key={c}
+                          label={c}
+                          checked={selectedCohorts.has(c)}
+                          onToggle={() => toggleSet(selectedCohorts, setSelectedCohorts, c)}
+                        />
+                      ))}
+                    </div>
+                  </PopoverContent>
+                </Popover>
+              </div>
+            ) : (
+              /* Generic Users Bulk Actions */
+              <div className="hidden md:block">
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className="h-11 px-6 bg-[#F6F6F6] border-none text-gray-600 font-normal hover:bg-gray-100 rounded-[8px] shadow-none"
+                    >
+                      Bulk Action <ChevronDown className="ml-2 size-4 text-gray-500" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent
+                    align="end"
+                    className="w-[380px] p-0 rounded-[20px] border-gray-100 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] bg-[#FAFAFA]"
                   >
-                    Bulk Action{" "}
-                    <ChevronDown className="ml-2 size-4 text-gray-500" />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent
-                  align="end"
-                  className="w-[380px] p-0 rounded-[20px] border-gray-100 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] bg-[#FAFAFA]"
-                >
-                  <div className="flex items-center justify-between p-5 pb-3">
-                    <h3 className="font-semibold text-[22px] text-black">
-                      Bulk actions
-                    </h3>
-                    <PopoverClose asChild>
-                      <button className="p-1.5 bg-[#E6E6E6] rounded-full hover:bg-gray-300 transition-colors">
-                        <X className="size-[18px] text-black" />
-                      </button>
-                    </PopoverClose>
-                  </div>
-                  <div className="px-2 pb-4 pt-1 flex flex-col gap-1">
-                    <PopoverClose asChild>
-                      <button className="text-left px-4 py-3 text-[16px] text-gray-600 hover:bg-white rounded-xl transition-colors">
-                        View all users (students and instructors)
-                      </button>
-                    </PopoverClose>
-                    <PopoverClose asChild>
-                      <button className="text-left px-4 py-3 text-[16px] text-gray-600 hover:bg-white rounded-xl transition-colors">
-                        Create, edit, deactivate, suspend, or delete user
-                        accounts
-                      </button>
-                    </PopoverClose>
-                    <PopoverClose asChild>
-                      <button className="text-left px-4 py-3 text-[16px] text-gray-600 hover:bg-white rounded-xl transition-colors">
-                        Assign or change user roles
-                      </button>
-                    </PopoverClose>
-                    <PopoverClose asChild>
-                      <button className="text-left px-4 py-3 text-[16px] text-gray-600 hover:bg-white rounded-xl transition-colors">
-                        View user activity and login history
-                      </button>
-                    </PopoverClose>
-                  </div>
-                </PopoverContent>
-              </Popover>
-            </div>
+                    <div className="flex items-center justify-between p-5 pb-3">
+                      <h3 className="font-semibold text-[22px] text-black">
+                        Bulk actions
+                      </h3>
+                      <PopoverClose asChild>
+                        <button className="p-1.5 bg-[#E6E6E6] rounded-full hover:bg-gray-300 transition-colors">
+                          <X className="size-[18px] text-black" />
+                        </button>
+                      </PopoverClose>
+                    </div>
+                    <div className="px-2 pb-4 pt-1 flex flex-col gap-1">
+                      <PopoverClose asChild>
+                        <button className="text-left px-4 py-3 text-[16px] text-gray-600 hover:bg-white rounded-xl transition-colors">
+                          View all users (students and instructors)
+                        </button>
+                      </PopoverClose>
+                      <PopoverClose asChild>
+                        <button className="text-left px-4 py-3 text-[16px] text-gray-600 hover:bg-white rounded-xl transition-colors">
+                          Create, edit, deactivate, suspend, or delete user
+                          accounts
+                        </button>
+                      </PopoverClose>
+                      <PopoverClose asChild>
+                        <button className="text-left px-4 py-3 text-[16px] text-gray-600 hover:bg-white rounded-xl transition-colors">
+                          Assign or change user roles
+                        </button>
+                      </PopoverClose>
+                      <PopoverClose asChild>
+                        <button className="text-left px-4 py-3 text-[16px] text-gray-600 hover:bg-white rounded-xl transition-colors">
+                          View user activity and login history
+                        </button>
+                      </PopoverClose>
+                    </div>
+                  </PopoverContent>
+                </Popover>
+              </div>
+            )}
           </div>
         </div>
 

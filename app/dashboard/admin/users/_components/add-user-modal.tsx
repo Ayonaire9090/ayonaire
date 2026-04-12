@@ -9,18 +9,26 @@ import { BulkAddForm } from "./bulk-add-form";
 export function AddUserModal({
   isOpen,
   onClose,
+  isInstructor,
 }: {
   isOpen: boolean;
   onClose: () => void;
+  isInstructor?: boolean;
 }) {
   const [activeTab, setActiveTab] = useState<"manual" | "bulk">("manual");
+
+  const titleText = isInstructor ? "Add New Instructor" : "Add New User";
+  const subtitleText = isInstructor 
+    ? "Create a new instructor or invite instructors to the platform" 
+    : "Create a new student or invite users to the platform";
+  const buttonText = isInstructor ? "Add Instructor" : "Add User";
 
   return (
     <AppMegaModal
       isOpen={isOpen}
       onClose={onClose}
-      title="Add New User"
-      subtitle="Create a new student or invite users to the platform"
+      title={titleText}
+      subtitle={subtitleText}
       headerContent={
         <div className="inline-flex items-center bg-white p-1 rounded-xl shadow-sm overflow-x-auto w-full md:w-auto">
           <button
@@ -55,7 +63,7 @@ export function AddUserModal({
             Cancel
           </Button>
           <Button className="md:w-auto px-8 h-12 rounded-xl text-[15px] font-medium bg-[#FF7A59] hover:bg-[#FF7A59]/90 text-white border-transparent">
-            <span className="text-xl mr-1 font-light">+</span> Add User
+            <span className="text-xl mr-1 font-light">+</span> {buttonText}
           </Button>
         </div>
       }

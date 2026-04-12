@@ -205,7 +205,7 @@ export function BulkAddForm() {
           </div>
 
           {/* Template Download Box */}
-          <div className="bg-[#FFF5F2] border border-[#FFEBE6] rounded-2xl p-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="bg-[#F86432]/10 border border-[#F86432] rounded-2xl p-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="flex flex-col gap-1">
               <h4 className="font-semibold text-gray-900 text-[16px]">
                 Need a template?

@@ -11,7 +11,7 @@ interface UsersTableProps {
 }
 
 export const UsersTable = ({ data, isInstructor }: UsersTableProps) => {
-  const tableColumns: ColumnDef<UserData>[] = [
+  const studentColumns: ColumnDef<UserData>[] = [
     {
       key: "name",
       header: "Name",
@@ -20,10 +20,7 @@ export const UsersTable = ({ data, isInstructor }: UsersTableProps) => {
           <Avatar className="size-11">
             <AvatarImage src={user.avatar} alt={user.name} />
             <AvatarFallback className="text-sm font-medium bg-primary/10 text-primary">
-              {user.name
-                .split(" ")
-                .map((n) => n[0])
-                .join("")}
+              {user.name.split(" ").map((n) => n[0]).join("")}
             </AvatarFallback>
           </Avatar>
           <span className="font-medium text-gray-900 text-[15px] whitespace-nowrap">
@@ -57,7 +54,7 @@ export const UsersTable = ({ data, isInstructor }: UsersTableProps) => {
     },
     {
       key: "enrollments",
-      header: isInstructor ? "Courses" : "Enrollments",
+      header: "Enrollments",
       cell: (user) => (
         <span className="text-gray-700 text-[15px] pl-4">
           {user.enrollments}
@@ -73,11 +70,88 @@ export const UsersTable = ({ data, isInstructor }: UsersTableProps) => {
     },
   ];
 
+  const instructorColumns: ColumnDef<UserData>[] = [
+    {
+      key: "name",
+      header: "Instructor",
+      cell: (user) => (
+        <div className="flex items-center gap-4">
+          <Avatar className="size-11">
+            <AvatarImage src={user.avatar} alt={user.name} />
+            <AvatarFallback className="text-sm font-medium bg-primary/10 text-primary">
+              {user.name.split(" ").map((n) => n[0]).join("")}
+            </AvatarFallback>
+          </Avatar>
+          <span className="font-medium text-gray-900 text-[15px] whitespace-nowrap">
+            {user.name}
+          </span>
+        </div>
+      ),
+    },
+    {
+      key: "uniqueId",
+      header: "ID",
+      cell: (user) => (
+        <span className="text-gray-500 text-[15px] whitespace-nowrap">
+          {user.uniqueId}
+        </span>
+      ),
+    },
+    {
+      key: "status",
+      header: "Status",
+      cell: (user) => <StatusBadge status={user.status} />,
+    },
+    {
+      key: "courses",
+      header: "Courses",
+      cell: (user) => (
+        <span className="text-gray-700 text-[15px] whitespace-nowrap">
+          {user.coursesCount || "-"}
+        </span>
+      ),
+    },
+    {
+      key: "batch",
+      header: "Batch",
+      cell: (user) => (
+        <span className="text-gray-700 text-[15px] whitespace-nowrap">
+          {user.batch || "-"}
+        </span>
+      ),
+    },
+    {
+      key: "joined",
+      header: "Joined",
+      cell: (user) => (
+        <span className="text-gray-700 text-[15px] whitespace-nowrap">
+          {user.joined || "-"}
+        </span>
+      ),
+    },
+    {
+      key: "lastActive",
+      header: "Last Active",
+      cell: (user) => (
+        <span className="text-gray-700 text-[15px] whitespace-nowrap">
+          {user.lastActive || "-"}
+        </span>
+      ),
+    },
+    {
+      key: "action",
+      header: "Actions",
+      headerClassName: "pr-6",
+      className: "pr-6",
+      cell: () => <UserActions />,
+    },
+  ];
+
   return (
     <div className="hidden md:block w-full overflow-x-auto">
       <DataTable
         data={data}
-        columns={tableColumns}
+        columns={isInstructor ? instructorColumns : studentColumns}
         keyExtractor={(user) => user.id}
         selectable
       />

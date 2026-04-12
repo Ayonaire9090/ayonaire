@@ -36,10 +36,10 @@ export const UsersList = ({ data, isInstructor }: UsersListProps) => {
               </div>
               <div className="text-[14px] text-gray-500 truncate">
                 {user.uniqueId} <span className="mx-1.5 text-gray-400">•</span>{" "}
-                {user.enrollments} {isInstructor ? "Courses" : "Enrollments"}
+                {isInstructor ? (user.coursesCount || "-") : `${user.enrollments} Enrollments`}
               </div>
               <div className="text-[14px] text-gray-800 truncate">
-                {user.email}
+                {isInstructor ? (user.batch || "No Batch") : user.email}
               </div>
             </div>
             <div className="absolute right-1 top-1/2 -translate-y-1/2">
