@@ -42,18 +42,14 @@ export const AnnouncementsList = () => {
             />
           </div>
           {/* Apply / Toggle Data button for mobile to verify */}
-          <button onClick={() => setIsEmptyState(!isEmptyState)} className="mt-2 text-sm text-primary font-medium hover:underline">
-             Toggle mock data
+          <button
+            onClick={() => setIsEmptyState(!isEmptyState)}
+            className="mt-2 text-sm text-primary font-medium hover:underline"
+          >
+            Toggle mock data
           </button>
         </div>
       </div>
-
-      {/* Empty State Banner */}
-      {isEmptyState && (
-        <div className="pb-4">
-          <AnnouncementBanner />
-        </div>
-      )}
 
       <DataList
         data={(isEmptyState ? [] : mockAnnouncements).filter((item) =>
