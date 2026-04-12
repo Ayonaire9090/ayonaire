@@ -15,6 +15,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { DataTable, ColumnDef } from "@/components/ui/data-table";
+import { DataList } from "@/components/ui/data-list";
 
 interface EnrollmentsListProps {
   onEnrollClick: () => void;
@@ -23,6 +25,15 @@ interface EnrollmentsListProps {
 export const EnrollmentsList = ({ onEnrollClick }: EnrollmentsListProps) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isBulkOpen, setIsBulkOpen] = useState(false);
+
+  // Mock columns since we have no data yet
+  const columns: ColumnDef<any>[] = [
+    { key: "studentName", header: "Student Name", cell: () => null },
+    { key: "course", header: "Course", cell: () => null },
+    { key: "date", header: "Date", cell: () => null },
+    { key: "status", header: "Status", cell: () => null },
+    { key: "action", header: "Action", cell: () => null },
+  ];
 
   return (
     <div className="flex flex-col w-full">
@@ -122,29 +133,22 @@ export const EnrollmentsList = ({ onEnrollClick }: EnrollmentsListProps) => {
           </div>
         </div>
 
-        {/* Empty State Content */}
-        <div className="flex-1 flex flex-col items-center justify-center min-h-[400px]">
-          <Image
-            src="/assets/icons/enrolments-not-found.svg"
-            alt="No Enrollments Found"
-            width={150}
-            height={150}
-            className="w-28 h-auto object-contain select-none"
-          />
-        </div>
-
-        {/* Pagination Bottom */}
-        <div className="flex items-center justify-between mt-auto pt-6 w-full">
-          <span className="text-[15px] font-medium text-gray-800">
-            Page 1 of 5
-          </span>
-          <div className="flex items-center gap-6">
-            <button className="flex items-center gap-1.5 text-[15px] font-medium text-gray-800 hover:text-black transition-colors disabled:opacity-50">
-              <ChevronLeft className="size-4" strokeWidth={2.5} /> Prev.
-            </button>
-            <button className="flex items-center gap-1.5 text-[15px] font-medium text-gray-800 hover:text-black transition-colors">
-              Next <ChevronRight className="size-4" strokeWidth={2.5} />
-            </button>
+        {/* Data Views */}
+        <div className="flex-1 mt-6">
+          <div className="hidden md:block">
+            <DataTable
+              data={[]}
+              columns={columns}
+              keyExtractor={(item: any) => item.id || ""}
+              selectable
+            />
+          </div>
+          <div className="block md:hidden">
+            <DataList
+              data={[]}
+              keyExtractor={(item: any) => item.id || ""}
+              renderItem={(item: any) => <div />}
+            />
           </div>
         </div>
       </div>

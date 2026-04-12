@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import {
   Table,
   TableBody,
@@ -92,32 +93,51 @@ export function DataTable<T>({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data.map((item) => {
-            const id = keyExtractor(item);
-            const isSelected = selectedItems.has(id);
-            return (
-              <TableRow
-                key={id}
-                data-state={isSelected ? "selected" : undefined}
-                className="border-none hover:bg-transparent even:bg-[#F6F6F6] odd:bg-white h-[72px]"
+          {data.length === 0 ? (
+            <TableRow className="border-none hover:bg-transparent">
+              <TableCell
+                colSpan={selectable ? columns.length + 1 : columns.length}
+                className="h-[400px] text-center align-middle"
               >
-                {selectable && (
-                  <TableCell className="pl-6">
-                    <Checkbox
-                      className="rounded-[4px] border-gray-300 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
-                      checked={isSelected}
-                      onCheckedChange={() => toggleItem(id)}
-                    />
-                  </TableCell>
-                )}
-                {columns.map((col) => (
-                  <TableCell key={col.key} className={col.className}>
-                    {col.cell(item)}
-                  </TableCell>
-                ))}
-              </TableRow>
-            );
-          })}
+                <div className="flex flex-col items-center justify-center">
+                  <Image
+                    src="/assets/icons/data-not-found.svg"
+                    alt="Data not found"
+                    width={150}
+                    height={150}
+                    className="w-28 h-auto object-contain select-none"
+                  />
+                </div>
+              </TableCell>
+            </TableRow>
+          ) : (
+            data.map((item) => {
+              const id = keyExtractor(item);
+              const isSelected = selectedItems.has(id);
+              return (
+                <TableRow
+                  key={id}
+                  data-state={isSelected ? "selected" : undefined}
+                  className="border-none hover:bg-transparent even:bg-[#F6F6F6] odd:bg-white h-[72px]"
+                >
+                  {selectable && (
+                    <TableCell className="pl-6">
+                      <Checkbox
+                        className="rounded-[4px] border-gray-300 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
+                        checked={isSelected}
+                        onCheckedChange={() => toggleItem(id)}
+                      />
+                    </TableCell>
+                  )}
+                  {columns.map((col) => (
+                    <TableCell key={col.key} className={col.className}>
+                      {col.cell(item)}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              );
+            })
+          )}
         </TableBody>
       </Table>
 

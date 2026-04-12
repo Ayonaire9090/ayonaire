@@ -19,13 +19,20 @@ import Image from "next/image";
 interface DashboardHeaderProps {
   title?: React.ReactNode;
   subTitle?: React.ReactNode;
+  className?: string;
 }
 
-export function DashboardHeader({ title, subTitle }: DashboardHeaderProps) {
+export function DashboardHeader({
+  title,
+  subTitle,
+  className,
+}: DashboardHeaderProps) {
   return (
     <>
-      {/* ───────── MOBILE HEADER ───────── */}
-      <header className="flex md:hidden flex-col gap-5 pt-5 pb-2">
+      {/*MOBILE HEADER*/}
+      <header
+        className={`flex md:hidden flex-col gap-5 pt-5 pb-2 ${className}`}
+      >
         {/* Row 1: Logo + action icons */}
         <div className="flex items-center justify-between">
           <Image
@@ -112,8 +119,10 @@ export function DashboardHeader({ title, subTitle }: DashboardHeaderProps) {
         </div>
       </header>
 
-      {/* ───────── DESKTOP HEADER ───────── */}
-      <header className="hidden md:flex w-full shrink-0 flex-row items-center justify-between gap-4 border-b-0 py-6">
+      {/*DESKTOP HEADER*/}
+      <header
+        className={`hidden md:flex w-full shrink-0 flex-row items-center justify-between gap-4 border-b-0 py-6 ${className}`}
+      >
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-2">
             <SidebarTrigger className="-ml-2 md:hidden" />
