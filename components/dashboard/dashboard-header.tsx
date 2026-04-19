@@ -114,7 +114,11 @@ export function DashboardHeader({
             <h1 className="text-xl font-bold tracking-tight text-gray-900">
               {title}
             </h1>
-            <p className="text-sm text-gray-400 leading-snug">{subTitle}</p>
+            {typeof subTitle === "string" ? (
+              <p className="text-sm text-gray-400 leading-snug">{subTitle}</p>
+            ) : (
+              subTitle
+            )}
           </div>
         </div>
       </header>
@@ -130,7 +134,11 @@ export function DashboardHeader({
               {title}
             </h1>
           </div>
-          <p className="text-base text-gray-500">{subTitle}</p>
+          {typeof subTitle === "string" ? (
+            <p className="text-base text-gray-500">{subTitle}</p>
+          ) : (
+            subTitle
+          )}
         </div>
 
         <div className="flex items-center gap-4 w-auto">

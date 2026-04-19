@@ -35,7 +35,7 @@ export const AdminDashboardButton = ({
                 rounded-lg bg-primary shadow-sm 
                 focus:outline-0! shadow-0! ${className}`}
         >
-          {Icon && <Icon className="size-5" />}
+          {Icon && <Icon className="size-5 text-white" />}
         </Button>
       </div>
     </>

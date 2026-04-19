@@ -127,7 +127,7 @@ export const AdminDashboardAnalyticsCards = () => {
   );
 };
 
-interface AdminDashboardAnalyticsCardsProps {
+interface AdminDashboardAnalyticsCardProps {
   heading: string;
   title: string;
   icon: LucideIcon;
@@ -141,7 +141,7 @@ export const AdminDashboardSectionFeatureCard = ({
   icon: Icon,
   rate,
   description,
-}: AdminDashboardAnalyticsCardsProps) => {
+}: AdminDashboardAnalyticsCardProps) => {
   return (
     <div className="rounded-[16px]! px-4 py-5 space-y-3 bg-white h-full">
       <div>
