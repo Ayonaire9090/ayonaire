@@ -3,12 +3,19 @@
 import { AdminDashboardButton } from "@/components/dashboard/admin-dashboard-button";
 import { DashboardSearch } from "@/components/dashboard/dashboard-search";
 import { Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export const AssignmentsPageHeader = () => {
+  const router = useRouter();
+
   return (
     <div className="flex justify-between items-center gap-4 flex-wrap pb-6">
       <DashboardSearch />
-      <AdminDashboardButton title="Create Assignment" icon={Plus} />
+      <AdminDashboardButton
+        onClick={() => router.push("/dashboard/admin/assignments/create")}
+        title="Create Assignment"
+        icon={Plus}
+      />
     </div>
   );
 };
