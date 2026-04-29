@@ -23,7 +23,7 @@ export default function AdminOrdersPage() {
       />
       <div className="w-full flex justify-between items-start">
         <StatsSummary data={mockSummaryData} />
-        <AdminDashboardButton title="Add New Orders" icon={Plus} />
+        <AdminDashboardButton title="Add New Order" icon={Plus} />
       </div>
 
       {/* Desktop */}

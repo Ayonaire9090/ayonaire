@@ -294,12 +294,6 @@ export const OrdersTable = () => {
               </div>
             )}
             <FilterPopoverHeader title="Bulk actions" />
-            {/* Section label */}
-            <div className="px-5 pb-2">
-              <span className="text-[15px] font-semibold text-gray-900">
-                Bulk actions
-              </span>
-            </div>
             <div className="pb-3 flex flex-col gap-0.5">
               {bulkActionItems.map((action) => (
                 <CheckboxItem

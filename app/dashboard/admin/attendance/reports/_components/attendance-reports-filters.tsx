@@ -9,7 +9,6 @@ import {
   PopoverClose,
 } from "@/components/ui/popover";
 import { ChevronDown, ChevronUp, SlidersHorizontal, X } from "lucide-react";
-import { Input } from "@/components/ui/input";
 import { useAttendanceReportsContext } from "./attendance-reports-context";
 
 // Shared Popover Header
