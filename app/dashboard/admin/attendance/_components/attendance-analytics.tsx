@@ -6,7 +6,7 @@ import {
 import {
   AttendanceAnalyticsCard,
   ActionListCard,
-} from "./attenbdance-analytics-card";
+} from "./attendance-analytics-card";
 
 const STATS_DATA = [
   {
