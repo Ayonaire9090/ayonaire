@@ -19,7 +19,7 @@ export default function AdminClassAttendanceView() {
             <span className="flex items-center gap-1 text-gray-500">
               Attendance Management <ChevronRight className="size-3" />
             </span>
-            <span className="text-gray-500">Class View</span>
+            <span className="text-gray-600 font-medium">Class View</span>
           </div>
         }
       />

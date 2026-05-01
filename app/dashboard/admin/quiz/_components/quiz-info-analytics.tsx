@@ -1,15 +1,15 @@
-import { AssignmentsInfoAnalyticsCard } from "./assignments-info-analytics-card";
+import { QuizInfoAnalyticsCard } from "./quiz-info-analytics-card";
 
 const STATS_DATA = [
   {
-    heading: "Total Assigments",
-    title: "8",
+    heading: "Total Quizzes",
+    title: "12",
     rate: "+2 vs yesterday ↑",
     statusBadge: { label: "Info", variant: "info" as const },
   },
   {
     heading: "Drafts",
-    title: "1",
+    title: "3",
     rate: "steady →",
     statusBadge: { label: "Info", variant: "info" as const },
   },
@@ -21,23 +21,23 @@ const STATS_DATA = [
   },
   {
     heading: "Closed",
-    title: "2",
+    title: "3",
     rate: "+1% ↑",
     statusBadge: { label: "Normal", variant: "normal" as const },
   },
   {
     heading: "Archived",
-    title: "1",
+    title: "2",
     rate: "+1% ↑",
     statusBadge: { label: "Normal", variant: "normal" as const },
   },
 ];
 
-export const AssignmentsInfoAnalytics = () => {
+export const QuizInfoAnalytics = () => {
   return (
     <div className="flex overflow-x-auto gap-4 w-full -mt-2 hide-scrollbar">
       {STATS_DATA.map((stat, i) => (
-        <AssignmentsInfoAnalyticsCard key={i} {...stat} />
+        <QuizInfoAnalyticsCard key={i} {...stat} />
       ))}
     </div>
   );
