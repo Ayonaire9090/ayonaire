@@ -148,7 +148,7 @@ export const dashboardData = {
     },
     {
       title: "System Settings",
-      url: "/dashboard/admin/settings",
+      url: "/dashboard/admin/system-settings",
       icon: DashboardSettingsIcon,
     },
   ],
