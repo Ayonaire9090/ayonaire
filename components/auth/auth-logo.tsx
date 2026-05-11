@@ -14,9 +14,10 @@ export function AuthLogo({ className }: AuthLogoProps) {
       <Image
         src="/assets/logos/full-logo-dark.svg"
         alt="Ayonaire Logo"
-        width={150}
-        height={50}
-        className="h-10 w-auto object-contain"
+        draggable={false}
+        width={200}
+        height={60}
+        className="h-14 w-auto object-cover"
         priority
       />
     </Link>

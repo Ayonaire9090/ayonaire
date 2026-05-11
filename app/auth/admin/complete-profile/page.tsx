@@ -4,7 +4,6 @@ import { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import {
-  AuthLogo,
   AuthHeader,
   AuthBackButton,
   AuthFormField,
@@ -90,10 +89,6 @@ function CompleteAdminProfileContent() {
     <>
       {/* Back Button - hidden on success step */}
       {step !== "success" && <AuthBackButton href="/auth/admin/verify-email" />}
-
-      {/* Logo */}
-      <AuthLogo className="mb-8 mt-8" />
-
       {/* Details Step */}
       {step === "details" && (
         <>

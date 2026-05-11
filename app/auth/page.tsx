@@ -4,7 +4,6 @@ import { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { GraduationCap, Users, ShieldCheck } from "lucide-react";
 import {
-  AuthLogo,
   AuthHeader,
   AuthSubmitButton,
   AuthRoleSelectionSkeleton,
@@ -72,9 +71,6 @@ function AuthPageContent() {
 
   return (
     <>
-      {/* Logo */}
-      <AuthLogo className="mb-8" />
-
       {/* Header */}
       <AuthHeader
         title="Welcome to Ayonaire"

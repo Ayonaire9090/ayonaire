@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { AuthLogo } from "@/components/auth";
 
 export default function AuthLayout({
   children,
@@ -6,20 +6,25 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 w-full min-h-screen bg-[#F86432]">
-      <div className="flex justify-center items-center bg-white lg:rounded-r-[50px] w-full h-full">
-        <div className="relative w-full max-w-[90%] lg:max-w-[80%] mx-auto py-8 lg:py-12">
+    <div className="relative flex justify-center items-center w-full min-h-screen bg-white lg:bg-transparent">
+      {/* Background Image - Desktop Only */}
+      <div
+        className="hidden lg:block fixed inset-0 z-0"
+        style={{
+          backgroundImage: "url('/assets/images/auth-image.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      />
+
+      {/* Form Container */}
+      <div className="relative z-10 flex flex-col justify-center items-center w-full min-h-screen px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+        {/* Auth Logo */}
+        <AuthLogo className="mb-8" />
+        <div className="w-full max-w-[580px] bg-white rounded-[50px] lg:shadow-2xl lg:px-10 lg:py-12 px-4 py-8">
           {children}
         </div>
-      </div>
-      <div className="hidden lg:fixed lg:top-0 lg:right-10 lg:flex flex-col w-[45%] justify-center items-center bg-[#F86432] h-full">
-        <Image
-          src="/assets/images/auth-banner.png"
-          alt="auth"
-          width={1000}
-          height={1000}
-          className="h-full object-contain"
-        />
       </div>
     </div>
   );

@@ -2,9 +2,9 @@
 
 import React, { useRef } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { MoreVertical } from "lucide-react";
+import { BellDot, MoreVertical } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useSidebar } from "@/components/ui/sidebar";
 import { dashboardData } from "@/constants";
@@ -50,6 +50,7 @@ export function MobileDashboardFooter({
   const pathname = usePathname();
   const scrollRef = useRef<HTMLDivElement>(null);
   const { setOpenMobile } = useSidebar();
+  const router = useRouter();
 
   // Split items into visible and overflow
   const visibleItems = items.slice(0, maxVisible);
@@ -95,7 +96,9 @@ export function MobileDashboardFooter({
                 {item.icon && (
                   <item.icon
                     className={cn("h-6 w-6", active && "text-primary")}
-                    {...(active ? { fill: "currentColor", stroke: "currentColor" } : {})}
+                    {...(active
+                      ? { fill: "currentColor", stroke: "currentColor" }
+                      : {})}
                   />
                 )}
                 <span
@@ -169,7 +172,12 @@ export function MobileDashboardFooter({
                   height={20}
                   className="h-5 w-5 text-gray-700"
                 />
-                View Profile
+                <button
+                  onClick={() => router.push("/dashboard/admin/profile")}
+                  className="flex w-full! h-full! cursor-pointer bg-transparent! flex-start! items-start"
+                >
+                  View Profile
+                </button>
               </DropdownMenuItem>
               <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-sm font-medium text-gray-800 hover:bg-white focus:bg-white">
                 <Image
@@ -180,6 +188,13 @@ export function MobileDashboardFooter({
                   className="h-5 w-5 text-gray-700"
                 />
                 My account
+              </DropdownMenuItem>
+              <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-sm font-medium text-gray-800 hover:bg-white focus:bg-white">
+                <BellDot
+                  className="bg-[#222222] p-1 rounded-full text-white font-bold w-5.5! h-5.5!"
+                  strokeWidth={2.7}
+                />
+                Notifications
               </DropdownMenuItem>
               <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-sm font-medium text-red-500 hover:bg-white focus:bg-white hover:text-red-500 focus:text-red-500">
                 <Image

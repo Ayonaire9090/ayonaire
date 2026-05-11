@@ -4,12 +4,10 @@ import { useState } from "react";
 import Link from "next/link";
 import { BadgeCheck } from "lucide-react";
 import {
-  AuthLogo,
   AuthHeader,
   AuthFormField,
   AuthPasswordField,
   AuthPasswordStrength,
-  AuthBackButton,
   AuthSubmitButton,
   AuthFormMessage,
 } from "@/components/auth";
@@ -107,19 +105,6 @@ export default function ResetPasswordPage() {
 
   return (
     <>
-      {/* Back Button - hidden on success step */}
-      {step !== "success" && (
-        <AuthBackButton
-          onClick={
-            step === "create-password" ? () => setStep("email") : undefined
-          }
-          href={step === "email" ? "/auth/signin" : undefined}
-        />
-      )}
-
-      {/* Logo */}
-      <AuthLogo className="mb-8 mt-8" />
-
       {step === "email" ? (
         <>
           {/* Header for Email Step */}
@@ -158,7 +143,7 @@ export default function ResetPasswordPage() {
           <p className="text-center text-sm text-muted-foreground mt-6">
             Remember your password?{" "}
             <Link
-              href="/auth/signin"
+              href="/auth"
               className="font-semibold text-primary hover:underline"
             >
               Sign in

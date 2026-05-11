@@ -4,7 +4,6 @@ import { useState, useMemo, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import {
-  AuthLogo,
   AuthHeader,
   AuthBackButton,
   AuthFormField,
@@ -220,9 +219,6 @@ function InstructorBuildProfileContent() {
           onClick={step === "expertise" ? handleBack : undefined}
         />
       )}
-
-      {/* Logo */}
-      <AuthLogo className="mb-8 mt-8" />
 
       {/* Personal Details Step */}
       {step === "personal" && (

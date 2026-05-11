@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import {
-  AuthLogo,
   AuthHeader,
   AuthFooter,
   AuthFormField,
+  AuthPasswordField,
   AuthSubmitButton,
 } from "@/components/auth";
 import { useRouter } from "next/navigation";
@@ -52,9 +52,6 @@ export default function SignUpPage() {
 
   return (
     <>
-      {/* Logo */}
-      <AuthLogo className="mb-8" />
-
       {/* Header */}
       <AuthHeader
         title="Create Admin Account"
@@ -83,10 +80,9 @@ export default function SignUpPage() {
           required
         />
 
-        <AuthFormField
+        <AuthPasswordField
           id="password"
           label="Password"
-          type="password"
           placeholder="••••••••"
           value={formData.password}
           onChange={handleChange}

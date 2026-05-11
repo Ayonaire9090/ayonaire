@@ -37,7 +37,9 @@ export function AuthFooter({
           {/* Divider */}
           <div className="flex items-center gap-4">
             <div className="flex-1 h-px bg-gray-200" />
-            <span className="text-sm text-muted-foreground">Or</span>
+            <span className="text-sm text-muted-foreground">
+              Other Login Options
+            </span>
             <div className="flex-1 h-px bg-gray-200" />
           </div>
 
@@ -45,6 +47,7 @@ export function AuthFooter({
           <div className="flex gap-3">
             <AuthSocialButton provider="google" onClick={onGoogleClick} />
             <AuthSocialButton provider="facebook" onClick={onFacebookClick} />
+            <AuthSocialButton provider="apple" onClick={onFacebookClick} />
           </div>
         </div>
       )}

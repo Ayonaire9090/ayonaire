@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import {
-  AuthLogo,
   AuthHeader,
   AuthBackButton,
   AuthSubmitButton,
@@ -70,9 +69,6 @@ function VerifyEmailContent() {
     <>
       {/* Back Button */}
       <AuthBackButton href="/auth/instructor/signup" />
-
-      {/* Logo */}
-      <AuthLogo className="mb-8 mt-8" />
 
       {/* Header */}
       <AuthHeader

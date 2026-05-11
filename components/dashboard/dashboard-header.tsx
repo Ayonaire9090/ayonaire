@@ -15,6 +15,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { BellDot } from "lucide-react";
 
 interface DashboardHeaderProps {
   title?: React.ReactNode;
@@ -27,6 +29,7 @@ export function DashboardHeader({
   subTitle,
   className,
 }: DashboardHeaderProps) {
+  const router = useRouter();
   return (
     <>
       {/*MOBILE HEADER*/}
@@ -86,7 +89,12 @@ export function DashboardHeader({
                   height={20}
                   className="h-5 w-5 text-gray-700"
                 />
-                View Profile
+                <button
+                  onClick={() => router.push("/dashboard/admin/profile")}
+                  className="flex w-full! h-full! cursor-pointer bg-transparent! flex-start! items-start"
+                >
+                  View Profile
+                </button>
               </DropdownMenuItem>
               <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-sm font-medium text-gray-800 hover:bg-white focus:bg-white">
                 <Image
@@ -187,7 +195,12 @@ export function DashboardHeader({
                     height={20}
                     className="h-5 w-5 text-gray-700"
                   />
-                  View Profile
+                  <button
+                    onClick={() => router.push("/dashboard/admin/profile")}
+                    className="flex w-full! h-full! cursor-pointer bg-transparent! flex-start! items-start"
+                  >
+                    View Profile
+                  </button>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-sm font-medium text-gray-800 hover:bg-white focus:bg-white">
                   <Image
@@ -198,6 +211,13 @@ export function DashboardHeader({
                     className="h-5 w-5 text-gray-700"
                   />
                   My account
+                </DropdownMenuItem>
+                <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-sm font-medium text-gray-800 hover:bg-white focus:bg-white">
+                  <BellDot
+                    className="bg-[#222222] p-1 rounded-full text-white font-bold w-5.5! h-5.5!"
+                    strokeWidth={2.7}
+                  />
+                  Notifications
                 </DropdownMenuItem>
                 <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-sm font-medium text-red-500 hover:bg-white focus:bg-white hover:text-red-500 focus:text-red-500">
                   <Image

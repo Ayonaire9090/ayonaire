@@ -3,15 +3,16 @@
 import { useState } from "react";
 import Link from "next/link";
 import {
-  AuthLogo,
   AuthHeader,
   AuthFooter,
   AuthFormField,
+  AuthPasswordField,
   AuthSubmitButton,
 } from "@/components/auth";
 
 export default function SignInPage() {
   const [isLoading, setIsLoading] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -45,9 +46,6 @@ export default function SignInPage() {
 
   return (
     <>
-      {/* Logo */}
-      <AuthLogo className="mb-8" />
-
       {/* Header */}
       <AuthHeader
         title="Welcome back, Ayo"
@@ -67,21 +65,31 @@ export default function SignInPage() {
           required
         />
 
-        <div className="space-y-2">
-          <AuthFormField
-            id="password"
-            label="Password"
-            type="password"
-            placeholder="••••••••"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
+        <AuthPasswordField
+          id="password"
+          label="Password"
+          placeholder="••••••••"
+          value={formData.password}
+          onChange={handleChange}
+          required
+        />
+
+        {/* Remember Me & Forgot Password */}
+        <div className="flex items-center justify-between">
+          <label className="flex items-center gap-2 cursor-pointer select-none">
+            <input
+              type="checkbox"
+              checked={rememberMe}
+              onChange={(e) => setRememberMe(e.target.checked)}
+              className="size-4 rounded border-2 border-gray-400 text-[#F86432] accent-[#F86432] cursor-pointer"
+            />
+            <span className="text-sm text-gray-700">Remember Me</span>
+          </label>
           <Link
             href="/auth/reset-password"
-            className="block text-sm text-green-700 font-medium hover:underline"
+            className="text-sm text-gray-700 font-medium hover:underline"
           >
-            Forgot password?
+            Forgot password
           </Link>
         </div>
 

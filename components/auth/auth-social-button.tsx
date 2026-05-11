@@ -2,10 +2,9 @@
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
 
 interface AuthSocialButtonProps {
-  provider: "google" | "facebook";
+  provider: "google" | "facebook" | "apple";
   onClick?: () => void;
   className?: string;
   disabled?: boolean;
@@ -45,6 +44,20 @@ const providerConfig = {
       </svg>
     ),
   },
+  apple: {
+    label: "Apple",
+    icon: "/assets/icons/apple.svg",
+    fallbackIcon: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        className="size-5"
+        fill="currentColor"
+      >
+        <path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" />
+      </svg>
+    ),
+  },
 };
 
 export function AuthSocialButton({
@@ -61,13 +74,13 @@ export function AuthSocialButton({
       variant="outline"
       onClick={onClick}
       disabled={disabled}
+      aria-label={`Sign in with ${config.label}`}
       className={cn(
-        "flex-1 h-12 gap-2 cursor-pointer rounded-[10px] border-gray-200 bg-white hover:bg-gray-50 text-gray-700 font-medium",
+        "flex-1 h-12 cursor-pointer rounded-[10px] border-gray-200 bg-white hover:bg-gray-50 text-gray-700 font-medium flex items-center justify-center",
         className,
       )}
     >
       {config.fallbackIcon}
-      <span>{config.label}</span>
     </Button>
   );
 }
