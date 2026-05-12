@@ -17,7 +17,7 @@ export function AuthLogo({ className }: AuthLogoProps) {
         draggable={false}
         width={200}
         height={60}
-        className="h-14 w-auto object-cover"
+        className="h-11 w-[150px] lg:h-14 lg:w-[200px] object-contain"
         priority
       />
     </Link>

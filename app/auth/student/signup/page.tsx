@@ -57,20 +57,62 @@ export default function SignUpPage() {
         <AuthFormField
           id="fullName"
           label="Full Name"
-          placeholder="Flores Juanita"
+          placeholder="John Doe"
           value={formData.fullName}
           onChange={handleChange}
           required
+          labelClassName="font-bold! text-[14px]!"
+          className="
+            bg-transparent!
+            font-semibold!
+            text-[14px]!
+            active:bg-[#FFFCC8]! 
+            focus:bg-[#FFFCC8]! 
+            active:outline-none!  
+            focus:outline-none!
+            focus:ring-0!
+            active:ring-0!
+            focus-visible:ring-0!
+            active-visible:ring-0!
+            border-0! border-b-[1.8px]! border-b-black rounded-none!
+            focus:border-b-[1.8px]! focus:border-b-gray-400!
+            focus-visible:border-b-[1.8px]! focus-visible:border-b-gray-400!
+            active:border-b-[1.8px]! active:border-b-gray-400!
+            active-visible:border-b-[1.8px]! active-visible:border-b-gray-400!
+            not-placeholder-shown:bg-[#FFFCC8]!
+            not-placeholder-shown:border-b-gray-400!
+            "
         />
 
         <AuthFormField
           id="email"
           label="Email"
           type="email"
-          placeholder="michelle.rivera@example.com"
+          placeholder="jon_doe@example.com"
           value={formData.email}
           onChange={handleChange}
           required
+          labelClassName="font-bold! text-[14px]!"
+          className="
+            bg-transparent!
+            font-semibold!
+            text-[14px]!
+            active:bg-[#FFFCC8]! 
+            focus:bg-[#FFFCC8]! 
+            active:outline-none!  
+            focus:outline-none!
+            focus:ring-0!
+            active:ring-0!
+            focus-visible:ring-0!
+            active-visible:ring-0!
+            border-0! border-b-[1.8px]! border-b-black rounded-none!
+            focus:border-b-[1.8px]! focus:border-b-gray-400!
+            focus-visible:border-b-[1.8px]! focus-visible:border-b-gray-400!
+            active:border-b-[1.8px]! active:border-b-gray-400!
+            active-visible:border-b-[1.8px]! active-visible:border-b-gray-400!
+            not-placeholder-shown:bg-[#FFFCC8]!
+            not-placeholder-shown:border-b-gray-400!
+            "
         />
 
         <AuthPasswordField
@@ -81,6 +123,34 @@ export default function SignUpPage() {
           onChange={handleChange}
           required
           minLength={8}
+          labelClassName="font-bold! text-[14px]!"
+          className="
+            bg-transparent!
+            font-semibold!
+            active:bg-[#FFFCC8]! 
+            focus:bg-[#FFFCC8]! 
+            active:outline-none!  
+            focus:outline-none!
+            focus:ring-0!
+            active:ring-0!
+            focus-visible:ring-0!
+            active-visible:ring-0!
+            border-0! border-b-[1.8px]! border-b-black rounded-none!
+            focus:border-b-[1.8px]! focus:border-b-gray-400!
+            focus-visible:border-b-[1.8px]! focus-visible:border-b-gray-400!
+            active:border-b-[1.8px]! active:border-b-gray-400!
+            active-visible:border-b-[1.8px]! active-visible:border-b-gray-400!
+            not-placeholder-shown:bg-[#FFFCC8]!
+            not-placeholder-shown:border-b-gray-400!
+            "
+        />
+
+        {/* Checkbox */}
+        <AuthFormField
+          id="terms"
+          label="I agree to the terms and privacy policy"
+          type="checkbox"
+          required
         />
 
         <AuthSubmitButton isLoading={isLoading} className="mt-6">

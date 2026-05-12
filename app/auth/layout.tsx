@@ -21,8 +21,8 @@ export default function AuthLayout({
       {/* Form Container */}
       <div className="relative z-10 flex flex-col justify-center items-center w-full min-h-screen px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
         {/* Auth Logo */}
-        <AuthLogo className="mb-8" />
-        <div className="w-full max-w-[580px] bg-white rounded-[50px] lg:shadow-2xl lg:px-10 lg:py-12 px-4 py-8">
+        <AuthLogo className="mb-0 lg:mb-3" />
+        <div className="w-full max-w-[98%] lg:max-w-[580px] bg-white rounded-[50px] shadow-2xl lg:px-10 lg:py-12 px-4 py-8">
           {children}
         </div>
       </div>

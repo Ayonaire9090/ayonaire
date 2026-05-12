@@ -59,10 +59,31 @@ export default function SignInPage() {
           id="email"
           label="Email"
           type="email"
-          placeholder="Enter your email"
+          placeholder="admin@email.com"
           value={formData.email}
           onChange={handleChange}
           required
+          labelClassName="font-bold! text-[14px]!"
+          className="
+            bg-transparent!
+            font-semibold!
+            text-[14px]!
+            active:bg-[#FFFCC8]! 
+            focus:bg-[#FFFCC8]! 
+            active:outline-none!  
+            focus:outline-none!
+            focus:ring-0!
+            active:ring-0!
+            focus-visible:ring-0!
+            active-visible:ring-0!
+            border-0! border-b-[1.8px]! border-b-black rounded-none!
+            focus:border-b-[1.8px]! focus:border-b-gray-400!
+            focus-visible:border-b-[1.8px]! focus-visible:border-b-gray-400!
+            active:border-b-[1.8px]! active:border-b-gray-400!
+            active-visible:border-b-[1.8px]! active-visible:border-b-gray-400!
+            not-placeholder-shown:bg-[#FFFCC8]!
+            not-placeholder-shown:border-b-gray-400!
+            "
         />
 
         <AuthPasswordField
@@ -72,19 +93,38 @@ export default function SignInPage() {
           value={formData.password}
           onChange={handleChange}
           required
+          labelClassName="font-bold! text-[14px]!"
+          className="
+            bg-transparent!
+            font-semibold!
+            active:bg-[#FFFCC8]! 
+            focus:bg-[#FFFCC8]! 
+            active:outline-none!  
+            focus:outline-none!
+            focus:ring-0!
+            active:ring-0!
+            focus-visible:ring-0!
+            active-visible:ring-0!
+            border-0! border-b-[1.8px]! border-b-black rounded-none!
+            focus:border-b-[1.8px]! focus:border-b-gray-400!
+            focus-visible:border-b-[1.8px]! focus-visible:border-b-gray-400!
+            active:border-b-[1.8px]! active:border-b-gray-400!
+            active-visible:border-b-[1.8px]! active-visible:border-b-gray-400!
+            not-placeholder-shown:bg-[#FFFCC8]!
+            not-placeholder-shown:border-b-gray-400!
+            "
         />
 
         {/* Remember Me & Forgot Password */}
         <div className="flex items-center justify-between">
-          <label className="flex items-center gap-2 cursor-pointer select-none">
-            <input
-              type="checkbox"
-              checked={rememberMe}
-              onChange={(e) => setRememberMe(e.target.checked)}
-              className="size-4 rounded border-2 border-gray-400 text-[#F86432] accent-[#F86432] cursor-pointer"
-            />
-            <span className="text-sm text-gray-700">Remember Me</span>
-          </label>
+          <AuthFormField
+            id="terms"
+            onChange={(e) => setRememberMe(e.target.checked)}
+            label="Remember Me"
+            type="checkbox"
+            checked={rememberMe}
+            required
+          />
           <Link
             href="/auth/reset-password"
             className="text-sm text-gray-700 font-medium hover:underline"

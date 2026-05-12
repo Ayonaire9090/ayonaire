@@ -12,18 +12,22 @@ interface AuthPasswordFieldProps extends Omit<
 > {
   label: string;
   error?: string;
+  labelClassName?: string;
 }
 
 export const AuthPasswordField = forwardRef<
   HTMLInputElement,
   AuthPasswordFieldProps
->(({ label, error, className, id, ...props }, ref) => {
+>(({ label, error, className, labelClassName, id, ...props }, ref) => {
   const [showPassword, setShowPassword] = useState(false);
   const fieldId = id || label.toLowerCase().replace(/\s+/g, "-");
 
   return (
     <div className="space-y-2">
-      <Label htmlFor={fieldId} className="text-sm font-medium text-foreground">
+      <Label
+        htmlFor={fieldId}
+        className={cn("text-sm font-medium text-foreground", labelClassName)}
+      >
         {label}
       </Label>
       <div className="relative">
@@ -34,6 +38,7 @@ export const AuthPasswordField = forwardRef<
           className={cn(
             "h-12 rounded-lg border-gray-200 bg-[#FBFBFB] px-4 pr-12 text-base placeholder:text-muted-foreground/60 focus:border-primary focus:bg-white focus-visible:ring-primary/20 shadow-none!",
             error && "border-destructive focus-visible:ring-destructive/20",
+            showPassword ? "text-[14px]!" : "text-[25px]!",
             className,
           )}
           {...props}

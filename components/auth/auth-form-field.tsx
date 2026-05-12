@@ -9,10 +9,14 @@ import { forwardRef } from "react";
 interface AuthFormFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
   error?: string;
+  labelClassName?: string;
 }
 
 export const AuthFormField = forwardRef<HTMLInputElement, AuthFormFieldProps>(
-  ({ label, error, className, id, type = "text", ...props }, ref) => {
+  (
+    { label, error, className, id, type = "text", labelClassName, ...props },
+    ref,
+  ) => {
     const fieldId = id || label.toLowerCase().replace(/\s+/g, "-");
 
     // Handle checkbox type differently
@@ -29,7 +33,9 @@ export const AuthFormField = forwardRef<HTMLInputElement, AuthFormFieldProps>(
           />
           <Label
             htmlFor={fieldId}
-            className="text-sm font-medium text-foreground cursor-pointer select-none"
+            className={cn(
+              "text-sm font-medium text-foreground cursor-pointer select-none",
+            )}
           >
             {label}
           </Label>
@@ -42,7 +48,7 @@ export const AuthFormField = forwardRef<HTMLInputElement, AuthFormFieldProps>(
       <div className="space-y-2">
         <Label
           htmlFor={fieldId}
-          className="text-sm font-medium text-foreground"
+          className={cn("text-sm font-medium text-foreground", labelClassName)}
         >
           {label}
         </Label>

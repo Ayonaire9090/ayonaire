@@ -44,7 +44,7 @@ export function AuthFooter({
           </div>
 
           {/* Social Buttons */}
-          <div className="flex gap-3">
+          <div className="flex gap-3 w-full max-w-[70%] lg:max-w-[50%] mx-auto">
             <AuthSocialButton provider="google" onClick={onGoogleClick} />
             <AuthSocialButton provider="facebook" onClick={onFacebookClick} />
             <AuthSocialButton provider="apple" onClick={onFacebookClick} />
