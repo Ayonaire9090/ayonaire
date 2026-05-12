@@ -121,7 +121,7 @@ export default function ResetPasswordPage() {
                 id="email"
                 label="Email Address"
                 type="email"
-                placeholder="your_email@example.com"
+                placeholder=""
                 value={email}
                 onChange={(e) => {
                   setEmail(e.target.value);
@@ -142,12 +142,12 @@ export default function ResetPasswordPage() {
             focus-visible:ring-0!
             active-visible:ring-0!
             border-0! border-b-[1.8px]! border-b-black rounded-none!
-            focus:border-b-[1.8px]! focus:border-b-gray-400!
-            focus-visible:border-b-[1.8px]! focus-visible:border-b-gray-400!
-            active:border-b-[1.8px]! active:border-b-gray-400!
-            active-visible:border-b-[1.8px]! active-visible:border-b-gray-400!
+            focus:border-b-[1.8px]! focus:border-b-primary!
+            focus-visible:border-b-[1.8px]! focus-visible:border-b-primary!
+            active:border-b-[1.8px]! active:border-b-primary!
+            active-visible:border-b-[1.8px]! active-visible:border-b-primary!
             not-placeholder-shown:bg-[#FFFCC8]!
-            not-placeholder-shown:border-b-gray-400!
+            not-placeholder-shown:border-b-primary!
             "
               />
               {errors.email && (
@@ -191,7 +191,7 @@ export default function ResetPasswordPage() {
                 onChange={handlePasswordChange}
                 required
                 minLength={8}
-                labelClassName="font-bold! text-[14px]!"
+                labelClassName="font-bold! text-[14px]! pt-3!"
                 className="
             bg-transparent!
             font-semibold!
@@ -204,12 +204,12 @@ export default function ResetPasswordPage() {
             focus-visible:ring-0!
             active-visible:ring-0!
             border-0! border-b-[1.8px]! border-b-black rounded-none!
-            focus:border-b-[1.8px]! focus:border-b-gray-400!
-            focus-visible:border-b-[1.8px]! focus-visible:border-b-gray-400!
-            active:border-b-[1.8px]! active:border-b-gray-400!
-            active-visible:border-b-[1.8px]! active-visible:border-b-gray-400!
+            focus:border-b-[1.8px]! focus:border-b-primary!
+            focus-visible:border-b-[1.8px]! focus-visible:border-b-primary!
+            active:border-b-[1.8px]! active:border-b-primary!
+            active-visible:border-b-[1.8px]! active-visible:border-b-primary!
             not-placeholder-shown:bg-[#FFFCC8]!
-            not-placeholder-shown:border-b-gray-400!
+            not-placeholder-shown:border-b-primary!
             "
               />
               {errors.newPassword && (
@@ -221,12 +221,12 @@ export default function ResetPasswordPage() {
               <AuthPasswordField
                 id="confirmPassword"
                 label="Repeat New  Password"
-                placeholder="••••••••"
+                placeholder=""
                 value={passwords.confirmPassword}
                 onChange={handlePasswordChange}
                 required
                 minLength={8}
-                labelClassName="font-bold! text-[14px]!"
+                labelClassName="font-bold! text-[14px]! pt-3!"
                 className="
             bg-transparent!
             font-semibold!
@@ -239,12 +239,12 @@ export default function ResetPasswordPage() {
             focus-visible:ring-0!
             active-visible:ring-0!
             border-0! border-b-[1.8px]! border-b-black rounded-none!
-            focus:border-b-[1.8px]! focus:border-b-gray-400!
-            focus-visible:border-b-[1.8px]! focus-visible:border-b-gray-400!
-            active:border-b-[1.8px]! active:border-b-gray-400!
-            active-visible:border-b-[1.8px]! active-visible:border-b-gray-400!
+            focus:border-b-[1.8px]! focus:border-b-primary!
+            focus-visible:border-b-[1.8px]! focus-visible:border-b-primary!
+            active:border-b-[1.8px]! active:border-b-primary!
+            active-visible:border-b-[1.8px]! active-visible:border-b-primary!
             not-placeholder-shown:bg-[#FFFCC8]!
-            not-placeholder-shown:border-b-gray-400!
+            not-placeholder-shown:border-b-primary!
             "
               />
               {errors.confirmPassword && (

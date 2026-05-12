@@ -5,7 +5,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import {
   AuthHeader,
-  AuthBackButton,
   AuthFormField,
   AuthSubmitButton,
   AuthFormSkeleton,
@@ -210,16 +209,6 @@ function InstructorBuildProfileContent() {
 
   return (
     <>
-      {/* Back Button - hidden on success step */}
-      {step !== "success" && (
-        <AuthBackButton
-          href={
-            step === "personal" ? "/auth/instructor/verify-email" : undefined
-          }
-          onClick={step === "expertise" ? handleBack : undefined}
-        />
-      )}
-
       {/* Personal Details Step */}
       {step === "personal" && (
         <>
@@ -236,20 +225,60 @@ function InstructorBuildProfileContent() {
             <AuthFormField
               id="fullName"
               label="Full Name"
-              placeholder="Flores Juanita"
+              placeholder=""
               value={formData.fullName}
               onChange={handleChange}
               required
+              labelClassName="font-bold! text-[14px]!"
+              className="
+            bg-transparent!
+            font-semibold!
+            active:bg-[#FFFCC8]! 
+            focus:bg-[#FFFCC8]! 
+            active:outline-none!  
+            focus:outline-none!
+            focus:ring-0!
+            active:ring-0!
+            focus-visible:ring-0!
+            active-visible:ring-0!
+            border-0! border-b-[1.8px]! border-b-black rounded-none!
+            focus:border-b-[1.8px]! focus:border-b-primary!
+            focus-visible:border-b-[1.8px]! focus-visible:border-b-primary!
+            active:border-b-[1.8px]! active:border-b-primary!
+            active-visible:border-b-[1.8px]! active-visible:border-b-primary!
+            not-placeholder-shown:bg-[#FFFCC8]!
+            not-placeholder-shown:border-b-primary!
+            "
             />
 
             {/* Professional Title */}
             <AuthFormField
               id="professionalTitle"
               label="Professional title *"
-              placeholder="Product Designer"
+              placeholder=""
               value={formData.professionalTitle}
               onChange={handleChange}
               required
+              labelClassName="font-bold! text-[14px]! pt-3!"
+              className="
+            bg-transparent!
+            font-semibold!
+            active:bg-[#FFFCC8]! 
+            focus:bg-[#FFFCC8]! 
+            active:outline-none!  
+            focus:outline-none!
+            focus:ring-0!
+            active:ring-0!
+            focus-visible:ring-0!
+            active-visible:ring-0!
+            border-0! border-b-[1.8px]! border-b-black rounded-none!
+            focus:border-b-[1.8px]! focus:border-b-primary!
+            focus-visible:border-b-[1.8px]! focus-visible:border-b-primary!
+            active:border-b-[1.8px]! active:border-b-primary!
+            active-visible:border-b-[1.8px]! active-visible:border-b-primary!
+            not-placeholder-shown:bg-[#FFFCC8]!
+            not-placeholder-shown:border-b-primary!
+            "
             />
 
             {/* Short Bio */}

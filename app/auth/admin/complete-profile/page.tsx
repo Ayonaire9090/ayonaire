@@ -5,7 +5,6 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import {
   AuthHeader,
-  AuthBackButton,
   AuthFormField,
   AuthSubmitButton,
   AuthFormSkeleton,
@@ -87,8 +86,6 @@ function CompleteAdminProfileContent() {
 
   return (
     <>
-      {/* Back Button - hidden on success step */}
-      {step !== "success" && <AuthBackButton href="/auth/admin/verify-email" />}
       {/* Details Step */}
       {step === "details" && (
         <>
@@ -105,10 +102,30 @@ function CompleteAdminProfileContent() {
             <AuthFormField
               id="fullName"
               label="Full Name"
-              placeholder="Flores Juanita"
+              placeholder=""
               value={formData.fullName}
               onChange={handleChange}
               required
+              labelClassName="font-bold! text-[14px]!"
+              className="
+            bg-transparent!
+            font-semibold!
+            active:bg-[#FFFCC8]! 
+            focus:bg-[#FFFCC8]! 
+            active:outline-none!  
+            focus:outline-none!
+            focus:ring-0!
+            active:ring-0!
+            focus-visible:ring-0!
+            active-visible:ring-0!
+            border-0! border-b-[1.8px]! border-b-black rounded-none!
+            focus:border-b-[1.8px]! focus:border-b-primary!
+            focus-visible:border-b-[1.8px]! focus-visible:border-b-primary!
+            active:border-b-[1.8px]! active:border-b-primary!
+            active-visible:border-b-[1.8px]! active-visible:border-b-primary!
+            not-placeholder-shown:bg-[#FFFCC8]!
+            not-placeholder-shown:border-b-primary!
+            "
             />
 
             {/* Email Address */}
@@ -116,10 +133,30 @@ function CompleteAdminProfileContent() {
               id="email"
               label="Email Address *"
               type="email"
-              placeholder="admin@ayonaire.com"
+              placeholder=""
               value={formData.email}
               onChange={handleChange}
               required
+              labelClassName="font-bold! text-[14px]! pt-3!"
+              className="
+            bg-transparent!
+            font-semibold!
+            active:bg-[#FFFCC8]! 
+            focus:bg-[#FFFCC8]! 
+            active:outline-none!  
+            focus:outline-none!
+            focus:ring-0!
+            active:ring-0!
+            focus-visible:ring-0!
+            active-visible:ring-0!
+            border-0! border-b-[1.8px]! border-b-black rounded-none!
+            focus:border-b-[1.8px]! focus:border-b-primary!
+            focus-visible:border-b-[1.8px]! focus-visible:border-b-primary!
+            active:border-b-[1.8px]! active:border-b-primary!
+            active-visible:border-b-[1.8px]! active-visible:border-b-primary!
+            not-placeholder-shown:bg-[#FFFCC8]!
+            not-placeholder-shown:border-b-primary!
+            "
             />
 
             {/* Short Bio */}

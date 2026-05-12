@@ -36,9 +36,9 @@ export const AuthPasswordField = forwardRef<
           id={fieldId}
           type={showPassword ? "text" : "password"}
           className={cn(
-            "h-12 rounded-lg border-gray-200 bg-[#FBFBFB] px-4 pr-12 text-base placeholder:text-muted-foreground/60 focus:border-primary focus:bg-white focus-visible:ring-primary/20 shadow-none!",
+            "h-10 rounded-lg border-gray-200 bg-[#FBFBFB] px-4 pr-12 text-base placeholder:text-muted-foreground/60 focus:border-primary focus:bg-white focus-visible:ring-primary/20 shadow-none!",
             error && "border-destructive focus-visible:ring-destructive/20",
-            showPassword ? "text-[14px]!" : "text-[25px]!",
+            showPassword ? "text-[14px]!" : "text-[18px]!",
             className,
           )}
           {...props}

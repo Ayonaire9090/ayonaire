@@ -67,9 +67,6 @@ function VerifyEmailContent() {
 
   return (
     <>
-      {/* Back Button */}
-      <AuthBackButton href="/auth/admin/signup" />
-
       {/* Header */}
       <AuthHeader
         title="Verify your email"
