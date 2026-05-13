@@ -106,7 +106,7 @@ function AuthPageContent() {
 
             {/* Text Content */}
             <div className="flex-1">
-              <h3 className="font-semibold text-gray-900">{option.title}</h3>
+              <h3 className="font-semibold text-[#121315]">{option.title}</h3>
               <p className="text-sm text-gray-500">{option.description}</p>
             </div>
 

@@ -89,7 +89,7 @@ function VerifyEmailContent() {
             value={otp}
             onChange={(value) => setOtp(value)}
             containerClassName="gap-2 md:gap-3 shadow-none!"
-            className="shadow-none!"
+            className="shadow-none! text-[#121315]!"
           >
             <InputOTPGroup className="gap-2">
               {[0, 1, 2, 3, 4, 5].map((index) => (

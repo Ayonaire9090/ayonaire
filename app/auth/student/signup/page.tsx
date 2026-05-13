@@ -63,6 +63,7 @@ export default function SignUpPage() {
           required
           labelClassName="font-bold! text-[14px]!"
           className="
+          text-[#121315]!
             bg-transparent!
             font-semibold!
             text-[14px]!
@@ -74,7 +75,7 @@ export default function SignUpPage() {
             active:ring-0!
             focus-visible:ring-0!
             active-visible:ring-0!
-            border-0! border-b-[1.8px]! border-b-black rounded-none!
+            border-0! border-b-[1.8px]! border-b-[#121315] rounded-none!
             focus:border-b-[1.8px]! focus:border-b-primary!
             focus-visible:border-b-[1.8px]! focus-visible:border-b-primary!
             active:border-b-[1.8px]! active:border-b-primary!
@@ -94,6 +95,7 @@ export default function SignUpPage() {
           required
           labelClassName="font-bold! text-[14px]! pt-3!"
           className="
+          text-[#121315]!
             bg-transparent!
             font-semibold!
             text-[14px]!
@@ -105,7 +107,7 @@ export default function SignUpPage() {
             active:ring-0!
             focus-visible:ring-0!
             active-visible:ring-0!
-            border-0! border-b-[1.8px]! border-b-black rounded-none!
+            border-0! border-b-[1.8px]! border-b-[#121315] rounded-none!
             focus:border-b-[1.8px]! focus:border-b-primary!
             focus-visible:border-b-[1.8px]! focus-visible:border-b-primary!
             active:border-b-[1.8px]! active:border-b-primary!
@@ -125,6 +127,7 @@ export default function SignUpPage() {
           minLength={8}
           labelClassName="font-bold! text-[14px]! pt-3!"
           className="
+          text-[#121315]!
             bg-transparent!
             font-semibold!
             active:bg-[#FFFCC8]! 
@@ -135,7 +138,7 @@ export default function SignUpPage() {
             active:ring-0!
             focus-visible:ring-0!
             active-visible:ring-0!
-            border-0! border-b-[1.8px]! border-b-black rounded-none!
+            border-0! border-b-[1.8px]! border-b-[#121315] rounded-none!
             focus:border-b-[1.8px]! focus:border-b-primary!
             focus-visible:border-b-[1.8px]! focus-visible:border-b-primary!
             active:border-b-[1.8px]! active:border-b-primary!
