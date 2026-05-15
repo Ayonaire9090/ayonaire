@@ -4,6 +4,7 @@ import { satoshi, spectralSC } from "./fonts";
 import { GoogleTagManager } from "@next/third-parties/google";
 import { Toaster } from "sonner";
 
+
 export const metadata: Metadata = {
   title: "Ayonaire - Build a Future-Proof Career in Tech",
   description:
