@@ -10,6 +10,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from "@/components/ui/sidebar";
 
 export function NavMain({
@@ -22,6 +23,8 @@ export function NavMain({
   }[];
 }) {
   const pathname = usePathname();
+  const { state } = useSidebar();
+  const isCollapsed = state === "collapsed";
 
   return (
     <SidebarGroup>
@@ -62,7 +65,10 @@ export function NavMain({
                   <Link href={item.url}>
                     {item.icon && (
                       <item.icon
-                        className={cn("h-5 w-5", isActive && "text-primary")}
+                        className={cn(
+                          isCollapsed ? "h-6 w-6 shrink-0" : "h-5 w-5",
+                          isActive && "text-primary",
+                        )}
                         {...(isActive
                           ? { fill: "currentColor", stroke: "currentColor" }
                           : {})}
