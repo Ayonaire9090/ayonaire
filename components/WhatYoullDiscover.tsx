@@ -125,7 +125,7 @@ export default function WhatYoullDiscover() {
                     {/* Text */}
                     <div className="flex flex-col gap-2">
 
-                      <h3 className={`${exo.className} text-xl leading-[1.3] tracking-[-0.04em] text-[#533520] md:text-2xl`}>
+                      <h3 className={`${exo.className} text-xl leading-[1.3] tracking-[-0.04em]  md:text-2xl`}>
 
                         {
                           item.heading
@@ -133,7 +133,7 @@ export default function WhatYoullDiscover() {
 
                       </h3>
 
-                      <p className="font-adineue font-light text-base text-[18px] leading-[1.6] tracking-[-0.03em] text-[#533520] md:text-lg">
+                      <p className="font-adineue font-light text-base text-[18px] leading-[1.6] tracking-[-0.03em]  md:text-lg">
 
 
                         {
