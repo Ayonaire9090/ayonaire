@@ -3,7 +3,7 @@
 
 import RegistrationModal from "./RegisterationModal";
 import { useState } from 'react';
-import { agile, adineue } from '@/app/fonts';
+import { agile, adineue, exo } from '@/app/fonts';
 const ArrowIcon = () => (
   <svg
     width="34"
@@ -64,18 +64,7 @@ const items = [
   },
 ];
 
-  const renderTextWithAdineueA = (text: string) => {
-    return text.split('').map((char, index) => {
-      if (char === 'A') {
-        return (
-          <span key={index} className={`${adineue.className}  inline-block`}>
-            {char}
-          </span>
-        );
-      }
-      return <span key={index}>{char}</span>;
-    });
-  };
+
 
 export default function WhatYoullDiscover() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -136,10 +125,10 @@ export default function WhatYoullDiscover() {
                     {/* Text */}
                     <div className="flex flex-col gap-2">
 
-                      <h3 className={`${agile.className} text-xl leading-[1.3] tracking-[-0.04em] text-[#533520] md:text-2xl`}>
+                      <h3 className={`${exo.className} text-xl leading-[1.3] tracking-[-0.04em] text-[#533520] md:text-2xl`}>
 
                         {
-                          renderTextWithAdineueA(item.heading)
+                          item.heading
                         }
 
                       </h3>

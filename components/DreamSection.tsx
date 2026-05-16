@@ -2,13 +2,13 @@
 
 import RegistrationModal from "./RegisterationModal";
 import { useState } from 'react';
-import { agile, adineue } from '@/app/fonts';
+import { agile, adineue, exo } from '@/app/fonts';
 
 const renderTextWithAdineueA = (text: string) => {
   return text.split('').map((char, index) => {
     if (char === 'A') {
       return (
-        <span key={index} className={`${adineue.className} `}>
+        <span key={index} className={`${exo.className} `}>
           {char}
         </span>
       );
@@ -132,7 +132,7 @@ export default function DreamSection() {
                 </div>
 
                 <div className="flex flex-col gap-1">
-                  <h3 className={`${agile.className} text-[20px] sm:text-[22px] font-normal leading-[1.3] text-[#121315] tracking-tight`}>
+                  <h3 className={`${exo.className} text-[20px] sm:text-[22px] font-normal leading-[1.3] text-[#121315] tracking-tight`}>
                     {renderTextWithAdineueA(card.title)}
                   </h3>
 

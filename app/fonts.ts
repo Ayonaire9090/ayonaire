@@ -56,7 +56,7 @@ export const spectralSC = Spectral_SC({
 
 
 export const agile = localFont({
-  src: './fonts/agile/agile.ttf', // adjust path
+  src: './fonts/agile/agile.ttf', 
   variable: '--font-agile',
 });
 
@@ -64,3 +64,8 @@ export const adineue = localFont({
   src: './fonts/adeninue/adineue-pro-regular.otf',
   variable: '--font-adineue',
 });
+
+export const exo = localFont({
+  src:"./fonts/exo/Exo-Bold.ttf",
+  variable:"--font-exo"
+})
