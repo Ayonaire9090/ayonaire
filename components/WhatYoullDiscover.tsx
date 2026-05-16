@@ -64,6 +64,19 @@ const items = [
   },
 ];
 
+  const renderTextWithAdineueA = (text: string) => {
+    return text.split('').map((char, index) => {
+      if (char === 'A') {
+        return (
+          <span key={index} className={`${adineue.className}  inline-block`}>
+            {char}
+          </span>
+        );
+      }
+      return <span key={index}>{char}</span>;
+    });
+  };
+
 export default function WhatYoullDiscover() {
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -74,7 +87,7 @@ export default function WhatYoullDiscover() {
         {/* Heading */}
         <div className="mx-auto flex max-w-5xl flex-col items-center">
 
-          <h2 className={`${agile.className} text-center text-3xl leading-tight tracking-[-0.04em] sm:text-4xl md:text-5xl lg:text-6xl`}>
+          <h2 className={`${agile.className} text-center text-4xl leading-tight tracking-[-0.04em] sm:text-4xl md:text-5xl lg:text-6xl`}>
 
             <span className="text-black">
               What You'll Discover
@@ -123,10 +136,10 @@ export default function WhatYoullDiscover() {
                     {/* Text */}
                     <div className="flex flex-col gap-2">
 
-                      <h3 className="font-agile text-xl leading-[1.3] tracking-[-0.04em] text-[#533520] md:text-2xl">
+                      <h3 className={`${agile.className} text-xl leading-[1.3] tracking-[-0.04em] text-[#533520] md:text-2xl`}>
 
                         {
-                          item.heading
+                          renderTextWithAdineueA(item.heading)
                         }
 
                       </h3>

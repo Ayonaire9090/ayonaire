@@ -132,8 +132,8 @@ export default function DreamSection() {
                 </div>
 
                 <div className="flex flex-col gap-1">
-                  <h3 className="text-[20px] sm:text-[22px] font-normal leading-[1.3] text-[#121315] tracking-tight">
-                    {card.title}
+                  <h3 className={`${agile.className} text-[20px] sm:text-[22px] font-normal leading-[1.3] text-[#121315] tracking-tight`}>
+                    {renderTextWithAdineueA(card.title)}
                   </h3>
 
                   <p className="text-[19px] sm:text-[16px] leading-relaxed text-[#121315]">
