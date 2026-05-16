@@ -8,40 +8,36 @@ import { agile, adineue } from '@/app/fonts';
 export default function Hero() {
   const [modalOpen, setModalOpen] = useState(false);
 
-  // Function to replace capital A's with Adineue font
   const renderTextWithAdineueA = (text: string) => {
     return text.split('').map((char, index) => {
       if (char === 'A') {
         return (
-          <span key={index} className={`${adineue.className}  inline-block`}>
+          <span key={index} className={`${adineue.className} inline-block`}>
             {char}
           </span>
         );
       }
+
       return <span key={index}>{char}</span>;
     });
   };
 
   return (
     <>
-      <main className="relative bg-[#F25E25]">
-        {/* Background image layer */}
-        <div
-          className="absolute inset-0 bg-cover bg-center mix-blend-luminosity"
-          style={{
-            backgroundImage:
-              "url('https://api.builder.io/api/v1/image/assets/TEMP/1523e69ae24327de9c69acf8cba1db2c22022339?width=2880')",
-            backgroundPosition: '-52px 0',
-            backgroundSize: '107% 100%',
-          }}
-        />
-
+      <main
+        className="relative bg-cover bg-center"
+        style={{
+          backgroundImage: "url('/Hero.png')",
+        }}
+      >
         {/* Content */}
         <div className="relative z-10 flex flex-col items-center px-4 pt-20 sm:px-8">
           <div className="mt-4 flex w-full max-w-4xl flex-col items-center gap-6 text-center sm:gap-4">
+            
             {/* Badge */}
             <div className="flex items-center gap-2 rounded-full bg-white px-3 py-2 shadow-sm">
               <span className="absolute inline-flex h-4 w-4 animate-ping rounded-full bg-[#F25E25] opacity-40"></span>
+
               <svg
                 width="16"
                 height="12"
@@ -62,7 +58,9 @@ export default function Hero() {
             </div>
 
             {/* Heading */}
-            <h1 className={`${agile.className} text-3xl leading-tight tracking-[-0.04em] text-center sm:text-4xl md:text-5xl lg:text-6xl`}>
+            <h1
+              className={`${agile.className} text-3xl leading-tight tracking-[-0.04em] text-center sm:text-4xl md:text-5xl lg:text-6xl`}
+            >
               <span className="text-black">
                 How To Break Into{' '}
               </span>
@@ -84,61 +82,57 @@ export default function Hero() {
             </p>
 
             {/* CTA */}
-            <div className="animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300">
-              <button
-                onClick={() => setModalOpen(true)}
-                className="group relative mt-2 flex h-14 items-center gap-3 rounded-full pl-6 pr-3 font-bold text-white shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-105 active:scale-95"
-                style={{
-                  background: 'linear-gradient(135deg, #FFFFFF 0%, #FFE5D4 100%)',
-                }}
-              >
-                <span className="text-base font-agile tracking-wide text-[#F25E25] group-hover:tracking-wider transition-all">
-                  Get free access now →
-                </span>
+            <button
+              onClick={() => setModalOpen(true)}
+              className="group relative mt-2 flex h-14 items-center gap-3 rounded-full pl-6 pr-3 font-bold text-white shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95"
+              style={{
+                background:
+                  'linear-gradient(135deg, #FFFFFF 0%, #FFE5D4 100%)',
+              }}
+            >
+              <span className="text-base tracking-wide text-[#F25E25]">
+                Get free access now →
+              </span>
 
-                <span className="flex h-[42px] w-[42px] items-center justify-center rounded-full bg-gradient-to-br from-[#F25E25] to-[#F67721] shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-110">
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 18 18"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="group-hover:translate-x-0.5 transition-transform"
-                  >
-                    <path
-                      d="M9.59456 1.68393L17.4854 8.85501L9.26626 15.7397"
-                      stroke="white"
-                      strokeWidth="1.5"
-                    />
-                    <path
-                      d="M0.000324288 8.62534L17.0875 8.92915"
-                      stroke="white"
-                      strokeWidth="1.5"
-                    />
-                  </svg>
-                </span>
-              </button>
-            </div>
+              <span className="flex h-[42px] w-[42px] items-center justify-center rounded-full bg-gradient-to-br from-[#F25E25] to-[#F67721] shadow-lg">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 18 18"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9.59456 1.68393L17.4854 8.85501L9.26626 15.7397"
+                    stroke="white"
+                    strokeWidth="1.5"
+                  />
+                  <path
+                    d="M0.000324288 8.62534L17.0875 8.92915"
+                    stroke="white"
+                    strokeWidth="1.5"
+                  />
+                </svg>
+              </span>
+            </button>
           </div>
 
           {/* Hero Image */}
-          <div className="relative z-20 w-full max-w-6xl px-4 mt-10 mb-[-70px] md:mb-[-120px] lg:mb-[-150px]">
+          <div className="relative z-20 mt-10 mb-[-70px] w-full max-w-6xl px-4 md:mb-[-120px] lg:mb-[-150px]">
             <Image
               src="/HeroImage.png"
               alt="Hero visual"
               width={1200}
               height={800}
               priority
-              className="w-full h-auto object-contain"
+              className="h-auto w-full object-contain"
             />
           </div>
         </div>
       </main>
 
       {/* Next Section */}
-      <section className="bg-white pt-24 md:pt-40 lg:pt-52">
-        {/* Your next component goes here */}
-      </section>
+      <section className="bg-white pt-24 md:pt-40 lg:pt-52"></section>
 
       {/* Modal */}
       <RegistrationModal
