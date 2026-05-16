@@ -15,6 +15,9 @@ const inter = Inter({
   weight: ['400', '500', '600', '700'],
 });
 
+
+import { agile, adineue } from '@/app/fonts';
+
 export default function LiveSessionDetails() {
   const details = [
     {
@@ -49,7 +52,7 @@ export default function LiveSessionDetails() {
         {/* Heading */}
         <div className="text-center mb-10">
           <h2
-            className= 'font-agile text-4xl md:text-5xl font-bold text-[#121315]'
+            className= {`${agile.className} text-4xl md:text-5xl font-bold text-[#121315]`}
           >
             Live Session Details
           </h2>

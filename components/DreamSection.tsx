@@ -2,6 +2,20 @@
 
 import RegistrationModal from "./RegisterationModal";
 import { useState } from 'react';
+import { agile, adineue } from '@/app/fonts';
+
+const renderTextWithAdineueA = (text: string) => {
+  return text.split('').map((char, index) => {
+    if (char === 'A') {
+      return (
+        <span key={index} className={`${adineue.className} `}>
+          {char}
+        </span>
+      );
+    }
+    return <span key={index}>{char}</span>;
+  });
+};
 
 const CircleTick = ({ id }: { id: string }) => (
   <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -65,8 +79,7 @@ export default function DreamSection() {
 
           {/* Heading */}
           <div className="text-center">
-            <h2 className="font-agile text-3xl leading-tight tracking-[-0.04em] text-center sm:text-4xl md:text-3xl lg:text-6xl">
-
+            <h2 className={`${agile.className} text-3xl leading-tight tracking-[-0.04em] text-center sm:text-4xl md:text-3xl lg:text-6xl`}>
               <span className="text-[#F4683F]">
                 Dreaming of{' '}
               </span>
@@ -76,8 +89,7 @@ export default function DreamSection() {
               </span>
 
               <span className="text-black">
-                <span className="font-adineue font-bold">A</span>
-                I Engineering?
+                {renderTextWithAdineueA('AI Engineering?')}
               </span>
             </h2>
 
@@ -131,7 +143,6 @@ export default function DreamSection() {
               </div>
             ))}
           </div>
-
 
           {/* CTA Button */}
           <div className="mt-10 flex justify-center">

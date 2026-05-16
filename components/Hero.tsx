@@ -1,16 +1,30 @@
 'use client';
 
-
 import Image from 'next/image';
 import { useState } from 'react';
 import RegistrationModal from './RegisterationModal';
+import { agile, adineue } from '@/app/fonts';
 
 export default function Hero() {
   const [modalOpen, setModalOpen] = useState(false);
 
+  // Function to replace capital A's with Adineue font
+  const renderTextWithAdineueA = (text: string) => {
+    return text.split('').map((char, index) => {
+      if (char === 'A') {
+        return (
+          <span key={index} className={`${adineue.className}  inline-block`}>
+            {char}
+          </span>
+        );
+      }
+      return <span key={index}>{char}</span>;
+    });
+  };
+
   return (
     <>
-      <main className="relative  bg-[#F25E25]">
+      <main className="relative bg-[#F25E25]">
         {/* Background image layer */}
         <div
           className="absolute inset-0 bg-cover bg-center mix-blend-luminosity"
@@ -25,7 +39,6 @@ export default function Hero() {
         {/* Content */}
         <div className="relative z-10 flex flex-col items-center px-4 pt-20 sm:px-8">
           <div className="mt-4 flex w-full max-w-4xl flex-col items-center gap-6 text-center sm:gap-4">
-
             {/* Badge */}
             <div className="flex items-center gap-2 rounded-full bg-white px-3 py-2 shadow-sm">
               <span className="absolute inline-flex h-4 w-4 animate-ping rounded-full bg-[#F25E25] opacity-40"></span>
@@ -49,19 +62,18 @@ export default function Hero() {
             </div>
 
             {/* Heading */}
-            <h1 className="font-agile text-3xl leading-tight tracking-[-0.04em] text-center sm:text-4xl md:text-5xl lg:text-6xl">
+            <h1 className={`${agile.className} text-3xl leading-tight tracking-[-0.04em] text-center sm:text-4xl md:text-5xl lg:text-6xl`}>
               <span className="text-black">
                 How To Break Into{' '}
               </span>
 
               <span className="text-[#F4683F]">
-                <span className="font-adineue font-bold ">A</span>
-                I Engineering
+                {renderTextWithAdineueA('AI Engineering')}
               </span>
 
               <span className="text-black">
                 {' '}
-                &amp; Become Globally Employable
+                & Become Globally Employable
               </span>
             </h1>
 
@@ -72,7 +84,7 @@ export default function Hero() {
             </p>
 
             {/* CTA */}
-             <div className="animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300">
+            <div className="animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300">
               <button
                 onClick={() => setModalOpen(true)}
                 className="group relative mt-2 flex h-14 items-center gap-3 rounded-full pl-6 pr-3 font-bold text-white shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-105 active:scale-95"
@@ -83,7 +95,7 @@ export default function Hero() {
                 <span className="text-base font-agile tracking-wide text-[#F25E25] group-hover:tracking-wider transition-all">
                   Get free access now →
                 </span>
-                
+
                 <span className="flex h-[42px] w-[42px] items-center justify-center rounded-full bg-gradient-to-br from-[#F25E25] to-[#F67721] shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-110">
                   <svg
                     width="20"

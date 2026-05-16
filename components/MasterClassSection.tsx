@@ -4,7 +4,7 @@
 import { Inter } from 'next/font/google';
 import RegistrationModal from './RegisterationModal';
 import { useState } from 'react';
-
+import { agile, adineue } from '@/app/fonts';
 const inter = Inter({
   subsets: ['latin'],
   weight: ['400', '500', '700'],
@@ -85,7 +85,7 @@ export default function MasterclassSection() {
           {/* Left */}
           <div className="flex flex-col justify-center gap-10 lg:w-[577px] lg:shrink-0 lg:self-stretch">
 
-            <h2 className="font-agile text-3xl leading-tight tracking-[-0.04em] text-left sm:text-4xl md:text-5xl lg:text-[56px]">
+            <h2 className={`${agile.className} text-3xl leading-tight tracking-[-0.04em] text-left sm:text-4xl md:text-5xl lg:text-[56px]`}>
               
               <span className="text-black">
                 This Live Masterclass Is For You If:
@@ -123,7 +123,7 @@ export default function MasterclassSection() {
                 <CheckIcon />
 
                 <p
-                  style={{ fontFamily: "Adineue" }}
+                
                   className="
                     text-[#05040B]
                     leading-[132%]
