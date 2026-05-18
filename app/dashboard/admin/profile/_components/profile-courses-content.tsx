@@ -33,7 +33,7 @@ export function ProfileCoursesContent() {
   const [activeSubTab, setActiveSubTab] = useState<CourseSubTab>("My Courses");
 
   return (
-    <div className="py-6 md:py-8">
+    <div className="py-6 md:py-8 w-full max-w-[96%] md:max-w-full mx-auto">
       {/* Sub-tabs */}
       <div className="flex gap-6 mb-6 border-b border-gray-100">
         {subTabs.map((tab) => (
@@ -82,9 +82,7 @@ export function ProfileCoursesContent() {
       )}
 
       {/* My Certificates Tab Content */}
-      {activeSubTab === "My Certificates" && (
-        <ProfileCerificateContent />
-      )}
+      {activeSubTab === "My Certificates" && <ProfileCerificateContent />}
     </div>
   );
 }
