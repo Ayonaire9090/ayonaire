@@ -1,5 +1,5 @@
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
-import { StatsSummary } from "../../../../components/dashboard/stats-summary";
+import { StatsSummary } from "../../../../../components/dashboard/stats-summary";
 import { CoursesTable } from "./_components/courses-table";
 import { CoursesList } from "./_components/courses-list";
 

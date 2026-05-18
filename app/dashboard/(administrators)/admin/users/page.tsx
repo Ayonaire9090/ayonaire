@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Plus, Search, ChevronDown, X } from "lucide-react";
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 import { AdminDashboardButton } from "@/components/dashboard/admin-dashboard-button";
-import { StatsSummary } from "../../../../components/dashboard/stats-summary";
+import { StatsSummary } from "../../../../../components/dashboard/stats-summary";
 import { usersData } from "./_components/users-data";
 import { UsersTable } from "./_components/users-table";
 import { UsersList } from "./_components/users-list";
