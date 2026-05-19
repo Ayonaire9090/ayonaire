@@ -69,7 +69,11 @@ export default function RegistrationModal({
         try {
             await registerUser(fullName, email);
 
-            router.push('/ai-engineering-thank-you');
+            // ✅ FIX: Pass the user data as URL parameters
+            const encodedName = encodeURIComponent(fullName);
+            const encodedEmail = encodeURIComponent(email);
+            router.push(`/ai-engineering-thank-you?name=${encodedName}&email=${encodedEmail}`);
+            
         } catch (err: any) {
             setError(
                 err.message ||
