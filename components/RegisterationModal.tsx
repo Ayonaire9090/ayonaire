@@ -42,6 +42,22 @@ export default function RegistrationModal({
         email?: string;
     }>({});
 
+    // Helper function to push events to dataLayer for GA4
+    const pushToDataLayer = (eventData: any) => {
+        if (typeof window !== 'undefined' && window.dataLayer) {
+            window.dataLayer.push(eventData);
+            console.log('GA4 event pushed:', eventData);
+        }
+    };
+
+    // Helper function to fire Facebook Pixel (Meta)
+    const fireFacebookPixel = (eventName: string, params?: any) => {
+        if (typeof window !== 'undefined' && window.fbq) {
+            window.fbq('track', eventName, params);
+            console.log(`Facebook Pixel fired: ${eventName}`);
+        }
+    };
+
     const handleSubmit = async () => {
         setError(null);
         setFieldErrors({});
@@ -67,21 +83,90 @@ export default function RegistrationModal({
         setLoading(true);
 
         try {
+            // Track form submission start
+            pushToDataLayer({
+                event: 'form_start',
+                form_type: 'waitlist',
+                form_name: 'AI Engineering Masterclass',
+                user_email: email
+            });
+
+            // Register user
             await registerUser(fullName, email);
 
-            // ✅ FIX: Pass the user data as URL parameters
-            const encodedName = encodeURIComponent(fullName);
-            const encodedEmail = encodeURIComponent(email);
-            router.push(`/ai-engineering-thank-you?name=${encodedName}&email=${encodedEmail}`);
+            // GA4 Event 1: generate_lead (standard GA4 event for leads)
+            pushToDataLayer({
+                event: 'generate_lead',
+                event_category: 'form',
+                event_label: 'AI Engineering Waitlist',
+                value: 1,
+                currency: 'USD',
+                user_email: email,
+                user_name: fullName
+            });
+
+            // GA4 Event 2: form_submit (custom event)
+            pushToDataLayer({
+                event: 'form_submit',
+                event_category: 'engagement',
+                event_label: 'waitlist_signup',
+                form_id: 'masterclass_registration',
+                form_name: 'AI Engineering Masterclass Waitlist',
+                form_destination: '/ai-engineering-thank-you',
+                user_email: email,
+                user_name: fullName
+            });
+
+            // GA4 Event 3: lead (alternative event name for GTM)
+            pushToDataLayer({
+                event: 'lead',
+                event_category: 'conversion',
+                event_action: 'form_submission',
+                event_label: 'waitlist_conversion',
+                value: 1
+            });
+
+            // Facebook Pixel Lead event
+            fireFacebookPixel('Lead', {
+                content_name: 'AI Engineering Masterclass Waitlist',
+                content_category: 'Registration',
+                content_type: 'form_submission',
+                status: 'successful',
+                currency: 'USD',
+                value: 1.0,
+                user_email: email,
+                user_name: fullName
+            });
+
+            // Store conversion data
+            sessionStorage.setItem('conversion_completed', 'true');
+            sessionStorage.setItem('user_email', email);
+            sessionStorage.setItem('user_name', fullName);
+
+            // Small delay to ensure events fire before navigation
+            setTimeout(() => {
+                const encodedName = encodeURIComponent(fullName);
+                const encodedEmail = encodeURIComponent(email);
+                router.push(`/ai-engineering-thank-you?name=${encodedName}&email=${encodedEmail}&converted=true`);
+            }, 300);
             
         } catch (err: any) {
+            // Track form error
+            pushToDataLayer({
+                event: 'form_error',
+                event_category: 'form',
+                event_label: 'waitlist_error',
+                error_message: err.message || 'Unknown error',
+                user_email: email
+            });
+
             setError(
                 err.message ||
                 'Something went wrong. Please try again.'
             );
-        } finally {
             setLoading(false);
         }
+        
     };
 
     if (!isOpen) return null;
