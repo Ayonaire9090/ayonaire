@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
+
 interface RegistrationModalProps {
     isOpen: boolean;
     onClose: () => void;
@@ -69,12 +70,23 @@ export default function RegistrationModal({
         try {
             // Register user
             await registerUser(fullName, email);
+            window.dataLayer = window.dataLayer || [];
 
+            window.dataLayer.push({
+                event: 'generate_lead',
+                form_name: 'registration_form',
+                full_name: fullName,
+                email: email,
+            });
             // Navigate to thank you page
-            const encodedName = encodeURIComponent(fullName);
-            const encodedEmail = encodeURIComponent(email);
-            router.push(`/ai-engineering-thank-you?name=${encodedName}&email=${encodedEmail}`);
-            
+            setTimeout(() => {
+                const encodedName = encodeURIComponent(fullName);
+                const encodedEmail = encodeURIComponent(email);
+
+                router.push(
+                    `/ai-engineering-thank-you?name=${encodedName}&email=${encodedEmail}`
+                );
+            }, 500);
         } catch (err: any) {
             setError(
                 err.message ||
@@ -165,8 +177,8 @@ export default function RegistrationModal({
                                     }));
                                 }}
                                 className={`h-[42px] w-full rounded-full border bg-white px-4 text-sm outline-none ${fieldErrors.name
-                                        ? 'border-red-400'
-                                        : 'border-transparent'
+                                    ? 'border-red-400'
+                                    : 'border-transparent'
                                     }`}
                             />
 
@@ -191,8 +203,8 @@ export default function RegistrationModal({
                                     }));
                                 }}
                                 className={`h-[42px] w-full rounded-full border bg-white px-4 text-sm outline-none ${fieldErrors.email
-                                        ? 'border-red-400'
-                                        : 'border-transparent'
+                                    ? 'border-red-400'
+                                    : 'border-transparent'
                                     }`}
                             />
 
