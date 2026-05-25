@@ -137,7 +137,7 @@ export default function ThankYouClient() {
         {/* Section Button */}
         <div className="mb-8">
           <AppSectionButton
-            title="Thank You — You're In!"
+            title="You're Almost Done!"
             className="shadow-md"
           />
         </div>
@@ -145,23 +145,23 @@ export default function ThankYouClient() {
         {/* Heading and Description */}
         <div className="text-center max-w-4xl">
           <AppHeading
-            title="Your Spot Has Been Reserved Successfully."
+            title="Now Join The Community To Get The Masterclass Link & Updates"
             headingLevel="h1"
-            description={`Hey ${firstName}! You've just taken an important step toward understanding the roadmap into AI Engineering and how modern AI systems are built.`}
+            description={`Hey ${firstName}! You've successfully registered for the free AI Engineering Masterclass. Join the community now so you don't miss the live access link, reminders, and important updates before the class.`}
           />
         </div>
       </div>
 
-      {/* What Happens Next Section */}
+      {/* What Happens Next Section - Updated to "Your Next Step Is Important" */}
       <section className="relative z-10 pl-6 md:pl-16 pb-12">
         <div className="flex items-center justify-between">
           {/* Left Content */}
           <div className="max-w-lg">
             <AppHeading
-              title="What Happens Next?"
+              title="Your Next Step Is Important"
               headingLevel="h2"
               className="mb-4"
-              description="Be sure to join our Exclusive WhatsApp Community."
+              description="Registration alone is not enough. The class link, reminders, and important updates will be shared with members of the community before the live session. Join now so you don't miss any information about the masterclass."
               descriptionClassName="pt-0 pb-3 text-gray-600 text-base md:text-lg"
             />
 
@@ -171,7 +171,7 @@ export default function ThankYouClient() {
               rel="noopener noreferrer"
             >
               <AppActionButton className="group">
-                <p>CLICK HERE TO GET IN INSTANTLY</p>
+                <p>JOIN THE COMMUNITY FOR UPDATES</p>
                 <span className="bg-white p-1 lg:p-2 rounded-lg group-hover:ml-2 transition-all ease-in-out duration-300">
                   <ArrowRight
                     size={25}
@@ -198,21 +198,20 @@ export default function ThankYouClient() {
         </div>
       </section>
 
-      {/* Welcome Section */}
+      {/* Welcome Section - Repurposed as "Join The Community" section */}
       <section className="relative z-10 pl-6 md:pl-16 py-12">
         <div className="flex items-center justify-between">
           {/* Left Content */}
           <div className="max-w-lg">
             <AppHeading
-              title="Join The AI Builder Community"
+              title="Join The Community Now"
               headingLevel="h2"
-              description="Check your email now, we've sent important details about what's"
+              description="Don't miss out on the masterclass link and important updates."
               className=""
               descriptionClassName="text-gray-600 text-base md:text-lg mb-4"
             />
             <p className="text-gray-500 text-sm md:text-base mb-8 italic">
-              Note: Please If you don't see it, check Spam, Promotions, or
-              Updates.
+              Note: Please If you don't see the email, check Spam, Promotions, or Updates.
             </p>
 
             <a
@@ -221,7 +220,7 @@ export default function ThankYouClient() {
               rel="noopener noreferrer"
             >
               <AppActionButton className="group">
-                <p>CLICK HERE TO GET IN INSTANTLY</p>
+                <p>JOIN THE COMMUNITY NOW</p>
                 <span className="bg-white p-1 lg:p-2 rounded-lg group-hover:ml-2 transition-all ease-in-out duration-300">
                   <ArrowRight
                     size={25}
@@ -248,7 +247,7 @@ export default function ThankYouClient() {
         </div>
       </section>
 
-      {/* What You'll Get Section */}
+      {/* What You'll Get Section - Keeping original benefits unchanged */}
       <section className="relative z-10 px-6 md:px-16 py-16">
         <div className="mx-auto max-w-6xl">
           <div className="text-center mb-10">
