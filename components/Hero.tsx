@@ -78,10 +78,8 @@ export default function Hero() {
             </h1>
 
             {/* Subtitle */}
-            <p className="max-w-2xl text-base leading-relaxed tracking-tight text-[#121315] sm:text-[18px] sm:leading-[28px]">
-
-              Become the kind of AI Builder companies are urgently hiring for globally.
-
+            <p className="max-w-2xl text-xl leading-relaxed tracking-tight text-[#121315] sm:text-2xl sm:leading-[34px]">
+              Become the kind of <strong>AI Builder companies</strong> are urgently hiring for <strong>globally</strong>.
             </p>
 
             {/* CTA */}
