@@ -124,7 +124,7 @@ export default function ThankYouClient() {
         </div>
 
         {/* Thank You Icon */}
-        <div className="mb-8">
+        {/* <div className="mb-8">
           <Image
             src="/assets/icons/thank-you-icon.svg"
             alt="Thank You"
@@ -132,7 +132,7 @@ export default function ThankYouClient() {
             height={138}
             className="object-contain"
           />
-        </div>
+        </div> */}
 
         {/* Section Button */}
         <div className="mb-8">
@@ -150,6 +150,27 @@ export default function ThankYouClient() {
             description={`Hey ${firstName}! You've successfully registered for the free AI Engineering Masterclass. Join the community now so you don't miss the live access link, reminders, and important updates before the class.`}
           />
         </div>
+        {/* Just added  */}
+            <a
+              href="https://chat.whatsapp.com/BAZx2ojKiV66jm3ABeOSwu?mode=gi_t"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-3"
+            >
+              <AppActionButton className="group">
+                <p>JOIN THE COMMUNITY FOR UPDATES</p>
+                <span className="bg-white p-1 lg:p-2 rounded-lg group-hover:ml-2 transition-all ease-in-out duration-300">
+                  <ArrowRight
+                    size={25}
+                    className="text-primary rounded block group-hover:hidden"
+                  />
+                  <IconBrandWhatsapp
+                    size={25}
+                    className="text-primary rounded hidden group-hover:block"
+                  />
+                </span>
+              </AppActionButton>
+            </a>
       </div>
 
       {/* What Happens Next Section - Updated to "Your Next Step Is Important" */}
