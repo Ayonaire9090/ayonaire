@@ -76,20 +76,39 @@ export default function WhatYoullDiscover() {
 
           {/* Call-to-Action Masterclass Button */}
           <div className="mt-14 flex justify-center">
-            <button
-              onClick={() => setModalOpen(true)}
-              className="flex items-center gap-3 rounded-xl px-6 py-3.5 text-base font-bold text-white transition-transform active:scale-98 shadow-sm"
-              style={{ background: "linear-gradient(90deg, #F25E25 0%, #FFA873 100%)" }}
-            >
-              <span className="font-sans tracking-tight">
-                Join The Free Masterclass
-              </span>
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-white">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="#F25E25" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </span>
-            </button>
+              <button
+                            onClick={() => setModalOpen(true)}
+                            className="relative flex h-11 items-center gap-3 rounded-[14px] pl-5 pr-2 font-bold text-white transition-transform hover:scale-[1.02]"
+                            style={{
+                                background:
+                                    "linear-gradient(90deg, #F67219 0%, #FFDCC4 100%)",
+                            }}
+                        >
+                            <span className="text-sm whitespace-nowrap">
+                                Join the Free Masterclass
+                            </span>
+
+                            <span className="flex h-[33px] w-[33px] shrink-0 items-center justify-center rounded-[7px] bg-white">
+                                <svg
+                                    width="18"
+                                    height="18"
+                                    viewBox="0 0 18 18"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        d="M9.59456 1.68393L17.4854 8.85501L9.26626 15.7397"
+                                        stroke="#F67721"
+                                        strokeWidth="1.5"
+                                    />
+                                    <path
+                                        d="M0.000324288 8.62534L17.0875 8.92915"
+                                        stroke="#F67721"
+                                        strokeWidth="1.5"
+                                    />
+                                </svg>
+                            </span>
+                        </button>
           </div>
 
         </div>

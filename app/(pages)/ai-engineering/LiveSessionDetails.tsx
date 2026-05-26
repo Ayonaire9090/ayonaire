@@ -63,17 +63,31 @@ export default function LiveSessionDetails() {
     },
   ];
 
+
+    const renderTextWithAdineueA = (text: string) => {
+      return text.split('').map((char, index) => {
+        if (char === 'A') {
+          return (
+            <span key={index} className={`${adineue.className} inline-block`}>
+              {char}
+            </span>
+          );
+        }
+        return <span key={index}>{char}</span>;
+      });
+    };
+
   return (
     <section className="w-full bg-white py-16 sm:py-20">
       <div className="max-w-6xl mx-auto px-4 w-full">
         
         {/* Header Layout Section */}
         <div className="text-center mb-12 flex flex-col items-center">
-          <p className="font-sans text-sm sm:text-base font-medium text-[#121315] mb-2 tracking-wide">
+          <p className={`${adineue.className}font-sans text-sm sm:text-base font-medium text-[#121315] mb-2 tracking-wide`}>
             Free Live Masterclass Details
           </p>
           <h2 className={`${agile.className} text-3xl sm:text-4xl md:text-5xl lg:text-[52px] font-bold text-[#121315] leading-tight tracking-tight max-w-4xl`}>
-            How To Break Into <span className="text-black">AI Engineering</span> &amp; <span className="text-[#F25E25]">Become An AI Builder</span>
+            How To Break Into <span className="text-black">{renderTextWithAdineueA('AI')} Engineering</span> &amp; <span className="text-[#F25E25]">Become {renderTextWithAdineueA('An AI')} Builder</span>
           </h2>
         </div>
 

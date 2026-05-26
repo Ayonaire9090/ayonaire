@@ -7,18 +7,32 @@ import RegistrationModal from '@/components/RegisterationModal';
 // Setup role items array matching titles. They all reference the same base image for now.
 const aiRoles = [
   { name: "AI Engineer", src: "/AI.png" },
-  { name: "Generative AI Engineer", src: "/AI.png" },
-  { name: "Agentic AI Engineer", src: "/AI.png" },
-  { name: "Machine Learning Engineer", src: "/AI.png" },
-  { name: "LLM Engineer", src: "/AI.png" },
-  { name: "NLP Engineer", src: "/AI.png" },
-  { name: "Computer Vision Engineer", src: "/AI.png" },
-  { name: "Deep Learning Engineer", src: "/AI.png" },
-  { name: "AI Product Engineer", src: "/AI.png" },
+  { name: "Generative AI Engineer", src: "/Gen.png" },
+  { name: "Agentic AI Engineer", src: "/Agent.png" },
+  { name: "Machine Learning Engineer", src: "/Machine.png" },
+  { name: "LLM Engineer", src: "/LLM.png" },
+  { name: "NLP Engineer", src: "/NLP.png" },
+  { name: "Computer Vision Engineer", src: "/Computer.png" },
+  { name: "Deep Learning Engineer", src: "/Deep.png" },
+  { name: "AI Product Engineer", src: "/Product.png" },
 ];
 
 export default function AICareerPaths() {
   const [modalOpen, setModalOpen] = useState(false);
+
+
+    const renderTextWithAdineueA = (text: string) => {
+        return text.split('').map((char, index) => {
+          if (char === 'A') {
+            return (
+              <span key={index} className={`${adineue.className} inline-block`}>
+                {char}
+              </span>
+            );
+          }
+          return <span key={index}>{char}</span>;
+        });
+      };
 
   return (
     <>
@@ -28,7 +42,7 @@ export default function AICareerPaths() {
           {/* Header Typography Group */}
           <div className="text-center max-w-3xl mb-4">
             <h2 className={`${agile.className} text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-bold text-black leading-tight tracking-tight`}>
-              <span className="text-[#F25E25]">AI Career Paths</span> You Can Start Preparing For
+              <span className="text-[#F25E25]">{renderTextWithAdineueA('AI')} Career Paths</span> You Can Start Preparing For
             </h2>
             <p className="mt-4 text-[#55565A] font-normal text-base sm:text-[18px] tracking-tight">
               This masterclass will expose you to high-demand AI roles such as:
@@ -36,7 +50,7 @@ export default function AICareerPaths() {
           </div>
 
           {/* Roles Grid Display Frame */}
-          <div className="mt-12 flex flex-wrap justify-center gap-x-12 gap-y-12 max-w-5xl w-full">
+          <div className="mt-12 flex flex-wrap justify-center gap-x-6 gap-y-12 max-w-5xl w-full">
             {aiRoles.map((role, index) => (
               <div 
                 key={index} 
@@ -75,19 +89,38 @@ export default function AICareerPaths() {
           {/* Action Trigger Element */}
           <div className="mt-8 flex justify-center">
             <button
-              onClick={() => setModalOpen(true)}
-              className="flex items-center gap-3 rounded-xl px-6 py-3.5 text-base font-bold text-white transition-transform active:scale-97 shadow-sm hover:opacity-95"
-              style={{ background: "linear-gradient(90deg, #F25E25 0%, #FFA56E 100%)" }}
-            >
-              <span className="font-sans tracking-tight">
-                I Want To Become An AI Builder
-              </span>
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-white">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="#F25E25" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </span>
-            </button>
+                            onClick={() => setModalOpen(true)}
+                            className="relative flex h-11 items-center gap-3 rounded-[14px] pl-5 pr-2 font-bold text-white transition-transform hover:scale-[1.02]"
+                            style={{
+                                background:
+                                    "linear-gradient(90deg, #F67219 0%, #FFDCC4 100%)",
+                            }}
+                        >
+                            <span className="text-sm whitespace-nowrap">
+                                I want to Become AI Builder
+                            </span>
+
+                            <span className="flex h-[33px] w-[33px] shrink-0 items-center justify-center rounded-[7px] bg-white">
+                                <svg
+                                    width="18"
+                                    height="18"
+                                    viewBox="0 0 18 18"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        d="M9.59456 1.68393L17.4854 8.85501L9.26626 15.7397"
+                                        stroke="#F67721"
+                                        strokeWidth="1.5"
+                                    />
+                                    <path
+                                        d="M0.000324288 8.62534L17.0875 8.92915"
+                                        stroke="#F67721"
+                                        strokeWidth="1.5"
+                                    />
+                                </svg>
+                            </span>
+                        </button>
           </div>
 
         </div>

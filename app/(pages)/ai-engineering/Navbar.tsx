@@ -23,9 +23,9 @@ export default function Navbar() {
             {/* Logo */}
             <a href="/" className="shrink-0">
               <img
-                src="/Logo.png"
+                src="/ayo.png"
                 alt="Ayonaire"
-                className="h-[32px] w-auto object-contain"
+                className="h-8 w-auto object-contain"
               />
             </a>
 

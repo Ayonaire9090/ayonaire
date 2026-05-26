@@ -2,6 +2,7 @@
 import RegistrationModal from '@/components/RegisterationModal';
 import { useState } from 'react';
 import { agile, adineue, exo } from '@/app/fonts';
+import DifferenceSection from './DifferenceSection';
 
 // Reusable Circle Checkmark Component tailored to the design image
 const OrangeCircleCheck = ({ id }: { id: string }) => (
@@ -96,6 +97,22 @@ const builderChallenges = [
 export default function AIBuildersSection() {
     const [modalOpen, setModalOpen] = useState(false);
 
+
+     const renderTextWithAdineueA = (text: string) => {
+    return text.split('').map((char, index) => {
+      if (char === 'A') {
+        return (
+          <span key={index} className={`${adineue.className} inline-block`}>
+            {char}
+          </span>
+        );
+      }
+      return <span key={index}>{char}</span>;
+    });
+  };
+
+
+
     return (
         <>
             {/* Changed background from pinkish-orange to crisp white/light gray wrapper if needed */}
@@ -105,11 +122,11 @@ export default function AIBuildersSection() {
                     {/* Header Section */}
                     <div className="text-center mb-16">
                         <h2 className={`${agile.className} text-4xl sm:text-5xl lg:text-[56px] font-bold tracking-tight text-[#121315] leading-tight`}>
-                            Companies Pay For <span className="text-[#F25E25]">AI Builders</span>, Not <span className="text-[#F25E25]">AI Consumers.</span>
+                            Companies Pay For <span className="text-[#F25E25]">{renderTextWithAdineueA('AI')} Builders</span>, Not <span className="text-[#F25E25]">{renderTextWithAdineueA('AI')} Consumers.</span>
                         </h2>
 
                         <p className="mt-4 text-[18px] sm:text-[22px] text-[#55565A] font-normal tracking-tight">
-                            Using AI tools is not enough anymore.
+                            Using {renderTextWithAdineueA('AI')} tools is not enough anymore.
                         </p>
 
                         <p className="mt-2 text-[18px] sm:text-[22px] text-[#F25E25] font-semibold tracking-tight">
@@ -137,18 +154,41 @@ export default function AIBuildersSection() {
                         ))}
                     </div>
 
+
+                    <DifferenceSection />
+
                     {/* CTA Button Wrapper */}
-                    <div className="mt-14 flex justify-center">
+                    <div className="mt-1 flex justify-center">
                         <button
                             onClick={() => setModalOpen(true)}
-                            className="flex items-center gap-3 rounded-[14px] px-6 py-3.5 text-base font-bold text-white transition-transform active:scale-95"
-                            style={{ background: "linear-gradient(90deg, #F25E25 0%, #F97F11 100%)" }}
+                            className="relative flex h-11 items-center gap-3 rounded-[14px] pl-5 pr-2 font-bold text-white transition-transform hover:scale-[1.02]"
+                            style={{
+                                background:
+                                    "linear-gradient(90deg, #F67219 0%, #FFDCC4 100%)",
+                            }}
                         >
-                            Reserve My Free Spot
-                            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[7px] bg-white">
-                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M10.7442 2.73047L19.5805 9.90155L10.3766 16.7862" stroke="#F25E25" strokeWidth="1.5" />
-                                    <path d="M9.29604e-05 9.67188L19.1346 9.97569" stroke="#F25E25" strokeWidth="1.5" />
+                            <span className="text-sm whitespace-nowrap">
+                                Show me the AI Roadmap
+                            </span>
+
+                            <span className="flex h-[33px] w-[33px] shrink-0 items-center justify-center rounded-[7px] bg-white">
+                                <svg
+                                    width="18"
+                                    height="18"
+                                    viewBox="0 0 18 18"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        d="M9.59456 1.68393L17.4854 8.85501L9.26626 15.7397"
+                                        stroke="#F67721"
+                                        strokeWidth="1.5"
+                                    />
+                                    <path
+                                        d="M0.000324288 8.62534L17.0875 8.92915"
+                                        stroke="#F67721"
+                                        strokeWidth="1.5"
+                                    />
                                 </svg>
                             </span>
                         </button>
