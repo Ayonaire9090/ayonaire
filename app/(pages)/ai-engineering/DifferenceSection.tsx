@@ -35,7 +35,7 @@ export default function DifferenceSection() {
         </div>
 
         {/* Subtext Description */}
-        <p className={`${agile.className} mt-8 text-base leading-relaxed tracking-tight text-[#5C5E63] sm:text-lg md:text-xl md:leading-[32px]`}>
+        <p className={`${agile.className} mt-8 text-lg leading-relaxed tracking-tight text-[#5C5E63] sm:text-xl md:text-xl md:leading-[32px]`}>
           This free masterclass will show you the roadmap to move from learning{' '}
           {renderTextWithAdineueA('AI')} randomly to building real-world{' '}
           {renderTextWithAdineueA('AI')} systems with structure.

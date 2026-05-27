@@ -1,5 +1,5 @@
 'use client';
-import RegistrationModal from '@/components/RegisterationModal';
+import RegistrationModal from './RegisterationModal';
 import { useState } from 'react';
 import { agile, adineue, exo } from '@/app/fonts';
 import DifferenceSection from './DifferenceSection';
@@ -147,7 +147,7 @@ export default function AIBuildersSection() {
                                 </div>
 
                                 {/* Question Text */}
-                                <div className="text-[#2D3139] text-[16px] sm:text-[17px] leading-[1.5] font-normal">
+                                <div className="text-[#2D3139] text-[18px] sm:text-[17px] leading-[1.5] font-normal">
                                     {item.text}
                                 </div>
                             </div>

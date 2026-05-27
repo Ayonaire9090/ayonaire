@@ -6,6 +6,7 @@ import WhatYoullDiscover from './WhatYouWillDiscover'
 import AICareerPaths from './AiCareerPaths'
 import LiveSessionDetails from './LiveSessionDetails'
 import { Footer } from '@/components/layout/footer'
+import NextStepCallout from './Price'
 const Optin = () => {
     return (
 
@@ -17,6 +18,7 @@ const Optin = () => {
                 <WhatYoullDiscover/>
                 <AICareerPaths/>
                 <LiveSessionDetails/>
+                <NextStepCallout/>
                 <Footer/>
             </div>
         </main>

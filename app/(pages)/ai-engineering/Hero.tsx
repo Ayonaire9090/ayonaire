@@ -42,8 +42,8 @@ export default function Hero() {
           <div className="mt-4 flex w-full max-w-4xl flex-col items-center gap-5 text-center">
 
             {/* Top Badge: Masterclass Label */}
-            <div className="flex items-center gap-2 mt-4">
-              <span className= {`${adineue.className}   font-bold uppercase tracking-wider text-[#F25E25] `}>
+            <div className="flex items-center gap-2 mt-6">
+              <span className= {`${adineue.className}   font-bold uppercase tracking-wider text-lg sm:text-xl md:text-2xl text-[#F25E25] `}>
                 {renderTextWithAdineueA('AI ENGINEERING')} <span className='font-bold text-black'>LIVE MASTER CLASS</span>
               </span>
             </div>
@@ -65,7 +65,7 @@ export default function Hero() {
               Don't miss out on{' '}
               <span className="text-[#F4683F]">${renderTextWithAdineueA('300K')}–${renderTextWithAdineueA('500K')}/</span>
               <br />
-              <span className="text-[#F4683F] font-normal lowercase italic">{renderTextWithAdineueA('year')}</span>{' '}
+              <span className="text-[#F4683F] font-normal lowercase ">{renderTextWithAdineueA('year')}</span>{' '}
               {renderTextWithAdineueA('AI Engineering salaries')}
             </h1>
 

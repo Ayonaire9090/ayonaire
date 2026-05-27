@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import RegistrationModal from "@/components/RegisterationModal";
+import RegistrationModal from "./RegisterationModal";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);

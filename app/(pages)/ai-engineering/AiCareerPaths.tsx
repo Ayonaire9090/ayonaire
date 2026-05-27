@@ -3,7 +3,8 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { agile, adineue, exo } from '@/app/fonts';
-import RegistrationModal from '@/components/RegisterationModal';
+import RegistrationModal from './RegisterationModal';
+
 // Setup role items array matching titles. They all reference the same base image for now.
 const aiRoles = [
   { name: "AI Engineer", src: "/AI.png" },
