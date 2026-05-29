@@ -34,6 +34,18 @@ const masterclassItems = [
 
 export default function WhatYoullDiscover() {
   const [modalOpen, setModalOpen] = useState(false);
+  const renderTextWithAdineueA = (text: string) => {
+    return text.split('').map((char, index) => {
+      if (char === 'A') {
+        return (
+          <span key={index} className={`${adineue.className} inline-block`}>
+            {char}
+          </span>
+        );
+      }
+      return <span key={index}>{char}</span>;
+    });
+  };
 
   return (
     <>
@@ -67,10 +79,10 @@ export default function WhatYoullDiscover() {
 
                   {/* Content Frame */}
                   <div className="flex flex-col gap-2">
-                    <h3 className={`${exo.className} text-[20px] sm:text-[21px] font-bold leading-[1.3] text-[#121315] tracking-tight`}>
-                      {item.heading}
+                    <h3 className={`${agile.className} text-[20px] sm:text-[24px] font-bold leading-[1.3] text-[#121315] tracking-tight`}>
+                      {renderTextWithAdineueA(item.heading)}
                     </h3>
-                    <p className="font-sans text-[18px] sm:text-[16px] leading-relaxed text-[#55565A]">
+                    <p className={`${adineue.className} font-sans text-[15px] sm:text-[18px] leading-relaxed text-[#55565A]`}>
                       {item.desc}
                     </p>
                   </div>

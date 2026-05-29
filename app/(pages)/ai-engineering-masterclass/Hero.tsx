@@ -70,7 +70,7 @@ export default function Hero() {
             </h1>
 
             {/* Subtitle / Paragraph */}
-            <p className="max-w-2xl text-base leading-relaxed text-[#4A4A4A] sm:text-lg md:text-xl">
+            <p className={`${adineue.className} max-w-2xl text-base leading-relaxed text-[#4A4A4A] sm:text-lg md:text-xl`}>
               Become the kind of <strong className="font-bold text-black">AI Builder companies</strong> are urgently hiring for <strong className="font-bold text-black">globally</strong>.
             </p>
 
@@ -84,7 +84,7 @@ export default function Hero() {
                 }}
               >
                 <span className="text-sm whitespace-nowrap">
-                  Reserve my spot
+                  Reserve My Free spot
                 </span>
 
                 <span className="flex h-[33px] w-[33px] shrink-0 items-center justify-center rounded-[7px] bg-white">

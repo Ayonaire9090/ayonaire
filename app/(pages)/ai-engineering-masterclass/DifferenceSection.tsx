@@ -22,7 +22,7 @@ export default function DifferenceSection() {
         
         {/* Callout Box */}
         <div className="rounded-[20px] bg-[#FFF5F1] px-6 py-8 shadow-[0_4px_20px_rgba(242,94,37,0.04)] sm:px-12 sm:py-10">
-          <h2 className="mb-4 text-xl font-extrabold tracking-tight text-black sm:text-2xl">
+          <h2 className={`${adineue.className} mb-4 text-xl font-bold tracking-tight text-black sm:text-4xl`}>
             That is the difference.
           </h2>
           
@@ -35,7 +35,7 @@ export default function DifferenceSection() {
         </div>
 
         {/* Subtext Description */}
-        <p className={`${agile.className} mt-8 text-lg leading-relaxed tracking-tight text-[#5C5E63] sm:text-xl md:text-xl md:leading-[32px]`}>
+        <p className={`${adineue.className} mt-8 text-lg leading-relaxed tracking-tight text-[#5C5E63] sm:text-xl md:text-xl md:leading-[32px]`}>
           This free masterclass will show you the roadmap to move from learning{' '}
           {renderTextWithAdineueA('AI')} randomly to building real-world{' '}
           {renderTextWithAdineueA('AI')} systems with structure.

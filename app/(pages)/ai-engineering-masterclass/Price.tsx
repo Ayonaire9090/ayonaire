@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { agile, adineue } from "@/app/fonts";
+import { agile, adineue, exo } from "@/app/fonts";
 import RegistrationModal from "./RegisterationModal";
 export default function NextStepCallout() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -23,7 +23,7 @@ export default function NextStepCallout() {
         <div
           className="relative w-full rounded-[12px] overflow-hidden px-6 py-10 text-center text-white shadow-xl sm:px-12 sm:py-12"
           style={{
-            background: "linear-gradient(107deg, #FFDCC4 0%, #F67721 100%)",
+            background: "linear-gradient(107deg, #FFDCC4 0%, #FFDCC4 10%, #F67721 35%, #F67721 100%)",
           }}
         >
           {/* White Grid/Squares Texture Overlay */}
@@ -38,12 +38,12 @@ export default function NextStepCallout() {
           {/* Content Container */}
           <div className="relative z-10 flex flex-col items-center font-sans">
             {/* Top Label */}
-            <span className="text-xs font-bold uppercase tracking-wider text-white mb-2 drop-shadow-sm">
+            <span className={`${adineue.className} text-[15px ] font-bold sm:text-[24px] tracking-wider text-white mb-2 drop-shadow-sm`}>
               Original Value
             </span>
 
             {/* Pricing Highlight */}
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight flex items-center gap-2 mb-2">
+            <h2 className={`${exo.className} text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight flex items-center gap-2 mb-2`}>
               <span className="text-black/80 line-through decoration-2 decoration-black/60">
                 $500
               </span>
@@ -54,7 +54,7 @@ export default function NextStepCallout() {
             </h2>
 
             {/* Subtext */}
-            <p className="text-xs sm:text-sm font-medium text-white/90 tracking-wide mb-6">
+            <p className="text-[15px] sm:text-[20px] font-medium text-white/90 tracking-wide mb-6">
               Don't miss this. Your future self will thank you.
             </p>
 
@@ -66,7 +66,7 @@ export default function NextStepCallout() {
                 background: "linear-gradient(90deg, #F67219 0%, #FFDCC4 100%)",
               }}
             >
-              <span className="text-sm whitespace-nowrap">Reserve my spot</span>
+              <span className="text-sm whitespace-nowrap">Reserve My Free Spot</span>
 
               <span className="flex h-[33px] w-[33px] shrink-0 items-center justify-center rounded-[7px] bg-white">
                 <svg
