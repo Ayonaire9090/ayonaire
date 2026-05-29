@@ -86,6 +86,7 @@ export default function RegistrationModal({
                 );
             }, 500);
         } catch (err: any) {
+            console.log(err)
             setError(
                 err.message ||
                 'Something went wrong. Please try again.'

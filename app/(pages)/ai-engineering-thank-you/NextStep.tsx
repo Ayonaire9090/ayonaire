@@ -56,7 +56,7 @@ export default function NextStepCallout() {
 
                     {/* CTA Link Button Component */}
                     <a
-                        href="https://your-community-link-here.com"
+                       href="https://chat.whatsapp.com/BAZx2ojKiV66jm3ABeOSwu?mode=gi_t"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="group relative mt-8 flex h-11 items-center gap-4 rounded-[14px] pl-6 pr-2 font-bold text-white transition-all duration-300 hover:scale-[1.03] shadow-md hover:shadow-lg"
