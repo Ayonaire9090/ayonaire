@@ -51,7 +51,7 @@ export default function WhatYoullDiscover() {
     <>
       <section className="w-full bg-white px-4 py-16 sm:py-24">
         <div className="mx-auto max-w-6xl w-full">
-          
+
           {/* Main Layout Header */}
           <div className="text-center mb-12 sm:mb-16">
             <h2 className={`${agile.className} text-3xl sm:text-4xl md:text-5xl lg:text-[52px] font-bold text-[#121315] leading-tight`}>
@@ -79,10 +79,10 @@ export default function WhatYoullDiscover() {
 
                   {/* Content Frame */}
                   <div className="flex flex-col gap-2">
-                    <h3 className={`${agile.className} text-[20px] sm:text-[24px] font-bold leading-[1.3] text-[#121315] tracking-tight`}>
+                    <h3 className={`${agile.className} text-[24px] sm:text-[24px] font-bold leading-[1.3] text-[#121315] tracking-[0.02em]`}>
                       {renderTextWithAdineueA(item.heading)}
                     </h3>
-                    <p className={`${adineue.className} font-sans text-[15px] sm:text-[18px] leading-relaxed text-[#55565A]`}>
+                    <p className={`${adineue.className} font-sans text-[20px] sm:text-[18px] leading-relaxed text-[#55565A]`}>
                       {item.desc}
                     </p>
                   </div>
@@ -95,7 +95,7 @@ export default function WhatYoullDiscover() {
           <div className="mt-14 flex justify-center">
             <button
               onClick={() => setModalOpen(true)}
-              className="relative flex h-11 items-center gap-3 rounded-[14px] pl-5 pr-2 font-bold text-white transition-transform hover:scale-[1.02]"
+              className="relative flex h-11 items-center gap-3 rounded-[14px] pl-5 pr-2 font-bold text-white transition-transform hover:scale-[1.02] shadow-lg"
               style={{
                 background: "linear-gradient(90deg, #F67219 0%, #FFDCC4 100%)",
               }}

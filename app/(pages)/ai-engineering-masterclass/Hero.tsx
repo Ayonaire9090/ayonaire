@@ -59,15 +59,19 @@ export default function Hero() {
             </div>
 
             {/* Main Heading */}
-            <h1
-              className={`${agile.className} text-4xl font-extrabold leading-tight tracking-tight text-black sm:text-5xl md:text-6xl`}
-            >
-              Don't miss out on{' '}
-              <span className="text-[#F4683F]">${renderTextWithAdineueA('300K')}–${renderTextWithAdineueA('500K')}/</span>
-              <br />
-              <span className="text-[#F4683F] font-normal lowercase ">{renderTextWithAdineueA('year')}</span>{' '}
-              {renderTextWithAdineueA('AI Engineering salaries')}
-            </h1>
+       <h1
+  className={`${agile.className} text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold leading-tight tracking-tight text-black`}
+>
+  Don't miss out on{' '}
+  <span className="text-[#F4683F]">
+    {renderTextWithAdineueA('300K')}–{renderTextWithAdineueA('500K')}/
+  </span>
+  <br />
+  <span className="text-[#F4683F] font-normal lowercase">
+    {renderTextWithAdineueA('year')}
+  </span>{' '}
+  {renderTextWithAdineueA('AI Engineering salaries')}
+</h1>
 
             {/* Subtitle / Paragraph */}
             <p className={`${adineue.className} max-w-2xl text-base leading-relaxed text-[#4A4A4A] sm:text-lg md:text-xl`}>
@@ -77,7 +81,7 @@ export default function Hero() {
             {/* CTA Button */}
           <button
                 onClick={() => setModalOpen(true)}
-                className="relative flex h-11 items-center gap-3 rounded-[14px] pl-5 pr-2 font-bold text-white transition-transform hover:scale-[1.02]"
+                className="relative flex h-11 items-center gap-3 rounded-[14px] pl-5 pr-2 font-bold text-white transition-transform hover:scale-[1.02] shadow-xl"
                 style={{
                   background:
                     "linear-gradient(90deg, #F67219 0%, #FFDCC4 100%)",

@@ -147,7 +147,7 @@ export default function AIBuildersSection() {
                                 </div>
 
                                 {/* Question Text */}
-                                <div className="text-[#2D3139] text-[18px] sm:text-[17px] leading-[1.5] font-normal">
+                                <div className={`${adineue.className } text-[#2D3139] text-[17px] font-normal sm:text-[18px] leading-[1.5]`}>
                                     {item.text}
                                 </div>
                             </div>
@@ -161,7 +161,7 @@ export default function AIBuildersSection() {
                     <div className="mt-1 flex justify-center">
                         <button
                             onClick={() => setModalOpen(true)}
-                            className="relative flex h-11 items-center gap-3 rounded-[14px] pl-5 pr-2 font-bold text-white transition-transform hover:scale-[1.02]"
+                           className="relative flex h-11 items-center gap-3 rounded-[14px] pl-5 pr-2 font-bold text-white transition-transform hover:scale-[1.02] shadow-xl"
                             style={{
                                 background:
                                     "linear-gradient(90deg, #F67219 0%, #FFDCC4 100%)",

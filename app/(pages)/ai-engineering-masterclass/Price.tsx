@@ -61,7 +61,7 @@ export default function NextStepCallout() {
             {/* CTA Button */}
             <button
               onClick={() => setModalOpen(true)}
-              className="relative flex h-11 items-center gap-3 rounded-[14px] pl-5 pr-2 font-bold text-white transition-transform hover:scale-[1.02]"
+              className="relative flex h-11 items-center gap-3 rounded-[14px] pl-5 pr-2 font-bold text-white transition-transform hover:scale-[1.02] shadow-xl"
               style={{
                 background: "linear-gradient(90deg, #F67219 0%, #FFDCC4 100%)",
               }}

@@ -23,7 +23,7 @@ export default function Navbar() {
             {/* Logo */}
             <a href="/" className="shrink-0">
               <img
-                src="/ayo.png"
+                src="/Lg.png"
                 alt="Ayonaire"
                 className="h-8 w-auto object-contain"
               />
@@ -33,7 +33,7 @@ export default function Navbar() {
             <div className="hidden md:flex items-center">
               <button
                 onClick={() => setModalOpen(true)}
-                className="relative flex h-11 items-center gap-3 rounded-[14px] pl-5 pr-2 font-bold text-white transition-transform hover:scale-[1.02]"
+     className="relative flex h-11 items-center gap-3 rounded-[14px] pl-5 pr-2 font-bold text-white transition-transform hover:scale-[1.02] shadow-lg"
                 style={{
                   background:
                     "linear-gradient(90deg, #F67219 0%, #FFDCC4 100%)",

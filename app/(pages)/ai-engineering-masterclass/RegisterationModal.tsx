@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { adineue } from '@/app/fonts';
 
 interface RegistrationModalProps {
     isOpen: boolean;
@@ -100,8 +101,7 @@ export default function RegistrationModal({
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4 backdrop-blur-sm">
             {/* Main Outer Container Wrapper Box */}
-            <div className="relative w-full max-w-[380px] overflow-hidden rounded-[24px] bg-[#121315] shadow-2xl border border-white/10">
-
+            <div className="relative w-full max-w-[380px] sm:max-w-[400px] md:max-w-[470px] lg:max-w-[510px] overflow-hidden rounded-[24px] bg-[#121315] shadow-2xl border border-white/10">
                 {/* Top Close Button (Stays clear over the full-bleed layout image context) */}
                 {!loading && (
                     <button
@@ -125,15 +125,15 @@ export default function RegistrationModal({
                 </div>
 
                 {/* 2. Lower Form Fields Container featuring the /Bg.png file texture + custom gray overlay style */}
-                <div 
-                    className="relative px-6 pb-8 pt-6 bg-[#DBDBDB] bg-cover bg-center rounded-t-[24px] -mt-4 z-10 border-t border-white/20"
+                <div
+                    className="relative px-6 pb-8 pt-3 bg-[#DBDBDB] bg-cover bg-center rounded-t-none -mt-4 z-10 border-t border-white/20"
                     style={{
                         backgroundImage: "url('/Bg.png')",
                     }}
                 >
                     {/* Gray Overlay Blend Tint layer */}
-                    <div 
-                        className="absolute inset-0 pointer-events-none mix-blend-normal rounded-t-[23px]" 
+                    <div
+                        className="absolute inset-0 pointer-events-none mix-blend-normal rounded-t-[23px]"
                         style={{
                             background: "radial-gradient(100% 100% at 50% 0%, rgba(255, 255, 255, 0.75) 0%, rgba(219, 219, 219, 0.45) 100%)"
                         }}
@@ -142,9 +142,15 @@ export default function RegistrationModal({
                     {/* Relative Content Frame above the inputs backdrop background mask setup */}
                     <div className="relative z-10 w-full flex flex-col">
 
-                        {/* Mid-level Instruction Heading Description Text */}
-                        <p className="text-center text-[15px] font-semibold leading-normal text-[#1A1C1E] max-w-[260px] mx-auto">
-                            Fill out this form below to get access to the group.
+                        <h1
+                            className={`${adineue.className} font-bold text-center text-[22px] sm:text-[28px] text-[#1A1C1E]`}
+                            
+                        >
+                            One Last Step
+                        </h1>
+
+                        <p className="mt-1 text-center text-[14px] font-medium leading-normal text-[#1A1C1E]/80 max-w-[260px] mx-auto">
+                            Fill out the form below to get instant access to the group.
                         </p>
 
                         {/* Status Alert Error Log Block */}
@@ -155,7 +161,7 @@ export default function RegistrationModal({
                         )}
 
                         {/* Input Sets */}
-                        <div className="mt-5 flex flex-col gap-3.5">
+                        <div className="mt-6 flex flex-col gap-4 w-full max-w-[340px] mx-auto px-2">
 
                             {/* Full Name block */}
                             <div className="w-full">
@@ -171,11 +177,10 @@ export default function RegistrationModal({
                                             name: undefined,
                                         }));
                                     }}
-                                    className={`h-[45px] w-full rounded-[12px] border bg-white px-4 text-sm text-[#121315] placeholder-gray-400 font-medium shadow-sm transition-all outline-none ${
-                                        fieldErrors.name
-                                            ? 'border-red-400 focus:border-red-500 ring-2 ring-red-100'
-                                            : 'border-gray-200 focus:border-[#F66A1B] focus:ring-2 focus:ring-orange-100'
-                                    }`}
+                                    className={`h-[45px] w-full rounded-[12px] border bg-white px-4 text-sm text-[#121315] placeholder-gray-400 font-medium shadow-sm transition-all outline-none ${fieldErrors.name
+                                        ? 'border-red-400 focus:border-red-500 ring-2 ring-red-100'
+                                        : 'border-gray-200 focus:border-[#F66A1B] focus:ring-2 focus:ring-orange-100'
+                                        }`}
                                 />
                                 {fieldErrors.name && (
                                     <p className="mt-1 pl-2 text-xs font-semibold text-red-600">
@@ -198,11 +203,10 @@ export default function RegistrationModal({
                                             email: undefined,
                                         }));
                                     }}
-                                    className={`h-[45px] w-full rounded-[12px] border bg-white px-4 text-sm text-[#121315] placeholder-gray-400 font-medium shadow-sm transition-all outline-none ${
-                                        fieldErrors.email
-                                            ? 'border-red-400 focus:border-red-500 ring-2 ring-red-100'
-                                            : 'border-gray-200 focus:border-[#F66A1B] focus:ring-2 focus:ring-orange-100'
-                                    }`}
+                                    className={`h-[45px] w-full rounded-[12px] border bg-white px-4 text-sm text-[#121315] placeholder-gray-400 font-medium shadow-sm transition-all outline-none ${fieldErrors.email
+                                        ? 'border-red-400 focus:border-red-500 ring-2 ring-red-100'
+                                        : 'border-gray-200 focus:border-[#F66A1B] focus:ring-2 focus:ring-orange-100'
+                                        }`}
                                 />
                                 {fieldErrors.email && (
                                     <p className="mt-1 pl-2 text-xs font-semibold text-red-600">
