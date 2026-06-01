@@ -3,7 +3,7 @@
 import { agile, adineue } from '@/app/fonts';
 import NextStepCallout from './NextStep';
 import { Footer } from '@/components/layout/footer';
-import Navbar from '../ai-engineering-masterclass/Navbar';
+import Navbar from './Navbar';
 export default function RegistrationSuccess() {
     const renderTextWithAdineueA = (text: string) => {
         return text.split('').map((char, index) => {
