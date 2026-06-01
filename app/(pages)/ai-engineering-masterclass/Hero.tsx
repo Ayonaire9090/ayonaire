@@ -26,7 +26,7 @@ export default function Hero() {
       <main
         className="relative bg-[#DBDBDB] bg-cover bg-center "
         style={{
-          backgroundImage: "url('/Bg.png')",
+          backgroundImage: "url('/h.png')",
         }}
       >
         <div
