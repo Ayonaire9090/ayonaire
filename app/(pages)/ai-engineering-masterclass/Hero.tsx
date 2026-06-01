@@ -44,7 +44,7 @@ export default function Hero() {
             {/* Top Badge: Masterclass Label */}
             <div className="flex items-center gap-2 mt-6">
               <span className= {`${adineue.className}   font-bold uppercase tracking-wider text-lg sm:text-xl md:text-2xl text-[#F25E25] `}>
-                {renderTextWithAdineueA('AI ENGINEERING')} <span className='font-bold text-black'>LIVE MASTER CLASS</span>
+                {renderTextWithAdineueA('AI ENGINEERING')} <span className='font-bold text-black'>LIVE MASTERCLASS</span>
               </span>
             </div>
 
