@@ -115,7 +115,7 @@ export default function RegistrationModal({
                 {/* 1. Full-bleed Image Layer Frame taking up full horizontal and layout ceiling space */}
                 <div className="relative h-[215px] w-full">
                     <Image
-                        src="/HeroImage.png"
+                        src="/m.png"
                         alt="Transition to AI Engineering"
                         fill
                         sizes="380px"
