@@ -61,45 +61,7 @@ export default function Navbar() {
           </div>
 
           {/* Mobile Menu */}
-          <div
-            className={`overflow-hidden transition-all duration-300 md:hidden ${
-              menuOpen ? "max-h-40 opacity-100" : "max-h-0 opacity-0"
-            }`}
-          >
-            <div className="border-t border-gray-100 px-5 py-4">
-              <button
-                onClick={() => setModalOpen(true)}
-                className="relative flex h-11 w-full items-center justify-center gap-3 rounded-[14px] font-bold text-white"
-                style={{
-                  background:
-                    "linear-gradient(90deg, #F67219 0%, #FFDCC4 100%)",
-                }}
-              >
-                <span className="text-sm">Get free access now</span>
-
-                <span className="flex h-[33px] w-[33px] shrink-0 items-center justify-center rounded-[7px] bg-white">
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 18 18"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M9.59456 1.68393L17.4854 8.85501L9.26626 15.7397"
-                      stroke="#F67721"
-                      strokeWidth="1.5"
-                    />
-                    <path
-                      d="M0.000324288 8.62534L17.0875 8.92915"
-                      stroke="#F67721"
-                      strokeWidth="1.5"
-                    />
-                  </svg>
-                </span>
-              </button>
-            </div>
-          </div>
+     
         </div>
       </nav>
 
