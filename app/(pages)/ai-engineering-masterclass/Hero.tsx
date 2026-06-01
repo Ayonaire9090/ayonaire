@@ -64,7 +64,7 @@ export default function Hero() {
 >
   Don't miss out on{' '}
   <span className="text-[#F4683F]">
-    {renderTextWithAdineueA('300K')}–{renderTextWithAdineueA('500K')}/
+    {renderTextWithAdineueA('$300K')}–{renderTextWithAdineueA('500K')}/
   </span>
   <br />
   <span className="text-[#F4683F] font-normal lowercase">
