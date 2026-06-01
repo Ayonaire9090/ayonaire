@@ -26,7 +26,7 @@ export default function Hero() {
       <main
         className="relative bg-[#DBDBDB] bg-cover bg-center "
         style={{
-          backgroundImage: "url('/h.png')",
+          backgroundImage: "url('/Bg.png')",
         }}
       >
         <div
@@ -117,7 +117,7 @@ export default function Hero() {
           {/* Hero Visual Image container */}
           <div className="relative z-20 mt-12 mb-[-70px] w-full max-w-5xl px-4 md:mb-[-120px] lg:mb-[-150px]">
             <Image
-              src="/HeroImage.png"
+              src="/h.jpeg"
               alt="Hero visual"
               width={1200}
               height={800}
