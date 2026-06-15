@@ -1,4 +1,5 @@
 "use client";
+import { AuthGuard } from "@/components/auth/auth-guard";
 import { AppSidebar } from "@/components/dashboard/app-sidebar";
 import { DashboardMobileFooterWrapper } from "@/components/dashboard/dashboard-mobile-footer-wrapper";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
@@ -23,20 +24,30 @@ export default function DashboardLayout({
   ];
   const pathname = usePathname();
   const noPadding = pagesWithNoMobilePadding.includes(pathname);
+
+  const getAllowedRoles = () => {
+    if (pathname.includes("/dashboard/admin")) {
+      return ["admin"];
+    } else if (pathname.includes("/dashboard/instructor")) {
+      return ["admin", "instructor"];
+    }
+  };
   return (
-    <SidebarProvider defaultOpen={false}>
-      <AppSidebar variant="sidebar" collapsible="icon" />
-      <SidebarInset className="bg-[#F6F6F6]">
-        <div
-          className={`flex flex-1 flex-col pb-20 md:pb-0 ${noPadding ? "px-0 lg:px-6" : "px-4 lg:px-6"}`}
-        >
-          <div className="@container/main flex flex-1 flex-col gap-6">
-            {children}
+    <AuthGuard allowedRoles={getAllowedRoles()}>
+      <SidebarProvider defaultOpen={false}>
+        <AppSidebar variant="sidebar" collapsible="icon" />
+        <SidebarInset className="bg-[#F6F6F6]">
+          <div
+            className={`flex flex-1 flex-col pb-20 md:pb-0 ${noPadding ? "px-0 lg:px-6" : "px-4 lg:px-6"}`}
+          >
+            <div className="@container/main flex flex-1 flex-col gap-6">
+              {children}
+            </div>
           </div>
-        </div>
-        {/* Mobile bottom navigation */}
-        <DashboardMobileFooterWrapper />
-      </SidebarInset>
-    </SidebarProvider>
+          {/* Mobile bottom navigation */}
+          <DashboardMobileFooterWrapper />
+        </SidebarInset>
+      </SidebarProvider>
+    </AuthGuard>
   );
 }

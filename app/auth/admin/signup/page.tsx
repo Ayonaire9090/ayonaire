@@ -9,10 +9,12 @@ import {
   AuthSubmitButton,
 } from "@/components/auth";
 import { useRouter } from "next/navigation";
+import { useRegisterMutation } from "@/hooks/api/use-auth";
 
 export default function SignUpPage() {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
+  const { mutateAsync: register, isPending } = useRegisterMutation();
+  const isLoading = isPending;
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -26,18 +28,22 @@ export default function SignUpPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    try {
+      await register({
+        name: formData.fullName,
+        email: formData.email,
+        password: formData.password,
+      });
 
-    console.log("Sign up:", formData);
-    setIsLoading(false);
-
-    // Redirect to verify email page
-    router.push(
-      `/auth/admin/verify-email?email=${encodeURIComponent(formData.email)}`,
-    );
+      // Redirect to verify email page
+      // TODO: Update this routing logic when auto-login endpoint or token on register is available
+      router.push(
+        `/auth/admin/verify-email?email=${encodeURIComponent(formData.email)}`,
+      );
+    } catch (error) {
+      console.error("Sign up failed:", error);
+    }
   };
 
   const handleGoogleSignUp = () => {

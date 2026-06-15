@@ -10,6 +10,7 @@ interface DataListProps<T> {
   renderItem: (item: T) => React.ReactNode;
   className?: string;
   itemClassName?: string;
+  footerContent?: React.ReactNode;
 }
 
 export function DataList<T>({
@@ -18,6 +19,7 @@ export function DataList<T>({
   renderItem,
   className = "",
   itemClassName = "",
+  footerContent,
 }: DataListProps<T>) {
   return (
     <div className={`flex flex-col gap-4 ${className}`}>
@@ -40,6 +42,13 @@ export function DataList<T>({
             {renderItem(item)}
           </div>
         ))
+      )}
+
+      {/* Footer Content */}
+      {footerContent && (
+        <div className="w-full mt-4 flex items-center">
+          {footerContent}
+        </div>
       )}
 
       {/* Pagination placeholder */}

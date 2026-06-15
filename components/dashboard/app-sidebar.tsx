@@ -20,8 +20,8 @@ import { Menu, X } from "lucide-react";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname();
-  const { state, toggleSidebar, open } = useSidebar();
-  const isCollapsed = state === "collapsed";
+  const { state, toggleSidebar, open, isMobile } = useSidebar();
+  const isCollapsed = state === "collapsed" && !isMobile;
   const isPinned = open;
 
   // Determine which navigation to use based on the pathname
@@ -72,17 +72,21 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 className="text-gray-500 hover:text-black transition-colors"
                 aria-label="Toggle Sidebar"
               >
-                {!isPinned ? (
-                  <Menu className="w-5 h-5" />
+                {isMobile ? (
+                  <X className="w-5 h-5 text-primary! [&>svg]:stroke-primary! [&>svg]:text-primary!" />
+                ) : !isPinned && !isCollapsed ? (
+                  <X className="w-5 h-5 text-primary! [&>svg]:stroke-primary! [&>svg]:text-primary!" />
                 ) : (
-                  <X className="w-5 h-5" />
+                  <Menu className="w-5 h-5 text-primary! [&>svg]:stroke-primary! [&>svg]:text-primary!" />
                 )}
               </button>
             </div>
           </SidebarMenuItem>
         </SidebarMenu>
         {!isCollapsed && (
-          <div className="px-3 pt-4 text-base font-medium text-black">Menu</div>
+          <div className="px-3 pt-4 pb-2 text-base font-medium text-black">
+            Menu
+          </div>
         )}
       </SidebarHeader>
       <SidebarContent className="bg-transparent">

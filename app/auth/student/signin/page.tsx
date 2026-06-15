@@ -9,9 +9,13 @@ import {
   AuthPasswordField,
   AuthSubmitButton,
 } from "@/components/auth";
+import { useLoginMutation } from "@/hooks/api/use-auth";
+import { useRouter } from "next/navigation";
 
 export default function SignInPage() {
-  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+  const { mutateAsync: login, isPending } = useLoginMutation();
+  const isLoading = isPending;
   const [rememberMe, setRememberMe] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
@@ -25,13 +29,24 @@ export default function SignInPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
-    console.log("Sign in:", formData);
-    setIsLoading(false);
+    try {
+      const data = await login({
+        email: formData.email,
+        password: formData.password,
+      });
+      if (data.success) {
+        if (data.user.role === "admin") {
+          router.push("/dashboard/admin");
+        } else if (data.user.role === "instructor") {
+          router.push("/dashboard/instructor");
+        } else {
+          router.push("/dashboard/student");
+        }
+      }
+    } catch (error) {
+      console.error("Sign in failed:", error);
+    }
   };
 
   const handleGoogleSignIn = () => {
@@ -48,7 +63,7 @@ export default function SignInPage() {
     <>
       {/* Header */}
       <AuthHeader
-        title="Welcome back, Ayo"
+        title="Welcome back"
         description="Sign in to continue to your account"
         className="mb-8"
       />
@@ -125,7 +140,6 @@ export default function SignInPage() {
             label="Remember Me"
             type="checkbox"
             checked={rememberMe}
-            required
           />
           <Link
             href="/auth/reset-password"

@@ -51,6 +51,7 @@
     "@tabler/icons-react": "^3.36.1",
     "@tailwindcss/typography": "^0.5.19",
     "@tanstack/match-sorter-utils": "^8.19.4",
+    "@tanstack/react-query": "^5.101.0",
     "@tanstack/react-table": "^8.21.3",
     "@tanstack/react-virtual": "^3.11.2",
     "@tiptap/pm": "^2.10.4",
@@ -106,7 +107,7 @@
     "vaul": "^1.1.2",
     "yet-another-react-lightbox": "^3.21.7",
     "zod": "^4.1.13",
-    "zustand": "^5.0.8"
+    "zustand": "^5.0.14"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

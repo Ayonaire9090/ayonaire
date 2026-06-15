@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 interface AppSimpleModalProps {
   isOpen: boolean;
@@ -22,7 +23,7 @@ interface AppSimpleModalProps {
 export const AppSimpleModal = ({
   isOpen,
   onClose,
-  title,
+  title = "",
   children,
   className,
   showCloseButton = true,
@@ -33,16 +34,20 @@ export const AppSimpleModal = ({
         // We override some internal dialog padding to match design or keep it flexible
         className={cn(
           "p-6 rounded-2xl sm:rounded-3xl border-0 gap-0 w-[96%] sm:w-full max-w-[500px] flex flex-col max-h-[85vh]",
-          className
+          className,
         )}
         showCloseButton={false} // We want to customize our own close button
       >
-        {(title || showCloseButton) && (
+        {(title || showCloseButton) ? (
           <DialogHeader className="flex flex-row items-center justify-between pb-4 space-y-0 text-left shrink-0">
-            {title && (
+            {title ? (
               <DialogTitle className="text-[20px] font-semibold text-gray-900">
                 {title}
               </DialogTitle>
+            ) : (
+              <VisuallyHidden>
+                <DialogTitle>Title</DialogTitle>
+              </VisuallyHidden>
             )}
             {showCloseButton && (
               <button
@@ -53,6 +58,10 @@ export const AppSimpleModal = ({
               </button>
             )}
           </DialogHeader>
+        ) : (
+          <VisuallyHidden>
+            <DialogTitle>Title</DialogTitle>
+          </VisuallyHidden>
         )}
 
         <div className="w-full flex-1 overflow-y-auto min-h-0 pr-1 custom-scrollbar">

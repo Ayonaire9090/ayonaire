@@ -3,7 +3,7 @@ import "./globals.css";
 import { satoshi, spectralSC } from "./fonts";
 import { GoogleTagManager } from "@next/third-parties/google";
 import { Toaster } from "sonner";
-
+import QueryProvider from "@/providers/query-provider";
 
 export const metadata: Metadata = {
   title: "Ayonaire - Build a Future-Proof Career in Tech",
@@ -93,7 +93,9 @@ export default function RootLayout({
         className={`${satoshi.variable} ${spectralSC.variable} antialiased`}
         suppressHydrationWarning={true}
       >
-        <div className="root">{children}</div>
+        <div className="root">
+          <QueryProvider>{children}</QueryProvider>
+        </div>
         {/* Toast */}
         <Toaster richColors position="bottom-right" />
       </body>

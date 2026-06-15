@@ -8,11 +8,15 @@ import {
   AuthPasswordField,
   AuthSubmitButton,
 } from "@/components/auth";
+import { useRegisterMutation } from "@/hooks/api/use-auth";
+import { useRouter } from "next/navigation";
 
 export default function SignUpPage() {
-  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+  const { mutateAsync: register, isPending } = useRegisterMutation();
+  const isLoading = isPending;
   const [formData, setFormData] = useState({
-    fullName: "",
+    name: "",
     email: "",
     password: "",
   });
@@ -24,13 +28,19 @@ export default function SignUpPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    try {
+      await register({
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+      });
 
-    console.log("Sign up:", formData);
-    setIsLoading(false);
+      // TODO: Update this routing logic when auto-login endpoint or token on register is available
+      router.push("/auth/student/signin");
+    } catch (error) {
+      console.error("Sign up failed:", error);
+    }
   };
 
   const handleGoogleSignUp = () => {
@@ -55,10 +65,10 @@ export default function SignUpPage() {
       {/* Form */}
       <form onSubmit={handleSubmit} className="space-y-5">
         <AuthFormField
-          id="fullName"
+          id="name"
           label="Full Name"
           placeholder=""
-          value={formData.fullName}
+          value={formData.name}
           onChange={handleChange}
           required
           labelClassName="font-bold! text-[14px]!"

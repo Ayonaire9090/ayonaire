@@ -28,6 +28,7 @@ interface DataTableProps<T> {
   selectable?: boolean;
   onSelectionChange?: (selectedIds: Set<string>) => void;
   className?: string;
+  footerContent?: React.ReactNode;
 }
 
 export function DataTable<T>({
@@ -37,6 +38,7 @@ export function DataTable<T>({
   selectable = false,
   onSelectionChange,
   className = "",
+  footerContent,
 }: DataTableProps<T>) {
   const [selectedItems, setSelectedItems] = useState<Set<string>>(new Set());
 
@@ -140,6 +142,13 @@ export function DataTable<T>({
           )}
         </TableBody>
       </Table>
+
+      {/* Footer Content */}
+      {footerContent && (
+        <div className="w-full mt-4 flex items-center px-4">
+          {footerContent}
+        </div>
+      )}
 
       {/* Pagination placeholder */}
       <div className="flex items-center justify-between mt-8 p-4 border-t border-gray-100">
