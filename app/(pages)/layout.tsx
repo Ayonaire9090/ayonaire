@@ -1,5 +1,4 @@
-import ChatbotWidget from "@/components/chatbot";
-
+import ChatbotWrapper from "../ChatbotWrapper";
 export default function PagesLayout({
   children,
 }: Readonly<{
@@ -8,7 +7,7 @@ export default function PagesLayout({
   return (
     <>
       {children}
-      <ChatbotWidget />
+      <ChatbotWrapper />
     </>
   );
 }

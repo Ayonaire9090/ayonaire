@@ -33,7 +33,7 @@ export default function Hero() {
         {/* Content */}
         <div className="relative z-10 flex flex-col items-center px-4 pt-20 sm:px-8">
           <div className="mt-4 flex w-full max-w-4xl flex-col items-center gap-6 text-center sm:gap-4">
-            
+
             {/* Badge */}
             <div className="flex items-center gap-2 rounded-full bg-white px-3 py-2 shadow-sm">
               <span className="absolute inline-flex h-4 w-4 animate-ping rounded-full bg-[#F25E25] opacity-40"></span>
@@ -62,23 +62,24 @@ export default function Hero() {
               className={`${agile.className} text-3xl leading-tight tracking-[-0.04em] text-center sm:text-4xl md:text-5xl lg:text-6xl`}
             >
               <span className="text-black">
-                How To Break Into{' '}
+                DON'T MISS OUT ON <br />
               </span>
 
               <span className="text-[#F4683F]">
-                {renderTextWithAdineueA('AI Engineering')}
+                {renderTextWithAdineueA('$300K–$500K/YEAR')}
               </span>
 
               <span className="text-black">
                 {' '}
-                & Become Globally Employable
+                {renderTextWithAdineueA('AI')}<br />
+                ENGINEERING<br />
+                {renderTextWithAdineueA('SALARIES')}
               </span>
             </h1>
 
             {/* Subtitle */}
-            <p className="max-w-2xl text-base leading-relaxed tracking-tight text-[#121315] sm:text-[18px] sm:leading-[28px]">
-              Even Without a Technical Background…using the Exact Skills
-              Employers Hire For
+            <p className="max-w-2xl text-xl leading-relaxed tracking-tight text-[#121315] sm:text-2xl sm:leading-[34px]">
+              Become the kind of <strong>AI Builder companies</strong> are urgently hiring for <strong>globally</strong>.
             </p>
 
             {/* CTA */}
@@ -91,7 +92,7 @@ export default function Hero() {
               }}
             >
               <span className="text-base tracking-wide text-[#F25E25]">
-                Get free access now →
+                Reserve My Free Spot →
               </span>
 
               <span className="flex h-[42px] w-[42px] items-center justify-center rounded-full bg-gradient-to-br from-[#F25E25] to-[#F67721] shadow-lg">
