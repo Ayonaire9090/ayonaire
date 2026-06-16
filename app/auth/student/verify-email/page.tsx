@@ -31,7 +31,7 @@ function VerifyEmailContent() {
   const isLoading = isVerifyLoading || isResendLoading;
 
   // Get email from query params or use fallback
-  const email = searchParams.get("email") || "instructor@example.com";
+  const email = searchParams.get("email") || "student@example.com";
 
   // Countdown timer for resend
   useEffect(() => {
@@ -65,8 +65,8 @@ function VerifyEmailContent() {
     try {
       await verifyEmail({ token: otp });
       toast.success("Email verified successfully!");
-      // Navigate to profile setup page
-      router.push("/auth/instructor/complete-profile");
+      // Navigate to student signin page
+      router.push("/auth/student/signin");
     } catch (error: any) {
       console.error("Verification failed:", error);
       toast.error(error?.message || "Verification failed");

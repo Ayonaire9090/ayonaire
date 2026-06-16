@@ -1,5 +1,13 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { authApi, LoginPayload, RegisterPayload } from "@/lib/api/endpoints/auth";
+import {
+  LogoutPayload,
+  AcceptInvitePayload,
+  VerifyEmailPayload,
+  ResendVerificationEmailPayload,
+  ForgotPasswordPayload,
+  ResetPasswordPayload,
+} from "@/lib/api/types";
 import { useAuthStore } from "@/store/auth.store";
 import { queryKeys } from "@/lib/api/query-keys";
 
@@ -38,5 +46,48 @@ export const useGetProfile = () => {
     },
     // Only run if we have a token
     enabled: !!token,
+  });
+};
+
+export const useLogoutMutation = () => {
+  const clearAuth = useAuthStore((state) => state.clearAuth);
+
+  return useMutation({
+    mutationFn: (payload: LogoutPayload) => authApi.logout(payload),
+    onSuccess: () => {
+      clearAuth();
+    },
+  });
+};
+
+export const useAcceptInviteMutation = () => {
+  return useMutation({
+    mutationFn: ({ token, payload }: { token: string; payload: AcceptInvitePayload }) =>
+      authApi.acceptInvite(token, payload),
+  });
+};
+
+export const useVerifyEmailMutation = () => {
+  return useMutation({
+    mutationFn: (payload: VerifyEmailPayload) => authApi.verifyEmailPost(payload),
+  });
+};
+
+export const useResendVerificationEmailMutation = () => {
+  return useMutation({
+    mutationFn: (payload: ResendVerificationEmailPayload) =>
+      authApi.resendVerificationEmail(payload),
+  });
+};
+
+export const useForgotPasswordMutation = () => {
+  return useMutation({
+    mutationFn: (payload: ForgotPasswordPayload) => authApi.forgotPassword(payload),
+  });
+};
+
+export const useResetPasswordMutation = () => {
+  return useMutation({
+    mutationFn: (payload: ResetPasswordPayload) => authApi.resetPassword(payload),
   });
 };

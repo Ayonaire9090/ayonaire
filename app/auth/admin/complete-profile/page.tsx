@@ -20,6 +20,8 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { BadgeCheck } from "lucide-react";
+import { useEditProfileMutation } from "@/hooks/api/use-users";
+import { toast } from "sonner";
 
 // Department options
 const departments = [
@@ -37,8 +39,9 @@ type Step = "details" | "success";
 
 function CompleteAdminProfileContent() {
   const searchParams = useSearchParams();
-  const [isLoading, setIsLoading] = useState(false);
   const [step, setStep] = useState<Step>("details");
+
+  const { mutateAsync: editProfile, isPending: isLoading } = useEditProfileMutation();
 
   // Get email from query params if available
   const initialEmail = searchParams.get("email") || "admin@ayonaire.com";
@@ -46,7 +49,7 @@ function CompleteAdminProfileContent() {
 
   // Form data
   const [formData, setFormData] = useState({
-    fullName: initialName,
+    name: initialName,
     email: initialEmail,
     bio: "",
     department: "",
@@ -72,16 +75,21 @@ function CompleteAdminProfileContent() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    try {
+      const form = new FormData();
+      if (formData.name) form.append("name", formData.name);
+      if (formData.phoneNumber) form.append("phoneNumber", formData.phoneNumber);
 
-    console.log("Admin profile data:", formData);
-    setIsLoading(false);
+      await editProfile(form);
 
-    // Move to success step
-    setStep("success");
+      toast.success("Profile updated successfully!");
+      // Move to success step
+      setStep("success");
+    } catch (error: any) {
+      console.error("Failed to update profile:", error);
+      toast.error(error?.message || "Failed to update profile");
+    }
   };
 
   return (
@@ -100,10 +108,10 @@ function CompleteAdminProfileContent() {
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Full Name */}
             <AuthFormField
-              id="fullName"
+              id="name"
               label="Full Name"
               placeholder=""
-              value={formData.fullName}
+              value={formData.name}
               onChange={handleChange}
               required
               labelClassName="font-bold! text-[14px]!"

@@ -34,6 +34,8 @@ import {
   Briefcase,
   BadgeCheck,
 } from "lucide-react";
+import { useApplyInstructorMutation } from "@/hooks/api/use-instructor";
+import { toast } from "sonner";
 
 // Type for country data
 interface Country {
@@ -103,15 +105,16 @@ type Step = "personal" | "expertise" | "success";
 function InstructorBuildProfileContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [isLoading, setIsLoading] = useState(false);
   const [step, setStep] = useState<Step>("personal");
+
+  const { mutateAsync: applyInstructor, isPending: isLoading } = useApplyInstructorMutation();
 
   // Get name from query params if available
   const initialName = searchParams.get("name") || "Flores Juanita";
 
   // Personal details form
   const [formData, setFormData] = useState({
-    fullName: initialName,
+    name: initialName,
     professionalTitle: "",
     bio: "",
     country: "",
@@ -188,17 +191,21 @@ function InstructorBuildProfileContent() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
-    console.log("Profile data:", formData);
-    console.log("Expertise data:", expertiseData);
-    setIsLoading(false);
-
-    // Move to success step
-    setStep("success");
+    try {
+      await applyInstructor({
+        bio: formData.bio,
+        expertise: expertiseData.selectedCourses,
+        instructorCourseCategory: expertiseData.selectedSchools.join(", "),
+      });
+      
+      toast.success("Profile submitted successfully!");
+      // Move to success step
+      setStep("success");
+    } catch (error: any) {
+      console.error("Failed to submit profile:", error);
+      toast.error(error?.message || "Failed to submit profile");
+    }
   };
 
   const handleBack = () => {
@@ -223,10 +230,10 @@ function InstructorBuildProfileContent() {
           <form onSubmit={handlePersonalContinue} className="space-y-5">
             {/* Full Name */}
             <AuthFormField
-              id="fullName"
+              id="name"
               label="Full Name"
               placeholder=""
-              value={formData.fullName}
+              value={formData.name}
               onChange={handleChange}
               required
               labelClassName="font-bold! text-[14px]!"

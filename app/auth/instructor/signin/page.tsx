@@ -11,6 +11,7 @@ import {
 } from "@/components/auth";
 import { useLoginMutation } from "@/hooks/api/use-auth";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function SignInPage() {
   const router = useRouter();
@@ -36,6 +37,7 @@ export default function SignInPage() {
         password: formData.password,
       });
       if (data.success) {
+        toast.success("Signed in successfully!");
         if (data.user.role === "admin") {
           router.push("/dashboard/admin");
         } else if (data.user.role === "instructor") {
@@ -44,8 +46,9 @@ export default function SignInPage() {
           router.push("/dashboard/student");
         }
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Sign in failed:", error);
+      toast.error(error?.message || "Sign in failed");
     }
   };
 

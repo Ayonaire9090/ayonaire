@@ -15,14 +15,20 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
+import { useVerifyEmailMutation, useResendVerificationEmailMutation } from "@/hooks/api/use-auth";
+import { toast } from "sonner";
 
 function VerifyEmailContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [otp, setOtp] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [countdown, setCountdown] = useState(58);
   const [canResend, setCanResend] = useState(false);
+
+  const { mutateAsync: verifyEmail, isPending: isVerifyLoading } = useVerifyEmailMutation();
+  const { mutateAsync: resendEmail, isPending: isResendLoading } = useResendVerificationEmailMutation();
+
+  const isLoading = isVerifyLoading || isResendLoading;
 
   // Get email from query params or use fallback
   const email = searchParams.get("email") || "admin@example.com";
@@ -40,12 +46,15 @@ function VerifyEmailContent() {
   const handleResendCode = async () => {
     if (!canResend) return;
 
-    // Reset countdown
-    setCountdown(58);
-    setCanResend(false);
-
-    // Simulate resending code
-    console.log("Resending code to:", email);
+    try {
+      await resendEmail({ email });
+      setCountdown(58);
+      setCanResend(false);
+      toast.success("Verification code resent!");
+    } catch (error: any) {
+      console.error("Failed to resend code:", error);
+      toast.error(error?.message || "Failed to resend code");
+    }
   };
 
   const handleVerify = async (e: React.FormEvent) => {
@@ -53,16 +62,15 @@ function VerifyEmailContent() {
 
     if (otp.length !== 6) return;
 
-    setIsLoading(true);
-
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
-    console.log("Verifying OTP:", otp);
-    setIsLoading(false);
-
-    // Navigate to next step (e.g., complete profile or dashboard)
-    router.push("/auth/admin/complete-profile");
+    try {
+      await verifyEmail({ token: otp });
+      toast.success("Email verified successfully!");
+      // Navigate to next step (e.g., complete profile or dashboard)
+      router.push("/auth/admin/complete-profile");
+    } catch (error: any) {
+      console.error("Verification failed:", error);
+      toast.error(error?.message || "Verification failed");
+    }
   };
 
   return (

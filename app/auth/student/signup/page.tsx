@@ -10,6 +10,7 @@ import {
 } from "@/components/auth";
 import { useRegisterMutation } from "@/hooks/api/use-auth";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -36,10 +37,14 @@ export default function SignUpPage() {
         password: formData.password,
       });
 
-      // TODO: Update this routing logic when auto-login endpoint or token on register is available
-      router.push("/auth/student/signin");
-    } catch (error) {
+      toast.success("Account created! Please verify your email.");
+      // Redirect to verify email page
+      router.push(
+        `/auth/student/verify-email?email=${encodeURIComponent(formData.email)}`
+      );
+    } catch (error: any) {
       console.error("Sign up failed:", error);
+      toast.error(error?.message || "Sign up failed");
     }
   };
 

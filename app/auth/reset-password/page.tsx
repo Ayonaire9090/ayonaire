@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { BadgeCheck } from "lucide-react";
 import {
   AuthHeader,
@@ -10,12 +11,15 @@ import {
   AuthPasswordStrength,
   AuthSubmitButton,
   AuthFormMessage,
+  AuthFormSkeleton,
 } from "@/components/auth";
 import { Button } from "@/components/ui/button";
 import {
   ResetPasswordEmailSchema,
   ResetPasswordSchema,
 } from "@/schemas/reset-password";
+import { useForgotPasswordMutation, useResetPasswordMutation } from "@/hooks/api/use-auth";
+import { toast } from "sonner";
 
 type Step = "email" | "create-password" | "success";
 
@@ -25,15 +29,22 @@ interface FormErrors {
   confirmPassword?: string;
 }
 
-export default function ResetPasswordPage() {
-  const [step, setStep] = useState<Step>("email");
-  const [isLoading, setIsLoading] = useState(false);
+function ResetPasswordContent() {
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token");
+
+  const [step, setStep] = useState<Step>(token ? "create-password" : "email");
   const [email, setEmail] = useState("");
   const [passwords, setPasswords] = useState({
     newPassword: "",
     confirmPassword: "",
   });
   const [errors, setErrors] = useState<FormErrors>({});
+
+  const { mutateAsync: forgotPassword, isPending: isForgotLoading } = useForgotPasswordMutation();
+  const { mutateAsync: resetPassword, isPending: isResetLoading } = useResetPasswordMutation();
+
+  const isLoading = isForgotLoading || isResetLoading;
 
   // Clear error when user starts typing
   const clearError = (field: keyof FormErrors) => {
@@ -57,16 +68,14 @@ export default function ResetPasswordPage() {
       return;
     }
 
-    setIsLoading(true);
-
-    // Simulate API call to send reset link
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-
-    console.log("Reset link sent to:", email);
-    setIsLoading(false);
-
-    // Move to create password step (simulating user clicked the link)
-    setStep("create-password");
+    try {
+      await forgotPassword({ email });
+      toast.success("Reset link sent!");
+      alert("If an account exists, a password reset email has been sent. Please check your inbox and click the link to continue.");
+    } catch (error: any) {
+      setErrors({ email: error?.message || "Failed to send reset link" });
+      toast.error(error?.message || "Failed to send reset link");
+    }
   };
 
   // Handle password update
@@ -85,16 +94,19 @@ export default function ResetPasswordPage() {
       return;
     }
 
-    setIsLoading(true);
+    if (!token) {
+      setErrors({ newPassword: "Reset token is missing. Please use the link sent to your email." });
+      return;
+    }
 
-    // Simulate API call to update password
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-
-    console.log("Password updated successfully");
-    setIsLoading(false);
-
-    // Move to success step
-    setStep("success");
+    try {
+      await resetPassword({ token, password: passwords.newPassword });
+      toast.success("Password reset successfully!");
+      setStep("success");
+    } catch (error: any) {
+      setErrors({ confirmPassword: error?.message || "Failed to reset password" });
+      toast.error(error?.message || "Failed to reset password");
+    }
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -296,5 +308,13 @@ export default function ResetPasswordPage() {
         </>
       )}
     </>
+  );
+}
+
+export default function ResetPasswordPage() {
+  return (
+    <Suspense fallback={<AuthFormSkeleton />}>
+      <ResetPasswordContent />
+    </Suspense>
   );
 }

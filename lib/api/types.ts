@@ -47,3 +47,44 @@ export interface AuthRegisterResponse {
   message: string;
   user: UserProfile;
 }
+
+export interface VerifyEmailPayload {
+  token: string;
+}
+
+export interface ResendVerificationEmailPayload {
+  email: string;
+}
+
+export interface ForgotPasswordPayload {
+  email: string;
+}
+
+export interface ResetPasswordPayload {
+  token: string;
+  password?: string; // Sometimes the token is sent in URL, but body is just password (and maybe token)
+}
+
+export interface AcceptInvitePayload {
+  name: string;
+  password: string;
+}
+
+export interface LogoutPayload {
+  refreshToken: string;
+  allDevices?: boolean;
+}
+
+// User Profile
+export interface EditProfilePayload {
+  name?: string;
+  phoneNumber?: string;
+  profile?: File; // For multipart/form-data
+}
+
+// Instructor
+export interface ApplyInstructorPayload {
+  bio: string;
+  expertise: string[];
+  instructorCourseCategory: string;
+}

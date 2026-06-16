@@ -10,13 +10,14 @@ import {
 } from "@/components/auth";
 import { useRouter } from "next/navigation";
 import { useRegisterMutation } from "@/hooks/api/use-auth";
+import { toast } from "sonner";
 
 export default function SignUpPage() {
   const router = useRouter();
   const { mutateAsync: register, isPending } = useRegisterMutation();
   const isLoading = isPending;
   const [formData, setFormData] = useState({
-    fullName: "",
+    name: "",
     email: "",
     password: "",
   });
@@ -31,18 +32,20 @@ export default function SignUpPage() {
 
     try {
       await register({
-        name: formData.fullName,
+        name: formData.name,
         email: formData.email,
         password: formData.password,
       });
 
+      toast.success("Account created! Please verify your email.");
       // Redirect to verify email page
       // TODO: Update this routing logic when auto-login endpoint or token on register is available
       router.push(
         `/auth/admin/verify-email?email=${encodeURIComponent(formData.email)}`,
       );
-    } catch (error) {
+    } catch (error: any) {
       console.error("Sign up failed:", error);
+      toast.error(error?.message || "Sign up failed");
     }
   };
 
@@ -68,10 +71,10 @@ export default function SignUpPage() {
       {/* Form */}
       <form onSubmit={handleSubmit} className="space-y-5">
         <AuthFormField
-          id="fullName"
+          id="name"
           label="Full Name"
           placeholder=""
-          value={formData.fullName}
+          value={formData.name}
           onChange={handleChange}
           required
           labelClassName="font-bold! text-[14px]!"
