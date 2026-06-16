@@ -55,7 +55,8 @@ export async function apiClient<T>(
       // Optional: Clear auth state and redirect to login
       useAuthStore.getState().clearAuth();
       if (typeof window !== "undefined") {
-        window.location.href = "/auth/login"; // Or wherever your login page is
+        window.location.reload(); // refresh for now
+        // window.location.href = "/auth/login"; // Or wherever your login page is
       }
     }
 
