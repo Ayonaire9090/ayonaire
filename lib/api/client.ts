@@ -52,12 +52,14 @@ export async function apiClient<T>(
 
     // Handle 401 Unauthorized generically
     if (response.status === 401) {
-      // Optional: Clear auth state and redirect to login
+      // Optional: Clear auth state
       useAuthStore.getState().clearAuth();
-      if (typeof window !== "undefined") {
-        window.location.reload(); // refresh for now
-        // window.location.href = "/auth"; // Or wherever your login page is
-      }
+
+      // Optionally: Reload Window or redirect: Commented for now
+      // if (typeof window !== "undefined") {
+      //   window.location.reload(); // refresh for now
+      //   // window.location.href = "/auth"; // Or wherever your login page is
+      // }
     }
 
     const error: any = new Error(errorMessage);
