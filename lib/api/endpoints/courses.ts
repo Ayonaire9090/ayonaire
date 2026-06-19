@@ -26,7 +26,7 @@ export interface AssignInstructorCoursePayload {
 
 export const coursesApi = {
   createCategory: (payload: CreateCategoryPayload) =>
-    apiClient<ApiResponse>("/api/v1/course/category", {
+    apiClient<ApiResponse>("/api/v1/course/cat", {
       method: "POST",
       body: JSON.stringify(payload),
       requireAuth: true,

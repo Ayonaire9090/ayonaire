@@ -10,17 +10,8 @@ import { CourseSidebarSheet } from "../_components/course-sidebar-sheet";
 import { CourseContentAccordion } from "../_components/course-content-accordion";
 import { CourseAiAssistant } from "../_components/course-ai-assistant";
 import { CourseOverview } from "../_components/course-overview";
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarInset } from "@/components/ui/sidebar";
 import { StudentHomeSidebarContent } from "../../_components/student-home-sidebar-content";
-import { MobileDashboardFooter } from "@/components/dashboard/mobile-dashboard-footer";
-import {
-  BookOpen,
-  Briefcase,
-  LayoutTemplate,
-  MessageSquare,
-  Presentation,
-  Video,
-} from "lucide-react";
 import { CourseQAndA } from "../_components/course-q-and-a";
 import { CourseNotes } from "../_components/course-notes";
 import { CourseAnnouncements } from "../_components/course-announcements";
@@ -29,27 +20,6 @@ import { CourseLearningTools } from "../_components/course-learning-tools";
 import { cn } from "@/lib/utils";
 import { CourseResources } from "../_components/course-resources";
 import { CourseTranscription } from "../_components/course-transcription";
-
-const studentFooterNav = [
-  { title: "Feed", url: "/dashboard/student/feed", icon: LayoutTemplate },
-  { title: "Workshop", url: "/dashboard/student/workshop", icon: Video },
-  {
-    title: "Job Fair",
-    url: "/dashboard/student/job-sessions",
-    icon: Briefcase,
-  },
-  { title: "Courses", url: "/dashboard/student/courses", icon: BookOpen },
-  {
-    title: "Messages",
-    url: "/dashboard/student/messages",
-    icon: MessageSquare,
-  },
-  {
-    title: "Career",
-    url: "/dashboard/student/career-accelarator",
-    icon: Presentation,
-  },
-];
 
 export default function StudentCourseLessonPage({
   params,
@@ -72,7 +42,7 @@ export default function StudentCourseLessonPage({
   const title = course?.title || "Prompt Engineering for AI Systems";
 
   return (
-    <SidebarProvider defaultOpen={false}>
+    <>
       <StudentHomeSidebarContent variant="sidebar" collapsible="offcanvas" />
       <SidebarInset className="bg-transparent min-h-screen">
         <div
@@ -152,9 +122,7 @@ export default function StudentCourseLessonPage({
           </div>
         </div>
         <CourseSidebarSheet open={isSheetOpen} onOpenChange={setIsSheetOpen} />
-        {/* Mobile bottom navigation */}
-        <MobileDashboardFooter items={studentFooterNav} maxVisible={4} />
       </SidebarInset>
-    </SidebarProvider>
+    </>
   );
 }

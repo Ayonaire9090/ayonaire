@@ -19,7 +19,7 @@ import {
 import { ProfileTimelineContent } from "@/components/dashboard/profile/profile-timeline-content";
 import { useState } from "react";
 
-export default function AdminProfilePage() {
+export default function InstructorProfilePage() {
   const [activeTab, setActiveTab] = useState<ProfileTab>("Profile");
 
   return (
@@ -42,10 +42,10 @@ export default function AdminProfilePage() {
 
           {/* Profile Info */}
           <ProfileInfoSection
-            name="Ayobami Awosanya"
-            email="ayobami.awosanya@gmail.com"
+            name="Dr. Sarah Mitchell"
+            email="sarah.mitchell@edu.com"
             popularity={3760}
-            userType="Admin"
+            userType="Instructor"
             joinedDate="January 2025"
           />
 

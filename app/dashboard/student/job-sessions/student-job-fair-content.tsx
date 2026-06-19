@@ -3,39 +3,9 @@
 import { SidebarInset, useSidebar } from "@/components/ui/sidebar";
 import { StudentHomeSidebarContent } from "../_components/student-home-sidebar-content";
 import { StudentDashboardHeader } from "../_components/student-dashboard-header";
-import { MobileDashboardFooter } from "@/components/dashboard/mobile-dashboard-footer";
-import {
-  BookOpen,
-  Briefcase,
-  LayoutTemplate,
-  MessageSquare,
-  Presentation,
-  Video,
-  Clock,
-} from "lucide-react";
+import { Clock } from "lucide-react";
 import { useState } from "react";
 import { WorkshopDateFilter } from "../workshop/_components/workshop-date-filter";
-
-const studentFooterNav = [
-  { title: "Feed", url: "/dashboard/student/feed", icon: LayoutTemplate },
-  { title: "Workshop", url: "/dashboard/student/workshop", icon: Video },
-  {
-    title: "Job Fair",
-    url: "/dashboard/student/job-sessions",
-    icon: Briefcase,
-  },
-  { title: "Courses", url: "/dashboard/student/courses", icon: BookOpen },
-  {
-    title: "Messages",
-    url: "/dashboard/student/messages",
-    icon: MessageSquare,
-  },
-  {
-    title: "Career",
-    url: "/dashboard/student/career-accelarator",
-    icon: Presentation,
-  },
-];
 
 const jobFairData = [
   {
@@ -170,9 +140,6 @@ export const StudentJobFairSessionsContent = () => {
             </div>
           </div>
         </div>
-
-        {/* Mobile bottom navigation */}
-        <MobileDashboardFooter items={studentFooterNav} maxVisible={4} />
       </SidebarInset>
     </>
   );

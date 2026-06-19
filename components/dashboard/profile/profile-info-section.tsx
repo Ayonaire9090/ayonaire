@@ -4,7 +4,24 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
-export function ProfileInfoSection() {
+interface ProfileInfoSectionProps {
+  name: string;
+  email?: string;
+  popularity?: number;
+  thumbsUp?: number;
+  joinedDate?: string;
+  linkedInUrl?: string;
+  userType?: "Admin" | "Instructor" | "Student";
+}
+export function ProfileInfoSection({
+  name = "Dr. Sarah Mitchell",
+  email = "sarah.mitchell@edu.com",
+  popularity = 790,
+  thumbsUp = 1456,
+  joinedDate = "Joined september 2025",
+  linkedInUrl = "#",
+  userType = "Admin",
+}: ProfileInfoSectionProps) {
   return (
     <div className="flex flex-col md:flex-row md:items-start gap-4 md:gap-6 p-4 bg-white">
       {/* Avatar */}
@@ -14,7 +31,7 @@ export function ProfileInfoSection() {
           alt="Dr. Sarah Mitchell"
         />
         <AvatarFallback className="text-xl font-bold bg-gray-200 text-gray-600">
-          SM
+          {name}
         </AvatarFallback>
       </Avatar>
 
@@ -23,11 +40,9 @@ export function ProfileInfoSection() {
         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3">
           <div>
             <h2 className="text-[20px] md:text-[22px] font-bold text-gray-900">
-              Dr. Sarah Mitchell
+              {name}
             </h2>
-            <p className="text-[14px] text-gray-500 mt-0.5">
-              sarah.mitchell@edu.com
-            </p>
+            <p className="text-[14px] text-gray-500 mt-0.5">{email}</p>
 
             {/* Stats row */}
             <div className="flex items-center gap-4 mt-2">
@@ -40,7 +55,7 @@ export function ProfileInfoSection() {
                   className="w-5.5 h-5.5"
                 />
                 <span className="text-[14px] font-semibold text-gray-800">
-                  790
+                  {popularity}
                 </span>
               </div>
               <div className="flex items-center gap-1.5">
@@ -52,24 +67,24 @@ export function ProfileInfoSection() {
                   className="w-5 h-5"
                 />
                 <span className="text-[14px] font-semibold text-gray-800">
-                  1456
+                  {thumbsUp}
                 </span>
               </div>
             </div>
 
             {/* Admin badge */}
             <span className="inline-block mt-2 px-2.5 py-0.5 text-[12px] font-semibold text-primary bg-primary/10 rounded-full">
-              Admin
+              {userType}
             </span>
 
             {/* Joined date */}
             <p className="text-[13px] text-gray-500 mt-2">
-              Joined september 2025
+              Joined {joinedDate}
             </p>
 
             {/* LinkedIn icon */}
             <a
-              href="#"
+              href={linkedInUrl}
               className="inline-flex mt-1.5"
               aria-label="LinkedIn profile"
             >
@@ -86,9 +101,9 @@ export function ProfileInfoSection() {
           </div>
 
           {/* Set Featured button */}
-          <Button className="bg-primary hover:bg-primary/90 text-white px-6 h-10 rounded-lg text-[14px] self-start hidden md:flex">
+          {/* <Button className="bg-primary hover:bg-primary/90 text-white px-6 h-10 rounded-lg text-[14px] self-start hidden md:flex">
             Set Featured
-          </Button>
+          </Button> */}
         </div>
       </div>
     </div>

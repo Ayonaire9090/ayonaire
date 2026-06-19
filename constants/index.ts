@@ -33,6 +33,8 @@ import {
   MessageCircle,
   Settings,
   MessageCircleMore,
+  CircleDollarSign,
+  Bell,
 } from "lucide-react";
 import {
   IconCalendarEvent,
@@ -59,6 +61,11 @@ import { DashboardSupportIcon } from "@/public/assets/icons/dashboard-support-ic
 import { DashboardEmailIcon } from "@/public/assets/icons/dashboard-email-icon";
 import { DashboardTalkIcon } from "@/public/assets/icons/dashboard-talk-icon";
 import { DashboardSettingsIcon } from "@/public/assets/icons/dashboard-settings-icon";
+import { DashboardBulbIcon } from "@/public/assets/icons/dashboard-bulb-icon";
+import { DashboardFileTextIcon } from "@/public/assets/icons/dashboard-file-text-icon";
+import { DashboardChartIcon } from "@/public/assets/icons/dashboard-chart-icon";
+import { DashboardSpeechBubbleIcon } from "@/public/assets/icons/dashboard-speech-bubble-icon";
+import { DashboardDollarIcon } from "@/public/assets/icons/dashboard-dollar-icon";
 
 export const navItems = [
   {
@@ -173,17 +180,52 @@ export const dashboardData = {
     {
       title: "Dashboard",
       url: "/dashboard/instructor",
-      icon: IconDashboard,
+      icon: DashboardWindowIcon,
     },
     {
       title: "Courses",
       url: "/dashboard/instructor/courses",
-      icon: IconVideo,
+      icon: DashboardCoursesIcon,
     },
     {
-      title: "Earnings",
-      url: "/dashboard/instructor/earnings",
-      icon: IconReceipt2,
+      title: "Assignments",
+      url: "/dashboard/instructor/assignments",
+      icon: DashboardFileTextIcon,
+    },
+    {
+      title: "Quiz",
+      url: "/dashboard/instructor/quiz",
+      icon: DashboardBulbIcon,
+    },
+    {
+      title: "Assessments",
+      url: "/dashboard/instructor/assessments",
+      icon: DashboardAssesmentIcon,
+    },
+    {
+      title: "Students Management",
+      url: "/dashboard/instructor/students-management",
+      icon: DashboardUsersIcon,
+    },
+    {
+      title: "Analytics & Reporting",
+      url: "/dashboard/instructor/analytics-reporting",
+      icon: DashboardChartIcon,
+    },
+    {
+      title: "Communication",
+      url: "/dashboard/instructor/communication",
+      icon: DashboardSpeechBubbleIcon,
+    },
+    {
+      title: "Monetization",
+      url: "/dashboard/instructor/monetization",
+      icon: DashboardDollarIcon,
+    },
+    {
+      title: "Notifications",
+      url: "/dashboard/instructor/notifications",
+      icon: Bell,
     },
   ],
   navClouds: [

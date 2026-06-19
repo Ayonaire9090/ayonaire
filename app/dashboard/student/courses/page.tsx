@@ -2,17 +2,7 @@
 
 import { courses } from "@/constants";
 import { StudentDashboardHeader } from "../_components/student-dashboard-header";
-import {
-  BookOpen,
-  Briefcase,
-  LayoutTemplate,
-  MessageSquare,
-  Presentation,
-  Video,
-  Search,
-  ChevronDown,
-} from "lucide-react";
-import { MobileDashboardFooter } from "@/components/dashboard/mobile-dashboard-footer";
+import { BookOpen, Search, ChevronDown } from "lucide-react";
 import { AppSection } from "@/components/app-section";
 import {
   StudentCourseCard,
@@ -20,32 +10,10 @@ import {
 } from "./_components/student-course-card";
 import { useState } from "react";
 import {
-  SidebarProvider,
   SidebarInset,
   useSidebar,
 } from "@/components/ui/sidebar";
 import { StudentHomeSidebarContent } from "../_components/student-home-sidebar-content";
-
-const studentFooterNav = [
-  { title: "Feed", url: "/dashboard/student/feed", icon: LayoutTemplate },
-  { title: "Workshop", url: "/dashboard/student/workshop", icon: Video },
-  {
-    title: "Job Fair",
-    url: "/dashboard/student/job-sessions",
-    icon: Briefcase,
-  },
-  { title: "Courses", url: "/dashboard/student/courses", icon: BookOpen },
-  {
-    title: "Messages",
-    url: "/dashboard/student/messages",
-    icon: MessageSquare,
-  },
-  {
-    title: "Career",
-    url: "/dashboard/student/career-accelarator",
-    icon: Presentation,
-  },
-];
 
 function StudentCoursesContent() {
   const [activeTab, setActiveTab] = useState("All");
@@ -162,18 +130,11 @@ function StudentCoursesContent() {
             </div>
           )}
         </div>
-
-        {/* Mobile bottom navigation */}
-        <MobileDashboardFooter items={studentFooterNav} maxVisible={4} />
       </SidebarInset>
     </>
   );
 }
 
 export default function StudentCoursesPage() {
-  return (
-    <SidebarProvider defaultOpen={false}>
-      <StudentCoursesContent />
-    </SidebarProvider>
-  );
+  return <StudentCoursesContent />;
 }

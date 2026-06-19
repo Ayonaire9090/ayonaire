@@ -1,14 +1,7 @@
 "use client";
 
-import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
-import { MobileDashboardFooter } from "@/components/dashboard/mobile-dashboard-footer";
+import { SidebarInset } from "@/components/ui/sidebar";
 import {
-  LayoutTemplate,
-  Video,
-  Briefcase,
-  BookOpen,
-  MessageSquare,
-  Presentation,
   ChevronRight,
   Sparkles,
   Star,
@@ -22,34 +15,13 @@ import { ReviewQuizView } from "./_components/review-quiz-view";
 import { QuizResultView } from "./_components/quiz-result-view";
 import { AppSimpleModal } from "@/components/modals/app-simple-modal";
 
-const studentFooterNav = [
-  { title: "Feed", url: "/dashboard/student", icon: LayoutTemplate },
-  { title: "Workshop", url: "/dashboard/student/workshop", icon: Video },
-  {
-    title: "Job Fair",
-    url: "/dashboard/student/job-sessions",
-    icon: Briefcase,
-  },
-  { title: "Courses", url: "/dashboard/student/courses", icon: BookOpen },
-  {
-    title: "Messages",
-    url: "/dashboard/student/messages",
-    icon: MessageSquare,
-  },
-  {
-    title: "Career",
-    url: "/dashboard/student/career-accelarator",
-    icon: Presentation,
-  },
-];
-
 export default function StudentQuizDetailsPage() {
   const [isTakingQuiz, setTakingQuiz] = useState(false);
   const [isReviewing, setReviewing] = useState(false);
   const [showSubmitModal, setShowSubmitModal] = useState(false);
   const [showQuizResult, setShowQuizResult] = useState(false);
   return (
-    <SidebarProvider defaultOpen={false}>
+    <>
       <StudentHomeSidebarContent variant="sidebar" collapsible="icon" />
       <SidebarInset className="bg-[#F6F6F6]">
         <div className="px-4">
@@ -143,10 +115,7 @@ export default function StudentQuizDetailsPage() {
             </AppSimpleModal>
           </div>
         </div>
-
-        {/* Mobile bottom navigation */}
-        <MobileDashboardFooter items={studentFooterNav} maxVisible={4} />
       </SidebarInset>
-    </SidebarProvider>
+    </>
   );
 }

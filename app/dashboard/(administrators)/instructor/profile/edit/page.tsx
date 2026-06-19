@@ -14,8 +14,45 @@ import {
   EditSidebarKey,
 } from "@/components/dashboard/profile/edit/edit-profile-sidebar";
 import { useState } from "react";
+import { BookX, Trash2, UserX } from "lucide-react";
 
-export default function AdminEditProfilePage() {
+const dangerActions = [
+  {
+    id: "deactivate",
+    title: "Deactivate Account",
+    description:
+      "Temporarily disable your account. You can reactivate it anytime by logging back in.",
+    icon: <UserX className="size-5" />,
+    confirmTitle: "Deactivate Account",
+    confirmDescription:
+      "Follow all calendar prompts and save before moving forward. Apple and outlook will download an ics file. Open this file to add it to your calendar.",
+    confirmButtonLabel: "Deactivate my account",
+  },
+  {
+    id: "unsubscribe",
+    title: "Unsubscribe from Courses",
+    description:
+      "Remove all your course enrollments. You will lose access to all enrolled courses and progress.",
+    icon: <BookX className="size-5" />,
+    confirmTitle: "Unsubscribe from Courses",
+    confirmDescription:
+      "This will remove all your active course enrollments. Your progress and certificates will be permanently lost. This action cannot be undone.",
+    confirmButtonLabel: "Unsubscribe from all courses",
+  },
+  {
+    id: "delete-data",
+    title: "Delete My Data",
+    description:
+      "Permanently remove all your personal data from the system including profile info, activity logs, and preferences.",
+    icon: <Trash2 className="size-5" />,
+    confirmTitle: "Delete My Data",
+    confirmDescription:
+      "All your personal data including profile information, activity logs, preferences, and uploaded files will be permanently deleted. This action is irreversible.",
+    confirmButtonLabel: "Delete my data",
+  },
+];
+
+export default function InstructorEditProfilePage() {
   const [activeSection, setActiveSection] = useState<EditSidebarKey>("profile");
 
   return (
@@ -52,7 +89,9 @@ export default function AdminEditProfilePage() {
           {activeSection === "notifications" && (
             <EditProfileNotificationsContent />
           )}
-          {activeSection === "danger-zone" && <EditProfileDangerZoneContent />}
+          {activeSection === "danger-zone" && (
+            <EditProfileDangerZoneContent actions={dangerActions} />
+          )}
         </div>
       </div>
     </>

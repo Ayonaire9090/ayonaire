@@ -3,13 +3,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { AppSimpleModal } from "@/components/modals/app-simple-modal";
-import {
-  TriangleAlert,
-  UserX,
-  BookX,
-  DatabaseZap,
-  Trash2,
-} from "lucide-react";
+import { TriangleAlert, UserX, BookX, DatabaseZap, Trash2 } from "lucide-react";
 
 interface DangerAction {
   id: string;
@@ -68,10 +62,14 @@ const dangerActions: DangerAction[] = [
   },
 ];
 
-export const EditProfileDangerZoneContent = () => {
+export const EditProfileDangerZoneContent = ({
+  actions = dangerActions,
+}: {
+  actions?: DangerAction[];
+}) => {
   const [activeModal, setActiveModal] = useState<string | null>(null);
 
-  const currentAction = dangerActions.find((a) => a.id === activeModal);
+  const currentAction = actions.find((a) => a.id === activeModal);
 
   return (
     <div>
@@ -85,7 +83,7 @@ export const EditProfileDangerZoneContent = () => {
 
       {/* Action cards */}
       <div className="flex flex-col gap-4">
-        {dangerActions.map((action) => (
+        {actions.map((action) => (
           <div
             key={action.id}
             className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 p-4 md:p-5 rounded-xl border border-red-100 bg-red-50/30"

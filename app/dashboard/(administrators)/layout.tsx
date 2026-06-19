@@ -7,23 +7,13 @@ import { usePathname } from "next/navigation";
 
 import React from "react";
 
-export default function DashboardLayout({
+export default function AdministratorsDashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  // This is just a Quick Fix and Temporary. We can later move the pasdiings to their
-  // Individual oages, which is the industry-standard approach.
-  const pagesWithNoMobilePadding = [
-    "/dashboard/admin/profile",
-    "/dashboard/student/profile",
-    "/dashboard/instructor/profile",
-    "/dashboard/admin/profile/edit",
-    "/dashboard/student/profile/edit",
-    "/dashboard/instructor/profile/edit",
-  ];
   const pathname = usePathname();
-  const noPadding = pagesWithNoMobilePadding.includes(pathname);
+  const noPadding = pathname.includes("/profile");
 
   const getAllowedRoles = () => {
     if (pathname.includes("/dashboard/admin")) {

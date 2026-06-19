@@ -1,7 +1,31 @@
+import { SquarePen } from "lucide-react";
+import { DashboardHeader } from "@/components/dashboard/dashboard-header";
+import { InstructorDashboardButton } from "./_components/instructor-dashboard-button";
+import { InstructorDashboardAnalyticsCards } from "./_components/instructor-dashboard-analytics-cards";
+import { InstructorDashboardQuickActions } from "./_components/instructor-dashboard-quick-actions";
+import { InstructorDashboardRecentActivityFeed } from "./_components/instructor-dashboard-recent-activity-feed";
+import { InstructorDashboardAssignedCourses } from "./_components/instructor-dashboard-assigned-courses";
+
 export default function InstructorDashboardPage() {
   return (
-    <div>
-      <h1>Instructor Dashboard</h1>
-    </div>
+    <>
+      <DashboardHeader
+        title="Welcome Back, Dr.Sarah"
+        subTitle="You have 12 active courses and 28 pending assignments to review today."
+      />
+
+      <div className="pb-3">
+        <div className="flex justify-end items-center gap-4 flex-wrap pb-6">
+          <InstructorDashboardButton title="Edit Profile" icon={SquarePen} />
+        </div>
+        <InstructorDashboardAnalyticsCards />
+        <InstructorDashboardQuickActions />
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 py-6">
+          <InstructorDashboardRecentActivityFeed />
+          <InstructorDashboardAssignedCourses />
+        </div>
+      </div>
+    </>
   );
 }

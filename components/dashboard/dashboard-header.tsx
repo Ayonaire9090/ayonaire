@@ -8,15 +8,10 @@ import {
   IconChevronDown,
 } from "@tabler/icons-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { BellDot } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { DashboardUserDropDown } from "./dashboard-user-dropdown";
 
 interface DashboardHeaderProps {
   title?: React.ReactNode;
@@ -30,6 +25,16 @@ export function DashboardHeader({
   className,
 }: DashboardHeaderProps) {
   const router = useRouter();
+  const pathname = usePathname();
+
+  // Get the profile path based on route (update this later to be session based):
+  const profilePath = pathname.includes("/admin")
+    ? "admin"
+    : pathname.includes("instructor")
+      ? "/instructor"
+      : pathname.includes("/student")
+        ? "student"
+        : "";
   return (
     <>
       {/*MOBILE HEADER*/}
@@ -64,60 +69,17 @@ export function DashboardHeader({
 
         {/* Row 2: Avatar + welcome text */}
         <div className="flex items-center gap-3">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <div className="cursor-pointer">
-                <Avatar className="h-12 w-12 border-2 border-orange-200 shrink-0">
-                  <AvatarImage
-                    src={dashboardData.user.avatar}
-                    alt={dashboardData.user.name}
-                  />
-                  <AvatarFallback>AY</AvatarFallback>
-                </Avatar>
-              </div>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent
-              align="start"
-              sideOffset={8}
-              className="w-48 rounded-xl border-0 bg-[#F2F2F2] shadow-sm p-2 space-y-1"
-            >
-              <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-sm font-medium text-gray-800 hover:bg-white focus:bg-white">
-                <Image
-                  src="/assets/icons/user-solid.svg"
-                  alt="View Profile"
-                  width={20}
-                  height={20}
-                  className="h-5 w-5 text-gray-700"
+          <DashboardUserDropDown align="start">
+            <div className="cursor-pointer">
+              <Avatar className="h-12 w-12 border-2 border-orange-200 shrink-0">
+                <AvatarImage
+                  src={dashboardData.user.avatar}
+                  alt={dashboardData.user.name}
                 />
-                <button
-                  onClick={() => router.push("/dashboard/admin/profile")}
-                  className="flex w-full! h-full! cursor-pointer bg-transparent! flex-start! items-start"
-                >
-                  View Profile
-                </button>
-              </DropdownMenuItem>
-              <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-sm font-medium text-gray-800 hover:bg-white focus:bg-white">
-                <Image
-                  src="/assets/icons/account-solid.svg"
-                  alt="My account"
-                  width={20}
-                  height={20}
-                  className="h-5 w-5 text-gray-700"
-                />
-                My account
-              </DropdownMenuItem>
-              <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-sm font-medium text-red-500 hover:bg-white focus:bg-white hover:text-red-500 focus:text-red-500">
-                <Image
-                  src="/assets/icons/round-logout.svg"
-                  alt="Logout"
-                  width={20}
-                  height={20}
-                  className="h-5 w-5 text-[#EF4444]"
-                />
-                Logout
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+                <AvatarFallback>AY</AvatarFallback>
+              </Avatar>
+            </div>
+          </DashboardUserDropDown>
           <div className="flex flex-col gap-0.5">
             <h1 className="text-xl font-bold tracking-tight text-gray-900">
               {title}
@@ -161,76 +123,26 @@ export function DashboardHeader({
               <IconSettings className="h-5 w-5" />
             </button>
 
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <div className="flex items-center gap-3 ml-2 cursor-pointer bg-white hover:bg-white/80 p-1.5 rounded-full transition-colors">
-                  <Avatar className="h-11 w-11 border border-gray-200">
-                    <AvatarImage
-                      src={dashboardData.user.avatar}
-                      alt={dashboardData.user.name}
-                    />
-                    <AvatarFallback>AY</AvatarFallback>
-                  </Avatar>
-                  <div className="hidden lg:grid flex-1 text-left text-sm leading-tight pr-2">
-                    <span className="truncate font-semibold text-gray-900">
-                      {dashboardData.user.name}
-                    </span>
-                    <span className="truncate text-xs text-gray-500">
-                      {dashboardData.user.email}
-                    </span>
-                  </div>
-                  <IconChevronDown className="h-4 w-4 text-gray-500 hidden lg:block mr-2" />
+            <DashboardUserDropDown align="end">
+              <div className="flex items-center gap-3 ml-2 cursor-pointer bg-white hover:bg-white/80 p-1.5 rounded-full transition-colors">
+                <Avatar className="h-11 w-11 border border-gray-200">
+                  <AvatarImage
+                    src={dashboardData.user.avatar}
+                    alt={dashboardData.user.name}
+                  />
+                  <AvatarFallback>AY</AvatarFallback>
+                </Avatar>
+                <div className="hidden lg:grid flex-1 text-left text-sm leading-tight pr-2">
+                  <span className="truncate font-semibold text-gray-900">
+                    {dashboardData.user.name}
+                  </span>
+                  <span className="truncate text-xs text-gray-500">
+                    {dashboardData.user.email}
+                  </span>
                 </div>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                align="end"
-                sideOffset={8}
-                className="w-48 rounded-xl border-0 bg-[#F2F2F2] shadow-sm p-2 space-y-1"
-              >
-                <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-sm font-medium text-gray-800 hover:bg-white focus:bg-white">
-                  <Image
-                    src="/assets/icons/user-solid.svg"
-                    alt="View Profile"
-                    width={20}
-                    height={20}
-                    className="h-5 w-5 text-gray-700"
-                  />
-                  <button
-                    onClick={() => router.push("/dashboard/admin/profile")}
-                    className="flex w-full! h-full! cursor-pointer bg-transparent! flex-start! items-start"
-                  >
-                    View Profile
-                  </button>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-sm font-medium text-gray-800 hover:bg-white focus:bg-white">
-                  <Image
-                    src="/assets/icons/account-solid.svg"
-                    alt="My account"
-                    width={20}
-                    height={20}
-                    className="h-5 w-5 text-gray-700"
-                  />
-                  My account
-                </DropdownMenuItem>
-                <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-sm font-medium text-gray-800 hover:bg-white focus:bg-white">
-                  <BellDot
-                    className="bg-[#222222] p-1 rounded-full text-white font-bold w-5.5! h-5.5!"
-                    strokeWidth={2.7}
-                  />
-                  Notifications
-                </DropdownMenuItem>
-                <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-sm font-medium text-red-500 hover:bg-white focus:bg-white hover:text-red-500 focus:text-red-500">
-                  <Image
-                    src="/assets/icons/round-logout.svg"
-                    alt="Logout"
-                    width={20}
-                    height={20}
-                    className="h-5 w-5 text-[#EF4444]"
-                  />
-                  Logout
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+                <IconChevronDown className="h-4 w-4 text-gray-500 hidden lg:block mr-2" />
+              </div>
+            </DashboardUserDropDown>
           </div>
         </div>
       </header>

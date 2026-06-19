@@ -43,7 +43,7 @@ const studentHomeSidebarNav = [
     url: "/dashboard/student/ask-for-help",
     icon: HelpCircle,
   },
-  { title: "Workshops", url: "/dashboard/student/workshops", icon: Video },
+  { title: "Workshop", url: "/dashboard/student/workshop", icon: Video },
   { title: "Courses", url: "/dashboard/student/courses", icon: BookOpen },
   {
     title: "Chatrooms",

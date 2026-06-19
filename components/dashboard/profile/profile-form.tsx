@@ -4,7 +4,7 @@ import { useState } from "react";
 import { AppInput } from "@/components/ui/app-input";
 import { Button } from "@/components/ui/button";
 import { SquarePen } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const INPUT_CLASSNAME = `text-[#121315]!
   bg-transparent!
@@ -51,7 +51,17 @@ const initialData: ProfileData = {
 
 export function ProfileForm() {
   const router = useRouter();
+  const pathname = usePathname();
   const [formData, setFormData] = useState<ProfileData>(initialData);
+
+  // Get the profile path based on route (update this later to be session based):
+  const profilePath = pathname.includes("/admin")
+    ? "admin"
+    : pathname.includes("instructor")
+      ? "/instructor"
+      : pathname.includes("/student")
+        ? "student"
+        : "";
 
   const handleChange = (field: keyof ProfileData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -66,7 +76,9 @@ export function ProfileForm() {
         </h3>
         <div className="flex items-center gap-3">
           <Button
-            onClick={() => router.push("/dashboard/admin/profile/edit")}
+            onClick={() =>
+              router.push(`/dashboard/${profilePath}/profile/edit`)
+            }
             className="bg-primary hover:bg-primary/90 text-white font-semibold px-5 h-10 rounded-lg text-[13px] cursor-pointer"
           >
             <SquarePen />
