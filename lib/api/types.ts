@@ -27,7 +27,7 @@ export interface UserProfile {
     url: string;
     publicId: string;
   };
-  role: "admin" | "instructor" | "student";
+  role: "admin" | "instructor" | "student" | "user";
   status: string;
   cohorts?: string[];
   createdAt: string;
@@ -38,8 +38,12 @@ export interface UserProfile {
 // Authentication
 export interface LoginResponse {
   success: boolean;
-  token: string;
-  user: UserProfile;
+  token?: string;
+  user?: UserProfile;
+  data?: {
+    token: string;
+    user: UserProfile;
+  };
 }
 
 export interface AuthRegisterResponse {

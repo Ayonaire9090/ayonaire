@@ -40,7 +40,7 @@ export default function SignUpPage() {
       toast.success("Account created! Please verify your email.");
       // Redirect to verify email page
       router.push(
-        `/auth/student/verify-email?email=${encodeURIComponent(formData.email)}`
+        `/auth/verify-email?email=${encodeURIComponent(formData.email)}&type=student`
       );
     } catch (error: any) {
       console.error("Sign up failed:", error);

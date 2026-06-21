@@ -32,15 +32,19 @@ export default function SignInPage() {
     e.preventDefault();
 
     try {
-      const data = await login({
+      const res = await login({
         email: formData.email,
         password: formData.password,
       });
-      if (data.success) {
+      if (res.success) {
+        const user = res.user || res.data?.user;
+        if (!user) {
+          throw new Error("User data not found in response");
+        }
         toast.success("Signed in successfully!");
-        if (data.user.role === "admin") {
+        if (user.role === "admin") {
           router.push("/dashboard/admin");
-        } else if (data.user.role === "instructor") {
+        } else if (user.role === "instructor") {
           router.push("/dashboard/instructor");
         } else {
           router.push("/dashboard/student");

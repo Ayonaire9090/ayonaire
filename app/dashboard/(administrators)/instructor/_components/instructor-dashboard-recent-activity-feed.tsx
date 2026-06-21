@@ -59,9 +59,9 @@ export const InstructorDashboardRecentActivityFeed = () => {
       {/* Header */}
       <div className="flex items-center justify-between px-5 py-4 bg-[#FFF5F1]">
         <div className="flex items-center gap-2">
-          <div className="p-1.5 rounded-lg">
+          {/* <div className="p-1.5 rounded-lg">
             <CalendarClock className="size-5 text-[#F86432]" />
-          </div>
+          </div> */}
           <h3 className="text-base lg:text-lg font-semibold text-gray-900">
             Recent Activity Feed
           </h3>

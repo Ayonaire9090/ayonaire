@@ -23,21 +23,21 @@ export default function AdministratorsDashboardLayout({
     }
   };
   return (
-    <AuthGuard allowedRoles={getAllowedRoles()}>
-      <SidebarProvider defaultOpen={false}>
-        <AppSidebar variant="sidebar" collapsible="icon" />
-        <SidebarInset className="bg-[#F6F6F6]">
-          <div
-            className={`flex flex-1 flex-col pb-20 md:pb-0 ${noPadding ? "px-0 lg:px-6" : "px-4 lg:px-6"}`}
-          >
-            <div className="@container/main flex flex-1 flex-col gap-6">
-              {children}
-            </div>
+    // <AuthGuard allowedRoles={getAllowedRoles()}>
+    <SidebarProvider defaultOpen={false}>
+      <AppSidebar variant="sidebar" collapsible="icon" />
+      <SidebarInset className="bg-[#F6F6F6]">
+        <div
+          className={`flex flex-1 flex-col pb-20 md:pb-0 ${noPadding ? "px-0 lg:px-6" : "px-4 lg:px-6"}`}
+        >
+          <div className="@container/main flex flex-1 flex-col gap-6">
+            {children}
           </div>
-          {/* Mobile bottom navigation */}
-          <DashboardMobileFooterWrapper />
-        </SidebarInset>
-      </SidebarProvider>
-    </AuthGuard>
+        </div>
+        {/* Mobile bottom navigation */}
+        <DashboardMobileFooterWrapper />
+      </SidebarInset>
+    </SidebarProvider>
+    // </AuthGuard>
   );
 }

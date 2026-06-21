@@ -1,6 +1,5 @@
-import { SquarePen } from "lucide-react";
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
-import { InstructorDashboardButton } from "./_components/instructor-dashboard-button";
+import { InstructorDashboardEditProfileButton } from "./_components/instructor-dashboard-edit-profile-button";
 import { InstructorDashboardAnalyticsCards } from "./_components/instructor-dashboard-analytics-cards";
 import { InstructorDashboardQuickActions } from "./_components/instructor-dashboard-quick-actions";
 import { InstructorDashboardRecentActivityFeed } from "./_components/instructor-dashboard-recent-activity-feed";
@@ -15,9 +14,7 @@ export default function InstructorDashboardPage() {
       />
 
       <div className="pb-3">
-        <div className="flex justify-end items-center gap-4 flex-wrap pb-6">
-          <InstructorDashboardButton title="Edit Profile" icon={SquarePen} />
-        </div>
+        <InstructorDashboardEditProfileButton />
         <InstructorDashboardAnalyticsCards />
         <InstructorDashboardQuickActions />
 

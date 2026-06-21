@@ -30,8 +30,11 @@ function VerifyEmailContent() {
 
   const isLoading = isVerifyLoading || isResendLoading;
 
+  const type = searchParams.get("type") || "student";
+
   // Get email from query params or use fallback
-  const email = searchParams.get("email") || "student@example.com";
+  const fallbackEmail = type === "admin" ? "admin@example.com" : type === "instructor" ? "instructor@example.com" : "student@example.com";
+  const email = searchParams.get("email") || fallbackEmail;
 
   // Countdown timer for resend
   useEffect(() => {
@@ -65,8 +68,14 @@ function VerifyEmailContent() {
     try {
       await verifyEmail({ token: otp });
       toast.success("Email verified successfully!");
-      // Navigate to student signin page
-      router.push("/auth/student/signin");
+      
+      if (type === "admin") {
+        router.push("/auth/admin/complete-profile");
+      } else if (type === "instructor") {
+        router.push("/auth/instructor/complete-profile");
+      } else {
+        router.push("/auth/student/signin");
+      }
     } catch (error: any) {
       console.error("Verification failed:", error);
       toast.error(error?.message || "Verification failed");
@@ -97,14 +106,14 @@ function VerifyEmailContent() {
             value={otp}
             onChange={(value) => setOtp(value)}
             containerClassName="gap-2 md:gap-3 shadow-none!"
-            className="shadow-none! text-[#121315]!"
+            className="shadow-none!"
           >
             <InputOTPGroup className="gap-2">
               {[0, 1, 2, 3, 4, 5].map((index) => (
                 <InputOTPSlot
                   key={index}
                   index={index}
-                  className="w-12 h-12 md:w-12 md:h-12 text-xl font-semibold rounded-lg border-2 border-gray-200 bg-gray-50 first:rounded-lg last:rounded-lg data-[active=true]:border-[#F86432] data-[active=true]:ring-[#F86432]/20 shadow-none!"
+                  className="w-12 h-12 md:w-12 md:h-12 text-xl font-semibold rounded-lg border-2 border-gray-200 bg-gray-50 first:rounded-lg last:rounded-lg data-[active=true]:border-[#F86432] data-[active=true]:ring-[#F86432]/20 shadow-none! text-[#121315]!"
                 />
               ))}
             </InputOTPGroup>

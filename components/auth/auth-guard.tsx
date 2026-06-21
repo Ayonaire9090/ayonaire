@@ -33,15 +33,20 @@ export function AuthGuard({ children, allowedRoles }: AuthGuardProps) {
     }
 
     if (allowedRoles && allowedRoles.length > 0) {
-      if (!allowedRoles.includes(user.role)) {
+      const userRole = user.role === "user" ? "student" : user.role;
+      if (!allowedRoles.includes(userRole)) {
         // User is authenticated but doesn't have the right role
         // Redirect them to their appropriate dashboard based on their actual role
-        if (user.role === "admin") {
-          router.replace("/dashboard/admin");
-        } else if (user.role === "instructor") {
-          router.replace("/dashboard/instructor");
-        } else {
-          router.replace("/dashboard/student");
+        let target = "/dashboard/student";
+        if (userRole === "admin") {
+          target = "/dashboard/admin";
+        } else if (userRole === "instructor") {
+          target = "/dashboard/instructor";
+        }
+        
+        // Prevent infinite redirect loops
+        if (!pathname.startsWith(target)) {
+          router.replace(target);
         }
       }
     }
@@ -54,8 +59,9 @@ export function AuthGuard({ children, allowedRoles }: AuthGuardProps) {
 
   // If we reach here, either we are still waiting for the useEffect to redirect,
   // or the user is fully authorized. We should only render children if authorized.
+  const userRole = user?.role === "user" ? "student" : user?.role;
   const isAuthorized =
-    token && user && (!allowedRoles || allowedRoles.includes(user.role));
+    token && user && (!allowedRoles || (userRole && allowedRoles.includes(userRole)));
 
   if (!isAuthorized) {
     return <AppLoadingSpinner />;

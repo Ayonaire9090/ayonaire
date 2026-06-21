@@ -16,10 +16,12 @@ export const useLoginMutation = () => {
 
   return useMutation({
     mutationFn: (payload: LoginPayload) => authApi.login(payload),
-    onSuccess: (data) => {
+    onSuccess: (res) => {
+      const token = res.token || res.data?.token;
+      const user = res.user || res.data?.user;
       // Save token and user details on successful login
-      if (data.success && data.token) {
-        setAuth(data.token, data.user);
+      if (res.success && token && user) {
+        setAuth(token, user);
       }
     },
   });

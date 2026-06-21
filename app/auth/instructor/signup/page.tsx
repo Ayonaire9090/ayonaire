@@ -41,7 +41,7 @@ export default function SignUpPage() {
       // Redirect to verify email page
       // TODO: Update this routing logic when auto-login endpoint or token on register is available
       router.push(
-        `/auth/instructor/verify-email?email=${encodeURIComponent(formData.email)}`,
+        `/auth/verify-email?email=${encodeURIComponent(formData.email)}&type=instructor`,
       );
     } catch (error: any) {
       console.error("Sign up failed:", error);
