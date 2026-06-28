@@ -1,5 +1,6 @@
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 import {
-  CalendarClock,
   CircleCheckBig,
   EllipsisVertical,
   FileText,
@@ -7,8 +8,6 @@ import {
   Star,
   UserPlus,
 } from "lucide-react";
-import Image from "next/image";
-import icon from "react-syntax-highlighter/dist/esm/languages/prism/icon";
 
 const RecentActivities = [
   {
@@ -53,18 +52,32 @@ const RecentActivities = [
   },
 ];
 
-export const InstructorDashboardRecentActivityFeed = () => {
+interface InstructorDashboardRecentActivityFeedProps {
+  title?: string;
+  showBadge?: boolean;
+  className?: string;
+}
+export const InstructorDashboardRecentActivityFeed = ({
+  title = "Recent Activity Feed",
+  showBadge = false,
+  className,
+}: InstructorDashboardRecentActivityFeedProps) => {
   return (
-    <div className="rounded-2xl bg-white overflow-hidden">
+    <div className={cn("rounded-2xl bg-white overflow-hidden", className)}>
       {/* Header */}
       <div className="flex items-center justify-between px-5 py-4 bg-[#FFF5F1]">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center justify-between gap-2 w-full">
           {/* <div className="p-1.5 rounded-lg">
             <CalendarClock className="size-5 text-[#F86432]" />
           </div> */}
           <h3 className="text-base lg:text-lg font-semibold text-gray-900">
-            Recent Activity Feed
+            {title}
           </h3>
+          {showBadge && (
+            <Badge className="rounded-full bg-primary/20 text-primary">
+              PRIORITY ACTIONS
+            </Badge>
+          )}
         </div>
       </div>
 

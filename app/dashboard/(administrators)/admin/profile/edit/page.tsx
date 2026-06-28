@@ -1,60 +1,7 @@
 "use client";
 
-import { DashboardHeader } from "@/components/dashboard/dashboard-header";
-import { EditCoverPhotoContent } from "@/components/dashboard/profile/edit/edit-cover-photo-content";
-import { EditEmailPreferenceContent } from "@/components/dashboard/profile/edit/edit-email-preference-content";
-import { EditLoginInfoContent } from "@/components/dashboard/profile/edit/edit-login-info-content";
-import { EditProfileContent } from "@/components/dashboard/profile/edit/edit-profile-content";
-import { EditProfileDangerZoneContent } from "@/components/dashboard/profile/edit/edit-profile-danger-zone-content";
-import { EditProfileNotificationsContent } from "@/components/dashboard/profile/edit/edit-profile-notifications-content";
-import { EditProfilePhotoContent } from "@/components/dashboard/profile/edit/edit-profile-photo-content";
-import {
-  EditProfileMobileTabs,
-  EditProfileSidebar,
-  EditSidebarKey,
-} from "@/components/dashboard/profile/edit/edit-profile-sidebar";
-import { useState } from "react";
+import { EditProfilePageContent } from "@/components/dashboard/profile/edit/edit-profile-page-content";
 
 export default function AdminEditProfilePage() {
-  const [activeSection, setActiveSection] = useState<EditSidebarKey>("profile");
-
-  return (
-    <>
-      {/* Dashboard Header */}
-      <div className="bg-white lg:bg-transparent pt-4 pl-4 pr-4 pb-0 lg:p-0">
-        <DashboardHeader
-          title="Manage Your Profile"
-          subTitle="View and update your profile details"
-        />
-        {/* Mobile scrollable tabs */}
-        <EditProfileMobileTabs
-          activeSection={activeSection}
-          onSectionChange={setActiveSection}
-        />
-      </div>
-
-      <div className="flex gap-6 lg:gap-8 py-4 lg:py-6">
-        {/* Desktop sidebar */}
-        <EditProfileSidebar
-          activeSection={activeSection}
-          onSectionChange={setActiveSection}
-        />
-
-        {/* Content area */}
-        <div className="flex-1 min-w-0 bg-white rounded-none md:rounded-2xl p-4 md:p-6 lg:p-8">
-          {activeSection === "profile" && <EditProfileContent />}
-          {activeSection === "profile-photo" && <EditProfilePhotoContent />}
-          {activeSection === "cover-photo" && <EditCoverPhotoContent />}
-          {activeSection === "login-info" && <EditLoginInfoContent />}
-          {activeSection === "email-preference" && (
-            <EditEmailPreferenceContent />
-          )}
-          {activeSection === "notifications" && (
-            <EditProfileNotificationsContent />
-          )}
-          {activeSection === "danger-zone" && <EditProfileDangerZoneContent />}
-        </div>
-      </div>
-    </>
-  );
+  return <EditProfilePageContent />;
 }

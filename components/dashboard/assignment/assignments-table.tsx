@@ -2,9 +2,17 @@
 
 import React from "react";
 import { DataTable, ColumnDef } from "@/components/ui/data-table";
-import { mockAssignments, Assignment } from "./assignments-data";
+import {
+  mockAssignments,
+  Assignment,
+  mockInstructorAssignments,
+  InstructorAssignment,
+} from "./assignments-data";
 import { AssignmentsActions } from "./assignments-actions";
+import { InstructorAssignmentsActions } from "./instructor-assignments-actions";
 import { AssignmentsFilters } from "./assignments-filters";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const getTypeStyle = (type: string) => {
   switch (type) {
@@ -143,19 +151,100 @@ const columns: ColumnDef<Assignment>[] = [
   },
 ];
 
-export const AssignmentsTable = () => {
-  return (
-    <div className="w-full bg-white p-4 rounded-xl">
-      <AssignmentsFilters />
-      <DataTable
-        data={mockAssignments}
-        columns={columns}
-        keyExtractor={(item) => item.id}
-        selectable={true}
-        onSelectionChange={(selectedIds) => {
-          console.log("Selected:", selectedIds);
-        }}
-      />
-    </div>
-  );
+const getInstructorStatusStyle = (status: string) => {
+  switch (status) {
+    case "Graded":
+      return "bg-[#ECFDF5] text-[#10B981]";
+    case "Late":
+      return "bg-[#FEE2E2] text-[#EF4444]";
+    case "Submitted":
+      return "bg-[#EFF6FF] text-[#3B82F6]";
+    default:
+      return "bg-gray-100 text-gray-600";
+  }
+};
+
+const instructorColumns: ColumnDef<InstructorAssignment>[] = [
+  {
+    key: "studentName",
+    header: "Student name",
+    cell: (item) => (
+      <div className="flex items-center gap-2">
+        <Avatar className="h-8 w-8">
+          <AvatarImage src={item.studentAvatar} alt={item.studentName} />
+          <AvatarFallback>{item.studentName.charAt(0)}</AvatarFallback>
+        </Avatar>
+        <span className="text-gray-900">{item.studentName}</span>
+      </div>
+    ),
+    className: "w-[250px]",
+  },
+  {
+    key: "submittedFile",
+    header: "Submitted file",
+    cell: (item) => <span className="text-gray-600">{item.submittedFile}</span>,
+  },
+  {
+    key: "submissionDate",
+    header: "Submission Date",
+    cell: (item) => (
+      <span className="text-gray-600">{item.submissionDate}</span>
+    ),
+  },
+  {
+    key: "status",
+    header: "Status",
+    cell: (item) => (
+      <span
+        className={`px-3 py-1 rounded-full text-xs font-medium ${getInstructorStatusStyle(
+          item.status,
+        )}`}
+      >
+        {item.status}
+      </span>
+    ),
+  },
+  {
+    key: "actions",
+    header: "Actions",
+    cell: (item) => <InstructorAssignmentsActions assignmentId={item.id} />,
+  },
+];
+
+interface AssignmentsTableProps {
+  type?: "admin" | "instructor";
+}
+export const AssignmentsTable = ({ type = "admin" }: AssignmentsTableProps) => {
+  if (type === "admin") {
+    return (
+      <div className="w-full bg-white p-4 rounded-xl">
+        <AssignmentsFilters />
+        <DataTable
+          data={mockAssignments}
+          columns={columns}
+          keyExtractor={(item) => item.id}
+          selectable={true}
+          onSelectionChange={(selectedIds) => {
+            console.log("Selected:", selectedIds);
+          }}
+        />
+      </div>
+    );
+  } else if (type === "instructor") {
+    return (
+      <div className="w-full bg-white rounded-xl p-2 md:p-4 border-none">
+        <DataTable
+          data={mockInstructorAssignments}
+          columns={instructorColumns}
+          keyExtractor={(item) => item.id}
+          selectable={true}
+          onSelectionChange={(selectedIds) => {
+            console.log("Selected:", selectedIds);
+          }}
+        />
+      </div>
+    );
+  } else {
+    return null;
+  }
 };

@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
 import { AppInput } from "@/components/ui/app-input";
 import { Button } from "@/components/ui/button";
 import { SquarePen } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/store/auth.store";
 
 const INPUT_CLASSNAME = `text-[#121315]!
   bg-transparent!
@@ -27,45 +27,32 @@ const INPUT_CLASSNAME = `text-[#121315]!
   not-placeholder-shown:border-b-primary!
   cursor-not-allowed`;
 
-interface ProfileData {
-  firstName: string;
-  lastName: string;
-  userName: string;
-  email: string;
-  phone: string;
-  bio: string;
-  linkedIn: string;
-  website: string;
-}
-
-const initialData: ProfileData = {
-  firstName: "Ayobami",
-  lastName: "Awosanya",
-  userName: "Awosanya",
-  email: "example@gmail.com",
-  phone: "+234 8123456789",
-  bio: "Senior Software Engineer with 10+ years of experience in Python, AI, and cloud computing.",
-  linkedIn: "https://linkedin.com/in/sarahmitchell",
-  website: "https://sarahmitchell.dev",
-};
-
 export function ProfileForm() {
   const router = useRouter();
-  const pathname = usePathname();
-  const [formData, setFormData] = useState<ProfileData>(initialData);
+  const user = useAuthStore((state) => state.user);
 
-  // Get the profile path based on route (update this later to be session based):
-  const profilePath = pathname.includes("/admin")
-    ? "admin"
-    : pathname.includes("instructor")
-      ? "/instructor"
-      : pathname.includes("/student")
-        ? "student"
-        : "";
+  // Derive the correct edit path from the user's role
+  const roleSegment =
+    user?.role === "admin"
+      ? "admin"
+      : user?.role === "instructor"
+        ? "instructor"
+        : "student";
 
-  const handleChange = (field: keyof ProfileData, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-  };
+  const editPath =
+    roleSegment === "student"
+      ? `/dashboard/student/profile/edit`
+      : `/dashboard/${roleSegment}/profile/edit`;
+
+  // Read values from the auth store, fall back to empty string
+  const fullName = user?.name ?? "";
+  const email = user?.email ?? "";
+  const phone = user?.phoneNumber ?? "";
+
+  // Fields not yet available in the API – kept as placeholders for future use
+  const bio = "";
+  const linkedIn = "";
+  const website = "";
 
   return (
     <div className="py-6 md:py-8 bg-white p-4 rounded-2xl my-3">
@@ -76,9 +63,7 @@ export function ProfileForm() {
         </h3>
         <div className="flex items-center gap-3">
           <Button
-            onClick={() =>
-              router.push(`/dashboard/${profilePath}/profile/edit`)
-            }
+            onClick={() => router.push(editPath)}
             className="bg-primary hover:bg-primary/90 text-white font-semibold px-5 h-10 rounded-lg text-[13px] cursor-pointer"
           >
             <SquarePen />
@@ -90,28 +75,9 @@ export function ProfileForm() {
       {/* Form fields */}
       <div className="flex flex-col gap-6 max-w-[720px]">
         <AppInput
-          label="First Name"
-          placeholder="Enter first name"
-          value={formData.firstName}
-          onChange={(e) => handleChange("firstName", e.target.value)}
-          readOnly={true}
-          className={INPUT_CLASSNAME}
-        />
-
-        <AppInput
-          label="Last Name"
-          placeholder="Enter last name"
-          value={formData.lastName}
-          onChange={(e) => handleChange("lastName", e.target.value)}
-          readOnly={true}
-          className={INPUT_CLASSNAME}
-        />
-
-        <AppInput
-          label="User Name"
-          placeholder="Enter user name"
-          value={formData.userName}
-          onChange={(e) => handleChange("userName", e.target.value)}
+          label="Full Name"
+          placeholder="Enter full name"
+          value={fullName}
           readOnly={true}
           className={INPUT_CLASSNAME}
         />
@@ -120,8 +86,7 @@ export function ProfileForm() {
           label="Email Address"
           placeholder="Enter email"
           type="email"
-          value={formData.email}
-          onChange={(e) => handleChange("email", e.target.value)}
+          value={email}
           readOnly={true}
           className={INPUT_CLASSNAME}
         />
@@ -130,8 +95,7 @@ export function ProfileForm() {
           label="Phone Number"
           placeholder="Enter phone number"
           type="tel"
-          value={formData.phone}
-          onChange={(e) => handleChange("phone", e.target.value)}
+          value={phone}
           readOnly={true}
           className={INPUT_CLASSNAME}
         />
@@ -139,8 +103,7 @@ export function ProfileForm() {
         <AppInput
           label="Bio"
           placeholder="Enter bio"
-          value={formData.bio}
-          onChange={(e) => handleChange("bio", e.target.value)}
+          value={bio}
           readOnly={true}
           className={INPUT_CLASSNAME}
         />
@@ -149,8 +112,7 @@ export function ProfileForm() {
           label="LinkedIn"
           placeholder="Enter LinkedIn URL"
           type="url"
-          value={formData.linkedIn}
-          onChange={(e) => handleChange("linkedIn", e.target.value)}
+          value={linkedIn}
           readOnly={true}
           className={INPUT_CLASSNAME}
         />
@@ -159,8 +121,7 @@ export function ProfileForm() {
           label="Website"
           placeholder="Enter website URL"
           type="url"
-          value={formData.website}
-          onChange={(e) => handleChange("website", e.target.value)}
+          value={website}
           readOnly={true}
           className={INPUT_CLASSNAME}
         />

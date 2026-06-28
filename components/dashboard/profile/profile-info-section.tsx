@@ -7,6 +7,7 @@ import Image from "next/image";
 interface ProfileInfoSectionProps {
   name: string;
   email?: string;
+  avatarUrl?: string;
   popularity?: number;
   thumbsUp?: number;
   joinedDate?: string;
@@ -14,24 +15,33 @@ interface ProfileInfoSectionProps {
   userType?: "Admin" | "Instructor" | "Student";
 }
 export function ProfileInfoSection({
-  name = "Dr. Sarah Mitchell",
-  email = "sarah.mitchell@edu.com",
+  name,
+  email,
+  avatarUrl,
   popularity = 790,
   thumbsUp = 1456,
-  joinedDate = "Joined september 2025",
+  joinedDate,
   linkedInUrl = "#",
-  userType = "Admin",
+  userType = "Student",
 }: ProfileInfoSectionProps) {
+  // Derive initials from name for the avatar fallback
+  const initials = name
+    .split(" ")
+    .map((part) => part.charAt(0))
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+
   return (
     <div className="flex flex-col md:flex-row md:items-start gap-4 md:gap-6 p-4 bg-white">
       {/* Avatar */}
       <Avatar className="size-[100px] lg:size-[114px] border-2 border-white shadow-md -mt-15 md:mt-0 ml-4 md:ml-6 z-10 bg-white">
         <AvatarImage
-          src="https://randomuser.me/api/portraits/men/32.jpg"
-          alt="Dr. Sarah Mitchell"
+          src={avatarUrl || "https://randomuser.me/api/portraits/men/32.jpg"}
+          alt={name}
         />
         <AvatarFallback className="text-xl font-bold bg-gray-200 text-gray-600">
-          {name}
+          {initials}
         </AvatarFallback>
       </Avatar>
 
@@ -42,7 +52,9 @@ export function ProfileInfoSection({
             <h2 className="text-[20px] md:text-[22px] font-bold text-gray-900">
               {name}
             </h2>
-            <p className="text-[14px] text-gray-500 mt-0.5">{email}</p>
+            {email && (
+              <p className="text-[14px] text-gray-500 mt-0.5">{email}</p>
+            )}
 
             {/* Stats row */}
             <div className="flex items-center gap-4 mt-2">
@@ -72,15 +84,17 @@ export function ProfileInfoSection({
               </div>
             </div>
 
-            {/* Admin badge */}
+            {/* Role badge */}
             <span className="inline-block mt-2 px-2.5 py-0.5 text-[12px] font-semibold text-primary bg-primary/10 rounded-full">
               {userType}
             </span>
 
             {/* Joined date */}
-            <p className="text-[13px] text-gray-500 mt-2">
-              Joined {joinedDate}
-            </p>
+            {joinedDate && (
+              <p className="text-[13px] text-gray-500 mt-2">
+                Joined {joinedDate}
+              </p>
+            )}
 
             {/* LinkedIn icon */}
             <a

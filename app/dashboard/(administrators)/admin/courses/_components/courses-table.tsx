@@ -11,7 +11,7 @@ import {
 import { Plus, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { AdminDashboardButton } from "@/components/dashboard/admin-dashboard-button";
-import { AddCourseModal } from "./add-course-modal";
+import { AddCourseModal } from "@/components/modals/courses/add-course-modal";
 
 export const CoursesTable = () => {
   const [searchQuery, setSearchQuery] = React.useState("");
@@ -124,9 +124,9 @@ export const CoursesTable = () => {
         keyExtractor={(c) => c.id}
         selectable
       />
-      <AddCourseModal 
-        isOpen={addCourseOpen} 
-        onClose={() => setAddCourseOpen(false)} 
+      <AddCourseModal
+        isOpen={addCourseOpen}
+        onClose={() => setAddCourseOpen(false)}
       />
     </div>
   );

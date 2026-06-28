@@ -10,6 +10,8 @@ import Image from "next/image";
 import { useRouter, usePathname } from "next/navigation";
 import { BellDot } from "lucide-react";
 import { DropdownMenuContentProps } from "@radix-ui/react-dropdown-menu";
+import { useLogoutMutation } from "@/hooks/api/use-auth";
+import { useAuthStore } from "@/store/auth.store";
 
 export const DashboardUserDropDown = ({
   children,
@@ -26,6 +28,20 @@ export const DashboardUserDropDown = ({
 }) => {
   const router = useRouter();
   const pathname = usePathname();
+  const logoutMutation = useLogoutMutation();
+  const clearAuth = useAuthStore((state) => state.clearAuth);
+
+  const handleLogout = async () => {
+    // Attempt to hit the logout endpoint, and clear the auth store regardless of success
+    try {
+      await logoutMutation.mutateAsync({ refreshToken: "" });
+    } catch (error) {
+      console.error("Logout failed", error);
+    } finally {
+      clearAuth();
+      router.push("/auth");
+    }
+  };
 
   const profilePath = pathname.includes("/admin")
     ? "admin"
@@ -37,9 +53,7 @@ export const DashboardUserDropDown = ({
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        {children}
-      </DropdownMenuTrigger>
+      <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
       <DropdownMenuContent
         align={align}
         side={side}
@@ -70,7 +84,9 @@ export const DashboardUserDropDown = ({
             className="h-5 w-5 text-gray-700"
           />
           <button
-            onClick={() => router.push(`/dashboard/${profilePath}/profile/edit`)}
+            onClick={() =>
+              router.push(`/dashboard/${profilePath}/profile/edit`)
+            }
             className="flex w-full! h-full! cursor-pointer bg-transparent! flex-start! items-start"
           >
             My account
@@ -83,7 +99,10 @@ export const DashboardUserDropDown = ({
           />
           Notifications
         </DropdownMenuItem>
-        <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-sm font-medium text-red-500 hover:bg-white focus:bg-white hover:text-red-500 focus:text-red-500">
+        <DropdownMenuItem
+          onClick={handleLogout}
+          className="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-sm font-medium text-red-500 hover:bg-white focus:bg-white hover:text-red-500 focus:text-red-500"
+        >
           <Image
             src="/assets/icons/round-logout.svg"
             alt="Logout"

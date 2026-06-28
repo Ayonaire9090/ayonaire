@@ -197,11 +197,11 @@ export const dashboardData = {
       url: "/dashboard/instructor/quiz",
       icon: DashboardBulbIcon,
     },
-    {
-      title: "Assessments",
-      url: "/dashboard/instructor/assessments",
-      icon: DashboardAssesmentIcon,
-    },
+    // {
+    //   title: "Assessments",
+    //   url: "/dashboard/instructor/assessments",
+    //   icon: DashboardAssesmentIcon,
+    // },
     {
       title: "Students Management",
       url: "/dashboard/instructor/students-management",

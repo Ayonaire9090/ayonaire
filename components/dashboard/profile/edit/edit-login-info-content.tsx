@@ -4,9 +4,11 @@ import { useState } from "react";
 import { AppInput } from "@/components/ui/app-input";
 import { Button } from "@/components/ui/button";
 import { EDIT_INPUT_CLASSNAME } from "./edit-profile-input-styles";
+import { useAuthStore } from "@/store/auth.store";
 
 export function EditLoginInfoContent() {
-  const [email, setEmail] = useState("example@gmail.com");
+  const user = useAuthStore((state) => state.user);
+  const [email, setEmail] = useState(user?.email ?? "");
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");

@@ -76,3 +76,41 @@ export const mockAssignments: Assignment[] = [
     status: "Archived",
   },
 ];
+
+export type InstructorAssignmentStatus = "Graded" | "Late" | "Submitted";
+
+export interface InstructorAssignment {
+  id: string;
+  studentName: string;
+  studentAvatar?: string;
+  submittedFile: string;
+  submissionDate: string;
+  status: InstructorAssignmentStatus;
+}
+
+export const mockInstructorAssignments: InstructorAssignment[] = [
+  {
+    id: "ia1",
+    studentName: "Sarah Ahmed",
+    studentAvatar: "/assets/images/user1.png",
+    submittedFile: "Machine Learning. pdf",
+    submissionDate: "Mar 15, 2026",
+    status: "Graded",
+  },
+  {
+    id: "ia2",
+    studentName: "Sarah Ahmed",
+    studentAvatar: "/assets/images/user1.png",
+    submittedFile: "Machine Learning.docx",
+    submissionDate: "Mar 15, 2026",
+    status: "Late",
+  },
+  {
+    id: "ia3",
+    studentName: "Ahmed",
+    studentAvatar: "/assets/images/user2.png",
+    submittedFile: "Full Stack Development.pdf",
+    submissionDate: "Mar 15, 2026",
+    status: "Submitted",
+  },
+];

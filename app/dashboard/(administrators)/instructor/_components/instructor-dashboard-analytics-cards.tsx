@@ -14,7 +14,7 @@ import {
   NotebookPen,
 } from "lucide-react";
 
-const BasicAnalytics = [
+const BasicAnalytics: InstructorDashboardAnalyticsCardProps[] = [
   {
     heading: "Total Courses",
     title: "12",
@@ -45,7 +45,20 @@ const BasicAnalytics = [
   },
 ];
 
-export const InstructorDashboardAnalyticsCards = () => {
+interface InstructorDashboardAnalyticsCardsProps {
+  analytics?: typeof BasicAnalytics;
+  columns?:
+    | "grid-cols-1"
+    | "grid-cols-2"
+    | "grid-cols-3"
+    | "grid-cols-4"
+    | "grid-cols-5"
+    | "grid-cols-6";
+}
+export const InstructorDashboardAnalyticsCards = ({
+  analytics = BasicAnalytics,
+  columns = "grid-cols-4",
+}: InstructorDashboardAnalyticsCardsProps) => {
   return (
     <>
       {/* ── Mobile / Tablet: Embla carousel with peeking ── */}
@@ -58,7 +71,7 @@ export const InstructorDashboardAnalyticsCards = () => {
           className="w-full"
         >
           <CarouselContent className="-ml-3">
-            {BasicAnalytics.map((analytic, index) => (
+            {analytics.map((analytic, index) => (
               <CarouselItem
                 key={index}
                 // mobile: ~75% → 1 card + peek of 2nd
@@ -71,6 +84,7 @@ export const InstructorDashboardAnalyticsCards = () => {
                   icon={analytic.icon}
                   rate={analytic.rate}
                   description={analytic.description}
+                  iconBackground={analytic.iconBackground}
                 />
               </CarouselItem>
             ))}
@@ -79,8 +93,8 @@ export const InstructorDashboardAnalyticsCards = () => {
       </div>
 
       {/* ── Desktop: 4-column grid (unchanged) ── */}
-      <div className="hidden lg:grid grid-cols-4 gap-4">
-        {BasicAnalytics.map((analytic, index) => (
+      <div className={`hidden lg:grid ${columns} gap-4`}>
+        {analytics.map((analytic, index) => (
           <InstructorDashboardSectionFeatureCard
             key={index}
             heading={analytic.heading}
@@ -88,6 +102,7 @@ export const InstructorDashboardAnalyticsCards = () => {
             icon={analytic.icon}
             rate={analytic.rate}
             description={analytic.description}
+            iconBackground={analytic.iconBackground}
           />
         ))}
       </div>
@@ -95,18 +110,20 @@ export const InstructorDashboardAnalyticsCards = () => {
   );
 };
 
-interface InstructorDashboardAnalyticsCardProps {
+export interface InstructorDashboardAnalyticsCardProps {
   heading: string;
   title: string;
   icon: LucideIcon;
-  rate: string;
-  description: string;
+  iconBackground?: boolean;
+  rate?: string;
+  description?: string;
 }
 
 export const InstructorDashboardSectionFeatureCard = ({
   heading,
   title,
   icon: Icon,
+  iconBackground = false,
   rate,
   description,
 }: InstructorDashboardAnalyticsCardProps) => {
@@ -115,21 +132,27 @@ export const InstructorDashboardSectionFeatureCard = ({
       <div>
         <p className="flex justify-between items-center text-sm text-gray-500 pb-2">
           {heading}
-          <Icon className="size-10 text-[#F86432] bg-white rounded-lg p-2" />
+          {iconBackground ? (
+            <Icon className="size-10 text-[#F86432] bg-[#F86432]/10 rounded-lg p-2" />
+          ) : (
+            <Icon className="size-10 text-[#F86432] rounded-lg p-2" />
+          )}
         </p>
         <p className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
           {title}
         </p>
       </div>
-      <div className="flex items-start gap-1.5 text-sm pt-0!">
-        <Badge
-          variant="outline"
-          className="text-[#F86432] border-0! border-none! bg-[#F86432]/10 rounded-full!"
-        >
-          {rate}
-        </Badge>
-        <div className="text-muted-foreground">{description}</div>
-      </div>
+      {rate && description && (
+        <div className="flex items-start gap-1.5 text-sm pt-0!">
+          <Badge
+            variant="outline"
+            className="text-[#F86432] border-0! border-none! bg-[#F86432]/10 rounded-full!"
+          >
+            {rate}
+          </Badge>
+          <div className="text-muted-foreground">{description}</div>
+        </div>
+      )}
     </div>
   );
 };

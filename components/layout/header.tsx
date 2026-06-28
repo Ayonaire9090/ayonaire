@@ -11,8 +11,12 @@ import { AppActionButton } from "../app-action-button";
 import { MegaMenu } from "../app-mega-menu";
 import { MobileMenu } from "../app-mobile-menu";
 import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/store/auth.store";
+import { DashboardUserDropDown } from "@/components/dashboard/dashboard-user-dropdown";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export const Header = () => {
+  const { user, token } = useAuthStore();
   const [isMegaMenuOpen, setMegaMenuOpen] = useState(false);
   const [isMoreDropdownOpen, setMoreDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -165,25 +169,46 @@ export const Header = () => {
         </div>
         {/* Login and see bootcamps buttons */}
         <div className="hidden lg:flex items-center gap-4">
-          <AppActionButton
-            onClick={() => router.push("/auth")}
-            id="login"
-            className="py-6"
-            title="Login"
-            variant="outline"
-          />
-          <Link href="/get-started">
-            <AppActionButton
-              id="bootcamp"
-              variant="fading"
-              className="group py-6"
-            >
-              <p>See Bootcamps</p>
-              <span className="bg-white p-1 rounded group-hover:ml-2 transition-all ease-in-out duration-300">
-                <ArrowRight size={20} className="text-primary  rounded" />
-              </span>
-            </AppActionButton>
-          </Link>
+          {token && user ? (
+            <div className="flex items-center gap-4">
+              <Link href="/dashboard/student">
+                <AppActionButton
+                  id="dashboard"
+                  className="py-6"
+                  title="Dashboard"
+                  variant="outline"
+                />
+              </Link>
+              <DashboardUserDropDown>
+                <Avatar className="h-12 w-12 cursor-pointer hover:opacity-80 transition-opacity">
+                  <AvatarImage src={user.profile?.url} alt={user.name} className="object-cover" />
+                  <AvatarFallback>{user.name?.slice(0, 2).toUpperCase()}</AvatarFallback>
+                </Avatar>
+              </DashboardUserDropDown>
+            </div>
+          ) : (
+            <>
+              <AppActionButton
+                onClick={() => router.push("/auth")}
+                id="login"
+                className="py-6"
+                title="Login"
+                variant="outline"
+              />
+              <Link href="/get-started">
+                <AppActionButton
+                  id="bootcamp"
+                  variant="fading"
+                  className="group py-6"
+                >
+                  <p>See Bootcamps</p>
+                  <span className="bg-white p-1 rounded group-hover:ml-2 transition-all ease-in-out duration-300">
+                    <ArrowRight size={20} className="text-primary  rounded" />
+                  </span>
+                </AppActionButton>
+              </Link>
+            </>
+          )}
         </div>
         {/* Mobile Menu Button */}
         <button

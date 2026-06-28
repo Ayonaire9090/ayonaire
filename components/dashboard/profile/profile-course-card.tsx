@@ -1,10 +1,30 @@
 "use client";
 
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { ChevronDown } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
-type CourseStatus = "Completed" | "In Progress" | "Not Started";
+type CourseStatus =
+  | "Completed"
+  | "In Progress"
+  | "Not Started"
+  | "Draft"
+  | "Published";
+
+export type CourseAction = {
+  label: string;
+  onClick?: () => void;
+  isDestructive?: boolean;
+};
 
 interface ProfileCourseCardProps {
   imageSrc: string;
@@ -12,6 +32,8 @@ interface ProfileCourseCardProps {
   description: string;
   slug: string;
   status?: CourseStatus;
+  statusAsAction?: boolean;
+  actions?: CourseAction[];
 }
 
 const statusConfig: Record<
@@ -33,6 +55,16 @@ const statusConfig: Record<
     bgColor: "bg-gray-400",
     textColor: "text-white",
   },
+  Draft: {
+    label: "Draft",
+    bgColor: "bg-rose-500",
+    textColor: "text-white",
+  },
+  Published: {
+    label: "Published",
+    bgColor: "bg-[#22C55E]",
+    textColor: "text-white",
+  },
 };
 
 export const ProfileCourseCard = ({
@@ -41,6 +73,8 @@ export const ProfileCourseCard = ({
   description,
   slug,
   status = "Not Started",
+  statusAsAction = false,
+  actions = [],
 }: ProfileCourseCardProps) => {
   const currentStatus = statusConfig[status];
 
@@ -55,17 +89,58 @@ export const ProfileCourseCard = ({
           className="object-cover"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
-        {/* Status Badge */}
+        {/* Status Badge or Actions Menu */}
         <div className="absolute top-3 right-3">
-          <span
-            className={cn(
-              "px-3 py-1 rounded-full text-[12px] font-semibold",
-              currentStatus.bgColor,
-              currentStatus.textColor,
-            )}
-          >
-            {currentStatus.label}
-          </span>
+          {statusAsAction && actions.length > 0 ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button
+                  className={cn(
+                    "flex items-center gap-1.5 px-3 py-1 rounded-full text-[12px] font-semibold hover:opacity-90 transition-opacity focus:outline-none",
+                    currentStatus.bgColor,
+                    currentStatus.textColor,
+                  )}
+                >
+                  {currentStatus.label}
+                  <ChevronDown className="size-3.5" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                align="end"
+                sideOffset={8}
+                className="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] p-2 min-w-[140px] border-none"
+              >
+                {actions.map((action, index) => (
+                  <React.Fragment key={index}>
+                    <DropdownMenuItem
+                      onClick={action.onClick}
+                      className={cn(
+                        "cursor-pointer text-[15px] py-2 px-3 focus:bg-gray-50 rounded-xl transition-colors",
+                        action.isDestructive
+                          ? "text-red-500 focus:text-red-600"
+                          : "text-gray-600",
+                      )}
+                    >
+                      {action.label}
+                    </DropdownMenuItem>
+                    {index < actions.length - 1 && (
+                      <DropdownMenuSeparator className="bg-gray-100 my-1" />
+                    )}
+                  </React.Fragment>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <span
+              className={cn(
+                "px-3 py-1 rounded-full text-[12px] font-semibold",
+                currentStatus.bgColor,
+                currentStatus.textColor,
+              )}
+            >
+              {currentStatus.label}
+            </span>
+          )}
         </div>
       </div>
 

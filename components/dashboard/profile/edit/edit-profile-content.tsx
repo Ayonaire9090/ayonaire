@@ -1,51 +1,54 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AppInput } from "@/components/ui/app-input";
 import { Button } from "@/components/ui/button";
 import { EditProfileSubTabs } from "./edit-profile-sub-tabs";
 import { EDIT_INPUT_CLASSNAME } from "./edit-profile-input-styles";
+import { useAuthStore } from "@/store/auth.store";
+import { useEditProfileMutation } from "@/hooks/api/use-users";
+import { Loader2 } from "lucide-react";
 
 const profileSubTabs = ["Name", "Company", "Social"] as const;
 type ProfileSubTab = (typeof profileSubTabs)[number];
 
-/** Name form fields */
-function NameForm() {
-  const [firstName, setFirstName] = useState("Ayobami");
-  const [lastName, setLastName] = useState("Awosanya");
-  const [userName, setUserName] = useState("Awosanya");
-
+/** Name form fields — pre-populated from auth store */
+function NameForm({
+  fullName,
+  phoneNumber,
+  onNameChange,
+  onPhoneChange,
+}: {
+  fullName: string;
+  phoneNumber: string;
+  onNameChange: (value: string) => void;
+  onPhoneChange: (value: string) => void;
+}) {
   return (
     <div className="flex flex-col gap-6 mt-6">
       <AppInput
-        label="First Name"
-        placeholder="Enter first name"
-        value={firstName}
-        onChange={(e) => setFirstName(e.target.value)}
+        label="Full Name"
+        placeholder="Enter full name"
+        value={fullName}
+        onChange={(e) => onNameChange(e.target.value)}
         className={EDIT_INPUT_CLASSNAME}
       />
       <AppInput
-        label="Last Name"
-        placeholder="Enter last name"
-        value={lastName}
-        onChange={(e) => setLastName(e.target.value)}
-        className={EDIT_INPUT_CLASSNAME}
-      />
-      <AppInput
-        label="User Name"
-        placeholder="Enter user name"
-        value={userName}
-        onChange={(e) => setUserName(e.target.value)}
+        label="Phone Number"
+        placeholder="Enter phone number"
+        type="tel"
+        value={phoneNumber}
+        onChange={(e) => onPhoneChange(e.target.value)}
         className={EDIT_INPUT_CLASSNAME}
       />
     </div>
   );
 }
 
-/** Company form fields */
+/** Company form fields — placeholder for future API support */
 function CompanyForm() {
-  const [companyName, setCompanyName] = useState("Ayonaire Academy");
-  const [website, setWebsite] = useState("https://....");
+  const [companyName, setCompanyName] = useState("");
+  const [website, setWebsite] = useState("");
 
   return (
     <div className="flex flex-col gap-6 mt-6">
@@ -57,7 +60,7 @@ function CompanyForm() {
         className={EDIT_INPUT_CLASSNAME}
       />
       <AppInput
-        label="website"
+        label="Website"
         placeholder="Enter website URL"
         type="url"
         value={website}
@@ -68,16 +71,14 @@ function CompanyForm() {
   );
 }
 
-/** Social form fields */
+/** Social form fields — placeholder for future API support */
 function SocialForm() {
-  const [linkedin, setLinkedin] = useState("http://....");
-  const [instagram, setInstagram] = useState("https://....");
+  const [linkedin, setLinkedin] = useState("");
+  const [instagram, setInstagram] = useState("");
 
   return (
     <div className="flex flex-col gap-6 mt-6">
-      <p className="text-[14px] font-semibold text-gray-900">
-        Profile URL https://....
-      </p>
+      <p className="text-[14px] font-semibold text-gray-900">Profile URL</p>
       <AppInput
         label="Linkedin"
         placeholder="Enter LinkedIn URL"
@@ -107,6 +108,41 @@ const subTabTitleMap: Record<ProfileSubTab, string> = {
 
 export function EditProfileContent() {
   const [activeSubTab, setActiveSubTab] = useState<ProfileSubTab>("Name");
+  const user = useAuthStore((state) => state.user);
+  const editProfileMutation = useEditProfileMutation();
+
+  // Editable state, initialized from the store
+  const [fullName, setFullName] = useState(user?.name ?? "");
+  const [phoneNumber, setPhoneNumber] = useState(user?.phoneNumber ?? "");
+
+  // Re-sync when user data changes (e.g. after profile fetch)
+  useEffect(() => {
+    if (user) {
+      setFullName(user.name ?? "");
+      setPhoneNumber(user.phoneNumber ?? "");
+    }
+  }, [user]);
+
+  const handleSave = () => {
+    // Only the "Name" tab has API-backed fields right now
+    if (activeSubTab !== "Name") return;
+
+    const formData = new FormData();
+    if (fullName !== user?.name) {
+      formData.append("name", fullName);
+    }
+    if (phoneNumber !== user?.phoneNumber) {
+      formData.append("phoneNumber", phoneNumber);
+    }
+
+    // Only call API if something changed
+    if (
+      fullName !== user?.name ||
+      phoneNumber !== (user?.phoneNumber ?? "")
+    ) {
+      editProfileMutation.mutate(formData);
+    }
+  };
 
   return (
     <div>
@@ -123,13 +159,27 @@ export function EditProfileContent() {
       />
 
       {/* Form content */}
-      {activeSubTab === "Name" && <NameForm />}
+      {activeSubTab === "Name" && (
+        <NameForm
+          fullName={fullName}
+          phoneNumber={phoneNumber}
+          onNameChange={setFullName}
+          onPhoneChange={setPhoneNumber}
+        />
+      )}
       {activeSubTab === "Company" && <CompanyForm />}
       {activeSubTab === "Social" && <SocialForm />}
 
       {/* Save button */}
       <div className="mt-8">
-        <Button className="bg-primary hover:bg-primary/90 text-white font-semibold px-6 h-10 rounded-lg text-[14px]">
+        <Button
+          onClick={handleSave}
+          disabled={editProfileMutation.isPending}
+          className="bg-primary hover:bg-primary/90 text-white font-semibold px-6 h-10 rounded-lg text-[14px]"
+        >
+          {editProfileMutation.isPending && (
+            <Loader2 className="size-4 mr-2 animate-spin" />
+          )}
           Save Changes
         </Button>
       </div>

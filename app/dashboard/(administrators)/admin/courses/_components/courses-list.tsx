@@ -7,7 +7,7 @@ import { CourseStatusBadge, CourseActions, mockCourses } from "./courses-data";
 import { Input } from "@/components/ui/input";
 import { AdminDashboardButton } from "@/components/dashboard/admin-dashboard-button";
 import { Plus } from "lucide-react";
-import { AddCourseModal } from "./add-course-modal";
+import { AddCourseModal } from "@/components/modals/courses/add-course-modal";
 
 export const CoursesList = () => {
   const [searchQuery, setSearchQuery] = React.useState("");
@@ -104,9 +104,9 @@ export const CoursesList = () => {
           onClick={() => setAddCourseOpen(true)}
         />
       </div>
-      <AddCourseModal 
-        isOpen={addCourseOpen} 
-        onClose={() => setAddCourseOpen(false)} 
+      <AddCourseModal
+        isOpen={addCourseOpen}
+        onClose={() => setAddCourseOpen(false)}
       />
     </div>
   );

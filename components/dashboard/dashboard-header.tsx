@@ -12,6 +12,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { DashboardUserDropDown } from "./dashboard-user-dropdown";
+import { useAuthStore } from "@/store/auth.store";
 
 interface DashboardHeaderProps {
   title?: React.ReactNode;
@@ -26,6 +27,7 @@ export function DashboardHeader({
 }: DashboardHeaderProps) {
   const router = useRouter();
   const pathname = usePathname();
+  const { user } = useAuthStore();
 
   // Get the profile path based on route (update this later to be session based):
   const profilePath = pathname.includes("/admin")
@@ -73,10 +75,10 @@ export function DashboardHeader({
             <div className="cursor-pointer">
               <Avatar className="h-12 w-12 border-2 border-orange-200 shrink-0">
                 <AvatarImage
-                  src={dashboardData.user.avatar}
-                  alt={dashboardData.user.name}
+                  src={user?.profile?.url || dashboardData.user.avatar}
+                  alt={user?.name || dashboardData.user.name}
                 />
-                <AvatarFallback>AY</AvatarFallback>
+                <AvatarFallback>{user?.name ? user.name.slice(0, 2).toUpperCase() : "AY"}</AvatarFallback>
               </Avatar>
             </div>
           </DashboardUserDropDown>
@@ -127,17 +129,17 @@ export function DashboardHeader({
               <div className="flex items-center gap-3 ml-2 cursor-pointer bg-white hover:bg-white/80 p-1.5 rounded-full transition-colors">
                 <Avatar className="h-11 w-11 border border-gray-200">
                   <AvatarImage
-                    src={dashboardData.user.avatar}
-                    alt={dashboardData.user.name}
+                    src={user?.profile?.url || dashboardData.user.avatar}
+                    alt={user?.name || dashboardData.user.name}
                   />
-                  <AvatarFallback>AY</AvatarFallback>
+                  <AvatarFallback>{user?.name ? user.name.slice(0, 2).toUpperCase() : "AY"}</AvatarFallback>
                 </Avatar>
                 <div className="hidden lg:grid flex-1 text-left text-sm leading-tight pr-2">
                   <span className="truncate font-semibold text-gray-900">
-                    {dashboardData.user.name}
+                    {user?.name || dashboardData.user.name}
                   </span>
                   <span className="truncate text-xs text-gray-500">
-                    {dashboardData.user.email}
+                    {user?.email || dashboardData.user.email}
                   </span>
                 </div>
                 <IconChevronDown className="h-4 w-4 text-gray-500 hidden lg:block mr-2" />

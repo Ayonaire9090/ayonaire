@@ -1,8 +1,8 @@
+import { AssignmentsInfoAnalytics } from "@/components/dashboard/assignment/assignments-info-analytics";
+import { AssignmentsList } from "@/components/dashboard/assignment/assignments-list";
+import { AssignmentsPageHeader } from "@/components/dashboard/assignment/assignments-page-header";
+import { AssignmentsTable } from "@/components/dashboard/assignment/assignments-table";
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
-import { AssignmentsPageHeader } from "./_components/assignments-page-header";
-import { AssignmentsInfoAnalytics } from "./_components/assignments-info-analytics";
-import { AssignmentsTable } from "./_components/assignments-table";
-import { AssignmentsList } from "./_components/assignments-list";
 import { ChevronRight } from "lucide-react";
 
 export default function AdminAssignmentsPage() {

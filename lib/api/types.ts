@@ -22,14 +22,34 @@ export interface UserProfile {
   _id: string;
   name: string;
   email: string;
+  password?: string;
   phoneNumber?: string;
   profile?: {
     url: string;
     publicId: string;
   };
+  isEmailVerified?: boolean;
   role: "admin" | "instructor" | "student" | "user";
-  status: string;
+  status: "active" | "inactive" | "suspended";
   cohorts?: string[];
+  loginHistory?: [
+    {
+      ip: string;
+      userAgent: string;
+      loggedInAt: string;
+    },
+  ];
+  activity?: [
+    {
+      action: string;
+      performedAt: string;
+      meta: {};
+    },
+  ];
+  verificationToken?: string;
+  verificationTokenExpiresAt?: string;
+  resetPasswordToken?: string;
+  resetPasswordTokenExpiresAt?: string;
   createdAt: string;
   updatedAt: string;
   [key: string]: any; // Allow other properties for flexibility

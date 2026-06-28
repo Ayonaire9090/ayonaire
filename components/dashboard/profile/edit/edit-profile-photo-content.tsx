@@ -3,23 +3,50 @@
 import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { EditProfileSubTabs } from "./edit-profile-sub-tabs";
-import { Upload, Camera, Trash2, ImageIcon } from "lucide-react";
+import { Upload, Camera, Trash2 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useAuthStore } from "@/store/auth.store";
+import { useAddProfilePictureMutation } from "@/hooks/api/use-users";
+import { Loader2 } from "lucide-react";
 
 const photoSubTabs = ["Upload", "Take Photo"] as const;
 type PhotoSubTab = (typeof photoSubTabs)[number];
 
 /** Upload photo form */
 function UploadPhotoForm() {
+  const user = useAuthStore((state) => state.user);
+  const addProfilePictureMutation = useAddProfilePictureMutation();
   const [preview, setPreview] = useState<string | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const currentAvatarUrl = user?.profile?.url;
+  const initials = (user?.name ?? "")
+    .split(" ")
+    .map((part) => part.charAt(0))
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      setSelectedFile(file);
       const url = URL.createObjectURL(file);
       setPreview(url);
     }
+  };
+
+  const handleSave = () => {
+    if (!selectedFile) return;
+    const formData = new FormData();
+    formData.append("profile", selectedFile);
+    addProfilePictureMutation.mutate(formData, {
+      onSuccess: () => {
+        setSelectedFile(null);
+        setPreview(null);
+      },
+    });
   };
 
   return (
@@ -28,11 +55,11 @@ function UploadPhotoForm() {
       <div className="flex items-center gap-4 mb-6">
         <Avatar className="size-20 border-2 border-gray-200">
           <AvatarImage
-            src={preview || "https://randomuser.me/api/portraits/men/32.jpg"}
+            src={preview || currentAvatarUrl || "https://randomuser.me/api/portraits/men/32.jpg"}
             alt="Profile photo"
           />
           <AvatarFallback className="text-xl font-bold bg-gray-200 text-gray-600">
-            SM
+            {initials || "U"}
           </AvatarFallback>
         </Avatar>
         <div>
@@ -69,7 +96,14 @@ function UploadPhotoForm() {
 
       {/* Save button */}
       <div className="mt-6">
-        <Button className="bg-primary hover:bg-primary/90 text-white font-semibold px-6 h-10 rounded-lg text-[14px]">
+        <Button
+          onClick={handleSave}
+          disabled={!selectedFile || addProfilePictureMutation.isPending}
+          className="bg-primary hover:bg-primary/90 text-white font-semibold px-6 h-10 rounded-lg text-[14px]"
+        >
+          {addProfilePictureMutation.isPending && (
+            <Loader2 className="size-4 mr-2 animate-spin" />
+          )}
           Save Changes
         </Button>
       </div>

@@ -21,6 +21,8 @@ import {
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { AppLogo } from "@/components/app-logo";
+import { useAuthStore } from "@/store/auth.store";
+import { DashboardUserDropDown } from "@/components/dashboard/dashboard-user-dropdown";
 
 const headerNav = [
   { title: "Feed", url: "/dashboard/student/feed", icon: LayoutTemplate },
@@ -70,6 +72,7 @@ export const StudentDashboardHeader = ({
 }) => {
   const router = useRouter();
   const pathname = usePathname();
+  const { user } = useAuthStore();
 
   const isActive = (url: string) => {
     return pathname.startsWith(url);
@@ -161,14 +164,16 @@ export const StudentDashboardHeader = ({
           </span>
         </button>
 
-        <Avatar className="h-12 w-12 border-2 border-transparent">
-          <AvatarImage
-            src={dashboardData.user.avatar}
-            alt={dashboardData.user.name}
-            className="object-cover"
-          />
-          <AvatarFallback>AY</AvatarFallback>
-        </Avatar>
+        <DashboardUserDropDown>
+          <Avatar className="h-12 w-12 border-2 border-transparent cursor-pointer hover:opacity-80 transition-opacity">
+            <AvatarImage
+              src={user?.profile?.url || dashboardData.user.avatar}
+              alt={user?.name || dashboardData.user.name}
+              className="object-cover"
+            />
+            <AvatarFallback>{user?.name ? user.name.slice(0, 2).toUpperCase() : "AY"}</AvatarFallback>
+          </Avatar>
+        </DashboardUserDropDown>
       </div>
     </header>
   );
