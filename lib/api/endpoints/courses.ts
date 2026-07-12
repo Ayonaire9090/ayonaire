@@ -1,6 +1,24 @@
 import { apiClient } from "../client";
 import { ApiResponse } from "../types";
 
+// Shape returned by the backend for a single course.
+// NOTE: field names are a best-effort guess based on `CreateCoursePayload` below
+// and the conventions used by `workshopsApi`/`instructorApi`. Confirm against the
+// real `/api/v1/course/all` response and adjust once the backend team confirms it.
+export interface Course {
+  _id: string;
+  title: string;
+  description?: string;
+  category: string | { _id: string; title: string };
+  instructor?: string | { _id: string; name: string };
+  price?: number;
+  courseLevel?: string;
+  status?: string;
+  thumbnail?: string;
+  enrollmentCount?: number;
+  createdAt?: string;
+}
+
 export interface CreateCategoryPayload {
   title: string;
 }
@@ -50,6 +68,28 @@ export const coursesApi = {
     apiClient<ApiResponse>("/api/v1/course/assign", {
       method: "PUT",
       body: JSON.stringify(payload),
+      requireAuth: true,
+    }),
+
+  // NOTE: no list/detail endpoint existed before this change — path guessed to
+  // follow the same `/api/v1/course/<action>` convention as create/edit/assign.
+  // Confirm with the backend team and update if the real path differs.
+  getAll: (page?: number, limit?: number) => {
+    const queryParams = new URLSearchParams();
+    if (page) queryParams.append("page", page.toString());
+    if (limit) queryParams.append("limit", limit.toString());
+
+    const queryString = queryParams.toString() ? `?${queryParams.toString()}` : "";
+
+    return apiClient<ApiResponse<Course[]>>(`/api/v1/course/all${queryString}`, {
+      method: "GET",
+      requireAuth: true,
+    });
+  },
+
+  getById: (courseId: string) =>
+    apiClient<ApiResponse<Course>>(`/api/v1/course/${courseId}`, {
+      method: "GET",
       requireAuth: true,
     }),
 };

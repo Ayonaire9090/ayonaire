@@ -1,18 +1,9 @@
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
-import { StatsSummary } from "../../../../../components/dashboard/stats-summary";
 import { CoursesTable } from "./_components/courses-table";
 import { CoursesList } from "./_components/courses-list";
+import { CoursesSummary } from "./_components/courses-summary";
 
-const mockSummaryData = [
-  { title: "All", number: "44" },
-  { title: "Active", number: "20" },
-  { title: "Pending Cancellation", number: "1" },
-  { title: "Pending Payment", number: "3" },
-  { title: "On Hold", number: "4" },
-  { title: "Cancelled", number: "16" },
-];
-
-export default async function AdminCoursesPage() {
+export default function AdminCoursesPage() {
   return (
     <>
       <DashboardHeader
@@ -20,7 +11,7 @@ export default async function AdminCoursesPage() {
         subTitle="Manage course content, pricing, and availability"
       />
 
-      <StatsSummary data={mockSummaryData} />
+      <CoursesSummary />
 
       {/* For Desktop */}
       <CoursesTable />

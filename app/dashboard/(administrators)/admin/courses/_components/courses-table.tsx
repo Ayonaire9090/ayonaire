@@ -6,16 +6,20 @@ import {
   CourseStatusBadge,
   CourseActions,
   CourseData,
-  mockCourses,
+  mapCourseToCourseData,
 } from "./courses-data";
 import { Plus, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { AdminDashboardButton } from "@/components/dashboard/admin-dashboard-button";
 import { AddCourseModal } from "@/components/modals/courses/add-course-modal";
+import { useGetCourses } from "@/hooks/api/use-courses";
 
 export const CoursesTable = () => {
   const [searchQuery, setSearchQuery] = React.useState("");
   const [addCourseOpen, setAddCourseOpen] = React.useState(false);
+
+  const { data, isLoading, isError } = useGetCourses();
+  const courses: CourseData[] = (data?.data ?? []).map(mapCourseToCourseData);
 
   const tableColumns: ColumnDef<CourseData>[] = [
     {
@@ -76,7 +80,7 @@ export const CoursesTable = () => {
       header: <div className="text-right">Action</div>,
       headerClassName: "pr-6",
       className: "pr-6",
-      cell: (course) => <CourseActions showTrash={course.id === "6"} />,
+      cell: (course) => <CourseActions />,
     },
   ];
 
@@ -113,17 +117,31 @@ export const CoursesTable = () => {
           </div>
         </div>
       </div>
-      <DataTable
-        data={mockCourses.filter(
-          (course) =>
-            course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            course.courseId.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            course.instructor.toLowerCase().includes(searchQuery.toLowerCase()),
-        )}
-        columns={tableColumns}
-        keyExtractor={(c) => c.id}
-        selectable
-      />
+      {isLoading ? (
+        <div className="flex items-center justify-center py-16">
+          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+        </div>
+      ) : isError ? (
+        <div className="flex items-center justify-center py-16 text-[15px] text-red-500">
+          Failed to load courses. Please try again.
+        </div>
+      ) : courses.length === 0 ? (
+        <div className="flex items-center justify-center py-16 text-[15px] text-gray-500">
+          No courses found.
+        </div>
+      ) : (
+        <DataTable
+          data={courses.filter(
+            (course) =>
+              course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+              course.courseId.toLowerCase().includes(searchQuery.toLowerCase()) ||
+              course.instructor.toLowerCase().includes(searchQuery.toLowerCase()),
+          )}
+          columns={tableColumns}
+          keyExtractor={(c) => c.id}
+          selectable
+        />
+      )}
       <AddCourseModal
         isOpen={addCourseOpen}
         onClose={() => setAddCourseOpen(false)}

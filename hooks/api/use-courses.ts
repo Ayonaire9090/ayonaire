@@ -1,12 +1,27 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { 
-  coursesApi, 
-  CreateCategoryPayload, 
-  CreateCoursePayload, 
-  EditCoursePayload, 
-  AssignInstructorCoursePayload 
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  coursesApi,
+  CreateCategoryPayload,
+  CreateCoursePayload,
+  EditCoursePayload,
+  AssignInstructorCoursePayload
 } from "@/lib/api/endpoints/courses";
 import { queryKeys } from "@/lib/api/query-keys";
+
+export const useGetCourses = (page?: number, limit?: number) => {
+  return useQuery({
+    queryKey: [...queryKeys.courses.all, "list", { page, limit }] as const,
+    queryFn: () => coursesApi.getAll(page, limit),
+  });
+};
+
+export const useGetCourseById = (courseId: string) => {
+  return useQuery({
+    queryKey: queryKeys.courses.detail(courseId),
+    queryFn: () => coursesApi.getById(courseId),
+    enabled: !!courseId,
+  });
+};
 
 export const useCreateCategoryMutation = () => {
   const queryClient = useQueryClient();

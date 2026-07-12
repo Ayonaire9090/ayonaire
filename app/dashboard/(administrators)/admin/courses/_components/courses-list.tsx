@@ -3,15 +3,23 @@
 import React from "react";
 import { DataList } from "@/components/ui/data-list";
 import { Search, User } from "lucide-react";
-import { CourseStatusBadge, CourseActions, mockCourses } from "./courses-data";
+import {
+  CourseStatusBadge,
+  CourseActions,
+  mapCourseToCourseData,
+} from "./courses-data";
 import { Input } from "@/components/ui/input";
 import { AdminDashboardButton } from "@/components/dashboard/admin-dashboard-button";
 import { Plus } from "lucide-react";
 import { AddCourseModal } from "@/components/modals/courses/add-course-modal";
+import { useGetCourses } from "@/hooks/api/use-courses";
 
 export const CoursesList = () => {
   const [searchQuery, setSearchQuery] = React.useState("");
   const [addCourseOpen, setAddCourseOpen] = React.useState(false);
+
+  const { data, isLoading, isError } = useGetCourses();
+  const courses = (data?.data ?? []).map(mapCourseToCourseData);
 
   return (
     <div className="md:hidden mt-2 bg-white rounded-xl p-2 lg:p-4 relative">
@@ -38,8 +46,21 @@ export const CoursesList = () => {
           </div>
         </div>
       </div>
+      {isLoading ? (
+        <div className="flex items-center justify-center py-16">
+          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+        </div>
+      ) : isError ? (
+        <div className="flex items-center justify-center py-16 text-[15px] text-red-500">
+          Failed to load courses. Please try again.
+        </div>
+      ) : courses.length === 0 ? (
+        <div className="flex items-center justify-center py-16 text-[15px] text-gray-500">
+          No courses found.
+        </div>
+      ) : (
       <DataList
-        data={mockCourses.filter(
+        data={courses.filter(
           (course) =>
             course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
             course.courseId.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -97,6 +118,7 @@ export const CoursesList = () => {
           </div>
         )}
       />
+      )}
       {/* Add new Course Mobile Only */}
       <div className="md:hidden fixed flex justify-center items-center right-3 top-[50%] translate-y-[-50%] z-90">
         <AdminDashboardButton
