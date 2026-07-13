@@ -1,60 +1,44 @@
-export type QuizType = "Quiz" | "Assignment" | "Exam";
-export type QuizStatus = "Attempt Now" | "Submitted" | "Upcoming" | "Completed" | "Overdue";
+import { QuizRecord } from "@/lib/api/endpoints/quiz";
 
-export interface Quiz {
+export type QuizType = "Quiz" | "Assignment" | "Exam";
+
+export interface StudentQuiz {
   id: string;
   title: string;
   type: QuizType;
   course: string;
-  marks: number;
+  marks: string;
   dueDate: string;
-  status: QuizStatus;
+  status: string;
 }
 
-export const mockQuiz: Quiz[] = [
-  {
-    id: "q1",
-    title: "Python Quiz 1",
+// Enrollment can only be verified when module.course is populated. If the
+// backend returns module as a bare id string, we can't confirm the student
+// is enrolled, so the quiz is excluded rather than shown unverified.
+export function isEnrolledQuiz(
+  quiz: QuizRecord,
+  enrolledCourseIds: Set<string>,
+): boolean {
+  const moduleObj = typeof quiz.module === "object" ? quiz.module : undefined;
+  const courseId = moduleObj?.course?._id;
+  if (!courseId) return false;
+  return enrolledCourseIds.has(courseId);
+}
+
+// marks/dueDate/status have no known backend source yet (no marks field on
+// QuizRecord, no due-date field, no per-student submission-status endpoint)
+// so they fall back to "-"/"Available" rather than guessed values.
+export function mapQuizRecordToStudentQuiz(quiz: QuizRecord): StudentQuiz {
+  const moduleObj = typeof quiz.module === "object" ? quiz.module : undefined;
+  const course = moduleObj?.course?.title ?? "Uncategorized";
+
+  return {
+    id: quiz._id,
+    title: quiz.title,
     type: "Quiz",
-    course: "Data Science",
-    marks: 20,
-    dueDate: "Mar 8, 2026",
-    status: "Attempt Now",
-  },
-  {
-    id: "q2",
-    title: "Data Science Assignment",
-    type: "Assignment",
-    course: "AI Automation",
-    marks: 50,
-    dueDate: "Mar 10, 2026",
-    status: "Submitted",
-  },
-  {
-    id: "q3",
-    title: "Machine Learning Midterm",
-    type: "Exam",
-    course: "Data Science",
-    marks: 100,
-    dueDate: "Mar 15, 2026",
-    status: "Upcoming",
-  },
-  {
-    id: "q4",
-    title: "Python Basics Quiz",
-    type: "Quiz",
-    course: "AI Automation",
-    marks: 15,
-    dueDate: "Feb 25, 2026",
-    status: "Completed",
-  },
-  {
-    id: "q5",
-    title: "Neural Networks Project",
-    type: "Assignment",
-    course: "Data Science",
-    marks: 100,
-    dueDate: "Mar 5, 2026",
-    status: "Overdue",
-  },
-];
+    course,
+    marks: "-",
+    dueDate: "-",
+    status: "Available",
+  };
+}

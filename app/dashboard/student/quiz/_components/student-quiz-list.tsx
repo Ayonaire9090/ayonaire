@@ -2,15 +2,20 @@
 
 import React from "react";
 import { DataList } from "@/components/ui/data-list";
-import { mockQuiz } from "./student-quiz-data";
+import {
+  isEnrolledQuiz,
+  mapQuizRecordToStudentQuiz,
+} from "./student-quiz-data";
 import { StudentQuizActions } from "./student-quiz-actions";
 import { Checkbox } from "@/components/ui/checkbox";
 import { StudentQuizFilters } from "./student-quiz-filters";
 import { Download } from "lucide-react";
+import { useGetQuizzes } from "@/hooks/api/use-quiz";
+import { useGetEnrolledCourses } from "@/hooks/api/use-enrollment";
 
 const getStatusStyle = (status: string) => {
   switch (status) {
-    case "Attempt Now":
+    case "Available":
       return "bg-[#FFF2E5] text-[#F97316]"; // Orange
     case "Submitted":
       return "bg-[#F3E8FF] text-[#A855F7]"; // Purple
@@ -39,12 +44,43 @@ const getTypeStyle = (type: string) => {
 };
 
 export const StudentQuizList = () => {
+  const { data: quizzesData, isLoading: quizzesLoading, isError: quizzesError } = useGetQuizzes();
+  const { data: enrollmentData, isLoading: enrollmentLoading, isError: enrollmentError } = useGetEnrolledCourses();
+
+  const isLoading = quizzesLoading || enrollmentLoading;
+  const isError = quizzesError || enrollmentError;
+
+  const enrolledCourseIds = new Set(
+    (enrollmentData?.enrollments ?? [])
+      .map((enrollment) =>
+        typeof enrollment.course === "string" ? enrollment.course : enrollment.course?._id,
+      )
+      .filter((id): id is string => !!id),
+  );
+
+  const quizzes = (quizzesData?.data ?? [])
+    .filter((quiz) => isEnrolledQuiz(quiz, enrolledCourseIds))
+    .map(mapQuizRecordToStudentQuiz);
+
   return (
     <>
       <StudentQuizFilters />
       <div className="w-full bg-white p-4 rounded-xl">
+        {isLoading ? (
+          <div className="flex items-center justify-center py-16">
+            <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+          </div>
+        ) : isError ? (
+          <div className="flex items-center justify-center py-16 text-[15px] text-red-500">
+            Failed to load quizzes. Please try again.
+          </div>
+        ) : quizzes.length === 0 ? (
+          <div className="flex items-center justify-center py-16 text-[15px] text-gray-500">
+            No quizzes found.
+          </div>
+        ) : (
         <DataList
-          data={mockQuiz}
+          data={quizzes}
           keyExtractor={(item) => item.id}
           footerContent={
             <div className="flex gap-4">
@@ -116,6 +152,7 @@ export const StudentQuizList = () => {
             );
           }}
         />
+        )}
       </div>
     </>
   );
