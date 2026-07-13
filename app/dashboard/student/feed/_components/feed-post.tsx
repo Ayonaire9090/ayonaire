@@ -6,6 +6,7 @@ import { FeedWriteComment } from "./feed-write-comment";
 import { PostOption } from "./feed-post-actions";
 
 export interface FeedPostProps {
+  feedId?: string;
   authorName?: string;
   badge?: React.ReactNode;
   authorSubtitle?: string;
@@ -20,9 +21,13 @@ export interface FeedPostProps {
   pollTotalVotes?: string;
   postOptions?: PostOption[];
   onReportPost?: () => void;
+  likesCount?: number;
+  commentsCount?: number;
+  isLikedByMe?: boolean;
 }
 
 export const FeedPost = ({
+  feedId,
   authorName,
   badge,
   authorSubtitle,
@@ -37,6 +42,9 @@ export const FeedPost = ({
   pollTotalVotes,
   postOptions,
   onReportPost,
+  likesCount,
+  commentsCount,
+  isLikedByMe,
 }: FeedPostProps) => {
   return (
     <div className="bg-white lg:rounded-2xl border border-gray-200/80 p-4 sm:p-6 flex flex-col w-full">
@@ -65,14 +73,19 @@ export const FeedPost = ({
         />
       )}
 
-      {/* Interaction Footer (Likes, Comments, Views) */}
+      {/* Interaction Footer (Likes, Comments) */}
       <div className="mt-4">
-        <FeedInteractPost />
+        <FeedInteractPost
+          feedId={feedId}
+          likes={likesCount}
+          comments={commentsCount}
+          isLikedByMe={isLikedByMe}
+        />
       </div>
 
       {/* Comment Input */}
       <div className="mt-4">
-        <FeedWriteComment />
+        <FeedWriteComment feedId={feedId} />
       </div>
     </div>
   );
