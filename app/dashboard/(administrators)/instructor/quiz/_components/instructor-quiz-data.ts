@@ -1,3 +1,5 @@
+import { QuizRecord } from "@/lib/api/endpoints/quiz";
+
 export interface InstructorQuiz {
   id: string;
   title: string;
@@ -7,37 +9,28 @@ export interface InstructorQuiz {
   attempts: number;
 }
 
-export const INSTRUCTOR_QUIZZES: InstructorQuiz[] = [
-  {
-    id: "1",
-    title: "Midterm Examination",
-    course: "Computer Science 101",
-    dueDate: "Oct 24, 2023",
-    questions: 25,
-    attempts: 142,
-  },
-  {
-    id: "2",
-    title: "Weekly Pop Quiz #4",
-    course: "AI Automation",
-    dueDate: "Oct 28, 2023",
-    questions: 10,
-    attempts: 89,
-  },
-  {
-    id: "3",
-    title: "Final Assessment Part A",
-    course: "UX Design Principles",
-    dueDate: "Nov 15, 2023",
-    questions: 50,
-    attempts: 210,
-  },
-  {
-    id: "4",
-    title: "Entrance Leveling Test",
-    course: "Intro to Python",
-    dueDate: "Dec 01, 2023",
-    questions: 15,
-    attempts: 305,
-  },
-];
+export function isOwnQuiz(quiz: QuizRecord, instructorId?: string): boolean {
+  if (!instructorId) return false;
+  const createdBy =
+    typeof quiz.createdBy === "string" ? quiz.createdBy : quiz.createdBy?._id;
+  return createdBy === instructorId;
+}
+
+// dueDate/attempts have no known backend source yet (no due-date field on
+// QuizRecord, no results/analytics endpoint) so they fall back to "-"/0
+// rather than guessed values.
+export function mapQuizRecordToInstructorQuiz(
+  quiz: QuizRecord,
+): InstructorQuiz {
+  const moduleObj = typeof quiz.module === "object" ? quiz.module : undefined;
+  const course = moduleObj?.course?.title ?? "Uncategorized";
+
+  return {
+    id: quiz._id,
+    title: quiz.title,
+    course,
+    dueDate: "-",
+    questions: quiz.questions?.length ?? 0,
+    attempts: 0,
+  };
+}

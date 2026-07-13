@@ -2,7 +2,11 @@
 
 import React from "react";
 import { DataTable, ColumnDef } from "@/components/ui/data-table";
-import { INSTRUCTOR_QUIZZES, InstructorQuiz } from "./instructor-quiz-data";
+import {
+  InstructorQuiz,
+  isOwnQuiz,
+  mapQuizRecordToInstructorQuiz,
+} from "./instructor-quiz-data";
 import { MoreVertical, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,6 +15,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useGetQuizzes } from "@/hooks/api/use-quiz";
+import { useAuthStore } from "@/store/auth.store";
 
 const getPillColor = (questions: number) => {
   if (questions === 25) return "bg-[#F3E8FF] text-[#A855F7]";
@@ -20,6 +26,12 @@ const getPillColor = (questions: number) => {
 };
 
 export const InstructorQuizTable = () => {
+  const user = useAuthStore((state) => state.user);
+  const { data, isLoading, isError } = useGetQuizzes();
+  const quizzes: InstructorQuiz[] = (data?.data ?? [])
+    .filter((quiz) => isOwnQuiz(quiz, user?._id))
+    .map(mapQuizRecordToInstructorQuiz);
+
   const columns: ColumnDef<InstructorQuiz>[] = [
     {
       key: "title",
@@ -110,13 +122,27 @@ export const InstructorQuizTable = () => {
 
   return (
     <div className="bg-white rounded-xl p-4">
-      <DataTable
-        data={INSTRUCTOR_QUIZZES}
-        columns={columns}
-        keyExtractor={(item) => item.id}
-        selectable={true}
-        footerContent={footerContent}
-      />
+      {isLoading ? (
+        <div className="flex items-center justify-center py-16">
+          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+        </div>
+      ) : isError ? (
+        <div className="flex items-center justify-center py-16 text-[15px] text-red-500">
+          Failed to load quizzes. Please try again.
+        </div>
+      ) : quizzes.length === 0 ? (
+        <div className="flex items-center justify-center py-16 text-[15px] text-gray-500">
+          No quizzes found.
+        </div>
+      ) : (
+        <DataTable
+          data={quizzes}
+          columns={columns}
+          keyExtractor={(item) => item.id}
+          selectable={true}
+          footerContent={footerContent}
+        />
+      )}
     </div>
   );
 };
