@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-import { Mail, FileText, Link2, AlertCircle, Upload } from "lucide-react";
+import React, { useRef, useState } from "react";
+import { Mail, FileText, Link2, AlertCircle, Upload, X } from "lucide-react";
 import { AppSelect } from "@/components/ui/app-select";
 import { AppCheck } from "@/components/ui/app-check";
 import { AppToggle } from "@/components/ui/app-toggle";
@@ -11,6 +11,7 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
+import { useGetCourses } from "@/hooks/api/use-courses";
 
 const bulkOptions = [
   {
@@ -33,19 +34,52 @@ const bulkOptions = [
   },
 ] as const;
 
-export function BulkAddForm() {
-  // Bulk Form States
-  const [bulkOption, setBulkOption] = useState<"email" | "csv" | "link">(
-    "email",
-  );
+export interface BulkAddFormProps {
+  bulkOption: "email" | "csv" | "link";
+  onBulkOptionChange: (option: "email" | "csv" | "link") => void;
+  emailsText: string;
+  onEmailsTextChange: (text: string) => void;
+  courseId: string;
+  onCourseIdChange: (courseId: string) => void;
+  csvFile: File | null;
+  onCsvFileChange: (file: File | null) => void;
+}
+
+export function BulkAddForm({
+  bulkOption,
+  onBulkOptionChange,
+  emailsText,
+  onEmailsTextChange,
+  courseId,
+  onCourseIdChange,
+  csvFile,
+  onCsvFileChange,
+}: BulkAddFormProps) {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const { data: coursesData } = useGetCourses();
+  const courseOptions = [
+    { label: "Select All Courses", value: "all" },
+    ...(coursesData?.data ?? []).map((course) => ({
+      label: course.title,
+      value: course._id,
+    })),
+  ];
+
+  // Role/status/expiry fields below have no corresponding field on
+  // InviteUsersPayload (only emails/cohortId/courseId are accepted), so
+  // they're left as local, unwired UI state until the backend supports them.
   const [bulkRole, setBulkRole] = useState("student");
-  const [bulkCourse, setBulkCourse] = useState("all");
   const [bulkDefaultRole, setBulkDefaultRole] = useState("student");
   const [bulkDefaultStatus, setBulkDefaultStatus] = useState("active");
 
   const [inviteRole, setInviteRole] = useState("student");
   const [inviteExpiry, setInviteExpiry] = useState("7d");
   const [inviteMaxUsers, setInviteMaxUsers] = useState("100");
+
+  const handleFileSelected = (file: File | null) => {
+    if (file && !file.name.toLowerCase().endsWith(".csv")) return;
+    onCsvFileChange(file);
+  };
 
   return (
     <div className="flex flex-col gap-8 md:gap-10 py-4">
@@ -66,7 +100,7 @@ export function BulkAddForm() {
                 <CarouselItem
                   key={opt.id}
                   className="pl-4 basis-[80%] sm:basis-[45%]"
-                  onClick={() => setBulkOption(opt.id)}
+                  onClick={() => onBulkOptionChange(opt.id)}
                 >
                   <div
                     className={`p-5 rounded-2xl border cursor-pointer transition-all bg-white flex flex-col gap-3 h-full ${
@@ -110,7 +144,7 @@ export function BulkAddForm() {
           return (
             <div
               key={opt.id}
-              onClick={() => setBulkOption(opt.id)}
+              onClick={() => onBulkOptionChange(opt.id)}
               className={`p-5 rounded-2xl border-2 cursor-pointer transition-all bg-white flex flex-col gap-3 ${
                 isSelected
                   ? "border-[#FF7A59] ring-4 ring-[#FF7A59]/10"
@@ -153,6 +187,8 @@ export function BulkAddForm() {
               Email Addresses
             </label>
             <textarea
+              value={emailsText}
+              onChange={(e) => onEmailsTextChange(e.target.value)}
               placeholder="Enter email addresses separated by commas or new lines...e.g., john@example.com, jane@example.com"
               className="w-full min-h-[120px] p-4 rounded-xl text-[15px] bg-white border-transparent hover:border-gray-200 resize-y placeholder:text-gray-400 focus-visible:ring-1 focus-visible:ring-[#FF7A59]/30 outline-none"
             />
@@ -171,9 +207,9 @@ export function BulkAddForm() {
             />
             <AppSelect
               label="Course Assignment (optional)"
-              options={[{ label: "Select All Courses", value: "all" }]}
-              value={bulkCourse}
-              onChange={setBulkCourse}
+              options={courseOptions}
+              value={courseId}
+              onChange={onCourseIdChange}
             />
           </div>
 
@@ -191,7 +227,22 @@ export function BulkAddForm() {
       {bulkOption === "csv" && (
         <div className="flex flex-col gap-5">
           {/* Drag and Drop Area */}
-          <div className="border-2 border-dashed border-gray-200 rounded-2xl flex flex-col items-center justify-center py-12 px-4 bg-white text-center hover:bg-gray-50 transition-colors cursor-pointer">
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".csv"
+            className="hidden"
+            onChange={(e) => handleFileSelected(e.target.files?.[0] ?? null)}
+          />
+          <div
+            onClick={() => fileInputRef.current?.click()}
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={(e) => {
+              e.preventDefault();
+              handleFileSelected(e.dataTransfer.files?.[0] ?? null);
+            }}
+            className="border-2 border-dashed border-gray-200 rounded-2xl flex flex-col items-center justify-center py-12 px-4 bg-white text-center hover:bg-gray-50 transition-colors cursor-pointer"
+          >
             <div className="bg-[#F6F6F6] p-3 rounded-xl mb-4">
               <Upload className="w-6 h-6 text-gray-900" />
             </div>
@@ -203,6 +254,28 @@ export function BulkAddForm() {
             </p>
             <p className="text-sm text-gray-400">Supported format: .csv</p>
           </div>
+
+          {csvFile && (
+            <div className="flex items-center justify-between gap-3 bg-[#F6F6F6] rounded-xl px-4 py-3">
+              <div className="flex items-center gap-2 min-w-0">
+                <FileText className="w-4 h-4 text-gray-500 shrink-0" />
+                <span className="text-[14px] text-gray-700 truncate">
+                  {csvFile.name}
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onCsvFileChange(null);
+                  if (fileInputRef.current) fileInputRef.current.value = "";
+                }}
+                className="text-gray-400 hover:text-gray-600 shrink-0"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+          )}
 
           {/* Template Download Box */}
           <div className="bg-[#F86432]/10 border border-[#F86432] rounded-2xl p-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
