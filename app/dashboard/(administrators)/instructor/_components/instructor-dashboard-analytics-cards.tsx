@@ -13,40 +13,53 @@ import {
   Star,
   NotebookPen,
 } from "lucide-react";
+import { useGetCourses } from "@/hooks/api/use-courses";
+import { useAuthStore } from "@/store/auth.store";
 
-const BasicAnalytics: InstructorDashboardAnalyticsCardProps[] = [
-  {
-    heading: "Total Courses",
-    title: "12",
-    icon: BookOpen,
-    rate: "+12%",
-    description: "from last month",
-  },
-  {
-    heading: "Total Students",
-    title: "1,284",
-    icon: GraduationCap,
-    rate: "+15%",
-    description: "from last term",
-  },
-  {
-    heading: "Assignments Pending",
-    title: "28",
-    icon: NotebookPen,
-    rate: "!",
-    description: "Requires attention",
-  },
-  {
-    heading: "Average Rating",
-    title: "4.8",
-    icon: Star,
-    rate: "+0.1%",
-    description: "Higher than avg",
-  },
-];
+function useInstructorOverviewAnalytics(): InstructorDashboardAnalyticsCardProps[] {
+  const user = useAuthStore((state) => state.user);
+  const { data } = useGetCourses();
+  const myCourses = (data?.data ?? []).filter((course) => {
+    const instructorId =
+      typeof course.instructor === "string"
+        ? course.instructor
+        : course.instructor?._id;
+    return instructorId === user?._id;
+  });
+  const totalStudents = myCourses.reduce(
+    (sum, course) => sum + (course.enrollmentCount ?? 0),
+    0,
+  );
+
+  // "Assignments Pending" and "Average Rating" have no known backend source
+  // yet (no assignment/grading or ratings endpoint), so they fall back to
+  // "-" rather than guessed numbers.
+  return [
+    {
+      heading: "Total Courses",
+      title: String(myCourses.length),
+      icon: BookOpen,
+    },
+    {
+      heading: "Total Students",
+      title: String(totalStudents),
+      icon: GraduationCap,
+    },
+    {
+      heading: "Assignments Pending",
+      title: "-",
+      icon: NotebookPen,
+    },
+    {
+      heading: "Average Rating",
+      title: "-",
+      icon: Star,
+    },
+  ];
+}
 
 interface InstructorDashboardAnalyticsCardsProps {
-  analytics?: typeof BasicAnalytics;
+  analytics?: InstructorDashboardAnalyticsCardProps[];
   columns?:
     | "grid-cols-1"
     | "grid-cols-2"
@@ -56,9 +69,11 @@ interface InstructorDashboardAnalyticsCardsProps {
     | "grid-cols-6";
 }
 export const InstructorDashboardAnalyticsCards = ({
-  analytics = BasicAnalytics,
+  analytics,
   columns = "grid-cols-4",
 }: InstructorDashboardAnalyticsCardsProps) => {
+  const defaultAnalytics = useInstructorOverviewAnalytics();
+  const resolvedAnalytics = analytics ?? defaultAnalytics;
   return (
     <>
       {/* ── Mobile / Tablet: Embla carousel with peeking ── */}
@@ -71,7 +86,7 @@ export const InstructorDashboardAnalyticsCards = ({
           className="w-full"
         >
           <CarouselContent className="-ml-3">
-            {analytics.map((analytic, index) => (
+            {resolvedAnalytics.map((analytic, index) => (
               <CarouselItem
                 key={index}
                 // mobile: ~75% → 1 card + peek of 2nd
@@ -94,7 +109,7 @@ export const InstructorDashboardAnalyticsCards = ({
 
       {/* ── Desktop: 4-column grid (unchanged) ── */}
       <div className={`hidden lg:grid ${columns} gap-4`}>
-        {analytics.map((analytic, index) => (
+        {resolvedAnalytics.map((analytic, index) => (
           <InstructorDashboardSectionFeatureCard
             key={index}
             heading={analytic.heading}
