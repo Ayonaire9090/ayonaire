@@ -3,11 +3,17 @@
 import { DataList } from "@/components/ui/data-list";
 import { AppDropdown, AppDropdownItem } from "@/components/ui/app-dropdown";
 import { MoreVertical, Download } from "lucide-react";
-import { DUMMY_STUDENTS, getStatusColor, getProgressColor } from "./dummy-data";
+import {
+  getStatusColor,
+  getProgressColor,
+  useInstructorStudentRoster,
+} from "./instructor-student-data";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 
 export const InstructorStudentManagementList = () => {
+  const { students, isLoading, isError } = useInstructorStudentRoster();
+
   const footerContent = (
     <div className="flex justify-between items-center w-full mt-2">
       <Button variant="outline" className="border-gray-200 text-gray-500 shadow-none hover:bg-gray-50 h-11 px-3 sm:px-4 rounded-xl font-medium shrink-0">
@@ -27,8 +33,21 @@ export const InstructorStudentManagementList = () => {
 
   return (
     <div className="bg-white rounded-2xl p-4 w-full">
+      {isLoading ? (
+        <div className="flex items-center justify-center py-16">
+          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+        </div>
+      ) : isError ? (
+        <div className="flex items-center justify-center py-16 text-[15px] text-red-500">
+          Failed to load students. Please try again.
+        </div>
+      ) : students.length === 0 ? (
+        <div className="flex items-center justify-center py-16 text-[15px] text-gray-500">
+          No students found.
+        </div>
+      ) : (
       <DataList
-        data={DUMMY_STUDENTS}
+        data={students}
         keyExtractor={(item) => item.id}
         footerContent={footerContent}
         renderItem={(item) => (
@@ -82,17 +101,14 @@ export const InstructorStudentManagementList = () => {
                 <span
                   className={`px-2.5 py-1 rounded-full text-xs font-medium ${getStatusColor(item.status)}`}
                 >
-                  {item.status === "Submitted" ? "Submited" : item.status}
+                  {item.status}
                 </span>
-                <div className="text-[14px]">
-                  <span className="font-medium text-black">Marks </span>
-                  <span className="text-gray-500">{item.quizScore}</span>
-                </div>
               </div>
             </div>
           </div>
         )}
       />
+      )}
     </div>
   );
 };

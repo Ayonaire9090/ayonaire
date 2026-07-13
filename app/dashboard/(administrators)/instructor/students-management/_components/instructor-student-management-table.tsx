@@ -3,10 +3,17 @@
 import { DataTable, ColumnDef } from "@/components/ui/data-table";
 import { AppDropdown, AppDropdownItem } from "@/components/ui/app-dropdown";
 import { MoreVertical, Download } from "lucide-react";
-import { DUMMY_STUDENTS, StudentData, getStatusColor, getProgressColor } from "./dummy-data";
+import {
+  StudentData,
+  getStatusColor,
+  getProgressColor,
+  useInstructorStudentRoster,
+} from "./instructor-student-data";
 import { Button } from "@/components/ui/button";
 
 export const InstructorStudentManagementTable = () => {
+  const { students, isLoading, isError } = useInstructorStudentRoster();
+
   const columns: ColumnDef<StudentData>[] = [
     {
       key: "student",
@@ -34,20 +41,13 @@ export const InstructorStudentManagementTable = () => {
       ),
     },
     {
-      key: "quizScore",
-      header: "Quiz Score",
-      cell: (item) => (
-        <span className="text-[15px] text-gray-600">{item.quizScore}</span>
-      ),
-    },
-    {
       key: "status",
       header: "Status",
       cell: (item) => (
         <span
           className={`px-2.5 py-1 rounded-full text-xs font-medium ${getStatusColor(item.status)}`}
         >
-          {item.status === "Submitted" ? "Submited" : item.status}
+          {item.status}
         </span>
       ),
     },
@@ -112,13 +112,27 @@ export const InstructorStudentManagementTable = () => {
 
   return (
     <div className="bg-white rounded-2xl p-6 w-full">
+      {isLoading ? (
+        <div className="flex items-center justify-center py-16">
+          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+        </div>
+      ) : isError ? (
+        <div className="flex items-center justify-center py-16 text-[15px] text-red-500">
+          Failed to load students. Please try again.
+        </div>
+      ) : students.length === 0 ? (
+        <div className="flex items-center justify-center py-16 text-[15px] text-gray-500">
+          No students found.
+        </div>
+      ) : (
       <DataTable
-        data={DUMMY_STUDENTS}
+        data={students}
         columns={columns}
         keyExtractor={(item) => item.id}
         selectable
         footerContent={footerContent}
       />
+      )}
     </div>
   );
 };
