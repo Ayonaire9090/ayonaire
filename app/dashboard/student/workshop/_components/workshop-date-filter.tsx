@@ -1,7 +1,7 @@
 "use client";
 
 import { Calendar as CalendarIcon, RefreshCw } from "lucide-react";
-import React, { useState } from "react";
+import React from "react";
 import { format } from "date-fns";
 import { DateRange } from "react-day-picker";
 import { Calendar } from "@/components/ui/calendar";
@@ -12,9 +12,13 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 
-export const WorkshopDateFilter = () => {
-  const [date, setDate] = useState<DateRange | undefined>(undefined);
-
+export const WorkshopDateFilter = ({
+  date,
+  onDateChange,
+}: {
+  date: DateRange | undefined;
+  onDateChange: (date: DateRange | undefined) => void;
+}) => {
   return (
     <div className="flex items-center gap-3 w-[95%] mx-auto lg:w-auto lg:mx-0">
       <Popover>
@@ -46,14 +50,14 @@ export const WorkshopDateFilter = () => {
             mode="range"
             defaultMonth={date?.from}
             selected={date}
-            onSelect={setDate}
+            onSelect={onDateChange}
             numberOfMonths={1}
           />
         </PopoverContent>
       </Popover>
       <button
         className="p-2 sm:p-2.5 bg-white border border-gray-200 text-gray-500 hover:text-gray-700 hover:bg-gray-50 rounded-xl transition-colors shrink-0"
-        onClick={() => setDate(undefined)}
+        onClick={() => onDateChange(undefined)}
       >
         <RefreshCw size={18} className="sm:w-5 sm:h-5" />
       </button>

@@ -1,51 +1,41 @@
+"use client";
+
 import { Clock, ChevronLeft, ChevronRight } from "lucide-react";
+import { useEffect, useState } from "react";
+import { WorkshopHistoryGroup } from "./workshop-data";
 
-const historyData = [
-  {
-    date: "Nov 2, 2025",
-    items: [
-      {
-        time: "9:30 AM - 12:30 PM",
-        title:
-          "Induction Session (Ultimate RAG Bootcamp: Building Traditional to Agentic Systems with Cloud Deploy)",
-        subtitle: "(Custom meeting)",
-      },
-      {
-        time: "2:00 PM - 6:00 PM",
-        title: "Deployment of the project part -2 (LLMOPS)",
-        subtitle: "(Custom meeting)",
-      },
-    ],
-  },
-  {
-    date: "Nov 10, 2025",
-    items: [
-      {
-        time: "8:00 PM - 12:00 AM",
-        title: "ML - 11 (ultimate Data Science)",
-        subtitle: "(Custom meeting)",
-      },
-    ],
-  },
-  {
-    date: "Nov 20, 2025",
-    items: [
-      {
-        time: "8:00 PM - 12:00 AM",
-        title:
-          "Local AI + Prompt Engineering (Generative AI for EveryOne-Professionals and Leaders)",
-        subtitle: "(Custom meeting)",
-      },
-    ],
-  },
-];
+const GROUPS_PER_PAGE = 3;
 
-export const WorkshopHistory = () => {
+export const WorkshopHistory = ({
+  groups,
+}: {
+  groups: WorkshopHistoryGroup[];
+}) => {
+  const [page, setPage] = useState(1);
+  const totalPages = Math.max(1, Math.ceil(groups.length / GROUPS_PER_PAGE));
+
+  useEffect(() => {
+    setPage(1);
+  }, [groups]);
+
+  const visibleGroups = groups.slice(
+    (page - 1) * GROUPS_PER_PAGE,
+    page * GROUPS_PER_PAGE,
+  );
+
+  if (groups.length === 0) {
+    return (
+      <div className="flex items-center justify-center py-8 text-[15px] text-gray-500">
+        No completed workshops found.
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-4">
-        {historyData.map((group, i) => (
-          <div key={i} className="flex flex-col gap-3 w-full">
+        {visibleGroups.map((group) => (
+          <div key={group.date} className="flex flex-col gap-3 w-full">
             {/* Group Header */}
             <div className="bg-[#F8F9FA] lg:bg-[#F6F6F6] px-4 py-2 lg:py-3 lg:rounded-lg">
               <span className="text-gray-500 font-medium text-sm">
@@ -55,9 +45,9 @@ export const WorkshopHistory = () => {
 
             {/* Group Items */}
             <div className="flex flex-col gap-3">
-              {group.items.map((item, j) => (
+              {group.items.map((item) => (
                 <div
-                  key={j}
+                  key={item.id}
                   className="flex bg-white lg:rounded-2xl border border-gray-100 p-4 lg:p-6 gap-3 lg:gap-8 hover:shadow-sm transition-all items-start lg:items-center"
                 >
                   <div className="flex items-start lg:items-center gap-2 w-[100px] lg:w-[200px] shrink-0">
@@ -84,13 +74,23 @@ export const WorkshopHistory = () => {
 
       {/* Pagination */}
       <div className="flex items-center justify-between pt-6 mt-4 border-t border-gray-100 w-[95%] mx-auto lg:w-full">
-        <span className="text-gray-900 text-sm font-medium">Page 1 of 5</span>
+        <span className="text-gray-900 text-sm font-medium">
+          Page {page} of {totalPages}
+        </span>
         <div className="flex items-center gap-4">
-          <button className="flex items-center gap-1 text-gray-900 font-medium text-sm hover:text-[#F86432] transition-colors">
+          <button
+            onClick={() => setPage((p) => Math.max(1, p - 1))}
+            disabled={page === 1}
+            className="flex items-center gap-1 text-gray-900 font-medium text-sm hover:text-[#F86432] transition-colors disabled:opacity-40 disabled:hover:text-gray-900 disabled:cursor-not-allowed"
+          >
             <ChevronLeft className="w-4 h-4" />
             Prev.
           </button>
-          <button className="flex items-center gap-1 text-gray-900 font-medium text-sm hover:text-[#F86432] transition-colors">
+          <button
+            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+            disabled={page === totalPages}
+            className="flex items-center gap-1 text-gray-900 font-medium text-sm hover:text-[#F86432] transition-colors disabled:opacity-40 disabled:hover:text-gray-900 disabled:cursor-not-allowed"
+          >
             Next
             <ChevronRight className="w-4 h-4" />
           </button>

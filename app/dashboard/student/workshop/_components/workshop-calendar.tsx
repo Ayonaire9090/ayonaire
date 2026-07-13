@@ -1,5 +1,6 @@
 import { Calendar, Clock, MoreHorizontal } from "lucide-react";
 import React from "react";
+import { StudentWorkshop } from "./workshop-data";
 
 export interface WorkshopCalendarCardProps {
   month: string;
@@ -74,45 +75,25 @@ export const WorkshopCalendarCard = ({
   );
 };
 
-const calendarData = [
-  {
-    month: "Mar",
-    day: "12",
-    label: "Today",
-    dateText: "12 Mar",
-    time: "09:00 AM - 01:00 PM",
-    title: "Building RAG Agents with LangChain",
-    author: "Ayobami Awosanya",
-  },
-  {
-    month: "Mar",
-    day: "17",
-    label: "Friday",
-    dateText: "12 Mar",
-    time: "09:00 AM - 01:00 PM",
-    title: "Building RAG Agents with LangChain",
-    author: "Ayobami Awosanya",
-  },
-  {
-    month: "Mar",
-    day: "20",
-    label: "Monday",
-    dateText: "12 Mar",
-    time: "09:00 AM - 01:00 PM",
-    title: "Building RAG Agents with LangChain",
-    author: "Ayobami Awosanya",
-  },
-];
-
 export const WorkshopCalendar = ({
+  workshops,
   className = "",
 }: {
+  workshops: StudentWorkshop[];
   className?: string;
 }) => {
+  if (workshops.length === 0) {
+    return (
+      <div className={`flex items-center justify-center py-8 text-[15px] text-gray-500 ${className}`}>
+        No upcoming workshops found.
+      </div>
+    );
+  }
+
   return (
     <div className={`flex flex-col gap-4 ${className}`}>
-      {calendarData.map((item, i) => (
-        <WorkshopCalendarCard key={i} {...item} />
+      {workshops.map((item) => (
+        <WorkshopCalendarCard key={item.id} {...item} />
       ))}
     </div>
   );
