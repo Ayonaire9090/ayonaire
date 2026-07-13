@@ -1,6 +1,8 @@
 import { Edit, MoreVertical, Trash2, ChevronDown } from "lucide-react";
+import { format } from "date-fns";
 import { AppDropdown, AppDropdownItem, AppDropdownSeparator } from "@/components/ui/app-dropdown";
 import { Button } from "@/components/ui/button";
+import { Announcement } from "@/lib/api/endpoints/announcements";
 
 export type AnnouncementStatus = "Published" | "Draft" | "Scheduled";
 
@@ -10,18 +12,56 @@ export interface AnnouncementData {
   course: string;
   audience: string;
   date: string;
+  createdAt: string | null;
   status: AnnouncementStatus;
 }
 
-export const mockAnnouncements: AnnouncementData[] = [
-  { id: "1", title: "UI/UX Live Class Reminder", course: "AI Engineering 1.0", audience: "Batch Jan26", date: "21 Feb", status: "Scheduled" },
-  { id: "2", title: "AI Assignment Update", course: "DS & Gen 1.0", audience: "Specific Users", date: "21 Feb", status: "Published" },
-  { id: "3", title: "Maintenance Notice", course: "DA & AI Automation 1.0", audience: "All Students", date: "21 Feb", status: "Draft" },
-  { id: "4", title: "AI Assignment Update", course: "UI/UX Design 1.0", audience: "specific groups", date: "21 Feb", status: "Published" },
-  { id: "5", title: "UI/UX Live Class Reminder", course: "PM & AI for PM 1.0", audience: "Batch Jan26", date: "21 Feb", status: "Published" },
-  { id: "6", title: "Maintenance Notice", course: "Cloud Computing 1.0", audience: "All Students", date: "21 Feb", status: "Draft" },
-  { id: "7", title: "AI Assignment Update", course: "DevOp Engineering 1.0", audience: "Batch Feb26", date: "21 Feb", status: "Scheduled" },
-];
+const VALID_STATUSES: AnnouncementStatus[] = ["Published", "Draft", "Scheduled"];
+
+function normalizeStatus(status?: string): AnnouncementStatus {
+  if (!status) return "Published";
+  const match = VALID_STATUSES.find((s) => s.toLowerCase() === status.toLowerCase());
+  return match ?? "Published";
+}
+
+// Audience isn't returned directly by the backend - derive a display label from
+// whichever targeting field is present. Confirm this logic once the real
+// response shape (and any dedicated "audience" field) is confirmed.
+function deriveAudience(announcement: Announcement): string {
+  if (announcement.students && announcement.students.length > 0) {
+    return "Specific Users";
+  }
+  if (announcement.cohort) {
+    return typeof announcement.cohort === "string"
+      ? announcement.cohort
+      : announcement.cohort.title;
+  }
+  if (announcement.course) {
+    return "Course Students";
+  }
+  return "All Students";
+}
+
+export function mapAnnouncementToAnnouncementData(
+  announcement: Announcement,
+): AnnouncementData {
+  const course =
+    typeof announcement.course === "string"
+      ? announcement.course
+      : announcement.course?.title ?? "All Courses";
+
+  return {
+    id: announcement._id,
+    title: announcement.title,
+    course,
+    audience: deriveAudience(announcement),
+    date: announcement.createdAt
+      ? format(new Date(announcement.createdAt), "d MMM")
+      : "-",
+    createdAt: announcement.createdAt ?? null,
+    status: normalizeStatus(announcement.status),
+  };
+}
 
 export function AnnouncementStatusBadge({ status }: { status: AnnouncementStatus }) {
   const getStyle = (s: AnnouncementStatus) => {

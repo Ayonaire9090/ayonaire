@@ -24,6 +24,7 @@ export const CreateAnnouncementModal = ({
   const [formData, setFormData] = useState<AnnouncementFormData>({
     audience: "",
     course: "",
+    courseId: "",
     title: "",
     summary: "",
     sendEmail: true,
