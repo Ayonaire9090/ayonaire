@@ -10,20 +10,22 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { MoreVertical, Trash2, Eye } from "lucide-react";
-import {
-  mockCommunications,
-  CommunicationItem,
-} from "./instructor-analytics-communication-table";
+import { useGetAnnouncements } from "@/hooks/api/use-announcements";
+import { mapAnnouncementToCommunicationItem } from "./instructor-communication-data";
 
 export const InstructorAnalyticsCommunicationList = () => {
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const { data, isLoading, isError } = useGetAnnouncements();
+  const communications = (data?.data ?? []).map(
+    mapAnnouncementToCommunicationItem,
+  );
 
   const toggleSelectAll = () => {
     setSelectedIds((prev) => {
-      if (prev.size === mockCommunications.length) {
+      if (prev.size === communications.length) {
         return new Set();
       } else {
-        return new Set(mockCommunications.map((item) => item.id));
+        return new Set(communications.map((item) => item.id));
       }
     });
   };
@@ -41,8 +43,7 @@ export const InstructorAnalyticsCommunicationList = () => {
   };
 
   const isAllSelected =
-    selectedIds.size === mockCommunications.length &&
-    mockCommunications.length > 0;
+    selectedIds.size === communications.length && communications.length > 0;
 
   return (
     <div className="bg-white rounded-[16px] p-4 border border-gray-100/50 mb-4">
@@ -66,8 +67,21 @@ export const InstructorAnalyticsCommunicationList = () => {
       </div>
 
       {/* Data List */}
+      {isLoading ? (
+        <div className="flex items-center justify-center py-16">
+          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+        </div>
+      ) : isError ? (
+        <div className="flex items-center justify-center py-16 text-[15px] text-red-500">
+          Failed to load announcements. Please try again.
+        </div>
+      ) : communications.length === 0 ? (
+        <div className="flex items-center justify-center py-16 text-[15px] text-gray-500">
+          No announcements yet.
+        </div>
+      ) : (
       <DataList
-        data={mockCommunications}
+        data={communications}
         keyExtractor={(item) => item.id}
         renderItem={(item) => {
           const isSelected = selectedIds.has(item.id);
@@ -158,6 +172,7 @@ export const InstructorAnalyticsCommunicationList = () => {
           );
         }}
       />
+      )}
     </div>
   );
 };
