@@ -6,6 +6,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { MoreVertical } from "lucide-react";
 import React from "react";
+import { format } from "date-fns";
+import { UserProfile } from "@/lib/api/types";
 
 export type UserStatus = "Active" | "Suspended" | "Deactivate" | "Delete";
 export type UserRole = "student" | "instructor";
@@ -25,150 +27,39 @@ export interface UserData {
   lastActive?: string;
 }
 
-export const usersData: UserData[] = [
-  {
-    id: "1",
-    name: "Jerome Bell",
-    uniqueId: "STU-1823",
-    email: "ryanhen@gmail.com",
-    status: "Deactivate",
-    enrollments: 12,
-    avatar: "/assets/images/user1.png",
-    role: "student",
-  },
-  {
-    id: "2",
-    name: "Jenny Wilson",
-    uniqueId: "STU-1990",
-    email: "isabella@gmail.com",
-    status: "Suspended",
-    enrollments: 8,
-    avatar: "/assets/images/user1.png",
-    role: "student",
-  },
-  {
-    id: "3",
-    name: "Dianne Russell",
-    uniqueId: "STU-2104",
-    email: "bessieco@gmail.com",
-    status: "Suspended",
-    enrollments: 16,
-    avatar: "/assets/images/user1.png",
-    role: "student",
-  },
-  {
-    id: "4",
-    name: "Dianne Russell",
-    uniqueId: "STU-2215",
-    email: "robbert@gmail.com",
-    status: "Suspended",
-    enrollments: 10,
-    avatar: "/assets/images/user1.png",
-    role: "student",
-  },
-  {
-    id: "5",
-    name: "Eleanor Pena",
-    uniqueId: "STU-2330",
-    email: "leslie@gmail.com",
-    status: "Delete",
-    enrollments: 11,
-    avatar: "/assets/images/user1.png",
-    role: "student",
-  },
-  {
-    id: "6",
-    name: "Guy Hawkins",
-    uniqueId: "STU-1990",
-    email: "hawkins@gmail.com",
-    status: "Suspended",
-    enrollments: 8,
-    avatar: "/assets/images/user1.png",
-    role: "student",
-  },
-  {
-    id: "7",
-    name: "Albert Flores",
-    uniqueId: "STU-2219",
-    email: "albert@gmail.com",
-    status: "Active",
-    enrollments: 10,
-    avatar: "/assets/images/user1.png",
-    role: "student",
-  },
+function normalizeUserStatus(status: UserProfile["status"]): UserStatus {
+  switch (status) {
+    case "suspended":
+      return "Suspended";
+    case "inactive":
+      return "Deactivate";
+    case "active":
+    default:
+      return "Active";
+  }
+}
 
-  // Instructors Mock Data
-  {
-    id: "i1",
-    name: "Dr. Sarah Ahmed",
-    uniqueId: "INS001",
-    email: "",
-    status: "Active",
+// Fields with no backend equivalent yet (enrollments, coursesCount, batch,
+// lastActive) fall back to placeholders rather than guessed values.
+export function mapUserProfileToUserData(user: UserProfile): UserData {
+  const role: UserRole = user.role === "instructor" ? "instructor" : "student";
+  const prefix = role === "instructor" ? "INS" : "STU";
+
+  return {
+    id: user._id,
+    name: user.name,
+    uniqueId: `${prefix}-${user._id.slice(-6).toUpperCase()}`,
+    email: user.email,
+    status: normalizeUserStatus(user.status),
     enrollments: 0,
-    avatar: "/assets/images/user1.png",
-    role: "instructor",
-    coursesCount: "3 Courses",
-    batch: "Cohort A",
-    joined: "2026-01-02",
-    lastActive: "1 hr ago",
-  },
-  {
-    id: "i2",
-    name: "Prof. James Wilson",
-    uniqueId: "INS002",
-    email: "",
-    status: "Pending" as any,
-    enrollments: 0,
-    avatar: "/assets/images/user1.png",
-    role: "instructor",
-    coursesCount: "-",
-    batch: "Cohort A",
-    joined: "-",
-    lastActive: "-",
-  },
-  {
-    id: "i3",
-    name: "Dr. Sarah Ahmed",
-    uniqueId: "INS003",
-    email: "",
-    status: "Suspended",
-    enrollments: 0,
-    avatar: "/assets/images/user1.png",
-    role: "instructor",
-    coursesCount: "2 Courses",
-    batch: "Cohort A",
-    joined: "2026-01-02",
-    lastActive: "1 hr ago",
-  },
-  {
-    id: "i4",
-    name: "Dr. Sarah Ahmed",
-    uniqueId: "INS004",
-    email: "",
-    status: "Rejected" as any,
-    enrollments: 0,
-    avatar: "/assets/images/user1.png",
-    role: "instructor",
-    coursesCount: "-",
-    batch: "Cohort A",
-    joined: "-",
-    lastActive: "-",
-  },
-  {
-    id: "i5",
-    name: "Dr. Sarah Ahmed",
-    uniqueId: "INS005",
-    email: "",
-    status: "Active",
-    enrollments: 0,
-    avatar: "/assets/images/user1.png",
-    role: "instructor",
-    coursesCount: "5 Courses",
-    batch: "Cohort A",
-    joined: "2026-01-02",
-    lastActive: "1 hr ago",
-  },
-];
+    avatar: user.profile?.url || "/assets/images/user1.png",
+    role,
+    coursesCount: role === "instructor" ? "-" : undefined,
+    batch: role === "instructor" ? "-" : undefined,
+    joined: user.createdAt ? format(new Date(user.createdAt), "yyyy-MM-dd") : "-",
+    lastActive: role === "instructor" ? "-" : undefined,
+  };
+}
 
 export function StatusBadge({ status }: { status: UserStatus }) {
   const getColors = (s: string) => {
