@@ -17,6 +17,10 @@ export interface Course {
   thumbnail?: string;
   enrollmentCount?: number;
   createdAt?: string;
+  // Unconfirmed whether the backend exposes a public-page slug for courses -
+  // if present, dashboard "view course" links can use it; otherwise fall
+  // back to the course id.
+  slug?: string;
 }
 
 export interface CreateCategoryPayload {

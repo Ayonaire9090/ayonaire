@@ -1,41 +1,36 @@
 "use client";
-import { courses } from "@/constants";
 import { ProfileCourseCard } from "@/components/dashboard/profile/profile-course-card";
 import { InstructorCreateNewCourseCard } from "./instructor-create-new-course-card";
+import { Course } from "@/lib/api/endpoints/courses";
 
-// Flatten all courses from the categories and assign mock statuses for demo
-const allCourses = courses.flatMap((category) =>
-  category.courses.map((course) => ({
-    title: course.title,
-    description: course.description,
-    imageSrc: course.imageSrc,
-    slug: course.slug,
-  })),
-);
+interface InstructorCourseListProps {
+  courses: Course[];
+}
 
-// simulate state for demo
-const enrolledCourses = [
-  { ...allCourses[0], status: "Published" as const },
-  { ...allCourses[1], status: "Draft" as const },
-  { ...allCourses[2], status: "Published" as const },
-  { ...allCourses[3], status: "Draft" as const },
-  { ...allCourses[4], status: "Published" as const },
-];
+// Draft/Published are the only statuses ProfileCourseCard's badge styling
+// supports well here - anything else (e.g. "pending", "private") falls back
+// to Draft rather than crashing on an unrecognized status.
+function toCardStatus(status?: string): "Draft" | "Published" {
+  return status?.toLowerCase() === "active" ||
+    status?.toLowerCase() === "published"
+    ? "Published"
+    : "Draft";
+}
 
-export function InstructorCourseList() {
+export function InstructorCourseList({ courses }: InstructorCourseListProps) {
   return (
     <div className="py-6 md:py-8 w-full max-w-[96%] md:max-w-full mx-auto">
       {/* My Courses Content */}
-      {enrolledCourses.length > 0 ? (
+      {courses.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {enrolledCourses.map((course) => (
+          {courses.map((course) => (
             <ProfileCourseCard
-              key={course.slug}
-              imageSrc={course.imageSrc}
+              key={course._id}
+              imageSrc={course.thumbnail || "/assets/images/optin-hero.png"}
               title={course.title}
-              description={course.description}
-              slug={course.slug}
-              status={course.status}
+              description={course.description || "No description available"}
+              slug={course.slug || course._id}
+              status={toCardStatus(course.status)}
               statusAsAction={true}
               actions={[
                 {
@@ -52,11 +47,13 @@ export function InstructorCourseList() {
                 },
                 {
                   label:
-                    course.status === "Published" ? "Unpublish" : "Publish",
+                    toCardStatus(course.status) === "Published"
+                      ? "Unpublish"
+                      : "Publish",
                   onClick: () => {
                     console.log("Publish/Unpublish Course");
                   },
-                  isDestructive: course.status === "Published",
+                  isDestructive: toCardStatus(course.status) === "Published",
                 },
               ]}
             />
