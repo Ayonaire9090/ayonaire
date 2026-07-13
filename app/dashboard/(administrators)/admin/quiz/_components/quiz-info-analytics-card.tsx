@@ -3,7 +3,7 @@ import { ChevronDown, ChevronRight } from "lucide-react";
 interface QuizInfoAnalyticsCardProps {
   heading: string;
   title: string;
-  rate: string;
+  rate?: string;
   statusBadge: {
     label: string;
     variant: "info" | "normal";
@@ -36,11 +36,13 @@ export const QuizInfoAnalyticsCard = ({
           {title}
         </p>
       </div>
-      <div className="flex items-center gap-2.5 mt-auto pt-2">
-        <span className="flex items-center gap-1 px-3 py-1 rounded-full bg-[#FFF5F0] text-[#F06A3F] text-[13px] font-medium whitespace-nowrap">
-          {rate}
-        </span>
-      </div>
+      {rate && (
+        <div className="flex items-center gap-2.5 mt-auto pt-2">
+          <span className="flex items-center gap-1 px-3 py-1 rounded-full bg-[#FFF5F0] text-[#F06A3F] text-[13px] font-medium whitespace-nowrap">
+            {rate}
+          </span>
+        </div>
+      )}
     </div>
   );
 };
