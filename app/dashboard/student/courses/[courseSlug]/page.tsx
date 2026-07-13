@@ -2,6 +2,7 @@
 
 import { useState, use } from "react";
 import { useGetCourseById } from "@/hooks/api/use-courses";
+import { useResumeLastLesson } from "@/hooks/api/use-lessons";
 import { LessonHeader } from "../_components/lesson-header";
 import { LessonVideoPlayer } from "../_components/lesson-video-player";
 import { LessonTabs } from "../_components/lesson-tabs";
@@ -39,6 +40,12 @@ export default function StudentCourseLessonPage({
 
   const title = course?.title || "Prompt Engineering for AI Systems";
 
+  // Tells the player which lesson to load. No confirmed response shape for
+  // this endpoint exists yet (see ResumeLessonInfo) - falls back to letting
+  // the player show its placeholder video if no lessonId comes back.
+  const { data: resumeData } = useResumeLastLesson(resolvedParams.courseSlug);
+  const lessonId = resumeData?.data?.lessonId;
+
   return (
     <>
       <StudentHomeSidebarContent variant="sidebar" collapsible="offcanvas" />
@@ -60,7 +67,10 @@ export default function StudentCourseLessonPage({
           <div className="bg-black w-full flex flex-col">
             <LessonHeader title={title} />
             <div className="w-full relative">
-              <LessonVideoPlayer onOpenChapters={() => setIsSheetOpen(true)} />
+              <LessonVideoPlayer
+                lessonId={lessonId}
+                onOpenChapters={() => setIsSheetOpen(true)}
+              />
             </div>
           </div>
 

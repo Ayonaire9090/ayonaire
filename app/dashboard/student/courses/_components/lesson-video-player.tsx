@@ -17,15 +17,28 @@ import {
   ArrowLeft,
   ArrowRight,
   PictureInPicture,
+  CheckCircle2,
 } from "lucide-react";
+import {
+  useViewLessonContent,
+  useMarkLessonCompletedMutation,
+} from "@/hooks/api/use-lessons";
 
 interface LessonVideoPlayerProps {
+  lessonId?: string;
   onOpenChapters?: () => void;
 }
 
-export const LessonVideoPlayer = ({ onOpenChapters }: LessonVideoPlayerProps) => {
+export const LessonVideoPlayer = ({ lessonId, onOpenChapters }: LessonVideoPlayerProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  const { data: lessonData } = useViewLessonContent(lessonId ?? "");
+  const lesson = lessonData?.data;
+  const videoSrc = lesson?.videos?.[0] || "/assets/videos/learning-tips-demo.mp4";
+
+  const { mutate: markCompleted, isPending: isMarkingComplete, isSuccess: isMarkedComplete } =
+    useMarkLessonCompletedMutation();
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -203,7 +216,7 @@ export const LessonVideoPlayer = ({ onOpenChapters }: LessonVideoPlayerProps) =>
       >
         <video
           ref={videoRef}
-          src="/assets/videos/learning-tips-demo.mp4"
+          src={videoSrc}
           className="w-full h-full object-contain cursor-pointer"
           onClick={togglePlay}
           playsInline
@@ -344,6 +357,21 @@ export const LessonVideoPlayer = ({ onOpenChapters }: LessonVideoPlayerProps) =>
               >
                 <PictureInPicture size={18} />
               </button>
+              {lessonId && (
+                <button
+                  onClick={() => markCompleted(lessonId)}
+                  disabled={isMarkingComplete || isMarkedComplete}
+                  className={`hidden sm:flex items-center gap-1.5 text-xs font-semibold rounded px-2 py-1 transition ${
+                    isMarkedComplete
+                      ? "text-[#10B981]"
+                      : "border border-white/40 hover:bg-white/20"
+                  }`}
+                  title="Mark lesson as complete"
+                >
+                  <CheckCircle2 size={14} />
+                  {isMarkedComplete ? "Completed" : "Mark Complete"}
+                </button>
+              )}
               <button
                 onClick={toggleFullscreen}
                 className="hover:text-[#F86432] transition"
