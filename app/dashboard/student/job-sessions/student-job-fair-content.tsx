@@ -6,6 +6,7 @@ import { StudentDashboardHeader } from "../_components/student-dashboard-header"
 import { Clock } from "lucide-react";
 import { useState } from "react";
 import { WorkshopDateFilter } from "../workshop/_components/workshop-date-filter";
+import { DateRange } from "react-day-picker"; // 1. Import DateRange type
 
 const jobFairData = [
   {
@@ -52,9 +53,13 @@ const jobFairData = [
 
 export const StudentJobFairSessionsContent = () => {
   const { state } = useSidebar();
-  const [activeTab, setActiveTab] = useState<"upcoming" | "completed">(
-    "upcoming",
-  );
+  const [activeTab, setActiveTab] = useState<"upcoming" | "completed">("upcoming");
+  
+  // 2. Add the date state here
+  const [date, setDate] = useState<DateRange | undefined>({
+    from: undefined,
+    to: undefined,
+  });
 
   return (
     <>
@@ -63,7 +68,6 @@ export const StudentJobFairSessionsContent = () => {
         <StudentDashboardHeader showLogo={state === "collapsed"} />
 
         <div className="lg:bg-white flex flex-1 flex-col w-full lg:max-w-3xl lg:my-6 lg:rounded-3xl lg:p-8 lg:min-w-4xl lg:mx-auto pb-24">
-          {/* Header Title */}
           <h1 className="text-xl lg:text-2xl font-bold text-gray-900 mb-6 bg-white p-4 lg:p-0">
             Job Fair Sessions
           </h1>
@@ -93,8 +97,9 @@ export const StudentJobFairSessionsContent = () => {
               </button>
             </div>
 
+            {/* 3. Pass the props down to the filter component */}
             <div className="mt-2">
-              <WorkshopDateFilter />
+              <WorkshopDateFilter date={date} onDateChange={setDate} />
             </div>
 
             {/* List */}
@@ -102,14 +107,10 @@ export const StudentJobFairSessionsContent = () => {
               <div className="flex flex-col gap-4 w-full">
                 {jobFairData.map((group, i) => (
                   <div key={i} className="flex flex-col gap-3 w-full">
-                    {/* Group Header */}
                     <div className="bg-[#F8F9FA] lg:bg-[#F6F6F6] px-4 py-2 lg:py-3 lg:rounded-lg">
-                      <span className="text-gray-500 font-medium text-sm">
-                        {group.date}
-                      </span>
+                      <span className="text-gray-500 font-medium text-sm">{group.date}</span>
                     </div>
 
-                    {/* Group Items */}
                     <div className="flex flex-col gap-3">
                       {group.items.map((item, j) => (
                         <div
