@@ -1,6 +1,21 @@
 import { apiClient } from "../client";
 import { ApiResponse } from "../types";
 
+// Best-effort guess at the shapes returned by resume-last-lesson/view-lesson-content -
+// both endpoints are typed generically (ApiResponse<any>) elsewhere with no confirmed
+// response shape. Confirm against the real API and adjust once known.
+export interface ResumeLessonInfo {
+  lessonId?: string;
+  moduleId?: string;
+}
+
+export interface LessonContent {
+  _id: string;
+  title: string;
+  videos?: string[];
+  description?: string;
+}
+
 export interface UploadLessonPayload {
   title: string;
   module: string;
@@ -52,13 +67,13 @@ export const lessonsApi = {
     }),
 
   resumeLastLesson: (courseId: string) =>
-    apiClient<ApiResponse>(`/api/v1/lesson/resume-last-lesson?courseId=${courseId}`, {
+    apiClient<ApiResponse<ResumeLessonInfo>>(`/api/v1/lesson/resume-last-lesson?courseId=${courseId}`, {
       method: "GET",
       requireAuth: true,
     }),
 
   viewContent: (lessonId: string) =>
-    apiClient<ApiResponse>(`/api/v1/lesson/view-lesson-content?lessonId=${lessonId}`, {
+    apiClient<ApiResponse<LessonContent>>(`/api/v1/lesson/view-lesson-content?lessonId=${lessonId}`, {
       method: "GET",
       requireAuth: true,
     }),

@@ -11,6 +11,11 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { toast } from "sonner";
+import { useCreateAnnouncementMutation } from "@/hooks/api/use-announcements";
+import { useGetCourses } from "@/hooks/api/use-courses";
+import { useGetAdminUsers } from "@/hooks/api/use-admin";
+import { CreateAnnouncementPayload } from "@/lib/api/endpoints/announcements";
 
 // --- Shared Types ---
 export type AnnouncementViewType = "MAIN" | "AUDIENCE" | "SPECIFIC_USERS" | "SUCCESS";
@@ -18,38 +23,12 @@ export type AnnouncementViewType = "MAIN" | "AUDIENCE" | "SPECIFIC_USERS" | "SUC
 export interface AnnouncementFormData {
   audience: string;
   course: string;
+  courseId: string;
   title: string;
   summary: string;
   sendEmail: boolean;
   selectedUsers: string[];
 }
-
-export const MOCK_USERS = [
-  {
-    id: "u1",
-    name: "Iyanuoluwa Awosanya",
-    email: "delightfocus756@gmail.com",
-    status: "",
-  },
-  {
-    id: "u2",
-    name: "Festus Uwabor",
-    email: "festyuwabs@gmail.com",
-    status: "Enrollment Status (Approved)",
-  },
-  {
-    id: "u3",
-    name: "Mercy Nwankudu",
-    email: "mercy@gmail.com",
-    status: "Enrollment Status (Approved)",
-  },
-  {
-    id: "u4",
-    name: "Iyanuoluwa Awosanya", // duplicate logic for scrolling
-    email: "delightfocus756@gmail.com",
-    status: "",
-  },
-];
 
 interface SharedViewProps {
   data: AnnouncementFormData;
@@ -68,24 +47,19 @@ export const MainFormView = ({
   const [isCourseOpen, setIsCourseOpen] = useState(false);
   const [courseSearch, setCourseSearch] = useState("");
 
-  const coursesItems = [
-    "AI Engineering 1.0",
-    "DS & Gen 1.0",
-    "DA & AI Automation 1.0",
-    "UI/UX Design 1.0",
-    "PM & AI for PM 1.0",
-    "Cloud Computing 1.0",
-    "DevOp Engineering 1.0",
-    "Software Engineering 1.0",
-    "Frontend Dev 1.0",
-    "Backend Dev 1.0",
-    "Business Analytics & AI for BA 1.0",
-  ];
+  const { data: coursesResponse } = useGetCourses();
+  const courses = coursesResponse?.data ?? [];
+
+  const { data: usersResponse } = useGetAdminUsers();
+  const users = usersResponse?.users ?? [];
+
+  const { mutateAsync: createAnnouncement, isPending } =
+    useCreateAnnouncementMutation();
 
   const getAudienceDisplay = () => {
     if (data.audience === "Specific Users" && data.selectedUsers.length > 0) {
       const selectedNames = data.selectedUsers
-        .map((id) => MOCK_USERS.find((u) => u.id === id)?.name)
+        .map((id) => users.find((u) => u._id === id)?.name)
         .filter(Boolean);
 
       if (selectedNames.length <= 2) {
@@ -158,20 +132,20 @@ export const MainFormView = ({
                   </div>
                 </div>
                 <div className="flex-1 overflow-y-auto px-1 pb-2 flex flex-col gap-1 custom-scrollbar">
-                  {coursesItems
+                  {courses
                     .filter((c) =>
-                      c.toLowerCase().includes(courseSearch.toLowerCase()),
+                      c.title.toLowerCase().includes(courseSearch.toLowerCase()),
                     )
-                    .map((course) => (
+                    .map((c) => (
                       <button
-                        key={course}
+                        key={c._id}
                         onClick={() => {
-                          setData({ ...data, course });
+                          setData({ ...data, course: c.title, courseId: c._id });
                           setIsCourseOpen(false);
                         }}
                         className="text-left px-3 py-2.5 text-[15px] text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors"
                       >
-                        {course}
+                        {c.title}
                       </button>
                     ))}
                 </div>
@@ -233,12 +207,34 @@ export const MainFormView = ({
           Cancel
         </Button>
         <Button
-          onClick={() => {
-            onChangeView("SUCCESS");
+          disabled={isPending || !data.title || !data.summary}
+          onClick={async () => {
+            const payload: CreateAnnouncementPayload = {
+              title: data.title,
+              summary: data.summary,
+            };
+            if (data.audience === "Specific Course" && data.courseId) {
+              payload.courseId = data.courseId;
+            }
+            if (
+              data.audience === "Specific Users" &&
+              data.selectedUsers.length > 0
+            ) {
+              payload.students = data.selectedUsers;
+            }
+            // "Specific Group (Batch)" intentionally omitted: no cohorts-list
+            // endpoint exists yet to build a real cohort picker (see AudienceView).
+
+            try {
+              await createAnnouncement(payload);
+              onChangeView("SUCCESS");
+            } catch (error: any) {
+              toast.error(error?.message || "Failed to publish announcement");
+            }
           }}
-          className="h-11 px-6 rounded-lg bg-[#F06B30] hover:bg-[#F06B30]/90 text-white font-medium"
+          className="h-11 px-6 rounded-lg bg-[#F06B30] hover:bg-[#F06B30]/90 text-white font-medium disabled:opacity-50"
         >
-          Publish
+          {isPending ? "Publishing..." : "Publish"}
         </Button>
       </div>
     </div>
@@ -353,7 +349,10 @@ export const SpecificUsersView = ({
     new Set(data.selectedUsers),
   );
 
-  const filteredUsers = MOCK_USERS.filter(
+  const { data: usersResponse, isLoading: isUsersLoading } = useGetAdminUsers();
+  const allUsers = usersResponse?.users ?? [];
+
+  const filteredUsers = allUsers.filter(
     (u) =>
       u.name.toLowerCase().includes(localSearch.toLowerCase()) ||
       u.email.toLowerCase().includes(localSearch.toLowerCase()),
@@ -363,7 +362,7 @@ export const SpecificUsersView = ({
     if (localSelected.size === filteredUsers.length) {
       setLocalSelected(new Set());
     } else {
-      setLocalSelected(new Set(filteredUsers.map((u) => u.id)));
+      setLocalSelected(new Set(filteredUsers.map((u) => u._id)));
     }
   };
 
@@ -407,41 +406,47 @@ export const SpecificUsersView = ({
         </div>
 
         <div className="flex flex-col px-1">
-          {filteredUsers.map((u, idx) => (
-            <div
-              key={`${u.id}-${idx}`}
-              className="flex flex-col sm:flex-row sm:items-center gap-4 p-3 border-b border-gray-100 last:border-0 hover:bg-gray-50/50"
-            >
-              <div className="flex items-center gap-4 w-full">
-                <Checkbox
-                  checked={localSelected.has(u.id)}
-                  onCheckedChange={() => toggleUser(u.id)}
-                  className="rounded-[6px] border-gray-300 data-[state=checked]:bg-[#F06B30] data-[state=checked]:border-[#F06B30] size-5 shrink-0"
-                />
-                <Avatar className="size-[50px] shrink-0">
-                  <AvatarFallback className="bg-primary/10 text-primary">
-                    {u.name.charAt(0)}
-                  </AvatarFallback>
-                  <AvatarImage src="/assets/images/user1.png" alt={u.name} />
-                </Avatar>
-                <div className="flex flex-col flex-1">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-[15px] font-medium text-gray-900 leading-tight">
-                      {u.name}
-                    </span>
-                    {u.status && (
-                      <span className="px-2 py-0.5 bg-[#F6F6F6] text-gray-600 text-[11px] font-medium rounded">
-                        {u.status}
+          {isUsersLoading ? (
+            <div className="flex items-center justify-center py-10">
+              <div className="w-6 h-6 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+            </div>
+          ) : (
+            filteredUsers.map((u) => (
+              <div
+                key={u._id}
+                className="flex flex-col sm:flex-row sm:items-center gap-4 p-3 border-b border-gray-100 last:border-0 hover:bg-gray-50/50"
+              >
+                <div className="flex items-center gap-4 w-full">
+                  <Checkbox
+                    checked={localSelected.has(u._id)}
+                    onCheckedChange={() => toggleUser(u._id)}
+                    className="rounded-[6px] border-gray-300 data-[state=checked]:bg-[#F06B30] data-[state=checked]:border-[#F06B30] size-5 shrink-0"
+                  />
+                  <Avatar className="size-[50px] shrink-0">
+                    <AvatarFallback className="bg-primary/10 text-primary">
+                      {u.name.charAt(0)}
+                    </AvatarFallback>
+                    <AvatarImage src="/assets/images/user1.png" alt={u.name} />
+                  </Avatar>
+                  <div className="flex flex-col flex-1">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="text-[15px] font-medium text-gray-900 leading-tight">
+                        {u.name}
                       </span>
-                    )}
+                      {u.status && (
+                        <span className="px-2 py-0.5 bg-[#F6F6F6] text-gray-600 text-[11px] font-medium rounded capitalize">
+                          {u.status}
+                        </span>
+                      )}
+                    </div>
+                    <span className="text-[13px] text-gray-500 mt-0.5 max-w-full truncate">
+                      {u.email}
+                    </span>
                   </div>
-                  <span className="text-[13px] text-gray-500 mt-0.5 max-w-full truncate">
-                    {u.email}
-                  </span>
                 </div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </div>
 

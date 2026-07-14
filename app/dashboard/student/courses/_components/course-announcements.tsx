@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { format } from "date-fns";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { MoreVertical } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -10,50 +11,61 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useGetAnnouncements } from "@/hooks/api/use-announcements";
 
-const MOCK_ANNOUNCEMENTS = [
-  {
-    id: 1,
-    author: {
-      name: "Aditya S.",
-      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Aditya",
-    },
-    date: "5d",
-    courseName: "Build AI Agents From Scrach Free Course",
-    content:
-      "Just 2 weeks left\n🚀 The Wait Is Over – Learn AI the MODERN Way in 2026!\n🤖🔥 Best for anyone who wants to get started in Gen AI and Agentic AI\nThe program is fully updated for the modern AI stacks and techniques.",
-  },
-  {
-    id: 2,
-    author: {
-      name: "Aditya S.",
-      image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Aditya",
-    },
-    date: "5d",
-    courseName: "Build AI Agents From Scrach Free Course",
-    content:
-      "Just 2 weeks left\n🚀 The Wait Is Over – Learn AI the MODERN Way in 2026!\n🤖🔥 Best for anyone who wants to get started in Gen AI and Agentic AI\nThe program is fully updated for the modern AI stacks and techniques.",
-  },
-];
+interface CourseAnnouncementsProps {
+  courseId: string;
+}
 
-export const CourseAnnouncements = () => {
+export const CourseAnnouncements = ({ courseId }: CourseAnnouncementsProps) => {
+  const { data, isLoading, isError } = useGetAnnouncements();
+
+  const courseAnnouncements = (data?.data?.announcement ?? []).filter((a) => {
+    const announcementCourseId =
+      typeof a.course === "string" ? a.course : a.course?._id;
+    return announcementCourseId === courseId;
+  });
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center py-16">
+        <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="flex items-center justify-center py-16 text-[15px] text-red-500">
+        Failed to load announcements. Please try again.
+      </div>
+    );
+  }
+
+  if (courseAnnouncements.length === 0) {
+    return (
+      <div className="flex items-center justify-center py-16 text-[15px] text-gray-500">
+        No announcements for this course yet.
+      </div>
+    );
+  }
+
   return (
     <div className="w-full flex flex-col gap-6 md:gap-8 max-w-4xl mx-auto py-4">
-      {MOCK_ANNOUNCEMENTS.map((announcement, index) => (
+      {courseAnnouncements.map((announcement) => (
         <div
-          key={announcement.id}
+          key={announcement._id}
           className="rounded-xl p-4 bg-white shadow-sm"
         >
           <AnnouncementCard
-            image={announcement.author.image}
-            name={announcement.author.name}
-            description={announcement.courseName}
-            date={announcement.date}
-            content={announcement.content}
+            name="Ayonaire Team"
+            date={
+              announcement.createdAt
+                ? format(new Date(announcement.createdAt), "d MMM")
+                : ""
+            }
+            content={announcement.summary}
           />
-          {/* {index < MOCK_ANNOUNCEMENTS.length - 1 && (
-            <div className="w-full h-px bg-gray-100 mt-6 md:mt-8" />
-          )} */}
         </div>
       ))}
     </div>
@@ -140,7 +152,8 @@ const AnnouncementCard = ({
               {name}
             </span>
             <span className="text-sm md:text-sm text-gray-500">
-              {date} • {description}
+              {date}
+              {description ? ` • ${description}` : ""}
             </span>
           </div>
         </div>

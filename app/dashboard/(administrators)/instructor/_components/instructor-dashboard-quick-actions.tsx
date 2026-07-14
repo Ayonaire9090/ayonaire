@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/navigation";
 import {
   Carousel,
   CarouselContent,
@@ -17,25 +18,31 @@ const BasicQuickActions = [
     title: "Create Course",
     icon: BookOpen,
     iconColor: "#F86432",
+    href: "/dashboard/instructor/courses",
   },
   {
     title: "Create Assignment",
     icon: NotebookText,
     iconColor: "#A855F7",
+    href: "/dashboard/instructor/assignments/create",
   },
   {
     title: "Create Quiz",
     icon: LayoutGrid,
     iconColor: "#A855F7",
+    href: "/dashboard/instructor/quiz/create",
   },
   {
     title: "Send Announcement",
     icon: Megaphone,
     iconColor: "#10B981",
+    href: "/dashboard/instructor/communication",
   },
 ];
 
 export const InstructorDashboardQuickActions = () => {
+  const router = useRouter();
+
   return (
     <div className="py-4 md:py-8 space-y-3">
       <h2 className="text-xl md:text-2xl font-bold">Quick Actions</h2>
@@ -60,6 +67,7 @@ export const InstructorDashboardQuickActions = () => {
                   title={action.title}
                   icon={action.icon}
                   iconColor={action.iconColor}
+                  onClick={() => router.push(action.href)}
                 />
               </CarouselItem>
             ))}
@@ -75,6 +83,7 @@ export const InstructorDashboardQuickActions = () => {
             title={action.title}
             icon={action.icon}
             iconColor={action.iconColor}
+            onClick={() => router.push(action.href)}
           />
         ))}
       </div>
@@ -86,15 +95,18 @@ interface InstructorDashboardAnalyticsCardProps {
   title: string;
   icon: LucideIcon;
   iconColor: string;
+  onClick?: () => void;
 }
 
 export const InstructorDashboardSectionFeatureCard = ({
   title,
   icon: Icon,
   iconColor,
+  onClick,
 }: InstructorDashboardAnalyticsCardProps) => {
   return (
     <div
+      onClick={onClick}
       className={`rounded-[10px]! px-4 py-5 space-y-3 bg-white h-[130px] flex justify-center items-center cursor-pointer scale-100 hover:scale-105 transition-all transform group`}
     >
       <div className="flex items-center gap-2">

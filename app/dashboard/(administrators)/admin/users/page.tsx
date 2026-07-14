@@ -15,18 +15,10 @@ import { Plus, Search, ChevronDown, X } from "lucide-react";
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 import { AdminDashboardButton } from "@/components/dashboard/admin-dashboard-button";
 import { StatsSummary } from "../../../../../components/dashboard/stats-summary";
-import { usersData } from "./_components/users-data";
+import { mapUserProfileToUserData } from "./_components/users-data";
 import { UsersTable } from "./_components/users-table";
 import { UsersList } from "./_components/users-list";
-
-const mockSummaryData = [
-  { title: "All", number: "44" },
-  { title: "Active", number: "20" },
-  { title: "Pending Cancellation", number: "1" },
-  { title: "Pending Payment", number: "3" },
-  { title: "On Hold", number: "4" },
-  { title: "Cancelled", number: "16" },
-];
+import { useGetAdminUsers } from "@/hooks/api/use-admin";
 
 function FilterPopoverHeader({ title }: { title: string }) {
   return (
@@ -95,6 +87,29 @@ export default function AdminUsersPage() {
   );
   const [searchQuery, setSearchQuery] = useState("");
   const [addUserOpen, setAddUserOpen] = useState(false);
+
+  const { data, isLoading, isError } = useGetAdminUsers();
+  const usersData = (data?.users ?? []).map(mapUserProfileToUserData);
+
+  const summaryData = [
+    { title: "All", number: String(usersData.length) },
+    {
+      title: "Active",
+      number: String(usersData.filter((u) => u.status === "Active").length),
+    },
+    {
+      title: "Suspended",
+      number: String(
+        usersData.filter((u) => u.status === "Suspended").length,
+      ),
+    },
+    {
+      title: "Deactivated",
+      number: String(
+        usersData.filter((u) => u.status === "Deactivate").length,
+      ),
+    },
+  ];
 
   // Instructor filter states
   const [selectedStatuses, setSelectedStatuses] = useState<Set<string>>(
@@ -302,7 +317,7 @@ export default function AdminUsersPage() {
       />
 
       {/* Stats Summary */}
-      <StatsSummary data={mockSummaryData} />
+      <StatsSummary data={summaryData} />
 
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8 mt-8 md:mt-0 w-full">
         <div className="flex justify-between items-center md:block">
@@ -488,8 +503,20 @@ export default function AdminUsersPage() {
           )}
         </div>
 
-        <UsersTable data={filteredUsers} isInstructor={isInstructor} />
-        <UsersList data={filteredUsers} isInstructor={isInstructor} />
+        {isLoading ? (
+          <div className="flex items-center justify-center py-16">
+            <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+          </div>
+        ) : isError ? (
+          <div className="flex items-center justify-center py-16 text-[15px] text-red-500">
+            Failed to load users. Please try again.
+          </div>
+        ) : (
+          <>
+            <UsersTable data={filteredUsers} isInstructor={isInstructor} />
+            <UsersList data={filteredUsers} isInstructor={isInstructor} />
+          </>
+        )}
       </div>
     </div>
   );

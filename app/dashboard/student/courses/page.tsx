@@ -1,6 +1,5 @@
 "use client";
 
-import { courses } from "@/constants";
 import { StudentDashboardHeader } from "../_components/student-dashboard-header";
 import { BookOpen, Search, ChevronDown } from "lucide-react";
 import { AppSection } from "@/components/app-section";
@@ -14,33 +13,41 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { StudentHomeSidebarContent } from "../_components/student-home-sidebar-content";
+import { useGetEnrolledCourses } from "@/hooks/api/use-enrollment";
+
+function deriveStatus(completed: boolean, progress: number): CourseStatus {
+  if (completed) return "Completed";
+  if (progress > 0) return "In Progress";
+  return "Not Started";
+}
 
 function StudentCoursesContent() {
   const [activeTab, setActiveTab] = useState("All");
   const { state } = useSidebar();
 
+  // "Expired"/"Paid" have no backend equivalent (enrollments don't carry a
+  // payment or expiry status), so those tabs are left non-functional rather
+  // than filtering against a guessed field.
   const tabs = ["All", "In Progress", "Completed", "Expired", "Paid"];
 
-  // Flatten courses and assign mock statuses for UI demonstration
-  const allCourses = courses
-    .flatMap((c) => c.courses)
-    .map((c, i) => {
-      let status: CourseStatus = "Not Started";
-      let progress = 0;
-      let chaptersCompleted = 0;
+  const { data, isLoading, isError } = useGetEnrolledCourses();
 
-      if (i % 4 === 1) {
-        status = "In Progress";
-        progress = 33;
-        chaptersCompleted = 15;
-      } else if (i % 4 === 2) {
-        status = "Completed";
-        progress = 100;
-        chaptersCompleted = 15;
-      }
+  const allCourses = (data?.enrollments ?? []).map((enrollment) => {
+    const course =
+      typeof enrollment.course === "string" ? null : enrollment.course;
+    const status = deriveStatus(enrollment.completed, enrollment.progress);
 
-      return { ...c, status, progress, chaptersCompleted };
-    });
+    return {
+      id: enrollment._id,
+      title: course?.title ?? "Unknown Course",
+      description: course?.description ?? "No description available",
+      imageSrc: course?.thumbnail || "/assets/images/optin-hero.png",
+      slug: course?.slug || course?._id || enrollment._id,
+      status,
+      progress: enrollment.progress ?? 0,
+      chaptersCompleted: enrollment.comletedLessons?.length ?? 0,
+    };
+  });
 
   const filteredCourses = allCourses.filter((c) => {
     if (activeTab === "All") return true;
@@ -108,11 +115,19 @@ function StudentCoursesContent() {
 
         {/* Courses Grid */}
         <div className="w-full px-4 lg:px-8 mx-auto py-8 lg:py-12">
-          {filteredCourses.length > 0 ? (
+          {isLoading ? (
+            <div className="flex items-center justify-center py-20">
+              <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+            </div>
+          ) : isError ? (
+            <div className="flex items-center justify-center py-20 text-[15px] text-red-500">
+              Failed to load courses. Please try again.
+            </div>
+          ) : filteredCourses.length > 0 ? (
             <div className="grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-5">
-              {filteredCourses.map((course, idx) => (
+              {filteredCourses.map((course) => (
                 <StudentCourseCard
-                  key={idx}
+                  key={course.id}
                   title={course.title}
                   description={course.description}
                   imageSrc={course.imageSrc}

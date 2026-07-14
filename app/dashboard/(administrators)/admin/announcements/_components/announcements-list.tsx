@@ -6,18 +6,21 @@ import { Search, Plus } from "lucide-react";
 import {
   AnnouncementStatusBadge,
   AnnouncementActions,
-  mockAnnouncements,
+  mapAnnouncementToAnnouncementData,
 } from "./announcements-data";
 import { Input } from "@/components/ui/input";
 import { AdminDashboardButton } from "@/components/dashboard/admin-dashboard-button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { AnnouncementBanner } from "./announcement-banner";
 import { CreateAnnouncementModal } from "./create-announcement-modal";
+import { useGetAnnouncements } from "@/hooks/api/use-announcements";
 
 export const AnnouncementsList = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [isEmptyState, setIsEmptyState] = useState(true); // Demonstrating empty state
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const { data, isLoading, isError } = useGetAnnouncements();
+  const announcements = (data?.data?.announcement ?? []).map(mapAnnouncementToAnnouncementData);
 
   return (
     <div className="md:hidden mt-2 bg-white rounded-xl p-2 lg:p-4 relative">
@@ -41,18 +44,22 @@ export const AnnouncementsList = () => {
               className="pl-11 rounded-full border-none bg-[#F6F6F6] h-11 text-[15px] placeholder:text-gray-400 focus-visible:ring-0 focus-visible:bg-gray-100 shadow-none"
             />
           </div>
-          {/* Apply / Toggle Data button for mobile to verify */}
-          <button
-            onClick={() => setIsEmptyState(!isEmptyState)}
-            className="mt-2 text-sm text-primary font-medium hover:underline"
-          >
-            Toggle mock data
-          </button>
         </div>
       </div>
 
+      {isLoading ? (
+        <div className="flex items-center justify-center py-16">
+          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+        </div>
+      ) : isError ? (
+        <div className="flex items-center justify-center py-16 text-[15px] text-red-500">
+          Failed to load announcements. Please try again.
+        </div>
+      ) : announcements.length === 0 ? (
+        <AnnouncementBanner />
+      ) : (
       <DataList
-        data={(isEmptyState ? [] : mockAnnouncements).filter((item) =>
+        data={announcements.filter((item) =>
           item.title.toLowerCase().includes(searchQuery.toLowerCase()),
         )}
         keyExtractor={(c) => c.id}
@@ -87,6 +94,7 @@ export const AnnouncementsList = () => {
           </div>
         )}
       />
+      )}
 
       {/* Mobile-only float action */}
       <div className="md:hidden fixed flex justify-center items-center right-3 top-[50%] translate-y-[-50%] z-90">

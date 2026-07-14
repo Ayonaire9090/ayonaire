@@ -1,3 +1,5 @@
+"use client";
+
 import {
   ChartPie,
   FileQuestionMark,
@@ -5,54 +7,74 @@ import {
   NotebookPen,
   Users,
 } from "lucide-react";
-
-const dummyAnalytics: InstructorStudentCourseSummaryAnalyticsCardProps[] = [
-  {
-    icon: Users,
-    title: "Total Students",
-    description: "45",
-    sideContent: (
-      <span className="p-1 rounded bg-[#F0FDF4] text-green-700 text-sm font-semibold">
-        +12%
-      </span>
-    ),
-  },
-  {
-    icon: NotebookPen,
-    title: "Assignments",
-    description: "6",
-  },
-  {
-    icon: FileQuestionMark,
-    title: "Quizzes",
-    description: "4",
-  },
-  {
-    icon: ChartPie,
-    title: "Completion Rate",
-    description: "68%",
-    sideContent: (
-      <div className="w-10">
-        <div className="h-2 bg-gray-100 rounded-full">
-          <div className="h-full w-[68%] bg-primary rounded-full" />
-        </div>
-      </div>
-    ), //simulate a progressbar
-  },
-];
+import { useInstructorStudentRoster } from "./instructor-student-data";
+import { useGetQuizzes } from "@/hooks/api/use-quiz";
+import { isOwnQuiz } from "../../quiz/_components/instructor-quiz-data";
+import { useAuthStore } from "@/store/auth.store";
 
 export const InstructorStudentCourseSummaryAnalytics = () => {
+  const user = useAuthStore((state) => state.user);
+  const { students } = useInstructorStudentRoster();
+  const { data: quizzesData } = useGetQuizzes();
+  const quizCount = (quizzesData?.data ?? []).filter((quiz) =>
+    isOwnQuiz(quiz, user?._id),
+  ).length;
+
+  const completionRate =
+    students.length > 0
+      ? Math.round(
+          (students.filter((s) => s.status === "Completed").length /
+            students.length) *
+            100,
+        )
+      : 0;
+
+  // "Assignments" has no known backend source yet (no assignment/grading
+  // endpoint), so it falls back to "-" rather than a guessed number.
+  const analytics: InstructorStudentCourseSummaryAnalyticsCardProps[] = [
+    {
+      icon: Users,
+      title: "Total Students",
+      description: String(students.length),
+    },
+    {
+      icon: NotebookPen,
+      title: "Assignments",
+      description: "-",
+    },
+    {
+      icon: FileQuestionMark,
+      title: "Quizzes",
+      description: String(quizCount),
+    },
+    {
+      icon: ChartPie,
+      title: "Completion Rate",
+      description: `${completionRate}%`,
+      sideContent: (
+        <div className="w-10">
+          <div className="h-2 bg-gray-100 rounded-full">
+            <div
+              className="h-full bg-primary rounded-full"
+              style={{ width: `${completionRate}%` }}
+            />
+          </div>
+        </div>
+      ),
+    },
+  ];
+
   return (
     <>
       <h2 className="text-xl lg:text-2xl font-bold py-2">Course Summary</h2>
       <div className="flex overflow-x-auto hide-scrollbar items-center md:grid lg:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {dummyAnalytics.map((analytics, idx) => (
+        {analytics.map((item, idx) => (
           <InstructorStudentCourseSummaryAnalyticsCard
             key={idx}
-            title={analytics.title}
-            description={analytics.description}
-            icon={analytics.icon}
-            sideContent={analytics.sideContent}
+            title={item.title}
+            description={item.description}
+            icon={item.icon}
+            sideContent={item.sideContent}
           />
         ))}
       </div>

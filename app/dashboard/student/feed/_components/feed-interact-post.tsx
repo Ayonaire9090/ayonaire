@@ -1,22 +1,41 @@
-import { Share2, Link } from "lucide-react";
+"use client";
+
 import Image from "next/image";
+import { useLikeFeedMutation } from "@/hooks/api/use-feeds";
 
 interface FeedInteractPostProps {
-  likes?: number | string;
-  comments?: number | string;
-  views?: number | string;
+  feedId?: string;
+  likes?: number;
+  comments?: number;
+  isLikedByMe?: boolean;
 }
 
 export const FeedInteractPost = ({
-  likes = 24,
+  feedId,
+  likes = 0,
   comments = 0,
-  views = "3k",
+  isLikedByMe = false,
 }: FeedInteractPostProps) => {
+  const likeMutation = useLikeFeedMutation();
+
+  const handleLike = () => {
+    if (!feedId || likeMutation.isPending) return;
+    likeMutation.mutate(feedId);
+  };
+
   return (
     <div className="flex justify-between items-center border-t border-b border-gray-100 py-3">
       {/* Left Stats */}
       <div className="flex items-center gap-5">
-        <button className="flex gap-2 items-center text-gray-500 hover:text-gray-900 transition-colors group">
+        <button
+          onClick={handleLike}
+          disabled={!feedId || likeMutation.isPending}
+          className={`flex gap-2 items-center transition-colors group disabled:cursor-default ${
+            isLikedByMe
+              ? "text-[#F86432]"
+              : "text-gray-500 hover:text-gray-900"
+          }`}
+        >
           <Image
             src="/assets/icons/heart-like.svg"
             alt="Like"
@@ -26,26 +45,16 @@ export const FeedInteractPost = ({
           />
           <span className="text-[15px] font-medium">{likes}</span>
         </button>
-        <button className="flex gap-2 items-center text-gray-500 hover:text-gray-900 transition-colors group">
+        <div className="flex gap-2 items-center text-gray-500">
           <Image
             src="/assets/icons/chat-round.svg"
             alt="Comment"
             width={22}
             height={22}
-            className="cursor-pointer opacity-70 group-hover:opacity-100 transition-opacity"
+            className="opacity-70"
           />
           <span className="text-[15px] font-medium">{comments}</span>
-        </button>
-        <button className="flex gap-2 items-center text-gray-500 hover:text-gray-900 transition-colors group">
-          <Image
-            src="/assets/icons/icon-eye.svg"
-            alt="Views"
-            width={22}
-            height={22}
-            className="cursor-pointer opacity-70 group-hover:opacity-100 transition-opacity"
-          />
-          <span className="text-[15px] font-medium">{views}</span>
-        </button>
+        </div>
       </div>
 
       {/* Right Share Buttons */}

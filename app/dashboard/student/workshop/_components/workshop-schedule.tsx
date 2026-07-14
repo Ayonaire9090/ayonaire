@@ -1,5 +1,6 @@
 import { MoreHorizontal, Video } from "lucide-react";
 import React from "react";
+import { StudentWorkshop } from "./workshop-data";
 
 export interface WorkshopScheduleCardProps {
   label: string;
@@ -101,38 +102,25 @@ export const WorkshopScheduleCard = ({
   );
 };
 
-const scheduleData = [
-  {
-    label: "Today",
-    isLive: true,
-    time: "09:00 AM - 01:00 PM",
-    month: "Mar",
-    day: "12",
-    title: "Building RAG Agents with LangChain",
-    author: "Ayobami Awosanya",
-    endTime: "2h:30min 2sec",
-  },
-  {
-    label: "Tomorrow",
-    isLive: true,
-    time: "09:00 AM - 01:00 PM",
-    month: "Mar",
-    day: "20",
-    title: "Intro to MLOps",
-    author: "Ayobami Awosanya",
-    endTime: "2h:30min 2sec",
-  },
-];
-
 export const WorkshopSchedule = ({
+  workshops,
   className = "",
 }: {
+  workshops: StudentWorkshop[];
   className?: string;
 }) => {
+  if (workshops.length === 0) {
+    return (
+      <div className={`flex items-center justify-center py-8 text-[15px] text-gray-500 ${className}`}>
+        No workshops scheduled for today.
+      </div>
+    );
+  }
+
   return (
     <div className={`flex flex-col gap-4 ${className}`}>
-      {scheduleData.map((item, i) => (
-        <WorkshopScheduleCard key={i} {...item} />
+      {workshops.map((item) => (
+        <WorkshopScheduleCard key={item.id} {...item} />
       ))}
     </div>
   );

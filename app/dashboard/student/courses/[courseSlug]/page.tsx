@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, use } from "react";
-import { courses } from "@/constants";
-import { notFound } from "next/navigation";
+import { useGetCourseById } from "@/hooks/api/use-courses";
+import { useResumeLastLesson } from "@/hooks/api/use-lessons";
 import { LessonHeader } from "../_components/lesson-header";
 import { LessonVideoPlayer } from "../_components/lesson-video-player";
 import { LessonTabs } from "../_components/lesson-tabs";
@@ -30,16 +30,21 @@ export default function StudentCourseLessonPage({
   const [activeTab, setActiveTab] = useState("Course Content");
   const [isSheetOpen, setIsSheetOpen] = useState(false);
 
-  // Find the course by slug
-  const allCourses = courses.flatMap((c) => c.courses);
-  const course = allCourses.find((c) => c.slug === resolvedParams.courseSlug);
-
-  if (!course) {
-    // In a real app we might redirect or show a 404, for now let's just fall back to a mock title
-    // return notFound();
-  }
+  // Course listing links here with course.slug ?? course._id (no confirmed
+  // backend slug field exists yet - see Student Courses fix), so this is
+  // treated as a course id. getById() will 404/error if it's actually a
+  // marketing-catalog slug instead, in which case the fallback title below
+  // is used rather than crashing the page.
+  const { data } = useGetCourseById(resolvedParams.courseSlug);
+  const course = data?.data;
 
   const title = course?.title || "Prompt Engineering for AI Systems";
+
+  // Tells the player which lesson to load. No confirmed response shape for
+  // this endpoint exists yet (see ResumeLessonInfo) - falls back to letting
+  // the player show its placeholder video if no lessonId comes back.
+  const { data: resumeData } = useResumeLastLesson(resolvedParams.courseSlug);
+  const lessonId = resumeData?.data?.lessonId;
 
   return (
     <>
@@ -62,7 +67,10 @@ export default function StudentCourseLessonPage({
           <div className="bg-black w-full flex flex-col">
             <LessonHeader title={title} />
             <div className="w-full relative">
-              <LessonVideoPlayer onOpenChapters={() => setIsSheetOpen(true)} />
+              <LessonVideoPlayer
+                lessonId={lessonId}
+                onOpenChapters={() => setIsSheetOpen(true)}
+              />
             </div>
           </div>
 
@@ -87,7 +95,7 @@ export default function StudentCourseLessonPage({
                 </div>
               ) : activeTab === "Overview" ? (
                 <div className="max-w-4xl mx-auto w-full pt-4">
-                  <CourseOverview title={title} />
+                  <CourseOverview title={title} description={course?.description} />
                 </div>
               ) : activeTab === "Resources" ? (
                 <div className="max-w-4xl mx-auto w-full pt-4">
@@ -103,7 +111,7 @@ export default function StudentCourseLessonPage({
                 </div>
               ) : activeTab === "Announcement" ? (
                 <div className="max-w-3xl mx-auto w-full">
-                  <CourseAnnouncements />
+                  <CourseAnnouncements courseId={resolvedParams.courseSlug} />
                 </div>
               ) : activeTab === "Reviews" ? (
                 <div className="max-w-5xl mx-auto w-full">

@@ -1,6 +1,27 @@
 import { apiClient } from "../client";
 import { ApiResponse } from "../types";
 
+// Shape returned by the backend for a single feed post. NOTE: field names
+// are a best-effort guess (no feed GET response has been confirmed against
+// the backend yet) - adjust once confirmed.
+export interface FeedComment {
+  _id: string;
+  text: string;
+  user?: string | { _id: string; name: string };
+  createdAt?: string;
+}
+
+export interface FeedRecord {
+  _id: string;
+  text?: string;
+  image?: string;
+  tags?: string[];
+  createdBy?: string | { _id: string; name: string };
+  likes?: string[];
+  comments?: FeedComment[];
+  createdAt?: string;
+}
+
 export const feedsApi = {
   create: (formData: FormData) =>
     apiClient<ApiResponse>("/api/v1/feed", {
@@ -11,7 +32,7 @@ export const feedsApi = {
     }),
 
   getAll: () =>
-    apiClient<ApiResponse>("/api/v1/feed", {
+    apiClient<ApiResponse<FeedRecord[]>>("/api/v1/feed", {
       method: "GET",
       requireAuth: true,
     }),

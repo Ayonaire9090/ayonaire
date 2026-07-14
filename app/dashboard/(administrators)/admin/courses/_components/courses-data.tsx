@@ -2,6 +2,7 @@ import { Edit, MoreVertical, Trash2 } from "lucide-react";
 import { AppDropdown, AppDropdownItem, AppDropdownSeparator } from "@/components/ui/app-dropdown";
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
+import { Course } from "@/lib/api/endpoints/courses";
 
 export type CourseStatus = "Active" | "Draft" | "Pending" | "Private";
 
@@ -16,14 +17,40 @@ export interface CourseData {
   enrollments: number;
 }
 
-export const mockCourses: CourseData[] = [
-  { id: "1", courseId: "C-101", title: "Complete Python Bootcamp", category: "Programming", instructor: "Savannah Nguyen", price: 49, status: "Draft", enrollments: 447 },
-  { id: "2", courseId: "C-225", title: "Digital Marketing 101", category: "Marketing", instructor: "Courtney Henry", price: 29, status: "Active", enrollments: 398 },
-  { id: "3", courseId: "C-330", title: "UI/UX from Zero to Hero", category: "Design", instructor: "Leslie Alexander", price: 59, status: "Draft", enrollments: 426 },
-  { id: "4", courseId: "C-412", title: "AI for Beginners", category: "Programming", instructor: "Ronald Richards", price: 39, status: "Draft", enrollments: 532 },
-  { id: "5", courseId: "C-515", title: "React & Node Masterclass", category: "Programming", instructor: "Darrell Steward", price: 79, status: "Pending", enrollments: 423 },
-  { id: "6", courseId: "C-628", title: "Digital Marketing 101", category: "Marketing", instructor: "Ralph Edwards", price: 69, status: "Private", enrollments: 369 },
-];
+const VALID_STATUSES: CourseStatus[] = ["Active", "Draft", "Pending", "Private"];
+
+// Backend status casing isn't confirmed yet, so normalize defensively and fall
+// back to "Draft" for anything unrecognized rather than crashing the badge.
+function normalizeStatus(status?: string): CourseStatus {
+  if (!status) return "Draft";
+  const match = VALID_STATUSES.find(
+    (s) => s.toLowerCase() === status.toLowerCase(),
+  );
+  return match ?? "Draft";
+}
+
+export function mapCourseToCourseData(course: Course): CourseData {
+  const category =
+    typeof course.category === "string"
+      ? course.category
+      : course.category?.title ?? "Uncategorized";
+
+  const instructor =
+    typeof course.instructor === "string"
+      ? course.instructor
+      : course.instructor?.name ?? "Unassigned";
+
+  return {
+    id: course._id,
+    courseId: `C-${course._id.slice(-6).toUpperCase()}`,
+    title: course.title,
+    category,
+    instructor,
+    price: course.price ?? 0,
+    status: normalizeStatus(course.status),
+    enrollments: course.enrollmentCount ?? 0,
+  };
+}
 
 export function CourseStatusBadge({ status }: { status: CourseStatus }) {
   const getStyle = (s: CourseStatus) => {

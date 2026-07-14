@@ -8,8 +8,17 @@ import { FeedUpcomingWorkShops } from "./_components/feed-upcomming-workshops";
 import { FeedLeaderBoard } from "./_components/feed-leaderboard";
 import { FeedFilter } from "./_components/feed-filter";
 import { FeedCriteriaModal } from "./_components/feed-leaderboard-criteria-modal";
+import { useGetFeeds } from "@/hooks/api/use-feeds";
+import { useAuthStore } from "@/store/auth.store";
+import { mapFeedRecordToFeedPost } from "./_components/feed-data";
 
 export default function StudentFeedPage() {
+  const user = useAuthStore((state) => state.user);
+  const { data, isLoading, isError } = useGetFeeds();
+  const posts = (data?.data ?? []).map((feed) =>
+    mapFeedRecordToFeedPost(feed, user?._id),
+  );
+
   return (
     <div className="flex flex-1 flex-col lg:grid grid-cols-3 gap-4 p-0 lg:p-6 pb-24 md:pb-6">
       <div className="@container/main flex flex-1 flex-col gap-6 lg:col-span-2">
@@ -22,35 +31,34 @@ export default function StudentFeedPage() {
           <FeedFilter />
 
           {/* Posts */}
-          <FeedPost
-            authorName="Aditya S."
-            authorSubtitle="5d • Build AI Agents From Scrach Free Course"
-            isPinned={true}
-            textContent="Just 2 weeks left🚀 The Wait Is Over — Learn AI the MODERN Way in 2026! 🤖🔥 Best for anyone who wants to get started in Gen AI and Agentic AI The... See more"
-            imageUrl="/assets/courses/ai-engineering.webp"
-          />
-
-          <FeedPost
-            authorName="Aditya S."
-            authorSubtitle="in about 7 hours"
-            tags={["DeepLearning", "ComputerVision", "Python"]}
-            textContent="Finally built my first image classifier! 87% accuracy i Code: https://github.com/aditya/cnn-project"
-          />
-
-          <FeedPost
-            authorName="Ayobami Awosanya"
-            authorSubtitle="1y • Ultimate Data Science & Gen AI - 1.0... +19"
-            isPoll={true}
-            pollQuestion="Which of the following best describes situated AI agents?"
-            pollSubtitle="Also comment the reasons for your answers"
-            pollOptions={[
-              { text: "Dynamic interaction & learning", percentage: 84.34 },
-              { text: "Static environment", percentage: 3.02 },
-              { text: "Structured data only", percentage: 3.02 },
-              { text: "No feedback", percentage: 8.52 },
-            ]}
-            pollTotalVotes="364 votes"
-          />
+          {isLoading ? (
+            <div className="flex items-center justify-center py-16">
+              <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+            </div>
+          ) : isError ? (
+            <div className="flex items-center justify-center py-16 text-[15px] text-red-500">
+              Failed to load posts. Please try again.
+            </div>
+          ) : posts.length === 0 ? (
+            <div className="flex items-center justify-center py-16 text-[15px] text-gray-500">
+              No posts yet. Be the first to share something!
+            </div>
+          ) : (
+            posts.map((post) => (
+              <FeedPost
+                key={post.id}
+                feedId={post.id}
+                authorName={post.authorName}
+                authorSubtitle={post.authorSubtitle}
+                tags={post.tags}
+                textContent={post.textContent}
+                imageUrl={post.imageUrl}
+                likesCount={post.likesCount}
+                commentsCount={post.commentsCount}
+                isLikedByMe={post.isLikedByMe}
+              />
+            ))
+          )}
         </div>
       </div>
 

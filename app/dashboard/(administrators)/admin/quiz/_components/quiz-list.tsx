@@ -2,10 +2,11 @@
 
 import React from "react";
 import { DataList } from "@/components/ui/data-list";
-import { mockQuiz } from "./quiz-data";
+import { mapQuizRecordToQuiz } from "./quiz-data";
 import { QuizActions } from "./quiz-actions";
 import { Checkbox } from "@/components/ui/checkbox";
 import { QuizFilters } from "./quiz-filters";
+import { useGetQuizzes } from "@/hooks/api/use-quiz";
 
 const getStatusStyle = (status: string) => {
   switch (status) {
@@ -38,12 +39,28 @@ const getProgressBarColor = (status: string) => {
 };
 
 export const QuizList = () => {
+  const { data, isLoading, isError } = useGetQuizzes();
+  const quizzes = (data?.data ?? []).map(mapQuizRecordToQuiz);
+
   return (
     <>
       <QuizFilters />
       <div className="w-full bg-white p-4 rounded-xl">
+        {isLoading ? (
+          <div className="flex items-center justify-center py-16">
+            <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+          </div>
+        ) : isError ? (
+          <div className="flex items-center justify-center py-16 text-[15px] text-red-500">
+            Failed to load quizzes. Please try again.
+          </div>
+        ) : quizzes.length === 0 ? (
+          <div className="flex items-center justify-center py-16 text-[15px] text-gray-500">
+            No quizzes found.
+          </div>
+        ) : (
         <DataList
-          data={mockQuiz}
+          data={quizzes}
           keyExtractor={(item) => item.id}
           renderItem={(item) => {
             const percentage = Math.min(
@@ -124,6 +141,7 @@ export const QuizList = () => {
             );
           }}
         />
+        )}
       </div>
     </>
   );

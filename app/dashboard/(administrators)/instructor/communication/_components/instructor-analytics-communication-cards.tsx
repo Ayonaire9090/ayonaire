@@ -1,32 +1,40 @@
-import { LayoutGrid, LucideIcon, Pen, Send } from "lucide-react";
+"use client";
 
-export const BasicAnalytics: InstructorDashboardAnalyticsCardProps[] = [
-  {
-    icon: LayoutGrid,
-    title: "Total Announcements",
-    description: "128",
-    iconColor: "text-[#A855F7]",
-    iconBackground: "bg-[#A855F7]/10",
-  },
-  {
-    icon: Send,
-    title: "Sent",
-    description: "114",
-    iconColor: "text-[#197FE6]",
-    iconBackground: "bg-[#197FE6]/10",
-  },
-  {
-    icon: Pen,
-    title: "Drafts",
-    description: "14",
-    iconColor: "text-[#F86432]",
-    iconBackground: "bg-[#F86432]/10",
-  },
-];
+import { LayoutGrid, LucideIcon, Pen, Send } from "lucide-react";
+import { useGetAnnouncements } from "@/hooks/api/use-announcements";
+
 export const InstructorAnalyticsCommunicationCards = () => {
+  const { data } = useGetAnnouncements();
+  const announcements = data?.data?.announcement ?? [];
+  // Backend has no draft state - every created announcement counts as
+  // "Sent", so Drafts is always 0 until that's supported.
+  const analytics: InstructorDashboardAnalyticsCardProps[] = [
+    {
+      icon: LayoutGrid,
+      title: "Total Announcements",
+      description: String(announcements.length),
+      iconColor: "text-[#A855F7]",
+      iconBackground: "bg-[#A855F7]/10",
+    },
+    {
+      icon: Send,
+      title: "Sent",
+      description: String(announcements.length),
+      iconColor: "text-[#197FE6]",
+      iconBackground: "bg-[#197FE6]/10",
+    },
+    {
+      icon: Pen,
+      title: "Drafts",
+      description: "0",
+      iconColor: "text-[#F86432]",
+      iconBackground: "bg-[#F86432]/10",
+    },
+  ];
+
   return (
     <div className="flex items-center overflow-x-auto gap-4 hide-scrollbar lg:grid lg:grid-cols-3">
-      {BasicAnalytics.map((analytic, index) => (
+      {analytics.map((analytic, index) => (
         <InstructorAnalyticsCommunicationCard
           key={index}
           title={analytic.title}

@@ -6,6 +6,7 @@ import { AppInput } from "@/components/ui/app-input";
 import { AppSelect, AppSelectOption } from "@/components/ui/app-select";
 import { Textarea } from "@/components/ui/textarea";
 import { Link2 } from "lucide-react";
+import { useGetCourses } from "@/hooks/api/use-courses";
 
 interface InstructorAnnouncementQuickCreateModalProps {
   isOpen: boolean;
@@ -13,20 +14,16 @@ interface InstructorAnnouncementQuickCreateModalProps {
   onSubmit?: (data: {
     title: string;
     cohort: string;
-    course: string;
+    courseId: string;
     scheduleDate?: string;
     message: string;
     status: "Sent" | "Draft";
   }) => void;
 }
 
+// No cohorts-list endpoint exists yet, so this stays a decorative,
+// unwired select.
 const cohortOptions: AppSelectOption[] = [
-  { label: "UI UX Designing", value: "ui-ux" },
-  { label: "AI Engineering", value: "ai-eng" },
-  { label: "Data Science", value: "data-sci" },
-];
-
-const courseOptions: AppSelectOption[] = [
   { label: "UI UX Designing", value: "ui-ux" },
   { label: "AI Engineering", value: "ai-eng" },
   { label: "Data Science", value: "data-sci" },
@@ -39,15 +36,20 @@ export const InstructorAnnouncementQuickCreateModal = ({
 }: InstructorAnnouncementQuickCreateModalProps) => {
   const [title, setTitle] = useState("");
   const [cohort, setCohort] = useState("");
-  const [course, setCourse] = useState("");
+  const [courseId, setCourseId] = useState("");
   const [scheduleDate, setScheduleDate] = useState("");
   const [message, setMessage] = useState("");
+
+  const { data: coursesData } = useGetCourses();
+  const courseOptions: AppSelectOption[] = (coursesData?.data ?? []).map(
+    (course) => ({ label: course.title, value: course._id }),
+  );
 
   const handleAction = (status: "Sent" | "Draft") => {
     onSubmit?.({
       title,
       cohort,
-      course,
+      courseId,
       scheduleDate,
       message,
       status,
@@ -55,7 +57,7 @@ export const InstructorAnnouncementQuickCreateModal = ({
     // Reset form
     setTitle("");
     setCohort("");
-    setCourse("");
+    setCourseId("");
     setScheduleDate("");
     setMessage("");
     onClose();
@@ -84,8 +86,9 @@ export const InstructorAnnouncementQuickCreateModal = ({
         </button>
         <button
           type="button"
+          disabled={!title.trim() || !message.trim()}
           onClick={() => handleAction("Sent")}
-          className="px-6 h-12 bg-[#FF7A59] hover:bg-[#FF7A59]/90 rounded-[12px] text-[15px] font-semibold text-white transition-all cursor-pointer"
+          className="px-6 h-12 bg-[#FF7A59] hover:bg-[#FF7A59]/90 rounded-[12px] text-[15px] font-semibold text-white transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Send Now
         </button>
@@ -123,10 +126,10 @@ export const InstructorAnnouncementQuickCreateModal = ({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <AppSelect
             label="Select Course"
-            placeholder="UI UX Designing"
+            placeholder="Select a course"
             options={courseOptions}
-            value={course}
-            onChange={setCourse}
+            value={courseId}
+            onChange={setCourseId}
           />
           <AppInput
             label="Schedule Date (Optional)"

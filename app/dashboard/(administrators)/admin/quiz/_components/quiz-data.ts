@@ -1,3 +1,5 @@
+import { QuizRecord } from "@/lib/api/endpoints/quiz";
+
 export type QuizStatus = "Published" | "Closed" | "Draft" | "Archived";
 
 export interface Quiz {
@@ -13,89 +15,44 @@ export interface Quiz {
   status: QuizStatus;
 }
 
-export const mockQuiz: Quiz[] = [
-  {
-    id: "q1",
-    title: "Machine Learning Final Project",
-    course: "AI Engineering",
-    class: "AI Automation 0.1",
-    createdBy: "Dr. Ahmad",
-    questions: 25,
-    totalStudents: 30,
-    submissions: 28,
-    avgScore: "82%",
-    status: "Published",
-  },
-  {
-    id: "q2",
-    title: "Neural Networks Quiz",
-    course: "Data Science",
-    class: "AI Automation 0.2",
-    createdBy: "Prof. Sara",
-    questions: 20,
-    totalStudents: 25,
-    submissions: 25,
-    avgScore: "82%",
-    status: "Closed",
-  },
-  {
-    id: "q3",
-    title: "React Components Assignment",
-    course: "Project Management",
-    class: "Web Development 0.3",
-    createdBy: "Mr. Ali",
-    questions: 15,
-    totalStudents: 0,
-    submissions: 35,
-    avgScore: "0%",
-    status: "Draft",
-  },
-  {
-    id: "q4",
-    title: "Data Visualization Project",
-    course: "Data Analytics",
-    class: "Data Science 0.4",
-    createdBy: "Ms. Fatima",
-    questions: 30,
-    totalStudents: 28,
-    submissions: 28,
-    avgScore: "91%",
-    status: "Published",
-  },
-  {
-    id: "q5",
-    title: "Machine Learning Final Project",
-    course: "Cyber Security",
-    class: "Web Development 0.5",
-    createdBy: "Dr. Ahmad",
-    questions: 10,
-    totalStudents: 25,
-    submissions: 20,
-    avgScore: "65%",
-    status: "Archived",
-  },
-  {
-    id: "q6",
-    title: "Data Visualization Project",
-    course: "Data Analytics",
-    class: "Data Science 0.6",
-    createdBy: "Ms. Fatima",
-    questions: 30,
-    totalStudents: 28,
-    submissions: 28,
-    avgScore: "91%",
-    status: "Published",
-  },
-  {
-    id: "q7",
-    title: "Machine Learning Final Project",
-    course: "Cyber Security",
-    class: "Web Development 0.7",
-    createdBy: "Dr. Ahmad",
-    questions: 10,
-    totalStudents: 25,
-    submissions: 20,
-    avgScore: "65%",
-    status: "Archived",
-  },
+const VALID_QUIZ_STATUSES: QuizStatus[] = [
+  "Published",
+  "Closed",
+  "Draft",
+  "Archived",
 ];
+
+function normalizeQuizStatus(status?: string): QuizStatus {
+  if (!status) return "Draft";
+  const match = VALID_QUIZ_STATUSES.find(
+    (s) => s.toLowerCase() === status.toLowerCase(),
+  );
+  return match ?? "Draft";
+}
+
+// totalStudents/submissions/avgScore have no known backend source yet (no
+// results/analytics endpoint exists) so they fall back to 0/"-" rather than
+// guessed numbers.
+export function mapQuizRecordToQuiz(quiz: QuizRecord): Quiz {
+  const moduleObj = typeof quiz.module === "object" ? quiz.module : undefined;
+  const course = moduleObj?.course?.title ?? "Uncategorized";
+  const cls = moduleObj?.title ?? "-";
+
+  const createdBy =
+    typeof quiz.createdBy === "string"
+      ? quiz.createdBy
+      : quiz.createdBy?.name ?? "-";
+
+  return {
+    id: quiz._id,
+    title: quiz.title,
+    course,
+    class: cls,
+    createdBy,
+    questions: quiz.questions?.length ?? 0,
+    totalStudents: 0,
+    submissions: 0,
+    avgScore: "-",
+    status: normalizeQuizStatus(quiz.status),
+  };
+}

@@ -17,6 +17,12 @@ import {
 } from "@/components/ui/popover";
 import { DataTable, ColumnDef } from "@/components/ui/data-table";
 import { DataList } from "@/components/ui/data-list";
+import { useGetEnrolledCourses } from "@/hooks/api/use-enrollment";
+import {
+  EnrollmentData,
+  EnrollmentStatusBadge,
+  mapEnrollmentToEnrollmentData,
+} from "./enrollments-data";
 
 interface EnrollmentsListProps {
   onEnrollClick: () => void;
@@ -26,13 +32,60 @@ export const EnrollmentsList = ({ onEnrollClick }: EnrollmentsListProps) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isBulkOpen, setIsBulkOpen] = useState(false);
 
-  // Mock columns since we have no data yet
-  const columns: ColumnDef<any>[] = [
-    { key: "studentName", header: "Student Name", cell: () => null },
-    { key: "course", header: "Course", cell: () => null },
-    { key: "date", header: "Date", cell: () => null },
-    { key: "status", header: "Status", cell: () => null },
-    { key: "action", header: "Action", cell: () => null },
+  const { data, isLoading, isError } = useGetEnrolledCourses();
+  const enrollments: EnrollmentData[] = (data?.enrollments ?? []).map(
+    mapEnrollmentToEnrollmentData,
+  );
+  const filteredEnrollments = enrollments.filter(
+    (e) =>
+      e.studentName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      e.course.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
+
+  const columns: ColumnDef<EnrollmentData>[] = [
+    {
+      key: "studentName",
+      header: "Student Name",
+      cell: (item) => (
+        <div className="flex flex-col">
+          <span className="font-medium text-[15px] text-gray-900">
+            {item.studentName}
+          </span>
+          {item.studentEmail && (
+            <span className="text-[13px] text-gray-400">
+              {item.studentEmail}
+            </span>
+          )}
+        </div>
+      ),
+    },
+    {
+      key: "course",
+      header: "Course",
+      cell: (item) => (
+        <span className="text-gray-600 text-[15px]">{item.course}</span>
+      ),
+    },
+    {
+      key: "date",
+      header: "Date",
+      cell: (item) => (
+        <span className="text-gray-600 text-[15px]">{item.date}</span>
+      ),
+    },
+    {
+      key: "status",
+      header: "Status",
+      cell: (item) => <EnrollmentStatusBadge status={item.status} />,
+    },
+    {
+      key: "action",
+      header: <div className="text-right">Action</div>,
+      className: "text-right",
+      cell: (item) => (
+        <span className="text-gray-600 text-[15px]">{item.progress}%</span>
+      ),
+    },
   ];
 
   return (
@@ -135,21 +188,53 @@ export const EnrollmentsList = ({ onEnrollClick }: EnrollmentsListProps) => {
 
         {/* Data Views */}
         <div className="flex-1 mt-6">
-          <div className="hidden md:block">
-            <DataTable
-              data={[]}
-              columns={columns}
-              keyExtractor={(item: any) => item.id || ""}
-              selectable
-            />
-          </div>
-          <div className="block md:hidden">
-            <DataList
-              data={[]}
-              keyExtractor={(item: any) => item.id || ""}
-              renderItem={(item: any) => <div />}
-            />
-          </div>
+          {isLoading ? (
+            <div className="flex items-center justify-center py-16">
+              <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+            </div>
+          ) : isError ? (
+            <div className="flex items-center justify-center py-16 text-[15px] text-red-500">
+              Failed to load enrollments. Please try again.
+            </div>
+          ) : filteredEnrollments.length === 0 ? (
+            <div className="flex items-center justify-center py-16 text-[15px] text-gray-500">
+              No enrollments found.
+            </div>
+          ) : (
+            <>
+              <div className="hidden md:block">
+                <DataTable
+                  data={filteredEnrollments}
+                  columns={columns}
+                  keyExtractor={(item) => item.id}
+                  selectable
+                />
+              </div>
+              <div className="block md:hidden">
+                <DataList
+                  data={filteredEnrollments}
+                  keyExtractor={(item) => item.id}
+                  renderItem={(item) => (
+                    <div className="w-full flex flex-col gap-2">
+                      <div className="flex items-center justify-between">
+                        <span className="font-medium text-[15px] text-gray-900">
+                          {item.studentName}
+                        </span>
+                        <EnrollmentStatusBadge status={item.status} />
+                      </div>
+                      <span className="text-[14px] text-gray-500">
+                        {item.course}
+                      </span>
+                      <div className="flex items-center justify-between text-[13px] text-gray-400">
+                        <span>{item.date}</span>
+                        <span>{item.progress}% complete</span>
+                      </div>
+                    </div>
+                  )}
+                />
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>

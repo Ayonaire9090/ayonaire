@@ -9,49 +9,21 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { MoreVertical, Download, Trash2, Eye } from "lucide-react";
-
-export interface CommunicationItem {
-  id: string;
-  title: string;
-  description: string;
-  course: string;
-  dateCreated: string;
-  status: "Sent" | "Draft";
-  views: number;
-}
-
-export const mockCommunications: CommunicationItem[] = [
-  {
-    id: "1",
-    title: "Welcome to the Course!",
-    description: "Hello everyone! I'm excited to start this seme",
-    course: "AI Engineering",
-    dateCreated: "Mar 11, 2026",
-    status: "Sent",
-    views: 453,
-  },
-  {
-    id: "2",
-    title: "Midterm Exam Date Changed",
-    description: "Please note that the midterm exam has been",
-    course: "Data Science",
-    dateCreated: "Mar 11, 2026",
-    status: "Draft",
-    views: 0,
-  },
-  {
-    id: "3",
-    title: "Welcome to the Course!",
-    description: "Hello everyone! I'm excited to start this seme",
-    course: "AI Engineering",
-    dateCreated: "Mar 11, 2026",
-    status: "Sent",
-    views: 453,
-  },
-];
+import { useGetAnnouncements } from "@/hooks/api/use-announcements";
+import {
+  CommunicationItem,
+  mapAnnouncementToCommunicationItem,
+} from "./instructor-communication-data";
 
 export const InstructorAnalyticsCommunicationTable = () => {
   const [selectedCount, setSelectedCount] = useState(0);
+  // Announcements have no createdBy/instructor field on the backend yet, so
+  // this can't be scoped to "my announcements" - it shows every platform
+  // announcement, same as the admin view.
+  const { data, isLoading, isError } = useGetAnnouncements();
+  const communications: CommunicationItem[] = (data?.data?.announcement ?? []).map(
+    mapAnnouncementToCommunicationItem,
+  );
 
   const columns: ColumnDef<CommunicationItem>[] = [
     {
@@ -171,13 +143,29 @@ export const InstructorAnalyticsCommunicationTable = () => {
       </div>
 
       {/* Data Table */}
-      <DataTable
-        data={mockCommunications}
-        columns={columns}
-        keyExtractor={(item) => item.id}
-        selectable={true}
-        onSelectionChange={(selectedIds) => setSelectedCount(selectedIds.size)}
-      />
+      {isLoading ? (
+        <div className="flex items-center justify-center py-16">
+          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+        </div>
+      ) : isError ? (
+        <div className="flex items-center justify-center py-16 text-[15px] text-red-500">
+          Failed to load announcements. Please try again.
+        </div>
+      ) : communications.length === 0 ? (
+        <div className="flex items-center justify-center py-16 text-[15px] text-gray-500">
+          No announcements yet.
+        </div>
+      ) : (
+        <DataTable
+          data={communications}
+          columns={columns}
+          keyExtractor={(item) => item.id}
+          selectable={true}
+          onSelectionChange={(selectedIds) =>
+            setSelectedCount(selectedIds.size)
+          }
+        />
+      )}
     </div>
   );
 };

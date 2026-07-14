@@ -3,16 +3,61 @@
 import { SidebarInset } from "@/components/ui/sidebar";
 import { StudentFeedSidebarContent } from "../_components/student-feed-sidebar-content";
 import { StudentDashboardHeader } from "../_components/student-dashboard-header";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { DateRange } from "react-day-picker";
 import { WorkshopDateFilter } from "./_components/workshop-date-filter";
 import { WorkshopSchedule } from "./_components/workshop-schedule";
 import { WorkshopCalendar } from "./_components/workshop-calendar";
 import { WorkshopHistory } from "./_components/workshop-history";
+import { useGetWorkshops } from "@/hooks/api/use-workshops";
+import {
+  groupWorkshopsByDate,
+  isWithinDateRange,
+  mapWorkshopRecordToStudentWorkshop,
+} from "./_components/workshop-data";
 
 export default function StudentWorkshopPage() {
   const [activeTab, setActiveTab] = useState<"upcoming" | "completed">(
     "upcoming",
   );
+  const [dateRange, setDateRange] = useState<DateRange | undefined>(
+    undefined,
+  );
+
+  const { data, isLoading, isError } = useGetWorkshops(1, 100);
+
+  const workshops = useMemo(
+    () => (data?.data?.workshops ?? []).map(mapWorkshopRecordToStudentWorkshop),
+    [data],
+  );
+
+  const filteredWorkshops = useMemo(
+    () => workshops.filter((w) => isWithinDateRange(w, dateRange)),
+    [workshops, dateRange],
+  );
+
+  const todayWorkshops = useMemo(
+    () =>
+      filteredWorkshops
+        .filter((w) => w.status === "upcoming" && w.label === "Today")
+        .sort((a, b) => a.startDate.getTime() - b.startDate.getTime()),
+    [filteredWorkshops],
+  );
+
+  const upcomingWorkshops = useMemo(
+    () =>
+      filteredWorkshops
+        .filter((w) => w.status === "upcoming")
+        .sort((a, b) => a.startDate.getTime() - b.startDate.getTime()),
+    [filteredWorkshops],
+  );
+
+  const historyGroups = useMemo(() => {
+    const completed = filteredWorkshops
+      .filter((w) => w.status === "completed")
+      .sort((a, b) => b.startDate.getTime() - a.startDate.getTime());
+    return groupWorkshopsByDate(completed);
+  }, [filteredWorkshops]);
 
   return (
     <>
@@ -52,28 +97,40 @@ export default function StudentWorkshopPage() {
             </div>
 
             <div className="mt-2">
-              <WorkshopDateFilter />
+              <WorkshopDateFilter date={dateRange} onDateChange={setDateRange} />
             </div>
 
-            {activeTab === "upcoming" && (
-              <div className="flex flex-col gap-6 lg:gap-8 mt-4 lg:mt-6">
-                {/* Top Schedule Cards */}
-                <WorkshopSchedule />
-
-                {/* Bottom Calendar Cards */}
-                <div className="mt-2">
-                  <h2 className="text-lg font-bold text-gray-900 mb-4 bg-white lg:bg-transparent px-4 lg:px-0">
-                    Upcoming workshops
-                  </h2>
-                  <WorkshopCalendar />
-                </div>
+            {isLoading ? (
+              <div className="flex items-center justify-center py-16">
+                <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
               </div>
-            )}
-
-            {activeTab === "completed" && (
-              <div className="flex flex-col gap-6 lg:gap-8 mt-4 lg:mt-6 lg:max-w-4xl">
-                <WorkshopHistory />
+            ) : isError ? (
+              <div className="flex items-center justify-center py-16 text-[15px] text-red-500">
+                Failed to load workshops. Please try again.
               </div>
+            ) : (
+              <>
+                {activeTab === "upcoming" && (
+                  <div className="flex flex-col gap-6 lg:gap-8 mt-4 lg:mt-6">
+                    {/* Top Schedule Cards */}
+                    <WorkshopSchedule workshops={todayWorkshops} />
+
+                    {/* Bottom Calendar Cards */}
+                    <div className="mt-2">
+                      <h2 className="text-lg font-bold text-gray-900 mb-4 bg-white lg:bg-transparent px-4 lg:px-0">
+                        Upcoming workshops
+                      </h2>
+                      <WorkshopCalendar workshops={upcomingWorkshops} />
+                    </div>
+                  </div>
+                )}
+
+                {activeTab === "completed" && (
+                  <div className="flex flex-col gap-6 lg:gap-8 mt-4 lg:mt-6 lg:max-w-4xl">
+                    <WorkshopHistory groups={historyGroups} />
+                  </div>
+                )}
+              </>
             )}
           </div>
         </div>

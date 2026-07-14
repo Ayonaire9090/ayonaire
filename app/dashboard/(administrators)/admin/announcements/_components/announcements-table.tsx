@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
+import { format } from "date-fns";
 import { DataTable, ColumnDef } from "@/components/ui/data-table";
 import {
   AnnouncementStatusBadge,
   AnnouncementData,
-  mockAnnouncements,
+  mapAnnouncementToAnnouncementData,
 } from "./announcements-data";
 import { Plus, Search, ChevronDown, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -19,6 +20,7 @@ import {
 } from "@/components/ui/popover";
 import { AnnouncementBanner } from "./announcement-banner";
 import { CreateAnnouncementModal } from "./create-announcement-modal";
+import { useGetAnnouncements } from "@/hooks/api/use-announcements";
 
 // Shared Popover Header
 function FilterPopoverHeader({ title }: { title: string }) {
@@ -95,8 +97,12 @@ export const AnnouncementsTable = () => {
   const [selectedBulkActions, setSelectedBulkActions] = useState<Set<string>>(
     new Set(),
   );
-  const [isEmptyState, setIsEmptyState] = useState(true); // Using state to demonstrate empty view as requested
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const { data, isLoading, isError } = useGetAnnouncements();
+  const announcements: AnnouncementData[] = (data?.data?.announcement ?? []).map(
+    mapAnnouncementToAnnouncementData,
+  );
 
   const toggleSet = (
     set: Set<string>,
@@ -157,29 +163,53 @@ export const AnnouncementsTable = () => {
     },
   ];
 
+  // Bulk delete is intentionally not wired up: announcementsApi has no delete
+  // endpoint yet, and guessing a destructive endpoint path isn't safe to do
+  // speculatively. Confirm the real endpoint with the backend before wiring this.
   const bulkActionItems = ["Delete Permanently"];
-  const coursesItems = [
-    "AI Engineering 1.0",
-    "DS & Gen 1.0",
-    "DA & AI Automation 1.0",
-    "UI/UX Design 1.0",
-    "PM & AI for PM 1.0",
-  ];
-  const datesItems = [
-    "February 2026",
-    "January 2026",
-    "November 2025",
-    "June 2025",
-    "April 2025",
-    "March 2025",
-    "February 2025",
-  ];
-  const audienceItems = ["All Students", "Batch Jan26", "Specific Users"];
+
+  // Filter option lists are derived from the loaded announcements themselves,
+  // so they only ever show values that actually exist in the data.
+  const coursesItems = useMemo(
+    () => Array.from(new Set(announcements.map((a) => a.course))).sort(),
+    [announcements],
+  );
+  const datesItems = useMemo(
+    () =>
+      Array.from(
+        new Set(
+          announcements
+            .filter((a) => a.createdAt)
+            .map((a) => format(new Date(a.createdAt as string), "MMMM yyyy")),
+        ),
+      ).sort(),
+    [announcements],
+  );
+  const audienceItems = useMemo(
+    () => Array.from(new Set(announcements.map((a) => a.audience))).sort(),
+    [announcements],
+  );
+
+  const filteredAnnouncements = announcements.filter((item) => {
+    const matchesSearch = item.title
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
+    const matchesCourse =
+      selectedCourses.size === 0 || selectedCourses.has(item.course);
+    const matchesAudience =
+      selectedAudiences.size === 0 || selectedAudiences.has(item.audience);
+    const matchesDate =
+      selectedDates.size === 0 ||
+      (item.createdAt &&
+        selectedDates.has(format(new Date(item.createdAt), "MMMM yyyy")));
+
+    return matchesSearch && matchesCourse && matchesAudience && matchesDate;
+  });
 
   return (
     <>
       {/* Empty State Banner */}
-      {isEmptyState && (
+      {!isLoading && !isError && announcements.length === 0 && (
         <div className="pb-4">
           <AnnouncementBanner />
         </div>
@@ -359,22 +389,27 @@ export const AnnouncementsTable = () => {
           </Button>
 
           {/* Apply */}
-          <Button
-            className="h-10 px-6 bg-primary text-white font-medium rounded-[8px] text-[14px] hover:bg-primary/90"
-            onClick={() => setIsEmptyState(!isEmptyState)}
-          >
-            {!isEmptyState ? "Apply" : "Show Data"}
+          <Button className="h-10 px-6 bg-primary text-white font-medium rounded-[8px] text-[14px] hover:bg-primary/90">
+            Apply
           </Button>
         </div>
 
-        <DataTable
-          data={(isEmptyState ? [] : mockAnnouncements).filter((item) =>
-            item.title.toLowerCase().includes(searchQuery.toLowerCase()),
-          )}
-          columns={tableColumns}
-          keyExtractor={(c) => c.id}
-          selectable
-        />
+        {isLoading ? (
+          <div className="flex items-center justify-center py-16">
+            <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+          </div>
+        ) : isError ? (
+          <div className="flex items-center justify-center py-16 text-[15px] text-red-500">
+            Failed to load announcements. Please try again.
+          </div>
+        ) : (
+          <DataTable
+            data={filteredAnnouncements}
+            columns={tableColumns}
+            keyExtractor={(c) => c.id}
+            selectable
+          />
+        )}
       </div>
 
       <CreateAnnouncementModal
