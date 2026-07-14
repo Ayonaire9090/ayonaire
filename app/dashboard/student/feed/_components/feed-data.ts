@@ -9,6 +9,7 @@ export interface FeedPostData {
   tags?: string[];
   likesCount: number;
   commentsCount: number;
+  sharesCount: number;
   isLikedByMe: boolean;
 }
 
@@ -33,19 +34,18 @@ export function mapFeedRecordToFeedPost(
   feed: FeedRecord,
   currentUserId?: string,
 ): FeedPostData {
-  const author =
-    typeof feed.createdBy === "string" ? undefined : feed.createdBy;
   const likes = feed.likes ?? [];
 
   return {
-    id: feed._id,
-    authorName: author?.name ?? "Unknown User",
+    id: feed.id,
+    authorName: feed.user?.name ?? "Unknown User",
     authorSubtitle: timeAgo(feed.createdAt),
-    textContent: feed.text,
-    imageUrl: feed.image,
-    tags: feed.tags,
+    textContent: feed.content,
+    imageUrl: feed.media?.url,
+    tags: feed.tag,
     likesCount: likes.length,
     commentsCount: feed.comments?.length ?? 0,
+    sharesCount: feed.shares ?? 0,
     isLikedByMe: !!currentUserId && likes.includes(currentUserId),
   };
 }

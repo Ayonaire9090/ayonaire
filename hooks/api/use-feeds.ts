@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { feedsApi } from "@/lib/api/endpoints/feeds";
+import { feedsApi, GetFeedsParams } from "@/lib/api/endpoints/feeds";
 import { queryKeys } from "@/lib/api/query-keys";
 
 export const useCreateFeedMutation = () => {
@@ -13,10 +13,10 @@ export const useCreateFeedMutation = () => {
   });
 };
 
-export const useGetFeeds = () => {
+export const useGetFeeds = (params?: GetFeedsParams) => {
   return useQuery({
-    queryKey: queryKeys.feeds.all,
-    queryFn: () => feedsApi.getAll(),
+    queryKey: [...queryKeys.feeds.all, params],
+    queryFn: () => feedsApi.getAll(params),
   });
 };
 
@@ -68,10 +68,28 @@ export const useDeleteCommentMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ feedId, commentId }: { feedId: string; commentId: string }) => 
+    mutationFn: ({ feedId, commentId }: { feedId: string; commentId: string }) =>
       feedsApi.deleteComment(feedId, commentId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.feeds.all });
     },
+  });
+};
+
+export const useShareFeedMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (feedId: string) => feedsApi.share(feedId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.feeds.all });
+    },
+  });
+};
+
+export const useReportFeedMutation = () => {
+  return useMutation({
+    mutationFn: ({ feedId, reason }: { feedId: string; reason: string }) =>
+      feedsApi.report(feedId, reason),
   });
 };

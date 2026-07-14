@@ -1,12 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import { useLikeFeedMutation } from "@/hooks/api/use-feeds";
+import { useLikeFeedMutation, useShareFeedMutation } from "@/hooks/api/use-feeds";
 
 interface FeedInteractPostProps {
   feedId?: string;
   likes?: number;
   comments?: number;
+  shares?: number;
   isLikedByMe?: boolean;
 }
 
@@ -14,13 +15,26 @@ export const FeedInteractPost = ({
   feedId,
   likes = 0,
   comments = 0,
+  shares = 0,
   isLikedByMe = false,
 }: FeedInteractPostProps) => {
   const likeMutation = useLikeFeedMutation();
+  const shareMutation = useShareFeedMutation();
 
   const handleLike = () => {
     if (!feedId || likeMutation.isPending) return;
     likeMutation.mutate(feedId);
+  };
+
+  const handleShare = () => {
+    if (!feedId || shareMutation.isPending) return;
+    shareMutation.mutate(feedId);
+
+    if (typeof navigator !== "undefined" && navigator.clipboard) {
+      navigator.clipboard
+        .writeText(`${window.location.origin}${window.location.pathname}?post=${feedId}`)
+        .catch(() => {});
+    }
   };
 
   return (
@@ -59,7 +73,12 @@ export const FeedInteractPost = ({
 
       {/* Right Share Buttons */}
       <div className="flex items-center gap-4 text-gray-400">
-        <button className="hover:text-gray-900 transition-colors">
+        <button
+          onClick={handleShare}
+          disabled={!feedId || shareMutation.isPending}
+          title="Share post"
+          className="flex items-center gap-1.5 hover:text-gray-900 transition-colors disabled:cursor-default"
+        >
           <Image
             src="/assets/icons/arrow-share.svg"
             alt="Share"
@@ -67,8 +86,16 @@ export const FeedInteractPost = ({
             height={20}
             className="cursor-pointer"
           />
+          {shares > 0 && (
+            <span className="text-[15px] font-medium">{shares}</span>
+          )}
         </button>
-        <button className="hover:text-gray-900 transition-colors">
+        <button
+          onClick={handleShare}
+          disabled={!feedId || shareMutation.isPending}
+          title="Copy link"
+          className="hover:text-gray-900 transition-colors disabled:cursor-default"
+        >
           <Image
             src="/assets/icons/share-icon.svg"
             alt="share"

@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import { FeedNewPost } from "./_components/feed-new-post";
 import { FeedLivePost } from "./_components/feed-live-post";
 import { FeedWorkShop } from "./_components/feed-workshop";
@@ -8,13 +9,16 @@ import { FeedUpcomingWorkShops } from "./_components/feed-upcomming-workshops";
 import { FeedLeaderBoard } from "./_components/feed-leaderboard";
 import { FeedFilter } from "./_components/feed-filter";
 import { FeedCriteriaModal } from "./_components/feed-leaderboard-criteria-modal";
+import { FeedReportModal } from "./_components/feed-report-modal";
 import { useGetFeeds } from "@/hooks/api/use-feeds";
 import { useAuthStore } from "@/store/auth.store";
 import { mapFeedRecordToFeedPost } from "./_components/feed-data";
 
 export default function StudentFeedPage() {
   const user = useAuthStore((state) => state.user);
-  const { data, isLoading, isError } = useGetFeeds();
+  const [tagFilter, setTagFilter] = useState<string | undefined>(undefined);
+  const [reportingFeedId, setReportingFeedId] = useState<string | null>(null);
+  const { data, isLoading, isError } = useGetFeeds({ tag: tagFilter });
   const posts = (data?.data ?? []).map((feed) =>
     mapFeedRecordToFeedPost(feed, user?._id),
   );
@@ -28,7 +32,7 @@ export default function StudentFeedPage() {
 
         <div className="flex flex-col gap-6">
           {/* Feed Filter */}
-          <FeedFilter />
+          <FeedFilter selectedTag={tagFilter} onApply={setTagFilter} />
 
           {/* Posts */}
           {isLoading ? (
@@ -55,7 +59,9 @@ export default function StudentFeedPage() {
                 imageUrl={post.imageUrl}
                 likesCount={post.likesCount}
                 commentsCount={post.commentsCount}
+                sharesCount={post.sharesCount}
                 isLikedByMe={post.isLikedByMe}
+                onReportPost={() => setReportingFeedId(post.id)}
               />
             ))
           )}
@@ -69,6 +75,10 @@ export default function StudentFeedPage() {
         <FeedLeaderBoard />
       </div>
       <FeedCriteriaModal />
+      <FeedReportModal
+        feedId={reportingFeedId}
+        onClose={() => setReportingFeedId(null)}
+      />
     </div>
   );
 }
