@@ -27,7 +27,7 @@ export default function StudentWorkshopPage() {
   const { data, isLoading, isError } = useGetWorkshops(1, 100);
 
   const workshops = useMemo(
-    () => (data?.data ?? []).map(mapWorkshopRecordToStudentWorkshop),
+    () => (data?.data?.workshops ?? []).map(mapWorkshopRecordToStudentWorkshop),
     [data],
   );
 

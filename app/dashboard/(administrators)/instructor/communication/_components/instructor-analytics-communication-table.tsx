@@ -21,7 +21,7 @@ export const InstructorAnalyticsCommunicationTable = () => {
   // this can't be scoped to "my announcements" - it shows every platform
   // announcement, same as the admin view.
   const { data, isLoading, isError } = useGetAnnouncements();
-  const communications: CommunicationItem[] = (data?.data ?? []).map(
+  const communications: CommunicationItem[] = (data?.data?.announcement ?? []).map(
     mapAnnouncementToCommunicationItem,
   );
 

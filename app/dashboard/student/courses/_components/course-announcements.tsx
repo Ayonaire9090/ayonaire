@@ -20,7 +20,7 @@ interface CourseAnnouncementsProps {
 export const CourseAnnouncements = ({ courseId }: CourseAnnouncementsProps) => {
   const { data, isLoading, isError } = useGetAnnouncements();
 
-  const courseAnnouncements = (data?.data ?? []).filter((a) => {
+  const courseAnnouncements = (data?.data?.announcement ?? []).filter((a) => {
     const announcementCourseId =
       typeof a.course === "string" ? a.course : a.course?._id;
     return announcementCourseId === courseId;

@@ -6,7 +6,7 @@ import { mapAnnouncementToAnnouncementData } from "./announcements-data";
 
 export const AnnouncementsSummary = () => {
   const { data } = useGetAnnouncements();
-  const announcements = (data?.data ?? []).map(mapAnnouncementToAnnouncementData);
+  const announcements = (data?.data?.announcement ?? []).map(mapAnnouncementToAnnouncementData);
 
   const summaryData = [
     { title: "All", number: String(announcements.length) },

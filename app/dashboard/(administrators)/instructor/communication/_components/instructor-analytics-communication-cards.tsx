@@ -5,7 +5,7 @@ import { useGetAnnouncements } from "@/hooks/api/use-announcements";
 
 export const InstructorAnalyticsCommunicationCards = () => {
   const { data } = useGetAnnouncements();
-  const announcements = data?.data ?? [];
+  const announcements = data?.data?.announcement ?? [];
   // Backend has no draft state - every created announcement counts as
   // "Sent", so Drafts is always 0 until that's supported.
   const analytics: InstructorDashboardAnalyticsCardProps[] = [

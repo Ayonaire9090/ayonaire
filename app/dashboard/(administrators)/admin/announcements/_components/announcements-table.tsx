@@ -100,7 +100,7 @@ export const AnnouncementsTable = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { data, isLoading, isError } = useGetAnnouncements();
-  const announcements: AnnouncementData[] = (data?.data ?? []).map(
+  const announcements: AnnouncementData[] = (data?.data?.announcement ?? []).map(
     mapAnnouncementToAnnouncementData,
   );
 

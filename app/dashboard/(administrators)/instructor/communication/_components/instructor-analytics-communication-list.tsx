@@ -16,7 +16,7 @@ import { mapAnnouncementToCommunicationItem } from "./instructor-communication-d
 export const InstructorAnalyticsCommunicationList = () => {
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const { data, isLoading, isError } = useGetAnnouncements();
-  const communications = (data?.data ?? []).map(
+  const communications = (data?.data?.announcement ?? []).map(
     mapAnnouncementToCommunicationItem,
   );
 

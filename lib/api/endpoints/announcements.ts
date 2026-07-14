@@ -23,6 +23,19 @@ export interface Announcement {
   createdAt?: string;
 }
 
+// Confirmed live 2026-07-14: GET /api/v1/announcement returns
+// { success, data: { announcement: [...], pagination: {...} } } - the list
+// is nested one level deeper than a typical ApiResponse<T[]>.
+export interface AnnouncementListData {
+  announcement: Announcement[];
+  pagination: {
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+  };
+}
+
 export const announcementsApi = {
   create: (payload: CreateAnnouncementPayload) =>
     apiClient<ApiResponse>("/api/v1/announcement", {
@@ -32,7 +45,7 @@ export const announcementsApi = {
     }),
 
   getAll: () =>
-    apiClient<ApiResponse<Announcement[]>>("/api/v1/announcement", {
+    apiClient<ApiResponse<AnnouncementListData>>("/api/v1/announcement", {
       method: "GET",
       requireAuth: true,
     }),

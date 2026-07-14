@@ -1,5 +1,5 @@
 import { apiClient } from "../client";
-import { ApiResponse, PaginatedResponse } from "../types";
+import { ApiResponse } from "../types";
 
 export interface CreateWorkshopPayload {
   title: string;
@@ -26,6 +26,19 @@ export interface WorkshopRecord {
   createdAt?: string;
 }
 
+// Confirmed live 2026-07-14: GET /api/v1/workshop returns
+// { success, data: { workshops: [...], pagination: {...} }, message } - the
+// list is nested one level deeper than a typical ApiResponse<T[]>.
+export interface WorkshopListData {
+  workshops: WorkshopRecord[];
+  pagination: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+  };
+}
+
 export const workshopsApi = {
   create: (payload: CreateWorkshopPayload) =>
     apiClient<ApiResponse>("/api/v1/workshop", {
@@ -41,7 +54,7 @@ export const workshopsApi = {
 
     const queryString = queryParams.toString() ? `?${queryParams.toString()}` : "";
 
-    return apiClient<PaginatedResponse<WorkshopRecord>>(`/api/v1/workshop${queryString}`, {
+    return apiClient<ApiResponse<WorkshopListData>>(`/api/v1/workshop${queryString}`, {
       method: "GET",
       requireAuth: true,
     });
