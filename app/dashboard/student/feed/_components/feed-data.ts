@@ -29,21 +29,21 @@ function timeAgo(dateString?: string): string {
   });
 }
 
+// Confirmed 2026-07-14: Feed has no createdBy or tags field on the backend,
+// so author name and tags have no real source and are dropped rather than
+// faked.
 export function mapFeedRecordToFeedPost(
   feed: FeedRecord,
   currentUserId?: string,
 ): FeedPostData {
-  const author =
-    typeof feed.createdBy === "string" ? undefined : feed.createdBy;
   const likes = feed.likes ?? [];
 
   return {
     id: feed._id,
-    authorName: author?.name ?? "Unknown User",
+    authorName: "Ayonaire Community",
     authorSubtitle: timeAgo(feed.createdAt),
-    textContent: feed.text,
-    imageUrl: feed.image,
-    tags: feed.tags,
+    textContent: feed.content,
+    imageUrl: feed.media,
     likesCount: likes.length,
     commentsCount: feed.comments?.length ?? 0,
     isLikedByMe: !!currentUserId && likes.includes(currentUserId),
