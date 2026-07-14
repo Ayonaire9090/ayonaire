@@ -37,7 +37,7 @@ export const InstructorDashboardAssignedCourses = () => {
       id: course._id,
       title: course.title,
       status: toCardStatus(course.status),
-      studentsCount: course.enrollmentCount ?? 0,
+      studentsCount: course.enrollments?.length ?? 0,
     }));
 
   return (

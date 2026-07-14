@@ -8,13 +8,10 @@ interface InstructorCourseListProps {
 }
 
 // Draft/Published are the only statuses ProfileCourseCard's badge styling
-// supports well here - anything else (e.g. "pending", "private") falls back
-// to Draft rather than crashing on an unrecognized status.
+// supports well here - "archived" (the real third status) falls back to
+// Draft rather than crashing on an unrecognized status.
 function toCardStatus(status?: string): "Draft" | "Published" {
-  return status?.toLowerCase() === "active" ||
-    status?.toLowerCase() === "published"
-    ? "Published"
-    : "Draft";
+  return status === "published" ? "Published" : "Draft";
 }
 
 export function InstructorCourseList({ courses }: InstructorCourseListProps) {
@@ -26,10 +23,10 @@ export function InstructorCourseList({ courses }: InstructorCourseListProps) {
           {courses.map((course) => (
             <ProfileCourseCard
               key={course._id}
-              imageSrc={course.thumbnail || "/assets/images/optin-hero.png"}
+              imageSrc={course.thumbnail?.url || "/assets/images/optin-hero.png"}
               title={course.title}
               description={course.description || "No description available"}
-              slug={course.slug || course._id}
+              slug={course._id}
               status={toCardStatus(course.status)}
               statusAsAction={true}
               actions={[

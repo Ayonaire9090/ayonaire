@@ -17,16 +17,22 @@ export interface CourseData {
   enrollments: number;
 }
 
-const VALID_STATUSES: CourseStatus[] = ["Active", "Draft", "Pending", "Private"];
-
-// Backend status casing isn't confirmed yet, so normalize defensively and fall
-// back to "Draft" for anything unrecognized rather than crashing the badge.
+// The real backend enum (confirmed 2026-07-14 against the live Swagger
+// spec) is only draft/published/archived - narrower than this UI's
+// existing Active/Draft/Pending/Private badge set. Mapped onto the closest
+// existing label rather than redesigning the badges: published -> Active,
+// archived -> Private. "Pending" has no real backend equivalent and will
+// never actually appear.
 function normalizeStatus(status?: string): CourseStatus {
-  if (!status) return "Draft";
-  const match = VALID_STATUSES.find(
-    (s) => s.toLowerCase() === status.toLowerCase(),
-  );
-  return match ?? "Draft";
+  switch (status) {
+    case "published":
+      return "Active";
+    case "archived":
+      return "Private";
+    case "draft":
+    default:
+      return "Draft";
+  }
 }
 
 export function mapCourseToCourseData(course: Course): CourseData {
@@ -48,7 +54,7 @@ export function mapCourseToCourseData(course: Course): CourseData {
     instructor,
     price: course.price ?? 0,
     status: normalizeStatus(course.status),
-    enrollments: course.enrollmentCount ?? 0,
+    enrollments: course.enrollments?.length ?? 0,
   };
 }
 
