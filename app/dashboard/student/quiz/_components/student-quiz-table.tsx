@@ -108,7 +108,7 @@ export const StudentQuizTable = () => {
   const isError = quizzesError || enrollmentError;
 
   const enrolledCourseIds = new Set(
-    (enrollmentData?.enrollments ?? [])
+    (enrollmentData?.data ?? [])
       .map((enrollment) =>
         typeof enrollment.course === "string" ? enrollment.course : enrollment.course?._id,
       )

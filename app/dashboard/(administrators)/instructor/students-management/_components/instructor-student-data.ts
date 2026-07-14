@@ -99,7 +99,7 @@ export function useInstructorStudentRoster() {
       .map((course) => course._id),
   );
 
-  const students: StudentData[] = (enrollmentsQuery.data?.enrollments ?? [])
+  const students: StudentData[] = (enrollmentsQuery.data?.data ?? [])
     .filter((enrollment) => isEnrollmentInCourses(enrollment, courseIds))
     .map(mapEnrollmentToStudentData);
 

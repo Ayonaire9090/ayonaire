@@ -32,7 +32,7 @@ function StudentCoursesContent() {
 
   const { data, isLoading, isError } = useGetEnrolledCourses();
 
-  const allCourses = (data?.enrollments ?? []).map((enrollment) => {
+  const allCourses = (data?.data ?? []).map((enrollment) => {
     const course =
       typeof enrollment.course === "string" ? null : enrollment.course;
     const status = deriveStatus(enrollment.completed, enrollment.progress);
@@ -41,8 +41,8 @@ function StudentCoursesContent() {
       id: enrollment._id,
       title: course?.title ?? "Unknown Course",
       description: course?.description ?? "No description available",
-      imageSrc: course?.thumbnail || "/assets/images/optin-hero.png",
-      slug: course?.slug || course?._id || enrollment._id,
+      imageSrc: course?.thumbnail?.url || "/assets/images/optin-hero.png",
+      slug: course?._id || enrollment._id,
       status,
       progress: enrollment.progress ?? 0,
       chaptersCompleted: enrollment.comletedLessons?.length ?? 0,
