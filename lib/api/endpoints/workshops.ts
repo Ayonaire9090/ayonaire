@@ -4,31 +4,39 @@ import { ApiResponse } from "../types";
 export interface CreateWorkshopPayload {
   title: string;
   description: string;
-  platform: string;
-  status: string;
+  platform: {
+    name: string;
+    link: string;
+    type: string;
+  };
   startDate: string;
   endDate: string;
 }
 
-// Shape returned by the backend for a single workshop. NOTE: field names
-// beyond CreateWorkshopPayload (_id, createdBy, createdAt) are a best-effort
-// guess following the same convention as QuizRecord - confirm against the
-// real response and adjust once the backend confirms it.
+export interface EditWorkshopPayload extends Partial<CreateWorkshopPayload> {
+  workShopId: string;
+}
+
 export interface WorkshopRecord {
-  _id: string;
+  id: string;
   title: string;
-  description?: string;
-  platform?: string;
-  status?: string;
+  description: string;
+  platform: {
+    name: string;
+    link: string;
+    type: string;
+  };
+  status: "live" | "upcoming" | "completed";
+  createdBy?: {
+    id: string;
+    name: string;
+  } | null;
   startDate: string;
   endDate: string;
-  createdBy?: string | { _id: string; name: string };
-  createdAt?: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
-// Confirmed live 2026-07-14: GET /api/v1/workshop returns
-// { success, data: { workshops: [...], pagination: {...} }, message } - the
-// list is nested one level deeper than a typical ApiResponse<T[]>.
 export interface WorkshopListData {
   workshops: WorkshopRecord[];
   pagination: {
@@ -41,7 +49,7 @@ export interface WorkshopListData {
 
 export const workshopsApi = {
   create: (payload: CreateWorkshopPayload) =>
-    apiClient<ApiResponse>("/api/v1/workshop", {
+    apiClient<ApiResponse<WorkshopRecord>>("/api/v1/workshop", {
       method: "POST",
       body: JSON.stringify(payload),
       requireAuth: true,
@@ -63,6 +71,19 @@ export const workshopsApi = {
   getById: (id: string) =>
     apiClient<ApiResponse<WorkshopRecord>>(`/api/v1/workshop/${id}`, {
       method: "GET",
+      requireAuth: true,
+    }),
+
+  edit: ({ workShopId, ...payload }: EditWorkshopPayload) =>
+    apiClient<ApiResponse<WorkshopRecord>>(`/api/v1/workshop/${workShopId}`, {
+      method: "PUT",
+      body: JSON.stringify(payload),
+      requireAuth: true,
+    }),
+
+  delete: (id: string) =>
+    apiClient<ApiResponse>(`/api/v1/workshop/${id}`, {
+      method: "DELETE",
       requireAuth: true,
     }),
 };

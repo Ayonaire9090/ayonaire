@@ -1,15 +1,16 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { feedsApi, GetFeedsParams } from "@/lib/api/endpoints/feeds";
 import { queryKeys } from "@/lib/api/query-keys";
 
-export const useCreateFeedMutation = () => {
-  const queryClient = useQueryClient();
+// Cache updates for reads no longer rely on invalidate-then-refetch after a
+// mutation - the /feed socket namespace broadcasts the authoritative,
+// already-updated record to every connected client (see
+// hooks/socket/use-feed-realtime-sync.ts, mounted on the feed page), so the
+// mutations below only need to report success/failure back to their caller.
 
+export const useCreateFeedMutation = () => {
   return useMutation({
     mutationFn: (formData: FormData) => feedsApi.create(formData),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.feeds.all });
-    },
   });
 };
 
@@ -21,69 +22,39 @@ export const useGetFeeds = (params?: GetFeedsParams) => {
 };
 
 export const useEditFeedMutation = () => {
-  const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: (formData: FormData) => feedsApi.edit(formData),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.feeds.all });
-    },
   });
 };
 
 export const useDeleteFeedMutation = () => {
-  const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: (feedId: string) => feedsApi.delete(feedId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.feeds.all });
-    },
   });
 };
 
 export const useLikeFeedMutation = () => {
-  const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: (feedId: string) => feedsApi.like(feedId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.feeds.all });
-    },
   });
 };
 
 export const useCommentFeedMutation = () => {
-  const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: ({ feedId, text }: { feedId: string; text: string }) => feedsApi.comment(feedId, text),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.feeds.all });
-    },
   });
 };
 
 export const useDeleteCommentMutation = () => {
-  const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: ({ feedId, commentId }: { feedId: string; commentId: string }) =>
       feedsApi.deleteComment(feedId, commentId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.feeds.all });
-    },
   });
 };
 
 export const useShareFeedMutation = () => {
-  const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: (feedId: string) => feedsApi.share(feedId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.feeds.all });
-    },
   });
 };
 

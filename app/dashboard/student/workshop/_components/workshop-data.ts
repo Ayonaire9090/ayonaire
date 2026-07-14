@@ -31,15 +31,13 @@ function getDayLabel(start: Date): string {
   return format(start, "EEEE");
 }
 
-// author has no confirmed backend field beyond the optional createdBy on
-// WorkshopRecord, so it falls back to "-" rather than a guessed value.
 export function mapWorkshopRecordToStudentWorkshop(
   workshop: WorkshopRecord,
 ): StudentWorkshop {
   const startDate = new Date(workshop.startDate);
   const endDate = new Date(workshop.endDate);
   const now = new Date();
-  const isLive = now >= startDate && now <= endDate;
+  const isLive = workshop.status === "live" || (now >= startDate && now <= endDate);
 
   let endTime: string | undefined;
   if (isLive) {
@@ -47,14 +45,13 @@ export function mapWorkshopRecordToStudentWorkshop(
     endTime = `${duration.hours ?? 0}h ${duration.minutes ?? 0}m`;
   }
 
-  const author =
-    typeof workshop.createdBy === "object" ? workshop.createdBy.name : "-";
+  const author = workshop.createdBy?.name ?? "-";
 
   return {
-    id: workshop._id,
+    id: workshop.id,
     title: workshop.title,
     author,
-    platform: workshop.platform || "-",
+    platform: workshop.platform?.name || "-",
     month: format(startDate, "MMM"),
     day: format(startDate, "d"),
     label: getDayLabel(startDate),
@@ -64,7 +61,7 @@ export function mapWorkshopRecordToStudentWorkshop(
     isLive,
     startDate,
     endDate,
-    status: endDate < now ? "completed" : "upcoming",
+    status: workshop.status === "completed" || endDate < now ? "completed" : "upcoming",
   };
 }
 

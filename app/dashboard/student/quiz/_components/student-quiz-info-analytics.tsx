@@ -14,7 +14,7 @@ export const StudentQuizInfoAnalytics = () => {
   const { data: enrollmentData } = useGetEnrolledCourses();
 
   const enrolledCourseIds = new Set(
-    (enrollmentData?.enrollments ?? [])
+    (enrollmentData?.data ?? [])
       .map((enrollment) =>
         typeof enrollment.course === "string" ? enrollment.course : enrollment.course?._id,
       )

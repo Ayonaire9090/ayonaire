@@ -11,6 +11,7 @@ import { FeedFilter } from "./_components/feed-filter";
 import { FeedCriteriaModal } from "./_components/feed-leaderboard-criteria-modal";
 import { FeedReportModal } from "./_components/feed-report-modal";
 import { useGetFeeds } from "@/hooks/api/use-feeds";
+import { useFeedRealtimeSync } from "@/hooks/socket/use-feed-realtime-sync";
 import { useAuthStore } from "@/store/auth.store";
 import { mapFeedRecordToFeedPost } from "./_components/feed-data";
 
@@ -18,6 +19,7 @@ export default function StudentFeedPage() {
   const user = useAuthStore((state) => state.user);
   const [tagFilter, setTagFilter] = useState<string | undefined>(undefined);
   const [reportingFeedId, setReportingFeedId] = useState<string | null>(null);
+  useFeedRealtimeSync();
   const { data, isLoading, isError } = useGetFeeds({ tag: tagFilter });
   const posts = (data?.data ?? []).map((feed) =>
     mapFeedRecordToFeedPost(feed, user?._id),

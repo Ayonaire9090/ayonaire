@@ -19,26 +19,31 @@ import {
   PictureInPicture,
   CheckCircle2,
 } from "lucide-react";
-import {
-  useViewLessonContent,
-  useMarkLessonCompletedMutation,
-} from "@/hooks/api/use-lessons";
+import { useMarkLessonCompletedMutation } from "@/hooks/api/use-lessons";
 
 interface LessonVideoPlayerProps {
   lessonId?: string;
+  courseId: string;
+  videoUrl?: string;
+  isCompleted?: boolean;
   onOpenChapters?: () => void;
 }
 
-export const LessonVideoPlayer = ({ lessonId, onOpenChapters }: LessonVideoPlayerProps) => {
+export const LessonVideoPlayer = ({
+  lessonId,
+  courseId,
+  videoUrl,
+  isCompleted,
+  onOpenChapters,
+}: LessonVideoPlayerProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const { data: lessonData } = useViewLessonContent(lessonId ?? "");
-  const lesson = lessonData?.data;
-  const videoSrc = lesson?.videos?.[0] || "/assets/videos/learning-tips-demo.mp4";
+  const videoSrc = videoUrl || "/assets/videos/learning-tips-demo.mp4";
 
-  const { mutate: markCompleted, isPending: isMarkingComplete, isSuccess: isMarkedComplete } =
+  const { mutate: markCompleted, isPending: isMarkingComplete, isSuccess: justMarkedComplete } =
     useMarkLessonCompletedMutation();
+  const isMarkedComplete = isCompleted || justMarkedComplete;
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -359,7 +364,7 @@ export const LessonVideoPlayer = ({ lessonId, onOpenChapters }: LessonVideoPlaye
               </button>
               {lessonId && (
                 <button
-                  onClick={() => markCompleted(lessonId)}
+                  onClick={() => markCompleted({ lessonId, courseId })}
                   disabled={isMarkingComplete || isMarkedComplete}
                   className={`hidden sm:flex items-center gap-1.5 text-xs font-semibold rounded px-2 py-1 transition ${
                     isMarkedComplete

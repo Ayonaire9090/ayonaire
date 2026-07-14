@@ -26,7 +26,7 @@ export default function StudentLeaderboardPage() {
         </div>
       </div>
       <div className="flex flex-1 flex-col gap-4 p-0 lg:p-6 pb-24 md:pb-6">
-        <StudentFeedLeaderboard />
+        <StudentFeedLeaderboard onPeriodChange={setSelectedPeriod} />
       </div>
     </>
   );
