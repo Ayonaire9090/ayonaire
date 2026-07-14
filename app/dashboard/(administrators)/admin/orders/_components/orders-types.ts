@@ -1,6 +1,9 @@
 // Shared types and mock data for orders — NO "use client" directive
 // This file is safe to import from both server and client components.
 
+import { format } from "date-fns";
+import { Payment as PaymentRecord } from "@/lib/api/endpoints/payments";
+
 // Types
 
 export type OrderStatus =
@@ -108,7 +111,78 @@ const defaultShipping: ShippingAddress = {
   phone: "",
 };
 
-//Mock Data
+// Maps the real Payment record (confirmed 2026-07-14 against the live
+// Swagger spec) onto this UI's richer OrderData shape. The backend only
+// has one status field (pending/successful/failed), while this UI wants
+// three separate dimensions (order/payment/enrollment status) - collapsed
+// from that single source of truth rather than fabricating independent
+// values for each.
+//
+// billing/shipping/notes have no confirmed read path yet (edit-order
+// accepts billingAddress/shippingAddress but single-order's response
+// shape for reading them back is unverified - our test account isn't
+// admin-role) - defaulted to empty until that's confirmed.
+function deriveOrderStatuses(status?: string): {
+  orderStatus: OrderStatus;
+  paymentStatus: PaymentStatus;
+  enrollmentStatus: EnrollmentStatus;
+} {
+  if (status === "successful") {
+    return {
+      orderStatus: "Completed",
+      paymentStatus: "Paid",
+      enrollmentStatus: "Access Granted",
+    };
+  }
+  if (status === "failed") {
+    return {
+      orderStatus: "Cancelled",
+      paymentStatus: "Un Paid",
+      enrollmentStatus: "Not Enrolled",
+    };
+  }
+  return {
+    orderStatus: "Pending Payment",
+    paymentStatus: "Un Paid",
+    enrollmentStatus: "Not Enrolled",
+  };
+}
+
+export function mapPaymentRecordToOrderData(payment: PaymentRecord): OrderData {
+  const student =
+    typeof payment.student === "string" ? null : payment.student;
+  const course = typeof payment.course === "string" ? null : payment.course;
+  const { orderStatus, paymentStatus, enrollmentStatus } = deriveOrderStatuses(
+    payment.status,
+  );
+
+  return {
+    id: payment._id,
+    user: {
+      name: student?.name ?? "Unknown Student",
+      avatar: "/assets/images/user1.png",
+    },
+    orderId: `#${payment._id.slice(-6).toUpperCase()}`,
+    course: course?.title ?? "Unknown Course",
+    amount: `${payment.currency ?? "NGN"} ${payment.amount?.toLocaleString() ?? 0}`,
+    paymentMethod: payment.channel ?? "-",
+    orderStatus,
+    paymentStatus,
+    enrollmentStatus,
+    dateCreated: payment.createdAt
+      ? format(new Date(payment.createdAt), "yyyy-MM-dd")
+      : "-",
+    transactionId: payment.reference ?? "",
+    customerNote: "",
+    billing: defaultBilling,
+    shipping: defaultShipping,
+    notes: [],
+  };
+}
+
+//Mock Data (kept for the order detail page until billing/shipping/notes
+// read paths are confirmed - see mapPaymentRecordToOrderData above for the
+// real-data path used by the list pages)
 
 export const mockOrders: OrderData[] = [
   {
