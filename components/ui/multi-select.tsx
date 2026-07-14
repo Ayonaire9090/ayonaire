@@ -66,7 +66,7 @@ function MultiSelect({
                   {opt.label}
                   <XIcon
                     className="h-3 w-3 cursor-pointer hover:text-primary/70"
-                    onClick={(e) => handleRemove(opt.value, e)}
+                    onClick={(e: React.MouseEvent) => handleRemove(opt.value, e)}
                   />
                 </span>
               ))
