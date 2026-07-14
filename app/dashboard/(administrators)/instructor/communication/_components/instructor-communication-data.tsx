@@ -17,16 +17,11 @@ export interface CommunicationItem {
 export function mapAnnouncementToCommunicationItem(
   announcement: Announcement,
 ): CommunicationItem {
-  const course =
-    typeof announcement.course === "string"
-      ? announcement.course
-      : announcement.course?.title ?? "All Courses";
-
   return {
     id: announcement._id,
     title: announcement.title,
     description: announcement.summary,
-    course,
+    course: announcement.courseId ?? "All Courses",
     dateCreated: announcement.createdAt
       ? format(new Date(announcement.createdAt), "MMM d, yyyy")
       : "-",
