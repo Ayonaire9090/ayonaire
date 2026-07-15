@@ -1,29 +1,28 @@
+"use client";
+
+import { useMemo } from "react";
 import { WorkshopCalendarCard } from "../../workshop/_components/workshop-calendar";
 import Link from "next/link";
-import React from "react";
-
-const DummyWorkshopData = [
-  {
-    month: "Mar",
-    day: "12",
-    label: "Today",
-    dateText: "12 Mar",
-    time: "09:00 AM - 01:00 PM",
-    title: "Building RAG Agents with LangChain",
-    author: "Ayobami Awosanya",
-  },
-  {
-    month: "Mar",
-    day: "17",
-    label: "Friday",
-    dateText: "17 Mar",
-    time: "09:00 AM - 01:00 PM",
-    title: "Building RAG Agents with LangChain",
-    author: "Ayobami Awosanya",
-  },
-];
+import { useGetWorkshops } from "@/hooks/api/use-workshops";
+import { mapWorkshopRecordToStudentWorkshop } from "../../workshop/_components/workshop-data";
 
 export const FeedWorkShop = () => {
+  const { data, isLoading } = useGetWorkshops(1, 20);
+
+  const upcomingWorkshops = useMemo(() => {
+    const workshops = (data?.data?.workshops ?? []).map(
+      mapWorkshopRecordToStudentWorkshop,
+    );
+    return workshops
+      .filter((w) => w.status === "upcoming")
+      .sort((a, b) => a.startDate.getTime() - b.startDate.getTime())
+      .slice(0, 6);
+  }, [data]);
+
+  if (!isLoading && upcomingWorkshops.length === 0) {
+    return null;
+  }
+
   return (
     <div className="w-full flex flex-col gap-4 bg-white p-2 lg:p-4 lg:rounded-2xl ">
       {/* Header */}
@@ -32,7 +31,7 @@ export const FeedWorkShop = () => {
           Upcoming workshops
         </h2>
         <Link
-          href="#"
+          href="/dashboard/student/workshop"
           className="text-[#F86432] text-sm font-medium hover:underline"
         >
           View all
@@ -41,13 +40,25 @@ export const FeedWorkShop = () => {
 
       {/* Cards Scrollable Container */}
       <div className="flex overflow-x-auto hide-scrollbar gap-4 px-4 lg:px-0 pb-2">
-        {DummyWorkshopData.map((workshop, index) => (
-          <WorkshopCalendarCard 
-            key={index} 
-            {...workshop} 
-            className="min-w-[300px] sm:min-w-[380px] md:min-w-[420px] shrink-0"
-          />
-        ))}
+        {isLoading ? (
+          <div className="flex items-center justify-center py-4 w-full">
+            <div className="w-6 h-6 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+          </div>
+        ) : (
+          upcomingWorkshops.map((workshop) => (
+            <WorkshopCalendarCard
+              key={workshop.id}
+              month={workshop.month}
+              day={workshop.day}
+              label={workshop.label}
+              dateText={workshop.dateText}
+              time={workshop.time}
+              title={workshop.title}
+              author={workshop.author}
+              className="min-w-[300px] sm:min-w-[380px] md:min-w-[420px] shrink-0"
+            />
+          ))
+        )}
       </div>
     </div>
   );

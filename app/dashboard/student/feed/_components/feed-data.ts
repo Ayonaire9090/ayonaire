@@ -9,6 +9,7 @@ export interface FeedPostData {
   tags?: string[];
   likesCount: number;
   commentsCount: number;
+  sharesCount: number;
   isLikedByMe: boolean;
 }
 
@@ -29,9 +30,6 @@ function timeAgo(dateString?: string): string {
   });
 }
 
-// Confirmed 2026-07-14: Feed has no createdBy or tags field on the backend,
-// so author name and tags have no real source and are dropped rather than
-// faked.
 export function mapFeedRecordToFeedPost(
   feed: FeedRecord,
   currentUserId?: string,
@@ -39,13 +37,15 @@ export function mapFeedRecordToFeedPost(
   const likes = feed.likes ?? [];
 
   return {
-    id: feed._id,
-    authorName: "Ayonaire Community",
+    id: feed.id,
+    authorName: feed.user?.name ?? "Unknown User",
     authorSubtitle: timeAgo(feed.createdAt),
     textContent: feed.content,
-    imageUrl: feed.media,
+    imageUrl: feed.media?.url,
+    tags: feed.tag,
     likesCount: likes.length,
     commentsCount: feed.comments?.length ?? 0,
+    sharesCount: feed.shares ?? 0,
     isLikedByMe: !!currentUserId && likes.includes(currentUserId),
   };
 }

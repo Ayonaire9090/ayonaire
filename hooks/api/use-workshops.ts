@@ -1,5 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { workshopsApi, CreateWorkshopPayload } from "@/lib/api/endpoints/workshops";
+import {
+  workshopsApi,
+  CreateWorkshopPayload,
+  EditWorkshopPayload,
+} from "@/lib/api/endpoints/workshops";
 import { queryKeys } from "@/lib/api/query-keys";
 
 export const useCreateWorkshopMutation = () => {
@@ -26,5 +30,27 @@ export const useGetWorkshopById = (id: string) => {
     queryKey: queryKeys.workshops.detail(id),
     queryFn: () => workshopsApi.getById(id),
     enabled: !!id,
+  });
+};
+
+export const useEditWorkshopMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (payload: EditWorkshopPayload) => workshopsApi.edit(payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.workshops.all });
+    },
+  });
+};
+
+export const useDeleteWorkshopMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (id: string) => workshopsApi.delete(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.workshops.all });
+    },
   });
 };

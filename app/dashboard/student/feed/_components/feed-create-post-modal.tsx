@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { AppSimpleModal } from "@/components/modals/app-simple-modal";
 import {
   X,
@@ -19,6 +19,8 @@ import {
   Plus,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useCreateFeedMutation } from "@/hooks/api/use-feeds";
+import { useAuthStore } from "@/store/auth.store";
 
 interface FeedCreatePostModalProps {
   isOpen: boolean;
@@ -42,6 +44,41 @@ export const FeedCreatePostModal = ({
   const [isSpaceDropdownOpen, setIsSpaceDropdownOpen] = useState(false);
   const [selectedSpace, setSelectedSpace] = useState("Service");
   const [text, setText] = useState("");
+  const [image, setImage] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const user = useAuthStore((state) => state.user);
+  const createFeedMutation = useCreateFeedMutation();
+
+  const resetAndClose = () => {
+    setText("");
+    setTags([]);
+    setTagInput("");
+    setImage(null);
+    setImagePreview(null);
+    onClose();
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setImage(file);
+    setImagePreview(URL.createObjectURL(file));
+    e.target.value = "";
+  };
+
+  const handlePublish = () => {
+    const trimmed = text.trim();
+    if ((!trimmed && !image) || createFeedMutation.isPending) return;
+
+    const formData = new FormData();
+    formData.append("content", trimmed);
+    if (image) formData.append("media", image);
+
+    createFeedMutation.mutate(formData, {
+      onSuccess: () => resetAndClose(),
+    });
+  };
 
   const handleAddTag = (e: React.FormEvent) => {
     e.preventDefault();
@@ -77,7 +114,7 @@ export const FeedCreatePostModal = ({
           Create new post
         </h3>
         <button
-          onClick={onClose}
+          onClick={resetAndClose}
           className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors shrink-0 outline-none"
         >
           <X className="size-4 text-gray-900" />
@@ -133,15 +170,15 @@ export const FeedCreatePostModal = ({
       <div className="flex items-start gap-3 pt-4 shrink-0">
         <Avatar className="h-10 w-10 border border-gray-200 bg-gray-100 shrink-0">
           <AvatarImage
-            src="/assets/icons/user-solid.svg"
+            src={user?.profile?.url || "/assets/icons/user-solid.svg"}
             className="object-contain p-2"
           />
-          <AvatarFallback>EP</AvatarFallback>
+          <AvatarFallback>{user?.name?.slice(0, 2).toUpperCase() ?? "AN"}</AvatarFallback>
         </Avatar>
 
         <div className="flex flex-col gap-1.5 items-start">
           <span className="font-semibold text-sm sm:text-base text-gray-900 leading-none">
-            Eleanor Pena
+            {user?.name ?? "You"}
           </span>
 
           <div className="relative flex items-center gap-1">
@@ -187,14 +224,42 @@ export const FeedCreatePostModal = ({
       </div>
 
       {/* Borderless Textarea Input */}
-      <div className="flex-1 w-full min-h-0 py-2">
+      <div className="flex-1 w-full min-h-0 py-2 flex flex-col gap-3">
         <textarea
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="What's on your mind?"
           className="w-full h-full resize-none border-0 focus:ring-0 placeholder-gray-400 text-gray-700 text-base py-2 focus-visible:ring-0 focus-visible:outline-none outline-none bg-transparent"
         />
+
+        {imagePreview && (
+          <div className="relative w-fit">
+            <img
+              src={imagePreview}
+              alt="Selected"
+              className="max-h-56 rounded-xl object-cover"
+            />
+            <button
+              type="button"
+              onClick={() => {
+                setImage(null);
+                setImagePreview(null);
+              }}
+              className="absolute -top-2 -right-2 flex h-6 w-6 items-center justify-center rounded-full bg-gray-900/80 text-white hover:bg-gray-900"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        )}
       </div>
+
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        className="hidden"
+        onChange={handleImageChange}
+      />
 
       {/* Bottom Actions Bar */}
       <div className="flex flex-col gap-2 shrink-0 mt-auto">
@@ -222,43 +287,56 @@ export const FeedCreatePostModal = ({
             <div className="flex items-center gap-1.5">
               <button
                 type="button"
+                onClick={() => fileInputRef.current?.click()}
                 className="w-9 h-9 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-500 hover:bg-gray-100 hover:text-gray-800 transition-colors cursor-pointer "
               >
                 <ImagePlus className="w-4 h-4" />
               </button>
               <button
                 type="button"
-                className="w-9 h-9 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-500 hover:bg-gray-100 hover:text-gray-800 transition-colors cursor-pointer "
+                disabled
+                title="Coming soon"
+                className="w-9 h-9 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-500 opacity-40 cursor-not-allowed"
               >
                 <Calendar className="w-4 h-4" />
               </button>
               <button
                 type="button"
-                className="w-9 h-9 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-500 hover:bg-gray-100 hover:text-gray-800 transition-colors cursor-pointer "
+                disabled
+                title="Coming soon"
+                className="w-9 h-9 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-500 opacity-40 cursor-not-allowed"
               >
                 <Globe className="w-4 h-4" />
               </button>
               <button
                 type="button"
-                className="w-9 h-9 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-500 hover:bg-gray-100 hover:text-gray-800 transition-colors cursor-pointer "
+                disabled
+                title="Coming soon"
+                className="w-9 h-9 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-500 opacity-40 cursor-not-allowed"
               >
                 <BarChart3 className="w-4 h-4" />
               </button>
               <button
                 type="button"
-                className="w-9 h-9 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-500 hover:bg-gray-100 hover:text-gray-800 transition-colors cursor-pointer "
+                disabled
+                title="Coming soon"
+                className="w-9 h-9 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-500 opacity-40 cursor-not-allowed"
               >
                 <FileText className="w-4 h-4" />
               </button>
               <button
                 type="button"
-                className="w-9 h-9 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-500 hover:bg-gray-100 hover:text-gray-800 transition-colors cursor-pointer "
+                disabled
+                title="Coming soon"
+                className="w-9 h-9 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-500 opacity-40 cursor-not-allowed"
               >
                 <User className="w-4 h-4" />
               </button>
               <button
                 type="button"
-                className="w-9 h-9 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-500 hover:bg-gray-100 hover:text-gray-800 transition-colors cursor-pointer "
+                disabled
+                title="Coming soon"
+                className="w-9 h-9 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-500 opacity-40 cursor-not-allowed"
               >
                 <Briefcase className="w-4 h-4" />
               </button>
@@ -267,10 +345,11 @@ export const FeedCreatePostModal = ({
 
           <button
             type="button"
-            onClick={onClose}
-            className="bg-[#F86432] hover:bg-[#F86432]/90 text-white font-semibold px-6 py-2.5 rounded-xl transition-all  cursor-pointer border-none"
+            onClick={handlePublish}
+            disabled={(!text.trim() && !image) || createFeedMutation.isPending}
+            className="bg-[#F86432] hover:bg-[#F86432]/90 text-white font-semibold px-6 py-2.5 rounded-xl transition-all cursor-pointer border-none disabled:opacity-60 disabled:cursor-default"
           >
-            Publish
+            {createFeedMutation.isPending ? "Publishing..." : "Publish"}
           </button>
         </div>
       </div>

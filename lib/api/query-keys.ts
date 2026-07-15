@@ -21,6 +21,9 @@ export const queryKeys = {
     profiles: () => [...queryKeys.instructor.all, "profiles"] as const,
     profile: (id: string) => [...queryKeys.instructor.all, "profile", id] as const,
   },
+  leaderboard: {
+    all: ["leaderboard"] as const,
+  },
   announcements: {
     all: ["announcements"] as const,
   },
@@ -38,10 +41,18 @@ export const queryKeys = {
   feeds: {
     all: ["feeds"] as const,
   },
+  rooms: {
+    all: ["rooms"] as const,
+  },
+  messages: {
+    all: ["messages"] as const,
+    forRoom: (roomId: string) => [...queryKeys.messages.all, roomId] as const,
+  },
   lessons: {
     all: ["lessons"] as const,
     resumeLast: (courseId: string) => [...queryKeys.lessons.all, "resume-last", courseId] as const,
     content: (lessonId: string) => [...queryKeys.lessons.all, "content", lessonId] as const,
+    courseContent: (courseId: string) => [...queryKeys.lessons.all, "course-content", courseId] as const,
   },
   modules: {
     all: ["modules"] as const,

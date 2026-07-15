@@ -23,6 +23,7 @@ export interface FeedPostProps {
   onReportPost?: () => void;
   likesCount?: number;
   commentsCount?: number;
+  sharesCount?: number;
   isLikedByMe?: boolean;
 }
 
@@ -44,6 +45,7 @@ export const FeedPost = ({
   onReportPost,
   likesCount,
   commentsCount,
+  sharesCount,
   isLikedByMe,
 }: FeedPostProps) => {
   return (
@@ -79,6 +81,7 @@ export const FeedPost = ({
           feedId={feedId}
           likes={likesCount}
           comments={commentsCount}
+          shares={sharesCount}
           isLikedByMe={isLikedByMe}
         />
       </div>

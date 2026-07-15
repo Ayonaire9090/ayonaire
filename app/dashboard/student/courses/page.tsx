@@ -40,7 +40,10 @@ function StudentCoursesContent() {
     return {
       id: enrollment._id,
       title: course?.title ?? "Unknown Course",
-      description: course?.description ?? "No description available",
+      // The enrolled-courses list endpoint doesn't project a description
+      // field (see GET /api/v1/enrollment/enrolled-courses) - the full
+      // description is only available from the course detail endpoint.
+      description: "No description available",
       imageSrc: course?.thumbnail?.url || "/assets/images/optin-hero.png",
       slug: course?._id || enrollment._id,
       status,

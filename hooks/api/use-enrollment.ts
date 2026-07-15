@@ -8,3 +8,18 @@ export const useGetEnrolledCourses = () => {
     queryFn: () => enrollmentApi.getEnrolledCourses(),
   });
 };
+
+export const useGetCompletedCourses = () => {
+  return useQuery({
+    queryKey: [...queryKeys.enrollment.all, "completed-courses"] as const,
+    queryFn: () => enrollmentApi.getCompletedCourses(),
+  });
+};
+
+export const useGetEnrolledCourseDetail = (courseId: string) => {
+  return useQuery({
+    queryKey: [...queryKeys.enrollment.all, "course", courseId] as const,
+    queryFn: () => enrollmentApi.getCourseDetail(courseId),
+    enabled: !!courseId,
+  });
+};
