@@ -10,13 +10,17 @@ import {
   PaymentStatusBadge,
   EnrollmentStatusBadge,
   OrderActions,
-  mockOrders,
+  mapPaymentRecordToOrderData,
 } from "./orders-data";
+import { useGetAllPayments } from "@/hooks/api/use-payments";
 
 export const OrdersList = () => {
   const [searchQuery, setSearchQuery] = React.useState("");
 
-  const filteredOrders = mockOrders.filter(
+  const { data, isLoading, isError } = useGetAllPayments();
+  const orders = (data?.data?.payments ?? []).map(mapPaymentRecordToOrderData);
+
+  const filteredOrders = orders.filter(
     (order) =>
       order.user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       order.orderId.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -55,6 +59,19 @@ export const OrdersList = () => {
         </div>
 
         {/* Order cards */}
+        {isLoading ? (
+          <div className="flex items-center justify-center py-16">
+            <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+          </div>
+        ) : isError ? (
+          <div className="flex items-center justify-center py-16 text-[15px] text-red-500">
+            Failed to load orders. Please try again.
+          </div>
+        ) : filteredOrders.length === 0 ? (
+          <div className="flex items-center justify-center py-16 text-[15px] text-gray-500">
+            No orders found.
+          </div>
+        ) : (
         <div className="flex flex-col p-2 gap-4">
           {filteredOrders.map((order) => (
             <div
@@ -117,6 +134,7 @@ export const OrdersList = () => {
             </div>
           ))}
         </div>
+        )}
 
         {/* Pagination */}
         <div className="flex items-center justify-between px-4 py-4 border-t border-gray-100">

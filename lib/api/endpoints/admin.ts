@@ -8,10 +8,13 @@ export interface UpdateUserPayload {
   role?: string;
 }
 
+// Paths corrected 2026-07-14 against the live Swagger spec
+// (https://ayonaire.onrender.com/api-docs/) - the previous team had these
+// under /api/v1/user/*, but the real routes are under /api/v1/auth/*.
 export const adminApi = {
   getUsers: () =>
     apiClient<{ success: boolean; count: number; users: UserProfile[] }>(
-      "/api/v1/user/non-admin-users",
+      "/api/v1/auth/non-admin-users",
       {
         method: "GET",
         requireAuth: true,
@@ -20,7 +23,7 @@ export const adminApi = {
 
   updateUser: (id: string, payload: UpdateUserPayload) =>
     apiClient<{ success: boolean; message: string; user?: UserProfile }>(
-      `/api/v1/user/${id}`,
+      `/api/v1/auth/user/${id}`,
       {
         method: "PUT",
         body: JSON.stringify({ id, ...payload }),
@@ -29,20 +32,20 @@ export const adminApi = {
     ),
 
   suspendUser: (id: string) =>
-    apiClient<ApiResponse>(`/api/v1/user/${id}/suspend-user`, {
+    apiClient<ApiResponse>(`/api/v1/auth/user/${id}/suspend-user`, {
       method: "PUT",
       requireAuth: true,
     }),
 
   deactivateUser: (id: string) =>
-    apiClient<ApiResponse>(`/api/v1/user/${id}/deativate-user`, {
+    apiClient<ApiResponse>(`/api/v1/auth/user/${id}/deactivate-user`, {
       method: "PUT",
       requireAuth: true,
     }),
 
   assignRole: (id: string, role: string) =>
     apiClient<{ success: boolean; message: string; user: UserProfile }>(
-      `/api/v1/user/${id}/assign-role`,
+      `/api/v1/auth/user/${id}/assign-role`,
       {
         method: "PUT",
         body: JSON.stringify({ id, role }),
@@ -51,13 +54,13 @@ export const adminApi = {
     ),
 
   getLoginHistory: (id: string) =>
-    apiClient<ApiResponse>(`/api/v1/user/${id}/login-history`, {
+    apiClient<ApiResponse>(`/api/v1/auth/user/${id}/login-history`, {
       method: "GET",
       requireAuth: true,
     }),
 
   getUserActivity: (id: string) =>
-    apiClient<ApiResponse>(`/api/v1/user/${id}/user-activity-history`, {
+    apiClient<ApiResponse>(`/api/v1/auth/user/${id}/user-activity-history`, {
       method: "GET",
       requireAuth: true,
     }),

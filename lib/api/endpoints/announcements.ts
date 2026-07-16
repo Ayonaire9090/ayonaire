@@ -9,17 +9,16 @@ export interface CreateAnnouncementPayload {
   students?: string[];
 }
 
-// Best-effort guess at the raw backend shape, based on CreateAnnouncementPayload.
-// Confirm field names/casing against the real response and adjust the mapper in
-// announcements-data.tsx if they differ.
+// Confirmed 2026-07-14 against the live Swagger spec: fields are courseId/
+// cohortId (plain ID strings), not course/cohort - and there's no status
+// field on an Announcement at all.
 export interface Announcement {
   _id: string;
   title: string;
   summary: string;
-  course?: string | { _id: string; title: string };
-  cohort?: string | { _id: string; title: string };
+  courseId?: string;
+  cohortId?: string;
   students?: string[];
-  status?: string;
   createdAt?: string;
 }
 

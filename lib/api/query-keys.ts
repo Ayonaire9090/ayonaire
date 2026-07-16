@@ -64,5 +64,15 @@ export const queryKeys = {
     all: ["workshops"] as const,
     detail: (id: string) => [...queryKeys.workshops.all, "detail", id] as const,
   },
+  career: {
+    all: ["career"] as const,
+    jobs: (params?: Record<string, any>) => [...queryKeys.career.all, "jobs", params] as const,
+    marketplace: (params?: Record<string, any>) => [...queryKeys.career.all, "marketplace", params] as const,
+  },
+  payments: {
+    all: ["payments"] as const,
+    list: (params?: Record<string, any>) => [...queryKeys.payments.all, "list", params] as const,
+    detail: (id: string) => [...queryKeys.payments.all, "detail", id] as const,
+  },
 };
 

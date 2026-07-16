@@ -19,8 +19,9 @@ import {
   PaymentStatusBadge,
   EnrollmentStatusBadge,
   OrderActions,
-  mockOrders,
+  mapPaymentRecordToOrderData,
 } from "./orders-data";
+import { useGetAllPayments } from "@/hooks/api/use-payments";
 
 //Shared Popover Header
 
@@ -118,7 +119,12 @@ export const OrdersTable = () => {
     });
   };
 
-  const filteredOrders = mockOrders.filter(
+  const { data, isLoading, isError } = useGetAllPayments();
+  const orders: OrderData[] = (data?.data?.payments ?? []).map(
+    mapPaymentRecordToOrderData,
+  );
+
+  const filteredOrders = orders.filter(
     (order) =>
       order.user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       order.orderId.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -502,12 +508,26 @@ export const OrdersTable = () => {
 
       {/* Table */}
       <div className="overflow-x-auto">
-        <DataTable
-          data={filteredOrders}
-          columns={tableColumns}
-          keyExtractor={(o) => o.id}
-          selectable
-        />
+        {isLoading ? (
+          <div className="flex items-center justify-center py-16">
+            <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+          </div>
+        ) : isError ? (
+          <div className="flex items-center justify-center py-16 text-[15px] text-red-500">
+            Failed to load orders. Please try again.
+          </div>
+        ) : filteredOrders.length === 0 ? (
+          <div className="flex items-center justify-center py-16 text-[15px] text-gray-500">
+            No orders found.
+          </div>
+        ) : (
+          <DataTable
+            data={filteredOrders}
+            columns={tableColumns}
+            keyExtractor={(o) => o.id}
+            selectable
+          />
+        )}
       </div>
     </div>
   );

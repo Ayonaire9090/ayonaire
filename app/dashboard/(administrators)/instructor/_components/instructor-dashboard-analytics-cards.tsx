@@ -27,7 +27,7 @@ function useInstructorOverviewAnalytics(): InstructorDashboardAnalyticsCardProps
     return instructorId === user?._id;
   });
   const totalStudents = myCourses.reduce(
-    (sum, course) => sum + (course.enrollmentCount ?? 0),
+    (sum, course) => sum + (course.enrollments?.length ?? 0),
     0,
   );
 

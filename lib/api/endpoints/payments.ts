@@ -1,6 +1,47 @@
 import { apiClient } from "../client";
 import { ApiResponse } from "../types";
 
+// Shape reflects the actual aggregation pipeline in the backend's
+// payHistory service (payment.service.ts): student/course are always
+// populated objects (via $lookup+$unwind), never raw ID strings, and the
+// full Payment document (including orderStatus/billingAddress/shippingAddress/
+// notes) is returned per row since the pipeline never $projects those away.
+export interface Payment {
+  _id: string;
+  student: { _id: string; name: string; email?: string };
+  course: { _id: string; title: string };
+  enrollment?: string;
+  amount: number;
+  currency?: string;
+  reference?: string;
+  channel?: string;
+  status: "pending" | "success" | "failed";
+  orderStatus: string;
+  paidAt?: string;
+  billingAddress?: Record<string, unknown>;
+  shippingAddress?: Record<string, unknown>;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+// Matches payment.controller.ts `paymentHistory` -> payHistory(), which
+// returns { data: Payment[], total, page, limit } (not { payments, pagination }).
+export interface PaymentListData {
+  data: Payment[];
+  total: number;
+  page: number;
+  limit: number;
+}
+
+// Matches the backend's PaymentHistoryRequest type exactly.
+export interface GetPaymentsParams {
+  page?: number;
+  limit?: number;
+  search?: string;
+  order?: "asc" | "desc";
+  sortBy?: string;
+}
+
 export interface PaymentAnalytics {
   totalRevenue: number;
   totalTransactions: number;
@@ -28,8 +69,8 @@ export interface OrderRecord {
   status: string;
   orderStatus: string;
   paidAt?: string;
-  billingAddress?: Record<string, any>;
-  shippingAddress?: Record<string, any>;
+  billingAddress?: Record<string, unknown>;
+  shippingAddress?: Record<string, unknown>;
   notes?: OrderNote[];
   createdAt: string;
   purchaseHistory?: {
@@ -44,8 +85,8 @@ export interface OrderRecord {
 
 export interface EditOrderPayload {
   orderId: string;
-  billingAddress?: Record<string, any>;
-  shippingAddress?: Record<string, any>;
+  billingAddress?: Record<string, unknown>;
+  shippingAddress?: Record<string, unknown>;
 }
 
 export interface BulkOrderActionPayload {
@@ -96,18 +137,21 @@ export interface CreatePricingPlanPayload {
   status?: string;
 }
 
+function toQueryString(params: Record<string, string | number | undefined>): string {
+  const query = new URLSearchParams();
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined) query.append(key, String(value));
+  });
+  const qs = query.toString();
+  return qs ? `?${qs}` : "";
+}
+
 export const paymentsApi = {
-  getAllPayments: (params?: { page?: number; limit?: number; search?: string }) => {
-    const query = new URLSearchParams();
-    if (params?.page) query.append("page", String(params.page));
-    if (params?.limit) query.append("limit", String(params.limit));
-    if (params?.search) query.append("search", params.search);
-    const qs = query.toString() ? `?${query.toString()}` : "";
-    return apiClient<ApiResponse<{ data: any[]; total: number; page: number; limit: number }>>(
-      `/api/v1/payment/get-all-payments${qs}`,
+  getAllPayments: (params: GetPaymentsParams = {}) =>
+    apiClient<ApiResponse<PaymentListData>>(
+      `/api/v1/payment/get-all-payments${toQueryString(params)}`,
       { method: "GET", requireAuth: true },
-    );
-  },
+    ),
 
   getAnalytics: () =>
     apiClient<ApiResponse<PaymentAnalytics>>("/api/v1/payment/analytics", {
@@ -115,17 +159,11 @@ export const paymentsApi = {
       requireAuth: true,
     }),
 
-  getStudentPurchases: (params?: { page?: number; limit?: number; status?: string }) => {
-    const query = new URLSearchParams();
-    if (params?.page) query.append("page", String(params.page));
-    if (params?.limit) query.append("limit", String(params.limit));
-    if (params?.status) query.append("status", params.status);
-    const qs = query.toString() ? `?${query.toString()}` : "";
-    return apiClient<ApiResponse & { purchases: any[] }>(
-      `/api/v1/payment/student-purchases${qs}`,
+  getStudentPurchases: (params?: { page?: number; limit?: number; status?: string }) =>
+    apiClient<ApiResponse & { purchases: any[] }>(
+      `/api/v1/payment/student-purchases${toQueryString(params ?? {})}`,
       { method: "GET", requireAuth: true },
-    );
-  },
+    ),
 
   getSingleOrder: (orderId: string) =>
     apiClient<ApiResponse<OrderRecord>>(`/api/v1/payment/single-order/${orderId}`, {
@@ -179,16 +217,11 @@ export const paymentsApi = {
       requireAuth: true,
     }),
 
-  getPricingPlans: (params?: { course?: string; status?: string }) => {
-    const query = new URLSearchParams();
-    if (params?.course) query.append("course", params.course);
-    if (params?.status) query.append("status", params.status);
-    const qs = query.toString() ? `?${query.toString()}` : "";
-    return apiClient<ApiResponse<PricingPlan[]>>(`/api/v1/payment/pricing-plans${qs}`, {
-      method: "GET",
-      requireAuth: true,
-    });
-  },
+  getPricingPlans: (params?: { course?: string; status?: string }) =>
+    apiClient<ApiResponse<PricingPlan[]>>(
+      `/api/v1/payment/pricing-plans${toQueryString(params ?? {})}`,
+      { method: "GET", requireAuth: true },
+    ),
 
   createPricingPlan: (payload: CreatePricingPlanPayload) =>
     apiClient<ApiResponse<PricingPlan>>("/api/v1/payment/pricing-plans", {

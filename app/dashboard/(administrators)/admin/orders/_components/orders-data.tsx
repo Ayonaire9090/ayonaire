@@ -20,7 +20,7 @@ export type {
   OrderNote,
   OrderData,
 } from "./orders-types";
-export { mockOrders } from "./orders-types";
+export { mockOrders, mapPaymentRecordToOrderData } from "./orders-types";
 
 //Local type aliases (for use inside this file only)
 import type {
