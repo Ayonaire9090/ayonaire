@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { SidebarInset } from "@/components/ui/sidebar";
-import { StudentHomeSidebarContent } from "../../_components/student-home-sidebar-content";
+import { CareerAcceleratorSidebarContent } from "../_components/career-accelerator-sidebar-content";
 import { StudentDashboardHeader } from "../../_components/student-dashboard-header";
 import { CareerJobList } from "../_components/career-job-list";
 import { useSearchJobs } from "@/hooks/api/use-career";
@@ -13,7 +13,7 @@ export default function StudentJobAssistanceSystemPage() {
 
   return (
     <>
-      <StudentHomeSidebarContent variant="sidebar" collapsible="offcanvas" />
+      <CareerAcceleratorSidebarContent variant="sidebar" collapsible="icon" />
       <SidebarInset className="bg-[#F6F6F6] min-h-screen">
         <StudentDashboardHeader />
 

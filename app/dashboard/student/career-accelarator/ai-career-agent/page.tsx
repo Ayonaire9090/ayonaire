@@ -1,7 +1,7 @@
 "use client";
 
 import { SidebarInset } from "@/components/ui/sidebar";
-import { StudentHomeSidebarContent } from "../../_components/student-home-sidebar-content";
+import { CareerAcceleratorSidebarContent } from "../_components/career-accelerator-sidebar-content";
 import { StudentDashboardHeader } from "../../_components/student-dashboard-header";
 import { CareerAIToolCard } from "../_components/career-ai-tool-card";
 import {
@@ -22,7 +22,7 @@ export default function StudentAiCareerAgentPage() {
 
   return (
     <>
-      <StudentHomeSidebarContent variant="sidebar" collapsible="offcanvas" />
+      <CareerAcceleratorSidebarContent variant="sidebar" collapsible="icon" />
       <SidebarInset className="bg-[#F6F6F6] min-h-screen">
         <StudentDashboardHeader />
 

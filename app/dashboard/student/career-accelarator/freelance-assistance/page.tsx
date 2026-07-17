@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import { SidebarInset } from "@/components/ui/sidebar";
-import { StudentHomeSidebarContent } from "../../_components/student-home-sidebar-content";
+import { CareerAcceleratorSidebarContent } from "../_components/career-accelerator-sidebar-content";
 import { StudentDashboardHeader } from "../../_components/student-dashboard-header";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -61,7 +61,7 @@ export default function StudentFreelanceAssistancePage() {
 
   return (
     <>
-      <StudentHomeSidebarContent variant="sidebar" collapsible="offcanvas" />
+      <CareerAcceleratorSidebarContent variant="sidebar" collapsible="icon" />
       <SidebarInset className="bg-[#F6F6F6] min-h-screen">
         <StudentDashboardHeader />
 
