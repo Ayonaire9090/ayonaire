@@ -48,6 +48,19 @@ export interface CourseContent {
   lastLesson: string | null;
 }
 
+export interface ModuleWithLessonsPreview {
+  _id: string;
+  title: string;
+  description: string;
+  course: string;
+  order: number;
+  lessons: Omit<LessonWithProgress, "isCompleted">[];
+}
+
+export interface CourseContentPreview {
+  modules: ModuleWithLessonsPreview[];
+}
+
 export interface UploadLessonPayload {
   title: string;
   module: string;
@@ -126,6 +139,18 @@ export const lessonsApi = {
   getCourseContent: (courseId: string) =>
     apiClient<ApiResponse<CourseContent>>(
       `/api/v1/lesson/view-lesson-content?courseId=${courseId}`,
+      {
+        method: "GET",
+        requireAuth: true,
+      },
+    ),
+
+  // For an instructor/admin previewing their own course's curriculum - no
+  // enrollment record exists for them, so this has no progress/isCompleted
+  // data (unlike getCourseContent, which is student-facing).
+  getInstructorCourseContent: (courseId: string) =>
+    apiClient<ApiResponse<CourseContentPreview>>(
+      `/api/v1/lesson/course-content/${courseId}`,
       {
         method: "GET",
         requireAuth: true,

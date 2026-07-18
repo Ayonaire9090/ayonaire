@@ -31,6 +31,7 @@ interface ProfileCourseCardProps {
   title: string;
   description: string;
   slug: string;
+  href?: string; // overrides the default `/courses/${slug}` public-site link
   status?: CourseStatus;
   statusAsAction?: boolean;
   actions?: CourseAction[];
@@ -72,6 +73,7 @@ export const ProfileCourseCard = ({
   title,
   description,
   slug,
+  href,
   status = "Not Started",
   statusAsAction = false,
   actions = [],
@@ -160,7 +162,7 @@ export const ProfileCourseCard = ({
         {/* Go to Course Button */}
         <div className="pt-2">
           <Link
-            href={`/courses/${slug}`}
+            href={href ?? `/courses/${slug}`}
             className="block w-full text-center py-3.5 bg-white border-none shadow-none rounded-xl text-[16px] font-semibold text-gray-700 hover:bg-primary hover:text-white transition-colors duration-200"
           >
             Go to Course

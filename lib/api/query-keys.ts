@@ -53,6 +53,7 @@ export const queryKeys = {
     resumeLast: (courseId: string) => [...queryKeys.lessons.all, "resume-last", courseId] as const,
     content: (lessonId: string) => [...queryKeys.lessons.all, "content", lessonId] as const,
     courseContent: (courseId: string) => [...queryKeys.lessons.all, "course-content", courseId] as const,
+    instructorCourseContent: (courseId: string) => [...queryKeys.lessons.all, "instructor-course-content", courseId] as const,
   },
   modules: {
     all: ["modules"] as const,
