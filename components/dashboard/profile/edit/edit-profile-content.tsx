@@ -45,18 +45,25 @@ function NameForm({
   );
 }
 
-/** Company form fields — placeholder for future API support */
-function CompanyForm() {
-  const [companyName, setCompanyName] = useState("");
-  const [website, setWebsite] = useState("");
-
+/** Company form fields */
+function CompanyForm({
+  companyName,
+  website,
+  onCompanyNameChange,
+  onWebsiteChange,
+}: {
+  companyName: string;
+  website: string;
+  onCompanyNameChange: (value: string) => void;
+  onWebsiteChange: (value: string) => void;
+}) {
   return (
     <div className="flex flex-col gap-6 mt-6">
       <AppInput
         label="Company name"
         placeholder="Enter company name"
         value={companyName}
-        onChange={(e) => setCompanyName(e.target.value)}
+        onChange={(e) => onCompanyNameChange(e.target.value)}
         className={EDIT_INPUT_CLASSNAME}
       />
       <AppInput
@@ -64,18 +71,25 @@ function CompanyForm() {
         placeholder="Enter website URL"
         type="url"
         value={website}
-        onChange={(e) => setWebsite(e.target.value)}
+        onChange={(e) => onWebsiteChange(e.target.value)}
         className={EDIT_INPUT_CLASSNAME}
       />
     </div>
   );
 }
 
-/** Social form fields — placeholder for future API support */
-function SocialForm() {
-  const [linkedin, setLinkedin] = useState("");
-  const [instagram, setInstagram] = useState("");
-
+/** Social form fields */
+function SocialForm({
+  linkedin,
+  instagram,
+  onLinkedinChange,
+  onInstagramChange,
+}: {
+  linkedin: string;
+  instagram: string;
+  onLinkedinChange: (value: string) => void;
+  onInstagramChange: (value: string) => void;
+}) {
   return (
     <div className="flex flex-col gap-6 mt-6">
       <p className="text-[14px] font-semibold text-gray-900">Profile URL</p>
@@ -84,7 +98,7 @@ function SocialForm() {
         placeholder="Enter LinkedIn URL"
         type="url"
         value={linkedin}
-        onChange={(e) => setLinkedin(e.target.value)}
+        onChange={(e) => onLinkedinChange(e.target.value)}
         className={EDIT_INPUT_CLASSNAME}
       />
       <AppInput
@@ -92,7 +106,7 @@ function SocialForm() {
         placeholder="Enter Instagram URL"
         type="url"
         value={instagram}
-        onChange={(e) => setInstagram(e.target.value)}
+        onChange={(e) => onInstagramChange(e.target.value)}
         className={EDIT_INPUT_CLASSNAME}
       />
     </div>
@@ -114,32 +128,57 @@ export function EditProfileContent() {
   // Editable state, initialized from the store
   const [fullName, setFullName] = useState(user?.name ?? "");
   const [phoneNumber, setPhoneNumber] = useState(user?.phoneNumber ?? "");
+  const [companyName, setCompanyName] = useState(user?.company ?? "");
+  const [website, setWebsite] = useState(user?.website ?? "");
+  const [linkedin, setLinkedin] = useState(user?.linkedin ?? "");
+  const [instagram, setInstagram] = useState(user?.instagram ?? "");
 
   // Re-sync when user data changes (e.g. after profile fetch)
   useEffect(() => {
     if (user) {
       setFullName(user.name ?? "");
       setPhoneNumber(user.phoneNumber ?? "");
+      setCompanyName(user.company ?? "");
+      setWebsite(user.website ?? "");
+      setLinkedin(user.linkedin ?? "");
+      setInstagram(user.instagram ?? "");
     }
   }, [user]);
 
   const handleSave = () => {
-    // Only the "Name" tab has API-backed fields right now
-    if (activeSubTab !== "Name") return;
-
     const formData = new FormData();
-    if (fullName !== user?.name) {
-      formData.append("name", fullName);
-    }
-    if (phoneNumber !== user?.phoneNumber) {
-      formData.append("phoneNumber", phoneNumber);
+    let hasChanges = false;
+
+    if (activeSubTab === "Name") {
+      if (fullName !== (user?.name ?? "")) {
+        formData.append("name", fullName);
+        hasChanges = true;
+      }
+      if (phoneNumber !== (user?.phoneNumber ?? "")) {
+        formData.append("phoneNumber", phoneNumber);
+        hasChanges = true;
+      }
+    } else if (activeSubTab === "Company") {
+      if (companyName !== (user?.company ?? "")) {
+        formData.append("company", companyName);
+        hasChanges = true;
+      }
+      if (website !== (user?.website ?? "")) {
+        formData.append("website", website);
+        hasChanges = true;
+      }
+    } else if (activeSubTab === "Social") {
+      if (linkedin !== (user?.linkedin ?? "")) {
+        formData.append("linkedin", linkedin);
+        hasChanges = true;
+      }
+      if (instagram !== (user?.instagram ?? "")) {
+        formData.append("instagram", instagram);
+        hasChanges = true;
+      }
     }
 
-    // Only call API if something changed
-    if (
-      fullName !== user?.name ||
-      phoneNumber !== (user?.phoneNumber ?? "")
-    ) {
+    if (hasChanges) {
       editProfileMutation.mutate(formData);
     }
   };
@@ -167,8 +206,22 @@ export function EditProfileContent() {
           onPhoneChange={setPhoneNumber}
         />
       )}
-      {activeSubTab === "Company" && <CompanyForm />}
-      {activeSubTab === "Social" && <SocialForm />}
+      {activeSubTab === "Company" && (
+        <CompanyForm
+          companyName={companyName}
+          website={website}
+          onCompanyNameChange={setCompanyName}
+          onWebsiteChange={setWebsite}
+        />
+      )}
+      {activeSubTab === "Social" && (
+        <SocialForm
+          linkedin={linkedin}
+          instagram={instagram}
+          onLinkedinChange={setLinkedin}
+          onInstagramChange={setInstagram}
+        />
+      )}
 
       {/* Save button */}
       <div className="mt-8">

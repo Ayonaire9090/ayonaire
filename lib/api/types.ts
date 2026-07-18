@@ -24,6 +24,11 @@ export interface UserProfile {
   email: string;
   password?: string;
   phoneNumber?: string;
+  bio?: string;
+  company?: string;
+  website?: string;
+  linkedin?: string;
+  instagram?: string;
   profile?: {
     url: string;
     publicId: string;
@@ -103,6 +108,11 @@ export interface LogoutPayload {
 export interface EditProfilePayload {
   name?: string;
   phoneNumber?: string;
+  bio?: string;
+  company?: string;
+  website?: string;
+  linkedin?: string;
+  instagram?: string;
   profile?: File; // For multipart/form-data
 }
 

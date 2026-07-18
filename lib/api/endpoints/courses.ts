@@ -33,7 +33,8 @@ export interface CreateCoursePayload {
   category: string;
   price?: number;
   courseLevel: string;
-  thumbnail: string | File | Blob; // Can be string or File depending on form
+  thumbnail: File | Blob;
+  introVideo?: File | Blob;
 }
 
 export interface EditCoursePayload extends Partial<CreateCoursePayload> {
@@ -54,12 +55,25 @@ export const coursesApi = {
       requireAuth: true,
     }),
 
-  createCourse: (payload: CreateCoursePayload) =>
-    apiClient<ApiResponse>("/api/v1/course/create", {
+  // POST /api/v1/course/create requires multipart/form-data (thumbnail and
+  // introVideo are uploaded as binary files, not JSON).
+  createCourse: (payload: CreateCoursePayload) => {
+    const formData = new FormData();
+    formData.append("title", payload.title);
+    if (payload.description) formData.append("description", payload.description);
+    formData.append("category", payload.category);
+    if (payload.price !== undefined) formData.append("price", String(payload.price));
+    formData.append("courseLevel", payload.courseLevel);
+    formData.append("thumbnail", payload.thumbnail);
+    if (payload.introVideo) formData.append("introVideo", payload.introVideo);
+
+    return apiClient<ApiResponse>("/api/v1/course/create", {
       method: "POST",
-      body: JSON.stringify(payload),
+      body: formData,
+      headers: { "Content-Type": undefined as any },
       requireAuth: true,
-    }),
+    });
+  },
 
   editCourse: (payload: EditCoursePayload) =>
     apiClient<ApiResponse>("/api/v1/course/edit", {

@@ -21,8 +21,39 @@ import {
   ListOrdered,
 } from "lucide-react";
 
-export function ClassInformationStep() {
+export interface ClassInformationValues {
+  title: string;
+  category: string;
+  description: string;
+  price: string;
+  courseLevel: string;
+  thumbnail: File | null;
+}
+
+const courseLevelOptions = [
+  { label: "Beginner", value: "beginner" },
+  { label: "Intermediate", value: "intermediate" },
+  { label: "Advanced", value: "advanced" },
+];
+
+export function ClassInformationStep({
+  values,
+  onChange,
+}: {
+  values: ClassInformationValues;
+  onChange: (values: ClassInformationValues) => void;
+}) {
   const [videoSource, setVideoSource] = useState("Vimeo");
+
+  const setField = <K extends keyof ClassInformationValues>(
+    key: K,
+    value: ClassInformationValues[K],
+  ) => onChange({ ...values, [key]: value });
+
+  const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] ?? null;
+    setField("thumbnail", file);
+  };
 
   return (
     <div className="flex flex-col gap-6 md:gap-8 mb-4">
@@ -37,20 +68,22 @@ export function ClassInformationStep() {
           </span>
         }
         placeholder="Complete Python Bootcamp"
+        value={values.title}
+        onChange={(e) => setField("title", e.target.value)}
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-        <AppSelect
-          label={<span className="font-semibold">Category</span>}
-          options={[{ label: "Programming", value: "programming" }]}
-          value="programming"
-        />
-        <AppSelect
-          label={<span className="font-semibold">Instructor</span>}
-          options={[{ label: "Mike Rodriguez", value: "mike_rodriguez" }]}
-          value="mike_rodriguez"
-        />
-      </div>
+      {/* No backend endpoint exists to list categories, so this takes a
+          category ID directly until one is added. */}
+      <AppInput
+        label={
+          <span className="font-semibold">
+            Category ID <span className="text-red-500">*</span>
+          </span>
+        }
+        placeholder="Enter category ID"
+        value={values.category}
+        onChange={(e) => setField("category", e.target.value)}
+      />
 
       {/* Class Description Rich Text Editor Fake */}
       <div className="flex flex-col gap-1.5">
@@ -136,24 +169,25 @@ export function ClassInformationStep() {
           <textarea
             className="flex-1 w-full p-4 text-[15px] outline-none text-gray-700 placeholder:text-gray-400 bg-white min-h-[160px] resize-none"
             placeholder="Describe what students will learn in this course..."
+            value={values.description}
+            onChange={(e) => setField("description", e.target.value)}
           />
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
         <AppInput
           label={<span className="font-semibold">Price</span>}
-          placeholder="$ 99.99"
+          placeholder="99.99"
+          type="number"
+          value={values.price}
+          onChange={(e) => setField("price", e.target.value)}
         />
         <AppSelect
           label={<span className="font-semibold">Course Level</span>}
-          options={[{ label: "Beginner", value: "beginner" }]}
-          value="beginner"
-        />
-        <AppSelect
-          label={<span className="font-semibold">Course Status</span>}
-          options={[{ label: "Active", value: "active" }]}
-          value="active"
+          options={courseLevelOptions}
+          value={values.courseLevel}
+          onChange={(val) => setField("courseLevel", val)}
         />
       </div>
 
@@ -206,19 +240,27 @@ export function ClassInformationStep() {
         {/* Course Thumbnail */}
         <div className="flex flex-col gap-4">
           <h4 className="text-[17px] font-semibold text-gray-900">
-            Course Thumbnail
+            Course Thumbnail <span className="text-red-500">*</span>
           </h4>
-          <div className="flex flex-col items-center justify-center border-[1.5px] border-dashed border-gray-200 rounded-xl bg-transparent hover:bg-white/50 transition-colors cursor-pointer min-h-[200px]">
+          <label className="flex flex-col items-center justify-center border-[1.5px] border-dashed border-gray-200 rounded-xl bg-transparent hover:bg-white/50 transition-colors cursor-pointer min-h-[200px]">
             <div className="size-11 rounded-full bg-[#FAFAFA] flex items-center justify-center mb-3 text-gray-700 shadow-sm border border-gray-100/50">
               <FileText className="size-5" />
             </div>
             <span className="text-[14px] font-medium text-gray-900 mb-1">
-              Click to upload thumbnail
+              {values.thumbnail
+                ? values.thumbnail.name
+                : "Click to upload thumbnail"}
             </span>
             <span className="text-[12px] text-gray-500 uppercase tracking-tight">
               PNG, JPG or WEBP (max. 2MB)
             </span>
-          </div>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleThumbnailChange}
+              className="hidden"
+            />
+          </label>
         </div>
       </div>
     </div>
