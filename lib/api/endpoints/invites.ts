@@ -20,7 +20,7 @@ export const invitesApi = {
     }),
 
   inviteUsers: (payload: InviteUsersPayload) =>
-    apiClient<ApiResponse>("/api/v1/auth/invites", {
+    apiClient<ApiResponse>("/api/v1/auth/invite", {
       method: "POST",
       body: JSON.stringify(payload),
       requireAuth: true,

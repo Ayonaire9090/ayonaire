@@ -27,8 +27,8 @@ export const cohortsApi = {
     }),
 
   assignStudent: (payload: AssignStudentPayload) =>
-    apiClient<ApiResponse>("/api/v1/cohort/assign", {
-      method: "PUT",
+    apiClient<ApiResponse>("/api/v1/cohort/assign-student", {
+      method: "POST",
       body: JSON.stringify(payload),
       requireAuth: true,
     }),

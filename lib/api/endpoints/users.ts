@@ -4,7 +4,7 @@ import { UserProfile, ApiResponse } from "../types";
 export const usersApi = {
   addProfilePicture: (formData: FormData) =>
     apiClient<{ success: boolean; message: string; profile: { url: string; publicId: string } }>(
-      "/api/v1/user/add-profile",
+      "/api/v1/auth/add-profile",
       {
         method: "POST",
         body: formData,
@@ -16,7 +16,7 @@ export const usersApi = {
 
   editProfile: (formData: FormData) =>
     apiClient<{ success: boolean; message: string; user: UserProfile }>(
-      "/api/v1/user/edit-profile",
+      "/api/v1/auth/edit-profile",
       {
         method: "PUT",
         body: formData,
