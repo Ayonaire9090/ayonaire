@@ -8,10 +8,11 @@ interface InstructorCourseListProps {
 }
 
 // Draft/Published are the only statuses ProfileCourseCard's badge styling
-// supports well here - "archived" (the real third status) falls back to
-// Draft rather than crashing on an unrecognized status.
+// supports well here - "Archived" (the real third status, per the backend's
+// CourseStatus enum: Draft | Active | Archived) falls back to Draft rather
+// than crashing on an unrecognized status.
 function toCardStatus(status?: string): "Draft" | "Published" {
-  return status === "published" ? "Published" : "Draft";
+  return status === "Active" ? "Published" : "Draft";
 }
 
 export function InstructorCourseList({ courses }: InstructorCourseListProps) {

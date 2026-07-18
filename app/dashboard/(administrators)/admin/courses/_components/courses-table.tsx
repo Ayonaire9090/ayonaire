@@ -19,7 +19,7 @@ export const CoursesTable = () => {
   const [addCourseOpen, setAddCourseOpen] = React.useState(false);
 
   const { data, isLoading, isError } = useGetCourses();
-  const courses: CourseData[] = (data?.data ?? []).map(mapCourseToCourseData);
+  const courses: CourseData[] = (data?.courses ?? []).map(mapCourseToCourseData);
 
   const tableColumns: ColumnDef<CourseData>[] = [
     {

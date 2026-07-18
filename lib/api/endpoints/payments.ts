@@ -137,7 +137,7 @@ export interface CreatePricingPlanPayload {
   status?: string;
 }
 
-function toQueryString(params: Record<string, string | number | undefined>): string {
+function toQueryString(params: Record<string, any>): string {
   const query = new URLSearchParams();
   Object.entries(params).forEach(([key, value]) => {
     if (value !== undefined) query.append(key, String(value));

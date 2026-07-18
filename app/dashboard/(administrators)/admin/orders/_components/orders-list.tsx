@@ -18,10 +18,10 @@ export const OrdersList = () => {
   const [searchQuery, setSearchQuery] = React.useState("");
 
   const { data, isLoading, isError } = useGetAllPayments();
-  const orders = (data?.data?.payments ?? []).map(mapPaymentRecordToOrderData);
+  const orders = (data?.data?.data ?? []).map(mapPaymentRecordToOrderData);
 
   const filteredOrders = orders.filter(
-    (order) =>
+    (order: (typeof orders)[number]) =>
       order.user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       order.orderId.toLowerCase().includes(searchQuery.toLowerCase()) ||
       order.course.toLowerCase().includes(searchQuery.toLowerCase()),

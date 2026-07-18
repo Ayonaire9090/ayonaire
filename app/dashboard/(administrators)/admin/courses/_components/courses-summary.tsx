@@ -6,7 +6,7 @@ import { mapCourseToCourseData } from "./courses-data";
 
 export const CoursesSummary = () => {
   const { data } = useGetCourses();
-  const courses = (data?.data ?? []).map(mapCourseToCourseData);
+  const courses = (data?.courses ?? []).map(mapCourseToCourseData);
 
   const summaryData = [
     { title: "All", number: String(courses.length) },

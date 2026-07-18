@@ -127,7 +127,7 @@ function deriveOrderStatuses(status?: string): {
   paymentStatus: PaymentStatus;
   enrollmentStatus: EnrollmentStatus;
 } {
-  if (status === "successful") {
+  if (status === "success") {
     return {
       orderStatus: "Completed",
       paymentStatus: "Paid",

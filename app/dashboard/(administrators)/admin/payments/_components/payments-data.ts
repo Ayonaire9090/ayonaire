@@ -29,7 +29,7 @@ export function mapPaymentRecordToPayment(payment: PaymentRecord): Payment {
     date: payment.createdAt
       ? format(new Date(payment.createdAt), "MMM d, yyyy")
       : "-",
-    status: payment.status === "successful" ? "Completed" : "Pending",
+    status: payment.status === "success" ? "Completed" : "Pending",
     avatar: "/assets/images/user1.png",
   };
 }

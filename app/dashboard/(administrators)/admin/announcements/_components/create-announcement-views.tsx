@@ -48,7 +48,7 @@ export const MainFormView = ({
   const [courseSearch, setCourseSearch] = useState("");
 
   const { data: coursesResponse } = useGetCourses();
-  const courses = coursesResponse?.data ?? [];
+  const courses = coursesResponse?.courses ?? [];
 
   const { data: usersResponse } = useGetAdminUsers();
   const users = usersResponse?.users ?? [];

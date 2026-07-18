@@ -60,8 +60,8 @@ export interface UploadLessonPayload {
 }
 
 export interface UploadLessonVideoPayload {
-  lesson: string;
-  videos: string[];
+  lessonId: string;
+  videos: { title: string; file: File }[];
 }
 
 export interface UpdateLastLessonPayload {
@@ -82,12 +82,20 @@ export const lessonsApi = {
       requireAuth: true,
     }),
 
-  uploadVideo: (payload: UploadLessonVideoPayload) =>
-    apiClient<ApiResponse>("/api/v1/lesson/upload-video", {
+  uploadVideo: (payload: UploadLessonVideoPayload) => {
+    const formData = new FormData();
+    formData.append("lessonId", payload.lessonId);
+    payload.videos.forEach((video) => {
+      formData.append("titles", video.title);
+      formData.append("videos", video.file);
+    });
+
+    return apiClient<ApiResponse>("/api/v1/lesson/upload-video", {
       method: "POST",
-      body: JSON.stringify(payload),
+      body: formData,
       requireAuth: true,
-    }),
+    });
+  },
 
   markCompleted: ({ courseId, lessonId }: MarkLessonCompletedPayload) =>
     apiClient<ApiResponse>("/api/v1/lesson/mark-lesson-as-completed", {

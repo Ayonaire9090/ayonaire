@@ -41,7 +41,7 @@ export const InstructorAnnouncementQuickCreateModal = ({
   const [message, setMessage] = useState("");
 
   const { data: coursesData } = useGetCourses();
-  const courseOptions: AppSelectOption[] = (coursesData?.data ?? []).map(
+  const courseOptions: AppSelectOption[] = (coursesData?.courses ?? []).map(
     (course) => ({ label: course.title, value: course._id }),
   );
 

@@ -12,7 +12,7 @@ import { useGetAllPayments } from "@/hooks/api/use-payments";
 export const AdminPaymentsList = () => {
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const { data, isLoading, isError } = useGetAllPayments();
-  const payments = (data?.data?.payments ?? []).map(mapPaymentRecordToPayment);
+  const payments = (data?.data?.data ?? []).map(mapPaymentRecordToPayment);
 
   const toggleSelection = (id: string) => {
     setSelectedIds((prev) => {

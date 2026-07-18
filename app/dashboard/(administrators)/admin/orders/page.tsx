@@ -11,7 +11,7 @@ import { mapPaymentRecordToOrderData } from "./_components/orders-data";
 
 export default function AdminOrdersPage() {
   const { data } = useGetAllPayments();
-  const orders = (data?.data?.payments ?? []).map(mapPaymentRecordToOrderData);
+  const orders = (data?.data?.data ?? []).map(mapPaymentRecordToOrderData);
 
   const summaryData = [
     { title: "All", number: String(orders.length) },

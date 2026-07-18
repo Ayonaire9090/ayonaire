@@ -84,19 +84,11 @@ export const getProgressColor = (status: StudentStatus) => {
 // already made for the Admin Enrollments page).
 export function useInstructorStudentRoster() {
   const user = useAuthStore((state) => state.user);
-  const coursesQuery = useGetCourses();
+  const coursesQuery = useGetCourses({ instructor: user?._id });
   const enrollmentsQuery = useGetEnrolledCourses();
 
   const courseIds = new Set(
-    (coursesQuery.data?.data ?? [])
-      .filter((course) => {
-        const instructorId =
-          typeof course.instructor === "string"
-            ? course.instructor
-            : course.instructor?._id;
-        return instructorId === user?._id;
-      })
-      .map((course) => course._id),
+    (coursesQuery.data?.courses ?? []).map((course) => course._id),
   );
 
   const students: StudentData[] = (enrollmentsQuery.data?.data ?? [])

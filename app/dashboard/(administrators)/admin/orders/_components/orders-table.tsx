@@ -120,7 +120,7 @@ export const OrdersTable = () => {
   };
 
   const { data, isLoading, isError } = useGetAllPayments();
-  const orders: OrderData[] = (data?.data?.payments ?? []).map(
+  const orders: OrderData[] = (data?.data?.data ?? []).map(
     mapPaymentRecordToOrderData,
   );
 
