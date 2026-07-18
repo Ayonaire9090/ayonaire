@@ -25,15 +25,20 @@ export interface Enrollment {
 }
 
 export const enrollmentApi = {
-  // NOTE: named "enrolled-coures" (their typo, kept verbatim) and originally
-  // written for a student's own "my enrolled courses" view. Reused here for
-  // the Admin Enrollments page on the assumption an admin-role token returns
-  // all platform enrollments rather than just the caller's own - unconfirmed,
-  // needs backend verification. If it turns out to be scoped to the caller,
-  // this page will need a genuinely separate "list all enrollments" endpoint.
+  // Path corrected against the live Swagger spec
+  // (https://ayonaire.onrender.com/api-docs/) - real route is
+  // /api/v1/enrollment/enrolled-courses. The previous path
+  // (/api/v1/enroll/enrolled-coures) 404s on the live backend.
+  //
+  // Originally written for a student's own "my enrolled courses" view.
+  // Reused here for the Admin Enrollments page on the assumption an
+  // admin-role token returns all platform enrollments rather than just the
+  // caller's own - unconfirmed, needs backend verification. If it turns out
+  // to be scoped to the caller, this page will need a genuinely separate
+  // "list all enrollments" endpoint.
   getEnrolledCourses: () =>
     apiClient<{ success: boolean; count: number; enrollments: Enrollment[] }>(
-      "/api/v1/enroll/enrolled-coures",
+      "/api/v1/enrollment/enrolled-courses",
       {
         method: "GET",
         requireAuth: true,
