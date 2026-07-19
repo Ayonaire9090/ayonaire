@@ -60,7 +60,7 @@ export const quizApi = {
     }),
 
   createQuiz: (payload: CreateQuizPayload) =>
-    apiClient<ApiResponse>("/api/v1/quiz/quiz", {
+    apiClient<ApiResponse<QuizRecord>>("/api/v1/quiz/quiz", {
       method: "POST",
       body: JSON.stringify(payload),
       requireAuth: true,
