@@ -7,32 +7,43 @@ import {
 } from "@/components/ui/carousel";
 import { DollarSign, Users2, Wallet } from "lucide-react";
 import { PaymentAnalyticsCard } from "./payment-analytics-card";
-
-const BasicAnalytics = [
-  {
-    heading: "Total Revenue",
-    title: "$42,320",
-    icon: DollarSign,
-    rate: "+15%",
-    description: "from last month",
-  },
-  {
-    heading: "Instructor Payouts",
-    title: "$14,120",
-    icon: Users2,
-    rate: "",
-    description: "January, 2024",
-  },
-  {
-    heading: "Platform Fees",
-    title: "$28,200",
-    icon: Wallet,
-    rate: "",
-    description: "this month",
-  },
-];
+import { useGetAllPayments } from "@/hooks/api/use-payments";
 
 export const PaymentAnalytics = () => {
+  const { data } = useGetAllPayments();
+  const payments = data?.data?.payments ?? [];
+
+  const totalRevenue = payments
+    .filter((p) => p.status === "successful")
+    .reduce((sum, p) => sum + (p.amount ?? 0), 0);
+
+  // Instructor Payouts / Platform Fees have no known backend source yet (no
+  // payout-split or fee-percentage field on a Payment), so they fall back
+  // to "-" rather than guessed numbers.
+  const BasicAnalytics = [
+    {
+      heading: "Total Revenue",
+      title: `NGN ${totalRevenue.toLocaleString()}`,
+      icon: DollarSign,
+      rate: "",
+      description: "",
+    },
+    {
+      heading: "Instructor Payouts",
+      title: "-",
+      icon: Users2,
+      rate: "",
+      description: "",
+    },
+    {
+      heading: "Platform Fees",
+      title: "-",
+      icon: Wallet,
+      rate: "",
+      description: "",
+    },
+  ];
+
   return (
     <>
       {/* ── Mobile / Tablet: Embla carousel with peeking ── */}

@@ -1,75 +1,119 @@
-import { apiClient } from "../client";
 import { ApiResponse } from "../types";
+import { feedSocketRequest } from "../../socket/feed-socket";
 
-// Shape returned by the backend for a single feed post. NOTE: field names
-// are a best-effort guess (no feed GET response has been confirmed against
-// the backend yet) - adjust once confirmed.
 export interface FeedComment {
-  _id: string;
+  user: {
+    id: string;
+    name?: string;
+  };
   text: string;
-  user?: string | { _id: string; name: string };
-  createdAt?: string;
+  createdAt: string;
 }
 
 export interface FeedRecord {
-  _id: string;
-  text?: string;
-  image?: string;
-  tags?: string[];
-  createdBy?: string | { _id: string; name: string };
-  likes?: string[];
-  comments?: FeedComment[];
-  createdAt?: string;
+  id: string;
+  content: string;
+  media?: {
+    url: string;
+    publicId: string;
+  };
+  tag?: string[];
+  user: {
+    id: string;
+    name: string;
+    profile?: {
+      url: string;
+      publicId: string;
+    } | null;
+  };
+  likes: string[];
+  comments: FeedComment[];
+  shares: number;
+  createdAt: string;
 }
 
+export interface GetFeedsParams {
+  tag?: string;
+  page?: number;
+  limit?: number;
+}
+
+export interface ShareFeedResult {
+  feedId: string;
+  shares: number;
+}
+
+interface TransferableMedia {
+  buffer: ArrayBuffer;
+  mimetype: string;
+  originalname: string;
+}
+
+const extractMediaFile = (formData: FormData): File | undefined => {
+  const file = formData.get("media");
+  return file instanceof File && file.size > 0 ? file : undefined;
+};
+
+const toTransferableMedia = async (
+  file: File,
+): Promise<TransferableMedia> => ({
+  buffer: await file.arrayBuffer(),
+  mimetype: file.type,
+  originalname: file.name,
+});
+
+const stringField = (formData: FormData, key: string): string | undefined => {
+  const value = formData.get(key);
+  return typeof value === "string" && value !== "" ? value : undefined;
+};
+
+// All feed reads/writes go over the /feed socket namespace (see
+// lib/socket/feed-socket.ts) instead of REST for lower latency and
+// real-time broadcast of changes - the FormData-in, ApiResponse-out
+// signatures are kept identical to the old REST client so every caller
+// (hooks/api/use-feeds.ts and the components that use it) needed zero changes.
 export const feedsApi = {
-  create: (formData: FormData) =>
-    apiClient<ApiResponse>("/api/v1/feed", {
-      method: "POST",
-      body: formData,
-      headers: { "Content-Type": undefined as any },
-      requireAuth: true,
+  create: async (formData: FormData): Promise<ApiResponse<FeedRecord>> => {
+    const mediaFile = extractMediaFile(formData);
+    return feedSocketRequest<FeedRecord>("feed:create", {
+      content: stringField(formData, "content") ?? "",
+      tag: stringField(formData, "tag"),
+      media: mediaFile ? await toTransferableMedia(mediaFile) : undefined,
+    });
+  },
+
+  getAll: (params?: GetFeedsParams) =>
+    feedSocketRequest<FeedRecord[]>("feed:list", {
+      tag: params?.tag,
+      page: params?.page,
+      limit: params?.limit,
     }),
 
-  getAll: () =>
-    apiClient<ApiResponse<FeedRecord[]>>("/api/v1/feed", {
-      method: "GET",
-      requireAuth: true,
-    }),
-
-  edit: (formData: FormData) =>
-    apiClient<ApiResponse>("/api/v1/feed", {
-      method: "PUT",
-      body: formData,
-      headers: { "Content-Type": undefined as any },
-      requireAuth: true,
-    }),
+  edit: async (formData: FormData): Promise<ApiResponse<FeedRecord>> => {
+    const mediaFile = extractMediaFile(formData);
+    return feedSocketRequest<FeedRecord>("feed:edit", {
+      feedId: stringField(formData, "feedId") ?? "",
+      content: stringField(formData, "content"),
+      tag: stringField(formData, "tag"),
+      media: mediaFile ? await toTransferableMedia(mediaFile) : undefined,
+    });
+  },
 
   delete: (feedId: string) =>
-    apiClient<ApiResponse>("/api/v1/feed", {
-      method: "DELETE",
-      body: JSON.stringify({ feedId }),
-      requireAuth: true,
-    }),
+    feedSocketRequest<string>("feed:delete", { feedId }),
 
   like: (feedId: string) =>
-    apiClient<ApiResponse>("/api/v1/feed/like", {
-      method: "POST",
-      body: JSON.stringify({ feedId }),
-      requireAuth: true,
-    }),
+    feedSocketRequest<FeedRecord>("feed:like", { feedId }),
 
   comment: (feedId: string, text: string) =>
-    apiClient<ApiResponse>("/api/v1/feed/comment", {
-      method: "POST",
-      body: JSON.stringify({ feedId, text }),
-      requireAuth: true,
-    }),
+    feedSocketRequest<FeedRecord>("feed:comment", { feedId, text }),
 
   deleteComment: (feedId: string, commentId: string) =>
-    apiClient<ApiResponse>("/api/v1/feed/comment", {
-      method: "DELETE",
-      body: JSON.stringify({ feedId, commentId }),
-      requireAuth: true,
-    }),
+    feedSocketRequest<string>("feed:comment:delete", { feedId, commentId }),
+
+  share: (feedId: string) =>
+    feedSocketRequest<ShareFeedResult>("feed:share", { feedId }),
+
+  report: (feedId: string, reason: string) =>
+    feedSocketRequest<string>("feed:report", { feedId, reason }),
 };

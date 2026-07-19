@@ -2,14 +2,17 @@
 
 import React, { useState } from "react";
 import { DataList } from "@/components/ui/data-list";
-import { mockPayments } from "./payments-data";
+import { mapPaymentRecordToPayment } from "./payments-data";
 import { PaymentsFilters } from "./payments-filters";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { MoreVertical } from "lucide-react";
+import { useGetAllPayments } from "@/hooks/api/use-payments";
 
 export const AdminPaymentsList = () => {
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const { data, isLoading, isError } = useGetAllPayments();
+  const payments = (data?.data?.payments ?? []).map(mapPaymentRecordToPayment);
 
   const toggleSelection = (id: string) => {
     setSelectedIds((prev) => {
@@ -37,8 +40,21 @@ export const AdminPaymentsList = () => {
   return (
     <div className="w-full bg-white p-4 rounded-xl">
       <PaymentsFilters selectedCount={selectedIds.size} />
+      {isLoading ? (
+        <div className="flex items-center justify-center py-16">
+          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+        </div>
+      ) : isError ? (
+        <div className="flex items-center justify-center py-16 text-[15px] text-red-500">
+          Failed to load payments. Please try again.
+        </div>
+      ) : payments.length === 0 ? (
+        <div className="flex items-center justify-center py-16 text-[15px] text-gray-500">
+          No payments found.
+        </div>
+      ) : (
       <DataList
-        data={mockPayments}
+        data={payments}
         keyExtractor={(item) => item.id}
         renderItem={(item) => {
           const isSelected = selectedIds.has(item.id);
@@ -86,6 +102,7 @@ export const AdminPaymentsList = () => {
           );
         }}
       />
+      )}
     </div>
   );
 };

@@ -33,7 +33,7 @@ export const EnrollmentsList = ({ onEnrollClick }: EnrollmentsListProps) => {
   const [isBulkOpen, setIsBulkOpen] = useState(false);
 
   const { data, isLoading, isError } = useGetEnrolledCourses();
-  const enrollments: EnrollmentData[] = (data?.enrollments ?? []).map(
+  const enrollments: EnrollmentData[] = (data?.data ?? []).map(
     mapEnrollmentToEnrollmentData,
   );
   const filteredEnrollments = enrollments.filter(

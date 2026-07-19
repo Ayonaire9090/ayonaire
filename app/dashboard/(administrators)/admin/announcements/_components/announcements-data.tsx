@@ -16,27 +16,24 @@ export interface AnnouncementData {
   status: AnnouncementStatus;
 }
 
-const VALID_STATUSES: AnnouncementStatus[] = ["Published", "Draft", "Scheduled"];
-
-function normalizeStatus(status?: string): AnnouncementStatus {
-  if (!status) return "Published";
-  const match = VALID_STATUSES.find((s) => s.toLowerCase() === status.toLowerCase());
-  return match ?? "Published";
+// Confirmed 2026-07-14 against the live Swagger spec: Announcement has no
+// status field at all - there's no draft/scheduled concept on the backend,
+// every created announcement is immediately live. Always "Published".
+function normalizeStatus(): AnnouncementStatus {
+  return "Published";
 }
 
-// Audience isn't returned directly by the backend - derive a display label from
-// whichever targeting field is present. Confirm this logic once the real
-// response shape (and any dedicated "audience" field) is confirmed.
+// Audience isn't returned directly by the backend - derive a display label
+// from whichever targeting field is present. courseId/cohortId are plain ID
+// strings per the confirmed schema (no populated title available).
 function deriveAudience(announcement: Announcement): string {
   if (announcement.students && announcement.students.length > 0) {
     return "Specific Users";
   }
-  if (announcement.cohort) {
-    return typeof announcement.cohort === "string"
-      ? announcement.cohort
-      : announcement.cohort.title;
+  if (announcement.cohortId) {
+    return "Specific Group";
   }
-  if (announcement.course) {
+  if (announcement.courseId) {
     return "Course Students";
   }
   return "All Students";
@@ -45,21 +42,16 @@ function deriveAudience(announcement: Announcement): string {
 export function mapAnnouncementToAnnouncementData(
   announcement: Announcement,
 ): AnnouncementData {
-  const course =
-    typeof announcement.course === "string"
-      ? announcement.course
-      : announcement.course?.title ?? "All Courses";
-
   return {
     id: announcement._id,
     title: announcement.title,
-    course,
+    course: announcement.courseId ?? "All Courses",
     audience: deriveAudience(announcement),
     date: announcement.createdAt
       ? format(new Date(announcement.createdAt), "d MMM")
       : "-",
     createdAt: announcement.createdAt ?? null,
-    status: normalizeStatus(announcement.status),
+    status: normalizeStatus(),
   };
 }
 

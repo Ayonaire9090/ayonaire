@@ -1,9 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { 
-  lessonsApi, 
-  UploadLessonPayload, 
-  UploadLessonVideoPayload, 
-  UpdateLastLessonPayload 
+import {
+  lessonsApi,
+  UploadLessonPayload,
+  UploadLessonVideoPayload,
+  UpdateLastLessonPayload,
+  MarkLessonCompletedPayload,
 } from "@/lib/api/endpoints/lessons";
 import { queryKeys } from "@/lib/api/query-keys";
 
@@ -33,10 +34,11 @@ export const useMarkLessonCompletedMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (lessonId: string) => lessonsApi.markCompleted(lessonId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.lessons.all });
-      // Might want to invalidate enrollment / progress here as well
+    mutationFn: (payload: MarkLessonCompletedPayload) => lessonsApi.markCompleted(payload),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.lessons.courseContent(variables.courseId),
+      });
       queryClient.invalidateQueries({ queryKey: queryKeys.enrollment.all });
     },
   });
@@ -61,10 +63,10 @@ export const useResumeLastLesson = (courseId: string) => {
   });
 };
 
-export const useViewLessonContent = (lessonId: string) => {
+export const useCourseContent = (courseId: string) => {
   return useQuery({
-    queryKey: queryKeys.lessons.content(lessonId),
-    queryFn: () => lessonsApi.viewContent(lessonId),
-    enabled: !!lessonId,
+    queryKey: queryKeys.lessons.courseContent(courseId),
+    queryFn: () => lessonsApi.getCourseContent(courseId),
+    enabled: !!courseId,
   });
 };

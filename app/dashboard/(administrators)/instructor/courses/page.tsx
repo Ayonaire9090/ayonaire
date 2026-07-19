@@ -35,7 +35,7 @@ export default function InstrutorCoursesPage() {
     {
       heading: "Published",
       title: String(
-        myCourses.filter((c) => c.status?.toLowerCase() === "active" || c.status?.toLowerCase() === "published").length,
+        myCourses.filter((c) => c.status === "published").length,
       ),
       icon: Rocket,
       rate: "",
@@ -44,7 +44,7 @@ export default function InstrutorCoursesPage() {
     {
       heading: "Drafts",
       title: String(
-        myCourses.filter((c) => c.status?.toLowerCase() === "draft").length,
+        myCourses.filter((c) => c.status === "draft").length,
       ),
       icon: NotebookPen,
       rate: "",
@@ -53,7 +53,7 @@ export default function InstrutorCoursesPage() {
     {
       heading: "Archived",
       title: String(
-        myCourses.filter((c) => c.status?.toLowerCase() === "archived").length,
+        myCourses.filter((c) => c.status === "archived").length,
       ),
       icon: Archive,
       rate: "",

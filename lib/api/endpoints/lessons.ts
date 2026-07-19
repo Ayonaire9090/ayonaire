@@ -1,19 +1,51 @@
 import { apiClient } from "../client";
 import { ApiResponse } from "../types";
 
-// Best-effort guess at the shapes returned by resume-last-lesson/view-lesson-content -
-// both endpoints are typed generically (ApiResponse<any>) elsewhere with no confirmed
-// response shape. Confirm against the real API and adjust once known.
 export interface ResumeLessonInfo {
-  lessonId?: string;
-  moduleId?: string;
+  lessonId: string | null;
 }
 
-export interface LessonContent {
+export interface LessonVideo {
+  title: string;
+  url: string;
+  publicId: string;
+  duration: number;
+}
+
+export interface LessonMaterial {
+  name: string;
+  url: string;
+  publicId: string;
+}
+
+export interface LessonWithProgress {
   _id: string;
   title: string;
-  videos?: string[];
-  description?: string;
+  module: string;
+  course: string;
+  order: number;
+  duration?: number;
+  isPublished: boolean;
+  isFreePreview: boolean;
+  isLocked: boolean;
+  videos: LessonVideo[];
+  materials: LessonMaterial[];
+  isCompleted: boolean;
+}
+
+export interface ModuleWithLessons {
+  _id: string;
+  title: string;
+  description: string;
+  course: string;
+  order: number;
+  lessons: LessonWithProgress[];
+}
+
+export interface CourseContent {
+  modules: ModuleWithLessons[];
+  progress: number;
+  lastLesson: string | null;
 }
 
 export interface UploadLessonPayload {
@@ -37,6 +69,11 @@ export interface UpdateLastLessonPayload {
   lessonId: string;
 }
 
+export interface MarkLessonCompletedPayload {
+  courseId: string;
+  lessonId: string;
+}
+
 export const lessonsApi = {
   upload: (payload: UploadLessonPayload) =>
     apiClient<ApiResponse>("/api/v1/lesson/upload", {
@@ -52,10 +89,10 @@ export const lessonsApi = {
       requireAuth: true,
     }),
 
-  markCompleted: (lessonId: string) =>
+  markCompleted: ({ courseId, lessonId }: MarkLessonCompletedPayload) =>
     apiClient<ApiResponse>("/api/v1/lesson/mark-lesson-as-completed", {
       method: "POST",
-      body: JSON.stringify({ lessonId }),
+      body: JSON.stringify({ courseId, lessonId }),
       requireAuth: true,
     }),
 
@@ -67,14 +104,23 @@ export const lessonsApi = {
     }),
 
   resumeLastLesson: (courseId: string) =>
-    apiClient<ApiResponse<ResumeLessonInfo>>(`/api/v1/lesson/resume-last-lesson?courseId=${courseId}`, {
-      method: "GET",
-      requireAuth: true,
-    }),
+    apiClient<ApiResponse<ResumeLessonInfo>>(
+      `/api/v1/lesson/resume-last-lesson?courseId=${courseId}`,
+      {
+        method: "GET",
+        requireAuth: true,
+      },
+    ),
 
-  viewContent: (lessonId: string) =>
-    apiClient<ApiResponse<LessonContent>>(`/api/v1/lesson/view-lesson-content?lessonId=${lessonId}`, {
-      method: "GET",
-      requireAuth: true,
-    }),
+  // Despite the "view-lesson-content" endpoint name, it's keyed by courseId
+  // and returns the whole module/lesson tree for that course (each lesson
+  // flagged with isCompleted) - not a single lesson's content.
+  getCourseContent: (courseId: string) =>
+    apiClient<ApiResponse<CourseContent>>(
+      `/api/v1/lesson/view-lesson-content?courseId=${courseId}`,
+      {
+        method: "GET",
+        requireAuth: true,
+      },
+    ),
 };

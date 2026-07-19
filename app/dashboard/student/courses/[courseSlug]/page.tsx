@@ -1,8 +1,12 @@
 "use client";
 
-import { useState, use } from "react";
-import { useGetCourseById } from "@/hooks/api/use-courses";
-import { useResumeLastLesson } from "@/hooks/api/use-lessons";
+import { useState, use, useEffect, useMemo } from "react";
+import { useGetEnrolledCourseDetail } from "@/hooks/api/use-enrollment";
+import {
+  useResumeLastLesson,
+  useCourseContent,
+  useUpdateLastLessonMutation,
+} from "@/hooks/api/use-lessons";
 import { LessonHeader } from "../_components/lesson-header";
 import { LessonVideoPlayer } from "../_components/lesson-video-player";
 import { LessonTabs } from "../_components/lesson-tabs";
@@ -27,24 +31,43 @@ export default function StudentCourseLessonPage({
   params: Promise<{ courseSlug: string }>;
 }) {
   const resolvedParams = use(params);
+  const courseId = resolvedParams.courseSlug;
   const [activeTab, setActiveTab] = useState("Course Content");
   const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const [selectedLessonId, setSelectedLessonId] = useState<string | undefined>();
 
-  // Course listing links here with course.slug ?? course._id (no confirmed
-  // backend slug field exists yet - see Student Courses fix), so this is
-  // treated as a course id. getById() will 404/error if it's actually a
-  // marketing-catalog slug instead, in which case the fallback title below
-  // is used rather than crashing the page.
-  const { data } = useGetCourseById(resolvedParams.courseSlug);
+  const { data } = useGetEnrolledCourseDetail(courseId);
   const course = data?.data;
+  const title = course?.title || "Untitled Course";
 
-  const title = course?.title || "Prompt Engineering for AI Systems";
+  const { data: contentData, isLoading: isContentLoading } = useCourseContent(courseId);
+  const modules = contentData?.data?.modules ?? [];
 
-  // Tells the player which lesson to load. No confirmed response shape for
-  // this endpoint exists yet (see ResumeLessonInfo) - falls back to letting
-  // the player show its placeholder video if no lessonId comes back.
-  const { data: resumeData } = useResumeLastLesson(resolvedParams.courseSlug);
-  const lessonId = resumeData?.data?.lessonId;
+  // Resume-last-lesson has its own fallback-to-first-published-lesson logic
+  // server-side, so it's the source of truth for which lesson to open by
+  // default - once it resolves, seed local selection state with it.
+  const { data: resumeData } = useResumeLastLesson(courseId);
+  useEffect(() => {
+    if (!selectedLessonId && resumeData?.data?.lessonId) {
+      setSelectedLessonId(resumeData.data.lessonId);
+    }
+  }, [resumeData, selectedLessonId]);
+
+  const activeLesson = useMemo(() => {
+    for (const mod of modules) {
+      const found = mod.lessons.find((l) => l._id === selectedLessonId);
+      if (found) return found;
+    }
+    return undefined;
+  }, [modules, selectedLessonId]);
+
+  const { mutate: updateLastLesson } = useUpdateLastLessonMutation();
+
+  const handleSelectLesson = (lessonId: string) => {
+    setSelectedLessonId(lessonId);
+    updateLastLesson({ courseId, lessonId });
+    setIsSheetOpen(false);
+  };
 
   return (
     <>
@@ -65,10 +88,13 @@ export default function StudentCourseLessonPage({
         >
           {/* Black top section for Header and Video */}
           <div className="bg-black w-full flex flex-col">
-            <LessonHeader title={title} />
+            <LessonHeader title={activeLesson?.title || title} />
             <div className="w-full relative">
               <LessonVideoPlayer
-                lessonId={lessonId}
+                lessonId={activeLesson?._id}
+                courseId={courseId}
+                videoUrl={activeLesson?.videos?.[0]?.url}
+                isCompleted={activeLesson?.isCompleted}
                 onOpenChapters={() => setIsSheetOpen(true)}
               />
             </div>
@@ -87,7 +113,12 @@ export default function StudentCourseLessonPage({
                 </div>
               ) : activeTab === "Course Content" ? (
                 <div className="max-w-3xl mx-auto">
-                  <CourseContentAccordion />
+                  <CourseContentAccordion
+                    modules={modules}
+                    activeLessonId={activeLesson?._id}
+                    onSelectLesson={handleSelectLesson}
+                    isLoading={isContentLoading}
+                  />
                 </div>
               ) : activeTab === "Ai Assistant" ? (
                 <div className="max-w-3xl mx-auto h-fit border border-gray-100 rounded-xl overflow-hidden">
@@ -111,7 +142,7 @@ export default function StudentCourseLessonPage({
                 </div>
               ) : activeTab === "Announcement" ? (
                 <div className="max-w-3xl mx-auto w-full">
-                  <CourseAnnouncements courseId={resolvedParams.courseSlug} />
+                  <CourseAnnouncements courseId={courseId} />
                 </div>
               ) : activeTab === "Reviews" ? (
                 <div className="max-w-5xl mx-auto w-full">
@@ -129,7 +160,14 @@ export default function StudentCourseLessonPage({
             </div>
           </div>
         </div>
-        <CourseSidebarSheet open={isSheetOpen} onOpenChange={setIsSheetOpen} />
+        <CourseSidebarSheet
+          open={isSheetOpen}
+          onOpenChange={setIsSheetOpen}
+          modules={modules}
+          activeLessonId={activeLesson?._id}
+          onSelectLesson={handleSelectLesson}
+          isLoading={isContentLoading}
+        />
       </SidebarInset>
     </>
   );

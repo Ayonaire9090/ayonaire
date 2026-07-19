@@ -13,9 +13,9 @@ export const InstructorsSummary = () => {
   const summaryData = [
     { title: "All", number: String(instructors.length) },
     {
-      title: "Active",
+      title: "Approved",
       number: String(
-        instructors.filter((i) => i.status === "Active").length,
+        instructors.filter((i) => i.status === "Approved").length,
       ),
     },
     {
@@ -25,9 +25,9 @@ export const InstructorsSummary = () => {
       ),
     },
     {
-      title: "Suspended",
+      title: "Rejected",
       number: String(
-        instructors.filter((i) => i.status === "Suspended").length,
+        instructors.filter((i) => i.status === "Rejected").length,
       ),
     },
   ];

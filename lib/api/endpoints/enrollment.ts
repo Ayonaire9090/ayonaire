@@ -1,8 +1,6 @@
 import { apiClient } from "../client";
-import { PaginatedResponse } from "../types";
+import { ApiResponse } from "../types";
 
-// NOTE: course/student are typed loosely since it's unconfirmed whether the
-// backend returns populated objects or bare ObjectId strings - handle both.
 export interface Enrollment {
   _id: string;
   course:
@@ -10,9 +8,9 @@ export interface Enrollment {
     | {
         _id: string;
         title: string;
-        description?: string;
-        thumbnail?: string;
-        slug?: string;
+        thumbnail?: { url: string; publicId: string };
+        status?: string;
+        instructor?: { name: string } | null;
       };
   student: string | { _id: string; name: string; email?: string };
   status: string;
@@ -24,24 +22,42 @@ export interface Enrollment {
   updatedAt: string;
 }
 
+export interface EnrolledCourseDetail {
+  _id: string;
+  title: string;
+  description?: string;
+  thumbnail?: { url: string; publicId: string };
+  category?: string;
+  instructor?: { id: string; name: string } | null;
+  price: number;
+  courseLevel: string;
+  status: string;
+  progress: number;
+  completed: boolean;
+  completedLessons: string[];
+  lastLesson: string | null;
+  enrolledAt: string;
+}
+
 export const enrollmentApi = {
-  // Path corrected against the live Swagger spec
-  // (https://ayonaire.onrender.com/api-docs/) - real route is
-  // /api/v1/enrollment/enrolled-courses. The previous path
-  // (/api/v1/enroll/enrolled-coures) 404s on the live backend.
-  //
-  // Originally written for a student's own "my enrolled courses" view.
-  // Reused here for the Admin Enrollments page on the assumption an
-  // admin-role token returns all platform enrollments rather than just the
-  // caller's own - unconfirmed, needs backend verification. If it turns out
-  // to be scoped to the caller, this page will need a genuinely separate
-  // "list all enrollments" endpoint.
   getEnrolledCourses: () =>
-    apiClient<{ success: boolean; count: number; enrollments: Enrollment[] }>(
-      "/api/v1/enrollment/enrolled-courses",
+    apiClient<ApiResponse<Enrollment[]>>("/api/v1/enrollment/enrolled-courses", {
+      method: "GET",
+      requireAuth: true,
+    }),
+
+  getCompletedCourses: () =>
+    apiClient<ApiResponse<Enrollment[]>>("/api/v1/enrollment/completed-courses", {
+      method: "GET",
+      requireAuth: true,
+    }),
+
+  getCourseDetail: (courseId: string) =>
+    apiClient<ApiResponse<EnrolledCourseDetail>>(
+      `/api/v1/enrollment/course/${courseId}`,
       {
         method: "GET",
         requireAuth: true,
-      }
+      },
     ),
 };

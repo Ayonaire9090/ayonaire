@@ -2,12 +2,17 @@
 
 import React, { useState } from "react";
 import { DataTable, ColumnDef } from "@/components/ui/data-table";
-import { mockPayments, Payment } from "./payments-data";
+import { Payment, mapPaymentRecordToPayment } from "./payments-data";
 import { PaymentsFilters } from "./payments-filters";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useGetAllPayments } from "@/hooks/api/use-payments";
 
 export const AdminPaymentsTable = () => {
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const { data, isLoading, isError } = useGetAllPayments();
+  const payments: Payment[] = (data?.data?.payments ?? []).map(
+    mapPaymentRecordToPayment,
+  );
 
   const getStatusStyle = (status: string) => {
     switch (status) {
@@ -68,13 +73,27 @@ export const AdminPaymentsTable = () => {
   return (
     <div className="w-full bg-white p-6 rounded-[24px]">
       <PaymentsFilters selectedCount={selectedIds.size} />
-      <DataTable
-        data={mockPayments}
-        columns={columns}
-        keyExtractor={(item) => item.id}
-        selectable={true}
-        onSelectionChange={(ids) => setSelectedIds(ids)}
-      />
+      {isLoading ? (
+        <div className="flex items-center justify-center py-16">
+          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+        </div>
+      ) : isError ? (
+        <div className="flex items-center justify-center py-16 text-[15px] text-red-500">
+          Failed to load payments. Please try again.
+        </div>
+      ) : payments.length === 0 ? (
+        <div className="flex items-center justify-center py-16 text-[15px] text-gray-500">
+          No payments found.
+        </div>
+      ) : (
+        <DataTable
+          data={payments}
+          columns={columns}
+          keyExtractor={(item) => item.id}
+          selectable={true}
+          onSelectionChange={(ids) => setSelectedIds(ids)}
+        />
+      )}
     </div>
   );
 };

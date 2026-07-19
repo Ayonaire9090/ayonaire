@@ -5,13 +5,25 @@ import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { PanelRightClose, Sparkles, X } from "lucide-react";
 import { CourseContentAccordion } from "./course-content-accordion";
 import { CourseAiAssistant } from "./course-ai-assistant";
+import { ModuleWithLessons } from "@/lib/api/endpoints/lessons";
 
 interface CourseSidebarSheetProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  modules?: ModuleWithLessons[];
+  activeLessonId?: string;
+  onSelectLesson?: (lessonId: string) => void;
+  isLoading?: boolean;
 }
 
-export const CourseSidebarSheet = ({ open, onOpenChange }: CourseSidebarSheetProps) => {
+export const CourseSidebarSheet = ({
+  open,
+  onOpenChange,
+  modules,
+  activeLessonId,
+  onSelectLesson,
+  isLoading,
+}: CourseSidebarSheetProps) => {
   const [activeTab, setActiveTab] = useState<"content" | "ai">("content");
 
   return (
@@ -61,7 +73,16 @@ export const CourseSidebarSheet = ({ open, onOpenChange }: CourseSidebarSheetPro
 
         {/* Content Area */}
         <div className="flex-1 overflow-hidden relative bg-white">
-          {activeTab === "content" ? <CourseContentAccordion /> : <CourseAiAssistant />}
+          {activeTab === "content" ? (
+            <CourseContentAccordion
+              modules={modules}
+              activeLessonId={activeLessonId}
+              onSelectLesson={onSelectLesson}
+              isLoading={isLoading}
+            />
+          ) : (
+            <CourseAiAssistant />
+          )}
         </div>
       </SheetContent>
     </Sheet>

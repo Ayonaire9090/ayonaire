@@ -230,3 +230,8 @@ Your tracking automatically fires these GA4 events:
 6. **Check Facebook Pixel in Events Manager**
 
 Everything is set up and ready to capture all the conversion events you need for retargeting and campaign optimization! 🎉
+
+
+
+
+

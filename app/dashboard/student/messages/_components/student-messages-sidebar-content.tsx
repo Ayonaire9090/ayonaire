@@ -15,7 +15,13 @@ import { X, Menu, ChevronsUpDown, MessageSquarePlus } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { CONVERSATIONS } from "../_data/mock-messages";
+import { useGetRooms } from "@/hooks/api/use-rooms";
+import { useAuthStore } from "@/store/auth.store";
+import {
+  mapRoomToConversation,
+  lastMessagePreview,
+  lastMessageTimestamp,
+} from "../_data/message-data";
 
 export function StudentMessagesSidebarContent({
   ...props
@@ -23,8 +29,17 @@ export function StudentMessagesSidebarContent({
   const { state, toggleSidebar, open, isMobile } = useSidebar();
   const isCollapsed = state === "collapsed" && !isMobile;
   const pathname = usePathname();
+  const user = useAuthStore((s) => s.user);
 
   const isPinned = open;
+
+  const { data: roomsData, isLoading } = useGetRooms();
+  const rooms = roomsData?.data ?? [];
+  const conversations = rooms.map((room) => ({
+    conv: mapRoomToConversation(room, user?._id),
+    preview: lastMessagePreview(room),
+    timestamp: lastMessageTimestamp(room),
+  }));
 
   return (
     <Sidebar className="bg-white border-r border-gray-200" {...props}>
@@ -106,9 +121,19 @@ export function StudentMessagesSidebarContent({
 
       <SidebarContent className="bg-transparent pt-2">
         <div className="flex flex-col gap-1 pb-4">
-          {CONVERSATIONS.map((conv) => {
+          {isLoading ? (
+            <div className="flex items-center justify-center py-8">
+              <div className="w-6 h-6 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+            </div>
+          ) : conversations.length === 0 ? (
+            !isCollapsed && (
+              <p className="px-4 py-6 text-sm text-gray-400 text-center">
+                No conversations yet.
+              </p>
+            )
+          ) : (
+          conversations.map(({ conv, preview, timestamp }) => {
             const isActive = pathname.includes(conv.id);
-            const lastMsg = conv.messages[conv.messages.length - 1];
 
             return (
               <Link
@@ -137,14 +162,9 @@ export function StudentMessagesSidebarContent({
                           <span className="text-sm font-medium text-gray-900 truncate">
                             {conv.title}
                           </span>
-                          {conv.role && (
-                            <span className="px-2 py-0.5 rounded-full bg-red-100 text-[#F15D23] text-[10px] font-medium whitespace-nowrap">
-                              {conv.role}
-                            </span>
-                          )}
                         </div>
                         <p className="text-[13px] font-medium text-gray-900 truncate">
-                          {conv.course}
+                          {preview}
                         </p>
                       </div>
                     )}
@@ -172,11 +192,11 @@ export function StudentMessagesSidebarContent({
                             {conv.title}
                           </span>
                           <span className="text-xs text-gray-400 shrink-0 ml-2">
-                            {lastMsg?.timestamp}
+                            {timestamp}
                           </span>
                         </div>
                         <p className="text-[13px] text-gray-500 line-clamp-2 leading-tight">
-                          {lastMsg?.content}
+                          {preview}
                         </p>
                       </div>
                     )}
@@ -184,7 +204,8 @@ export function StudentMessagesSidebarContent({
                 )}
               </Link>
             );
-          })}
+          })
+          )}
         </div>
       </SidebarContent>
     </Sidebar>

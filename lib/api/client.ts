@@ -26,15 +26,27 @@ export async function apiClient<T>(
     throw new Error("Unauthorized: No token available");
   }
 
+  // FormData bodies must NOT have an explicit Content-Type - the browser
+  // needs to set it itself (including the multipart boundary).
+  const isFormData = typeof FormData !== "undefined" && rest.body instanceof FormData;
+
+  const mergedHeaders: Record<string, string> = {
+    ...(!isFormData && { "Content-Type": "application/json" }),
+    ...(token && {
+      Authorization: `Bearer ${token}`,
+    }),
+    ...(headers as Record<string, string> | undefined),
+  };
+
+  // Strip out any explicitly-undefined header values (e.g. legacy callers
+  // passing `{ "Content-Type": undefined }` to opt out of the JSON default).
+  for (const key of Object.keys(mergedHeaders)) {
+    if (mergedHeaders[key] === undefined) delete mergedHeaders[key];
+  }
+
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
     ...rest,
-    headers: {
-      "Content-Type": "application/json",
-      ...(token && {
-        Authorization: `Bearer ${token}`,
-      }),
-      ...headers,
-    },
+    headers: mergedHeaders,
   });
 
   if (!response.ok) {

@@ -1,10 +1,14 @@
 import { apiClient } from "../client";
 import { ApiResponse } from "../types";
 
-// Shape returned by the backend for a single course.
-// NOTE: field names are a best-effort guess based on `CreateCoursePayload` below
-// and the conventions used by `workshopsApi`/`instructorApi`. Confirm against the
-// real `/api/v1/course/all` response and adjust once the backend team confirms it.
+// Confirmed 2026-07-14 against the live Swagger spec
+// (https://ayonaire.onrender.com/api-docs/). Corrections from the earlier
+// guess: thumbnail is an {url, publicId} object, not a plain string; there's
+// no enrollmentCount field (use enrollments.length or completionCount
+// instead); status is lowercase draft/published/archived only (no
+// pending/private); category/instructor are plain ID strings per the
+// schema, though still handled defensively in case a populated response
+// comes back; there is no slug field.
 export interface Course {
   _id: string;
   title: string;
@@ -12,15 +16,12 @@ export interface Course {
   category: string | { _id: string; title: string };
   instructor?: string | { _id: string; name: string };
   price?: number;
-  courseLevel?: string;
-  status?: string;
-  thumbnail?: string;
-  enrollmentCount?: number;
+  courseLevel?: "beginner" | "intermediate" | "advanced";
+  status?: "draft" | "published" | "archived";
+  thumbnail?: { url: string; publicId: string };
+  enrollments?: string[];
+  completionCount?: number;
   createdAt?: string;
-  // Unconfirmed whether the backend exposes a public-page slug for courses -
-  // if present, dashboard "view course" links can use it; otherwise fall
-  // back to the course id.
-  slug?: string;
 }
 
 export interface CreateCategoryPayload {
@@ -89,9 +90,8 @@ export const coursesApi = {
       requireAuth: true,
     }),
 
-  // NOTE: no list/detail endpoint existed before this change — path guessed to
-  // follow the same `/api/v1/course/<action>` convention as create/edit/assign.
-  // Confirm with the backend team and update if the real path differs.
+  // Path corrected 2026-07-14: real route is GET /api/v1/course (no "/all"
+  // suffix, that was a guess).
   getAll: (page?: number, limit?: number) => {
     const queryParams = new URLSearchParams();
     if (page) queryParams.append("page", page.toString());
@@ -99,7 +99,7 @@ export const coursesApi = {
 
     const queryString = queryParams.toString() ? `?${queryParams.toString()}` : "";
 
-    return apiClient<ApiResponse<Course[]>>(`/api/v1/course/all${queryString}`, {
+    return apiClient<ApiResponse<Course[]>>(`/api/v1/course${queryString}`, {
       method: "GET",
       requireAuth: true,
     });
