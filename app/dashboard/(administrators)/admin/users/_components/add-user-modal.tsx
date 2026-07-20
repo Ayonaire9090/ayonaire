@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { AppMegaModal } from "@/components/modals/app-mega-modal";
 import { Button } from "@/components/ui/button";
-import { ManualAddForm } from "./manual-add-form";
+import { ManualAddForm, ManualAddValue } from "./manual-add-form";
 import { BulkAddForm } from "./bulk-add-form";
 import {
   useInviteUsersMutation,
@@ -21,6 +21,27 @@ export function AddUserModal({
   isInstructor?: boolean;
 }) {
   const [activeTab, setActiveTab] = useState<"manual" | "bulk">("manual");
+
+  // Manual-add tab state - lifted so the shared footer button can submit it.
+  const makeEmptyManualValue = (): ManualAddValue => ({
+    email: "",
+    role: isInstructor ? "instructor" : "user",
+    courseId: "",
+    cohortId: "",
+  });
+  const [manualValue, setManualValue] = useState<ManualAddValue>(makeEmptyManualValue);
+  const [manualError, setManualError] = useState("");
+
+  // The role default depends on which tab (Students/Instructors) the modal
+  // was opened from, and that can change between opens of the same mounted
+  // instance, so re-derive whenever it opens rather than only on first mount.
+  useEffect(() => {
+    if (isOpen) {
+      setManualValue(makeEmptyManualValue());
+      setManualError("");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen, isInstructor]);
 
   // Bulk (invite) tab state - lifted so the shared footer button can submit it.
   const [bulkOption, setBulkOption] = useState<"email" | "csv" | "link">(
@@ -43,7 +64,30 @@ export function AddUserModal({
 
   const handleClose = () => {
     resetBulkState();
+    setManualValue(makeEmptyManualValue());
+    setManualError("");
     onClose();
+  };
+
+  const handleManualSubmit = async () => {
+    if (!manualValue.email.trim()) {
+      setManualError("Email is required");
+      return;
+    }
+    setManualError("");
+
+    try {
+      await inviteUsersMutation.mutateAsync({
+        emails: [manualValue.email.trim()],
+        role: manualValue.role,
+        courseId: manualValue.courseId || undefined,
+        cohortId: manualValue.cohortId || undefined,
+      });
+      toast.success("Invitation sent");
+      handleClose();
+    } catch (error: any) {
+      toast.error(error?.message || "Failed to send invitation");
+    }
   };
 
   const handleBulkSubmit = async () => {
@@ -130,23 +174,31 @@ export function AddUserModal({
             Cancel
           </Button>
           <Button
-            onClick={activeTab === "bulk" ? handleBulkSubmit : undefined}
+            onClick={activeTab === "bulk" ? handleBulkSubmit : handleManualSubmit}
             disabled={
-              activeTab === "bulk" &&
-              (isBulkSubmitDisabled || isBulkSubmitting)
+              activeTab === "bulk"
+                ? isBulkSubmitDisabled || isBulkSubmitting
+                : inviteUsersMutation.isPending
             }
             className="md:w-auto px-8 h-12 rounded-xl text-[15px] font-medium bg-[#FF7A59] hover:bg-[#FF7A59]/90 text-white border-transparent disabled:opacity-50"
           >
             <span className="text-xl mr-1 font-light">+</span>{" "}
             {activeTab === "bulk" && isBulkSubmitting
               ? "Sending..."
-              : buttonText}
+              : activeTab === "manual" && inviteUsersMutation.isPending
+                ? "Sending..."
+                : buttonText}
           </Button>
         </div>
       }
     >
       {activeTab === "manual" ? (
-        <ManualAddForm />
+        <ManualAddForm
+          value={manualValue}
+          onChange={(patch) => setManualValue((prev) => ({ ...prev, ...patch }))}
+          error={manualError}
+          hideRoleSelector={isInstructor}
+        />
       ) : (
         <BulkAddForm
           bulkOption={bulkOption}

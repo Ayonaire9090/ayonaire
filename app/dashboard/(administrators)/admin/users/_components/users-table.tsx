@@ -50,7 +50,7 @@ export const UsersTable = ({ data, isInstructor }: UsersTableProps) => {
     {
       key: "status",
       header: "Status",
-      cell: (user) => <StatusBadge status={user.status} />,
+      cell: (user) => <StatusBadge status={user.status} userId={user.id} />,
     },
     {
       key: "enrollments",
@@ -66,7 +66,7 @@ export const UsersTable = ({ data, isInstructor }: UsersTableProps) => {
       header: "Action",
       headerClassName: "pr-6",
       className: "pr-6",
-      cell: () => <UserActions />,
+      cell: (user) => <UserActions userId={user.id} />,
     },
   ];
 
@@ -100,7 +100,7 @@ export const UsersTable = ({ data, isInstructor }: UsersTableProps) => {
     {
       key: "status",
       header: "Status",
-      cell: (user) => <StatusBadge status={user.status} />,
+      cell: (user) => <StatusBadge status={user.status} userId={user.id} />,
     },
     {
       key: "courses",
@@ -143,7 +143,7 @@ export const UsersTable = ({ data, isInstructor }: UsersTableProps) => {
       header: "Actions",
       headerClassName: "pr-6",
       className: "pr-6",
-      cell: () => <UserActions />,
+      cell: (user) => <UserActions userId={user.id} />,
     },
   ];
 

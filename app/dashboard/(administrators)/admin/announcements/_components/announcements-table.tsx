@@ -159,7 +159,7 @@ export const AnnouncementsTable = () => {
       header: "Status",
       className: "pr-4",
       headerClassName: "pr-4",
-      cell: (item) => <AnnouncementStatusBadge status={item.status} />,
+      cell: (item) => <AnnouncementStatusBadge status={item.status} announcementId={item.id} />,
     },
   ];
 

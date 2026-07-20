@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { AdminDashboardButton } from "@/components/dashboard/admin-dashboard-button";
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 import { Calendar } from "@/components/ui/calendar";
@@ -11,8 +14,11 @@ import { AttendanceAnalytics } from "./_components/attendance-analytics";
 import { AttendanceTrendAndActions } from "./_components/attendance-trend-and-actions";
 import { AttendanceActivityLogs } from "./_components/attendance-activity-logs";
 import { AttendanceLiveAlerts } from "./_components/attendance-live-alerts";
+import { CreateAttendanceSessionModal } from "./_components/create-attendance-session-modal";
 
 export default function AdminAttendanceDashboardPage() {
+  const [isCreateOpen, setIsCreateOpen] = useState(false);
+
   return (
     <div className="flex flex-col gap-5 lg:gap-8">
       <DashboardHeader
@@ -36,12 +42,14 @@ export default function AdminAttendanceDashboardPage() {
           </PopoverContent>
         </Popover>
 
-        <AdminDashboardButton title="Add New Log" icon={Plus} />
+        <AdminDashboardButton title="Add New Log" icon={Plus} onClick={() => setIsCreateOpen(true)} />
       </div>
       <AttendanceAnalytics />
       <AttendanceTrendAndActions />
       <AttendanceActivityLogs />
       <AttendanceLiveAlerts />
+
+      <CreateAttendanceSessionModal isOpen={isCreateOpen} onClose={() => setIsCreateOpen(false)} />
     </div>
   );
 }

@@ -15,29 +15,13 @@ export interface Quiz {
   status: QuizStatus;
 }
 
-const VALID_QUIZ_STATUSES: QuizStatus[] = [
-  "Published",
-  "Closed",
-  "Draft",
-  "Archived",
-];
-
 function normalizeQuizStatus(status?: string): QuizStatus {
-  if (!status) return "Draft";
-  const match = VALID_QUIZ_STATUSES.find(
-    (s) => s.toLowerCase() === status.toLowerCase(),
-  );
-  return match ?? "Draft";
+  return status === "published" ? "Published" : "Draft";
 }
 
-// totalStudents/submissions/avgScore have no known backend source yet (no
-// results/analytics endpoint exists) so they fall back to 0/"-" rather than
-// guessed numbers.
+// totalStudents (course enrollment count) has no cheap source from this
+// endpoint - only real attempt data (submissions/avgScore) is available.
 export function mapQuizRecordToQuiz(quiz: QuizRecord): Quiz {
-  const moduleObj = typeof quiz.module === "object" ? quiz.module : undefined;
-  const course = moduleObj?.course?.title ?? "Uncategorized";
-  const cls = moduleObj?.title ?? "-";
-
   const createdBy =
     typeof quiz.createdBy === "string"
       ? quiz.createdBy
@@ -46,13 +30,13 @@ export function mapQuizRecordToQuiz(quiz: QuizRecord): Quiz {
   return {
     id: quiz._id,
     title: quiz.title,
-    course,
-    class: cls,
+    course: quiz.course?.title ?? "Uncategorized",
+    class: "-",
     createdBy,
-    questions: quiz.questions?.length ?? 0,
+    questions: quiz.questionsCount ?? 0,
     totalStudents: 0,
-    submissions: 0,
-    avgScore: "-",
+    submissions: quiz.attemptsCount ?? 0,
+    avgScore: quiz.avgScore != null ? `${quiz.avgScore}%` : "-",
     status: normalizeQuizStatus(quiz.status),
   };
 }

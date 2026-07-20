@@ -59,6 +59,27 @@ export interface GradeSubmissionPayload {
   feedback?: string;
 }
 
+export interface AllSubmissionRecord {
+  _id: string;
+  assignment: { _id: string; title: string } | null;
+  student: { _id: string; name: string; email: string } | null;
+  course: { _id: string; title: string } | null;
+  text?: string;
+  file?: { url: string; publicId: string; name: string } | null;
+  status: string;
+  grade?: number;
+  feedback?: string;
+  createdAt: string;
+}
+
+export interface GetAllSubmissionsParams {
+  course?: string;
+  assignment?: string;
+  status?: string;
+  page?: number;
+  limit?: number;
+}
+
 const buildAssignmentFormData = (payload: CreateAssignmentPayload) => {
   const formData = new FormData();
   formData.append("course", payload.course);
@@ -135,6 +156,20 @@ export const assignmentsApi = {
       `/api/v1/assignment/${assignmentId}/submissions`,
       { method: "GET", requireAuth: true },
     ),
+
+  getAllSubmissions: (params: GetAllSubmissionsParams = {}) => {
+    const query = new URLSearchParams();
+    Object.entries(params).forEach(([key, value]) => {
+      if (value !== undefined) query.append(key, String(value));
+    });
+    const qs = query.toString() ? `?${query.toString()}` : "";
+    return apiClient<
+      ApiResponse & {
+        submissions: AllSubmissionRecord[];
+        pagination: { total: number; page: number; limit: number; totalPages: number };
+      }
+    >(`/api/v1/assignment/submissions${qs}`, { method: "GET", requireAuth: true });
+  },
 
   grade: (submissionId: string, payload: GradeSubmissionPayload) =>
     apiClient<ApiResponse>(`/api/v1/assignment/submission/${submissionId}/grade`, {

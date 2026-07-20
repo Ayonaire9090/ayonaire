@@ -64,7 +64,7 @@ export const CoursesTable = () => {
     {
       key: "status",
       header: "Status",
-      cell: (course) => <CourseStatusBadge status={course.status} />,
+      cell: (course) => <CourseStatusBadge status={course.status} courseId={course.id} />,
     },
     {
       key: "enrollments",
@@ -80,7 +80,7 @@ export const CoursesTable = () => {
       header: <div className="text-right">Action</div>,
       headerClassName: "pr-6",
       className: "pr-6",
-      cell: (course) => <CourseActions />,
+      cell: (course) => <CourseActions courseId={course.id} />,
     },
   ];
 

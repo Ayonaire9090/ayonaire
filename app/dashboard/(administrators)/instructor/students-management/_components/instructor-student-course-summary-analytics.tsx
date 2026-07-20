@@ -16,7 +16,7 @@ export const InstructorStudentCourseSummaryAnalytics = () => {
   const user = useAuthStore((state) => state.user);
   const { students } = useInstructorStudentRoster();
   const { data: quizzesData } = useGetQuizzes();
-  const quizCount = (quizzesData?.data ?? []).filter((quiz) =>
+  const quizCount = (quizzesData?.quizzes ?? []).filter((quiz) =>
     isOwnQuiz(quiz, user?._id),
   ).length;
 

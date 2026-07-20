@@ -1,3 +1,5 @@
+import { AllSubmissionRecord } from "@/lib/api/endpoints/assignments";
+
 export type SubmissionStatus = "Submitted" | "Graded" | "Late" | "Critical";
 export type GradeStatus = "Graded" | "Pending";
 
@@ -11,6 +13,29 @@ export interface SubmissionRecord {
   fileLink: string | null;
   gradeStatus: GradeStatus;
   score: string;
+}
+
+function toSubmissionStatus(status: string): SubmissionStatus {
+  if (status === "graded") return "Graded";
+  if (status === "late") return "Late";
+  return "Submitted";
+}
+
+// "Critical" (severely overdue/flagged) and cohort have no backend
+// equivalent on a submission record, so cohort falls back to the course
+// title and "Critical" is never produced.
+export function mapSubmissionRecord(record: AllSubmissionRecord): SubmissionRecord {
+  return {
+    id: record._id,
+    studentName: record.student?.name ?? "Unknown",
+    studentId: record.student?._id ?? "-",
+    cohort: record.course?.title ?? "-",
+    submissionStatus: toSubmissionStatus(record.status),
+    submittedOn: new Date(record.createdAt).toLocaleString(),
+    fileLink: record.file?.url ?? null,
+    gradeStatus: record.status === "graded" ? "Graded" : "Pending",
+    score: record.grade !== undefined ? `${record.grade}/100` : "-",
+  };
 }
 
 export const mockSubmissions: SubmissionRecord[] = [

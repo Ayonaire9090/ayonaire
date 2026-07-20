@@ -7,24 +7,35 @@ export interface CreateAnnouncementPayload {
   cohortId?: string;
   courseId?: string;
   students?: string[];
+  status?: "draft" | "scheduled" | "published";
+  scheduledAt?: string;
 }
 
-// Confirmed 2026-07-14 against the live Swagger spec: fields are courseId/
-// cohortId (plain ID strings), not course/cohort - and there's no status
-// field on an Announcement at all.
+export interface UpdateAnnouncementPayload {
+  announcementId: string;
+  title?: string;
+  summary?: string;
+  status?: "draft" | "scheduled" | "published";
+  scheduledAt?: string;
+}
+
+// Verified directly against backend source (announcement.model.ts,
+// announcement.service.ts getAllAnnounceMents) on 2026-07-16 - the list
+// response uses `id` (not `_id`), `course`/`cohort` (not courseId/cohortId),
+// and a real `status` enum (draft|scheduled|published) + `views` do exist.
 export interface Announcement {
-  _id: string;
+  id: string;
   title: string;
   summary: string;
-  courseId?: string;
-  cohortId?: string;
-  students?: string[];
+  audience: string;
+  course?: string | null;
+  cohort?: string | null;
+  createdBy?: string | null;
+  status: "draft" | "scheduled" | "published";
+  views: number;
   createdAt?: string;
 }
 
-// Confirmed live 2026-07-14: GET /api/v1/announcement returns
-// { success, data: { announcement: [...], pagination: {...} } } - the list
-// is nested one level deeper than a typical ApiResponse<T[]>.
 export interface AnnouncementListData {
   announcement: Announcement[];
   pagination: {
@@ -46,6 +57,19 @@ export const announcementsApi = {
   getAll: () =>
     apiClient<ApiResponse<AnnouncementListData>>("/api/v1/announcement", {
       method: "GET",
+      requireAuth: true,
+    }),
+
+  update: ({ announcementId, ...payload }: UpdateAnnouncementPayload) =>
+    apiClient<ApiResponse<Announcement>>(`/api/v1/announcement/${announcementId}`, {
+      method: "PUT",
+      body: JSON.stringify(payload),
+      requireAuth: true,
+    }),
+
+  delete: (announcementId: string) =>
+    apiClient<ApiResponse>(`/api/v1/announcement/${announcementId}`, {
+      method: "DELETE",
       requireAuth: true,
     }),
 };

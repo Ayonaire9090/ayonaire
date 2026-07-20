@@ -1,11 +1,18 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { 
-  cohortsApi, 
-  CreateCohortPayload, 
-  AssignStudentPayload, 
-  AssignInstructorPayload 
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  cohortsApi,
+  CreateCohortPayload,
+  AssignStudentPayload,
+  AssignInstructorPayload
 } from "@/lib/api/endpoints/cohorts";
 import { queryKeys } from "@/lib/api/query-keys";
+
+export const useGetCohorts = (course?: string) => {
+  return useQuery({
+    queryKey: [...queryKeys.cohorts.all, "list", course] as const,
+    queryFn: () => cohortsApi.getAll(course),
+  });
+};
 
 export const useCreateCohortMutation = () => {
   const queryClient = useQueryClient();

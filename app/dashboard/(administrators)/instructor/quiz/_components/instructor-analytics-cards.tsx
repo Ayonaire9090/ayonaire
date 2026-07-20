@@ -8,11 +8,11 @@ import { isOwnQuiz } from "./instructor-quiz-data";
 export const InstructorAnalyticsCards = () => {
   const user = useAuthStore((state) => state.user);
   const { data } = useGetQuizzes();
-  const quizzes = (data?.data ?? []).filter((quiz) =>
+  const quizzes = (data?.quizzes ?? []).filter((quiz) =>
     isOwnQuiz(quiz, user?._id),
   );
   const totalQuestions = quizzes.reduce(
-    (sum, quiz) => sum + (quiz.questions?.length ?? 0),
+    (sum, quiz) => sum + (quiz.questionsCount ?? 0),
     0,
   );
 

@@ -74,8 +74,8 @@ export const CoursesList = () => {
                 {course.courseId}
               </span>
               <div className="flex items-center gap-1 -mr-2">
-                <CourseStatusBadge status={course.status} />
-                <CourseActions showEdit={false} />
+                <CourseStatusBadge status={course.status} courseId={course.id} />
+                <CourseActions courseId={course.id} showEdit={false} />
               </div>
             </div>
 

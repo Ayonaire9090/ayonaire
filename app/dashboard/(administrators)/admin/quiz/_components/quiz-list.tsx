@@ -40,7 +40,7 @@ const getProgressBarColor = (status: string) => {
 
 export const QuizList = () => {
   const { data, isLoading, isError } = useGetQuizzes();
-  const quizzes = (data?.data ?? []).map(mapQuizRecordToQuiz);
+  const quizzes = (data?.quizzes ?? []).map(mapQuizRecordToQuiz);
 
   return (
     <>
@@ -92,7 +92,7 @@ export const QuizList = () => {
                         <span className="text-[14px] font-medium text-gray-700">
                           {item.course}
                         </span>
-                        <QuizActions assignmentId={item.id} />
+                        <QuizActions assignmentId={item.id} status={item.status} />
                       </div>
                     </div>
                   </div>

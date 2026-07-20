@@ -43,6 +43,18 @@ export const adminApi = {
       requireAuth: true,
     }),
 
+  activateUser: (id: string) =>
+    apiClient<ApiResponse>(`/api/v1/auth/user/${id}/activate-user`, {
+      method: "PUT",
+      requireAuth: true,
+    }),
+
+  deleteUser: (id: string) =>
+    apiClient<ApiResponse>(`/api/v1/auth/user/${id}`, {
+      method: "DELETE",
+      requireAuth: true,
+    }),
+
   assignRole: (id: string, role: string) =>
     apiClient<{ success: boolean; message: string; user: UserProfile }>(
       `/api/v1/auth/user/${id}/assign-role`,

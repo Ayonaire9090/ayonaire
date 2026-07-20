@@ -6,8 +6,15 @@ import {
 import { Button } from "@/components/ui/button";
 import { MoreVertical } from "lucide-react";
 import React from "react";
+import { toast } from "sonner";
 import { format } from "date-fns";
 import { UserProfile } from "@/lib/api/types";
+import {
+  useSuspendUserMutation,
+  useDeactivateUserMutation,
+  useActivateUserMutation,
+  useDeleteUserMutation,
+} from "@/hooks/api/use-admin";
 
 export type UserStatus = "Active" | "Suspended" | "Deactivate" | "Delete";
 export type UserRole = "student" | "instructor";
@@ -61,7 +68,11 @@ export function mapUserProfileToUserData(user: UserProfile): UserData {
   };
 }
 
-export function StatusBadge({ status }: { status: UserStatus }) {
+export function StatusBadge({ status, userId }: { status: UserStatus; userId: string }) {
+  const suspend = useSuspendUserMutation();
+  const deactivate = useDeactivateUserMutation();
+  const activate = useActivateUserMutation();
+
   const getColors = (s: string) => {
     switch (s) {
       case "Deactivate":
@@ -81,6 +92,14 @@ export function StatusBadge({ status }: { status: UserStatus }) {
     }
   };
 
+  const run = (action: "activate" | "deactivate" | "suspend", label: string) => {
+    const mutation = action === "activate" ? activate : action === "deactivate" ? deactivate : suspend;
+    mutation.mutate(userId, {
+      onSuccess: () => toast.success(`User ${label}`),
+      onError: (err) => toast.error(err instanceof Error ? err.message : `Failed to ${action} user`),
+    });
+  };
+
   return (
     <AppDropdown
       variant="gray"
@@ -93,15 +112,30 @@ export function StatusBadge({ status }: { status: UserStatus }) {
         </button>
       }
     >
-      <AppDropdownItem variant="badge">Active</AppDropdownItem>
-      <AppDropdownItem variant="badge">Deactivate</AppDropdownItem>
-      <AppDropdownItem variant="badge">Delete</AppDropdownItem>
-      <AppDropdownItem variant="active-badge">suspended</AppDropdownItem>
+      <AppDropdownItem variant="badge" onClick={() => run("activate", "activated")}>
+        Active
+      </AppDropdownItem>
+      <AppDropdownItem variant="badge" onClick={() => run("deactivate", "deactivated")}>
+        Deactivate
+      </AppDropdownItem>
+      <AppDropdownItem variant="active-badge" onClick={() => run("suspend", "suspended")}>
+        Suspend
+      </AppDropdownItem>
     </AppDropdown>
   );
 }
 
-export function UserActions() {
+export function UserActions({ userId }: { userId: string }) {
+  const deleteUser = useDeleteUserMutation();
+
+  const handleDelete = () => {
+    if (!window.confirm("Delete this user? This cannot be undone.")) return;
+    deleteUser.mutate(userId, {
+      onSuccess: () => toast.success("User deleted"),
+      onError: (err) => toast.error(err instanceof Error ? err.message : "Failed to delete user"),
+    });
+  };
+
   return (
     <AppDropdown
       variant="white"
@@ -116,13 +150,17 @@ export function UserActions() {
         </Button>
       }
     >
-      <AppDropdownItem variant="menu">View User Profile</AppDropdownItem>
+      <AppDropdownItem variant="menu" onClick={() => toast.info("User profile detail page isn't available yet.")}>
+        View User Profile
+      </AppDropdownItem>
       <AppDropdownSeparator />
-      <AppDropdownItem variant="menu">Duplicate</AppDropdownItem>
+      <AppDropdownItem variant="menu" onClick={() => toast.info("Editing user details isn't available yet.")}>
+        Edit
+      </AppDropdownItem>
       <AppDropdownSeparator />
-      <AppDropdownItem variant="menu">Edit</AppDropdownItem>
-      <AppDropdownSeparator />
-      <AppDropdownItem variant="danger-menu">Delete User</AppDropdownItem>
+      <AppDropdownItem variant="danger-menu" onClick={handleDelete}>
+        Delete User
+      </AppDropdownItem>
     </AppDropdown>
   );
 }

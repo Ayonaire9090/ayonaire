@@ -4,6 +4,7 @@ import {
   CreateAssignmentPayload,
   UpdateAssignmentPayload,
   GradeSubmissionPayload,
+  GetAllSubmissionsParams,
 } from "@/lib/api/endpoints/assignments";
 import { queryKeys } from "@/lib/api/query-keys";
 
@@ -80,6 +81,13 @@ export const useGetAssignmentSubmissions = (assignmentId: string) => {
     queryKey: [...assignmentsKey, "submissions", assignmentId] as const,
     queryFn: () => assignmentsApi.getSubmissions(assignmentId),
     enabled: !!assignmentId,
+  });
+};
+
+export const useGetAllSubmissions = (params: GetAllSubmissionsParams = {}) => {
+  return useQuery({
+    queryKey: [...assignmentsKey, "all-submissions", params] as const,
+    queryFn: () => assignmentsApi.getAllSubmissions(params),
   });
 };
 

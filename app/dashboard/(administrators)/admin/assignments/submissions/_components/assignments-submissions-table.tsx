@@ -1,8 +1,9 @@
 "use client";
 
 import { DataTable, ColumnDef } from "@/components/ui/data-table";
-import { mockSubmissions, SubmissionRecord } from "./assignments-submissions-data";
+import { SubmissionRecord, mapSubmissionRecord } from "./assignments-submissions-data";
 import { MoreVertical, FileText } from "lucide-react";
+import { useGetAllSubmissions } from "@/hooks/api/use-assignments";
 
 // Status Badge Generator
 const StatusBadge = ({ status }: { status: string }) => {
@@ -97,11 +98,14 @@ const columns: ColumnDef<SubmissionRecord>[] = [
 ];
 
 export const AssignmentsSubmissionsTable = () => {
+  const { data } = useGetAllSubmissions();
+  const submissions = (data?.submissions ?? []).map(mapSubmissionRecord);
+
   return (
     <div className="w-full">
-      <DataTable 
-        columns={columns} 
-        data={mockSubmissions} 
+      <DataTable
+        columns={columns}
+        data={submissions}
         keyExtractor={(item) => item.id}
       />
     </div>

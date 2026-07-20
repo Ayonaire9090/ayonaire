@@ -3,11 +3,12 @@
 import React from "react";
 import { DataList } from "@/components/ui/data-list";
 import {
-  mockSubmissions,
   SubmissionRecord,
+  mapSubmissionRecord,
 } from "./assignments-submissions-data";
 import { Checkbox } from "@/components/ui/checkbox";
 import { MoreVertical, FileText } from "lucide-react";
+import { useGetAllSubmissions } from "@/hooks/api/use-assignments";
 
 const getStatusStyle = (status: string) => {
   switch (status) {
@@ -25,10 +26,13 @@ const getStatusStyle = (status: string) => {
 };
 
 export const AssignmentsSubmissionsList = () => {
+  const { data } = useGetAllSubmissions();
+  const submissions = (data?.submissions ?? []).map(mapSubmissionRecord);
+
   return (
     <div className="w-full bg-white p-4 rounded-xl">
       <DataList
-        data={mockSubmissions}
+        data={submissions}
         keyExtractor={(item) => item.id}
         renderItem={(item) => (
           <div className="flex w-full items-start gap-4">
