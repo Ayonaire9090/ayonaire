@@ -1,12 +1,20 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { toast } from "sonner";
 import { AppToggle } from "@/components/ui/app-toggle";
 import { AppSelect } from "@/components/ui/app-select";
+import { SettingCategory } from "@/lib/api/endpoints/settings";
+import { useGetSettingsByCategory, useUpdateSettingsMutation } from "@/hooks/api/use-settings";
 
 interface SettingCardBaseProps {
   title: React.ReactNode | string;
   description: string;
+  // When provided, the card persists its own value to
+  // PUT /api/v1/settings/:category as { [settingKey]: value } and reads its
+  // current value from GET /api/v1/settings/:category on load.
+  category?: SettingCategory;
+  settingKey?: string;
 }
 
 interface SettingCardToggleProps extends SettingCardBaseProps {
@@ -38,13 +46,46 @@ export type SettingCardProps =
   | SettingCardNoneProps;
 
 export const SettingCard = (props: SettingCardProps) => {
+  const { category, settingKey } = props;
+  const { data } = useGetSettingsByCategory(category as SettingCategory);
+  const updateSettings = useUpdateSettingsMutation();
+  const savedValue = settingKey ? data?.data?.[settingKey] : undefined;
+
   const [isChecked, setIsChecked] = useState(
     props?.type === "toggle" ? props?.defaultChecked : false,
   );
-
   const [selectedValue, setSelectedValue] = useState(
     props?.type === "select" ? props?.defaultValue : "",
   );
+
+  // Sync local UI state once the real saved value loads in, without
+  // clobbering it on every background refetch after the user has changed it.
+  useEffect(() => {
+    if (savedValue === undefined) return;
+    if (props.type === "toggle") setIsChecked(Boolean(savedValue));
+    if (props.type === "select") setSelectedValue(String(savedValue));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [savedValue]);
+
+  const persist = (value: unknown) => {
+    if (!category || !settingKey) return;
+    updateSettings.mutate(
+      { category, data: { [settingKey]: value } },
+      {
+        onError: (err) => toast.error(err instanceof Error ? err.message : "Failed to save setting"),
+      },
+    );
+  };
+
+  const handleToggle = (val: boolean) => {
+    setIsChecked(val);
+    persist(val);
+  };
+
+  const handleSelect = (val: string) => {
+    setSelectedValue(val);
+    persist(val);
+  };
 
   return (
     <div className="bg-[#FAFAFA] border border-gray-100 rounded-[16px] p-5 flex flex-col md:flex-row md:items-center justify-between gap-5 transition-colors hover:border-gray-200">
@@ -66,7 +107,7 @@ export const SettingCard = (props: SettingCardProps) => {
             <div className="md:ml-auto">
               <AppToggle
                 checked={isChecked}
-                onCheckedChange={setIsChecked}
+                onCheckedChange={handleToggle}
                 className="data-[state=checked]:bg-black"
               />
             </div>
@@ -74,7 +115,7 @@ export const SettingCard = (props: SettingCardProps) => {
             <div className="w-full md:w-[280px]">
               <AppSelect
                 value={selectedValue as string}
-                onChange={setSelectedValue}
+                onChange={handleSelect}
                 options={props.options}
                 className="bg-transparent border-gray-200 text-[14px]"
               />

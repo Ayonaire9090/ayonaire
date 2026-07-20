@@ -3,7 +3,7 @@ import { ChevronDown, ChevronRight } from "lucide-react";
 interface AttendanceAnalyticsCardProps {
   heading: string;
   title: string;
-  rate: string;
+  rate?: string;
   description: string;
   statusBadge: {
     label: string;
@@ -39,9 +39,11 @@ export const AttendanceAnalyticsCard = ({
         </p>
       </div>
       <div className="flex items-center gap-2.5 mt-auto pt-2">
-        <span className="flex items-center gap-1 px-3 py-1 rounded-full bg-[#FFF5F0] text-[#F06A3F] text-[13px] font-medium whitespace-nowrap">
-          {rate}
-        </span>
+        {rate && (
+          <span className="flex items-center gap-1 px-3 py-1 rounded-full bg-[#FFF5F0] text-[#F06A3F] text-[13px] font-medium whitespace-nowrap">
+            {rate}
+          </span>
+        )}
         <span className="text-[14px] text-gray-500 font-medium line-clamp-1">
           {description}
         </span>

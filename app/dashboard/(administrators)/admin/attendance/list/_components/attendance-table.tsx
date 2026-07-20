@@ -18,8 +18,9 @@ import {
   AttendanceStatusBadge,
   ApprovalStatusBadge,
   AttendanceActions,
-  mockAttendance,
+  mapAttendanceSessionToData,
 } from "./attendance-data";
+import { useGetAttendanceSessions } from "@/hooks/api/use-attendance";
 
 // Shared Popover Header
 function FilterPopoverHeader({ title }: { title: string }) {
@@ -110,7 +111,10 @@ export const AttendanceTable = () => {
     });
   };
 
-  const filteredAttendance = mockAttendance.filter(
+  const { data } = useGetAttendanceSessions();
+  const attendanceData = (data?.sessions ?? []).map(mapAttendanceSessionToData);
+
+  const filteredAttendance = attendanceData.filter(
     (item) =>
       item.course.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.session.toLowerCase().includes(searchQuery.toLowerCase()) ||

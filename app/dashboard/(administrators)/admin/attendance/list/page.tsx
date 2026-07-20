@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { AdminDashboardButton } from "@/components/dashboard/admin-dashboard-button";
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 import { Calendar } from "@/components/ui/calendar";
@@ -6,11 +9,35 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { CalendarIcon, Upload } from "lucide-react";
+import { CalendarIcon, Plus, Upload } from "lucide-react";
 import { AttendanceList } from "./_components/attendance-list";
 import { AttendanceTable } from "./_components/attendance-table";
+import { CreateAttendanceSessionModal } from "../_components/create-attendance-session-modal";
+import { useGetAttendanceSessions } from "@/hooks/api/use-attendance";
+import { mapAttendanceSessionToData } from "./_components/attendance-data";
+
+function exportAttendanceCsv(rows: ReturnType<typeof mapAttendanceSessionToData>[]) {
+  const header = ["Course", "Session", "Date", "Time", "Instructor", "Present", "Absent", "Attendance %", "Approval"];
+  const lines = rows.map((r) =>
+    [r.course, r.session, r.date, r.time, r.instructor.name, r.present, r.absent, `${r.attendancePercent}%`, r.approval]
+      .map((v) => `"${String(v).replace(/"/g, '""')}"`)
+      .join(","),
+  );
+  const csv = [header.join(","), ...lines].join("\n");
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "attendance.csv";
+  link.click();
+  URL.revokeObjectURL(url);
+}
 
 export default function AdminAttendanceListPage() {
+  const [isCreateOpen, setIsCreateOpen] = useState(false);
+  const { data } = useGetAttendanceSessions();
+  const sessions = (data?.sessions ?? []).map(mapAttendanceSessionToData);
+
   return (
     <div className="flex flex-col gap-5 pb-4 lg:pb-8">
       <DashboardHeader
@@ -34,11 +61,20 @@ export default function AdminAttendanceListPage() {
           </PopoverContent>
         </Popover>
 
-        <AdminDashboardButton title="Export Attendance" icon={Upload} />
+        <div className="flex items-center gap-3">
+          <AdminDashboardButton
+            title="Export Attendance"
+            icon={Upload}
+            onClick={() => exportAttendanceCsv(sessions)}
+          />
+          <AdminDashboardButton title="Add New Log" icon={Plus} onClick={() => setIsCreateOpen(true)} />
+        </div>
       </div>
 
       <AttendanceTable />
       <AttendanceList />
+
+      <CreateAttendanceSessionModal isOpen={isCreateOpen} onClose={() => setIsCreateOpen(false)} />
     </div>
   );
 }

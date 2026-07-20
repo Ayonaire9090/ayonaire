@@ -1,35 +1,27 @@
-const mockAttendanceReportsStats = [
-  {
-    title: "Total Students",
-    description: "120",
-    color: "text-black",
-  },
-  {
-    title: "Avg Attendance",
-    description: "86%",
-    color: "text-[#197FE6]",
-  },
-  {
-    title: "Highest Attendance",
-    description: "98%",
-    color: "text-[#009F42]",
-  },
-  {
-    title: "Lowest Attendance",
-    description: "55%",
-    color: "text-[#EF4444]",
-  },
-  {
-    title: "Absenteeism",
-    description: "14%",
-    color: "text-[#F59E0B]",
-  },
-];
+"use client";
+
+import { useGetAttendanceReport } from "@/hooks/api/use-attendance";
 
 export const AttendanceReportsStats = () => {
+  const { data } = useGetAttendanceReport();
+  const entries = data?.data ?? [];
+
+  const rates = entries.map((e) => e.attendanceRate);
+  const avg = rates.length > 0 ? Math.round(rates.reduce((a, b) => a + b, 0) / rates.length) : 0;
+  const highest = rates.length > 0 ? Math.max(...rates) : 0;
+  const lowest = rates.length > 0 ? Math.min(...rates) : 0;
+
+  const stats = [
+    { title: "Total Students", description: String(entries.length), color: "text-black" },
+    { title: "Avg Attendance", description: `${avg}%`, color: "text-[#197FE6]" },
+    { title: "Highest Attendance", description: `${highest}%`, color: "text-[#009F42]" },
+    { title: "Lowest Attendance", description: `${lowest}%`, color: "text-[#EF4444]" },
+    { title: "Absenteeism", description: `${entries.length > 0 ? 100 - avg : 0}%`, color: "text-[#F59E0B]" },
+  ];
+
   return (
     <div className="flex flex-row items-center gap-3 overflow-x-auto lg:grid lg:grid-cols-5 lg:overflow-x-hidden py-3 lg:py-5">
-      {mockAttendanceReportsStats.map((stat, index) => (
+      {stats.map((stat, index) => (
         <AttendanceReportCard
           key={index}
           title={stat.title}

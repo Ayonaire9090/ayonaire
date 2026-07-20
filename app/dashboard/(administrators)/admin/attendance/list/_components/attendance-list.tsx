@@ -10,13 +10,16 @@ import {
   AttendanceStatusBadge,
   ApprovalStatusBadge,
   AttendanceActions,
-  mockAttendance,
+  mapAttendanceSessionToData,
 } from "./attendance-data";
+import { useGetAttendanceSessions } from "@/hooks/api/use-attendance";
 
 export const AttendanceList = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const { data } = useGetAttendanceSessions();
+  const attendanceData = (data?.sessions ?? []).map(mapAttendanceSessionToData);
 
-  const filteredAttendance = mockAttendance.filter(
+  const filteredAttendance = attendanceData.filter(
     (item) =>
       item.course.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.session.toLowerCase().includes(searchQuery.toLowerCase()) ||
