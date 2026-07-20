@@ -25,7 +25,7 @@ export const careerTools: CareerTool[] = [
     description: "Define your core strengths and career objectives with AI guidance.",
   },
   {
-    href: "/dashboard/student/career-accelarator/career-support-tools",
+    href: "/dashboard/student/career-accelarator/resume-builder",
     icon: FileText,
     title: "AI Resume Builder",
     description: "Generate a professional, ATS-friendly resume from scratch in seconds.",
