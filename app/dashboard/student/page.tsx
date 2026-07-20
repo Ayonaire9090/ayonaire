@@ -1,5 +1,5 @@
-import StudentQuizPage from "./quiz/page";
+import StudentFeedPage from "./feed/page";
 
 export default function StudentDashboardPage() {
-  return <StudentQuizPage />;
+  return <StudentFeedPage />;
 }
