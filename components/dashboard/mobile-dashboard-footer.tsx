@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { MoreVertical } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useSidebar } from "@/components/ui/sidebar";
-import { dashboardData } from "@/constants";
+import { useAuthStore } from "@/store/auth.store";
 import { DashboardUserDropDown } from "./dashboard-user-dropdown";
 
 interface FooterNavItem {
@@ -20,10 +20,10 @@ interface MobileDashboardFooterProps {
   items: FooterNavItem[];
   /** Number of items to show before collapsing into "More…" */
   maxVisible?: number;
-  /** Profile section config – pass `null` to hide it */
+  /** Profile section config – pass `null` to hide it, omit to use the logged-in user */
   profile?: {
     name: string;
-    avatar: string;
+    avatar?: string;
     fallback: string;
     href: string;
   } | null;
@@ -33,18 +33,24 @@ interface MobileDashboardFooterProps {
 export function MobileDashboardFooter({
   items,
   maxVisible = 4,
-  profile = {
-    name: dashboardData.user.name,
-    avatar: dashboardData.user.avatar,
-    fallback: "AY",
-    href: "/dashboard/profile",
-  },
+  profile: profileProp,
   className,
 }: MobileDashboardFooterProps) {
   const pathname = usePathname();
   const scrollRef = useRef<HTMLDivElement>(null);
   const { setOpenMobile } = useSidebar();
   const router = useRouter();
+  const user = useAuthStore((state) => state.user);
+
+  const profile =
+    profileProp !== undefined
+      ? profileProp
+      : {
+          name: user?.name ?? "—",
+          avatar: user?.profile?.url,
+          fallback: user?.name ? user.name.slice(0, 2).toUpperCase() : "AY",
+          href: "/dashboard/profile",
+        };
 
   // Split items into visible and overflow
   const visibleItems = items.slice(0, maxVisible);

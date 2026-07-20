@@ -36,10 +36,7 @@ export function ProfileInfoSection({
     <div className="flex flex-col md:flex-row md:items-start gap-4 md:gap-6 p-4 bg-white">
       {/* Avatar */}
       <Avatar className="size-[100px] lg:size-[114px] border-2 border-white shadow-md -mt-15 md:mt-0 ml-4 md:ml-6 z-10 bg-white">
-        <AvatarImage
-          src={avatarUrl || "https://randomuser.me/api/portraits/men/32.jpg"}
-          alt={name}
-        />
+        <AvatarImage src={avatarUrl} alt={name} />
         <AvatarFallback className="text-xl font-bold bg-gray-200 text-gray-600">
           {initials}
         </AvatarFallback>

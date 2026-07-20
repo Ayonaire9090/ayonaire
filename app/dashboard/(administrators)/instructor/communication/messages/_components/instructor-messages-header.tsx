@@ -167,7 +167,7 @@ export const InstructorMessagesHeader = ({
         <DashboardUserDropDown>
           <Avatar className="h-12 w-12 border-2 border-transparent cursor-pointer hover:opacity-80 transition-opacity">
             <AvatarImage
-              src={user?.profile?.url || dashboardData.user.avatar}
+              src={user?.profile?.url}
               alt={user?.name || dashboardData.user.name}
               className="object-cover"
             />

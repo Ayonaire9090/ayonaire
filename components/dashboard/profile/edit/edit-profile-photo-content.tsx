@@ -55,7 +55,7 @@ function UploadPhotoForm() {
       <div className="flex items-center gap-4 mb-6">
         <Avatar className="size-20 border-2 border-gray-200">
           <AvatarImage
-            src={preview || currentAvatarUrl || "https://randomuser.me/api/portraits/men/32.jpg"}
+            src={preview || currentAvatarUrl}
             alt="Profile photo"
           />
           <AvatarFallback className="text-xl font-bold bg-gray-200 text-gray-600">

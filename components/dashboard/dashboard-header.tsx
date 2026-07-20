@@ -75,7 +75,7 @@ export function DashboardHeader({
             <div className="cursor-pointer">
               <Avatar className="h-12 w-12 border-2 border-orange-200 shrink-0">
                 <AvatarImage
-                  src={user?.profile?.url || dashboardData.user.avatar}
+                  src={user?.profile?.url}
                   alt={user?.name || dashboardData.user.name}
                 />
                 <AvatarFallback>{user?.name ? user.name.slice(0, 2).toUpperCase() : "AY"}</AvatarFallback>
@@ -129,7 +129,7 @@ export function DashboardHeader({
               <div className="flex items-center gap-3 ml-2 cursor-pointer bg-white hover:bg-white/80 p-1.5 rounded-full transition-colors">
                 <Avatar className="h-11 w-11 border border-gray-200">
                   <AvatarImage
-                    src={user?.profile?.url || dashboardData.user.avatar}
+                    src={user?.profile?.url}
                     alt={user?.name || dashboardData.user.name}
                   />
                   <AvatarFallback>{user?.name ? user.name.slice(0, 2).toUpperCase() : "AY"}</AvatarFallback>

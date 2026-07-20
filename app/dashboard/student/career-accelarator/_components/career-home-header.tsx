@@ -58,7 +58,7 @@ export function CareerHomeHeader() {
             <div className="flex items-center gap-2 cursor-pointer">
               <Avatar className="h-10 w-10 border-2 border-transparent hover:opacity-80 transition-opacity">
                 <AvatarImage
-                  src={user?.profile?.url || dashboardData.user.avatar}
+                  src={user?.profile?.url}
                   alt={user?.name || dashboardData.user.name}
                   className="object-cover"
                 />
