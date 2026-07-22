@@ -5,8 +5,8 @@ import { StudentHomeSidebarContent } from "../_components/student-home-sidebar-c
 import { StudentDashboardHeader } from "../_components/student-dashboard-header";
 import { Clock } from "lucide-react";
 import { useState } from "react";
+import { DateRange } from "react-day-picker";
 import { WorkshopDateFilter } from "../workshop/_components/workshop-date-filter";
-import { DateRange } from "react-day-picker"; // 1. Import DateRange type
 
 const jobFairData = [
   {
@@ -53,13 +53,10 @@ const jobFairData = [
 
 export const StudentJobFairSessionsContent = () => {
   const { state } = useSidebar();
-  const [activeTab, setActiveTab] = useState<"upcoming" | "completed">("upcoming");
-  
-  // 2. Add the date state here
-  const [date, setDate] = useState<DateRange | undefined>({
-    from: undefined,
-    to: undefined,
-  });
+  const [activeTab, setActiveTab] = useState<"upcoming" | "completed">(
+    "upcoming",
+  );
+  const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
 
   return (
     <>
@@ -99,7 +96,7 @@ export const StudentJobFairSessionsContent = () => {
 
             {/* 3. Pass the props down to the filter component */}
             <div className="mt-2">
-              <WorkshopDateFilter date={date} onDateChange={setDate} />
+              <WorkshopDateFilter date={dateRange} onDateChange={setDateRange} />
             </div>
 
             {/* List */}

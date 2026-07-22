@@ -102,6 +102,12 @@ export function AddCourseModal({
     }
   };
 
+  const resetAndClose = () => {
+    setActiveStep(1);
+    setClassInfo(emptyClassInfo);
+    onClose();
+  };
+
   const handleNext = async () => {
     if (activeStep === 1) {
       if (courseId) {
@@ -155,7 +161,7 @@ export function AddCourseModal({
     if (activeStep > 1) {
       setActiveStep(activeStep - 1);
     } else {
-      onClose();
+      resetAndClose();
     }
   };
 
@@ -164,7 +170,7 @@ export function AddCourseModal({
   return (
     <AppMegaModal
       isOpen={isOpen}
-      onClose={onClose}
+      onClose={resetAndClose}
       title="Upload Course"
       subtitle="Create your course details and curriculum"
       footerContent={

@@ -23,16 +23,16 @@ export default function StudentCareerAccelarator() {
               <div className="flex items-center justify-center size-10 rounded-xl bg-white text-[#F86432] shrink-0">
                 <Rocket className="size-5" />
               </div>
-              <div>
+              <div className="flex-1 min-w-0">
                 <p className="font-semibold text-gray-900">Optimize your Resume 🚀</p>
-                <p className="text-sm text-gray-500">
+                <p className="text-xs sm:text-sm text-gray-500 truncate">
                   Increase your chances of getting selected
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-6">
             <div className="flex flex-col gap-6">
               <div className="md:px-4 lg:px-0">
                 <div className="relative overflow-hidden rounded-none md:rounded-3xl bg-gradient-to-r from-[#FFAE77] to-white p-6 md:p-8 flex flex-row items-center gap-4 md:gap-8">
@@ -55,7 +55,7 @@ export default function StudentCareerAccelarator() {
                     </p>
                     <Link
                       href="/dashboard/student/profile/edit"
-                      className="inline-flex items-center gap-2 mt-5 bg-[#F86432] text-white font-semibold px-5 py-2.5 rounded-full hover:bg-[#F86432]/90 transition-colors"
+                      className="inline-flex items-center gap-2 mt-5 bg-[#F86432] text-white font-semibold px-5 py-2.5 rounded-xl hover:bg-[#F86432]/90 transition-colors"
                     >
                       Continue <ArrowRight className="size-4" />
                     </Link>

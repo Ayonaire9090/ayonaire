@@ -13,7 +13,7 @@ const checklistItems: ChecklistItem[] = [
     title: "Create your first resume",
     description: "Create an ATS-optimized resume",
     actionLabel: "Create Resume",
-    href: "/dashboard/student/career-accelarator/career-support-tools",
+    href: "/dashboard/student/career-accelarator/resume-builder",
   },
   {
     title: "Complete your first interview",
@@ -50,16 +50,16 @@ const checklistItems: ChecklistItem[] = [
 export function CareerChecklistCard() {
   return (
     <div className="bg-[#F8F9FA] border border-gray-100 rounded-2xl p-5">
-      <div className="flex items-start gap-3 mb-5">
-        <div className="flex items-center justify-center size-9 rounded-xl bg-[#F86432]/10 text-[#F86432] shrink-0">
-          <Sparkles className="size-4.5" />
-        </div>
-        <div>
+      <div className="mb-5">
+        <div className="flex items-center gap-3 mb-1.5">
+          <div className="flex items-center justify-center size-9 rounded-xl bg-[#F86432]/10 text-[#F86432] shrink-0">
+            <Sparkles className="size-4.5" />
+          </div>
           <h3 className="font-semibold text-gray-900">Complete your checklist</h3>
-          <p className="text-sm text-gray-500 mt-0.5">
-            Complete a few steps to land your next role
-          </p>
         </div>
+        <p className="text-sm text-gray-500 truncate">
+          Complete a few steps to land your next role
+        </p>
       </div>
 
       <div className="flex flex-col">
