@@ -84,7 +84,7 @@ export default function RegistrationModal({
                 const encodedEmail = encodeURIComponent(email);
 
                 router.push(
-                    `/data-analytics-thank-you?name=${encodedName}&email=${encodedEmail}`
+                    `/data-analytics-thank-you-02?name=${encodedName}&email=${encodedEmail}`
                 );
             }, 500);
         } catch (err: any) {
@@ -127,7 +127,7 @@ export default function RegistrationModal({
                         className="absolute inset-0"
                         style={{
                             background:
-                                "linear-gradient(180deg, rgba(242,94,37,0.15) 0%, rgba(246,114,25,0.65) 100%)",
+                                "linear-gradient(180deg, rgba(18,19,21,0.15) 0%, rgba(18,19,21,0.75) 100%)",
                         }}
                     />
                     <div className="absolute inset-0 flex items-center justify-center px-6 text-center">
@@ -184,7 +184,7 @@ export default function RegistrationModal({
                                     }}
                                     className={`h-[45px] w-full rounded-[12px] border bg-white px-4 text-sm text-[#121315] placeholder-gray-400 font-medium shadow-sm transition-all outline-none ${fieldErrors.name
                                         ? 'border-red-400 focus:border-red-500 ring-2 ring-red-100'
-                                        : 'border-gray-200 focus:border-[#F66A1B] focus:ring-2 focus:ring-orange-100'
+                                        : 'border-gray-200 focus:border-[#F67219] focus:ring-2 focus:ring-orange-100'
                                         }`}
                                 />
                                 {fieldErrors.name && (
@@ -209,7 +209,7 @@ export default function RegistrationModal({
                                     }}
                                     className={`h-[45px] w-full rounded-[12px] border bg-white px-4 text-sm text-[#121315] placeholder-gray-400 font-medium shadow-sm transition-all outline-none ${fieldErrors.email
                                         ? 'border-red-400 focus:border-red-500 ring-2 ring-red-100'
-                                        : 'border-gray-200 focus:border-[#F66A1B] focus:ring-2 focus:ring-orange-100'
+                                        : 'border-gray-200 focus:border-[#F67219] focus:ring-2 focus:ring-orange-100'
                                         }`}
                                 />
                                 {fieldErrors.email && (
@@ -222,10 +222,7 @@ export default function RegistrationModal({
                             <button
                                 onClick={handleSubmit}
                                 disabled={loading}
-                                className="group relative mt-2 flex h-[46px] w-full items-center justify-center rounded-[12px] text-sm font-extrabold text-black transition-all duration-300 hover:scale-[1.01] active:scale-[0.99] disabled:scale-100 shadow-md active:shadow-sm disabled:opacity-60"
-                                style={{
-                                    background: "linear-gradient(90deg, #FA9855 0%, #FFDCC4 100%)",
-                                }}
+                                className="group relative mt-2 flex h-[46px] w-full items-center justify-center rounded-[12px] bg-[#F67219] text-sm font-extrabold text-white transition-all duration-300 hover:scale-[1.01] active:scale-[0.99] disabled:scale-100 shadow-md active:shadow-sm disabled:opacity-60"
                             >
                                 <span>
                                     {loading ? 'Processing...' : 'Give Me Instant Access Now'}

@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { Marquee } from '@/components/ui/marquee';
-import { agile } from '@/app/fonts';
+import { baiJamjuree } from '@/app/fonts';
 
 interface Quote {
   handle: string;
@@ -10,14 +10,18 @@ interface Quote {
 }
 
 const quotes: Quote[] = [
-  { handle: '@dekeraannyon2768', quote: 'Having domain knowledge makes you get hired quickly.' },
-  { handle: '@EnochOlorunjuwon', quote: 'Eye opener — I never knew what hiring managers actually look for.' },
   { handle: '@felixekpa8870', quote: 'Thank you so much, Dr. Gospel.' },
   { handle: '@niklaushakan9294', quote: 'Real value.' },
+  { handle: '@EnochOlorunjuwon', quote: 'Eye opener — I never knew what hiring managers actually look for.' },
   { handle: '@davidolaoye7214', quote: "That's value! That truly is value." },
-  { handle: '@princeadex2005', quote: 'Greatest seminar ever, I learned a lot this night.' },
-  { handle: '@VictorOgbedu-f7g', quote: 'The curriculum is quite amazing.' },
+  { handle: '@UcheChokmah', quote: 'Thank you, sir.' },
+  { handle: '@PreciousSolomon-h4n', quote: 'AI all the way!' },
+  { handle: '@greatgrace6601', quote: 'Wow.' },
+  { handle: '@dekeraannyon2768', quote: 'Having domain knowledge makes you get hired quickly.' },
+  { handle: '@olanrewajuojetunde2296', quote: 'This is highly revealing.' },
   { handle: '@blessingcharles1527', quote: 'You are doing well.' },
+  { handle: '@fapohundaabdulfatai', quote: 'Having a niche is vital!' },
+  { handle: '@ahmaduisreal880', quote: "Seriously, you need to be paid for this — it's too much, ma'am!" },
 ];
 
 const avatars = [
@@ -29,7 +33,7 @@ const avatars = [
 function QuoteCard({ item, index }: { item: Quote; index: number }) {
   return (
     <div className="flex w-[280px] shrink-0 flex-col gap-4 rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
-      <span className="text-3xl leading-none text-[#F25E25]">"</span>
+      <span className="text-3xl leading-none text-[#F67219]">"</span>
       <p className="text-[15px] leading-relaxed text-[#2D3139] -mt-2">{item.quote}</p>
       <div className="flex items-center gap-3 pt-2">
         <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full">
@@ -53,8 +57,8 @@ export default function Testimonials() {
   return (
     <section id="reviews" className="w-full bg-white py-16 sm:py-24 scroll-mt-24">
       <div className="mx-auto max-w-2xl w-full text-center mb-10 px-4">
-        <h2 className={`${agile.className} text-2xl sm:text-3xl md:text-4xl font-bold text-[#121315]`}>
-          Loved By Past Attendees
+        <h2 className={`${baiJamjuree.className} text-2xl sm:text-3xl md:text-4xl font-bold text-[#121315]`}>
+          Real Feedback From Students Who Attended Our Last Session
         </h2>
       </div>
 

@@ -15,7 +15,7 @@ export const metadata: Metadata = generateSEO({
     'Join a Senior Data Analyst, a Hiring Executive, and a Remote Data Analyst as they reveal the hiring standards, career roadmap, and mistakes that determine who gets Data Analytics jobs in 2026.',
   keywords:
     'data analytics masterclass, data analyst hiring, AI-powered data analytics, remote data analyst jobs, data analytics career 2026',
-  canonical: '/data-analytics-masterclass',
+  canonical: '/data-analytics-masterclass-02',
 });
 
 const DataAnalyticsMasterclass = () => {

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import RegistrationModal from './RegistrationModal';
-import { agile } from '@/app/fonts';
+import { baiJamjuree } from '@/app/fonts';
 
 const OrangeCircleCheck = ({ id }: { id: string }) => (
   <svg width="40" height="40" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -22,12 +22,12 @@ const OrangeCircleCheck = ({ id }: { id: string }) => (
     />
     <defs>
       <linearGradient id={`grad0_${id}`} x1="5.6875" y1="26.0214" x2="46.3128" y2="26.0214" gradientUnits="userSpaceOnUse">
-        <stop stopColor="#F25E25" />
-        <stop offset="1" stopColor="#F97F11" />
+        <stop stopColor="#F67219" />
+        <stop offset="1" stopColor="#F67219" />
       </linearGradient>
       <linearGradient id={`grad1_${id}`} x1="18.6875" y1="22.75" x2="46.3125" y2="22.75" gradientUnits="userSpaceOnUse">
-        <stop stopColor="#F25E25" />
-        <stop offset="1" stopColor="#F97F11" />
+        <stop stopColor="#F67219" />
+        <stop offset="1" stopColor="#F67219" />
       </linearGradient>
     </defs>
   </svg>
@@ -49,7 +49,7 @@ export default function WhoThisIsFor() {
       <section className="w-full bg-white px-4 py-16 sm:py-24">
         <div className="mx-auto max-w-4xl w-full">
           <div className="text-center mb-12">
-            <h2 className={`${agile.className} text-3xl sm:text-4xl md:text-5xl font-bold text-[#121315]`}>
+            <h2 className={`${baiJamjuree.className} text-3xl sm:text-4xl md:text-5xl font-bold text-[#121315]`}>
               This Is For You If:
             </h2>
           </div>
@@ -63,7 +63,7 @@ export default function WhoThisIsFor() {
                 <div className="shrink-0">
                   <OrangeCircleCheck id={`reason-${index}`} />
                 </div>
-                <p className="text-[#2D3139] text-[16px] sm:text-[18px] leading-[1.5]">
+                <p className="text-[#2D3139] text-[16px] sm:text-[18px] leading-[1.5] max-w-xl">
                   {reason}
                 </p>
               </div>
@@ -71,10 +71,10 @@ export default function WhoThisIsFor() {
           </div>
 
           <div className="mt-12 rounded-[20px] bg-[#FFF5F1] px-6 py-8 text-center sm:px-12 sm:py-10">
-            <h3 className={`${agile.className} text-xl sm:text-2xl font-bold text-black`}>
+            <h3 className={`${baiJamjuree.className} text-xl sm:text-2xl font-bold text-black`}>
               Register Before Slots Fill Up
             </h3>
-            <p className="mt-2 text-base sm:text-lg font-semibold text-[#F25E25]">
+            <p className="mt-2 text-xs sm:text-sm font-semibold uppercase tracking-[0.1em] text-[#F67219]">
               This Is A Live Masterclass, Not A Replay.
             </p>
             <p className="mt-4 text-[15px] sm:text-base leading-relaxed text-[#55565A]">
@@ -84,16 +84,13 @@ export default function WhoThisIsFor() {
             <div className="mt-6 flex justify-center">
               <button
                 onClick={() => setModalOpen(true)}
-                className="relative flex h-11 items-center gap-3 rounded-[14px] pl-5 pr-2 font-bold text-white transition-transform hover:scale-[1.02] shadow-lg"
-                style={{
-                  background: "linear-gradient(90deg, #F67219 0%, #FFDCC4 100%)",
-                }}
+                className="relative flex h-11 items-center gap-3 rounded-[14px] pl-5 pr-2 font-bold text-white bg-[#F67219] transition-transform hover:scale-[1.02] shadow-lg"
               >
                 <span className="text-sm whitespace-nowrap">Reserve My Free Seat</span>
                 <span className="flex h-[33px] w-[33px] shrink-0 items-center justify-center rounded-[7px] bg-white">
                   <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M9.59456 1.68393L17.4854 8.85501L9.26626 15.7397" stroke="#F67721" strokeWidth="1.5" />
-                    <path d="M0.000324288 8.62534L17.0875 8.92915" stroke="#F67721" strokeWidth="1.5" />
+                    <path d="M9.59456 1.68393L17.4854 8.85501L9.26626 15.7397" stroke="#F67219" strokeWidth="1.5" />
+                    <path d="M0.000324288 8.62534L17.0875 8.92915" stroke="#F67219" strokeWidth="1.5" />
                   </svg>
                 </span>
               </button>

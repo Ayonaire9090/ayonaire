@@ -18,7 +18,7 @@ export const metadata: Metadata = generateSEO({
     "You've successfully registered for the Free Data Analytics Masterclass 2026. Join the WhatsApp community to get the class link and updates.",
   keywords:
     "thank you, data analytics masterclass, confirmation, Ayonaire community",
-  canonical: "/data-analytics-thank-you",
+  canonical: "/data-analytics-thank-you-02",
   noIndex: true,
 });
 
@@ -62,8 +62,13 @@ export default function DataAnalyticsThankYou() {
 
         {/* Heading and Description */}
         <div className="text-center max-w-4xl">
+          <p className="text-sm md:text-base font-semibold uppercase tracking-[0.15em] text-[#F25E25] mb-3">
+            You're One Step Away!
+          </p>
           <AppHeading
-            title="You're Registered For The Free Data Analytics Masterclass!"
+            title="Congratulations, Your Registration Is Successful."
+            description="But your next step is IMPORTANT!"
+            descriptionClassName="text-gray-600 text-base md:text-lg font-semibold pt-3"
             headingLevel="h1"
           />
         </div>
@@ -78,7 +83,7 @@ export default function DataAnalyticsThankYou() {
               title="What Happens Next?"
               headingLevel="h2"
               className="mb-4"
-              description="Join our Exclusive WhatsApp Community to get the masterclass link and updates."
+              description="Click the button below to join the community to get the masterclass link & updates."
               descriptionClassName="pt-0 pb-3 text-gray-600 text-base md:text-lg"
             />
 
@@ -88,7 +93,7 @@ export default function DataAnalyticsThankYou() {
               rel="noopener noreferrer"
             >
               <AppActionButton className="group">
-                <p>CLICK HERE TO GET IN INSTANTLY</p>
+                <p>TAKE ME TO THE COMMUNITY NOW!</p>
                 <span className="bg-white p-1 lg:p-2 rounded-lg group-hover:ml-2 transition-all ease-in-out duration-300">
                   <ArrowRight
                     size={25}
@@ -123,12 +128,12 @@ export default function DataAnalyticsThankYou() {
             <AppHeading
               title="You're In! Welcome Aboard"
               headingLevel="h2"
-              description="Registration alone is not enough — the class link, reminders, and updates are shared inside the community before the live session."
+              description="You have successfully registered for the Free AI-Data Analysis Masterclass. But registration alone is not enough — the class link, reminders, and important updates will be shared with members of the community before the live session."
               className=""
               descriptionClassName="text-gray-600 text-base md:text-lg mb-4"
             />
             <p className="text-gray-500 text-sm md:text-base mb-8 italic">
-              Join now so you don't miss any information about the masterclass.
+              Join now so you don't miss any information about the masterclass. Click the button below to join the community now!
             </p>
 
             <a
@@ -137,7 +142,7 @@ export default function DataAnalyticsThankYou() {
               rel="noopener noreferrer"
             >
               <AppActionButton className="group">
-                <p>CLICK HERE TO GET IN INSTANTLY</p>
+                <p>TAKE ME TO THE COMMUNITY NOW!</p>
                 <span className="bg-white p-1 lg:p-2 rounded-lg group-hover:ml-2 transition-all ease-in-out duration-300">
                   <ArrowRight
                     size={25}

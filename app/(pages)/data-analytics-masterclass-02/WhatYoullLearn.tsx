@@ -2,17 +2,17 @@
 
 import { useState } from 'react';
 import RegistrationModal from './RegistrationModal';
-import { agile, adineue } from '@/app/fonts';
+import { baiJamjuree } from '@/app/fonts';
 
 const items = [
-  'Why traditional Data Analysts are getting passed over — and the AI skill shift replacing them',
-  'Exactly how hiring managers filter candidates in 2026',
-  'The roadmap to becoming globally employable, no guesswork',
-  'How non-tech people broke into Data Analysis from zero',
-  'How to land remote and international roles, even outside the US/EU',
-  'The "Build in Public" strategy that gets you noticed before you apply',
-  'Why a finance, marketing, or health background is your fastest path in',
-  'The CV, portfolio, and interview mistakes costing you offers',
+  'Why "traditional" Data Analysts are getting passed over — and the specific AI-powered skill shift that\'s replacing them',
+  'How hiring managers actually filter candidates in 2026 — the exact criteria and checklist in use',
+  'The precise learning roadmap to become globally employable this year (no more guessing what to learn next)',
+  'How non-tech people broke into Data Analysis — the real path from zero background to working for global companies',
+  'How to land international internships and remote Data Analyst roles — even from outside the US/EU',
+  'The "Build in Public" strategy top candidates are using to get noticed by recruiters before they even apply',
+  'Why your background in finance, marketing, health, or accounting isn\'t a disadvantage, but your fastest path to a specialized, higher-paying analyst role',
+  'Plus the CV, portfolio, and interview mistakes quietly costing you job offers',
 ];
 
 const ChevronIcon = () => (
@@ -39,28 +39,25 @@ export default function WhatYoullLearn() {
         <div className="mx-auto max-w-3xl w-full flex flex-col items-center gap-10 lg:gap-12">
           {/* Heading + CTA */}
           <div className="flex flex-col items-center gap-5 text-center">
-            <span className={`${adineue.className} text-xs font-semibold uppercase tracking-[0.15em] text-[#F25E25]`}>
+            <span className={`${baiJamjuree.className} text-xs font-semibold uppercase tracking-[0.15em] text-[#F67219]`}>
               Curriculum
             </span>
-            <h2 className={`${agile.className} text-3xl sm:text-4xl md:text-[44px] font-bold text-[#121315] leading-tight`}>
+            <h2 className={`${baiJamjuree.className} text-3xl sm:text-4xl md:text-[44px] font-bold text-[#121315] leading-tight`}>
               What You'll Learn Inside The Free Masterclass
             </h2>
-            <p className={`${adineue.className} text-base text-gray-600 leading-relaxed max-w-md`}>
+            <p className={`${baiJamjuree.className} text-base text-gray-600 leading-relaxed max-w-md`}>
               Eight things top candidates already know that most people learning Data Analytics don't.
             </p>
 
             <button
               onClick={() => setModalOpen(true)}
-              className="relative mt-2 flex h-11 w-fit items-center gap-3 rounded-[14px] pl-5 pr-2 font-bold text-white transition-transform hover:scale-[1.02] shadow-lg"
-              style={{
-                background: "linear-gradient(90deg, #F67219 0%, #FFDCC4 100%)",
-              }}
+              className="relative mt-2 flex h-11 w-fit items-center gap-3 rounded-[14px] pl-5 pr-2 font-bold text-white bg-[#F67219] transition-transform hover:scale-[1.02] shadow-lg"
             >
-              <span className="text-sm whitespace-nowrap">Join the Free Masterclass</span>
+              <span className="text-sm whitespace-nowrap">Give Me Instant Access</span>
               <span className="flex h-[33px] w-[33px] shrink-0 items-center justify-center rounded-[7px] bg-white">
                 <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M9.59456 1.68393L17.4854 8.85501L9.26626 15.7397" stroke="#F67721" strokeWidth="1.5" />
-                  <path d="M0.000324288 8.62534L17.0875 8.92915" stroke="#F67721" strokeWidth="1.5" />
+                  <path d="M9.59456 1.68393L17.4854 8.85501L9.26626 15.7397" stroke="#F67219" strokeWidth="1.5" />
+                  <path d="M0.000324288 8.62534L17.0875 8.92915" stroke="#F67219" strokeWidth="1.5" />
                 </svg>
               </span>
             </button>
@@ -77,11 +74,11 @@ export default function WhatYoullLearn() {
                     hiddenOnMobile ? 'hidden lg:flex' : 'flex'
                   }`}
                 >
-                  <span className="text-sm font-bold text-[#F25E25] w-6 shrink-0">
+                  <span className="text-sm font-bold text-[#F67219] w-6 shrink-0">
                     {String(index + 1).padStart(2, '0')}
                   </span>
                   <p className="flex-1 text-[15px] leading-snug text-[#2D3139]">{item}</p>
-                  <span className="shrink-0 text-gray-300 group-hover:text-[#F25E25] transition-colors">
+                  <span className="shrink-0 text-gray-300 group-hover:text-[#F67219] transition-colors">
                     <ChevronIcon />
                   </span>
                 </div>
@@ -91,7 +88,7 @@ export default function WhatYoullLearn() {
             {items.length > VISIBLE_ON_MOBILE && (
               <button
                 onClick={() => setExpanded((prev) => !prev)}
-                className="flex w-full items-center justify-center gap-2 border-t border-gray-100 px-5 py-4 text-sm font-semibold text-[#F25E25] hover:bg-white transition-colors lg:hidden"
+                className="flex w-full items-center justify-center gap-2 border-t border-gray-100 px-5 py-4 text-sm font-semibold text-[#F67219] hover:bg-white transition-colors lg:hidden"
                 aria-expanded={expanded}
               >
                 {expanded ? 'Show less' : 'Show more'}
