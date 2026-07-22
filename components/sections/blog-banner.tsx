@@ -75,7 +75,7 @@ export const BlogBanner = ({
               <div className="flex items-center gap-2">
                 <Image
                   src={authorImage || "/assets/persons/mr-ayo.png"}
-                  alt="Ayobami Awosanya"
+                  alt={author}
                   width={32}
                   height={32}
                   className="w-8 h-8 rounded-full object-cover"
