@@ -21,7 +21,7 @@ export const StudentQuizInfoAnalytics = () => {
       .filter((id): id is string => !!id),
   );
 
-  const totalQuizzes = (quizzesData?.data ?? []).filter((quiz) =>
+  const totalQuizzes = (quizzesData?.quizzes ?? []).filter((quiz) =>
     isEnrolledQuiz(quiz, enrolledCourseIds),
   ).length;
 

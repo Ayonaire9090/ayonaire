@@ -44,6 +44,8 @@ export default async function AdminLicenseSettings() {
           title="License Key"
           description="Added"
           type="action"
+            category="license"
+            settingKey="licenseKey"
           action={
             <div className="flex items-center">
               <Button

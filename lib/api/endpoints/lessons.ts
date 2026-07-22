@@ -48,6 +48,19 @@ export interface CourseContent {
   lastLesson: string | null;
 }
 
+export interface ModuleWithLessonsPreview {
+  _id: string;
+  title: string;
+  description: string;
+  course: string;
+  order: number;
+  lessons: Omit<LessonWithProgress, "isCompleted">[];
+}
+
+export interface CourseContentPreview {
+  modules: ModuleWithLessonsPreview[];
+}
+
 export interface UploadLessonPayload {
   title: string;
   module: string;
@@ -60,8 +73,8 @@ export interface UploadLessonPayload {
 }
 
 export interface UploadLessonVideoPayload {
-  lesson: string;
-  videos: string[];
+  lessonId: string;
+  videos: { title: string; file: File }[];
 }
 
 export interface UpdateLastLessonPayload {
@@ -82,12 +95,20 @@ export const lessonsApi = {
       requireAuth: true,
     }),
 
-  uploadVideo: (payload: UploadLessonVideoPayload) =>
-    apiClient<ApiResponse>("/api/v1/lesson/upload-video", {
+  uploadVideo: (payload: UploadLessonVideoPayload) => {
+    const formData = new FormData();
+    formData.append("lessonId", payload.lessonId);
+    payload.videos.forEach((video) => {
+      formData.append("titles", video.title);
+      formData.append("videos", video.file);
+    });
+
+    return apiClient<ApiResponse>("/api/v1/lesson/upload-video", {
       method: "POST",
-      body: JSON.stringify(payload),
+      body: formData,
       requireAuth: true,
-    }),
+    });
+  },
 
   markCompleted: ({ courseId, lessonId }: MarkLessonCompletedPayload) =>
     apiClient<ApiResponse>("/api/v1/lesson/mark-lesson-as-completed", {
@@ -118,6 +139,18 @@ export const lessonsApi = {
   getCourseContent: (courseId: string) =>
     apiClient<ApiResponse<CourseContent>>(
       `/api/v1/lesson/view-lesson-content?courseId=${courseId}`,
+      {
+        method: "GET",
+        requireAuth: true,
+      },
+    ),
+
+  // For an instructor/admin previewing their own course's curriculum - no
+  // enrollment record exists for them, so this has no progress/isCompleted
+  // data (unlike getCourseContent, which is student-facing).
+  getInstructorCourseContent: (courseId: string) =>
+    apiClient<ApiResponse<CourseContentPreview>>(
+      `/api/v1/lesson/course-content/${courseId}`,
       {
         method: "GET",
         requireAuth: true,

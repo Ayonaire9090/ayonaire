@@ -11,18 +11,9 @@ import { useAuthStore } from "@/store/auth.store";
 
 export default function InstrutorCoursesPage() {
   const user = useAuthStore((state) => state.user);
-  const { data, isLoading, isError } = useGetCourses();
+  const { data, isLoading, isError } = useGetCourses({ instructor: user?._id });
 
-  // Filtered client-side since coursesApi.getAll() has no instructor-scoped
-  // param yet - assumes course.instructor is populated with an _id to match
-  // against the logged-in user. Needs backend confirmation.
-  const myCourses = (data?.data ?? []).filter((course) => {
-    const instructorId =
-      typeof course.instructor === "string"
-        ? course.instructor
-        : course.instructor?._id;
-    return instructorId === user?._id;
-  });
+  const myCourses = data?.courses ?? [];
 
   const analytics = [
     {
@@ -35,7 +26,7 @@ export default function InstrutorCoursesPage() {
     {
       heading: "Published",
       title: String(
-        myCourses.filter((c) => c.status === "published").length,
+        myCourses.filter((c) => c.status === "Active").length,
       ),
       icon: Rocket,
       rate: "",
@@ -44,7 +35,7 @@ export default function InstrutorCoursesPage() {
     {
       heading: "Drafts",
       title: String(
-        myCourses.filter((c) => c.status === "draft").length,
+        myCourses.filter((c) => c.status === "Draft").length,
       ),
       icon: NotebookPen,
       rate: "",
@@ -53,7 +44,7 @@ export default function InstrutorCoursesPage() {
     {
       heading: "Archived",
       title: String(
-        myCourses.filter((c) => c.status === "archived").length,
+        myCourses.filter((c) => c.status === "Archived").length,
       ),
       icon: Archive,
       rate: "",

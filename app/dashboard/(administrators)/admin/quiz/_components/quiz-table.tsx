@@ -131,13 +131,13 @@ const columns: ColumnDef<Quiz>[] = [
   {
     key: "actions",
     header: "Actions",
-    cell: (item) => <QuizActions assignmentId={item.id} />,
+    cell: (item) => <QuizActions assignmentId={item.id} status={item.status} />,
   },
 ];
 
 export const QuizTable = () => {
   const { data, isLoading, isError } = useGetQuizzes();
-  const quizzes: Quiz[] = (data?.data ?? []).map(mapQuizRecordToQuiz);
+  const quizzes: Quiz[] = (data?.quizzes ?? []).map(mapQuizRecordToQuiz);
 
   return (
     <div className="w-full bg-white p-4 rounded-xl">

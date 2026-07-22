@@ -6,8 +6,8 @@ import { useAttendanceReportsContext } from "./attendance-reports-context";
 import {
   AttendanceReportData,
   getProgressColor,
+  ReportStatusBadge,
 } from "./attendance-reports-data";
-import { AttendanceStatusBadge } from "../../list/_components/attendance-data";
 import { MoreVertical, Upload } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AdminDashboardButton } from "@/components/dashboard/admin-dashboard-button";
@@ -106,7 +106,7 @@ export const AttendanceReportsTable = () => {
     {
       key: "status",
       header: "Status",
-      cell: (item) => <AttendanceStatusBadge status={item.status} />,
+      cell: (item) => <ReportStatusBadge status={item.status} />,
     },
     {
       key: "actions",

@@ -58,7 +58,7 @@ export const StudentQuizList = () => {
       .filter((id): id is string => !!id),
   );
 
-  const quizzes = (quizzesData?.data ?? [])
+  const quizzes = (quizzesData?.quizzes ?? [])
     .filter((quiz) => isEnrolledQuiz(quiz, enrolledCourseIds))
     .map(mapQuizRecordToStudentQuiz);
 

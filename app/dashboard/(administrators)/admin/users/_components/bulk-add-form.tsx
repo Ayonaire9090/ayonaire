@@ -59,7 +59,7 @@ export function BulkAddForm({
   const { data: coursesData } = useGetCourses();
   const courseOptions = [
     { label: "Select All Courses", value: "all" },
-    ...(coursesData?.data ?? []).map((course) => ({
+    ...(coursesData?.courses ?? []).map((course) => ({
       label: course.title,
       value: course._id,
     })),

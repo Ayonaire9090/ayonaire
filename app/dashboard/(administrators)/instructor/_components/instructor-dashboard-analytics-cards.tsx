@@ -19,7 +19,7 @@ import { useAuthStore } from "@/store/auth.store";
 function useInstructorOverviewAnalytics(): InstructorDashboardAnalyticsCardProps[] {
   const user = useAuthStore((state) => state.user);
   const { data } = useGetCourses();
-  const myCourses = (data?.data ?? []).filter((course) => {
+  const myCourses = (data?.courses ?? []).filter((course) => {
     const instructorId =
       typeof course.instructor === "string"
         ? course.instructor
@@ -27,7 +27,7 @@ function useInstructorOverviewAnalytics(): InstructorDashboardAnalyticsCardProps
     return instructorId === user?._id;
   });
   const totalStudents = myCourses.reduce(
-    (sum, course) => sum + (course.enrollments?.length ?? 0),
+    (sum, course) => sum + (course.enrollmentCount ?? 0),
     0,
   );
 

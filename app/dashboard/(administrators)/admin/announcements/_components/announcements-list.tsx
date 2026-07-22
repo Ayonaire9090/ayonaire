@@ -89,7 +89,7 @@ export const AnnouncementsList = () => {
             </div>
 
             <div className="shrink-0 -mt-1">
-              <AnnouncementStatusBadge status={item.status} />
+              <AnnouncementStatusBadge status={item.status} announcementId={item.id} />
             </div>
           </div>
         )}

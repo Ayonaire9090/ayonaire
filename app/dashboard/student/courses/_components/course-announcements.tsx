@@ -21,7 +21,7 @@ export const CourseAnnouncements = ({ courseId }: CourseAnnouncementsProps) => {
   const { data, isLoading, isError } = useGetAnnouncements();
 
   const courseAnnouncements = (data?.data?.announcement ?? []).filter(
-    (a) => a.courseId === courseId,
+    (a) => a.course === courseId,
   );
 
   if (isLoading) {
@@ -52,7 +52,7 @@ export const CourseAnnouncements = ({ courseId }: CourseAnnouncementsProps) => {
     <div className="w-full flex flex-col gap-6 md:gap-8 max-w-4xl mx-auto py-4">
       {courseAnnouncements.map((announcement) => (
         <div
-          key={announcement._id}
+          key={announcement.id}
           className="rounded-xl p-4 bg-white shadow-sm"
         >
           <AnnouncementCard

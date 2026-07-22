@@ -7,6 +7,7 @@ export interface InstructorQuiz {
   dueDate: string;
   questions: number;
   attempts: number;
+  status?: string;
 }
 
 export function isOwnQuiz(quiz: QuizRecord, instructorId?: string): boolean {
@@ -16,21 +17,16 @@ export function isOwnQuiz(quiz: QuizRecord, instructorId?: string): boolean {
   return createdBy === instructorId;
 }
 
-// dueDate/attempts have no known backend source yet (no due-date field on
-// QuizRecord, no results/analytics endpoint) so they fall back to "-"/0
-// rather than guessed values.
 export function mapQuizRecordToInstructorQuiz(
   quiz: QuizRecord,
 ): InstructorQuiz {
-  const moduleObj = typeof quiz.module === "object" ? quiz.module : undefined;
-  const course = moduleObj?.course?.title ?? "Uncategorized";
-
   return {
     id: quiz._id,
     title: quiz.title,
-    course,
-    dueDate: "-",
-    questions: quiz.questions?.length ?? 0,
-    attempts: 0,
+    course: quiz.course?.title ?? "Uncategorized",
+    dueDate: quiz.dueDate ? new Date(quiz.dueDate).toLocaleDateString() : "-",
+    questions: quiz.questionsCount ?? 0,
+    attempts: quiz.attemptsCount ?? 0,
+    status: quiz.status,
   };
 }

@@ -14,6 +14,23 @@ export interface StudentData {
   progress: number;
 }
 
+export function downloadStudentsCsv(filename: string, rows: StudentData[]) {
+  const header = ["Name", "Email", "Course", "Status", "Progress"];
+  const lines = rows.map((r) =>
+    [r.name, r.email, r.course, r.status, `${r.progress}%`]
+      .map((v) => `"${String(v).replace(/"/g, '""')}"`)
+      .join(","),
+  );
+  const csv = [header.join(","), ...lines].join("\n");
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
 // "Quiz Score" has no known backend source yet (enrollment records carry no
 // per-student quiz/assignment scores), so it's dropped from the mapped shape.
 function deriveStatus(enrollment: Enrollment): StudentStatus {
@@ -84,19 +101,11 @@ export const getProgressColor = (status: StudentStatus) => {
 // already made for the Admin Enrollments page).
 export function useInstructorStudentRoster() {
   const user = useAuthStore((state) => state.user);
-  const coursesQuery = useGetCourses();
+  const coursesQuery = useGetCourses({ instructor: user?._id });
   const enrollmentsQuery = useGetEnrolledCourses();
 
   const courseIds = new Set(
-    (coursesQuery.data?.data ?? [])
-      .filter((course) => {
-        const instructorId =
-          typeof course.instructor === "string"
-            ? course.instructor
-            : course.instructor?._id;
-        return instructorId === user?._id;
-      })
-      .map((course) => course._id),
+    (coursesQuery.data?.courses ?? []).map((course) => course._id),
   );
 
   const students: StudentData[] = (enrollmentsQuery.data?.data ?? [])

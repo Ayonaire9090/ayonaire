@@ -6,7 +6,7 @@ import { mapQuizRecordToQuiz } from "./quiz-data";
 
 export const QuizInfoAnalytics = () => {
   const { data } = useGetQuizzes();
-  const quizzes = (data?.data ?? []).map(mapQuizRecordToQuiz);
+  const quizzes = (data?.quizzes ?? []).map(mapQuizRecordToQuiz);
 
   const count = (status: string) =>
     quizzes.filter((q) => q.status === status).length;

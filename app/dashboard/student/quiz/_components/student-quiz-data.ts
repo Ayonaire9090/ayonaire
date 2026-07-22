@@ -12,33 +12,25 @@ export interface StudentQuiz {
   status: string;
 }
 
-// Enrollment can only be verified when module.course is populated. If the
-// backend returns module as a bare id string, we can't confirm the student
-// is enrolled, so the quiz is excluded rather than shown unverified.
 export function isEnrolledQuiz(
   quiz: QuizRecord,
   enrolledCourseIds: Set<string>,
 ): boolean {
-  const moduleObj = typeof quiz.module === "object" ? quiz.module : undefined;
-  const courseId = moduleObj?.course?._id;
+  const courseId = quiz.course?._id;
   if (!courseId) return false;
   return enrolledCourseIds.has(courseId);
 }
 
-// marks/dueDate/status have no known backend source yet (no marks field on
-// QuizRecord, no due-date field, no per-student submission-status endpoint)
-// so they fall back to "-"/"Available" rather than guessed values.
+// "marks" (points earned) has no per-student source yet (no submission
+// status endpoint scoped to the current student) so it stays "-".
 export function mapQuizRecordToStudentQuiz(quiz: QuizRecord): StudentQuiz {
-  const moduleObj = typeof quiz.module === "object" ? quiz.module : undefined;
-  const course = moduleObj?.course?.title ?? "Uncategorized";
-
   return {
     id: quiz._id,
     title: quiz.title,
     type: "Quiz",
-    course,
+    course: quiz.course?.title ?? "Uncategorized",
     marks: "-",
-    dueDate: "-",
-    status: "Available",
+    dueDate: quiz.dueDate ? new Date(quiz.dueDate).toLocaleDateString() : "-",
+    status: quiz.status === "published" ? "Available" : "Draft",
   };
 }

@@ -4,14 +4,15 @@ import {
   CreateCategoryPayload,
   CreateCoursePayload,
   EditCoursePayload,
-  AssignInstructorCoursePayload
+  AssignInstructorCoursePayload,
+  GetCoursesParams,
 } from "@/lib/api/endpoints/courses";
 import { queryKeys } from "@/lib/api/query-keys";
 
-export const useGetCourses = (page?: number, limit?: number) => {
+export const useGetCourses = (params: GetCoursesParams = {}) => {
   return useQuery({
-    queryKey: [...queryKeys.courses.all, "list", { page, limit }] as const,
-    queryFn: () => coursesApi.getAll(page, limit),
+    queryKey: [...queryKeys.courses.all, "list", params] as const,
+    queryFn: () => coursesApi.getAll(params),
   });
 };
 
@@ -23,13 +24,19 @@ export const useGetCourseById = (courseId: string) => {
   });
 };
 
+export const useGetCourseCategories = () => {
+  return useQuery({
+    queryKey: [...queryKeys.courses.all, "categories"] as const,
+    queryFn: () => coursesApi.getCategories(),
+  });
+};
+
 export const useCreateCategoryMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: (payload: CreateCategoryPayload) => coursesApi.createCategory(payload),
     onSuccess: () => {
-      // Typically you'd invalidate a categories query if you had one
       queryClient.invalidateQueries({ queryKey: queryKeys.courses.all });
     },
   });
@@ -66,6 +73,29 @@ export const useAssignInstructorToCourseMutation = () => {
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: queryKeys.courses.all });
       queryClient.invalidateQueries({ queryKey: queryKeys.courses.detail(variables.courseId) });
+    },
+  });
+};
+
+export const useDeleteCourseMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (courseId: string) => coursesApi.deleteCourse(courseId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.courses.all });
+    },
+  });
+};
+
+export const useTogglePublishMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (courseId: string) => coursesApi.togglePublish(courseId),
+    onSuccess: (_, courseId) => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.courses.all });
+      queryClient.invalidateQueries({ queryKey: queryKeys.courses.detail(courseId) });
     },
   });
 };

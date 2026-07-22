@@ -13,18 +13,24 @@ export default async function AdminCoursesSettings() {
             title="Course Visibility"
             description="Course Visibility"
             type="toggle"
+            category="courses"
+            settingKey="courseVisibility"
             defaultChecked={true}
           />
           <SettingCard
             title="Course Content Access"
             description="Allow instructors and admins to view the course content without enrolling"
             type="toggle"
+            category="courses"
+            settingKey="courseContentAccess"
             defaultChecked={true}
           />
           <SettingCard
             title="Content Summary"
             description="Enabling this feature will show a course content summary on the Course Details page."
             type="toggle"
+            category="courses"
+            settingKey="contentSummary"
             defaultChecked={true}
           />
         </div>
@@ -38,12 +44,16 @@ export default async function AdminCoursesSettings() {
             title="WP Editor for Lesson"
             description="Enable classic editor to edit lesson."
             type="toggle"
+            category="courses"
+            settingKey="wpEditorForLesson"
             defaultChecked={true}
           />
           <SettingCard
             title="Video Lesson Completion Control"
             description="Enable to set the minimum video watch % for lesson completion, only works with Tutor Player."
             type="toggle"
+            category="courses"
+            settingKey="videoLessonCompletionControl"
             defaultChecked={true}
           />
         </div>
@@ -57,6 +67,8 @@ export default async function AdminCoursesSettings() {
             title="When time expires"
             description="Choose which action to follow when the quiz time expires."
             type="select"
+            category="courses"
+            settingKey="whenTimeExpires"
             defaultValue="Auto Submit"
             options={[
               {
@@ -73,6 +85,8 @@ export default async function AdminCoursesSettings() {
             title="Correct Answer Display Time (When Reveal Mode is enabled)"
             description="Put the answer display time in seconds"
             type="select"
+            category="courses"
+            settingKey="correctAnswerDisplayTimeWhenRevealModeIsEnabled"
             defaultValue="100s"
             options={[
               {
@@ -89,18 +103,24 @@ export default async function AdminCoursesSettings() {
             title="Show Quiz Previous Button"
             description="Choose whether to show or hide the previous button for each question."
             type="toggle"
+            category="courses"
+            settingKey="showQuizPreviousButton"
             defaultChecked={true}
           />
           <SettingCard
             title="Hide Quiz Details From Students"
             description="If enabled, the students will not be able to see their quiz attempts details"
             type="toggle"
+            category="courses"
+            settingKey="hideQuizDetailsFromStudents"
             defaultChecked={true}
           />
           <SettingCard
             title="Allow Instructors to Change Course Author"
             description="If enabled, instructors can change the course author for their courses."
             type="toggle"
+            category="courses"
+            settingKey="allowInstructorsToChangeCourseAuthor"
             defaultChecked={true}
           />
         </div>
@@ -114,6 +134,8 @@ export default async function AdminCoursesSettings() {
             title="Preferred Video Source"
             description="Select the video hosting platform(s) you want to enable."
             type="select"
+            category="courses"
+            settingKey="preferredVideoSource"
             defaultValue="External Url"
             options={[
               {
@@ -134,12 +156,16 @@ export default async function AdminCoursesSettings() {
             title="Use Tutor Player for YouTube"
             description="Enable this option to use Tutor LMS video player for YouTube."
             type="toggle"
+            category="courses"
+            settingKey="useTutorPlayerForYoutube"
             defaultChecked={true}
           />
           <SettingCard
             title="Use Tutor Player for Vimeo"
             description="Enable this option to use Tutor LMS video player for Vimeo."
             type="toggle"
+            category="courses"
+            settingKey="useTutorPlayerForVimeo"
             defaultChecked={true}
           />
         </div>

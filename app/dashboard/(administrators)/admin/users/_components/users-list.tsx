@@ -32,7 +32,7 @@ export const UsersList = ({ data, isInstructor }: UsersListProps) => {
                 <span className="font-medium text-[16px] text-gray-900 truncate">
                   {user.name}
                 </span>
-                <StatusBadge status={user.status} />
+                <StatusBadge status={user.status} userId={user.id} />
               </div>
               <div className="text-[14px] text-gray-500 truncate">
                 {user.uniqueId} <span className="mx-1.5 text-gray-400">•</span>{" "}
@@ -43,7 +43,7 @@ export const UsersList = ({ data, isInstructor }: UsersListProps) => {
               </div>
             </div>
             <div className="absolute right-1 top-1/2 -translate-y-1/2">
-              <UserActions />
+              <UserActions userId={user.id} />
             </div>
           </>
         )}

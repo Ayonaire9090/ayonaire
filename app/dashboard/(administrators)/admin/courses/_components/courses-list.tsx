@@ -19,7 +19,7 @@ export const CoursesList = () => {
   const [addCourseOpen, setAddCourseOpen] = React.useState(false);
 
   const { data, isLoading, isError } = useGetCourses();
-  const courses = (data?.data ?? []).map(mapCourseToCourseData);
+  const courses = (data?.courses ?? []).map(mapCourseToCourseData);
 
   return (
     <div className="md:hidden mt-2 bg-white rounded-xl p-2 lg:p-4 relative">
@@ -74,8 +74,8 @@ export const CoursesList = () => {
                 {course.courseId}
               </span>
               <div className="flex items-center gap-1 -mr-2">
-                <CourseStatusBadge status={course.status} />
-                <CourseActions showEdit={false} />
+                <CourseStatusBadge status={course.status} courseId={course.id} />
+                <CourseActions courseId={course.id} showEdit={false} />
               </div>
             </div>
 

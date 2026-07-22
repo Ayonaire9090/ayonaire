@@ -10,6 +10,7 @@ export interface InviteUsersPayload {
   emails: string[];
   cohortId?: string;
   courseId?: string;
+  role?: "user" | "instructor" | "admin";
 }
 
 export const invitesApi = {

@@ -29,6 +29,8 @@ export default async function AdminDesignSettings() {
             title="Column Per Row"
             description="Define how many columns you want to use to display courses."
             type="select"
+            category="design"
+            settingKey="columnPerRow"
             defaultValue="10 columns"
             options={[
               {
@@ -49,6 +51,8 @@ export default async function AdminDesignSettings() {
             title="Courses Per Page"
             description="Set the number of courses to display per page on the Course List page"
             type="select"
+            category="design"
+            settingKey="coursesPerPage"
             defaultValue="12 courses"
             options={[
               {
@@ -69,12 +73,16 @@ export default async function AdminDesignSettings() {
             title="Course Filter"
             description="Show sorting and filtering options on course archive page"
             type="toggle"
+            category="design"
+            settingKey="courseFilter"
             defaultChecked={true}
           />
           <SettingCard
             title="Course Sorting"
             description="If enabled, the courses will be sortable by Course Name or Creation Date in either Ascending or Descending order"
             type="toggle"
+            category="design"
+            settingKey="courseSorting"
             defaultChecked={true}
           />
         </div>
@@ -88,6 +96,8 @@ export default async function AdminDesignSettings() {
             title="Instructor List Layout"
             description="Choose a layout for the list of instructors inside a course page. You can change this at any time."
             type="select"
+            category="design"
+            settingKey="instructorListLayout"
             defaultValue="Grid Layout"
             options={[
               {
@@ -108,6 +118,8 @@ export default async function AdminDesignSettings() {
             title="Instructor Public Profile Layout"
             description="Choose a layout design for a instructor’s public profile"
             type="select"
+            category="design"
+            settingKey="instructorPublicProfileLayout"
             defaultValue="Grid Layout"
             options={[
               {
@@ -128,6 +140,8 @@ export default async function AdminDesignSettings() {
             title="Student Public Profile Layout"
             description="Choose a layout design for a student’s public profile"
             type="select"
+            category="design"
+            settingKey="studentPublicProfileLayout"
             defaultValue="Carousel Layout"
             options={[
               {
@@ -148,6 +162,8 @@ export default async function AdminDesignSettings() {
             title="Position of the Enrollment Box in Mobile View"
             description="You can decide where you want to show Enrollment Box on your Course Details page by selecting an option from here"
             type="select"
+            category="design"
+            settingKey="positionOfTheEnrollmentBoxInMobileView"
             defaultValue="On Page Bottom"
             options={[
               {
@@ -175,6 +191,8 @@ export default async function AdminDesignSettings() {
             title="Page Features"
             description="You can keep the following features active or inactive as per the need of your business model"
             type="toggle"
+            category="design"
+            settingKey="pageFeatures"
             defaultChecked={true}
           />
         </div>
@@ -188,6 +206,8 @@ export default async function AdminDesignSettings() {
             title="Preset Colors"
             description="These colors will be used throughout your website. Choose between these presets or create your own custom palette."
             type="select"
+            category="design"
+            settingKey="presetColors"
             defaultValue="Default"
             options={[
               {

@@ -14,6 +14,8 @@ export default async function AdminAdvancedSettings() {
             title="Basics"
             description="Admin + Instructor"
             type="select"
+            category="advanced"
+            settingKey="basics"
             defaultValue="General"
             options={[
               {
@@ -38,6 +40,8 @@ export default async function AdminAdvancedSettings() {
             title="Curriculum"
             description="Admin + Instructor"
             type="select"
+            category="advanced"
+            settingKey="curriculum"
             defaultValue="General"
             options={[
               {
@@ -62,6 +66,8 @@ export default async function AdminAdvancedSettings() {
             title="Additional"
             description="Admin + Instructor"
             type="select"
+            category="advanced"
+            settingKey="additional"
             defaultValue="General"
             options={[
               {
@@ -93,18 +99,24 @@ export default async function AdminAdvancedSettings() {
             title="Gutenberg Editor"
             description="Enable this to create courses using the Gutenberg Editor."
             type="toggle"
+            category="advanced"
+            settingKey="gutenbergEditor"
             defaultChecked={true}
           />
           <SettingCard
             title="Hide Course Products on Shop Page"
             description="Enable to hide course products on shop page."
             type="toggle"
+            category="advanced"
+            settingKey="hideCourseProductsOnShopPage"
             defaultChecked={true}
           />
           <SettingCard
             title="Course Archive Page"
             description="This page will be used to list all the published courses."
             type="select"
+            category="advanced"
+            settingKey="courseArchivePage"
             defaultValue="/courses/archive"
             options={[
               {
@@ -121,6 +133,8 @@ export default async function AdminAdvancedSettings() {
             title="Instructor Registration Page"
             description="Choose the page for instructor registration."
             type="select"
+            category="advanced"
+            settingKey="instructorRegistrationPage"
             defaultValue="/instructors/register"
             options={[
               {
@@ -141,6 +155,8 @@ export default async function AdminAdvancedSettings() {
             title="student Registration Page"
             description="Choose the page for student registration."
             type="select"
+            category="advanced"
+            settingKey="studentRegistrationPage"
             defaultValue="/students/register"
             options={[
               {
@@ -168,6 +184,8 @@ export default async function AdminAdvancedSettings() {
             title="Course Permalink"
             description="https://seo.ayonaire.com/courses/sample-course."
             type="select"
+            category="advanced"
+            settingKey="coursePermalink"
             defaultValue="/courses/course-slug"
             options={[
               {
@@ -192,6 +210,8 @@ export default async function AdminAdvancedSettings() {
             title="Lesson Permalink"
             description="https://seo.ayonaire.com/courses/sample-course/lessons/sample-lesson/"
             type="select"
+            category="advanced"
+            settingKey="lessonPermalink"
             defaultValue="/courses/course-slug/lessons/lesson-slug"
             options={[
               {
@@ -216,6 +236,8 @@ export default async function AdminAdvancedSettings() {
             title="Quiz Permalink"
             description="https://seo.ayonaire.com/courses/sample-course/quizzes/sample-quiz/"
             type="select"
+            category="advanced"
+            settingKey="quizPermalink"
             defaultValue="/courses/course-name/quizzes/quiz-name"
             options={[
               {
@@ -247,18 +269,24 @@ export default async function AdminAdvancedSettings() {
             title="Profile Completion"
             description="Enabling this feature will show a notification bar to students and instructors to complete their profile information"
             type="toggle"
+            category="advanced"
+            settingKey="profileCompletion"
             defaultChecked={true}
           />
           <SettingCard
             title="Enable Tutor LMS Login"
             description="Enable to use the Tutor LMS native login system instead of the WordPress login page"
             type="toggle"
+            category="advanced"
+            settingKey="enableTutorLmsLogin"
             defaultChecked={true}
           />
           <SettingCard
             title="Enable Email Update"
             description="Allow students and instructors to change their email directly from their profile"
             type="toggle"
+            category="advanced"
+            settingKey="enableEmailUpdate"
             defaultChecked={true}
           />
         </div>
@@ -274,12 +302,16 @@ export default async function AdminAdvancedSettings() {
             title="Prevent Hotlinking"
             description="Use hotlink protection for your self-hosted images and videos"
             type="toggle"
+            category="advanced"
+            settingKey="preventHotlinking"
             defaultChecked={true}
           />
           <SettingCard
             title="Copy Protection"
             description="Prevent right-click and copy actions on your website"
             type="toggle"
+            category="advanced"
+            settingKey="copyProtection"
             defaultChecked={true}
           />
         </div>
@@ -293,12 +325,16 @@ export default async function AdminAdvancedSettings() {
             title="Insert ChatGPT API Key"
             description="Find your Secret API key in your ChatGPT User settings and paste it here."
             type="toggle"
+            category="advanced"
+            settingKey="insertChatgptApiKey"
             defaultChecked={true}
           />
           <SettingCard
             title="Bubble Position"
             description="Set the ChatGPT bubble position"
             type="select"
+            category="advanced"
+            settingKey="bubblePosition"
             defaultValue="bottom-right"
             options={[
               {

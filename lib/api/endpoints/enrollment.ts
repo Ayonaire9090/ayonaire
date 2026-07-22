@@ -39,6 +39,18 @@ export interface EnrolledCourseDetail {
   enrolledAt: string;
 }
 
+export interface GetAllEnrollmentsParams {
+  course?: string;
+  status?: string;
+  page?: number;
+  limit?: number;
+}
+
+export interface EnrollStudentsPayload {
+  courseId: string;
+  studentIds: string[];
+}
+
 export const enrollmentApi = {
   getEnrolledCourses: () =>
     apiClient<ApiResponse<Enrollment[]>>("/api/v1/enrollment/enrolled-courses", {
@@ -60,4 +72,38 @@ export const enrollmentApi = {
         requireAuth: true,
       },
     ),
+
+  // Admin-only listing across all students/courses (restrictTo("admin") on
+  // the backend route).
+  getAllEnrollments: (params: GetAllEnrollmentsParams = {}) => {
+    const query = new URLSearchParams();
+    Object.entries(params).forEach(([key, value]) => {
+      if (value !== undefined) query.append(key, String(value));
+    });
+    const qs = query.toString() ? `?${query.toString()}` : "";
+    return apiClient<
+      ApiResponse & {
+        enrollments: Enrollment[];
+        pagination: { total: number; page: number; limit: number; totalPages: number };
+      }
+    >(`/api/v1/enrollment/admin/all${qs}`, { method: "GET", requireAuth: true });
+  },
+
+  enrollStudents: (payload: EnrollStudentsPayload) =>
+    apiClient<ApiResponse>("/api/v1/enrollment/admin/enroll", {
+      method: "POST",
+      body: JSON.stringify(payload),
+      requireAuth: true,
+    }),
+
+  enrollStudentsCsv: (courseId: string, file: File) => {
+    const formData = new FormData();
+    formData.append("courseId", courseId);
+    formData.append("file", file);
+    return apiClient<ApiResponse>("/api/v1/enrollment/admin/enroll-csv", {
+      method: "POST",
+      body: formData,
+      requireAuth: true,
+    });
+  },
 };

@@ -24,7 +24,7 @@ export const InstructorDashboardAssignedCourses = () => {
   const user = useAuthStore((state) => state.user);
   const { data, isLoading, isError } = useGetCourses();
 
-  const assignedCourses: AssignedCourse[] = (data?.data ?? [])
+  const assignedCourses: AssignedCourse[] = (data?.courses ?? [])
     .filter((course) => {
       const instructorId =
         typeof course.instructor === "string"
@@ -37,7 +37,7 @@ export const InstructorDashboardAssignedCourses = () => {
       id: course._id,
       title: course.title,
       status: toCardStatus(course.status),
-      studentsCount: course.enrollments?.length ?? 0,
+      studentsCount: course.enrollmentCount ?? 0,
     }));
 
   return (

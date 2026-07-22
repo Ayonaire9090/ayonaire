@@ -7,6 +7,7 @@ import {
   mapQuizRecordToInstructorQuiz,
 } from "./instructor-quiz-data";
 import { MoreVertical } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -15,7 +16,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useGetQuizzes } from "@/hooks/api/use-quiz";
+import { useGetQuizzes, useDeleteQuizMutation } from "@/hooks/api/use-quiz";
 import { useAuthStore } from "@/store/auth.store";
 
 const getPillColor = (questions: number) => {
@@ -28,9 +29,19 @@ const getPillColor = (questions: number) => {
 export const InstructorQuizList = () => {
   const user = useAuthStore((state) => state.user);
   const { data, isLoading, isError } = useGetQuizzes();
-  const quizzes = (data?.data ?? [])
+  const quizzes = (data?.quizzes ?? [])
     .filter((quiz) => isOwnQuiz(quiz, user?._id))
     .map(mapQuizRecordToInstructorQuiz);
+
+  const deleteQuiz = useDeleteQuizMutation();
+
+  const handleDelete = (quizId: string) => {
+    if (!window.confirm("Delete this quiz? This cannot be undone.")) return;
+    deleteQuiz.mutate(quizId, {
+      onSuccess: () => toast.success("Quiz deleted"),
+      onError: (err) => toast.error(err instanceof Error ? err.message : "Failed to delete quiz"),
+    });
+  };
 
   return (
     <div className="p-4 bg-white rounded-xl">
@@ -84,13 +95,22 @@ export const InstructorQuizList = () => {
                       align="end"
                       className="w-36 bg-[#F6F6F6] border border-gray-200 shadow-sm rounded-[16px] p-2 flex flex-col gap-1"
                     >
-                      <DropdownMenuItem className="text-[15px] text-gray-900 focus:bg-gray-200 cursor-pointer rounded-lg px-3 py-2">
+                      <DropdownMenuItem
+                        className="text-[15px] text-gray-900 focus:bg-gray-200 cursor-pointer rounded-lg px-3 py-2"
+                        onClick={() => toast.info("Editing an existing quiz isn't available yet.")}
+                      >
                         Edit
                       </DropdownMenuItem>
-                      <DropdownMenuItem className="text-[15px] text-gray-900 focus:bg-gray-200 cursor-pointer rounded-lg px-3 py-2">
+                      <DropdownMenuItem
+                        className="text-[15px] text-gray-900 focus:bg-gray-200 cursor-pointer rounded-lg px-3 py-2"
+                        onClick={() => handleDelete(item.id)}
+                      >
                         Delete
                       </DropdownMenuItem>
-                      <DropdownMenuItem className="text-[15px] text-gray-900 focus:bg-gray-200 cursor-pointer rounded-lg px-3 py-2">
+                      <DropdownMenuItem
+                        className="text-[15px] text-gray-900 focus:bg-gray-200 cursor-pointer rounded-lg px-3 py-2"
+                        onClick={() => toast.info("Quiz analytics view isn't available yet.")}
+                      >
                         Analytics
                       </DropdownMenuItem>
                     </DropdownMenuContent>

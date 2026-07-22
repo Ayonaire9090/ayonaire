@@ -1,5 +1,7 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import { DataTable, ColumnDef } from "@/components/ui/data-table";
 import { AppDropdown, AppDropdownItem } from "@/components/ui/app-dropdown";
 import { MoreVertical, Download } from "lucide-react";
@@ -8,11 +10,13 @@ import {
   getStatusColor,
   getProgressColor,
   useInstructorStudentRoster,
+  downloadStudentsCsv,
 } from "./instructor-student-data";
 import { Button } from "@/components/ui/button";
 
 export const InstructorStudentManagementTable = () => {
   const { students, isLoading, isError } = useInstructorStudentRoster();
+  const router = useRouter();
 
   const columns: ColumnDef<StudentData>[] = [
     {
@@ -85,9 +89,15 @@ export const InstructorStudentManagementTable = () => {
             </button>
           }
         >
-          <AppDropdownItem>View</AppDropdownItem>
-          <AppDropdownItem>Grade now</AppDropdownItem>
-          <AppDropdownItem>Download</AppDropdownItem>
+          <AppDropdownItem onClick={() => toast.info("Student profile detail view isn't available yet.")}>
+            View
+          </AppDropdownItem>
+          <AppDropdownItem onClick={() => toast.info("Grading view isn't available yet.")}>
+            Grade now
+          </AppDropdownItem>
+          <AppDropdownItem onClick={() => downloadStudentsCsv(`${item.name.replace(/\s+/g, "-")}.csv`, [item])}>
+            Download
+          </AppDropdownItem>
         </AppDropdown>
       ),
     },
@@ -95,15 +105,26 @@ export const InstructorStudentManagementTable = () => {
 
   const footerContent = (
     <div className="flex justify-between items-center w-full mt-2">
-      <Button variant="outline" className="border-gray-200 text-gray-500 shadow-none hover:bg-gray-50 h-12 px-4 rounded-xl font-medium">
+      <Button
+        variant="outline"
+        className="border-gray-200 text-gray-500 shadow-none hover:bg-gray-50 h-12 px-4 rounded-xl font-medium"
+        onClick={() => downloadStudentsCsv("students.csv", students)}
+      >
         <Download className="size-5" />
         <span className="hidden sm:inline">Export Students</span>
       </Button>
       <div className="flex items-center gap-3">
-        <Button variant="outline" className="border-gray-200 text-gray-500 shadow-none hover:bg-gray-50 h-12 px-5 rounded-xl font-medium">
+        <Button
+          variant="outline"
+          className="border-gray-200 text-gray-500 shadow-none hover:bg-gray-50 h-12 px-5 rounded-xl font-medium"
+          onClick={() => router.push("/dashboard/instructor/communication")}
+        >
           Send Announcement
         </Button>
-        <Button className="h-12 px-6 rounded-xl bg-[#FF5A1F] hover:bg-[#E04D19] text-white shadow-none border-none font-medium">
+        <Button
+          className="h-12 px-6 rounded-xl bg-[#FF5A1F] hover:bg-[#E04D19] text-white shadow-none border-none font-medium"
+          onClick={() => router.push("/dashboard/instructor/communication/messages")}
+        >
           Send Message
         </Button>
       </div>

@@ -6,11 +6,15 @@ import {
   GradingData,
   GradingStatusBadge,
   GradingActions,
-  mockGradingData,
+  mapSubmissionToGradingData,
 } from "./grading-data";
+import { useGetAllSubmissions } from "@/hooks/api/use-assignments";
 
 export const GradingTable = ({ searchQuery }: { searchQuery: string }) => {
-  const filteredData = mockGradingData.filter(
+  const { data } = useGetAllSubmissions();
+  const gradingData = (data?.submissions ?? []).map(mapSubmissionToGradingData);
+
+  const filteredData = gradingData.filter(
     (item) =>
       item.student.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.course.toLowerCase().includes(searchQuery.toLowerCase()) ||

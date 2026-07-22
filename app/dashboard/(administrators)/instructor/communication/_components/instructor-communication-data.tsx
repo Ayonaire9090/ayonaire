@@ -7,25 +7,29 @@ export interface CommunicationItem {
   description: string;
   course: string;
   dateCreated: string;
-  status: "Sent" | "Draft";
+  status: "Sent" | "Draft" | "Scheduled";
   views: number;
 }
 
-// Backend has no draft/scheduling state on an announcement once created -
-// every created announcement is treated as "Sent". "views" has no known
-// backend source yet (no analytics endpoint), so it falls back to 0.
 export function mapAnnouncementToCommunicationItem(
   announcement: Announcement,
 ): CommunicationItem {
+  const status =
+    announcement.status === "published"
+      ? "Sent"
+      : announcement.status === "scheduled"
+        ? "Scheduled"
+        : "Draft";
+
   return {
-    id: announcement._id,
+    id: announcement.id,
     title: announcement.title,
     description: announcement.summary,
-    course: announcement.courseId ?? "All Courses",
+    course: announcement.course ?? "All Courses",
     dateCreated: announcement.createdAt
       ? format(new Date(announcement.createdAt), "MMM d, yyyy")
       : "-",
-    status: "Sent",
-    views: 0,
+    status,
+    views: announcement.views,
   };
 }

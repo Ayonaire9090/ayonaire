@@ -2,9 +2,10 @@
 
 import React, { createContext, useContext, useState, ReactNode } from "react";
 import {
-  mockAttendanceReports,
   AttendanceReportData,
+  mapReportEntryToData,
 } from "./attendance-reports-data";
+import { useGetAttendanceReport } from "@/hooks/api/use-attendance";
 
 interface AttendanceReportsContextType {
   searchQuery: string;
@@ -40,18 +41,12 @@ export const AttendanceReportsProvider = ({
     });
   };
 
-  const filteredReports = mockAttendanceReports.filter((item) => {
-    // Search matching across multiple fields
+  const { data } = useGetAttendanceReport();
+  const reports = (data?.data ?? []).map(mapReportEntryToData);
+
+  const filteredReports = reports.filter((item) => {
     const query = searchQuery.toLowerCase();
-    const matchesSearch =
-      item.studentName.toLowerCase().includes(query) ||
-      item.courseName.toLowerCase().includes(query) ||
-      item.className.toLowerCase().includes(query) ||
-      item.instructor.toLowerCase().includes(query);
-
-    // If implementing actual filter logic per category, add it here based on selectedFilters matches
-
-    return matchesSearch;
+    return item.studentName.toLowerCase().includes(query);
   });
 
   return (

@@ -10,7 +10,7 @@ import { useGetAllPayments } from "@/hooks/api/use-payments";
 export const AdminPaymentsTable = () => {
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const { data, isLoading, isError } = useGetAllPayments();
-  const payments: Payment[] = (data?.data?.payments ?? []).map(
+  const payments: Payment[] = (data?.data?.data ?? []).map(
     mapPaymentRecordToPayment,
   );
 

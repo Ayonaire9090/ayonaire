@@ -1,8 +1,13 @@
+"use client";
+
 import { Edit, MoreVertical, Trash2 } from "lucide-react";
 import { AppDropdown, AppDropdownItem, AppDropdownSeparator } from "@/components/ui/app-dropdown";
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import { Course } from "@/lib/api/endpoints/courses";
+import { useTogglePublishMutation, useDeleteCourseMutation } from "@/hooks/api/use-courses";
 
 export type CourseStatus = "Active" | "Draft" | "Pending" | "Private";
 
@@ -17,19 +22,19 @@ export interface CourseData {
   enrollments: number;
 }
 
-// The real backend enum (confirmed 2026-07-14 against the live Swagger
-// spec) is only draft/published/archived - narrower than this UI's
-// existing Active/Draft/Pending/Private badge set. Mapped onto the closest
-// existing label rather than redesigning the badges: published -> Active,
-// archived -> Private. "Pending" has no real backend equivalent and will
-// never actually appear.
+// Verified directly against the backend's CourseStatus enum
+// (backend/src/types/course.types.ts): actual values are "Draft" | "Active"
+// | "Archived" (capitalized, no "Published"). Narrower than this UI's
+// existing Active/Draft/Pending/Private badge set, so mapped onto the
+// closest existing label: Archived -> Private. "Pending" has no real
+// backend equivalent and will never actually appear.
 function normalizeStatus(status?: string): CourseStatus {
   switch (status) {
-    case "published":
+    case "Active":
       return "Active";
-    case "archived":
+    case "Archived":
       return "Private";
-    case "draft":
+    case "Draft":
     default:
       return "Draft";
   }
@@ -54,11 +59,13 @@ export function mapCourseToCourseData(course: Course): CourseData {
     instructor,
     price: course.price ?? 0,
     status: normalizeStatus(course.status),
-    enrollments: course.enrollments?.length ?? 0,
+    enrollments: course.enrollmentCount ?? 0,
   };
 }
 
-export function CourseStatusBadge({ status }: { status: CourseStatus }) {
+export function CourseStatusBadge({ status, courseId }: { status: CourseStatus; courseId: string }) {
+  const togglePublish = useTogglePublishMutation();
+
   const getStyle = (s: CourseStatus) => {
     switch (s) {
       case "Active": return "bg-[#E6F6EC] text-[#24A164]";
@@ -69,6 +76,15 @@ export function CourseStatusBadge({ status }: { status: CourseStatus }) {
     }
   };
 
+  const handleToggle = () => {
+    togglePublish.mutate(courseId, {
+      onSuccess: () => toast.success(status === "Active" ? "Course unpublished" : "Course published"),
+      onError: (err) => toast.error(err instanceof Error ? err.message : "Failed to update course"),
+    });
+  };
+
+  // Only Draft/Active reflect the backend's real CourseStatus enum - the
+  // "Private" mapping (from Archived) has no toggle action defined yet.
   return (
     <AppDropdown
       variant="gray"
@@ -80,25 +96,56 @@ export function CourseStatusBadge({ status }: { status: CourseStatus }) {
         </button>
       }
     >
-      <AppDropdownItem variant="menu">Publish</AppDropdownItem>
-      <AppDropdownItem variant="menu">Pending</AppDropdownItem>
-      <AppDropdownItem variant="menu">Trash</AppDropdownItem>
-      <AppDropdownItem variant="menu">Draft</AppDropdownItem>
-      <AppDropdownItem variant="menu">Private</AppDropdownItem>
+      {status === "Active" ? (
+        <AppDropdownItem variant="menu" onClick={handleToggle}>Unpublish (set to Draft)</AppDropdownItem>
+      ) : (
+        <AppDropdownItem variant="menu" onClick={handleToggle}>Publish</AppDropdownItem>
+      )}
     </AppDropdown>
   );
 }
 
-export function CourseActions({ showEdit = true, showTrash = false }: { showEdit?: boolean; showTrash?: boolean }) {
+export function CourseActions({
+  courseId,
+  showEdit = true,
+  showTrash = false,
+}: {
+  courseId: string;
+  showEdit?: boolean;
+  showTrash?: boolean;
+}) {
+  const router = useRouter();
+  const deleteCourse = useDeleteCourseMutation();
+
+  const handleDelete = () => {
+    if (!window.confirm("Delete this course? This cannot be undone.")) return;
+    deleteCourse.mutate(courseId, {
+      onSuccess: () => toast.success("Course deleted"),
+      onError: (err) => toast.error(err instanceof Error ? err.message : "Failed to delete course"),
+    });
+  };
+
+  const viewCourse = () => router.push(`/dashboard/instructor/courses/${courseId}`);
+
   return (
     <div className="flex items-center gap-2 justify-end">
       {showEdit && (
-        <Button variant="outline" size="icon" className="h-8 w-8 rounded-lg border-gray-200 hover:bg-gray-100">
+        <Button
+          variant="outline"
+          size="icon"
+          className="h-8 w-8 rounded-lg border-gray-200 hover:bg-gray-100"
+          onClick={viewCourse}
+        >
           <Edit className="size-[15px] text-gray-600" />
         </Button>
       )}
       {showTrash ? (
-        <Button variant="outline" size="icon" className="h-8 w-8 rounded-lg border-gray-200 hover:bg-gray-100">
+        <Button
+          variant="outline"
+          size="icon"
+          className="h-8 w-8 rounded-lg border-gray-200 hover:bg-gray-100"
+          onClick={handleDelete}
+        >
           <Trash2 className="size-[15px] text-gray-600" />
         </Button>
       ) : (
@@ -111,13 +158,9 @@ export function CourseActions({ showEdit = true, showTrash = false }: { showEdit
             </Button>
           }
         >
-          <AppDropdownItem variant="menu">View Course</AppDropdownItem>
+          <AppDropdownItem variant="menu" onClick={viewCourse}>View Course</AppDropdownItem>
           <AppDropdownSeparator />
-          <AppDropdownItem variant="menu">Duplicate</AppDropdownItem>
-          <AppDropdownSeparator />
-          <AppDropdownItem variant="menu">Publish</AppDropdownItem>
-          <AppDropdownSeparator />
-          <AppDropdownItem variant="danger-menu">Delete Course</AppDropdownItem>
+          <AppDropdownItem variant="danger-menu" onClick={handleDelete}>Delete Course</AppDropdownItem>
         </AppDropdown>
       )}
     </div>

@@ -1,5 +1,5 @@
 import localFont from "next/font/local";
-import { Spectral_SC } from "next/font/google";
+import { Spectral_SC, Bai_Jamjuree } from "next/font/google";
 
 export const satoshi = localFont({
   src: [
@@ -49,6 +49,13 @@ export const spectralSC = Spectral_SC({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-spectral-sc",
+  display: "swap",
+});
+
+export const baiJamjuree = Bai_Jamjuree({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-bai-jamjuree",
   display: "swap",
 });
 

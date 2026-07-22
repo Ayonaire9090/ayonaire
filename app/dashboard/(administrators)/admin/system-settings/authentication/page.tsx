@@ -15,6 +15,8 @@ export default async function AdminAuthenticationSettings() {
             title="Enable 2FA"
             description=""
             type="toggle"
+            category="authentication"
+            settingKey="enable2fa"
             defaultChecked={true}
           />
         </div>
@@ -29,6 +31,8 @@ export default async function AdminAuthenticationSettings() {
             title="Enable Fraud Protection"
             description=""
             type="toggle"
+            category="authentication"
+            settingKey="enableFraudProtection"
             defaultChecked={true}
           />
         </div>
@@ -43,6 +47,8 @@ export default async function AdminAuthenticationSettings() {
             title="Limit Active Login Sessions"
             description="Toggle to limit the number of active login sessions for a concurrent user login"
             type="toggle"
+            category="authentication"
+            settingKey="limitActiveLoginSessions"
             defaultChecked={true}
           />
         </div>
@@ -57,6 +63,8 @@ export default async function AdminAuthenticationSettings() {
             title="Enable"
             description="Toggle to enable email verification for students and instructor signup"
             type="toggle"
+            category="authentication"
+            settingKey="enable"
             defaultChecked={true}
           />
         </div>

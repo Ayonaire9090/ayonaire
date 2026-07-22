@@ -53,9 +53,11 @@ export const queryKeys = {
     resumeLast: (courseId: string) => [...queryKeys.lessons.all, "resume-last", courseId] as const,
     content: (lessonId: string) => [...queryKeys.lessons.all, "content", lessonId] as const,
     courseContent: (courseId: string) => [...queryKeys.lessons.all, "course-content", courseId] as const,
+    instructorCourseContent: (courseId: string) => [...queryKeys.lessons.all, "instructor-course-content", courseId] as const,
   },
   modules: {
     all: ["modules"] as const,
+    forCourse: (courseId: string) => ["modules", "course", courseId] as const,
   },
   quiz: {
     all: ["quiz"] as const,
@@ -73,6 +75,12 @@ export const queryKeys = {
     all: ["payments"] as const,
     list: (params?: Record<string, any>) => [...queryKeys.payments.all, "list", params] as const,
     detail: (id: string) => [...queryKeys.payments.all, "detail", id] as const,
+    analytics: () => [...queryKeys.payments.all, "analytics"] as const,
+    studentPurchases: (params?: Record<string, any>) =>
+      [...queryKeys.payments.all, "student-purchases", params] as const,
+    gateways: () => [...queryKeys.payments.all, "gateways"] as const,
+    pricingPlans: (params?: Record<string, any>) =>
+      [...queryKeys.payments.all, "pricing-plans", params] as const,
   },
 };
 

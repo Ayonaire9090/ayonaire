@@ -43,6 +43,28 @@ export const useDeactivateUserMutation = () => {
   });
 };
 
+export const useActivateUserMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (id: string) => adminApi.activateUser(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.admin.users() });
+    },
+  });
+};
+
+export const useDeleteUserMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (id: string) => adminApi.deleteUser(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.admin.users() });
+    },
+  });
+};
+
 export const useAssignRoleMutation = () => {
   const queryClient = useQueryClient();
 

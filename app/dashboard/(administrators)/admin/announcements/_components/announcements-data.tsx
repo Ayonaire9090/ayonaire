@@ -1,8 +1,12 @@
+"use client";
+
 import { Edit, MoreVertical, Trash2, ChevronDown } from "lucide-react";
 import { format } from "date-fns";
+import { toast } from "sonner";
 import { AppDropdown, AppDropdownItem, AppDropdownSeparator } from "@/components/ui/app-dropdown";
 import { Button } from "@/components/ui/button";
 import { Announcement } from "@/lib/api/endpoints/announcements";
+import { useUpdateAnnouncementMutation, useDeleteAnnouncementMutation } from "@/hooks/api/use-announcements";
 
 export type AnnouncementStatus = "Published" | "Draft" | "Scheduled";
 
@@ -16,46 +20,41 @@ export interface AnnouncementData {
   status: AnnouncementStatus;
 }
 
-// Confirmed 2026-07-14 against the live Swagger spec: Announcement has no
-// status field at all - there's no draft/scheduled concept on the backend,
-// every created announcement is immediately live. Always "Published".
-function normalizeStatus(): AnnouncementStatus {
-  return "Published";
+function toDisplayStatus(status: Announcement["status"]): AnnouncementStatus {
+  switch (status) {
+    case "published": return "Published";
+    case "scheduled": return "Scheduled";
+    case "draft": default: return "Draft";
+  }
 }
 
-// Audience isn't returned directly by the backend - derive a display label
-// from whichever targeting field is present. courseId/cohortId are plain ID
-// strings per the confirmed schema (no populated title available).
-function deriveAudience(announcement: Announcement): string {
-  if (announcement.students && announcement.students.length > 0) {
-    return "Specific Users";
+function toBackendStatus(status: AnnouncementStatus): Announcement["status"] {
+  switch (status) {
+    case "Published": return "published";
+    case "Scheduled": return "scheduled";
+    case "Draft": default: return "draft";
   }
-  if (announcement.cohortId) {
-    return "Specific Group";
-  }
-  if (announcement.courseId) {
-    return "Course Students";
-  }
-  return "All Students";
 }
 
 export function mapAnnouncementToAnnouncementData(
   announcement: Announcement,
 ): AnnouncementData {
   return {
-    id: announcement._id,
+    id: announcement.id,
     title: announcement.title,
-    course: announcement.courseId ?? "All Courses",
-    audience: deriveAudience(announcement),
+    course: announcement.course ?? "All Courses",
+    audience: announcement.audience,
     date: announcement.createdAt
       ? format(new Date(announcement.createdAt), "d MMM")
       : "-",
     createdAt: announcement.createdAt ?? null,
-    status: normalizeStatus(),
+    status: toDisplayStatus(announcement.status),
   };
 }
 
-export function AnnouncementStatusBadge({ status }: { status: AnnouncementStatus }) {
+export function AnnouncementStatusBadge({ status, announcementId }: { status: AnnouncementStatus; announcementId: string }) {
+  const updateAnnouncement = useUpdateAnnouncementMutation();
+
   const getStyle = (s: AnnouncementStatus) => {
     switch (s) {
       case "Published": return "bg-[#E6F6EC] text-[#24A164]";
@@ -63,6 +62,16 @@ export function AnnouncementStatusBadge({ status }: { status: AnnouncementStatus
       case "Draft": return "bg-[#FFF5F2] text-[#FF7A59]";
       default: return "bg-gray-100 text-gray-800";
     }
+  };
+
+  const setStatus = (next: AnnouncementStatus) => {
+    updateAnnouncement.mutate(
+      { announcementId, status: toBackendStatus(next) },
+      {
+        onSuccess: () => toast.success(`Announcement marked ${next.toLowerCase()}`),
+        onError: (err) => toast.error(err instanceof Error ? err.message : "Failed to update status"),
+      },
+    );
   };
 
   return (
@@ -76,15 +85,25 @@ export function AnnouncementStatusBadge({ status }: { status: AnnouncementStatus
         </button>
       }
     >
-      <AppDropdownItem variant="menu">Publish</AppDropdownItem>
-      <AppDropdownItem variant="menu">Schedule</AppDropdownItem>
+      <AppDropdownItem variant="menu" onClick={() => setStatus("Published")}>Publish</AppDropdownItem>
+      <AppDropdownItem variant="menu" onClick={() => setStatus("Scheduled")}>Schedule</AppDropdownItem>
       <AppDropdownSeparator />
-      <AppDropdownItem variant="menu">Draft</AppDropdownItem>
+      <AppDropdownItem variant="menu" onClick={() => setStatus("Draft")}>Draft</AppDropdownItem>
     </AppDropdown>
   );
 }
 
-export function AnnouncementActions() {
+export function AnnouncementActions({ announcementId }: { announcementId: string }) {
+  const deleteAnnouncement = useDeleteAnnouncementMutation();
+
+  const handleDelete = () => {
+    if (!window.confirm("Delete this announcement? This cannot be undone.")) return;
+    deleteAnnouncement.mutate(announcementId, {
+      onSuccess: () => toast.success("Announcement deleted"),
+      onError: (err) => toast.error(err instanceof Error ? err.message : "Failed to delete announcement"),
+    });
+  };
+
   return (
     <div className="flex items-center gap-2 justify-end">
       <AppDropdown
@@ -96,10 +115,14 @@ export function AnnouncementActions() {
           </Button>
         }
       >
-        <AppDropdownItem variant="menu">View Details</AppDropdownItem>
-        <AppDropdownItem variant="menu">Edit</AppDropdownItem>
+        <AppDropdownItem variant="menu" onClick={() => toast.info("Announcement detail view isn't available yet.")}>
+          View Details
+        </AppDropdownItem>
+        <AppDropdownItem variant="menu" onClick={() => toast.info("Editing an announcement isn't available yet.")}>
+          Edit
+        </AppDropdownItem>
         <AppDropdownSeparator />
-        <AppDropdownItem variant="danger-menu">Delete</AppDropdownItem>
+        <AppDropdownItem variant="danger-menu" onClick={handleDelete}>Delete</AppDropdownItem>
       </AppDropdown>
     </div>
   );

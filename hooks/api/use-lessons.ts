@@ -70,3 +70,11 @@ export const useCourseContent = (courseId: string) => {
     enabled: !!courseId,
   });
 };
+
+export const useInstructorCourseContent = (courseId: string) => {
+  return useQuery({
+    queryKey: queryKeys.lessons.instructorCourseContent(courseId),
+    queryFn: () => lessonsApi.getInstructorCourseContent(courseId),
+    enabled: !!courseId,
+  });
+};

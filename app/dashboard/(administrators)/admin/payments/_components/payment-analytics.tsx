@@ -7,39 +7,32 @@ import {
 } from "@/components/ui/carousel";
 import { DollarSign, Users2, Wallet } from "lucide-react";
 import { PaymentAnalyticsCard } from "./payment-analytics-card";
-import { useGetAllPayments } from "@/hooks/api/use-payments";
+import { useGetPaymentAnalytics } from "@/hooks/api/use-payments";
 
 export const PaymentAnalytics = () => {
-  const { data } = useGetAllPayments();
-  const payments = data?.data?.payments ?? [];
+  const { data } = useGetPaymentAnalytics();
+  const analytics = data?.data;
 
-  const totalRevenue = payments
-    .filter((p) => p.status === "successful")
-    .reduce((sum, p) => sum + (p.amount ?? 0), 0);
-
-  // Instructor Payouts / Platform Fees have no known backend source yet (no
-  // payout-split or fee-percentage field on a Payment), so they fall back
-  // to "-" rather than guessed numbers.
   const BasicAnalytics = [
     {
       heading: "Total Revenue",
-      title: `NGN ${totalRevenue.toLocaleString()}`,
+      title: `NGN ${(analytics?.totalRevenue ?? 0).toLocaleString()}`,
       icon: DollarSign,
       rate: "",
       description: "",
     },
     {
       heading: "Instructor Payouts",
-      title: "-",
+      title: `NGN ${(analytics?.instructorPayouts ?? 0).toLocaleString()}`,
       icon: Users2,
       rate: "",
       description: "",
     },
     {
       heading: "Platform Fees",
-      title: "-",
+      title: `NGN ${(analytics?.platformFees ?? 0).toLocaleString()}`,
       icon: Wallet,
-      rate: "",
+      rate: analytics ? `${analytics.platformFeePercent}%` : "",
       description: "",
     },
   ];

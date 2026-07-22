@@ -6,10 +6,10 @@ import { useAttendanceReportsContext } from "./attendance-reports-context";
 import {
   AttendanceReportData,
   getProgressColor,
+  ReportStatusBadge,
 } from "./attendance-reports-data";
 import { MoreVertical } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { AttendanceStatusBadge } from "../../list/_components/attendance-data";
 
 export const AttendanceReportsList = () => {
   const { filteredReports } = useAttendanceReportsContext();
@@ -63,7 +63,7 @@ export const AttendanceReportsList = () => {
 
         {/* Right side Actions */}
         <div className="flex items-center gap-2 shrink-0 pl-2">
-          <AttendanceStatusBadge status={item.status} />
+          <ReportStatusBadge status={item.status} />
           <div className="-mr-2">
             <Button
               variant="ghost"
