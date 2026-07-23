@@ -1,3 +1,5 @@
+
+
 import React from 'react';
 import { Metadata } from 'next';
 import { generateSEO } from '@/lib/seo';
@@ -6,6 +8,8 @@ import Testimonials from './Testimonials';
 import WhatYoullLearn from './WhatYoullLearn';
 import WhoIsTeaching from './WhoIsTeaching';
 import WhoThisIsFor from './WhoThisIsFor';
+import RegisterBand from './RegisterBand';
+import HiringGameChanged from './HiringGameChanged';
 import FinalCTA from './FinalCTA';
 import { Footer } from '@/components/layout/footer';
 
@@ -23,9 +27,11 @@ const DataAnalyticsMasterclass = () => {
     <main>
       <Hero />
       <WhatYoullLearn />
-      <WhoIsTeaching />
       <WhoThisIsFor />
       <Testimonials />
+      <WhoIsTeaching />
+      <RegisterBand />
+      <HiringGameChanged />
       <FinalCTA />
       <Footer />
     </main>

@@ -1,7 +1,35 @@
 "use client";
 import { useState } from "react";
+import { Video, Calendar, Clock, Wallet } from "lucide-react";
 import RegistrationModal from "./RegistrationModal";
 import { baiJamjuree } from "@/app/fonts";
+
+const sessionDetails = [
+  {
+    icon: Video,
+    label: "Venue",
+    value: "YouTube Live",
+    sub: "@Ayonaire Academy",
+  },
+  {
+    icon: Calendar,
+    label: "Date",
+    value: "15th August, 2026",
+    sub: "Saturday",
+  },
+  {
+    icon: Clock,
+    label: "Time",
+    value: "7PM WAT",
+    sub: "GMT +1",
+  },
+  {
+    icon: Wallet,
+    label: "Fee",
+    value: "100% Free",
+    sub: "Limited Access",
+  },
+];
 
 export default function FinalCTA() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -20,7 +48,7 @@ export default function FinalCTA() {
 
           <div className="relative z-10 flex flex-col items-center font-sans">
             <h2 className={`${baiJamjuree.className} text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight mb-3`}>
-              Get Instant Access
+              Get Instant <span className="text-[#F67219]">Access</span>
             </h2>
 
             <p className="max-w-2xl text-[15px] sm:text-lg font-medium text-white/95 tracking-wide mb-6">
@@ -43,6 +71,35 @@ export default function FinalCTA() {
           </div>
         </div>
       </section>
+
+      <section className="w-full px-6 pb-16 sm:px-8 lg:px-12 flex justify-center">
+        <div className="w-full max-w-6xl">
+          <h3 className={`${baiJamjuree.className} mb-8 text-center text-3xl sm:text-4xl font-bold text-[#121315]`}>
+            Live Session Details
+          </h3>
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+            {sessionDetails.map((detail) => {
+              const Icon = detail.icon;
+              return (
+                <div
+                  key={detail.label}
+                  className="flex flex-col items-center gap-3 rounded-xl bg-[#F67219]/10 p-6 text-center"
+                >
+                  <span className="flex h-[60px] w-[60px] items-center justify-center rounded-xl bg-[#F67219]/10">
+                    <Icon size={30} strokeWidth={1.75} className="text-[#F67219]" />
+                  </span>
+                  <span className="text-sm text-gray-500">{detail.label}</span>
+                  <div>
+                    <p className="text-lg sm:text-xl font-bold text-black">{detail.value}</p>
+                    <p className="text-sm sm:text-base text-[#F67219]">{detail.sub}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
       <RegistrationModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
     </>
   );

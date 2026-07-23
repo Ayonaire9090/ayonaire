@@ -15,9 +15,11 @@ import {
 const speakers = [
   {
     name: 'Dr. Gospel Iyioku',
-    role: 'Senior Data Analyst & Hiring Executive, McKinsey & Company',
+    role: 'Senior Data Analyst at McKinsey',
     photo: '/tutors/WhatsApp%20Image%202026-07-21%20at%2008.54.23.jpeg',
     color: '#F67219',
+    cardBio:
+      'A Senior Data Analyst & Hiring Executive at McKinsey & Company. Went from Agricultural Science to Data Analysis with zero tech background — now interviews DA candidates in Europe himself.',
     bio: "Transitioned from Agricultural Science into Data Analysis with zero tech background, and now sits on the other side of the table interviewing candidates for DA roles in Europe. He has over four years of experience applying advanced analytics and AI-driven insights to complex organizational challenges.",
     revealLabel: 'He will show you:',
     reveals: [
@@ -29,9 +31,11 @@ const speakers = [
   },
   {
     name: 'Muhammad Jamilu',
-    role: 'Remote Data Analyst for International Companies',
+    role: 'Remote Data Analyst',
     photo: '/tutors/Jameel.png',
     color: '#3B6FF2',
+    cardBio:
+      'Nigeria-based Data Analyst working remotely for international companies — proof you can land global DA roles without relocating.',
     bio: 'Based in Nigeria but working remotely for international companies — living proof that you can land Data Analyst roles in international companies without relocating. With over seven years of experience turning sales and business data into clear, decision-ready insights, he specializes in SQL, Power BI, Excel, and statistical analysis (SPSS, STATA), building dashboards and forecasting models that guide budgeting and growth decisions. He is also an online instructor on Udemy, among others.',
     revealLabel: 'He will show you:',
     reveals: [
@@ -43,9 +47,11 @@ const speakers = [
   },
   {
     name: 'Oluwapelumi',
-    role: 'Data Analyst, formerly Biochemistry',
+    role: 'Data Analyst',
     photo: '/tutors/oluwapelumi.jpeg',
     color: '#2F8F6B',
+    cardBio:
+      'A Data Analyst who transitioned into tech from a Biochemistry background — living proof that your background cannot stop you if you do not stop yourself.',
     bio: 'Transitioned into tech from a Biochemistry background — living proof that your background cannot stop you if you do not stop yourself.',
     revealLabel: 'She will reveal:',
     reveals: [
@@ -62,8 +68,8 @@ function TutorCard({ speaker }: { speaker: Speaker }) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button className="group flex w-full flex-col overflow-hidden rounded-2xl border-2 border-gray-200 bg-white text-left shadow-sm transition-shadow hover:shadow-lg focus:outline-none">
-          <div className="relative aspect-[4/3] w-full overflow-hidden bg-gradient-to-b from-gray-100 to-gray-200">
+        <button className="group flex w-full flex-col items-center overflow-hidden rounded-2xl bg-white p-6 text-center shadow-[0_4px_14.5px_rgba(0,0,0,0.09)] transition-shadow hover:shadow-lg focus:outline-none">
+          <div className="relative aspect-square w-full max-w-[260px] overflow-hidden rounded-[32px] bg-[#F97316]">
             <Image
               src={speaker.photo}
               alt={speaker.name}
@@ -80,11 +86,12 @@ function TutorCard({ speaker }: { speaker: Speaker }) {
             </div>
           </div>
 
-          <div className="p-5">
-            <p className={`${baiJamjuree.className} text-lg font-bold text-[#121315]`}>
+          <div className="mt-4">
+            <p className={`${baiJamjuree.className} text-lg font-semibold tracking-tight text-[#121315]`}>
               {speaker.name}
             </p>
-            <p className="mt-1 text-sm text-gray-500 leading-snug">{speaker.role}</p>
+            <p className="mt-1 text-sm font-medium" style={{ color: speaker.color }}>{speaker.role}</p>
+            <p className="mt-3 text-[13px] leading-relaxed text-[#575E70]">{speaker.cardBio}</p>
           </div>
         </button>
       </DialogTrigger>
@@ -193,7 +200,7 @@ export default function WhoIsTeaching() {
       <div className="mx-auto max-w-5xl w-full">
         <div className="text-center mb-12">
           <h2 className={`${baiJamjuree.className} text-2xl sm:text-3xl md:text-4xl font-bold text-[#121315]`}>
-            Who's Teaching You
+            Meet Your <span className="text-[#F67219]">Instructors</span>
           </h2>
           <p className={`${baiJamjuree.className} mt-2 text-gray-500`}>Real practitioners, not just theorists.</p>
         </div>

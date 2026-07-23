@@ -58,7 +58,7 @@ export default function Testimonials() {
     <section id="reviews" className="w-full bg-white py-16 sm:py-24 scroll-mt-24">
       <div className="mx-auto max-w-2xl w-full text-center mb-10 px-4">
         <h2 className={`${baiJamjuree.className} text-2xl sm:text-3xl md:text-4xl font-bold text-[#121315]`}>
-          Real Feedback From Students Who Attended Our Last Session
+          <span className="text-[#F67219]">Real Feedbacks</span> From Students Who Attended Our Last Session
         </h2>
       </div>
 
