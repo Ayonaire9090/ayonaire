@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 
 const studentFooterNav = [
-  { title: "Feed", url: "/dashboard/student", icon: LayoutTemplate },
+  { title: "Feed", url: "/dashboard/student/feed", icon: LayoutTemplate },
   { title: "Workshop", url: "/dashboard/student/workshop", icon: Video },
   {
     title: "Job Fair",
