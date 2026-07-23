@@ -7,9 +7,62 @@ export interface RequestOptions extends RequestInit {
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "";
 
-export async function apiClient<T>(
+// Dedupe concurrent 401s during the same expired-token window into a single
+// refresh call, instead of every in-flight request firing its own.
+let refreshPromise: Promise<string | null> | null = null;
+
+async function refreshAccessToken(): Promise<string | null> {
+  if (refreshPromise) return refreshPromise;
+
+  refreshPromise = (async () => {
+    const { refreshToken, user, setAuth, clearAuth } = useAuthStore.getState();
+    if (!refreshToken) {
+      clearAuth();
+      return null;
+    }
+
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/v1/auth/refresh-token`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ refreshToken }),
+      });
+
+      if (!res.ok) {
+        clearAuth();
+        return null;
+      }
+
+      const json = await res.json();
+      const data = json.data ?? json;
+      const newToken: string | undefined = data.accessToken || data.token;
+      const newRefreshToken: string | undefined = data.refreshToken;
+      const newUser = data.user ?? user;
+
+      if (!newToken || !newUser) {
+        clearAuth();
+        return null;
+      }
+
+      setAuth(newToken, newUser, newRefreshToken ?? refreshToken);
+      return newToken;
+    } catch {
+      clearAuth();
+      return null;
+    }
+  })();
+
+  try {
+    return await refreshPromise;
+  } finally {
+    refreshPromise = null;
+  }
+}
+
+async function performRequest<T>(
   endpoint: string,
-  options: RequestOptions = {},
+  options: RequestOptions,
+  isRetry: boolean,
 ): Promise<T> {
   const {
     token: overrideToken,
@@ -62,16 +115,23 @@ export async function apiClient<T>(
       errorMessage = response.statusText || errorMessage;
     }
 
-    // Handle 401 Unauthorized generically
     if (response.status === 401) {
-      // Optional: Clear auth state
-      useAuthStore.getState().clearAuth();
+      // Only a request that was actually authenticated is a candidate for
+      // "your session expired" - a public/unauthenticated call 401ing for
+      // its own reasons shouldn't nuke an unrelated active session.
+      const wasAuthedRequest = requireAuth || !!token;
 
-      // Optionally: Reload Window or redirect: Commented for now
-      // if (typeof window !== "undefined") {
-      //   window.location.reload(); // refresh for now
-      //   // window.location.href = "/auth"; // Or wherever your login page is
-      // }
+      if (wasAuthedRequest && !isRetry) {
+        const newToken = await refreshAccessToken();
+        if (newToken) {
+          return performRequest<T>(endpoint, options, true);
+        }
+        // refreshAccessToken() already cleared auth on failure.
+      } else if (wasAuthedRequest && isRetry) {
+        // Retried with a freshly-refreshed token and still got 401 - the
+        // session is genuinely dead, not just a stale access token.
+        useAuthStore.getState().clearAuth();
+      }
     }
 
     const error: any = new Error(errorMessage);
@@ -81,4 +141,11 @@ export async function apiClient<T>(
   }
 
   return response.json();
+}
+
+export function apiClient<T>(
+  endpoint: string,
+  options: RequestOptions = {},
+): Promise<T> {
+  return performRequest<T>(endpoint, options, false);
 }
