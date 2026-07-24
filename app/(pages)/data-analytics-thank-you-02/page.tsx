@@ -1,14 +1,11 @@
 import React from "react";
 import Image from "next/image";
-import { AppHeading } from "@/components/app-heading";
-import { AppSectionButton } from "@/components/app-section-button";
-import { AppActionButton } from "@/components/app-action-button";
-import { ArrowRight } from "lucide-react";
 import { Footer } from "@/components/layout/footer";
 import { generateSEO } from "@/lib/seo";
 import { Metadata } from "next";
-import { IconBrandWhatsapp } from "@tabler/icons-react";
 import { AppConfetti } from "@/components/app-confetti";
+import { baiJamjuree } from "@/app/fonts";
+import { CtaButton } from "./_components/CtaButton";
 
 const WHATSAPP_LINK = "https://chat.whatsapp.com/ILzKk6IHvKSGEvPqEYshTT?mode=gi_t";
 
@@ -25,154 +22,169 @@ export const metadata: Metadata = generateSEO({
 export default function DataAnalyticsThankYou() {
   return (
     <>
-      {/* Hero Decoration */}
-      <div className="absolute bg-[linear-gradient(178.47deg,#FFAC74_1.3%,#FFFFFF_45.22%)] inset-0 min-h-[872px] h-screen" />
+      {/* ===== Hero ===== */}
+      <section className="relative overflow-hidden">
+        {/* Peach wash base */}
+        <div
+          className="pointer-events-none absolute inset-0"
+          aria-hidden="true"
+          style={{
+            background:
+              "linear-gradient(180deg, #FBE7DA 0%, #FDF0E7 55%, #FEF7F2 100%)",
+          }}
+        />
+        {/* Soft vertical bars */}
+        <div
+          className="pointer-events-none absolute inset-0"
+          aria-hidden="true"
+          style={{
+            backgroundImage:
+              "repeating-linear-gradient(90deg, rgba(248,100,50,0.10) 0px, rgba(248,100,50,0.01) 34px, rgba(248,100,50,0.01) 56px, rgba(248,100,50,0.10) 90px)",
+          }}
+        />
+        {/* Center glow behind content */}
+        <div
+          className="pointer-events-none absolute inset-0"
+          aria-hidden="true"
+          style={{
+            background:
+              "radial-gradient(55% 70% at 50% 48%, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0) 100%)",
+          }}
+        />
 
-      <div className="container relative z-10 flex flex-col justify-center items-center py-16 overflow-hidden">
-        {/* Confetti */}
-        <AppConfetti />
-        {/* Logo */}
-        <div className="mb-10">
+        <div className="container relative z-10 flex flex-col items-center justify-center py-12 md:h-[614px] md:py-0">
+          {/* Confetti */}
+          <AppConfetti />
+
+          {/* Party popper */}
           <Image
-            src="/assets/logos/full-logo-dark.svg"
-            alt="Ayonaire Logo"
-            width={158}
-            height={39}
+            src="/assets/icons/party-popper.svg"
+            alt=""
+            width={140}
+            height={140}
+            priority
+            className="h-[120px] w-[120px] object-contain md:h-[140px] md:w-[140px]"
           />
-        </div>
 
-        {/* Thank You Icon */}
-        <div className="mb-8">
-          <Image
-            src="/assets/icons/thank-you-icon.svg"
-            alt="Thank You"
-            width={133}
-            height={138}
-            className="object-contain"
-          />
-        </div>
-
-        {/* Section Button */}
-        <div className="mb-8">
-          <AppSectionButton
-            title="Registration Successful"
-            className="shadow-md"
-          />
-        </div>
-
-        {/* Heading and Description */}
-        <div className="text-center max-w-4xl">
-          <p className="text-sm md:text-base font-semibold uppercase tracking-[0.15em] text-[#F25E25] mb-3">
-            You're One Step Away!
-          </p>
-          <AppHeading
-            title="Congratulations, Your Registration Is Successful."
-            description="But your next step is IMPORTANT!"
-            descriptionClassName="text-gray-600 text-base md:text-lg font-semibold pt-3"
-            headingLevel="h1"
-          />
-        </div>
-      </div>
-
-      {/* What Happens Next Section */}
-      <section className="relative z-10 pl-6 md:pl-16 pb-12">
-        <div className="flex items-center justify-between">
-          {/* Left Content */}
-          <div className="max-w-lg">
-            <AppHeading
-              title="What Happens Next?"
-              headingLevel="h2"
-              className="mb-4"
-              description="Click the button below to join the community to get the masterclass link & updates."
-              descriptionClassName="pt-0 pb-3 text-gray-600 text-base md:text-lg"
-            />
-
-            <a
-              href={WHATSAPP_LINK}
-              target="_blank"
-              rel="noopener noreferrer"
+          {/* Badge */}
+          <span className="mt-8 inline-flex items-center gap-2 rounded-full border border-[#F67219]/30 bg-[#FFF3EA] px-4 py-1.5 text-sm font-medium text-[#F67721] shadow-sm">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#F67721"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
             >
-              <AppActionButton className="group">
-                <p>TAKE ME TO THE COMMUNITY NOW!</p>
-                <span className="bg-white p-1 lg:p-2 rounded-lg group-hover:ml-2 transition-all ease-in-out duration-300">
-                  <ArrowRight
-                    size={25}
-                    className="text-primary rounded block group-hover:hidden"
-                  />
-                  <IconBrandWhatsapp
-                    size={25}
-                    className="text-primary rounded hidden group-hover:block"
-                  />
-                </span>
-              </AppActionButton>
-            </a>
-          </div>
+              <path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4" />
+              <path d="M12 8l1.2 2.8L16 12l-2.8 1.2L12 16l-1.2-2.8L8 12l2.8-1.2L12 8z" fill="#F67721" stroke="none" />
+            </svg>
+            <span className="hidden md:inline">You&apos;re one step away!</span>
+            <span className="md:hidden">Thank You — You&apos;re In!</span>
+          </span>
 
-          {/* Right Decoration - Hidden on mobile */}
-          <div className="hidden lg:block">
-            <Image
-              src="/assets/icons/pointing-hand.svg"
-              alt="Pointing Hand"
-              width={350}
-              height={400}
-            />
-          </div>
+          {/* Heading */}
+          <h1
+            className={`${baiJamjuree.className} mt-6 max-w-3xl text-center text-[26px] font-black uppercase leading-[1.15] tracking-tight text-[#121315] sm:text-[34px] md:text-[40px]`}
+          >
+            <span className="block text-[#F25E25] md:inline">
+              Congratulations,
+            </span>{" "}
+            Your Registration is Successful.
+          </h1>
+
+          {/* Subtext */}
+          <p
+            className={`${baiJamjuree.className} mt-5 text-center text-base font-semibold text-[#121315] md:text-lg`}
+          >
+            But your next step is IMPORTANT!
+          </p>
+
+          {/* CTA */}
+          <a
+            href={WHATSAPP_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-9 w-full px-2 md:w-auto md:px-0"
+          >
+            <CtaButton
+              size="lg"
+              className="w-full justify-between md:w-fit md:justify-start"
+              labelClassName="text-[12px] min-[400px]:text-[13px] md:text-sm"
+            >
+              TAKE ME TO THE COMMUNITY NOW!
+            </CtaButton>
+          </a>
         </div>
       </section>
 
-      {/* Welcome Section */}
-      <section className="relative z-10 pl-6 md:pl-16 py-12">
-        <div className="flex items-center justify-between">
-          {/* Left Content */}
-          <div className="max-w-lg">
-            <AppHeading
-              title="You're In! Welcome Aboard"
-              headingLevel="h2"
-              description="You have successfully registered for the Free AI-Data Analysis Masterclass. But registration alone is not enough — the class link, reminders, and important updates will be shared with members of the community before the live session."
-              className=""
-              descriptionClassName="text-gray-600 text-base md:text-lg mb-4"
-            />
-            <p className="text-gray-500 text-sm md:text-base mb-8 italic">
-              Join now so you don't miss any information about the masterclass. Click the button below to join the community now!
-            </p>
+      {/* ===== Successfully Registered ===== */}
+      <section className="relative z-10 mt-10 bg-[#0B0C0D] px-4 py-6 md:mt-24 md:px-16 md:py-16">
+        <div className="relative mx-auto max-w-[1290px] overflow-hidden rounded-[24px] bg-[#191A1C] px-6 py-12 text-center md:rounded-[32px] md:px-12 md:py-20">
+          {/* Ring decorations */}
+          {/* Ring up — arc bleeding off the upper right edge */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -right-[150px] -top-[100px] h-[260px] w-[260px] rounded-full border-[3px] border-[#3A3B3D] md:-right-[280px] md:-top-[180px] md:h-[480px] md:w-[480px] md:border-4"
+          />
+          {/* Ring under — arc at the bottom-left corner */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -bottom-[190px] -left-[110px] h-[260px] w-[260px] rounded-full border-[3px] border-[#3A3B3D] md:-bottom-[370px] md:-left-[200px] md:h-[500px] md:w-[500px] md:border-4"
+          />
+          {/* Diagonal accent line — bottom-right corner */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute bottom-10 right-6 h-10 w-[2px] origin-bottom rotate-[25deg] bg-[#3A3B3D] md:bottom-16 md:right-14 md:h-20 md:w-[2px]"
+          />
 
-            <a
-              href={WHATSAPP_LINK}
-              target="_blank"
-              rel="noopener noreferrer"
+          <h2 className="mx-auto max-w-[850px] text-[24px] font-bold leading-snug text-white md:text-[40px]">
+            You have{" "}
+            <span className="relative box-decoration-clone bg-white/10 px-1.5 text-[#F25E25] md:px-2">
+              successfully registered
+              <span
+                aria-hidden="true"
+                className="absolute inset-y-0 left-0 hidden w-[2px] bg-[#F25E25] md:block"
+              />
+              <span
+                aria-hidden="true"
+                className="absolute inset-y-0 right-0 hidden w-[2px] bg-[#F25E25] md:block"
+              />
+            </span>{" "}
+            for the Free AI-Data Analysis Masterclass.
+          </h2>
+
+          <p className="mx-auto mt-5 max-w-2xl text-[15px] leading-relaxed text-gray-400 md:text-lg">
+            But Registration alone is not enough.
+            <br />
+            The class link, reminders, and important updates will be shared
+            with members of the community before the live session.
+          </p>
+
+          <a
+            href={WHATSAPP_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-8 inline-block w-full md:w-auto"
+          >
+            <CtaButton
+              size="lg"
+              className="w-full justify-between md:w-fit md:justify-start"
+              labelClassName="text-[12px] min-[400px]:text-[13px] md:text-sm"
             >
-              <AppActionButton className="group">
-                <p>TAKE ME TO THE COMMUNITY NOW!</p>
-                <span className="bg-white p-1 lg:p-2 rounded-lg group-hover:ml-2 transition-all ease-in-out duration-300">
-                  <ArrowRight
-                    size={25}
-                    className="text-primary rounded block group-hover:hidden"
-                  />
-                  <IconBrandWhatsapp
-                    size={25}
-                    className="text-primary rounded hidden group-hover:block"
-                  />
-                </span>
-              </AppActionButton>
-            </a>
-          </div>
-
-          {/* Right Decoration - Hidden on mobile */}
-          <div className="hidden lg:block">
-            <Image
-              src="/assets/icons/pointing-hand.svg"
-              alt="Pointing Hand"
-              width={350}
-              height={400}
-            />
-          </div>
+              TAKE ME TO THE COMMUNITY NOW!
+            </CtaButton>
+          </a>
         </div>
       </section>
 
       {/* Footer With Logo Decoration */}
       <div className="relative w-full">
-        {/* Logo positioned to overlap between content and footer */}
-        <div className="absolute left-0 right-0 -top-16 lg:-top-48 z-10 w-full">
+        {/* Watermark logo peeking above the footer */}
+        <div className="pointer-events-none absolute left-0 right-0 -top-16 z-0 w-full lg:-top-48">
           <Image
             width={800}
             height={800}
@@ -181,16 +193,7 @@ export default function DataAnalyticsThankYou() {
             className="w-full h-auto object-contain opacity-5"
           />
         </div>
-        <div className="absolute left-0 right-0 -top-16 lg:-top-48 z-10 w-full">
-          <Image
-            width={800}
-            height={800}
-            src="/assets/logos/full-logo-black.png"
-            alt=""
-            className="w-full h-auto object-contain opacity-5 invert"
-          />
-        </div>
-        <div className="-z-10">
+        <div className="relative z-10">
           <Footer />
         </div>
       </div>
