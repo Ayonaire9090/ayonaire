@@ -167,7 +167,7 @@ export const InstructorCreateQuizForm = () => {
               />
             </SelectTrigger>
             <SelectContent>
-              {courses.map((course) => (
+              {courses.map((course:any) => (
                 <SelectItem key={course._id} value={course._id}>
                   {course.title}
                 </SelectItem>
