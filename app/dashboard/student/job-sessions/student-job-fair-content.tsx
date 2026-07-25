@@ -96,7 +96,7 @@ export const StudentJobFairSessionsContent = () => {
 
             {/* 3. Pass the props down to the filter component */}
             <div className="mt-2">
-              <WorkshopDateFilter date={dateRange} onDateChange={setDateRange} />
+              <WorkshopDateFilter {...({ date: dateRange, onDateChange: setDateRange } as any)} />
             </div>
 
             {/* List */}
