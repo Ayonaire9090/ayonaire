@@ -4,7 +4,7 @@ import { Footer } from "@/components/layout/footer";
 import { generateSEO } from "@/lib/seo";
 import { Metadata } from "next";
 import { AppConfetti } from "@/components/app-confetti";
-import { baiJamjuree } from "@/app/fonts";
+import { sora } from "@/app/fonts";
 import { CtaButton } from "./_components/CtaButton";
 
 const WHATSAPP_LINK = "https://chat.whatsapp.com/ILzKk6IHvKSGEvPqEYshTT?mode=gi_t";
@@ -88,7 +88,7 @@ export default function DataAnalyticsThankYou() {
 
           {/* Heading */}
           <h1
-            className={`${baiJamjuree.className} mt-6 max-w-3xl text-center text-[26px] font-black uppercase leading-[1.15] tracking-tight text-[#121315] sm:text-[34px] md:text-[40px]`}
+            className={`${sora.className} mt-6 max-w-3xl text-center text-[26px] font-black uppercase leading-[1.15] tracking-tight text-[#121315] sm:text-[34px] md:text-[40px]`}
           >
             <span className="block text-[#F25E25] md:inline">
               Congratulations,
@@ -98,7 +98,7 @@ export default function DataAnalyticsThankYou() {
 
           {/* Subtext */}
           <p
-            className={`${baiJamjuree.className} mt-5 text-center text-base font-semibold text-[#121315] md:text-lg`}
+            className={`${sora.className} mt-5 text-center text-base font-semibold text-[#121315] md:text-lg`}
           >
             But your next step is IMPORTANT!
           </p>
@@ -141,7 +141,7 @@ export default function DataAnalyticsThankYou() {
             className="pointer-events-none absolute bottom-10 right-6 h-10 w-[2px] origin-bottom rotate-[25deg] bg-[#3A3B3D] md:bottom-16 md:right-14 md:h-20 md:w-[2px]"
           />
 
-          <h2 className="mx-auto max-w-[850px] text-[24px] font-bold leading-snug text-white md:text-[40px]">
+          <h2 className={`${sora.className} mx-auto max-w-[850px] text-[24px] font-bold leading-snug text-white md:text-[40px]`}>
             You have{" "}
             <span className="relative box-decoration-clone bg-white/10 px-1.5 text-[#F25E25] md:px-2">
               successfully registered

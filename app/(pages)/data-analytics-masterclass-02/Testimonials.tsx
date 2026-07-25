@@ -1,8 +1,10 @@
 'use client';
 
 import Image from 'next/image';
+import { Star } from 'lucide-react';
 import { Marquee } from '@/components/ui/marquee';
-import { baiJamjuree } from '@/app/fonts';
+import { sora } from '@/app/fonts';
+import { typeScale } from './_components/type';
 
 interface Quote {
   handle: string;
@@ -32,11 +34,22 @@ const avatars = [
 
 function QuoteCard({ item, index }: { item: Quote; index: number }) {
   return (
-    <div className="flex w-[280px] shrink-0 flex-col gap-4 rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
-      <span className="text-3xl leading-none text-[#F67219]">"</span>
-      <p className="text-[15px] leading-relaxed text-[#2D3139] -mt-2">{item.quote}</p>
-      <div className="flex items-center gap-3 pt-2">
-        <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full">
+    <div
+      className="flex min-h-[240px] w-[300px] shrink-0 flex-col rounded-2xl p-6 shadow-[0_2px_12px_rgba(0,0,0,0.05)] md:w-[400px]"
+      style={{
+        background: 'linear-gradient(180deg, #FFFFFF 0%, #FDECE2 100%)',
+      }}
+    >
+      <div className="flex items-center gap-1">
+        {Array.from({ length: 5 }).map((_, i) => (
+          <Star key={i} size={20} strokeWidth={0} fill="#F25E25" />
+        ))}
+      </div>
+      <p className={`${typeScale.quote} mt-4 leading-relaxed text-[#2D3139]`}>
+        &ldquo;{item.quote}&rdquo;
+      </p>
+      <div className="mt-auto flex items-center gap-3 pt-6">
+        <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-md">
           <Image
             src={avatars[index % avatars.length]}
             alt={item.handle}
@@ -45,8 +58,8 @@ function QuoteCard({ item, index }: { item: Quote; index: number }) {
           />
         </div>
         <div>
-          <p className="text-[13px] font-semibold text-[#121315]">{item.handle}</p>
-          <p className="text-xs text-gray-500">Masterclass Attendee</p>
+          <p className="text-[14px] font-bold text-[#121315]">{item.handle}</p>
+          <p className={`${typeScale.caption} text-gray-500`}>Masterclass Attendee</p>
         </div>
       </div>
     </div>
@@ -57,9 +70,12 @@ export default function Testimonials() {
   return (
     <section id="reviews" className="w-full bg-white py-16 sm:py-24 scroll-mt-24">
       <div className="mx-auto max-w-2xl w-full text-center mb-10 px-4">
-        <h2 className={`${baiJamjuree.className} text-2xl sm:text-3xl md:text-4xl font-bold text-[#121315]`}>
-          <span className="text-[#F67219]">Real Feedbacks</span> From Students Who Attended Our Last Session
+        <h2 className={`${sora.className} ${typeScale.h2} font-bold text-[#121315]`}>
+          <span className="text-[#F67219]">Real Feedbacks</span> from students who attended our last session?
         </h2>
+        <p className={`${sora.className} ${typeScale.body} mt-4 leading-relaxed text-[#3F4145]`}>
+          Eight things top candidates already know that most people learning Data Analytics don&apos;t.
+        </p>
       </div>
 
       <div className="relative w-full overflow-hidden">

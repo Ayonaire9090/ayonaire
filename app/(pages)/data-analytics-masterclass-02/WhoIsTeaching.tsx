@@ -1,9 +1,9 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
 import { Eye, CheckCircle2 } from 'lucide-react';
-import { baiJamjuree } from '@/app/fonts';
+import { sora } from '@/app/fonts';
+import { typeScale } from './_components/type';
 import {
   Dialog,
   DialogContent,
@@ -16,10 +16,10 @@ const speakers = [
   {
     name: 'Dr. Gospel Iyioku',
     role: 'Senior Data Analyst at McKinsey',
-    photo: '/tutors/WhatsApp%20Image%202026-07-21%20at%2008.54.23.jpeg',
+    photo: '/tutors/dr%20gospel.png',
     color: '#F67219',
     cardBio:
-      'A Senior Data Analyst & Hiring Executive at McKinsey & Company. Went from Agricultural Science to Data Analysis with zero tech background — now interviews DA candidates in Europe himself.',
+      'A Senior Data Analyst & Hiring Executive at McKinsey & Company. Went from Agricultural Science to Data Analysis with zero tech background now interviews DA candidates in Europe himself.',
     bio: "Transitioned from Agricultural Science into Data Analysis with zero tech background, and now sits on the other side of the table interviewing candidates for DA roles in Europe. He has over four years of experience applying advanced analytics and AI-driven insights to complex organizational challenges.",
     revealLabel: 'He will show you:',
     reveals: [
@@ -31,8 +31,8 @@ const speakers = [
   },
   {
     name: 'Muhammad Jamilu',
-    role: 'Remote Data Analyst',
-    photo: '/tutors/Jameel.png',
+    role: 'Senior Financial Data Analyst',
+    photo: '/tutors/jamilu.png',
     color: '#3B6FF2',
     cardBio:
       'Nigeria-based Data Analyst working remotely for international companies — proof you can land global DA roles without relocating.',
@@ -47,11 +47,11 @@ const speakers = [
   },
   {
     name: 'Oluwapelumi',
-    role: 'Data Analyst',
-    photo: '/tutors/oluwapelumi.jpeg',
+    role: 'Senior Marketing Data Analyst',
+    photo: '/tutors/oluwapelumi.png',
     color: '#2F8F6B',
     cardBio:
-      'A Data Analyst who transitioned into tech from a Biochemistry background — living proof that your background cannot stop you if you do not stop yourself.',
+      'A Data Analyst who transitioned into tech from a Biochemistry background, she is a living proof that your background cannot stop you if you do not stop yourself.',
     bio: 'Transitioned into tech from a Biochemistry background — living proof that your background cannot stop you if you do not stop yourself.',
     revealLabel: 'She will reveal:',
     reveals: [
@@ -69,14 +69,13 @@ function TutorCard({ speaker }: { speaker: Speaker }) {
     <Dialog>
       <DialogTrigger asChild>
         <button className="group flex w-full flex-col items-center overflow-hidden rounded-2xl bg-white p-6 text-center shadow-[0_4px_14.5px_rgba(0,0,0,0.09)] transition-shadow hover:shadow-lg focus:outline-none">
-          <div className="relative aspect-square w-full max-w-[260px] overflow-hidden rounded-[32px] bg-[#F97316]">
+          <div className="relative aspect-square w-full max-w-[260px]">
             <Image
               src={speaker.photo}
               alt={speaker.name}
               fill
-              className="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-105"
+              className="object-contain transition-transform duration-500 ease-out group-hover:scale-[1.03]"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/0 to-black/0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
             <div className="absolute inset-0 flex items-center justify-center">
               <span
                 className="flex h-11 w-11 scale-75 items-center justify-center rounded-full bg-white/90 opacity-0 shadow-[0_8px_24px_rgba(0,0,0,0.2)] backdrop-blur-sm transition-all duration-300 ease-out group-hover:scale-100 group-hover:opacity-100"
@@ -87,11 +86,11 @@ function TutorCard({ speaker }: { speaker: Speaker }) {
           </div>
 
           <div className="mt-4">
-            <p className={`${baiJamjuree.className} text-lg font-semibold tracking-tight text-[#121315]`}>
+            <p className={`${sora.className} ${typeScale.cardTitle} font-semibold tracking-tight text-[#121315]`}>
               {speaker.name}
             </p>
-            <p className="mt-1 text-sm font-medium" style={{ color: speaker.color }}>{speaker.role}</p>
-            <p className="mt-3 text-[13px] leading-relaxed text-[#575E70]">{speaker.cardBio}</p>
+            <p className={`${sora.className} ${typeScale.body} mt-1 font-semibold text-[#F67219]`}>{speaker.role}</p>
+            <p className="mt-3 text-[10px] leading-relaxed text-[#575E70]">{speaker.cardBio}</p>
           </div>
         </button>
       </DialogTrigger>
@@ -99,11 +98,11 @@ function TutorCard({ speaker }: { speaker: Speaker }) {
       <DialogContent className="max-w-lg gap-0 overflow-hidden rounded-none border-none p-0 shadow-2xl">
         <div className="max-h-[85vh] overflow-y-auto p-6 sm:p-8">
           <DialogHeader className="text-left">
-            <DialogTitle className={`${baiJamjuree.className} text-lg`}>{speaker.name}</DialogTitle>
+            <DialogTitle className={`${sora.className} text-lg`}>{speaker.name}</DialogTitle>
             <p className="text-sm font-semibold" style={{ color: speaker.color }}>{speaker.role}</p>
           </DialogHeader>
 
-          <p className={`${baiJamjuree.className} mt-5 text-[15px] leading-relaxed text-gray-600`}>
+          <p className={`${sora.className} ${typeScale.body} mt-5 leading-relaxed text-gray-600`}>
             {speaker.bio}
           </p>
 
@@ -114,7 +113,7 @@ function TutorCard({ speaker }: { speaker: Speaker }) {
             <p className="text-sm font-bold" style={{ color: speaker.color }}>{speaker.revealLabel}</p>
             <ul className="mt-3 flex flex-col gap-2.5">
               {speaker.reveals.map((reveal, i) => (
-                <li key={i} className="flex items-start gap-2.5 text-[15px] text-[#2D3139]">
+                <li key={i} className={`${typeScale.body} flex items-start gap-2.5 text-[#2D3139]`}>
                   <CheckCircle2 size={18} strokeWidth={2} className="mt-0.5 shrink-0" style={{ color: speaker.color }} />
                   <span>{reveal}</span>
                 </li>
@@ -127,93 +126,22 @@ function TutorCard({ speaker }: { speaker: Speaker }) {
   );
 }
 
-/** Mobile: pinned stack where each tutor card crossfades in/out in the same
-    spot as you scroll — no sliding, just appear/disappear. All cards share
-    one grid cell so the container sizes itself to the tallest card. */
-function MobileTutorStack({ speakers }: { speakers: Speaker[] }) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  useEffect(() => {
-    let ticking = false;
-
-    const updateActiveIndex = () => {
-      ticking = false;
-      const el = containerRef.current;
-      if (!el) return;
-
-      const rect = el.getBoundingClientRect();
-      const scrollableDistance = rect.height - window.innerHeight;
-      if (scrollableDistance <= 0) return;
-
-      const scrolled = Math.min(Math.max(-rect.top, 0), scrollableDistance);
-      const progress = scrolled / scrollableDistance;
-      const index = Math.min(
-        speakers.length - 1,
-        Math.floor(progress * speakers.length),
-      );
-      setActiveIndex(index);
-    };
-
-    const onScroll = () => {
-      if (!ticking) {
-        ticking = true;
-        requestAnimationFrame(updateActiveIndex);
-      }
-    };
-
-    updateActiveIndex();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, [speakers.length]);
-
-  return (
-    <div
-      ref={containerRef}
-      className="relative sm:hidden"
-      style={{ height: `${speakers.length * 60}vh` }}
-    >
-      <div
-        className="sticky top-24 flex items-center justify-center"
-        style={{ minHeight: 'calc(100vh - 6rem)' }}
-      >
-        <div className="grid w-full">
-          {speakers.map((speaker, index) => (
-            <div
-              key={index}
-              className={`[grid-area:1/1] transition-opacity duration-500 ease-in-out ${
-                index === activeIndex ? 'opacity-100' : 'pointer-events-none opacity-0'
-              }`}
-            >
-              <TutorCard speaker={speaker} />
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export default function WhoIsTeaching() {
   return (
     <section id="who-is-teaching" className="w-full bg-white px-4 py-16 sm:py-24 scroll-mt-24">
       <div className="mx-auto max-w-5xl w-full">
         <div className="text-center mb-12">
-          <h2 className={`${baiJamjuree.className} text-2xl sm:text-3xl md:text-4xl font-bold text-[#121315]`}>
-            Meet Your <span className="text-[#F67219]">Instructors</span>
+          <h2 className={`${sora.className} ${typeScale.h2} font-bold text-[#121315]`}>
+            Meet Your <span className="text-[#F67219]">Speakers</span>
           </h2>
-          <p className={`${baiJamjuree.className} mt-2 text-gray-500`}>Real practitioners, not just theorists.</p>
+          <p className={`${sora.className} ${typeScale.body} mt-2 text-gray-500`}>Real practitioners, not just theorists.</p>
         </div>
 
-        {/* Desktop / tablet: static grid */}
-        <div className="hidden sm:grid sm:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           {speakers.map((speaker, index) => (
             <TutorCard key={index} speaker={speaker} />
           ))}
         </div>
-
-        {/* Mobile: pinned crossfade stack (see MobileTutorStack) */}
-        <MobileTutorStack speakers={speakers} />
       </div>
     </section>
   );

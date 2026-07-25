@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import RegistrationModal from './RegistrationModal';
-import { baiJamjuree } from '@/app/fonts';
+import { sora } from '@/app/fonts';
+import { typeScale } from './_components/type';
 
 export default function RegisterBand() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -12,11 +13,11 @@ export default function RegisterBand() {
       <section className="w-full bg-[#171717] px-4 py-6 sm:px-8">
         <div className="relative mx-auto flex w-full max-w-6xl flex-col items-center overflow-hidden rounded-3xl bg-[#222222] px-6 py-16 text-center sm:px-12">
           <div className="relative z-10 flex max-w-3xl flex-col items-center gap-5">
-            <h2 className={`${baiJamjuree.className} text-3xl sm:text-4xl md:text-[44px] font-bold leading-tight`}>
+            <h2 className={`${sora.className} ${typeScale.h2} font-bold leading-tight`}>
               <span className="text-[#F67219]">Register before</span>{' '}
               <span className="text-white">Slots Fill Up, This is a Live Masterclass, not a Replay.</span>
             </h2>
-            <p className="text-base text-white/50">
+            <p className={`${typeScale.body} text-white/50`}>
               We keep these sessions small so there&apos;s real Q&amp;A time with the panel. Once it fills, registration
               closes.
             </p>

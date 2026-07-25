@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { typeScale } from './_components/type';
 
 interface RegistrationModalProps {
     isOpen: boolean;
@@ -153,12 +154,12 @@ export default function RegistrationModal({
 
                     <div className="relative z-10 w-full flex flex-col">
                         <h1
-                            className="font-bold text-center text-[22px] sm:text-[28px] text-[#1A1C1E]"
+                            className={`${typeScale.h3} font-bold text-center text-[#1A1C1E]`}
                         >
                             One Last Step
                         </h1>
 
-                        <p className="mt-1 text-center text-[14px] font-medium leading-normal text-[#1A1C1E]/80 max-w-[260px] mx-auto">
+                        <p className={`${typeScale.body} mt-1 text-center font-medium leading-normal text-[#1A1C1E]/80 max-w-[260px] mx-auto`}>
                             Fill out the form below to reserve your free seat.
                         </p>
 

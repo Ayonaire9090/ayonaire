@@ -4,15 +4,26 @@ import { useState } from 'react';
 import Image from 'next/image';
 import RegistrationModal from './RegistrationModal';
 import Navbar from './Navbar';
-import { baiJamjuree } from '@/app/fonts';
+import { sora } from '@/app/fonts';
+import { CtaButton } from './_components/CtaButton';
+import { typeScale } from './_components/type';
 
-const avatarStack = [
-  '/assets/persons/student-1.png',
-  '/assets/persons/student-2.png',
-  '/assets/persons/student-3.png',
-  '/assets/persons/student-1.png',
-  '/assets/persons/student-2.png',
-];
+const VideoIcon = () => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="#F67219"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <rect width="15" height="14" x="1" y="5" rx="2" />
+    <path d="m22 8-6 4 6 4V8Z" />
+  </svg>
+);
 
 export default function Hero() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -21,74 +32,108 @@ export default function Hero() {
     <>
       <Navbar />
 
-      <section className="container relative bg-white">
-        <div className="flex flex-col items-center justify-center">
-          <div className="mt-24 flex w-full max-w-3xl flex-col items-center gap-5 text-center py-6 sm:py-10">
-            {/* Eyebrow */}
-            <span className={`${baiJamjuree.className} flex w-[60%] items-center justify-center gap-2 text-center text-[10px] sm:text-xs font-semibold uppercase tracking-[0.15em] text-[#F67219]`}>
-              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#F67219]" />
-              Free Data Analytics Masterclass 2026
+      <section className="relative bg-white">
+        {/* Striped wash — starts at the very top (behind the floating navbar)
+            and fades out to white above the hero image */}
+        <div className="relative overflow-hidden">
+          <div
+            className="pointer-events-none absolute inset-0"
+            aria-hidden="true"
+            style={{
+              background:
+                'linear-gradient(180deg, #FBE7DA 0%, #FDF0E7 60%, #FEF7F2 100%)',
+            }}
+          />
+          <div
+            className="pointer-events-none absolute inset-0"
+            aria-hidden="true"
+            style={{
+              backgroundImage:
+                'repeating-linear-gradient(90deg, rgba(248,100,50,0.10) 0px, rgba(248,100,50,0.01) 34px, rgba(248,100,50,0.01) 56px, rgba(248,100,50,0.10) 90px)',
+            }}
+          />
+          <div
+            className="pointer-events-none absolute inset-0"
+            aria-hidden="true"
+            style={{
+              background:
+                'radial-gradient(55% 70% at 50% 40%, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0) 100%)',
+            }}
+          />
+          {/* Bottom fade to white */}
+          <div
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-white md:h-36"
+            aria-hidden="true"
+          />
+
+          <div className="container relative z-10 flex flex-col items-center pb-10 pt-24 text-center md:pb-12 md:pt-36">
+            {/* Badge */}
+            <span
+              className={`${sora.className} inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-medium text-[#121315] shadow-[0_4px_16px_rgba(0,0,0,0.06)]`}
+            >
+              <VideoIcon />
+              Free Live Masterclass
             </span>
 
-            {/* Main Heading */}
-            <h1 className={`${baiJamjuree.className} text-balance text-4xl sm:text-5xl md:text-6xl lg:text-[64px] font-extrabold leading-tight tracking-tight text-[#121315]`}>
-              Before You Learn Data Analytics In 2026, Know What Hiring Managers <span className="text-[#F67219]">Actually Look For</span>
+            {/* Heading */}
+            <h1
+              className={`${sora.className} ${typeScale.h1} mt-6 max-w-[980px] font-bold leading-[1.18] tracking-tight text-[#121315] lg:leading-[1.14]`}
+            >
+              Before You Learn <span className="text-[#F25E25]">Data</span>
+              <br className="hidden lg:block" />{' '}
+              <span className="relative box-decoration-clone bg-[#F25E25]/10 px-2 text-[#F25E25]">
+                Analytics In 2026,
+                <span
+                  aria-hidden="true"
+                  className="absolute left-0 top-1/2 h-[1.05em] w-[2px] -translate-y-1/2 bg-[#F8A47E] md:bg-[#F25E25]"
+                >
+                  <span className="absolute -top-1 left-1/2 hidden h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-[#F25E25] md:block" />
+                </span>
+                <span
+                  aria-hidden="true"
+                  className="absolute right-0 top-1/2 h-[1.05em] w-[2px] -translate-y-1/2 bg-[#F8A47E] md:bg-[#F25E25]"
+                >
+                  <span className="absolute -bottom-1 left-1/2 hidden h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-[#F25E25] md:block" />
+                </span>
+              </span>{' '}
+              Know What
+              <br className="hidden lg:block" /> Hiring Managers Actually Look
+              For
             </h1>
 
             {/* Subtitle */}
-            <p className={`${baiJamjuree.className} max-w-xl text-base leading-relaxed text-gray-600 sm:text-lg`}>
-              Join a Senior Data Analyst, a Hiring Executive, and a Remote Data Analyst as they reveal
-              the hiring standards, career roadmap, and mistakes that determine who gets jobs — and who
-              never hears back.
+            <p
+              className={`${sora.className} ${typeScale.body} mt-[15px] max-w-[560px] font-semibold leading-relaxed text-[#26282B] lg:max-w-[600px]`}
+            >
+              Join a Senior Data Analyst, a Hiring Executive, and a Remote Data
+              Analyst as they reveal the hiring standards, career roadmap, and
+              mistakes that determine who gets jobs — and who never hears back.
             </p>
 
-            {/* CTA row */}
-            <div className="flex items-center justify-center mt-2">
-              <button
+            {/* CTA */}
+            <div className="mt-8 w-full px-2 md:w-auto md:px-0">
+              <CtaButton
+                size="lg"
                 onClick={() => setModalOpen(true)}
-                className="relative flex h-12 items-center gap-3 rounded-[14px] pl-6 pr-2 font-bold text-white bg-[#F67219] transition-transform hover:scale-[1.02] shadow-xl"
+                className="w-full justify-between md:w-fit md:justify-start"
               >
-                <span className="text-sm whitespace-nowrap">Give Me Instant Access</span>
-                <span className="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-[7px] bg-white">
-                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M9.59456 1.68393L17.4854 8.85501L9.26626 15.7397" stroke="#F67219" strokeWidth="1.5" />
-                    <path d="M0.000324288 8.62534L17.0875 8.92915" stroke="#F67219" strokeWidth="1.5" />
-                  </svg>
-                </span>
-              </button>
-            </div>
-
-            {/* Social proof */}
-            <div className="flex flex-col items-center gap-3">
-              <div className="flex -space-x-3">
-                {avatarStack.map((src, index) => (
-                  <div
-                    key={index}
-                    className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full border-2 border-white shadow-sm"
-                  >
-                    <Image src={src} alt="Community member" fill className="object-cover" />
-                  </div>
-                ))}
-              </div>
-              <span className="text-sm text-gray-500">
-                Join 1,800+ professionals already inside our community
-              </span>
+                Give Me Instant Access
+              </CtaButton>
             </div>
           </div>
+        </div>
 
-          {/* Hero visual */}
-          <div className="relative z-10 mb-16 w-full max-w-4xl">
-            <div className="relative overflow-hidden rounded-2xl border border-black/5 bg-white shadow-2xl">
-              <div className="relative aspect-video w-full">
-                <Image
-                  src="/assets/images/landing page hero image.png"
-                  alt="Data Analytics Masterclass"
-                  fill
-                  priority
-                  className="object-cover"
-                />
-              </div>
-            </div>
+        {/* Hero visual — on plain white, below the faded wash */}
+        <div className="container relative z-10 flex flex-col items-center pb-16 pt-2 md:pb-24 md:pt-3">
+          <div className="relative w-full max-w-[960px]">
+            <Image
+              src="/assets/images/become-data-analyst-hero.png"
+              alt="Become the Data Analyst that gets hired Fast"
+              width={1770}
+              height={978}
+              priority
+              className="h-auto w-full rounded-[16px] drop-shadow-[0_24px_50px_rgba(0,0,0,0.18)] md:rounded-[24px]"
+            />
           </div>
         </div>
       </section>
