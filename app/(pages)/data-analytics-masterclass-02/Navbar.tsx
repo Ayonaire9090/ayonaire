@@ -41,13 +41,13 @@ export default function Navbar() {
               aria-expanded={menuOpen}
             >
               <span
-                className={`h-[2px] rounded-full bg-[#F67219] transition-all duration-300 ${menuOpen ? 'w-5 translate-y-[7px] rotate-45' : 'w-5'}`}
+                className={`h-[2px] rounded-full bg-[#F67219] transition-all duration-300 ${menuOpen ? 'w-3.5 translate-y-[7px] rotate-45' : 'w-3.5'}`}
               />
               <span
-                className={`h-[2px] rounded-full bg-[#F67219] transition-all duration-300 ${menuOpen ? 'opacity-0' : 'w-3.5'}`}
+                className={`h-[2px] rounded-full bg-[#F67219] transition-all duration-300 ${menuOpen ? 'opacity-0' : 'w-5'}`}
               />
               <span
-                className={`h-[2px] rounded-full bg-[#F67219] transition-all duration-300 ${menuOpen ? 'w-5 -translate-y-[7px] -rotate-45' : 'w-5'}`}
+                className={`h-[2px] rounded-full bg-[#F67219] transition-all duration-300 ${menuOpen ? 'w-4 -translate-y-[7px] -rotate-45' : 'w-4'}`}
               />
             </button>
           </div>
