@@ -1,37 +1,24 @@
+"use client";
+
 import { Sparkles } from "lucide-react";
-import Image from "next/image";
+import { useGetAnnouncements } from "@/hooks/api/use-announcements";
+import { Announcement } from "@/lib/api/endpoints/announcements";
 
-interface MockAnnouncement {
-  title?: string;
-  description?: string;
-  date?: string;
-  image?: string;
-}
+const formatAnnouncementDate = (dateString?: string) => {
+  if (!dateString) return null;
+  return new Date(dateString).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+};
 
-const MockAnnouncements: MockAnnouncement[] = [
-  {
-    title: "New Workshop Added: Building RAG Agents",
-    description:
-      "Join us on March 12, 7 PM IST. We'll cover Retrieval-Augmented Generation from scratch using LangChain. Bring your laptop and make sure you have Python 3.9 + installed.",
-    date: "Nov 30",
-    image: "/assets/courses/ai-engineering.webp",
-  },
-  {
-    title: "Final Exam Date Updated",
-    description:
-      "The final exam has been rescheduled to March 25th. Please make note of this change and prepare accordingly. Study guides will be released next week.",
-    date: "Nov 28",
-    image: "/assets/courses/ai-engineering.webp",
-  },
-  {
-    title: "Welcome to Al Engineering Batch 5!",
-    description:
-      "We're thrilled to have you join our learning community. Please complete your profile setup and introduce yourself in the Introductions section.",
-    date: "Nov 18",
-    image: "/assets/courses/ai-engineering.webp",
-  },
-];
 export const FeedAnnouncements = () => {
+  const { data, isLoading, isError } = useGetAnnouncements();
+  const announcements = (data?.data?.announcement ?? []).filter(
+    (a) => a.status === "published",
+  );
+
   return (
     <div className="w-full bg-white p-4 lg:p-5 lg:rounded-2xl flex flex-col gap-4 border border-gray-100/50">
       {/* Header */}
@@ -44,49 +31,39 @@ export const FeedAnnouncements = () => {
         </div>
       </div>
 
-      {/* Announcement Content Card */}
-      {MockAnnouncements.map((announcement, index) => (
-        <AnnouncementCard
-          key={index}
-          title={announcement.title}
-          description={announcement.description}
-          date={announcement.date}
-          image={announcement.image}
-        />
-      ))}
+      {isLoading ? (
+        <div className="flex items-center justify-center py-16">
+          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+        </div>
+      ) : isError ? (
+        <div className="py-16 text-center text-[15px] text-red-500">
+          Failed to load announcements. Please try again.
+        </div>
+      ) : announcements.length === 0 ? (
+        <div className="py-16 text-center text-[15px] text-gray-500">
+          No announcements yet.
+        </div>
+      ) : (
+        announcements.map((announcement) => (
+          <AnnouncementCard key={announcement.id} announcement={announcement} />
+        ))
+      )}
     </div>
   );
 };
 
-interface AnnouncementCardProps {
-  title?: string;
-  description?: string;
-  date?: string;
-  image?: string;
-}
-const AnnouncementCard = ({
-  title = "New Workshop Added: Building RAG Agents",
-  description = "Join us on March 12, 7 PM IST. We'll cover Retrieval-Augmented Generation from scratch using LangChain. Bring your laptop and make sure you have Python 3.9 + installed.",
-  date = "Nov 28",
-  image = "/assets/courses/ai-engineering.webp",
-}: AnnouncementCardProps) => {
+const AnnouncementCard = ({ announcement }: { announcement: Announcement }) => {
   return (
-    <div className="bg-[#F8F9FA] rounded-2xl p-4 border-l-3 border-l-[#F86432] flex gap-4 flex-col lg:flex-row  items-start justify-between">
-      <div className="flex flex-col justify-between min-w-0 flex-1 min-h-[80px]">
-        <p className="text-gray-900 font-medium text-base leading-relaxed line-clamp-3">
-          {title}
-        </p>
-        <span className="text-gray-400 font-normal mt-2 block">
-          {description}
+    <div className="bg-[#F8F9FA] rounded-2xl p-4 border-l-3 border-l-[#F86432] flex flex-col gap-1">
+      <p className="text-gray-900 font-semibold text-base leading-relaxed">
+        {announcement.title}
+      </p>
+      <span className="text-gray-500 leading-relaxed">{announcement.summary}</span>
+      {formatAnnouncementDate(announcement.createdAt) && (
+        <span className="text-gray-400 text-sm font-normal mt-1 block">
+          {formatAnnouncementDate(announcement.createdAt)}
         </span>
-        <span className="text-gray-400 text-sm font-normal mt-2 block">
-          {date}
-        </span>
-      </div>
-
-      <div className="relative w-full aspect-video sm:w-32 sm:h-20 sm:aspect-auto rounded-lg overflow-hidden shrink-0 border border-gray-100 sm:self-center">
-        <Image src={image} alt={title || ""} fill className="object-cover" />
-      </div>
+      )}
     </div>
   );
 };

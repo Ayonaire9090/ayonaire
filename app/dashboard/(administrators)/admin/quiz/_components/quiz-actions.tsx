@@ -1,6 +1,7 @@
 "use client";
 
 import { MoreVertical } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import {
   DropdownMenu,
@@ -16,6 +17,7 @@ interface QuizActionsProps {
 }
 
 export const QuizActions = ({ assignmentId, status }: QuizActionsProps) => {
+  const router = useRouter();
   const updateQuiz = useUpdateQuizMutation();
   const deleteQuiz = useDeleteQuizMutation();
 
@@ -51,6 +53,14 @@ export const QuizActions = ({ assignmentId, status }: QuizActionsProps) => {
         align="end"
         className="w-40 border-none shadow-lg rounded-xl p-2 bg-[#F2F2F2]"
       >
+        <DropdownMenuItem
+          className="cursor-pointer text-[14px] text-gray-700 focus:bg-white focus:text-black rounded-lg py-2 transition-colors"
+          onClick={() =>
+            router.push(`/dashboard/admin/quiz/result/${assignmentId}`)
+          }
+        >
+          View Results
+        </DropdownMenuItem>
         <DropdownMenuItem
           className="cursor-pointer text-[14px] text-gray-700 focus:bg-white focus:text-black rounded-lg py-2 transition-colors"
           onClick={handlePublishToggle}
