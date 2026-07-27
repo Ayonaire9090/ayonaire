@@ -33,32 +33,16 @@ export default function Hero() {
       <Navbar />
 
       <section className="relative bg-white">
-        {/* Striped wash — starts at the very top (behind the floating navbar)
+        {/* Hero wash — starts at the very top (behind the floating navbar)
             and fades out to white above the hero image */}
         <div className="relative overflow-hidden">
-          <div
-            className="pointer-events-none absolute inset-0"
+          <Image
+            src="/assets/images/bgHero.png"
+            alt=""
+            fill
+            priority
             aria-hidden="true"
-            style={{
-              background:
-                'linear-gradient(180deg, #FBE7DA 0%, #FDF0E7 60%, #FEF7F2 100%)',
-            }}
-          />
-          <div
-            className="pointer-events-none absolute inset-0"
-            aria-hidden="true"
-            style={{
-              backgroundImage:
-                'repeating-linear-gradient(90deg, rgba(248,100,50,0.10) 0px, rgba(248,100,50,0.01) 34px, rgba(248,100,50,0.01) 56px, rgba(248,100,50,0.10) 90px)',
-            }}
-          />
-          <div
-            className="pointer-events-none absolute inset-0"
-            aria-hidden="true"
-            style={{
-              background:
-                'radial-gradient(55% 70% at 50% 40%, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0) 100%)',
-            }}
+            className="pointer-events-none object-cover object-top"
           />
           {/* Bottom fade to white */}
           <div
@@ -105,8 +89,8 @@ export default function Hero() {
             <p
               className={`${sora.className} ${typeScale.body} mt-[15px] max-w-[560px] font-semibold leading-relaxed text-[#26282B] lg:max-w-[600px]`}
             >
-              Join a Senior Data Analyst, a Hiring Executive, and a Remote Data
-              Analyst as they reveal the hiring standards, career roadmap, and
+              Join a Senior Data Analyst, a Hiring Executive, and a Remote Data Analyst as they reveal
+               the hiring standards, career roadmap, and
               mistakes that determine who gets jobs — and who never hears back.
             </p>
 

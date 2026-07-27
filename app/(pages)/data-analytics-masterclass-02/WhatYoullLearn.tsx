@@ -8,61 +8,60 @@ import {
   Smile,
   FileWarning,
   type LucideIcon,
-} from 'lucide-react';
-import { sora } from '@/app/fonts';
-import { typeScale } from './_components/type';
+} from "lucide-react";
+import { sora } from "@/app/fonts";
+import { typeScale } from "./_components/type";
 
 const items: { title: string; description: string; icon: LucideIcon }[] = [
   {
-    title: 'AI-powered skill shift',
+    title: "AI-powered skill shift",
     description:
       'Why "traditional" Data Analysts are getting passed over and the specific AI-powered skill shift that\'s replacing them.',
     icon: Sparkles,
   },
   {
-    title: 'Hiring manager filter',
+    title: "Hiring manager filter",
     description:
-      'How hiring managers actually filter candidates in 2026 , the exact criteria and checklist in use.',
+      "How hiring managers actually filter candidates in 2026 , the exact criteria and checklist in use.",
     icon: SlidersHorizontal,
   },
   {
-    title: 'Precise learning roadmap',
+    title: "Precise learning roadmap",
     description:
-      'The precise learning roadmap to become globally employable this year (no more guessing what to learn next).',
+      "The precise learning roadmap to become globally employable this year (no more guessing what to learn next).",
     icon: Route,
   },
   {
     title: "Build in Public' strategy",
     description:
-      'How non-tech people broke into Data Analysis...the real path from zero background to working for Global companies.',
+      "How non-tech people broke into Data Analysis...the real path from zero background to working for Global companies.",
     icon: Globe,
   },
   {
-    title: 'International remote roles',
+    title: "International remote roles",
     description:
-      'How to land international internships and remote Data Analyst roles....even from outside the US/EU',
+      "How to land international internships and remote Data Analyst roles....even from outside the US/EU",
     icon: Earth,
   },
   {
-    title: 'Industry specialization',
+    title: "Industry specialization",
     description:
       "The 'Build in Public' strategy top candidates are using to get noticed by recruiters before they even apply.",
     icon: ChartColumnIncreasing,
   },
   {
-    title: 'Non-tech success',
+    title: "Non-tech success",
     description:
       "Why your background in finance, marketing, health, or accounting isn't a disadvantage, BUT your fastest path to a specialized, higher-paying analyst role.",
     icon: Smile,
   },
   {
-    title: 'Fatal portfolio mistakes',
+    title: "Fatal portfolio mistakes",
     description:
-      'Plus the CV, portfolio, and interview mistakes quietly costing you job offers.',
+      "Plus the CV, portfolio, and interview mistakes quietly costing you job offers.",
     icon: FileWarning,
   },
 ];
-
 function CurriculumCard({
   item,
   index,
@@ -84,8 +83,7 @@ function CurriculumCard({
       <div
         className="h-full rounded-2xl p-6 pb-10 shadow-[0_10px_28px_rgba(18,19,21,0.14)] md:pb-8"
         style={{
-          background:
-            'linear-gradient(180deg, rgba(248,100,50,0.22) 0%, rgba(248,100,50,0) 68%), #FFFFFF',
+          backgroundColor: "rgba(248,100,50,0.08)",
         }}
       >
         <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#F86432]/20 md:h-14 md:w-14">
@@ -120,10 +118,25 @@ export default function WhatYoullLearn() {
       <div className="mx-auto flex w-full max-w-[1290px] flex-col items-center">
         {/* Heading */}
         <h2
-          className={`${sora.className} ${typeScale.h2} mx-auto max-w-[820px] text-center font-bold leading-snug text-[#121315]`}
+          className={`${sora.className} ${typeScale.h2} mx-auto max-w-[920px] text-center font-bold leading-snug text-[#121315]`}
         >
-          What <span className="text-[#F25E25]">You&apos;ll Learn</span> Inside
-          The Free Masterclass
+          What{" "}
+          <span className="relative box-decoration-clone bg-[#F25E25]/10 px-2 text-[#F25E25]">
+            You&apos;ll Learn
+            <span
+              aria-hidden="true"
+              className="absolute left-0 top-1/2 h-[1.05em] w-[2px] -translate-y-1/2 bg-[#F8A47E] md:bg-[#F25E25]"
+            >
+              <span className="absolute -top-1 left-1/2 hidden h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-[#F25E25] md:block" />
+            </span>
+            <span
+              aria-hidden="true"
+              className="absolute right-0 top-1/2 h-[1.05em] w-[2px] -translate-y-1/2 bg-[#F8A47E] md:bg-[#F25E25]"
+            >
+              <span className="absolute -bottom-1 left-1/2 hidden h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-[#F25E25] md:block" />
+            </span>
+          </span>{" "}
+          Inside The Free Masterclass
         </h2>
         <p
           className={`${sora.className} ${typeScale.body} mt-4 max-w-[720px] text-center leading-relaxed text-[#3F4145]`}
