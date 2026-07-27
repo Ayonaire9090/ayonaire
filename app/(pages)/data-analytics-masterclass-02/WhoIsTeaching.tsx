@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { Eye, CheckCircle2 } from 'lucide-react';
+import { Eye } from 'lucide-react';
 import { sora } from '@/app/fonts';
 import { typeScale } from './_components/type';
 import {
@@ -12,31 +12,90 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 
+// ==========================================
+// COMPONENT: OrangeCircleCheck (Custom SVG Checkmark)
+// ==========================================
+const OrangeCircleCheck = ({ id }: { id: string }) => (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 52 52"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+    className="mt-0.5 shrink-0"
+  >
+    <path
+      d="M46.3128 28.4374C44.6878 36.5624 38.5619 44.2117 29.963 45.9221C21.3643 47.6326 12.6384 43.6328 8.32119 36.0021C4.00399 28.3717 5.06979 18.8322 10.9646 12.3425C16.8594 5.85279 26.8128 4.06243 34.9378 7.31243"
+      stroke={`url(#grad0_${id})`}
+      strokeWidth="3.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M18.6875 25.1875L26.8125 33.3125L46.3125 12.1875"
+      stroke={`url(#grad1_${id})`}
+      strokeWidth="3.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <defs>
+      <linearGradient
+        id={`grad0_${id}`}
+        x1="5.6875"
+        y1="26.0214"
+        x2="46.3128"
+        y2="26.0214"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stopColor="#F25E25" />
+        <stop offset="1" stopColor="#F97F11" />
+      </linearGradient>
+      <linearGradient
+        id={`grad1_${id}`}
+        x1="18.6875"
+        y1="22.75"
+        x2="46.3125"
+        y2="22.75"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stopColor="#F25E25" />
+        <stop offset="1" stopColor="#F97F11" />
+      </linearGradient>
+    </defs>
+  </svg>
+);
+
+// ==========================================
+// DATA: Speakers Information
+// ==========================================
 const speakers = [
   {
+    id: 'gospel',
     name: 'Dr. Gospel Iyioku',
     role: 'Senior Data Analyst at McKinsey',
     photo: '/tutors/dr%20gospel.png',
     color: '#F67219',
     cardBio:
       'A Senior Data Analyst & Hiring Executive at McKinsey & Company. Went from Agricultural Science to Data Analysis with zero tech background now interviews DA candidates in Europe himself.',
-    bio: "Transitioned from Agricultural Science into Data Analysis with zero tech background, and now sits on the other side of the table interviewing candidates for DA roles in Europe. He has over four years of experience applying advanced analytics and AI-driven insights to complex organizational challenges.",
+    bio: "A Senior Data Analyst & Hiring Executive at McKinsey & Company. Went from Agricultural Science to Data Analysis with zero tech background now interviews DA candidates in Europe himself.",
     revealLabel: 'He will show you:',
     reveals: [
       'How he made the non-tech to tech switch',
-      'What actually got him hired in an international company',
+      'What actually got him hired in an international company.',
       "Why your CV gets screened out and never makes it to the HR's desk",
       "What he now looks for when he's the one hiring Data Analytics candidates",
     ],
   },
   {
+    id: 'jamilu',
     name: 'Muhammad Jamilu',
     role: 'Senior Financial Data Analyst',
     photo: '/tutors/jamilu.png',
     color: '#3B6FF2',
     cardBio:
       'Nigeria-based Data Analyst working remotely for international companies — proof you can land global DA roles without relocating.',
-    bio: 'Based in Nigeria but working remotely for international companies — living proof that you can land Data Analyst roles in international companies without relocating. With over seven years of experience turning sales and business data into clear, decision-ready insights, he specializes in SQL, Power BI, Excel, and statistical analysis (SPSS, STATA), building dashboards and forecasting models that guide budgeting and growth decisions. He is also an online instructor on Udemy, among others.',
+    bio: 'Nigeria-based Data Analyst working remotely for international companies — proof you can land global DA roles without relocating.',
     revealLabel: 'He will show you:',
     reveals: [
       'The skills that matter internationally in 2026',
@@ -46,13 +105,14 @@ const speakers = [
     ],
   },
   {
+    id: 'oluwapelumi',
     name: 'Oluwapelumi',
     role: 'Senior Marketing Data Analyst',
     photo: '/tutors/oluwapelumi.png',
     color: '#2F8F6B',
     cardBio:
       'A Data Analyst who transitioned into tech from a Biochemistry background, she is a living proof that your background cannot stop you if you do not stop yourself.',
-    bio: 'Transitioned into tech from a Biochemistry background — living proof that your background cannot stop you if you do not stop yourself.',
+    bio: 'A Data Analyst who transitioned into tech from a Biochemistry background, she is a living proof that your background cannot stop you if you do not stop yourself.',
     revealLabel: 'She will reveal:',
     reveals: [
       'The lies you must not fall for within the DA industry',
@@ -64,72 +124,114 @@ const speakers = [
 
 type Speaker = (typeof speakers)[number];
 
+// ==========================================
+// COMPONENT: TutorCard (Individual Speaker Card + Modal)
+// ==========================================
 function TutorCard({ speaker }: { speaker: Speaker }) {
   return (
     <Dialog>
+      {/* Card Trigger Button */}
       <DialogTrigger asChild>
         <button className="group flex w-full flex-col items-center overflow-hidden rounded-2xl bg-white p-6 text-center shadow-[0_4px_14.5px_rgba(0,0,0,0.09)] transition-shadow hover:shadow-lg focus:outline-none">
-          <div className="relative aspect-square w-full max-w-[260px]">
+          
+          {/* Speaker Image Thumbnail Wrapper */}
+          <div className="relative aspect-[4/4] w-[80%] overflow-hidden rounded-xl">
             <Image
               src={speaker.photo}
               alt={speaker.name}
               fill
-              className="object-contain transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+              className="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.03]"
             />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span
-                className="flex h-11 w-11 scale-75 items-center justify-center rounded-full bg-white/90 opacity-0 shadow-[0_8px_24px_rgba(0,0,0,0.2)] backdrop-blur-sm transition-all duration-300 ease-out group-hover:scale-100 group-hover:opacity-100"
-              >
+            {/* Hover overlay with eye icon */}
+            <div className="absolute inset-0 flex items-center justify-center bg-black/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <span className="flex h-11 w-11 items-center justify-center rounded-full bg-white/90 shadow-[0_8px_24px_rgba(0,0,0,0.2)] backdrop-blur-sm transition-transform duration-300 ease-out group-hover:scale-100">
                 <Eye size={18} strokeWidth={2} style={{ color: speaker.color }} />
               </span>
             </div>
           </div>
 
-          <div className="mt-4">
+          {/* Speaker Meta Information (Name, Role, Short Bio) */}
+          <div className="mt-4 w-full">
             <p className={`${sora.className} ${typeScale.cardTitle} font-semibold tracking-tight text-[#121315]`}>
               {speaker.name}
             </p>
             <p className={`${sora.className} ${typeScale.body} mt-1 font-semibold text-[#F67219]`}>{speaker.role}</p>
-            <p className="mt-3 text-[10px] leading-relaxed text-[#575E70]">{speaker.cardBio}</p>
+            <p className="mt-3 text-[14px] font-bold leading-relaxed text-[#575E70]">{speaker.cardBio}</p>
           </div>
+
         </button>
       </DialogTrigger>
 
-      <DialogContent className="max-w-lg gap-0 overflow-hidden rounded-none border-none p-0 shadow-2xl">
-        <div className="max-h-[85vh] overflow-y-auto p-6 sm:p-8">
-          <DialogHeader className="text-left">
-            <DialogTitle className={`${sora.className} text-lg`}>{speaker.name}</DialogTitle>
-            <p className="text-sm font-semibold" style={{ color: speaker.color }}>{speaker.role}</p>
-          </DialogHeader>
+      {/* Modal Content Dialog */}
+      <DialogContent className="w-full sm:max-w-4xl gap-0 overflow-hidden rounded-[12px] border-none p-6 sm:p-12 shadow-2xl bg-white">
+        <div className="max-h-[85vh] overflow-y-auto w-full">
+          
+          {/* Top Section: Speaker Profile (Image + Bio) */}
+      {/* Top Section: Speaker Profile (Image + Bio) */}
+          <div className="flex flex-col sm:flex-row items-center sm:items-center gap-6 sm:gap-10 w-full">
+            
+            {/* Speaker Large Image */}
+            <div className="relative aspect-square w-48 sm:w-60 shrink-0 overflow-hidden rounded-[24px]">
+              <div className="relative h-full w-full overflow-hidden rounded-[24px] bg-white">
+                <Image
+                  src={speaker.photo}
+                  alt={speaker.name}
+                  fill
+                  className="object-cover object-top"
+                />
+              </div>
+            </div>
 
-          <p className={`${sora.className} ${typeScale.body} mt-5 leading-relaxed text-gray-600`}>
-            {speaker.bio}
-          </p>
+            {/* Speaker Title & Detailed Description */}
+            <div className="flex flex-col items-center sm:items-start text-center sm:text-left flex-1 w-full space-y-3">
+              <DialogHeader className="p-0 text-center sm:text-left">
+                <DialogTitle className={`${sora.className} sm:text-lg font-bold text-[#121315]`}>
+                  {speaker.name}
+                </DialogTitle>
+                <p className="text-base font-bold mt-1" style={{ color: speaker.color }}>
+                  {speaker.role}
+                </p>
+              </DialogHeader>
 
+              <p className={`${sora.className} ${typeScale.body} text-sm sm:text-base leading-relaxed text-[#575E70] font-medium`}>
+                {speaker.bio}
+              </p>
+            </div>
+
+          </div>
+          {/* Bottom Box: Key Takeaways / What They Will Reveal */}
           <div
-            className="mt-5 rounded-2xl p-5"
-            style={{ backgroundColor: `${speaker.color}0D` }}
+            className="mt-8 sm:mt-10 rounded-2xl p-6 sm:p-8 w-full"
+            style={{ backgroundColor: `${speaker.color}0A` }}
           >
-            <p className="text-sm font-bold" style={{ color: speaker.color }}>{speaker.revealLabel}</p>
-            <ul className="mt-3 flex flex-col gap-2.5">
+            <p className="text-base sm:text-xl font-bold text-[#2D3139]">
+              {speaker.revealLabel}
+            </p>
+            <ul className="mt-4 sm:mt-5 flex flex-col gap-4">
               {speaker.reveals.map((reveal, i) => (
-                <li key={i} className={`${typeScale.body} flex items-start gap-2.5 text-[#2D3139]`}>
-                  <CheckCircle2 size={18} strokeWidth={2} className="mt-0.5 shrink-0" style={{ color: speaker.color }} />
+                <li key={i} className={`${typeScale.body} flex items-start gap-3.5 text-[#121315] text-sm sm:text-base font-medium`}>
+                  <OrangeCircleCheck id={speaker.id} />
                   <span>{reveal}</span>
                 </li>
               ))}
             </ul>
           </div>
+
         </div>
       </DialogContent>
     </Dialog>
   );
 }
 
+// ==========================================
+// COMPONENT: WhoIsTeaching (Main Section Wrapper)
+// ==========================================
 export default function WhoIsTeaching() {
   return (
     <section id="who-is-teaching" className="w-full bg-white px-4 py-16 sm:py-24 scroll-mt-24">
-      <div className="mx-auto max-w-5xl w-full">
+      <div className="mx-auto max-w-6xl w-full">
+        
+        {/* Section Header */}
         <div className="text-center mb-12">
           <h2 className={`${sora.className} ${typeScale.h2} font-bold text-[#121315]`}>
             Meet Your <span className="text-[#F67219]">Speakers</span>
@@ -137,11 +239,13 @@ export default function WhoIsTeaching() {
           <p className={`${sora.className} ${typeScale.body} mt-2 text-gray-500`}>Real practitioners, not just theorists.</p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        {/* Speakers Grid Loop */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {speakers.map((speaker, index) => (
             <TutorCard key={index} speaker={speaker} />
           ))}
         </div>
+
       </div>
     </section>
   );

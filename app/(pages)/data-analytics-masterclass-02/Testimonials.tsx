@@ -40,7 +40,7 @@ function QuoteCard({ item, index }: { item: Quote; index: number }) {
         background: 'linear-gradient(180deg, #FFFFFF 0%, #FDECE2 100%)',
       }}
     >
-      <div className="flex items-center gap-1">
+      <div className="flex items-center ">
         {Array.from({ length: 5 }).map((_, i) => (
           <Star key={i} size={20} strokeWidth={0} fill="#F25E25" />
         ))}
@@ -69,11 +69,27 @@ function QuoteCard({ item, index }: { item: Quote; index: number }) {
 export default function Testimonials() {
   return (
     <section id="reviews" className="w-full bg-white py-16 sm:py-24 scroll-mt-24">
-      <div className="mx-auto max-w-2xl w-full text-center mb-10 px-4">
-        <h2 className={`${sora.className} ${typeScale.h2} font-bold text-[#121315]`}>
-          <span className="text-[#F67219]">Real Feedbacks</span> from students who attended our last session?
+      {/* Increased max-w-2xl to max-w-4xl so the text fits nicely in two lines */}
+      <div className="mx-auto max-w-4xl w-full text-center mb-10 px-4">
+        <h2 className={`${sora.className} ${typeScale.h2}  text-4.8xl! font-bold text-[#121315]`}>
+          <span className="relative inline-block bg-[#F25E25]/10 px-2 text-[#F67219]">
+            Real Feedbacks
+            <span
+              aria-hidden="true"
+              className="absolute left-0 top-1/2 h-[1.05em] w-[2px] -translate-y-1/2 bg-[#e25614] md:bg-[#da501a]"
+            >
+              <span className="absolute -top-1 left-1/2 hidden h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-[#cf4f1c] md:block" />
+            </span>
+            <span
+              aria-hidden="true"
+              className="absolute right-0 top-1/2 h-[1.05em] w-[2px] -translate-y-1/2 bg-[#e25615] md:bg-[#d34e1a]"
+            >
+              <span className="absolute -bottom-1 left-1/2 hidden h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-[#e95318] md:block" />
+            </span>
+          </span>{" "}
+          from students who attended our last session?
         </h2>
-        <p className={`${sora.className} ${typeScale.body} mt-4 leading-relaxed text-[#3F4145]`}>
+        <p className={`${sora.className} ${typeScale.body} md:text-lg! lg:text-lg! mt-4 leading-relaxed text-[#3F4145]`}>
           Eight things top candidates already know that most people learning Data Analytics don&apos;t.
         </p>
       </div>
