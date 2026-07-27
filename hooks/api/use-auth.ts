@@ -1,7 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { authApi, LoginPayload, RegisterPayload } from "@/lib/api/endpoints/auth";
 import {
-  LogoutPayload,
   AcceptInvitePayload,
   VerifyEmailPayload,
   ResendVerificationEmailPayload,
@@ -17,11 +16,12 @@ export const useLoginMutation = () => {
   return useMutation({
     mutationFn: (payload: LoginPayload) => authApi.login(payload),
     onSuccess: (res) => {
-      const token = res.token || res.data?.token;
+      const token = res.token || res.data?.token || res.data?.accessToken;
       const user = res.user || res.data?.user;
+      const refreshToken = res.data?.refreshToken;
       // Save token and user details on successful login
       if (res.success && token && user) {
-        setAuth(token, user);
+        setAuth(token, user, refreshToken);
       }
     },
   });
@@ -55,7 +55,10 @@ export const useLogoutMutation = () => {
   const clearAuth = useAuthStore((state) => state.clearAuth);
 
   return useMutation({
-    mutationFn: (payload: LogoutPayload) => authApi.logout(payload),
+    mutationFn: (payload: { allDevices?: boolean } = {}) => {
+      const refreshToken = useAuthStore.getState().refreshToken ?? "";
+      return authApi.logout({ refreshToken, allDevices: payload.allDevices });
+    },
     onSuccess: () => {
       clearAuth();
     },

@@ -90,6 +90,12 @@ export function feedSocketRequest<T = any>(
     };
     const handleConnectError = (err: Error) => {
       cleanup();
+      // The /feed namespace's auth middleware is the only thing that can
+      // reject a connection here, so any connect_error means the stored
+      // token is missing/expired/invalid - clear it so AuthGuard bounces
+      // the user back to sign-in instead of leaving them stuck on a feed
+      // that will never load.
+      useAuthStore.getState().clearAuth();
       reject(err);
     };
     const cleanup = () => {

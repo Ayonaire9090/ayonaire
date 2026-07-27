@@ -67,6 +67,9 @@ export interface LoginResponse {
   user?: UserProfile;
   data?: {
     token: string;
+    accessToken?: string; // same value as token; kept for backward compat
+    refreshToken?: string;
+    expiresIn?: number; // access-token lifetime in seconds
     user: UserProfile;
   };
 }

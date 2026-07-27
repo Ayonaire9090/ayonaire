@@ -34,7 +34,7 @@ export const DashboardUserDropDown = ({
   const handleLogout = async () => {
     // Attempt to hit the logout endpoint, and clear the auth store regardless of success
     try {
-      await logoutMutation.mutateAsync({ refreshToken: "" });
+      await logoutMutation.mutateAsync({});
     } catch (error) {
       console.error("Logout failed", error);
     } finally {
