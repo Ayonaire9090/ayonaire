@@ -2,12 +2,18 @@
 
 import React from "react";
 import { DataList } from "@/components/ui/data-list";
-import { mockPricingPlans } from "./pricing-plans-data";
+import { PricingPlan, mapPricingPlanRecordToPricingPlan } from "./pricing-plans-data";
 import { PricingPlansFilters } from "./pricing-plans-filters";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { MoreVertical } from "lucide-react";
+import { useGetPricingPlans } from "@/hooks/api/use-payments";
 
 export const AdminStudentsPricingPlansList = () => {
+  const { data, isLoading, isError } = useGetPricingPlans();
+  const plans: PricingPlan[] = (data?.data ?? []).map(
+    mapPricingPlanRecordToPricingPlan,
+  );
+
   const getStatusStyle = (status: string) => {
     switch (status) {
       case "Active":
@@ -22,8 +28,21 @@ export const AdminStudentsPricingPlansList = () => {
   return (
     <div className="w-full bg-white p-4 rounded-xl">
       <PricingPlansFilters />
+      {isLoading ? (
+        <div className="flex items-center justify-center py-16">
+          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+        </div>
+      ) : isError ? (
+        <div className="flex items-center justify-center py-16 text-[15px] text-red-500">
+          Failed to load pricing plans. Please try again.
+        </div>
+      ) : plans.length === 0 ? (
+        <div className="flex items-center justify-center py-16 text-[15px] text-gray-500">
+          No pricing plans found.
+        </div>
+      ) : (
       <DataList
-        data={mockPricingPlans}
+        data={plans}
         keyExtractor={(item) => item.id}
         renderItem={(item) => {
           return (
@@ -63,6 +82,7 @@ export const AdminStudentsPricingPlansList = () => {
           );
         }}
       />
+      )}
     </div>
   );
 };

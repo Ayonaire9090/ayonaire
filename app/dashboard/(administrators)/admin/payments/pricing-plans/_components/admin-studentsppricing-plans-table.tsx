@@ -2,11 +2,17 @@
 
 import React from "react";
 import { DataTable, ColumnDef } from "@/components/ui/data-table";
-import { mockPricingPlans, PricingPlan } from "./pricing-plans-data";
+import { PricingPlan, mapPricingPlanRecordToPricingPlan } from "./pricing-plans-data";
 import { PricingPlansFilters } from "./pricing-plans-filters";
 import { Edit, Trash2 } from "lucide-react";
+import { useGetPricingPlans } from "@/hooks/api/use-payments";
 
 export const AdminStudentsPricingPlansTable = () => {
+  const { data, isLoading, isError } = useGetPricingPlans();
+  const plans: PricingPlan[] = (data?.data ?? []).map(
+    mapPricingPlanRecordToPricingPlan,
+  );
+
   const getStatusStyle = (status: string) => {
     switch (status) {
       case "Active":
@@ -72,12 +78,26 @@ export const AdminStudentsPricingPlansTable = () => {
   return (
     <div className="w-full bg-white p-6 rounded-[24px]">
       <PricingPlansFilters />
-      <DataTable
-        data={mockPricingPlans}
-        columns={columns}
-        keyExtractor={(item) => item.id}
-        selectable={false}
-      />
+      {isLoading ? (
+        <div className="flex items-center justify-center py-16">
+          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+        </div>
+      ) : isError ? (
+        <div className="flex items-center justify-center py-16 text-[15px] text-red-500">
+          Failed to load pricing plans. Please try again.
+        </div>
+      ) : plans.length === 0 ? (
+        <div className="flex items-center justify-center py-16 text-[15px] text-gray-500">
+          No pricing plans found.
+        </div>
+      ) : (
+        <DataTable
+          data={plans}
+          columns={columns}
+          keyExtractor={(item) => item.id}
+          selectable={false}
+        />
+      )}
     </div>
   );
 };

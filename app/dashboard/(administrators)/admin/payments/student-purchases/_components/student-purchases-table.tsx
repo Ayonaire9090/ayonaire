@@ -2,13 +2,18 @@
 
 import React, { useState } from "react";
 import { DataTable, ColumnDef } from "@/components/ui/data-table";
-import { mockStudentPurchases, StudentPurchase } from "./student-purchases-data";
+import { StudentPurchase, mapPurchaseRecordToStudentPurchase } from "./student-purchases-data";
 import { StudentPurchasesFilters } from "./student-purchases-filters";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Edit, Trash2 } from "lucide-react";
+import { useGetStudentPurchases } from "@/hooks/api/use-payments";
 
 export const AdminStudentPurchasesTable = () => {
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const { data, isLoading, isError } = useGetStudentPurchases();
+  const purchases: StudentPurchase[] = (data?.purchases ?? []).map(
+    mapPurchaseRecordToStudentPurchase,
+  );
 
   const getStatusStyle = (status: string) => {
     switch (status) {
@@ -88,13 +93,27 @@ export const AdminStudentPurchasesTable = () => {
   return (
     <div className="w-full bg-white p-6 rounded-[24px]">
       <StudentPurchasesFilters />
-      <DataTable
-        data={mockStudentPurchases}
-        columns={columns}
-        keyExtractor={(item) => item.id}
-        selectable={true}
-        onSelectionChange={(ids) => setSelectedIds(ids)}
-      />
+      {isLoading ? (
+        <div className="flex items-center justify-center py-16">
+          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+        </div>
+      ) : isError ? (
+        <div className="flex items-center justify-center py-16 text-[15px] text-red-500">
+          Failed to load student purchases. Please try again.
+        </div>
+      ) : purchases.length === 0 ? (
+        <div className="flex items-center justify-center py-16 text-[15px] text-gray-500">
+          No student purchases found.
+        </div>
+      ) : (
+        <DataTable
+          data={purchases}
+          columns={columns}
+          keyExtractor={(item) => item.id}
+          selectable={true}
+          onSelectionChange={(ids) => setSelectedIds(ids)}
+        />
+      )}
     </div>
   );
 };

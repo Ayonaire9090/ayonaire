@@ -2,12 +2,18 @@
 
 import React from "react";
 import { DataList } from "@/components/ui/data-list";
-import { mockStudentPurchases } from "./student-purchases-data";
+import { StudentPurchase, mapPurchaseRecordToStudentPurchase } from "./student-purchases-data";
 import { StudentPurchasesFilters } from "./student-purchases-filters";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { MoreVertical } from "lucide-react";
+import { useGetStudentPurchases } from "@/hooks/api/use-payments";
 
 export const AdminStudentPurchasesList = () => {
+  const { data, isLoading, isError } = useGetStudentPurchases();
+  const purchases: StudentPurchase[] = (data?.purchases ?? []).map(
+    mapPurchaseRecordToStudentPurchase,
+  );
+
   const getStatusStyle = (status: string) => {
     switch (status) {
       case "Completed":
@@ -22,8 +28,21 @@ export const AdminStudentPurchasesList = () => {
   return (
     <div className="w-full bg-white p-4 rounded-xl">
       <StudentPurchasesFilters />
+      {isLoading ? (
+        <div className="flex items-center justify-center py-16">
+          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+        </div>
+      ) : isError ? (
+        <div className="flex items-center justify-center py-16 text-[15px] text-red-500">
+          Failed to load student purchases. Please try again.
+        </div>
+      ) : purchases.length === 0 ? (
+        <div className="flex items-center justify-center py-16 text-[15px] text-gray-500">
+          No student purchases found.
+        </div>
+      ) : (
       <DataList
-        data={mockStudentPurchases}
+        data={purchases}
         keyExtractor={(item) => item.id}
         renderItem={(item) => {
           return (
@@ -63,6 +82,7 @@ export const AdminStudentPurchasesList = () => {
           );
         }}
       />
+      )}
     </div>
   );
 };

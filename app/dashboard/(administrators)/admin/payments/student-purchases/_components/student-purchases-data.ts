@@ -1,3 +1,5 @@
+import { format } from "date-fns";
+
 export interface StudentPurchase {
   id: string;
   name: string;
@@ -8,6 +10,30 @@ export interface StudentPurchase {
   date: string;
   status: "Completed" | "Pending";
   avatar: string;
+}
+
+// paymentsApi.getStudentPurchases() types its response as `purchases: any[]`
+// (no confirmed backend schema yet), so this mirrors the shape/mapping
+// conventions used for the (typed) Payment record in payments-data.ts:
+// student/course populated objects, currency+amount, channel as payment
+// method, "success" -> Completed and anything else -> Pending.
+export function mapPurchaseRecordToStudentPurchase(purchase: any): StudentPurchase {
+  const student = typeof purchase.student === "string" ? null : purchase.student;
+  const course = typeof purchase.course === "string" ? null : purchase.course;
+
+  return {
+    id: purchase._id,
+    name: student?.name ?? "Unknown Student",
+    email: student?.email ?? "-",
+    course: course?.title ?? "Unknown Course",
+    amount: `${purchase.currency ?? "NGN"} ${purchase.amount}`,
+    paymentMethod: purchase.channel ?? "-",
+    date: purchase.createdAt
+      ? format(new Date(purchase.createdAt), "MMM d, yyyy")
+      : "-",
+    status: purchase.status === "success" ? "Completed" : "Pending",
+    avatar: "/assets/images/user1.png",
+  };
 }
 
 export const mockStudentPurchases: StudentPurchase[] = [
