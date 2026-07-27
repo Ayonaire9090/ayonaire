@@ -210,8 +210,7 @@ export default function DataAnalyticsBlogPost() {
               className="h-auto w-full"
             />
           </div>
-
-          <p className="mt-6 text-[15px] font-bold text-[#121315] md:text-[17px]">
+          <p className="mt-2 text-center text-xs italic text-gray-500">
             That&apos;s not hype. That&apos;s capital. And capital doesn&apos;t move on guesses.
           </p>
 

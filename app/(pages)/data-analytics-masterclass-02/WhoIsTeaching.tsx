@@ -95,26 +95,31 @@ function TutorCard({ speaker }: { speaker: Speaker }) {
         </button>
       </DialogTrigger>
 
-      <DialogContent className="max-w-lg gap-0 overflow-hidden rounded-none border-none p-0 shadow-2xl">
-        <div className="max-h-[85vh] overflow-y-auto p-6 sm:p-8">
-          <DialogHeader className="text-left">
-            <DialogTitle className={`${sora.className} text-lg`}>{speaker.name}</DialogTitle>
-            <p className="text-sm font-semibold" style={{ color: speaker.color }}>{speaker.role}</p>
+      <DialogContent className="max-w-[calc(100%-2rem)] sm:max-w-lg md:max-w-4xl gap-0 overflow-hidden rounded-3xl border-none p-0 shadow-2xl">
+        <div className="max-h-[85vh] overflow-y-auto p-6 sm:p-8 md:p-10">
+          <DialogHeader className="flex flex-col items-center gap-4 space-y-0 text-center md:flex-row md:items-center md:gap-10 md:text-left">
+            <div className="relative aspect-square w-[180px] shrink-0 md:w-[250px]">
+              <Image src={speaker.photo} alt={speaker.name} fill className="object-contain" />
+            </div>
+            <div>
+              <DialogTitle className={`${sora.className} ${typeScale.cardTitle} font-semibold tracking-tight text-[#121315]`}>
+                {speaker.name}
+              </DialogTitle>
+              <p className={`${sora.className} ${typeScale.body} mt-1 font-semibold text-[#F67219]`}>{speaker.role}</p>
+              <p className={`${sora.className} ${typeScale.body} mt-4 leading-relaxed text-[#575E70]`}>
+                {speaker.cardBio}
+              </p>
+            </div>
           </DialogHeader>
 
-          <p className={`${sora.className} ${typeScale.body} mt-5 leading-relaxed text-gray-600`}>
-            {speaker.bio}
-          </p>
-
-          <div
-            className="mt-5 rounded-2xl p-5"
-            style={{ backgroundColor: `${speaker.color}0D` }}
-          >
-            <p className="text-sm font-bold" style={{ color: speaker.color }}>{speaker.revealLabel}</p>
-            <ul className="mt-3 flex flex-col gap-2.5">
+          <div className="mt-6 rounded-2xl bg-[#FDF2EA] p-5 md:p-7">
+            <p className={`${sora.className} text-[16px] font-bold text-[#4A4C50] md:text-[20px]`}>
+              {speaker.revealLabel}
+            </p>
+            <ul className="mt-4 flex flex-col gap-2.5 text-left">
               {speaker.reveals.map((reveal, i) => (
-                <li key={i} className={`${typeScale.body} flex items-start gap-2.5 text-[#2D3139]`}>
-                  <CheckCircle2 size={18} strokeWidth={2} className="mt-0.5 shrink-0" style={{ color: speaker.color }} />
+                <li key={i} className={`${typeScale.body} flex items-start gap-2.5 text-[#121315]`}>
+                  <CheckCircle2 size={18} strokeWidth={1.8} className="mt-0.5 shrink-0 text-[#F25E25]" />
                   <span>{reveal}</span>
                 </li>
               ))}
