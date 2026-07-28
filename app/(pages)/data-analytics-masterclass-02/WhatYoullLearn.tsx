@@ -32,10 +32,10 @@ const items: { title: string; description: string; icon: LucideIcon }[] = [
     icon: Route,
   },
   {
-    title: "Build in Public' strategy",
+    title: "Industry specialization",
     description:
-      "How non-tech people broke into Data Analysis...the real path from zero background to working for Global companies.",
-    icon: Globe,
+      "The 'Build in Public' strategy top candidates are using to get noticed by recruiters before they even apply.",
+    icon: ChartColumnIncreasing,
   },
   {
     title: "International remote roles",
@@ -43,12 +43,13 @@ const items: { title: string; description: string; icon: LucideIcon }[] = [
       "How to land international internships and remote Data Analyst roles....even from outside the US/EU",
     icon: Earth,
   },
-  {
-    title: "Industry specialization",
+    {
+    title: "Build in Public' strategy",
     description:
-      "The 'Build in Public' strategy top candidates are using to get noticed by recruiters before they even apply.",
-    icon: ChartColumnIncreasing,
+      "How non-tech people broke into Data Analysis...the real path from zero background to working for Global companies.",
+    icon: Globe,
   },
+
   {
     title: "Non-tech success",
     description:

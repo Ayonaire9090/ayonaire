@@ -95,7 +95,7 @@ export default function Hero() {
             </p>
 
             {/* CTA */}
-            <div className="mt-8 w-full px-2 md:w-auto md:px-0">
+            <div className="mt-8 w-full px-12 md:w-auto  md:px-0">
               <CtaButton
                 size="lg"
                 onClick={() => setModalOpen(true)}
