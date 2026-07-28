@@ -26,7 +26,7 @@ import {
 export function StudentMessagesSidebarContent({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
-  const { state, toggleSidebar, open, isMobile } = useSidebar();
+  const { state, toggleSidebar, open, isMobile, setOpenMobile } = useSidebar();
   const isCollapsed = state === "collapsed" && !isMobile;
   const pathname = usePathname();
   const user = useAuthStore((s) => s.user);
@@ -139,6 +139,12 @@ export function StudentMessagesSidebarContent({
               <Link
                 key={conv.id}
                 href={`/dashboard/student/messages/${conv.id}`}
+                onClick={() => {
+                  // On mobile the conversation list lives inside the
+                  // off-canvas Sheet - close it so the selected thread
+                  // (rendered underneath) becomes visible.
+                  if (isMobile) setOpenMobile(false);
+                }}
                 className={cn(
                   "flex items-start gap-3 p-3 transition-colors",
                   isActive ? "bg-[#F6F6F6]" : "hover:bg-gray-50",
