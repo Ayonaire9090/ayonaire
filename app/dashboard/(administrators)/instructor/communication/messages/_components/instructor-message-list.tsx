@@ -2,17 +2,17 @@
 
 import * as React from "react";
 import { InstructorMessageBubble } from "./instructor-message-bubble";
-import type { Message } from "../_data/mock-messages";
+import type { MessageRecord } from "@/lib/api/endpoints/messages";
 import { ChevronDown } from "lucide-react";
 
 interface InstructorMessageListProps {
-  messages: Message[];
-  isGroup?: boolean;
+  messages: MessageRecord[];
+  currentUserId?: string;
 }
 
 export const InstructorMessageList = ({
   messages,
-  isGroup = false,
+  currentUserId,
 }: InstructorMessageListProps) => {
   const bottomRef = React.useRef<HTMLDivElement>(null);
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -52,13 +52,13 @@ export const InstructorMessageList = ({
           {messages.map((message, index) => {
             const prevMessage = index > 0 ? messages[index - 1] : null;
             const sameSenderAsPrev =
-              prevMessage && prevMessage.senderId === message.senderId;
+              prevMessage && prevMessage.senderId.id === message.senderId.id;
 
             return (
               <InstructorMessageBubble
                 key={message.id}
                 message={message}
-                isGroup={isGroup}
+                currentUserId={currentUserId}
                 showAvatar={!sameSenderAsPrev}
                 showName={!sameSenderAsPrev}
               />

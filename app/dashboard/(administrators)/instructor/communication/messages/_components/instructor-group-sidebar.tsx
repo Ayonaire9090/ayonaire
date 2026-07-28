@@ -2,10 +2,13 @@
 
 import { useState } from "react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { ChevronDown, Plus, SlidersHorizontal } from "lucide-react";
+import { ChevronDown, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
+import type { RoomRecord } from "@/lib/api/endpoints/rooms";
 
+// No backend endpoint lists files shared in a room (RoomLastMessage only
+// exposes hasMedia/hasFile booleans on the latest message, not a full
+// history), so this panel stays mock until that endpoint exists.
 const attachments = [
   {
     id: 1,
@@ -41,25 +44,10 @@ const attachments = [
   },
 ];
 
-const members = [
-  {
-    name: "Novita",
-    avatar: "https://randomuser.me/api/portraits/women/44.jpg",
-  },
-  {
-    name: "Milie Nose",
-    avatar: "https://randomuser.me/api/portraits/women/68.jpg",
-  },
-  {
-    name: "Ikhsan SD",
-    avatar: "https://randomuser.me/api/portraits/men/75.jpg",
-  },
-  { name: "Aditya", avatar: "https://randomuser.me/api/portraits/men/45.jpg" },
-];
-
-export const InstructorGroupSidebar = () => {
+export const InstructorGroupSidebar = ({ room }: { room: RoomRecord }) => {
   const [attachmentsOpen, setAttachmentsOpen] = useState(true);
   const [membersOpen, setMembersOpen] = useState(true);
+  const title = room.name ?? "Untitled Group";
 
   return (
     <div className="p-5 md:p-6 bg-white min-h-full flex flex-col h-full w-full">
@@ -71,16 +59,16 @@ export const InstructorGroupSidebar = () => {
       {/* Profile */}
       <div className="flex flex-col items-center mb-8">
         <Avatar className="size-20 mb-3 border-2 border-white shadow-sm">
-          <AvatarImage
-            src="https://randomuser.me/api/portraits/men/32.jpg"
-            alt="Killan James"
-          />
+          <AvatarImage src={room.profile?.url} alt={title} />
           <AvatarFallback className="bg-orange-100 text-orange-600 font-bold text-xl">
-            KJ
+            {title.slice(0, 2).toUpperCase()}
           </AvatarFallback>
         </Avatar>
-        <h3 className="text-[16px] font-bold text-gray-900">Killan James</h3>
-        <p className="text-sm text-gray-500 font-medium">@killan james</p>
+        <h3 className="text-[16px] font-bold text-gray-900">{title}</h3>
+        <p className="text-sm text-gray-500 font-medium">
+          {room.participants.length} member
+          {room.participants.length === 1 ? "" : "s"}
+        </p>
       </div>
 
       {/* Attachments */}
@@ -162,13 +150,13 @@ export const InstructorGroupSidebar = () => {
               </span>
             </button>
 
-            {members.map((member) => (
+            {room.participants.map((member) => (
               <div
-                key={member.name}
+                key={member.id}
                 className="flex items-center gap-3 py-2 px-1 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer"
               >
                 <Avatar className="size-10 shrink-0 border border-gray-100">
-                  <AvatarImage src={member.avatar} alt={member.name} />
+                  <AvatarImage src={member.profile?.url} alt={member.name} />
                   <AvatarFallback className="text-sm font-medium bg-gray-100">
                     {member.name.charAt(0)}
                   </AvatarFallback>
