@@ -61,6 +61,21 @@ export default function StudentCourseLessonPage({
     return undefined;
   }, [modules, selectedLessonId]);
 
+  // Flat lesson order across all modules, for prev/next navigation.
+  const flatLessons = useMemo(
+    () => modules.flatMap((mod) => mod.lessons),
+    [modules],
+  );
+  const activeLessonIndex = flatLessons.findIndex(
+    (l) => l._id === activeLesson?._id,
+  );
+  const previousLesson =
+    activeLessonIndex > 0 ? flatLessons[activeLessonIndex - 1] : undefined;
+  const nextLesson =
+    activeLessonIndex >= 0 && activeLessonIndex < flatLessons.length - 1
+      ? flatLessons[activeLessonIndex + 1]
+      : undefined;
+
   const { mutate: updateLastLesson } = useUpdateLastLessonMutation();
 
   const handleSelectLesson = (lessonId: string) => {
@@ -96,6 +111,13 @@ export default function StudentCourseLessonPage({
                 videoUrl={activeLesson?.videos?.[0]?.url}
                 isCompleted={activeLesson?.isCompleted}
                 onOpenChapters={() => setIsSheetOpen(true)}
+                hasPrevious={!!previousLesson}
+                hasNext={!!nextLesson}
+                nextLessonTitle={nextLesson?.title}
+                onPrevious={() =>
+                  previousLesson && handleSelectLesson(previousLesson._id)
+                }
+                onNext={() => nextLesson && handleSelectLesson(nextLesson._id)}
               />
             </div>
           </div>
@@ -130,7 +152,7 @@ export default function StudentCourseLessonPage({
                 </div>
               ) : activeTab === "Resources" ? (
                 <div className="max-w-4xl mx-auto w-full pt-4">
-                  <CourseResources />
+                  <CourseResources materials={activeLesson?.materials} />
                 </div>
               ) : activeTab === "Q&A" ? (
                 <div className="max-w-3xl mx-auto w-full">
@@ -138,7 +160,11 @@ export default function StudentCourseLessonPage({
                 </div>
               ) : activeTab === "Notes" ? (
                 <div className="max-w-3xl mx-auto w-full">
-                  <CourseNotes />
+                  <CourseNotes
+                    courseId={courseId}
+                    lessonId={activeLesson?._id}
+                    lessonTitle={activeLesson?.title}
+                  />
                 </div>
               ) : activeTab === "Announcement" ? (
                 <div className="max-w-3xl mx-auto w-full">

@@ -18,8 +18,14 @@ import {
   ArrowRight,
   PictureInPicture,
   CheckCircle2,
+  VideoOff,
+  SkipForward,
 } from "lucide-react";
 import { useMarkLessonCompletedMutation } from "@/hooks/api/use-lessons";
+
+// Once a student has watched this fraction of the video, mark the lesson
+// complete automatically (standard LMS behavior).
+const AUTO_COMPLETE_THRESHOLD = 0.9;
 
 interface LessonVideoPlayerProps {
   lessonId?: string;
@@ -27,6 +33,11 @@ interface LessonVideoPlayerProps {
   videoUrl?: string;
   isCompleted?: boolean;
   onOpenChapters?: () => void;
+  hasPrevious?: boolean;
+  hasNext?: boolean;
+  nextLessonTitle?: string;
+  onPrevious?: () => void;
+  onNext?: () => void;
 }
 
 export const LessonVideoPlayer = ({
@@ -35,11 +46,15 @@ export const LessonVideoPlayer = ({
   videoUrl,
   isCompleted,
   onOpenChapters,
+  hasPrevious,
+  hasNext,
+  nextLessonTitle,
+  onPrevious,
+  onNext,
 }: LessonVideoPlayerProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-
-  const videoSrc = videoUrl || "/assets/videos/learning-tips-demo.mp4";
+  const hasAutoCompletedRef = useRef(false);
 
   const { mutate: markCompleted, isPending: isMarkingComplete, isSuccess: justMarkedComplete } =
     useMarkLessonCompletedMutation();
@@ -54,6 +69,15 @@ export const LessonVideoPlayer = ({
   const [playbackRate, setPlaybackRate] = useState(1);
   const [showControls, setShowControls] = useState(true);
   const [isBuffering, setIsBuffering] = useState(false);
+  const [hasEnded, setHasEnded] = useState(false);
+
+  // Reset per-lesson state when the lesson (and therefore the video) changes.
+  useEffect(() => {
+    hasAutoCompletedRef.current = false;
+    setHasEnded(false);
+    setIsPlaying(false);
+    setCurrentTime(0);
+  }, [videoUrl]);
 
   // Format time (e.g., 12:45)
   const formatTime = (time: number) => {
@@ -143,12 +167,29 @@ export const LessonVideoPlayer = ({
     const video = videoRef.current;
     if (!video) return;
 
-    const updateTime = () => setCurrentTime(video.currentTime);
+    const updateTime = () => {
+      setCurrentTime(video.currentTime);
+
+      if (
+        !hasAutoCompletedRef.current &&
+        lessonId &&
+        !isMarkedComplete &&
+        video.duration &&
+        video.currentTime / video.duration >= AUTO_COMPLETE_THRESHOLD
+      ) {
+        hasAutoCompletedRef.current = true;
+        markCompleted({ lessonId, courseId });
+      }
+    };
     const updateDuration = () => setDuration(video.duration);
     const onPlay = () => setIsPlaying(true);
     const onPause = () => setIsPlaying(false);
     const onWaiting = () => setIsBuffering(true);
     const onPlaying = () => setIsBuffering(false);
+    const onEnded = () => {
+      setIsPlaying(false);
+      setHasEnded(true);
+    };
 
     video.addEventListener("timeupdate", updateTime);
     video.addEventListener("loadedmetadata", updateDuration);
@@ -156,6 +197,7 @@ export const LessonVideoPlayer = ({
     video.addEventListener("pause", onPause);
     video.addEventListener("waiting", onWaiting);
     video.addEventListener("playing", onPlaying);
+    video.addEventListener("ended", onEnded);
 
     return () => {
       video.removeEventListener("timeupdate", updateTime);
@@ -164,8 +206,9 @@ export const LessonVideoPlayer = ({
       video.removeEventListener("pause", onPause);
       video.removeEventListener("waiting", onWaiting);
       video.removeEventListener("playing", onPlaying);
+      video.removeEventListener("ended", onEnded);
     };
-  }, []);
+  }, [videoUrl, lessonId, courseId, isMarkedComplete, markCompleted]);
 
   useEffect(() => {
     const handleFullscreenChange = () => {
@@ -208,10 +251,40 @@ export const LessonVideoPlayer = ({
     };
   }, [isPlaying]);
 
+  if (!videoUrl) {
+    return (
+      <div className="relative w-full bg-black flex items-center justify-center">
+        <div className="relative w-full max-w-6xl aspect-video lg:max-h-[400px] bg-[#111] flex flex-col items-center justify-center gap-3 text-center px-6">
+          <VideoOff className="text-gray-500 w-10 h-10" />
+          <p className="text-gray-300 text-[15px] font-medium">
+            No video available for this lesson yet
+          </p>
+          <p className="text-gray-500 text-[13px] max-w-xs">
+            Check back later, or pick another lesson from the chapters list.
+          </p>
+          {onOpenChapters && (
+            <button
+              onClick={onOpenChapters}
+              className="mt-2 flex items-center gap-2 text-xs font-semibold border border-white/30 text-white rounded px-3 py-1.5 hover:bg-white/10 transition"
+            >
+              <List size={14} />
+              View Chapters
+            </button>
+          )}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="relative w-full bg-black flex items-center justify-center group">
       {/* Side Navigation Buttons */}
-      <button className="absolute left-2 lg:left-8 z-10 p-2 lg:p-3 bg-[#F86432] text-white rounded-md hover:bg-[#E55A2B] transition shadow-lg opacity-0 group-hover:opacity-100 disabled:opacity-50">
+      <button
+        onClick={onPrevious}
+        disabled={!hasPrevious}
+        className="absolute left-2 lg:left-8 z-10 p-2 lg:p-3 bg-[#F86432] text-white rounded-md hover:bg-[#E55A2B] transition shadow-lg opacity-0 group-hover:opacity-100 disabled:opacity-0 disabled:pointer-events-none"
+        title="Previous lesson"
+      >
         <ArrowLeft size={20} />
       </button>
 
@@ -221,7 +294,7 @@ export const LessonVideoPlayer = ({
       >
         <video
           ref={videoRef}
-          src={videoSrc}
+          src={videoUrl}
           className="w-full h-full object-contain cursor-pointer"
           onClick={togglePlay}
           playsInline
@@ -235,7 +308,7 @@ export const LessonVideoPlayer = ({
         )}
 
         {/* Play Overlay (when paused) */}
-        {!isPlaying && !isBuffering && (
+        {!isPlaying && !isBuffering && !hasEnded && (
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none bg-black/30">
             <div className="w-16 h-16 bg-black/60 rounded-full flex items-center justify-center backdrop-blur-sm">
               <Play className="text-white w-8 h-8 ml-1" />
@@ -243,10 +316,45 @@ export const LessonVideoPlayer = ({
           </div>
         )}
 
+        {/* End of Video: Next Lesson Prompt */}
+        {hasEnded && (
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-black/80 text-center px-6">
+            <p className="text-white text-[15px] font-medium">
+              {hasNext ? "Lesson complete!" : "You've reached the end."}
+            </p>
+            {hasNext && nextLessonTitle && (
+              <p className="text-gray-300 text-[13px]">
+                Up next: <span className="text-white">{nextLessonTitle}</span>
+              </p>
+            )}
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => {
+                  setHasEnded(false);
+                  videoRef.current?.play();
+                }}
+                className="flex items-center gap-2 text-xs font-semibold border border-white/40 text-white rounded px-3 py-2 hover:bg-white/10 transition"
+              >
+                <RotateCcw size={14} />
+                Watch Again
+              </button>
+              {hasNext && (
+                <button
+                  onClick={onNext}
+                  className="flex items-center gap-2 text-xs font-semibold bg-[#F86432] text-white rounded px-3 py-2 hover:bg-[#E55A2B] transition"
+                >
+                  <SkipForward size={14} />
+                  Play Next Lesson
+                </button>
+              )}
+            </div>
+          </div>
+        )}
+
         {/* Controls Overlay */}
         <div
           className={`absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/90 via-black/60 to-transparent transition-opacity duration-300 ${
-            showControls ? "opacity-100" : "opacity-0"
+            showControls && !hasEnded ? "opacity-100" : "opacity-0"
           }`}
         >
           {/* Progress Bar Container */}
@@ -389,7 +497,12 @@ export const LessonVideoPlayer = ({
         </div>
       </div>
 
-      <button className="absolute right-2 lg:right-8 z-10 p-2 lg:p-3 bg-[#F86432] text-white rounded-md hover:bg-[#E55A2B] transition shadow-lg opacity-0 group-hover:opacity-100">
+      <button
+        onClick={onNext}
+        disabled={!hasNext}
+        className="absolute right-2 lg:right-8 z-10 p-2 lg:p-3 bg-[#F86432] text-white rounded-md hover:bg-[#E55A2B] transition shadow-lg opacity-0 group-hover:opacity-100 disabled:opacity-0 disabled:pointer-events-none"
+        title="Next lesson"
+      >
         <ArrowRight size={20} />
       </button>
     </div>

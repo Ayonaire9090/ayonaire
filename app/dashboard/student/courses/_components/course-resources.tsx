@@ -1,79 +1,72 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Download, FileText, FileArchive, Code2 } from "lucide-react";
+import { Download, FileText, FileArchive, Code2, File } from "lucide-react";
+import { LessonMaterial } from "@/lib/api/endpoints/lessons";
 
-type ResourceType = "All" | "PDF" | "ZIP" | "Code Files";
+type ResourceType = "All" | "PDF" | "ZIP" | "Code Files" | "Other";
 
-interface ResourceItem {
-  id: string;
-  title: string;
-  type: Exclude<ResourceType, "All">;
-  size: string;
+function getResourceType(name: string): Exclude<ResourceType, "All"> {
+  const ext = name.split(".").pop()?.toLowerCase() ?? "";
+  if (ext === "pdf") return "PDF";
+  if (["zip", "rar", "7z"].includes(ext)) return "ZIP";
+  if (["js", "ts", "tsx", "jsx", "py", "java", "c", "cpp", "go", "rb", "json"].includes(ext))
+    return "Code Files";
+  return "Other";
 }
 
-const RESOURCES: ResourceItem[] = [
-  {
-    id: "1",
-    title: "Dataset for Practice",
-    type: "PDF",
-    size: "2MB",
-  },
-  {
-    id: "2",
-    title: "Python Code Files",
-    type: "ZIP",
-    size: "12MB",
-  },
-  {
-    id: "3",
-    title: "Lecture Slides",
-    type: "PDF",
-    size: "2MB",
-  },
-  {
-    id: "4",
-    title: "Advanced Exercises",
-    type: "Code Files",
-    size: "1.5MB",
-  },
-];
+function getIconForType(type: Exclude<ResourceType, "All">) {
+  switch (type) {
+    case "PDF":
+      return <FileText className="w-6 h-6 text-[#F86432]" />;
+    case "ZIP":
+      return <FileArchive className="w-6 h-6 text-emerald-500" />;
+    case "Code Files":
+      return <Code2 className="w-6 h-6 text-blue-500" />;
+    case "Other":
+      return <File className="w-6 h-6 text-gray-500" />;
+  }
+}
 
-export const CourseResources = () => {
+function getBgForType(type: Exclude<ResourceType, "All">) {
+  switch (type) {
+    case "PDF":
+      return "bg-[#F86432]/10";
+    case "ZIP":
+      return "bg-emerald-500/10";
+    case "Code Files":
+      return "bg-blue-500/10";
+    case "Other":
+      return "bg-gray-500/10";
+  }
+}
+
+interface CourseResourcesProps {
+  materials?: LessonMaterial[];
+}
+
+export const CourseResources = ({ materials = [] }: CourseResourcesProps) => {
   const [activeFilter, setActiveFilter] = useState<ResourceType>("All");
   const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredResources = RESOURCES.filter((item) => {
+  const resources = materials.map((material) => ({
+    ...material,
+    type: getResourceType(material.name),
+  }));
+
+  const availableFilters: ResourceType[] = [
+    "All",
+    ...Array.from(new Set(resources.map((r) => r.type))),
+  ];
+
+  const filteredResources = resources.filter((item) => {
     const matchesFilter = activeFilter === "All" || item.type === activeFilter;
-    const matchesSearch = item.title
+    const matchesSearch = item.name
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
     return matchesFilter && matchesSearch;
   });
-
-  const getIconForType = (type: ResourceItem["type"]) => {
-    switch (type) {
-      case "PDF":
-        return <FileText className="w-6 h-6 text-[#F86432]" />;
-      case "ZIP":
-        return <FileArchive className="w-6 h-6 text-emerald-500" />;
-      case "Code Files":
-        return <Code2 className="w-6 h-6 text-blue-500" />;
-    }
-  };
-
-  const getBgForType = (type: ResourceItem["type"]) => {
-    switch (type) {
-      case "PDF":
-        return "bg-[#F86432]/10";
-      case "ZIP":
-        return "bg-emerald-500/10";
-      case "Code Files":
-        return "bg-blue-500/10";
-    }
-  };
 
   return (
     <div className="w-full flex flex-col gap-6 md:gap-8 lg:bg-white lg:p-8 lg:rounded-2xl">
@@ -83,9 +76,9 @@ export const CourseResources = () => {
           Resources
         </h2>
 
-        <div className="flex items-center gap-1 bg-white border border-gray-100 p-1.5 rounded-full shadow-sm mx-auto md:absolute md:left-1/2 md:-translate-x-1/2 overflow-x-auto w-full md:w-auto hide-scrollbar justify-between md:justify-center">
-          {(["All", "PDF", "ZIP", "Code Files"] as ResourceType[]).map(
-            (type) => (
+        {resources.length > 0 && (
+          <div className="flex items-center gap-1 bg-white border border-gray-100 p-1.5 rounded-full shadow-sm mx-auto md:absolute md:left-1/2 md:-translate-x-1/2 overflow-x-auto w-full md:w-auto hide-scrollbar justify-between md:justify-center">
+            {availableFilters.map((type) => (
               <button
                 key={type}
                 onClick={() => setActiveFilter(type)}
@@ -97,67 +90,76 @@ export const CourseResources = () => {
               >
                 {type}
               </button>
-            ),
-          )}
-        </div>
-      </div>
-
-      {/* Search Input */}
-      <div className="w-full">
-        <Input
-          placeholder="files"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full bg-gray-50 border-0 h-12 px-4 rounded-xl text-base placeholder:text-gray-400 focus-visible:ring-1 focus-visible:ring-gray-200"
-        />
-      </div>
-
-      {/* Resources List */}
-      <div className="flex flex-col w-full">
-        {filteredResources.map((resource, index) => (
-          <div key={resource.id} className="w-full flex flex-col">
-            <div className="flex items-center justify-between py-4 md:py-5">
-              <div className="flex items-center gap-4">
-                <div
-                  className={`w-12 h-12 md:w-14 md:h-14 rounded-xl flex items-center justify-center shrink-0 ${getBgForType(resource.type)}`}
-                >
-                  {getIconForType(resource.type)}
-                </div>
-                <div className="flex flex-col gap-1.5">
-                  <h3 className="text-base md:text-[17px] font-semibold text-gray-900">
-                    {resource.title}
-                  </h3>
-                  <div className="flex items-center gap-3">
-                    <span className="bg-gray-100 text-gray-600 text-xs md:text-sm font-medium px-2.5 py-0.5 rounded-md">
-                      {resource.type}
-                    </span>
-                    <span className="text-gray-400 text-sm">
-                      {resource.size}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              <Button className="bg-[#F86432] hover:bg-[#F86432]/90 text-white gap-2 rounded-lg px-4 md:px-6 h-10 md:h-11 shadow-none shrink-0">
-                <Download className="w-4 h-4 md:w-5 md:h-5" />
-                <span className="text-[14px] md:text-[15px] font-medium">
-                  Download
-                </span>
-              </Button>
-            </div>
-
-            {index < filteredResources.length - 1 && (
-              <div className="w-full h-px bg-gray-100" />
-            )}
-          </div>
-        ))}
-
-        {filteredResources.length === 0 && (
-          <div className="py-12 text-center text-gray-500">
-            No resources found matching your criteria.
+            ))}
           </div>
         )}
       </div>
+
+      {resources.length === 0 ? (
+        <div className="py-16 text-center text-gray-500">
+          No resources have been attached to this lesson.
+        </div>
+      ) : (
+        <>
+          {/* Search Input */}
+          <div className="w-full">
+            <Input
+              placeholder="Search resources"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full bg-gray-50 border-0 h-12 px-4 rounded-xl text-base placeholder:text-gray-400 focus-visible:ring-1 focus-visible:ring-gray-200"
+            />
+          </div>
+
+          {/* Resources List */}
+          <div className="flex flex-col w-full">
+            {filteredResources.map((resource, index) => (
+              <div key={resource.publicId} className="w-full flex flex-col">
+                <div className="flex items-center justify-between py-4 md:py-5">
+                  <div className="flex items-center gap-4 min-w-0">
+                    <div
+                      className={`w-12 h-12 md:w-14 md:h-14 rounded-xl flex items-center justify-center shrink-0 ${getBgForType(resource.type)}`}
+                    >
+                      {getIconForType(resource.type)}
+                    </div>
+                    <div className="flex flex-col gap-1.5 min-w-0">
+                      <h3 className="text-base md:text-[17px] font-semibold text-gray-900 truncate">
+                        {resource.name}
+                      </h3>
+                      <span className="bg-gray-100 text-gray-600 text-xs md:text-sm font-medium px-2.5 py-0.5 rounded-md w-fit">
+                        {resource.type}
+                      </span>
+                    </div>
+                  </div>
+
+                  <a
+                    href={resource.url}
+                    download
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 bg-[#F86432] hover:bg-[#F86432]/90 text-white rounded-lg px-4 md:px-6 h-10 md:h-11 shrink-0 transition-colors"
+                  >
+                    <Download className="w-4 h-4 md:w-5 md:h-5" />
+                    <span className="text-[14px] md:text-[15px] font-medium">
+                      Download
+                    </span>
+                  </a>
+                </div>
+
+                {index < filteredResources.length - 1 && (
+                  <div className="w-full h-px bg-gray-100" />
+                )}
+              </div>
+            ))}
+
+            {filteredResources.length === 0 && (
+              <div className="py-12 text-center text-gray-500">
+                No resources found matching your criteria.
+              </div>
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 };
