@@ -1,25 +1,55 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AppMegaModal } from "@/components/modals/app-mega-modal";
 import { Button } from "@/components/ui/button";
 import { AppToggle } from "@/components/ui/app-toggle";
 import { AppSelect } from "@/components/ui/app-select";
 import { Input } from "@/components/ui/input";
 import { BadgeDollarSign, Code, Info } from "lucide-react";
+import { toast } from "sonner";
+import { PaymentGateway } from "@/lib/api/endpoints/payments";
+import { GatewayCredentials } from "./stripe-configuration-modal";
 
 interface PaystackConfigurationModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSave: () => void;
+  onSave: (credentials: GatewayCredentials) => void;
+  isSaving?: boolean;
+  gateway?: PaymentGateway;
 }
 
 export function PaystackConfigurationModal({
   isOpen,
   onClose,
   onSave,
+  isSaving = false,
+  gateway,
 }: PaystackConfigurationModalProps) {
-  const [isTestMode, setIsTestMode] = useState(true);
+  const [isTestMode, setIsTestMode] = useState(gateway?.mode !== "live");
+  const [publicKey, setPublicKey] = useState(gateway?.publicKey ?? "");
+  const [secretKey, setSecretKey] = useState("");
+
+  // Re-sync form state each time the modal opens with fresh gateway data.
+  useEffect(() => {
+    if (isOpen) {
+      setIsTestMode(gateway?.mode !== "live");
+      setPublicKey(gateway?.publicKey ?? "");
+      setSecretKey("");
+    }
+  }, [isOpen, gateway]);
+
+  const handleSave = () => {
+    if (!secretKey.trim()) {
+      toast.error("Enter your Paystack secret key to save.");
+      return;
+    }
+    onSave({
+      publicKey: publicKey.trim(),
+      secretKey: secretKey.trim(),
+      mode: isTestMode ? "test" : "live",
+    });
+  };
 
   const headerContent = (
     <Button className="bg-[#FF7A59] hover:bg-[#FF7A59]/90 text-white hidden sm:flex items-center h-9 px-4 text-sm font-medium">
@@ -37,10 +67,11 @@ export function PaystackConfigurationModal({
         Cancel
       </Button>
       <Button
-        onClick={onSave}
-        className="bg-[#FF7A59] hover:bg-[#FF7A59]/90 text-white lg:px-8 py-6! rounded-xl shadow-none! cursor-pointer"
+        onClick={handleSave}
+        disabled={isSaving}
+        className="bg-[#FF7A59] hover:bg-[#FF7A59]/90 text-white lg:px-8 py-6! rounded-xl shadow-none! cursor-pointer disabled:opacity-60"
       >
-        Save Change
+        {isSaving ? "Saving..." : "Save Change"}
       </Button>
     </div>
   );
@@ -210,29 +241,36 @@ export function PaystackConfigurationModal({
         <div className="flex flex-col gap-4">
           <div className="flex flex-col sm:flex-row sm:items-center gap-4">
             <label className="w-[200px] text-[14px] font-semibold text-gray-900">
-              Live Secret Key
+              {isTestMode ? "Test Secret Key" : "Live Secret Key"}
             </label>
             <div className="flex-1 flex flex-col gap-1">
               <Input
-                placeholder="Secret Key"
+                type="password"
+                value={secretKey}
+                onChange={(e) => setSecretKey(e.target.value)}
+                placeholder={isTestMode ? "sk_test_..." : "sk_live_..."}
                 className="bg-white/80 border-gray-200"
               />
               <span className="text-[12px] text-white/800">
-                Enter your Live Secret Key here.
+                {gateway?.isConnected && gateway.secretKeyLast4
+                  ? `A key ending in ${gateway.secretKeyLast4} is currently saved. Enter a key to replace it.`
+                  : `Enter your ${isTestMode ? "Test" : "Live"} Secret Key here.`}
               </span>
             </div>
           </div>
           <div className="flex flex-col sm:flex-row sm:items-center gap-4">
             <label className="w-[200px] text-[14px] font-semibold text-gray-900">
-              Live Public Key
+              {isTestMode ? "Test Public Key" : "Live Public Key"}
             </label>
             <div className="flex-1 flex flex-col gap-1">
               <Input
-                placeholder="Publishable Key"
+                value={publicKey}
+                onChange={(e) => setPublicKey(e.target.value)}
+                placeholder={isTestMode ? "pk_test_..." : "pk_live_..."}
                 className="bg-white/80 border-gray-200"
               />
               <span className="text-[12px] text-white/800">
-                Enter your Live Public Key here.
+                Enter your {isTestMode ? "Test" : "Live"} Public Key here.
               </span>
             </div>
           </div>

@@ -1,5 +1,5 @@
-import StudentFeedPage from "./feed/page";
+import { redirect } from "next/navigation";
 
 export default function StudentDashboardPage() {
-  return <StudentFeedPage />;
+  redirect("/dashboard/student/feed");
 }

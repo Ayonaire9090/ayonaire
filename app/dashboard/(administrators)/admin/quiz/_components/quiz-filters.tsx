@@ -10,6 +10,9 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { ChevronDown, Search, X } from "lucide-react";
+import { QuizFilterState } from "./quiz-data";
+
+export type QuizBulkAction = "publish" | "unpublish" | "delete";
 
 // Filter Popover Header
 const FilterPopoverHeader = ({ title }: { title: string }) => {
@@ -74,31 +77,75 @@ const CheckboxItem = ({
   );
 };
 
-export const QuizFilters = () => {
-  const [searchQuery, setSearchQuery] = useState("");
+// Plain action row (no checkbox) for bulk actions
+const ActionItem = ({
+  label,
+  onClick,
+  danger,
+}: {
+  label: string;
+  onClick: () => void;
+  danger?: boolean;
+}) => {
+  return (
+    <PopoverClose asChild>
+      <button
+        onClick={onClick}
+        className="flex items-center gap-3.5 w-full px-5 py-3 hover:bg-white/60 transition-colors text-left rounded-xl"
+      >
+        <span
+          className={`text-[15px] font-normal ${
+            danger ? "text-red-500" : "text-gray-600"
+          }`}
+        >
+          {label}
+        </span>
+      </button>
+    </PopoverClose>
+  );
+};
 
-  // Generic state handler for UI mockup
-  const [state, setState] = useState<Record<string, Set<string>>>({
-    BulkActions: new Set(),
-    AssignStatus: new Set(),
-    Course: new Set(),
-    ClassCohort: new Set(),
-  });
+interface QuizFiltersProps {
+  filters: QuizFilterState;
+  onFiltersChange: (filters: QuizFilterState) => void;
+  courseOptions: string[];
+  // Bulk actions only make sense where row selection exists (desktop table)
+  selectedCount?: number;
+  onBulkAction?: (action: QuizBulkAction) => void;
+}
 
-  const toggleFilter = (filterCategory: string, option: string) => {
-    setState((prev) => {
-      const nextCategorySet = new Set(prev[filterCategory] || new Set());
-      if (nextCategorySet.has(option)) {
-        nextCategorySet.delete(option);
-      } else {
-        nextCategorySet.add(option);
-      }
-      return { ...prev, [filterCategory]: nextCategorySet };
-    });
+export const QuizFilters = ({
+  filters,
+  onFiltersChange,
+  courseOptions,
+  selectedCount,
+  onBulkAction,
+}: QuizFiltersProps) => {
+  // Checkbox selections are staged locally and committed with "Apply"
+  const [pendingStatuses, setPendingStatuses] = useState<Set<string>>(
+    new Set(filters.statuses),
+  );
+  const [pendingCourses, setPendingCourses] = useState<Set<string>>(
+    new Set(filters.courses),
+  );
+
+  const toggle = (
+    set: Set<string>,
+    setter: React.Dispatch<React.SetStateAction<Set<string>>>,
+    option: string,
+  ) => {
+    const next = new Set(set);
+    if (next.has(option)) next.delete(option);
+    else next.add(option);
+    setter(next);
   };
 
-  const getSelectedCount = (filterCategory: string) => {
-    return state[filterCategory]?.size || 0;
+  const applyFilters = () => {
+    onFiltersChange({
+      ...filters,
+      statuses: [...pendingStatuses],
+      courses: [...pendingCourses],
+    });
   };
 
   const popoverContentClasses =
@@ -113,8 +160,10 @@ export const QuizFilters = () => {
         <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-gray-400" />
         <Input
           placeholder="Search Quiz..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          value={filters.search}
+          onChange={(e) =>
+            onFiltersChange({ ...filters, search: e.target.value })
+          }
           className="pl-[42px] rounded-full border-none bg-white lg:bg-[#F6F6F6] h-11 text-[15px] placeholder:text-gray-400 focus-visible:ring-0 focus-visible:bg-gray-50 hover:bg-gray-50 transition-colors shadow-none w-full"
         />
       </div>
@@ -122,46 +171,64 @@ export const QuizFilters = () => {
       {/* Left Side Filters */}
       <div className="flex overflow-x-auto hide-scrollbar items-center justify-between lg:justify-end gap-3 lg:gap-2 w-full pr-1">
         {/* Bulk Action */}
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button variant="outline" className={buttonClasses}>
-              Bulk Action
-              <ChevronDown className="ml-1.5 size-4 text-gray-400" />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent align="start" className={popoverContentClasses}>
-            <FilterPopoverHeader title="Bulk actions" />
-            <div className="pb-3 flex flex-col gap-0.5">
-              {["Publish", "Archive", "Delete"].map((action) => (
-                <CheckboxItem
-                  key={action}
-                  label={action}
-                  checked={(state.BulkActions || new Set()).has(action)}
-                  onToggle={() => toggleFilter("BulkActions", action)}
-                  danger={action === "Delete"}
-                />
-              ))}
-            </div>
-          </PopoverContent>
-        </Popover>
+        {onBulkAction && (
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button variant="outline" className={buttonClasses}>
+                Bulk Action
+                {selectedCount ? ` (${selectedCount})` : ""}
+                <ChevronDown className="ml-1.5 size-4 text-gray-400" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent align="start" className={popoverContentClasses}>
+              <FilterPopoverHeader title="Bulk actions" />
+              <div className="pb-3 flex flex-col gap-0.5">
+                {selectedCount ? (
+                  <>
+                    <ActionItem
+                      label="Publish"
+                      onClick={() => onBulkAction("publish")}
+                    />
+                    <ActionItem
+                      label="Unpublish"
+                      onClick={() => onBulkAction("unpublish")}
+                    />
+                    <ActionItem
+                      label="Delete"
+                      onClick={() => onBulkAction("delete")}
+                      danger
+                    />
+                  </>
+                ) : (
+                  <p className="px-5 py-3 text-[14px] text-gray-500">
+                    Select one or more quizzes first.
+                  </p>
+                )}
+              </div>
+            </PopoverContent>
+          </Popover>
+        )}
 
-        {/* Assign Status */}
+        {/* Status */}
         <Popover>
           <PopoverTrigger asChild>
             <Button variant="outline" className={buttonClasses}>
-              Assign Status
+              Status
+              {pendingStatuses.size > 0 ? ` (${pendingStatuses.size})` : ""}
               <ChevronDown className="ml-1.5 size-4 text-gray-400" />
             </Button>
           </PopoverTrigger>
           <PopoverContent align="start" className={popoverContentClasses}>
-            <FilterPopoverHeader title="Assign Status" />
+            <FilterPopoverHeader title="Status" />
             <div className="pb-3 flex flex-col gap-0.5">
-              {["Published", "Draft", "Closed", "Archived"].map((action) => (
+              {["Published", "Draft"].map((status) => (
                 <CheckboxItem
-                  key={action}
-                  label={action}
-                  checked={(state.AssignStatus || new Set()).has(action)}
-                  onToggle={() => toggleFilter("AssignStatus", action)}
+                  key={status}
+                  label={status}
+                  checked={pendingStatuses.has(status)}
+                  onToggle={() =>
+                    toggle(pendingStatuses, setPendingStatuses, status)
+                  }
                 />
               ))}
             </div>
@@ -173,51 +240,38 @@ export const QuizFilters = () => {
           <PopoverTrigger asChild>
             <Button variant="outline" className={buttonClasses}>
               Filter by Course
+              {pendingCourses.size > 0 ? ` (${pendingCourses.size})` : ""}
               <ChevronDown className="ml-1.5 size-4 text-gray-400" />
             </Button>
           </PopoverTrigger>
           <PopoverContent align="start" className={popoverContentClasses}>
             <FilterPopoverHeader title="Filter by Course" />
             <div className="pb-3 flex flex-col gap-0.5">
-              {["Machine Learning", "Data Analytics", "Full Stack"].map(
-                (action) => (
+              {courseOptions.length === 0 ? (
+                <p className="px-5 py-3 text-[14px] text-gray-500">
+                  No courses available.
+                </p>
+              ) : (
+                courseOptions.map((course) => (
                   <CheckboxItem
-                    key={action}
-                    label={action}
-                    checked={(state.Course || new Set()).has(action)}
-                    onToggle={() => toggleFilter("Course", action)}
+                    key={course}
+                    label={course}
+                    checked={pendingCourses.has(course)}
+                    onToggle={() =>
+                      toggle(pendingCourses, setPendingCourses, course)
+                    }
                   />
-                ),
+                ))
               )}
             </div>
           </PopoverContent>
         </Popover>
 
-        {/* Filter by Class/Cohort */}
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button variant="outline" className={buttonClasses}>
-              Filter by Class/Cohort
-              <ChevronDown className="ml-1.5 size-4 text-gray-400" />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent align="start" className={popoverContentClasses}>
-            <FilterPopoverHeader title="Class/Cohort filter" />
-            <div className="pb-3 flex flex-col gap-0.5">
-              {["Cohort 1", "Cohort 2", "Cohort 3"].map((action) => (
-                <CheckboxItem
-                  key={action}
-                  label={action}
-                  checked={(state.ClassCohort || new Set()).has(action)}
-                  onToggle={() => toggleFilter("ClassCohort", action)}
-                />
-              ))}
-            </div>
-          </PopoverContent>
-        </Popover>
-
         {/* Apply Button */}
-        <Button className="h-11 px-8 lg:px-10 bg-primary text-white font-medium rounded-xl text-[15px] hover:bg-[#FF6B35]/90 border-none shadow-sm shrink-0">
+        <Button
+          onClick={applyFilters}
+          className="h-11 px-8 lg:px-10 bg-primary text-white font-medium rounded-xl text-[15px] hover:bg-[#FF6B35]/90 border-none shadow-sm shrink-0"
+        >
           Apply
         </Button>
       </div>

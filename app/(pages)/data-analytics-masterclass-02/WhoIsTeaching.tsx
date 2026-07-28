@@ -165,11 +165,10 @@ function TutorCard({ speaker }: { speaker: Speaker }) {
       {/* Modal Content Dialog */}
       <DialogContent className="w-full sm:max-w-4xl gap-0 overflow-hidden rounded-[12px] border-none p-6 sm:p-12 shadow-2xl bg-white">
         <div className="max-h-[85vh] overflow-y-auto w-full">
-          
+
           {/* Top Section: Speaker Profile (Image + Bio) */}
-      {/* Top Section: Speaker Profile (Image + Bio) */}
           <div className="flex flex-col sm:flex-row items-center sm:items-center gap-6 sm:gap-10 w-full">
-            
+
             {/* Speaker Large Image */}
             <div className="relative aspect-square w-48 sm:w-60 shrink-0 overflow-hidden rounded-[24px]">
               <div className="relative h-full w-full overflow-hidden rounded-[24px] bg-white">

@@ -11,6 +11,7 @@ import { FeedPostActions, PostOption } from "./feed-post-actions";
 
 interface FeedPostHeaderProps {
   title?: string;
+  avatarUrl?: string;
   badge?: React.ReactNode;
   description?: string;
   isPinned?: boolean;
@@ -18,8 +19,16 @@ interface FeedPostHeaderProps {
   onReport?: () => void;
 }
 
+const getInitials = (name?: string) => {
+  if (!name) return "AN";
+  const parts = name.trim().split(/\s+/);
+  const initials = parts.length > 1 ? `${parts[0][0]}${parts[1][0]}` : parts[0].slice(0, 2);
+  return initials.toUpperCase();
+};
+
 export const FeedPostHeader = ({
   title,
+  avatarUrl,
   badge,
   description,
   isPinned,
@@ -45,10 +54,10 @@ export const FeedPostHeader = ({
         <div className="flex items-center gap-3">
           <Avatar className="w-11 h-11 bg-[#F6F6F6]">
             <AvatarImage
-              src="/assets/icons/user-solid.svg"
-              className="object-contain p-2"
+              src={avatarUrl || "/assets/icons/user-solid.svg"}
+              className={avatarUrl ? "object-cover" : "object-contain p-2"}
             />
-            <AvatarFallback>AN</AvatarFallback>
+            <AvatarFallback>{getInitials(title)}</AvatarFallback>
           </Avatar>
           <div className="flex flex-col">
             <span className="flex gap-2 font-semibold text-[17px] text-gray-900 leading-tight">

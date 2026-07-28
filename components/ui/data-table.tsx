@@ -21,6 +21,13 @@ export interface ColumnDef<T> {
   headerClassName?: string; // Optional custom styling for the table head
 }
 
+export interface DataTablePagination {
+  page: number;
+  totalPages: number;
+  onPrev?: () => void;
+  onNext?: () => void;
+}
+
 interface DataTableProps<T> {
   data: T[];
   columns: ColumnDef<T>[];
@@ -29,6 +36,9 @@ interface DataTableProps<T> {
   onSelectionChange?: (selectedIds: Set<string>) => void;
   className?: string;
   footerContent?: React.ReactNode;
+  // When provided, the footer shows real page numbers with working
+  // Prev/Next buttons; otherwise the legacy static placeholder renders.
+  pagination?: DataTablePagination;
 }
 
 export function DataTable<T>({
@@ -39,6 +49,7 @@ export function DataTable<T>({
   onSelectionChange,
   className = "",
   footerContent,
+  pagination,
 }: DataTableProps<T>) {
   const [selectedItems, setSelectedItems] = useState<Set<string>>(new Set());
 
@@ -150,18 +161,42 @@ export function DataTable<T>({
         </div>
       )}
 
-      {/* Pagination placeholder */}
-      <div className="flex items-center justify-between mt-8 p-4 border-t border-gray-100">
-        <span className="text-gray-900 text-[15px]">Page 1 of 5</span>
-        <div className="flex items-center gap-6">
-          <button className="flex items-center gap-1.5 text-gray-900 text-[15px] hover:text-black transition-colors">
-            <ChevronLeft className="size-4" /> Prev
-          </button>
-          <button className="flex items-center gap-1.5 text-gray-900 text-[15px] hover:text-black transition-colors">
-            Next <ChevronRight className="size-4" />
-          </button>
+      {/* Pagination */}
+      {pagination ? (
+        <div className="flex items-center justify-between mt-8 p-4 border-t border-gray-100">
+          <span className="text-gray-900 text-[15px]">
+            Page {pagination.page} of {Math.max(pagination.totalPages, 1)}
+          </span>
+          <div className="flex items-center gap-6">
+            <button
+              onClick={pagination.onPrev}
+              disabled={pagination.page <= 1}
+              className="flex items-center gap-1.5 text-gray-900 text-[15px] hover:text-black transition-colors disabled:text-gray-300 disabled:cursor-not-allowed"
+            >
+              <ChevronLeft className="size-4" /> Prev
+            </button>
+            <button
+              onClick={pagination.onNext}
+              disabled={pagination.page >= pagination.totalPages}
+              className="flex items-center gap-1.5 text-gray-900 text-[15px] hover:text-black transition-colors disabled:text-gray-300 disabled:cursor-not-allowed"
+            >
+              Next <ChevronRight className="size-4" />
+            </button>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="flex items-center justify-between mt-8 p-4 border-t border-gray-100">
+          <span className="text-gray-900 text-[15px]">Page 1 of 5</span>
+          <div className="flex items-center gap-6">
+            <button className="flex items-center gap-1.5 text-gray-900 text-[15px] hover:text-black transition-colors">
+              <ChevronLeft className="size-4" /> Prev
+            </button>
+            <button className="flex items-center gap-1.5 text-gray-900 text-[15px] hover:text-black transition-colors">
+              Next <ChevronRight className="size-4" />
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -3,11 +3,14 @@ import { FeedPostContent } from "./feed-post-content";
 import { FeedPostPoll } from "./feed-post-poll";
 import { FeedInteractPost } from "./feed-interact-post";
 import { FeedWriteComment } from "./feed-write-comment";
+import { FeedCommentList } from "./feed-comment-list";
 import { PostOption } from "./feed-post-actions";
+import { FeedCommentData } from "./feed-data";
 
 export interface FeedPostProps {
   feedId?: string;
   authorName?: string;
+  authorAvatarUrl?: string;
   badge?: React.ReactNode;
   authorSubtitle?: string;
   isPinned?: boolean;
@@ -25,11 +28,14 @@ export interface FeedPostProps {
   commentsCount?: number;
   sharesCount?: number;
   isLikedByMe?: boolean;
+  comments?: FeedCommentData[];
+  currentUserId?: string;
 }
 
 export const FeedPost = ({
   feedId,
   authorName,
+  authorAvatarUrl,
   badge,
   authorSubtitle,
   isPinned,
@@ -47,12 +53,15 @@ export const FeedPost = ({
   commentsCount,
   sharesCount,
   isLikedByMe,
+  comments,
+  currentUserId,
 }: FeedPostProps) => {
   return (
     <div className="bg-white lg:rounded-2xl border border-gray-200/80 p-4 sm:p-6 flex flex-col w-full">
       {/* Header */}
       <FeedPostHeader
         title={authorName}
+        avatarUrl={authorAvatarUrl}
         badge={badge}
         description={authorSubtitle}
         isPinned={isPinned}
@@ -85,6 +94,17 @@ export const FeedPost = ({
           isLikedByMe={isLikedByMe}
         />
       </div>
+
+      {/* Comments */}
+      {comments && comments.length > 0 && (
+        <div className="mt-4">
+          <FeedCommentList
+            feedId={feedId}
+            comments={comments}
+            currentUserId={currentUserId}
+          />
+        </div>
+      )}
 
       {/* Comment Input */}
       <div className="mt-4">

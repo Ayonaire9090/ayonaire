@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -10,6 +10,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { ChevronDown, Search, X } from "lucide-react";
+import { QuizResultFilterState } from "./quiz-result-data";
 
 // Filter Popover Header
 const FilterPopoverHeader = ({ title }: { title: string }) => {
@@ -74,31 +75,24 @@ const CheckboxItem = ({
   );
 };
 
-export const QuizResultFilters = () => {
-  const [searchQuery, setSearchQuery] = useState("");
+interface QuizResultFiltersProps {
+  filters: QuizResultFilterState;
+  onFiltersChange: (filters: QuizResultFilterState) => void;
+}
 
-  // Generic state handler for UI mockup
-  const [state, setState] = useState<Record<string, Set<string>>>({
-    BulkActions: new Set(),
-    AssignStatus: new Set(),
-    Course: new Set(),
-    ClassCohort: new Set(),
-  });
-
-  const toggleFilter = (filterCategory: string, option: string) => {
-    setState((prev) => {
-      const nextCategorySet = new Set(prev[filterCategory] || new Set());
-      if (nextCategorySet.has(option)) {
-        nextCategorySet.delete(option);
-      } else {
-        nextCategorySet.add(option);
-      }
-      return { ...prev, [filterCategory]: nextCategorySet };
-    });
-  };
-
-  const getSelectedCount = (filterCategory: string) => {
-    return state[filterCategory]?.size || 0;
+export const QuizResultFilters = ({
+  filters,
+  onFiltersChange,
+}: QuizResultFiltersProps) => {
+  const toggleValue = (
+    key: "statuses" | "passFail",
+    option: string,
+  ) => {
+    const current = filters[key];
+    const next = current.includes(option)
+      ? current.filter((v) => v !== option)
+      : [...current, option];
+    onFiltersChange({ ...filters, [key]: next });
   };
 
   const popoverContentClasses =
@@ -112,38 +106,37 @@ export const QuizResultFilters = () => {
       <div className="relative w-full lg:w-[350px]">
         <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-gray-400" />
         <Input
-          placeholder="Search Quiz..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search student by name or email..."
+          value={filters.search}
+          onChange={(e) =>
+            onFiltersChange({ ...filters, search: e.target.value })
+          }
           className="pl-[42px] rounded-full border-none bg-white lg:bg-[#F6F6F6] h-11 text-[15px] placeholder:text-gray-400 focus-visible:ring-0 focus-visible:bg-gray-50 hover:bg-gray-50 transition-colors shadow-none w-full"
         />
       </div>
 
       {/* Left Side Filters */}
       <div className="flex overflow-x-auto hide-scrollbar items-center justify-between lg:justify-end gap-3 lg:gap-2 w-full pr-1">
-        {/*Status */}
+        {/* Status */}
         <Popover>
           <PopoverTrigger asChild>
             <Button variant="outline" className={buttonClasses}>
               Status
+              {filters.statuses.length > 0
+                ? ` (${filters.statuses.length})`
+                : ""}
               <ChevronDown className="ml-1.5 size-4 text-gray-400" />
             </Button>
           </PopoverTrigger>
           <PopoverContent align="start" className={popoverContentClasses}>
             <FilterPopoverHeader title="Status" />
             <div className="pb-3 flex flex-col gap-0.5">
-              {[
-                "Not Submitted",
-                "All Submissions",
-                "Submitted",
-                "Late",
-                "Graded",
-              ].map((action) => (
+              {["Graded", "Pending"].map((status) => (
                 <CheckboxItem
-                  key={action}
-                  label={action}
-                  checked={(state.AssignStatus || new Set()).has(action)}
-                  onToggle={() => toggleFilter("AssignStatus", action)}
+                  key={status}
+                  label={status}
+                  checked={filters.statuses.includes(status)}
+                  onToggle={() => toggleValue("statuses", status)}
                 />
               ))}
             </div>
@@ -155,44 +148,22 @@ export const QuizResultFilters = () => {
           <PopoverTrigger asChild>
             <Button variant="outline" className={buttonClasses}>
               Pass/Fail
+              {filters.passFail.length > 0
+                ? ` (${filters.passFail.length})`
+                : ""}
               <ChevronDown className="ml-1.5 size-4 text-gray-400" />
             </Button>
           </PopoverTrigger>
           <PopoverContent align="start" className={popoverContentClasses}>
-            <FilterPopoverHeader title="Filter by Course" />
+            <FilterPopoverHeader title="Pass/Fail" />
             <div className="pb-3 flex flex-col gap-0.5">
-              {["Machine Learning", "Data Analytics", "Full Stack"].map(
-                (action) => (
-                  <CheckboxItem
-                    key={action}
-                    label={action}
-                    checked={(state.Course || new Set()).has(action)}
-                    onToggle={() => toggleFilter("Course", action)}
-                  />
-                ),
-              )}
-            </div>
-          </PopoverContent>
-        </Popover>
-
-        {/* Action */}
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button variant="outline" className={buttonClasses}>
-              Action
-              <ChevronDown className="ml-1.5 size-4 text-gray-400" />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent align="start" className={popoverContentClasses}>
-            <FilterPopoverHeader title="Bulk actions" />
-            <div className="pb-3 flex flex-col gap-0.5">
-              {["Publish", "Edit", "Delete"].map((action) => (
+              {["Pass", "Fail"].map((option) => (
                 <CheckboxItem
-                  key={action}
-                  label={action}
-                  checked={(state.BulkActions || new Set()).has(action)}
-                  onToggle={() => toggleFilter("BulkActions", action)}
-                  danger={action === "Delete"}
+                  key={option}
+                  label={option}
+                  checked={filters.passFail.includes(option)}
+                  onToggle={() => toggleValue("passFail", option)}
+                  danger={option === "Fail"}
                 />
               ))}
             </div>
