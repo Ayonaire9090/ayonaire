@@ -7,7 +7,7 @@ import { AppConfetti } from "@/components/app-confetti";
 import { sora } from "@/app/fonts";
 import { CtaButton } from "./_components/CtaButton";
 
-const WHATSAPP_LINK = "https://chat.whatsapp.com/ILzKk6IHvKSGEvPqEYshTT?mode=gi_t";
+const WHATSAPP_LINK ="https://chat.whatsapp.com/C8r32SrdGjcJeyNoO9nGAs?s=cl&p=i&ilr=0"; 
 
 export const metadata: Metadata = generateSEO({
   title: "Thank You - Data Analytics Masterclass | Ayonaire Academy",
