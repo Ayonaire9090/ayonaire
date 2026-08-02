@@ -1,46 +1,57 @@
+"use client";
+
 import { CalendarClock } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { Badge } from "../ui/badge";
-
-const pendingActions = [
-  {
-    title: "Manual Payments",
-    description: "Requires verification from bank receipt",
-    count: "08",
-    icon: "/assets/icons/money-notes.svg",
-    iconBg: "bg-[#F86432]/10",
-  },
-  {
-    title: "Pending Enrollments",
-    description: "Awaiting course assignment",
-    count: "05",
-    icon: "/assets/icons/user-plus.svg",
-    iconBg: "bg-[#3B82F6]/10",
-  },
-  {
-    title: "Instructor Approvals",
-    description: "New profile validation",
-    count: "03",
-    icon: "/assets/icons/green-shield.svg",
-    iconBg: "bg-[#10B981]/10",
-  },
-  {
-    title: "Course Approvals",
-    description: "Content quality review",
-    count: "02",
-    icon: "/assets/icons/blue-book.svg",
-    iconBg: "bg-[#3B82F6]/10",
-  },
-  {
-    title: "Certificate Requests",
-    description: "Final assessment verification",
-    count: "07",
-    icon: "/assets/icons/certificate-badge-star.svg",
-    iconBg: "bg-[#A855F7]/10",
-  },
-];
+import { useGetAllPayments } from "@/hooks/api/use-payments";
+import { useGetAllEnrollments } from "@/hooks/api/use-enrollment";
+import { useGetAllInstructorProfiles } from "@/hooks/api/use-instructor";
 
 export const AdminDashboardPendingActionCard = () => {
+  const { data: paymentsData } = useGetAllPayments({ limit: 200 });
+  const { data: enrollmentsData } = useGetAllEnrollments({ limit: 200 });
+  const { data: instructorData } = useGetAllInstructorProfiles();
+
+  const payments = paymentsData?.data?.data ?? [];
+  const enrollments = enrollmentsData?.enrollments ?? [];
+  const instructors = instructorData?.data ?? [];
+
+  const pendingActions = [
+    {
+      title: "Manual Payments",
+      description: "Requires verification from bank receipt",
+      count: payments.filter((p) => p.status === "pending").length,
+      icon: "/assets/icons/money-notes.svg",
+      iconBg: "bg-[#F86432]/10",
+      href: "/dashboard/admin/payments",
+    },
+    {
+      title: "Pending Enrollments",
+      description: "Awaiting course start",
+      count: enrollments.filter((e) => !e.completed && !e.progress).length,
+      icon: "/assets/icons/user-plus.svg",
+      iconBg: "bg-[#3B82F6]/10",
+      href: "/dashboard/admin/enrollments",
+    },
+    {
+      title: "Instructor Approvals",
+      description: "New profile validation",
+      count: instructors.filter((i) => i.applicationStatus === "pending").length,
+      icon: "/assets/icons/green-shield.svg",
+      iconBg: "bg-[#10B981]/10",
+      href: "/dashboard/admin/instructor-approvals",
+    },
+    {
+      title: "Failed Payments",
+      description: "Transactions that need follow-up",
+      count: payments.filter((p) => p.status === "failed").length,
+      icon: "/assets/icons/clock.svg",
+      iconBg: "bg-[#EF4444]/10",
+      href: "/dashboard/admin/payments",
+    },
+  ];
+
   return (
     <div className="rounded-2xl bg-white overflow-hidden">
       {/* Header */}
@@ -71,6 +82,7 @@ export const AdminDashboardPendingActionCard = () => {
             count={action.count}
             icon={action.icon}
             iconBg={action.iconBg}
+            href={action.href}
             isLast={index === pendingActions.length - 1}
           />
         ))}
@@ -82,9 +94,10 @@ export const AdminDashboardPendingActionCard = () => {
 interface PendingActionItemProps {
   title: string;
   description: string;
-  count: string;
+  count: number;
   icon: string;
   iconBg: string;
+  href: string;
   isLast?: boolean;
 }
 
@@ -94,11 +107,15 @@ const PendingActionItem = ({
   count,
   icon,
   iconBg,
+  href,
   isLast,
 }: PendingActionItemProps) => {
   return (
     <div className="flex flex-col">
-      <div className="flex items-center justify-between px-5 py-4 hover:bg-gray-50/50 transition-colors cursor-pointer">
+      <Link
+        href={href}
+        className="flex items-center justify-between px-5 py-4 hover:bg-gray-50/50 transition-colors cursor-pointer"
+      >
         <div className="flex items-center gap-4">
           <div className={`p-3 rounded-lg ${iconBg}`}>
             <Image src={icon} alt={title} width={20} height={20} />
@@ -116,7 +133,7 @@ const PendingActionItem = ({
           </div>
           <p className="text-[13px] text-gray-400">Pending</p>
         </div>
-      </div>
+      </Link>
       {!isLast && <div className="mx-5 border-b-2 border-gray-100" />}
     </div>
   );

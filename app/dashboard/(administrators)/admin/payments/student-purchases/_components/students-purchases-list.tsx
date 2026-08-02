@@ -1,17 +1,32 @@
 "use client";
 
-import React from "react";
+import React, { useMemo, useState } from "react";
+import { toast } from "sonner";
 import { DataList } from "@/components/ui/data-list";
-import { StudentPurchase, mapPurchaseRecordToStudentPurchase } from "./student-purchases-data";
+import { mapPurchaseRecordToStudentPurchase } from "./student-purchases-data";
 import { StudentPurchasesFilters } from "./student-purchases-filters";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { MoreVertical } from "lucide-react";
+import {
+  AppDropdown,
+  AppDropdownItem,
+  AppDropdownSeparator,
+} from "@/components/ui/app-dropdown";
 import { useGetStudentPurchases } from "@/hooks/api/use-payments";
 
 export const AdminStudentPurchasesList = () => {
+  const [searchQuery, setSearchQuery] = useState("");
   const { data, isLoading, isError } = useGetStudentPurchases();
-  const purchases: StudentPurchase[] = (data?.purchases ?? []).map(
-    mapPurchaseRecordToStudentPurchase,
+
+  const purchases = useMemo(
+    () => (data?.purchases ?? []).map(mapPurchaseRecordToStudentPurchase),
+    [data],
+  );
+  const filteredPurchases = purchases.filter(
+    (p) =>
+      p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.course.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   const getStatusStyle = (status: string) => {
@@ -27,61 +42,70 @@ export const AdminStudentPurchasesList = () => {
 
   return (
     <div className="w-full bg-white p-4 rounded-xl">
-      <StudentPurchasesFilters />
+      <StudentPurchasesFilters searchQuery={searchQuery} onSearchChange={setSearchQuery} />
       {isLoading ? (
-        <div className="flex items-center justify-center py-16">
-          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
-        </div>
+        <p className="py-10 text-center text-sm text-gray-400">Loading purchases...</p>
       ) : isError ? (
-        <div className="flex items-center justify-center py-16 text-[15px] text-red-500">
-          Failed to load student purchases. Please try again.
-        </div>
-      ) : purchases.length === 0 ? (
-        <div className="flex items-center justify-center py-16 text-[15px] text-gray-500">
-          No student purchases found.
-        </div>
+        <p className="py-10 text-center text-sm text-red-500">Failed to load purchases.</p>
       ) : (
-      <DataList
-        data={purchases}
-        keyExtractor={(item) => item.id}
-        renderItem={(item) => {
-          return (
-            <div className="flex flex-col w-full gap-4">
-              {/* Top Row */}
-              <div className="flex justify-between items-start gap-2">
-                <div className="flex items-center gap-3">
-                  <Avatar className="size-12">
-                    <AvatarImage src={item.avatar} />
-                    <AvatarFallback>{item.name.charAt(0)}</AvatarFallback>
-                  </Avatar>
-                  <div className="flex flex-col gap-0.5">
-                    <span className="text-[16px] font-semibold text-gray-900 leading-tight">
-                      {item.name}
+        <DataList
+          data={filteredPurchases}
+          keyExtractor={(item) => item.id}
+          renderItem={(item) => {
+            return (
+              <div className="flex flex-col w-full gap-4">
+                {/* Top Row */}
+                <div className="flex justify-between items-start gap-2">
+                  <div className="flex items-center gap-3">
+                    <Avatar className="size-12">
+                      <AvatarFallback>{item.name.charAt(0)}</AvatarFallback>
+                    </Avatar>
+                    <div className="flex flex-col gap-0.5">
+                      <span className="text-[16px] font-semibold text-gray-900 leading-tight">
+                        {item.name}
+                      </span>
+                      <span className="text-[13px] text-gray-500 font-medium flex items-center gap-1.5 flex-wrap">
+                        <span>{item.email}</span>
+                        <span className="hidden sm:inline">•</span>
+                        <span>{item.date}</span>
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusStyle(item.status)}`}>
+                      {item.status}
                     </span>
-                    <span className="text-[13px] text-gray-500 font-medium flex items-center gap-1.5 flex-wrap">
-                      <span>{item.email}</span>
-                      <span className="hidden sm:inline">•</span>
-                      <span>{item.date}</span>
-                    </span>
+                    <AppDropdown
+                      variant="white"
+                      align="end"
+                      trigger={<MoreVertical className="size-5 text-gray-900 cursor-pointer" />}
+                    >
+                      <AppDropdownItem
+                        variant="menu"
+                        onClick={() => toast.info("Editing a purchase record isn't available yet.")}
+                      >
+                        Edit
+                      </AppDropdownItem>
+                      <AppDropdownSeparator />
+                      <AppDropdownItem
+                        variant="danger-menu"
+                        onClick={() => toast.info("Deleting a purchase record isn't available yet.")}
+                      >
+                        Delete
+                      </AppDropdownItem>
+                    </AppDropdown>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusStyle(item.status)}`}>
-                    {item.status}
-                  </span>
-                  <MoreVertical className="size-5 text-gray-900 cursor-pointer" />
+
+                {/* Bottom Row */}
+                <div className="flex justify-between items-center w-full mt-1">
+                  <span className="text-[18px] font-bold text-gray-900">{item.amount}</span>
+                  <span className="text-[14px] text-gray-500 font-medium">{item.course}</span>
                 </div>
               </div>
-              
-              {/* Bottom Row */}
-              <div className="flex justify-between items-center w-full mt-1">
-                <span className="text-[18px] font-bold text-gray-900">{item.amount}</span>
-                <span className="text-[14px] text-gray-500 font-medium">{item.course}</span>
-              </div>
-            </div>
-          );
-        }}
-      />
+            );
+          }}
+        />
       )}
     </div>
   );

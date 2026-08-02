@@ -5,10 +5,12 @@ import { format } from "date-fns";
 import { DataTable, ColumnDef } from "@/components/ui/data-table";
 import {
   AnnouncementStatusBadge,
+  AnnouncementActions,
   AnnouncementData,
   mapAnnouncementToAnnouncementData,
 } from "./announcements-data";
 import { Plus, Search, ChevronDown, X } from "lucide-react";
+import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import { AdminDashboardButton } from "@/components/dashboard/admin-dashboard-button";
 import { Button } from "@/components/ui/button";
@@ -20,7 +22,7 @@ import {
 } from "@/components/ui/popover";
 import { AnnouncementBanner } from "./announcement-banner";
 import { CreateAnnouncementModal } from "./create-announcement-modal";
-import { useGetAnnouncements } from "@/hooks/api/use-announcements";
+import { useGetAnnouncements, useDeleteAnnouncementMutation } from "@/hooks/api/use-announcements";
 
 // Shared Popover Header
 function FilterPopoverHeader({ title }: { title: string }) {
@@ -94,15 +96,14 @@ export const AnnouncementsTable = () => {
   const [selectedAudiences, setSelectedAudiences] = useState<Set<string>>(
     new Set(),
   );
-  const [selectedBulkActions, setSelectedBulkActions] = useState<Set<string>>(
-    new Set(),
-  );
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedRowIds, setSelectedRowIds] = useState<Set<string>>(new Set());
 
   const { data, isLoading, isError } = useGetAnnouncements();
   const announcements: AnnouncementData[] = (data?.data?.announcement ?? []).map(
     mapAnnouncementToAnnouncementData,
   );
+  const deleteAnnouncement = useDeleteAnnouncementMutation();
 
   const toggleSet = (
     set: Set<string>,
@@ -157,16 +158,40 @@ export const AnnouncementsTable = () => {
     {
       key: "status",
       header: "Status",
-      className: "pr-4",
-      headerClassName: "pr-4",
       cell: (item) => <AnnouncementStatusBadge status={item.status} announcementId={item.id} />,
+    },
+    {
+      key: "actions",
+      header: "",
+      headerClassName: "pr-4 w-12",
+      className: "pr-4",
+      cell: (item) => <AnnouncementActions announcement={item} />,
     },
   ];
 
-  // Bulk delete is intentionally not wired up: announcementsApi has no delete
-  // endpoint yet, and guessing a destructive endpoint path isn't safe to do
-  // speculatively. Confirm the real endpoint with the backend before wiring this.
   const bulkActionItems = ["Delete Permanently"];
+
+  const handleBulkDelete = () => {
+    if (selectedRowIds.size === 0) {
+      toast.info("Select at least one announcement first.");
+      return;
+    }
+    if (
+      !window.confirm(
+        `Delete ${selectedRowIds.size} selected announcement(s)? This cannot be undone.`,
+      )
+    )
+      return;
+
+    Promise.all(
+      Array.from(selectedRowIds).map(
+        (id) => new Promise<void>((resolve) => deleteAnnouncement.mutate(id, { onSettled: () => resolve() })),
+      ),
+    ).then(() => {
+      toast.success("Selected announcements deleted");
+      setSelectedRowIds(new Set());
+    });
+  };
 
   // Filter option lists are derived from the loaded announcements themselves,
   // so they only ever show values that actually exist in the data.
@@ -268,19 +293,16 @@ export const AnnouncementsTable = () => {
             >
               <FilterPopoverHeader title="Bulk actions" />
               <div className="pb-3 flex flex-col gap-0.5">
+                <p className="px-5 pb-1 text-[13px] text-gray-400">
+                  {selectedRowIds.size} selected
+                </p>
                 {bulkActionItems.map((action) => (
                   <CheckboxItem
                     key={action}
                     label={action}
-                    checked={selectedBulkActions.has(action)}
-                    onToggle={() =>
-                      toggleSet(
-                        selectedBulkActions,
-                        setSelectedBulkActions,
-                        action,
-                      )
-                    }
-                    danger={action === "Delete Announcements"}
+                    checked={false}
+                    onToggle={handleBulkDelete}
+                    danger
                   />
                 ))}
               </div>
@@ -380,18 +402,6 @@ export const AnnouncementsTable = () => {
             </PopoverContent>
           </Popover>
 
-          {/* Filters */}
-          <Button
-            variant="outline"
-            className="h-10 px-4 bg-[#F6F6F6] border-none text-gray-600 font-normal hover:bg-gray-100 rounded-lg shadow-none text-[14px]"
-          >
-            Filters <ChevronDown className="ml-1.5 size-4 text-gray-500" />
-          </Button>
-
-          {/* Apply */}
-          <Button className="h-10 px-6 bg-primary text-white font-medium rounded-[8px] text-[14px] hover:bg-primary/90">
-            Apply
-          </Button>
         </div>
 
         {isLoading ? (
@@ -408,6 +418,7 @@ export const AnnouncementsTable = () => {
             columns={tableColumns}
             keyExtractor={(c) => c.id}
             selectable
+            onSelectionChange={setSelectedRowIds}
           />
         )}
       </div>

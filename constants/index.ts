@@ -99,9 +99,24 @@ export const dashboardData = {
       icon: DashboardWindowIcon,
     },
     {
+      title: "Analytics",
+      url: "/dashboard/admin/analytics",
+      icon: DashboardChartIcon,
+    },
+    {
       title: "Users",
       url: "/dashboard/admin/users",
       icon: DashboardUsersIcon,
+    },
+    {
+      title: "Instructors",
+      url: "/dashboard/admin/instructors",
+      icon: DashboardInstructorsIcon,
+    },
+    {
+      title: "Instructor Approvals",
+      url: "/dashboard/admin/instructor-approvals",
+      icon: UserCheck,
     },
     {
       title: "Courses",
@@ -119,9 +134,14 @@ export const dashboardData = {
       icon: DashboardUserCheckIcon,
     },
     {
-      title: "Assessments",
-      url: "/dashboard/admin/assessments",
-      icon: DashboardAssesmentIcon,
+      title: "Assignments",
+      url: "/dashboard/admin/assignments",
+      icon: DashboardFileTextIcon,
+    },
+    {
+      title: "Quiz",
+      url: "/dashboard/admin/quiz",
+      icon: DashboardBulbIcon,
     },
     {
       title: "Attendance",
@@ -134,14 +154,24 @@ export const dashboardData = {
       icon: DashboardPaymentIcon,
     },
     {
+      title: "Orders",
+      url: "/dashboard/admin/orders",
+      icon: IconReceipt2,
+    },
+    {
       title: "Certificates",
       url: "/dashboard/admin/certificates",
       icon: DashboardCertificateIcon,
     },
     {
-      title: "Support",
-      url: "/dashboard/admin/support",
-      icon: DashboardSupportIcon,
+      title: "Announcements",
+      url: "/dashboard/admin/announcements",
+      icon: DashboardTalkIcon,
+    },
+    {
+      title: "Notifications",
+      url: "/dashboard/admin/notifications",
+      icon: Bell,
     },
     {
       title: "Email Broadcast",
@@ -149,9 +179,19 @@ export const dashboardData = {
       icon: DashboardEmailIcon,
     },
     {
-      title: "Communication",
-      url: "/dashboard/admin/communication",
-      icon: DashboardTalkIcon,
+      title: "Support",
+      url: "/dashboard/admin/support",
+      icon: DashboardSupportIcon,
+    },
+    {
+      title: "Team",
+      url: "/dashboard/admin/team",
+      icon: Users2Icon,
+    },
+    {
+      title: "Projects",
+      url: "/dashboard/admin/projects",
+      icon: LayoutGrid,
     },
     {
       title: "System Settings",

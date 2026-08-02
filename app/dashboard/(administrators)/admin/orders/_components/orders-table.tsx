@@ -191,7 +191,7 @@ export const OrdersTable = () => {
     {
       key: "orderStatus",
       header: "Order Status",
-      cell: (order) => <OrderStatusBadge status={order.orderStatus} />,
+      cell: (order) => <OrderStatusBadge status={order.orderStatus} orderId={order.id} />,
     },
     {
       key: "paymentStatus",

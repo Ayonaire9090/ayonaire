@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
   Bar,
   ComposedChart,
@@ -15,44 +15,81 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { useGetAllEnrollments } from "@/hooks/api/use-enrollment";
 
-const enrolmentData = [
-  { month: "Jan", students: 700, instructors: 900 },
-  { month: "Feb", students: 460, instructors: 850 },
-  { month: "Mar", students: 400, instructors: 800 },
-  { month: "Apr", students: 570, instructors: 920 },
-  { month: "May", students: 520, instructors: 950 },
-  { month: "Jun", students: 580, instructors: 830 },
-  { month: "Jul", students: 410, instructors: 750 },
-  { month: "Aug", students: 400, instructors: 700 },
-  { month: "Sep", students: 300, instructors: 600 },
+const MONTH_LABELS = [
+  "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
 ];
-
-// Determine which month gets the orange highlight bar
-const HIGHLIGHT_MONTH = "Aug";
-
-// Pre-process data to split students into highlighted vs normal
-const processedData = enrolmentData.map((item) => ({
-  ...item,
-  studentsHighlight: item.month === HIGHLIGHT_MONTH ? item.instructors : 0,
-  instructorsBar: item.month === HIGHLIGHT_MONTH ? 0 : item.instructors,
-}));
+const DAY_LABELS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 const chartConfig = {
-  students: {
-    label: "Students",
+  enrollments: {
+    label: "Enrollments",
     color: "#F86432",
   },
-  instructors: {
-    label: "Instructors",
+  completed: {
+    label: "Completed",
     color: "#E5E5E5",
   },
 } satisfies ChartConfig;
 
 type Period = "Weekly" | "Monthly" | "Yearly";
 
+function bucketEnrollments(
+  enrollments: { createdAt: string; completed: boolean }[],
+  period: Period,
+) {
+  const buckets = new Map<string, { enrollments: number; completed: number; order: number }>();
+
+  for (const enrollment of enrollments) {
+    if (!enrollment.createdAt) continue;
+    const date = new Date(enrollment.createdAt);
+    if (Number.isNaN(date.getTime())) continue;
+
+    let key: string;
+    let order: number;
+
+    if (period === "Weekly") {
+      const daysAgo = Math.floor(
+        (Date.now() - date.getTime()) / (1000 * 60 * 60 * 24),
+      );
+      if (daysAgo > 6) continue;
+      key = DAY_LABELS[date.getDay()];
+      order = -daysAgo;
+    } else if (period === "Yearly") {
+      key = String(date.getFullYear());
+      order = date.getFullYear();
+    } else {
+      key = `${MONTH_LABELS[date.getMonth()]} ${date.getFullYear()}`;
+      order = date.getFullYear() * 12 + date.getMonth();
+    }
+
+    const bucket = buckets.get(key) ?? { enrollments: 0, completed: 0, order };
+    bucket.enrollments += 1;
+    if (enrollment.completed) bucket.completed += 1;
+    buckets.set(key, bucket);
+  }
+
+  return Array.from(buckets.entries())
+    .sort((a, b) => a[1].order - b[1].order)
+    .slice(period === "Monthly" ? -9 : period === "Yearly" ? -6 : -7)
+    .map(([label, value]) => ({
+      month: label,
+      enrollments: value.enrollments,
+      completed: value.completed,
+    }));
+}
+
 export const AdminDashbordEnrolmentAnalytics = () => {
-  const [period, setPeriod] = useState<Period>("Weekly");
+  const [period, setPeriod] = useState<Period>("Monthly");
+  const { data } = useGetAllEnrollments({ limit: 500 });
+  const enrollments = data?.enrollments ?? [];
+
+  const chartData = useMemo(
+    () => bucketEnrollments(enrollments, period),
+    [enrollments, period],
+  );
 
   return (
     <div className="rounded-[16px]! px-5 py-5 space-y-4 bg-white shadow-sm">
@@ -64,11 +101,11 @@ export const AdminDashbordEnrolmentAnalytics = () => {
           <div className="flex items-center gap-4 text-sm text-muted-foreground">
             <div className="flex items-center gap-1.5">
               <span className="inline-block size-3 rounded-[3px] bg-[#F86432]" />
-              Students
+              Enrollments
             </div>
             <div className="flex items-center gap-1.5">
               <span className="inline-block size-3 rounded-[3px] bg-[#E5E5E5]" />
-              Instructors
+              Completed
             </div>
           </div>
         </div>
@@ -100,83 +137,74 @@ export const AdminDashbordEnrolmentAnalytics = () => {
       </div>
 
       {/* Chart */}
-      <ChartContainer
-        config={chartConfig}
-        className="aspect-auto h-[280px] w-full"
-      >
-        <ComposedChart
-          data={processedData}
-          margin={{ top: 10, right: 10, left: -10, bottom: 0 }}
-          barGap={0}
-          barCategoryGap="25%"
+      {chartData.length === 0 ? (
+        <div className="flex h-[280px] items-center justify-center text-sm text-muted-foreground">
+          No enrollment data yet
+        </div>
+      ) : (
+        <ChartContainer
+          config={chartConfig}
+          className="aspect-auto h-[280px] w-full"
         >
-          <CartesianGrid
-            horizontal={true}
-            vertical={false}
-            strokeDasharray="4 4"
-            stroke="#e5e5e5"
-          />
+          <ComposedChart
+            data={chartData}
+            margin={{ top: 10, right: 10, left: -10, bottom: 0 }}
+            barGap={0}
+            barCategoryGap="25%"
+          >
+            <CartesianGrid
+              horizontal={true}
+              vertical={false}
+              strokeDasharray="4 4"
+              stroke="#e5e5e5"
+            />
 
-          <XAxis
-            dataKey="month"
-            tickLine={false}
-            axisLine={false}
-            tick={{ fill: "#9ca3af", fontSize: 13 }}
-            dy={8}
-          />
+            <XAxis
+              dataKey="month"
+              tickLine={false}
+              axisLine={false}
+              tick={{ fill: "#9ca3af", fontSize: 13 }}
+              dy={8}
+            />
 
-          <YAxis
-            tickLine={false}
-            axisLine={false}
-            tick={{ fill: "#9ca3af", fontSize: 12 }}
-            tickCount={6}
-            domain={[0, 1000]}
-            tickFormatter={(v) => (v >= 1000 ? `${v / 1000}K` : `${v}`)}
-          />
+            <YAxis
+              tickLine={false}
+              axisLine={false}
+              tick={{ fill: "#9ca3af", fontSize: 12 }}
+              allowDecimals={false}
+            />
 
-          <ChartTooltip content={<ChartTooltipContent />} />
+            <ChartTooltip content={<ChartTooltipContent />} />
 
-          {/* Gray instructor bars */}
-          <Bar
-            dataKey="instructorsBar"
-            name="instructors"
-            fill="#E5E5E5"
-            radius={[10, 10, 10, 10]}
-            strokeWidth={10}
-            barSize={50}
-          />
+            <Bar
+              dataKey="completed"
+              name="completed"
+              fill="#E5E5E5"
+              radius={[10, 10, 10, 10]}
+              barSize={40}
+            />
 
-          {/* Orange highlight bar (only for the highlighted month) */}
-          <Bar
-            dataKey="studentsHighlight"
-            name="students"
-            fill="#F86432"
-            radius={[10, 10, 10, 10]}
-            barSize={50}
-            stackId="highlight"
-          />
-
-          {/* Line overlay for students trend */}
-          <Line
-            dataKey="students"
-            type="monotone"
-            stroke="#1a1a1a"
-            strokeWidth={3}
-            dot={{
-              r: 5,
-              fill: "#ffffff",
-              stroke: "#1a1a1a",
-              strokeWidth: 3,
-            }}
-            activeDot={{
-              r: 6,
-              fill: "#ffffff",
-              stroke: "#1a1a1a",
-              strokeWidth: 3,
-            }}
-          />
-        </ComposedChart>
-      </ChartContainer>
+            <Line
+              dataKey="enrollments"
+              type="monotone"
+              stroke="#1a1a1a"
+              strokeWidth={3}
+              dot={{
+                r: 5,
+                fill: "#ffffff",
+                stroke: "#1a1a1a",
+                strokeWidth: 3,
+              }}
+              activeDot={{
+                r: 6,
+                fill: "#ffffff",
+                stroke: "#1a1a1a",
+                strokeWidth: 3,
+              }}
+            />
+          </ComposedChart>
+        </ChartContainer>
+      )}
     </div>
   );
 };

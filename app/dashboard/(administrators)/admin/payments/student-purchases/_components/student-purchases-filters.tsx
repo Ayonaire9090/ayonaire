@@ -2,7 +2,13 @@
 
 import { Search } from "lucide-react";
 
-export const StudentPurchasesFilters = () => {
+export const StudentPurchasesFilters = ({
+  searchQuery,
+  onSearchChange,
+}: {
+  searchQuery: string;
+  onSearchChange: (value: string) => void;
+}) => {
   return (
     <div className="flex flex-col lg:flex-row lg:items-center justify-between w-full mb-6 gap-4">
       <div className="flex flex-col gap-1">
@@ -18,6 +24,8 @@ export const StudentPurchasesFilters = () => {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-gray-400" />
           <input
             type="text"
+            value={searchQuery}
+            onChange={(e) => onSearchChange(e.target.value)}
             placeholder="Search by student...."
             className="pl-9 pr-4 py-2.5 bg-[#F6F6F6] rounded-full text-[14px] border-none outline-none focus:ring-1 focus:ring-gray-200 w-[200px] md:w-[260px]"
           />

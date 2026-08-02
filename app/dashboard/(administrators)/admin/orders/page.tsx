@@ -6,6 +6,7 @@ import { OrdersTable } from "./_components/orders-table";
 import { OrdersList } from "./_components/orders-list";
 import { AdminDashboardButton } from "@/components/dashboard/admin-dashboard-button";
 import { Plus } from "lucide-react";
+import { toast } from "sonner";
 import { useGetAllPayments } from "@/hooks/api/use-payments";
 import { mapPaymentRecordToOrderData } from "./_components/orders-data";
 
@@ -39,7 +40,13 @@ export default function AdminOrdersPage() {
       />
       <div className="w-full flex justify-between items-start">
         <StatsSummary data={summaryData} />
-        <AdminDashboardButton title="Add New Order" icon={Plus} />
+        <AdminDashboardButton
+          title="Add New Order"
+          icon={Plus}
+          onClick={() =>
+            toast.info("Orders are created automatically at checkout — manual creation isn't available yet.")
+          }
+        />
       </div>
 
       {/* Desktop */}

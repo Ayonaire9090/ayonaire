@@ -1,18 +1,28 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
+import { toast } from "sonner";
 import { DataTable, ColumnDef } from "@/components/ui/data-table";
-import { StudentPurchase, mapPurchaseRecordToStudentPurchase } from "./student-purchases-data";
+import { mapPurchaseRecordToStudentPurchase, StudentPurchase } from "./student-purchases-data";
 import { StudentPurchasesFilters } from "./student-purchases-filters";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Edit, Trash2 } from "lucide-react";
 import { useGetStudentPurchases } from "@/hooks/api/use-payments";
 
 export const AdminStudentPurchasesTable = () => {
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [searchQuery, setSearchQuery] = useState("");
   const { data, isLoading, isError } = useGetStudentPurchases();
-  const purchases: StudentPurchase[] = (data?.purchases ?? []).map(
-    mapPurchaseRecordToStudentPurchase,
+
+  const purchases = useMemo(
+    () => (data?.purchases ?? []).map(mapPurchaseRecordToStudentPurchase),
+    [data],
+  );
+  const filteredPurchases = purchases.filter(
+    (p) =>
+      p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.course.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   const getStatusStyle = (status: string) => {
@@ -33,7 +43,6 @@ export const AdminStudentPurchasesTable = () => {
       cell: (item) => (
         <div className="flex items-center gap-3">
           <Avatar className="size-9">
-            <AvatarImage src={item.avatar} />
             <AvatarFallback>{item.name.charAt(0)}</AvatarFallback>
           </Avatar>
           <span className="font-semibold text-gray-900">{item.name}</span>
@@ -79,10 +88,16 @@ export const AdminStudentPurchasesTable = () => {
       header: "Actions",
       cell: () => (
         <div className="flex items-center gap-2">
-          <button className="p-1 hover:bg-gray-100 rounded-md text-gray-500 transition-colors">
+          <button
+            onClick={() => toast.info("Editing a purchase record isn't available yet.")}
+            className="p-1 hover:bg-gray-100 rounded-md text-gray-500 transition-colors"
+          >
             <Edit className="size-4" />
           </button>
-          <button className="p-1 hover:bg-red-50 rounded-md text-gray-500 hover:text-red-500 transition-colors">
+          <button
+            onClick={() => toast.info("Deleting a purchase record isn't available yet.")}
+            className="p-1 hover:bg-red-50 rounded-md text-gray-500 hover:text-red-500 transition-colors"
+          >
             <Trash2 className="size-4" />
           </button>
         </div>
@@ -92,22 +107,14 @@ export const AdminStudentPurchasesTable = () => {
 
   return (
     <div className="w-full bg-white p-6 rounded-[24px]">
-      <StudentPurchasesFilters />
+      <StudentPurchasesFilters searchQuery={searchQuery} onSearchChange={setSearchQuery} />
       {isLoading ? (
-        <div className="flex items-center justify-center py-16">
-          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
-        </div>
+        <p className="py-10 text-center text-sm text-gray-400">Loading purchases...</p>
       ) : isError ? (
-        <div className="flex items-center justify-center py-16 text-[15px] text-red-500">
-          Failed to load student purchases. Please try again.
-        </div>
-      ) : purchases.length === 0 ? (
-        <div className="flex items-center justify-center py-16 text-[15px] text-gray-500">
-          No student purchases found.
-        </div>
+        <p className="py-10 text-center text-sm text-red-500">Failed to load purchases.</p>
       ) : (
         <DataTable
-          data={purchases}
+          data={filteredPurchases}
           columns={columns}
           keyExtractor={(item) => item.id}
           selectable={true}

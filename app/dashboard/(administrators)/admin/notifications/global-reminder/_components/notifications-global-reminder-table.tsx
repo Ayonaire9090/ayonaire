@@ -2,15 +2,19 @@
 
 import React, { useState } from "react";
 import { DataTable, ColumnDef } from "@/components/ui/data-table";
-import { GlobalReminder, globalRemindersData } from "./mock-data";
-import { ChevronDown, MoreVertical, Search } from "lucide-react";
-import { Input } from "@/components/ui/input";
+import {
+  GlobalReminder,
+  mapNotificationToGlobalReminder,
+} from "./global-reminder-data";
+import { ChevronDown, MoreVertical } from "lucide-react";
+import { toast } from "sonner";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
+import { useGetNotifications } from "@/hooks/api/use-notifications";
 
 const getStatusBadge = (status: GlobalReminder["status"], type: string) => {
   if (status === "Active") {
@@ -82,10 +86,16 @@ const columns: ColumnDef<GlobalReminder>[] = [
           align="end"
           className="w-[160px] bg-[#F6F6F6] border-none shadow-sm rounded-xl"
         >
-          <DropdownMenuItem className="cursor-pointer text-gray-700 hover:bg-gray-200">
+          <DropdownMenuItem
+            className="cursor-pointer text-gray-700 hover:bg-gray-200"
+            onClick={() => toast.info("Editing a template isn't available yet.")}
+          >
             Edit
           </DropdownMenuItem>
-          <DropdownMenuItem className="cursor-pointer text-red-600 hover:bg-red-50 focus:bg-red-50 focus:text-red-600">
+          <DropdownMenuItem
+            className="cursor-pointer text-red-600 hover:bg-red-50 focus:bg-red-50 focus:text-red-600"
+            onClick={() => toast.info("Deleting a template isn't available yet.")}
+          >
             Delete
           </DropdownMenuItem>
         </DropdownMenuContent>
@@ -96,8 +106,10 @@ const columns: ColumnDef<GlobalReminder>[] = [
 
 export const NotificationsGlobalReminderTable = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const { data, isLoading } = useGetNotifications({ isRecurringTemplate: "true" });
+  const reminders = (data?.notifications ?? []).map(mapNotificationToGlobalReminder);
 
-  const filteredReminders = globalRemindersData.filter(
+  const filteredReminders = reminders.filter(
     (reminder) =>
       reminder.templateName.toLowerCase().includes(searchQuery.toLowerCase()) ||
       reminder.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -188,12 +200,16 @@ export const NotificationsGlobalReminderTable = () => {
         </DropdownMenu>
       </div>
 
-      <DataTable
-        data={filteredReminders}
-        columns={columns}
-        keyExtractor={(item) => item.id}
-        selectable={true}
-      />
+      {isLoading ? (
+        <p className="py-10 text-center text-sm text-gray-400">Loading templates...</p>
+      ) : (
+        <DataTable
+          data={filteredReminders}
+          columns={columns}
+          keyExtractor={(item) => item.id}
+          selectable={true}
+        />
+      )}
     </div>
   );
 };

@@ -8,7 +8,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { ChevronDown, MoreVertical } from "lucide-react";
 import React from "react";
+import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { useBulkEditOrdersMutation } from "@/hooks/api/use-payments";
 
 // Re-export types & data from the server-safe file so existing imports keep working
 export type {
@@ -20,7 +22,7 @@ export type {
   OrderNote,
   OrderData,
 } from "./orders-types";
-export { mockOrders, mapPaymentRecordToOrderData } from "./orders-types";
+export { mapPaymentRecordToOrderData, mapOrderRecordToOrderData } from "./orders-types";
 
 //Local type aliases (for use inside this file only)
 import type {
@@ -30,6 +32,8 @@ import type {
 } from "./orders-types";
 
 //Order Status Badge
+// Backed by a real field: bulkEditOrders accepts completed/onhold/cancelled/
+// processing flags for a single orderId, so changing this actually persists.
 
 const orderStatusStyles: Record<OrderStatus, string> = {
   "Pending Payment": "bg-[#FFF3EA] text-[#FF7A1A]",
@@ -39,7 +43,34 @@ const orderStatusStyles: Record<OrderStatus, string> = {
   Cancelled: "bg-[#FFEBE9] text-[#E5383B]",
 };
 
-export const OrderStatusBadge = ({ status }: { status: OrderStatus }) => {
+const ORDER_STATUS_FLAGS: Partial<Record<OrderStatus, "completed" | "onhold" | "cancelled" | "processing">> = {
+  Completed: "completed",
+  Processing: "processing",
+  "On Hold": "onhold",
+  Cancelled: "cancelled",
+};
+
+export const OrderStatusBadge = ({
+  status,
+  orderId,
+}: {
+  status: OrderStatus;
+  orderId: string;
+}) => {
+  const bulkEdit = useBulkEditOrdersMutation();
+
+  const setStatus = (next: OrderStatus) => {
+    const flag = ORDER_STATUS_FLAGS[next];
+    if (!flag) return;
+    bulkEdit.mutate(
+      { orderIds: [orderId], [flag]: true },
+      {
+        onSuccess: () => toast.success(`Order marked ${next.toLowerCase()}`),
+        onError: (err) => toast.error(err instanceof Error ? err.message : "Failed to update order status"),
+      },
+    );
+  };
+
   return (
     <AppDropdown
       variant="gray"
@@ -53,16 +84,17 @@ export const OrderStatusBadge = ({ status }: { status: OrderStatus }) => {
         </button>
       }
     >
-      <AppDropdownItem variant="badge">Completed</AppDropdownItem>
-      <AppDropdownItem variant="badge">Processing</AppDropdownItem>
-      <AppDropdownItem variant="active-badge">Pending Payment</AppDropdownItem>
-      <AppDropdownItem variant="badge">On Hold</AppDropdownItem>
-      <AppDropdownItem variant="badge">Cancelled</AppDropdownItem>
+      <AppDropdownItem variant={status === "Completed" ? "active-badge" : "badge"} onClick={() => setStatus("Completed")}>Completed</AppDropdownItem>
+      <AppDropdownItem variant={status === "Processing" ? "active-badge" : "badge"} onClick={() => setStatus("Processing")}>Processing</AppDropdownItem>
+      <AppDropdownItem variant={status === "On Hold" ? "active-badge" : "badge"} onClick={() => setStatus("On Hold")}>On Hold</AppDropdownItem>
+      <AppDropdownItem variant={status === "Cancelled" ? "active-badge" : "badge"} onClick={() => setStatus("Cancelled")}>Cancelled</AppDropdownItem>
     </AppDropdown>
   );
 };
 
 //Payment Status Badge
+// Read-only: the backend has no separate "payment status" field an admin can
+// set independently - it's derived from the transaction's actual outcome.
 const paymentStatusStyles: Record<PaymentStatus, string> = {
   Paid: "bg-[#E6F6EC] text-[#24A164]",
   "Un Paid": "bg-[#FFEBE9] text-[#E5383B]",
@@ -72,27 +104,17 @@ const paymentStatusStyles: Record<PaymentStatus, string> = {
 
 export const PaymentStatusBadge = ({ status }: { status: PaymentStatus }) => {
   return (
-    <AppDropdown
-      variant="gray"
-      align="start"
-      trigger={
-        <button
-          className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[13px] font-medium whitespace-nowrap focus:outline-none transition-colors ${paymentStatusStyles[status]}`}
-        >
-          {status}
-          <ChevronDown className="size-3.5" />
-        </button>
-      }
+    <span
+      className={`inline-flex items-center rounded-full px-3 py-1.5 text-[13px] font-medium whitespace-nowrap ${paymentStatusStyles[status]}`}
     >
-      <AppDropdownItem variant="badge">Paid</AppDropdownItem>
-      <AppDropdownItem variant="badge">Unpaid</AppDropdownItem>
-      <AppDropdownItem variant="active-badge">Verified</AppDropdownItem>
-      <AppDropdownItem variant="badge">Pending Verification</AppDropdownItem>
-    </AppDropdown>
+      {status}
+    </span>
   );
 };
 
 //Enrollment Status Badge
+// Read-only: enrollment access follows automatically from payment success -
+// there's no direct admin-settable field for it either.
 
 const enrollmentStatusStyles: Record<EnrollmentStatus, string> = {
   "Not Enrolled": "text-[#E5383B]",
@@ -107,28 +129,30 @@ export const EnrollmentStatusBadge = ({
   status: EnrollmentStatus;
 }) => {
   return (
-    <AppDropdown
-      variant="gray"
-      align="start"
-      trigger={
-        <button
-          className={`text-[13px] font-medium whitespace-nowrap focus:outline-none transition-colors ${enrollmentStatusStyles[status]}`}
-        >
-          {status}
-        </button>
-      }
+    <span
+      className={`text-[13px] font-medium whitespace-nowrap ${enrollmentStatusStyles[status]}`}
     >
-      <AppDropdownItem variant="active-badge">Not Enrolled</AppDropdownItem>
-      <AppDropdownItem variant="badge">Pending Enrollment</AppDropdownItem>
-      <AppDropdownItem variant="badge">Access Granted</AppDropdownItem>
-      <AppDropdownItem variant="badge">Access Revoked</AppDropdownItem>
-    </AppDropdown>
+      {status}
+    </span>
   );
 };
 
 //Order Actions
 export const OrderActions = ({ orderId }: { orderId?: string }) => {
   const router = useRouter();
+  const bulkEdit = useBulkEditOrdersMutation();
+
+  const handleDelete = () => {
+    if (!orderId) return;
+    if (!window.confirm("Delete this order? This cannot be undone.")) return;
+    bulkEdit.mutate(
+      { orderIds: [orderId], delete: true },
+      {
+        onSuccess: () => toast.success("Order deleted"),
+        onError: (err) => toast.error(err instanceof Error ? err.message : "Failed to delete order"),
+      },
+    );
+  };
 
   return (
     <AppDropdown
@@ -162,7 +186,7 @@ export const OrderActions = ({ orderId }: { orderId?: string }) => {
         Edit
       </AppDropdownItem>
       <AppDropdownSeparator />
-      <AppDropdownItem variant="danger-menu">Delete</AppDropdownItem>
+      <AppDropdownItem variant="danger-menu" onClick={handleDelete}>Delete</AppDropdownItem>
     </AppDropdown>
   );
 };

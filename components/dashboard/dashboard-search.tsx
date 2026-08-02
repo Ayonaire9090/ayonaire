@@ -6,10 +6,14 @@ import Image from "next/image";
 interface DashboardSearch {
   placeholder?: string;
   className?: string;
+  value?: string;
+  onChange?: (value: string) => void;
 }
 export const DashboardSearch = ({
   placeholder = "Search courses, instructors, or topics...",
   className = "",
+  value,
+  onChange,
 }: DashboardSearch) => {
   return (
     <div className="relative w-full lg:w-[400px]">
@@ -22,6 +26,8 @@ export const DashboardSearch = ({
       />
       <Input
         placeholder={placeholder}
+        value={value}
+        onChange={onChange ? (e) => onChange(e.target.value) : undefined}
         className={`w-full pl-10 py-5! rounded-full bg-white border-0 focus-visible:ring-primary/20 text-base z-45 shadow-none ${className}`}
       />
     </div>

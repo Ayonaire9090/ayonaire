@@ -2,8 +2,12 @@
 
 import { useState } from "react";
 import { DataList } from "@/components/ui/data-list";
-import { GlobalReminder, globalRemindersData } from "./mock-data";
+import {
+  GlobalReminder,
+  mapNotificationToGlobalReminder,
+} from "./global-reminder-data";
 import { ChevronDown, MoreVertical } from "lucide-react";
+import { toast } from "sonner";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
@@ -11,6 +15,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
+import { useGetNotifications } from "@/hooks/api/use-notifications";
 
 const getStatusBadge = (status: GlobalReminder["status"], type: string) => {
   if (status === "Active") {
@@ -37,6 +42,8 @@ const getStatusBadge = (status: GlobalReminder["status"], type: string) => {
 
 export const NotificationsGlobalReminderList = () => {
   const [selectedItems, setSelectedItems] = useState<Set<string>>(new Set());
+  const { data } = useGetNotifications({ isRecurringTemplate: "true" });
+  const reminders = (data?.notifications ?? []).map(mapNotificationToGlobalReminder);
 
   const toggleItem = (id: string) => {
     setSelectedItems((prev) => {
@@ -126,7 +133,7 @@ export const NotificationsGlobalReminderList = () => {
       </div>
       <div className="py-2 bg-white rounded-xl p-2">
         <DataList
-          data={globalRemindersData}
+          data={reminders}
           keyExtractor={(item) => item.id}
           itemClassName="flex-col items-stretch gap-0"
           renderItem={(item) => (
@@ -158,10 +165,16 @@ export const NotificationsGlobalReminderList = () => {
                         align="end"
                         className="w-[160px] bg-[#F6F6F6] border-none shadow-sm rounded-xl"
                       >
-                        <DropdownMenuItem className="cursor-pointer text-gray-700 hover:bg-gray-200">
+                        <DropdownMenuItem
+                          className="cursor-pointer text-gray-700 hover:bg-gray-200"
+                          onClick={() => toast.info("Editing a template isn't available yet.")}
+                        >
                           Edit
                         </DropdownMenuItem>
-                        <DropdownMenuItem className="cursor-pointer text-red-600 hover:bg-red-50 focus:text-red-600 focus:bg-red-50">
+                        <DropdownMenuItem
+                          className="cursor-pointer text-red-600 hover:bg-red-50 focus:text-red-600 focus:bg-red-50"
+                          onClick={() => toast.info("Deleting a template isn't available yet.")}
+                        >
                           Delete
                         </DropdownMenuItem>
                       </DropdownMenuContent>

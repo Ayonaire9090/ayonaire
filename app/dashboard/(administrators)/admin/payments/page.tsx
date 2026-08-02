@@ -2,6 +2,7 @@ import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 import { PaymentAnalytics } from "./_components/payment-analytics";
 import { AdminPaymentsTable } from "./_components/payments-table";
 import { AdminPaymentsList } from "./_components/payments-list";
+import { PaymentsTabs } from "./_components/payments-tabs";
 
 export default async function AdminPaymentsPage() {
   return (
@@ -10,6 +11,7 @@ export default async function AdminPaymentsPage() {
         title="Payments"
         subTitle="View transaction history and revenue analytics"
       />
+      <PaymentsTabs />
       {/* Analytics */}
       <PaymentAnalytics />
 
