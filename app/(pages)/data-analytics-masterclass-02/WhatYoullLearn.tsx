@@ -32,7 +32,7 @@ const items: { title: string; description: string; icon: LucideIcon }[] = [
     icon: Route,
   },
   {
-    title: "Industry specialization",
+    title: "Build in Public strategy",
     description:
       "The 'Build in Public' strategy top candidates are using to get noticed by recruiters before they even apply.",
     icon: ChartColumnIncreasing,
@@ -44,7 +44,7 @@ const items: { title: string; description: string; icon: LucideIcon }[] = [
     icon: Earth,
   },
     {
-    title: "Build in Public' strategy",
+    title: "Career Transitioning",
     description:
       "How non-tech people broke into Data Analysis...the real path from zero background to working for Global companies.",
     icon: Globe,

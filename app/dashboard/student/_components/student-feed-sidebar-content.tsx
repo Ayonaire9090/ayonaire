@@ -27,6 +27,7 @@ import {
   Menu,
   Pencil,
   Trophy,
+  LayoutGrid,
 } from "lucide-react";
 import { dashboardData } from "@/constants";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -41,6 +42,11 @@ import {
 import { FeedCreatePostModal } from "../feed/_components/feed-create-post-modal";
 
 const spacesNav = [
+  {
+    title: "Community",
+    url: "/dashboard/student/community",
+    icon: LayoutGrid,
+  },
   {
     title: "Announcements",
     url: "/dashboard/student/feed/announcements",

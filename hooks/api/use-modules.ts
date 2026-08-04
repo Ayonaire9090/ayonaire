@@ -12,6 +12,15 @@ export const useCreateModuleMutation = () => {
       queryClient.invalidateQueries({
         queryKey: queryKeys.modules.forCourse(variables.courseId),
       });
+      // A new (empty) module won't show up on the course page otherwise -
+      // that page reads modules from the lesson-content endpoints, not
+      // the modules endpoint above.
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.lessons.instructorCourseContent(variables.courseId),
+      });
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.lessons.courseContent(variables.courseId),
+      });
     },
   });
 };

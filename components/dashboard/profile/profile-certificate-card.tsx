@@ -6,6 +6,8 @@ interface ProfileCertificateCardProps {
   issueDate: string;
   certificateId: string;
   imageSrc?: string;
+  onView?: () => void;
+  onDownload?: () => void;
 }
 
 export const ProfileCertificateCard = ({
@@ -13,6 +15,8 @@ export const ProfileCertificateCard = ({
   issueDate,
   certificateId,
   imageSrc = "/assets/images/certificate-example.png",
+  onView,
+  onDownload,
 }: ProfileCertificateCardProps) => {
   return (
     <div className="w-full bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden flex flex-col hover:shadow-md transition-shadow duration-300">
@@ -73,11 +77,17 @@ export const ProfileCertificateCard = ({
 
         {/* Buttons */}
         <div className="flex items-center gap-3 mt-1">
-          <button className="flex-1 bg-primary text-white rounded-xl py-2 flex items-center justify-center gap-2 hover:bg-primary/90 transition-colors">
+          <button
+            onClick={onView}
+            className="flex-1 bg-primary text-white rounded-xl py-2 flex items-center justify-center gap-2 hover:bg-primary/90 transition-colors"
+          >
             <Eye className="w-5 h-5" />
             <span className="font-semibold text-[14px]">View</span>
           </button>
-          <button className="w-[42px] h-[42px] bg-primary/10 text-primary rounded-xl flex items-center justify-center hover:bg-primary/20 transition-colors shrink-0">
+          <button
+            onClick={onDownload}
+            className="w-[42px] h-[42px] bg-primary/10 text-primary rounded-xl flex items-center justify-center hover:bg-primary/20 transition-colors shrink-0"
+          >
             <Download className="w-5 h-5" />
           </button>
         </div>
