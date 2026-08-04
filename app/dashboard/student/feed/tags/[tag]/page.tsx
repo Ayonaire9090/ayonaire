@@ -1,18 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 import { Eye, Copy, Pencil, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
-import { FeedNewPost } from "../_components/feed-new-post";
-import { FeedPost } from "../_components/feed-post";
-import { FeedReportModal } from "../_components/feed-report-modal";
-import { FeedEditPostModal } from "../_components/feed-edit-post-modal";
-import { FeedDeletePostDialog } from "../_components/feed-delete-post-dialog";
-import { PostOption } from "../_components/feed-post-actions";
+import { FeedNewPost } from "../../_components/feed-new-post";
+import { FeedPost } from "../../_components/feed-post";
+import { FeedReportModal } from "../../_components/feed-report-modal";
+import { FeedEditPostModal } from "../../_components/feed-edit-post-modal";
+import { FeedDeletePostDialog } from "../../_components/feed-delete-post-dialog";
+import { PostOption } from "../../_components/feed-post-actions";
+import { FEED_TAG_OPTIONS } from "../../_components/feed-tags";
 import { useGetFeeds } from "@/hooks/api/use-feeds";
 import { useAuthStore } from "@/store/auth.store";
-import { FeedPostData, mapFeedRecordToFeedPost } from "../_components/feed-data";
+import { FeedPostData, mapFeedRecordToFeedPost } from "../../_components/feed-data";
 
 const copyPostLink = (feedId: string) => {
   const url = `${window.location.origin}${window.location.pathname}?post=${feedId}`;
@@ -44,19 +46,22 @@ const viewPost = (feedId: string) => {
   setTimeout(() => el.classList.remove("ring-2", "ring-[#F86432]"), 1500);
 };
 
-export default function StudentFeedGeneralDiscussionPage() {
+export default function StudentFeedTagPage() {
+  const params = useParams<{ tag: string }>();
+  const tagValue = params.tag;
+  const tagOption = FEED_TAG_OPTIONS.find((t) => t.value === tagValue);
+  const tagLabel = tagOption?.label ?? tagValue;
+
   const user = useAuthStore((state) => state.user);
   const [reportingFeedId, setReportingFeedId] = useState<string | null>(null);
   const [editingPost, setEditingPost] = useState<{ feedId: string; content: string } | null>(null);
   const [deletingFeedId, setDeletingFeedId] = useState<string | null>(null);
 
-  const { data, isLoading, isError } = useGetFeeds({ channel: "general-discussion" });
+  const { data, isLoading, isError } = useGetFeeds({ tag: tagValue });
   const posts = (data?.data ?? []).map((feed) =>
     mapFeedRecordToFeedPost(feed, user?._id),
   );
 
-  // Deep-link support for "View post" / "Copy link": scroll the target post
-  // into view once its data has loaded.
   useEffect(() => {
     if (isLoading) return;
     const targetId = new URLSearchParams(window.location.search).get("post");
@@ -100,25 +105,21 @@ export default function StudentFeedGeneralDiscussionPage() {
         <div className="hidden lg:flex flex-col gap-1">
           <div className="flex items-center gap-2">
             <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 flex items-center gap-2">
-              General Discussion
+              {tagLabel}
             </h1>
           </div>
           <p className="text-base text-gray-500">
-            Share your thoughts, ideas, and experiences with the community
+            Posts tagged with {tagLabel}
           </p>
         </div>
         <div className="md:hidden">
-          <DashboardHeader
-            title="General Discussion"
-            subTitle="Share your thoughts, ideas, and experiences with the community"
-          />
+          <DashboardHeader title={tagLabel} subTitle={`Posts tagged with ${tagLabel}`} />
         </div>
       </div>
       <div className="flex flex-1 flex-col gap-4 p-0 lg:p-6 pb-24 md:pb-6">
-        <div className="@container/main flex flex-1 flex-col gap-6 ">
-          <FeedNewPost channel="general-discussion" />
+        <div className="@container/main flex flex-1 flex-col gap-6">
+          <FeedNewPost />
           <div className="flex flex-col gap-6">
-            {/* Posts */}
             {isLoading ? (
               <div className="flex items-center justify-center py-16">
                 <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
@@ -129,7 +130,7 @@ export default function StudentFeedGeneralDiscussionPage() {
               </div>
             ) : posts.length === 0 ? (
               <div className="flex items-center justify-center py-16 text-[15px] text-gray-500">
-                No discussions yet. Be the first to share something!
+                No posts tagged {tagLabel} yet.
               </div>
             ) : (
               posts.map((post) => (

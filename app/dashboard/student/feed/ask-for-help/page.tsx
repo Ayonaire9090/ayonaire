@@ -1,5 +1,5 @@
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
-import { FeedAskForHelp } from "../_components/feed-ask-for-help";
+import { AskForHelpContent } from "./_components/ask-for-help-content";
 
 export default function StudentAskForHelpPage() {
   return (
@@ -23,7 +23,7 @@ export default function StudentAskForHelpPage() {
         </div>
       </div>
       <div className="flex flex-1 flex-col gap-4 p-0 lg:p-6 pb-24 md:pb-6">
-        <FeedAskForHelp />
+        <AskForHelpContent />
       </div>
     </>
   );

@@ -17,7 +17,8 @@ export interface FeedRecord {
     url: string;
     publicId: string;
   };
-  tag?: string[];
+  tag?: string;
+  channel: string;
   user: {
     id: string;
     name: string;
@@ -34,6 +35,7 @@ export interface FeedRecord {
 
 export interface GetFeedsParams {
   tag?: string;
+  channel?: string;
   page?: number;
   limit?: number;
 }
@@ -78,6 +80,7 @@ export const feedsApi = {
     return feedSocketRequest<FeedRecord>("feed:create", {
       content: stringField(formData, "content") ?? "",
       tag: stringField(formData, "tag"),
+      channel: stringField(formData, "channel"),
       media: mediaFile ? await toTransferableMedia(mediaFile) : undefined,
     });
   },
@@ -85,6 +88,7 @@ export const feedsApi = {
   getAll: (params?: GetFeedsParams) =>
     feedSocketRequest<FeedRecord[]>("feed:list", {
       tag: params?.tag,
+      channel: params?.channel,
       page: params?.page,
       limit: params?.limit,
     }),
@@ -95,6 +99,7 @@ export const feedsApi = {
       feedId: stringField(formData, "feedId") ?? "",
       content: stringField(formData, "content"),
       tag: stringField(formData, "tag"),
+      channel: stringField(formData, "channel"),
       media: mediaFile ? await toTransferableMedia(mediaFile) : undefined,
     });
   },

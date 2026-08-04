@@ -108,6 +108,12 @@ export function StudentFeedSidebarContent({
   const isPinned = open;
   const [isCreateModalOpen, setIsCreateModalOpen] = React.useState(false);
 
+  const defaultSpaceForPath = pathname.includes("/feed/introductions")
+    ? "Introductions"
+    : pathname.includes("/feed/general-discussion")
+      ? "General Discussion"
+      : "Service";
+
   return (
     <Sidebar className="bg-white border-r border-gray-200" {...props}>
       <SidebarHeader className="bg-transparent">
@@ -324,6 +330,7 @@ export function StudentFeedSidebarContent({
       <FeedCreatePostModal
         isOpen={isCreateModalOpen}
         onClose={() => setIsCreateModalOpen(false)}
+        defaultSpace={defaultSpaceForPath}
       />
     </Sidebar>
   );

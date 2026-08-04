@@ -5,7 +5,6 @@ import { AppSimpleModal } from "@/components/modals/app-simple-modal";
 import {
   X,
   Tag,
-  PlusCircle,
   Smile,
   Sparkles,
   ImagePlus,
@@ -21,28 +20,37 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useCreateFeedMutation } from "@/hooks/api/use-feeds";
 import { useAuthStore } from "@/store/auth.store";
+import { FEED_TAG_OPTIONS } from "./feed-tags";
 
 interface FeedCreatePostModalProps {
   isOpen: boolean;
   onClose: () => void;
+  defaultSpace?: string;
 }
 
-const AVAILABLE_SPACES = [
-  "Service",
-  "Announcements",
-  "Introductions",
-  "General Discussion",
-  "Ask for Help",
-];
+// Announcements aren't here - those are posted through the separate
+// Announcement model/route by staff, not through this composer. Ask for
+// Help isn't here either - it has its own dedicated model and its own
+// "Ask a question" modal (feed/ask-for-help/_components/ask-question-modal.tsx),
+// since a question's shape (resolved status, answers) doesn't fit a generic post.
+const AVAILABLE_SPACES = ["Service", "Introductions", "General Discussion"];
+
+// Maps the user-facing space label to the backend Feed `channel` value.
+const SPACE_VALUES: Record<string, string> = {
+  Service: "general",
+  "General Discussion": "general-discussion",
+  Introductions: "introductions",
+};
 
 export const FeedCreatePostModal = ({
   isOpen,
   onClose,
+  defaultSpace = "Service",
 }: FeedCreatePostModalProps) => {
-  const [tags, setTags] = useState<string[]>([]);
-  const [tagInput, setTagInput] = useState("");
+  const [selectedTag, setSelectedTag] = useState<string | undefined>(undefined);
+  const [isTagDropdownOpen, setIsTagDropdownOpen] = useState(false);
   const [isSpaceDropdownOpen, setIsSpaceDropdownOpen] = useState(false);
-  const [selectedSpace, setSelectedSpace] = useState("Service");
+  const [selectedSpace, setSelectedSpace] = useState(defaultSpace);
   const [text, setText] = useState("");
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -50,10 +58,17 @@ export const FeedCreatePostModal = ({
   const user = useAuthStore((state) => state.user);
   const createFeedMutation = useCreateFeedMutation();
 
+  // The modal is mounted once in the sidebar and persists across
+  // navigation, so re-sync the pre-selected space to whichever page the
+  // user was on each time they open it (they can still change it manually
+  // before publishing).
+  React.useEffect(() => {
+    if (isOpen) setSelectedSpace(defaultSpace);
+  }, [isOpen, defaultSpace]);
+
   const resetAndClose = () => {
     setText("");
-    setTags([]);
-    setTagInput("");
+    setSelectedTag(undefined);
     setImage(null);
     setImagePreview(null);
     onClose();
@@ -73,26 +88,13 @@ export const FeedCreatePostModal = ({
 
     const formData = new FormData();
     formData.append("content", trimmed);
+    formData.append("channel", SPACE_VALUES[selectedSpace] ?? "general");
+    if (selectedTag) formData.append("tag", selectedTag);
     if (image) formData.append("media", image);
 
     createFeedMutation.mutate(formData, {
       onSuccess: () => resetAndClose(),
     });
-  };
-
-  const handleAddTag = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (tagInput.trim() && !tags.includes(tagInput.trim())) {
-      setTags([...tags, tagInput.trim()]);
-      setTagInput("");
-    }
-  };
-
-  const handlePlusClick = () => {
-    if (tagInput.trim() && !tags.includes(tagInput.trim())) {
-      setTags([...tags, tagInput.trim()]);
-      setTagInput("");
-    }
   };
 
   const selectSpace = (space: string) => {
@@ -121,49 +123,61 @@ export const FeedCreatePostModal = ({
         </button>
       </div>
 
-      {/* Tags Input/Row */}
-      <div className="flex items-center justify-between w-full py-1.5 border-b border-gray-100 shrink-0 gap-3">
-        <div className="flex items-center gap-2 flex-1 min-w-0 flex-wrap">
-          <Tag className="w-4 h-4 text-gray-400 shrink-0" />
-
-          {tags.map((tag, idx) => (
-            <span
-              key={idx}
-              className="bg-gray-100 text-gray-700 text-xs font-medium px-2.5 py-1 rounded-full flex items-center gap-1 shrink-0"
-            >
-              #{tag}
-              <button
-                type="button"
-                onClick={() => setTags(tags.filter((_, i) => i !== idx))}
-                className="hover:text-red-500 transition-colors"
-              >
-                <X className="w-3 h-3 text-gray-400 hover:text-gray-600" />
-              </button>
-            </span>
-          ))}
-
-          <form onSubmit={handleAddTag} className="flex-1 min-w-[120px]">
-            <input
-              type="text"
-              value={tagInput}
-              onChange={(e) => setTagInput(e.target.value)}
-              placeholder={
-                tags.length === 0
-                  ? "Selected tags will show up here.."
-                  : "Add tag..."
-              }
-              className="w-full bg-transparent border-none outline-none text-sm text-gray-700 placeholder-gray-400 focus:ring-0 p-0 focus:outline-none"
-            />
-          </form>
-        </div>
-
+      {/* Topic Row - one of the 3 fixed topics, optional */}
+      <div className="relative flex items-center gap-2 w-full py-2 border-b border-gray-100 shrink-0">
+        <Tag className="w-4 h-4 text-gray-400 shrink-0" />
         <button
           type="button"
-          onClick={handlePlusClick}
-          className="flex items-center justify-center p-1 rounded-full text-gray-400 hover:text-gray-600 transition-colors shrink-0 cursor-pointer"
+          onClick={() => setIsTagDropdownOpen(!isTagDropdownOpen)}
+          className="flex items-center gap-1.5 text-sm text-gray-600 hover:text-gray-900 transition-colors"
         >
-          <PlusCircle className="w-5 h-5" />
+          {selectedTag ? (
+            <span className="bg-gray-100 text-gray-700 text-xs font-medium px-2.5 py-1 rounded-full">
+              #{selectedTag}
+            </span>
+          ) : (
+            <span className="text-gray-400">Add a topic (optional)</span>
+          )}
+          <ChevronDown className="w-3.5 h-3.5 text-gray-400" />
         </button>
+        {selectedTag && (
+          <button
+            type="button"
+            onClick={() => setSelectedTag(undefined)}
+            className="text-gray-400 hover:text-red-500 transition-colors"
+          >
+            <X className="w-3.5 h-3.5" />
+          </button>
+        )}
+
+        {isTagDropdownOpen && (
+          <>
+            <div
+              className="fixed inset-0 z-40"
+              onClick={() => setIsTagDropdownOpen(false)}
+            />
+            <div className="absolute left-0 top-full mt-1.5 w-56 bg-white border border-gray-100 rounded-xl shadow-lg py-1.5 z-50 animate-in fade-in slide-in-from-top-1 duration-150">
+              {FEED_TAG_OPTIONS.map(({ value, label, icon: Icon }) => (
+                <button
+                  key={value}
+                  type="button"
+                  onClick={() => {
+                    setSelectedTag(value);
+                    setIsTagDropdownOpen(false);
+                  }}
+                  className={`flex w-full items-center gap-2.5 text-left px-3.5 py-2 text-sm transition-colors cursor-pointer hover:bg-gray-50 ${
+                    selectedTag === value
+                      ? "text-[#F86432] font-semibold bg-[#FEECE5]/30"
+                      : "text-gray-600 hover:text-gray-900"
+                  }`}
+                >
+                  <Icon className="w-4 h-4" />
+                  {label}
+                </button>
+              ))}
+            </div>
+          </>
+        )}
       </div>
 
       {/* User Information & Space Selector */}

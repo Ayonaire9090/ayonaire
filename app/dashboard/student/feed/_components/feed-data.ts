@@ -70,7 +70,7 @@ export function mapFeedRecordToFeedPost(
     authorAvatarUrl: feed.user?.profile?.url,
     textContent: feed.content,
     imageUrl: feed.media?.url,
-    tags: feed.tag,
+    tags: feed.tag ? [feed.tag] : undefined,
     likesCount: likes.length,
     commentsCount: comments.length,
     sharesCount: feed.shares ?? 0,
