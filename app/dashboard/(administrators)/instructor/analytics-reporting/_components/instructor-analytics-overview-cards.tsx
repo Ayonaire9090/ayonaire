@@ -1,3 +1,5 @@
+"use client";
+
 import { Badge } from "@/components/ui/badge";
 import {
   GraduationCap,
@@ -7,60 +9,57 @@ import {
   BarChart,
   LucideIcon,
 } from "lucide-react";
+import { useInstructorAnalytics } from "./instructor-analytics-data";
 
 interface CardData {
   title: string;
   value: string;
-  badge: string;
-  badgeColor: string;
+  badge?: string;
+  badgeColor?: string;
   icon: LucideIcon;
   iconColor: string;
 }
 
-const cards: CardData[] = [
-  {
-    title: "Total Students",
-    value: "12,450",
-    badge: "+12%",
-    badgeColor: "text-green-600 bg-green-100 hover:bg-green-100/80",
-    icon: GraduationCap,
-    iconColor: "text-orange-500",
-  },
-  {
-    title: "Active Courses",
-    value: "42",
-    badge: "+0%",
-    badgeColor: "text-blue-500 bg-blue-100 hover:bg-blue-100/80",
-    icon: BookOpen,
-    iconColor: "text-blue-500",
-  },
-  {
-    title: "Completion Rate",
-    value: "78.5%",
-    badge: "-2%",
-    badgeColor: "text-red-500 bg-red-100 hover:bg-red-100/80",
-    icon: Star,
-    iconColor: "text-red-500",
-  },
-  {
-    title: "Avg. Quiz Score",
-    value: "84/100",
-    badge: "+5%",
-    badgeColor: "text-orange-500 bg-orange-100 hover:bg-orange-100/80",
-    icon: CircleHelp,
-    iconColor: "text-orange-500",
-  },
-  {
-    title: "Revenue",
-    value: "$124k",
-    badge: "+18%",
-    badgeColor: "text-purple-500 bg-purple-100 hover:bg-purple-100/80",
-    icon: BarChart,
-    iconColor: "text-purple-500",
-  },
-];
-
 export const InstructorAnalyticsOverviewCards = () => {
+  const { totalStudents, activeCourses, completionRate, avgQuizScore, totalRevenue, isLoading } =
+    useInstructorAnalytics();
+
+  // No historical snapshots exist for these figures yet, so the trend
+  // badges from the mockup are dropped rather than filled with guessed
+  // percentages.
+  const cards: CardData[] = [
+    {
+      title: "Total Students",
+      value: isLoading ? "-" : totalStudents.toLocaleString(),
+      icon: GraduationCap,
+      iconColor: "text-orange-500",
+    },
+    {
+      title: "Active Courses",
+      value: isLoading ? "-" : String(activeCourses),
+      icon: BookOpen,
+      iconColor: "text-blue-500",
+    },
+    {
+      title: "Completion Rate",
+      value: isLoading ? "-" : `${completionRate}%`,
+      icon: Star,
+      iconColor: "text-red-500",
+    },
+    {
+      title: "Avg. Quiz Score",
+      value: isLoading || avgQuizScore == null ? "-" : `${Math.round(avgQuizScore)}/100`,
+      icon: CircleHelp,
+      iconColor: "text-orange-500",
+    },
+    {
+      title: "Revenue",
+      value: isLoading ? "-" : `$${totalRevenue.toLocaleString()}`,
+      icon: BarChart,
+      iconColor: "text-purple-500",
+    },
+  ];
+
   return (
     <div className="flex w-full overflow-x-auto hide-scrollbar gap-4 pb-2">
       {cards.map((card, index) => (
@@ -89,12 +88,14 @@ const InstructorAnalyticsOverviewCard = ({
 
       <div className="pt-4 flex flex-col items-start gap-2 mt-auto">
         <div className="font-bold text-2xl text-gray-900">{value}</div>
-        <Badge
-          variant="secondary"
-          className={`rounded-full px-2 py-0.5 text-xs font-medium border-transparent ${badgeColor}`}
-        >
-          {badge}
-        </Badge>
+        {badge && (
+          <Badge
+            variant="secondary"
+            className={`rounded-full px-2 py-0.5 text-xs font-medium border-transparent ${badgeColor}`}
+          >
+            {badge}
+          </Badge>
+        )}
       </div>
     </div>
   );

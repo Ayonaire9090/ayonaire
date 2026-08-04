@@ -1,10 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, ReactNode } from "react";
-import {
-  mockSessionAttendance,
-  SessionAttendanceData,
-} from "./attendance-session-data";
+import { SessionAttendanceData } from "./attendance-session-data";
 
 interface AttendanceSessionContextType {
   searchQuery: string;
@@ -13,17 +10,11 @@ interface AttendanceSessionContextType {
   selectedBulkActions: Set<string>;
   setSelectedBulkActions: React.Dispatch<React.SetStateAction<Set<string>>>;
 
-  selectedSessions: Set<string>;
-  setSelectedSessions: React.Dispatch<React.SetStateAction<Set<string>>>;
-
   selectedStatuses: Set<string>;
   setSelectedStatuses: React.Dispatch<React.SetStateAction<Set<string>>>;
 
-  selectedSources: Set<string>;
-  setSelectedSources: React.Dispatch<React.SetStateAction<Set<string>>>;
-
   filteredAttendance: SessionAttendanceData[];
-  
+
   toggleSet: (
     setter: React.Dispatch<React.SetStateAction<Set<string>>>,
     value: string
@@ -35,21 +26,17 @@ const AttendanceSessionContext = createContext<AttendanceSessionContextType | nu
 );
 
 export const AttendanceSessionProvider = ({
+  records,
   children,
 }: {
+  records: SessionAttendanceData[];
   children: ReactNode;
 }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedBulkActions, setSelectedBulkActions] = useState<Set<string>>(
     new Set()
   );
-  const [selectedSessions, setSelectedSessions] = useState<Set<string>>(
-    new Set()
-  );
   const [selectedStatuses, setSelectedStatuses] = useState<Set<string>>(
-    new Set()
-  );
-  const [selectedSources, setSelectedSources] = useState<Set<string>>(
     new Set()
   );
 
@@ -65,22 +52,15 @@ export const AttendanceSessionProvider = ({
     });
   };
 
-  const filteredAttendance = mockSessionAttendance.filter((item) => {
-    // Search matching
+  const filteredAttendance = records.filter((item) => {
     const matchesSearch =
       item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.studentId.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.email.toLowerCase().includes(searchQuery.toLowerCase());
 
-    // Status matching (if filter applied)
     const matchesStatus =
       selectedStatuses.size === 0 || selectedStatuses.has(item.status);
 
-    // Source matching (if filter applied)
-    const matchesSource =
-      selectedSources.size === 0 || selectedSources.has(item.source);
-
-    return matchesSearch && matchesStatus && matchesSource;
+    return matchesSearch && matchesStatus;
   });
 
   return (
@@ -90,12 +70,8 @@ export const AttendanceSessionProvider = ({
         setSearchQuery,
         selectedBulkActions,
         setSelectedBulkActions,
-        selectedSessions,
-        setSelectedSessions,
         selectedStatuses,
         setSelectedStatuses,
-        selectedSources,
-        setSelectedSources,
         filteredAttendance,
         toggleSet,
       }}

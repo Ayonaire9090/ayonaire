@@ -9,6 +9,7 @@ import { InstructorProfile } from "@/lib/api/endpoints/instructor";
 import { Enrollment } from "@/lib/api/endpoints/enrollment";
 import {
   AttendanceSessionSummary,
+  AttendanceSessionDetail,
   AttendanceReportEntry,
 } from "@/lib/api/endpoints/attendance";
 import { QuizRecord, QuizResults } from "@/lib/api/endpoints/quiz";
@@ -297,6 +298,26 @@ export const SAMPLE_ATTENDANCE_SESSIONS: AttendanceSessionSummary[] = [
     createdAt: daysAgo(8),
   },
 ];
+
+// Roster for a single session (att-1) - backs the /attendance/session/[id] view.
+export const SAMPLE_ATTENDANCE_SESSION_DETAIL: AttendanceSessionDetail = {
+  _id: "att-1",
+  title: "Data Science Cohort A - Week 6",
+  course: { _id: "course-1", title: "2.0 - Ultimate Data Science" },
+  cohort: { _id: "cohort-1", name: "Cohort A" },
+  date: daysAgo(1),
+  instructor: { _id: "instructor-1", name: "Dr. Ahmed Musa" },
+  approvalStatus: "approved",
+  createdAt: daysAgo(1),
+  records: [
+    { student: SAMPLE_STUDENTS[0], status: "present", timeIn: "6:02 PM", timeOut: "8:00 PM", notes: "-" },
+    { student: SAMPLE_STUDENTS[1], status: "present", timeIn: "6:05 PM", timeOut: "8:00 PM", notes: "-" },
+    { student: SAMPLE_STUDENTS[2], status: "late", timeIn: "6:22 PM", timeOut: "8:00 PM", notes: "Informed about delay" },
+    { student: SAMPLE_STUDENTS[3], status: "absent", notes: "Medical emergency" },
+    { student: SAMPLE_STUDENTS[4], status: "present", timeIn: "6:00 PM", timeOut: "8:00 PM", notes: "-" },
+    { student: SAMPLE_STUDENTS[5], status: "unmarked", notes: "-" },
+  ],
+};
 
 export const SAMPLE_ATTENDANCE_REPORT: AttendanceReportEntry[] = SAMPLE_STUDENTS.map(
   (s, i) => {

@@ -24,7 +24,7 @@ export interface AttendanceSessionSummary {
 }
 
 export interface AttendanceSessionDetail extends Omit<AttendanceSessionSummary, "presentCount" | "absentCount" | "attendanceRate"> {
-  records: (AttendanceRecordInput & { student: { _id: string; name: string; email: string } })[];
+  records: (Omit<AttendanceRecordInput, "student"> & { student: { _id: string; name: string; email: string } })[];
 }
 
 export interface CreateAttendanceSessionPayload {

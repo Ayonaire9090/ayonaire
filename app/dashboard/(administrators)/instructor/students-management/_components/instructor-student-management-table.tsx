@@ -89,10 +89,26 @@ export const InstructorStudentManagementTable = () => {
             </button>
           }
         >
-          <AppDropdownItem onClick={() => toast.info("Student profile detail view isn't available yet.")}>
+          <AppDropdownItem
+            onClick={() =>
+              item.studentId && item.courseId
+                ? router.push(
+                    `/dashboard/instructor/students-management/course-module?studentId=${item.studentId}&courseId=${item.courseId}`,
+                  )
+                : toast.info("Student profile detail view isn't available for this enrollment.")
+            }
+          >
             View
           </AppDropdownItem>
-          <AppDropdownItem onClick={() => toast.info("Grading view isn't available yet.")}>
+          <AppDropdownItem
+            onClick={() =>
+              item.studentId
+                ? router.push(
+                    `/dashboard/instructor/students-management/performance-results?studentId=${item.studentId}`,
+                  )
+                : toast.info("Grading view isn't available for this enrollment.")
+            }
+          >
             Grade now
           </AppDropdownItem>
           <AppDropdownItem onClick={() => downloadStudentsCsv(`${item.name.replace(/\s+/g, "-")}.csv`, [item])}>

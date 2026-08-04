@@ -2,12 +2,12 @@
 
 import React, { useState } from "react";
 import {
+  StudentAttendanceData,
   StudentStatusBadge,
   StudentAttendanceActions,
-  mockStudentAttendance,
 } from "./attendance-view-data";
 
-export const AttendanceViewList = () => {
+export const AttendanceViewList = ({ data }: { data: StudentAttendanceData[] }) => {
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
 
   const toggleSelection = (id: string) => {
@@ -33,7 +33,7 @@ export const AttendanceViewList = () => {
 
   return (
     <div className="md:hidden flex flex-col gap-4 w-full">
-      {mockStudentAttendance.map((item) => (
+      {data.map((item) => (
         <div
           key={item.id}
           className="bg-white rounded-2xl p-5 flex flex-col w-full"
@@ -66,9 +66,6 @@ export const AttendanceViewList = () => {
               <div className="flex flex-col">
                 <span className="text-[16px] font-semibold text-gray-900 leading-tight">
                   {item.name}
-                </span>
-                <span className="text-[13px] text-gray-500 mt-0.5">
-                  {item.studentId}
                 </span>
                 <span className="text-[13px] text-gray-500 line-clamp-1">
                   {item.email}
@@ -105,22 +102,13 @@ export const AttendanceViewList = () => {
           </div>
 
           {/* Bottom Stats Row */}
-          <div className="flex items-center justify-between mt-5 w-full">
+          <div className="flex items-center mt-5 w-full">
             <div className="flex flex-col gap-1">
               <span className="text-[14px] font-medium text-gray-900">
                 Sessions
               </span>
               <span className="text-[14px] text-gray-500">
                 {item.sessionsPresent}/{item.sessionsAbsent}
-              </span>
-            </div>
-
-            <div className="flex flex-col gap-1 text-right">
-              <span className="text-[14px] font-medium text-gray-900">
-                Last Attended
-              </span>
-              <span className="text-[14px] text-gray-500">
-                {item.lastAttended}
               </span>
             </div>
           </div>

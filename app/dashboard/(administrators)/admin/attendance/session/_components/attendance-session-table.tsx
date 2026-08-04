@@ -5,7 +5,6 @@ import { DataTable, ColumnDef } from "@/components/ui/data-table";
 import {
   SessionAttendanceData,
   SessionStatusBadge,
-  SessionSourceBadge,
   SessionAttendanceAction,
 } from "./attendance-session-data";
 import { AttendanceSessionFilters } from "./attendance-session-filters";
@@ -25,11 +24,11 @@ export const AttendanceSessionTable = () => {
       ),
     },
     {
-      key: "studentId",
-      header: "Student ID",
+      key: "email",
+      header: "Email",
       cell: (item) => (
         <span className="text-gray-600 text-[13px] whitespace-nowrap">
-          {item.studentId}
+          {item.email}
         </span>
       ),
     },
@@ -53,20 +52,6 @@ export const AttendanceSessionTable = () => {
       cell: (item) => (
         <span className="text-gray-500 text-[13px] whitespace-nowrap">
           {item.timeOut}
-        </span>
-      ),
-    },
-    {
-      key: "source",
-      header: "Source",
-      cell: (item) => <SessionSourceBadge source={item.source} />,
-    },
-    {
-      key: "markedBy",
-      header: "Marked By",
-      cell: (item) => (
-        <span className="text-gray-500 text-[13px] whitespace-nowrap">
-          {item.markedBy}
         </span>
       ),
     },

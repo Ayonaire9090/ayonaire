@@ -5,6 +5,7 @@ import {
   SAMPLE_INSTRUCTOR_PROFILES,
   SAMPLE_ENROLLMENTS,
   SAMPLE_ATTENDANCE_SESSIONS,
+  SAMPLE_ATTENDANCE_SESSION_DETAIL,
   SAMPLE_ATTENDANCE_REPORT,
   SAMPLE_QUIZZES,
   SAMPLE_QUIZ_RESULTS,
@@ -92,6 +93,12 @@ export function createSeededAdminQueryClient(): QueryClient {
   queryClient.setQueryData(["attendance", "report", {}], {
     success: true,
     data: SAMPLE_ATTENDANCE_REPORT,
+  });
+
+  // Attendance session detail (single session roster)
+  queryClient.setQueryData(["attendance", "detail", "att-1"], {
+    success: true,
+    data: SAMPLE_ATTENDANCE_SESSION_DETAIL,
   });
 
   // Quiz list (desktop table passes {page:1}, others pass {})

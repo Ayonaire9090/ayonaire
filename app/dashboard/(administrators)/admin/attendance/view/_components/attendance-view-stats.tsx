@@ -1,31 +1,29 @@
-import { IconUserFilled } from "@tabler/icons-react";
-import { User, DoorClosed } from "lucide-react";
+import { AttendanceReportEntry } from "@/lib/api/endpoints/attendance";
 
-export const AttendanceViewStats = () => {
+export const AttendanceViewStats = ({
+  entries,
+}: {
+  entries: AttendanceReportEntry[];
+}) => {
+  const totalStudents = entries.length;
+  // The report gives per-student totals, not a single cohort session count -
+  // take the max across students as the best available approximation.
+  const totalSessions = entries.length
+    ? Math.max(...entries.map((e) => e.totalSessions))
+    : 0;
+  const averageAttendance = entries.length
+    ? Math.round(
+        entries.reduce((sum, e) => sum + e.attendanceRate, 0) / entries.length,
+      )
+    : 0;
+
   return (
     <div className="w-full bg-white rounded-2xl p-5 md:p-6 mb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 overflow-x-auto">
-      {/* Left side: Course Info */}
+      {/* Left side: Section Info */}
       <div className="flex flex-col gap-2.5 shrink-0">
-        <div className="flex items-center gap-3">
-          <h2 className="text-[20px] md:text-[22px] font-bold text-gray-900 leading-tight">
-            AI Automation – Cohort 3
-          </h2>
-          <span className="inline-flex items-center justify-center rounded-full bg-[#E6F6EC] px-3 py-1 text-[13px] font-medium text-[#24A164]">
-            Active
-          </span>
-        </div>
-
-        <div className="flex items-center gap-4 text-[14px] text-gray-700 font-semibold">
-          <div className="flex items-center gap-1.5">
-            <IconUserFilled size="20" />
-            <span>Dr. Ahmed</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            {/* SVG placeholder for Door icon if DoorClosed doesn't look exact, but DoorClosed works well. */}
-            <DoorClosed className="size-4" />
-            <span>Room 402</span>
-          </div>
-        </div>
+        <h2 className="text-[20px] md:text-[22px] font-bold text-gray-900 leading-tight">
+          Student Attendance Overview
+        </h2>
       </div>
 
       {/* Vertical Divider (Hidden on mobile) */}
@@ -39,7 +37,7 @@ export const AttendanceViewStats = () => {
             Total Students
           </span>
           <span className="text-[22px] lg:text-[24px] font-bold text-gray-900 text-center md:text-left">
-            30
+            {totalStudents}
           </span>
         </div>
 
@@ -49,7 +47,7 @@ export const AttendanceViewStats = () => {
             Total Sessions
           </span>
           <span className="text-[22px] lg:text-[24px] font-bold text-gray-900 text-center md:text-left">
-            12
+            {totalSessions}
           </span>
         </div>
 
@@ -59,7 +57,7 @@ export const AttendanceViewStats = () => {
             Average Attendance
           </span>
           <span className="text-[22px] lg:text-[24px] font-bold text-[#24A164] text-center md:text-left">
-            86%
+            {averageAttendance}%
           </span>
         </div>
       </div>

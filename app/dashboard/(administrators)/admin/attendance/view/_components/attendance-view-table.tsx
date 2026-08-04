@@ -6,10 +6,9 @@ import {
   StudentAttendanceData,
   StudentStatusBadge,
   StudentAttendanceActions,
-  mockStudentAttendance,
 } from "./attendance-view-data";
 
-export const AttendanceViewTable = () => {
+export const AttendanceViewTable = ({ data }: { data: StudentAttendanceData[] }) => {
   const getProgressColor = (percent: number) => {
     if (percent >= 80) return "bg-[#24A164]";
     if (percent >= 70) return "bg-[#F59E0B]";
@@ -29,15 +28,6 @@ export const AttendanceViewTable = () => {
       cell: (item) => (
         <span className="text-gray-900 text-[14px] font-medium whitespace-nowrap">
           {item.name}
-        </span>
-      ),
-    },
-    {
-      key: "studentId",
-      header: "Student ID",
-      cell: (item) => (
-        <span className="text-gray-500 text-[13px] whitespace-nowrap">
-          {item.studentId}
         </span>
       ),
     },
@@ -83,15 +73,6 @@ export const AttendanceViewTable = () => {
       ),
     },
     {
-      key: "lastAttended",
-      header: "Last Attended",
-      cell: (item) => (
-        <span className="text-gray-500 text-[13px] whitespace-nowrap">
-          {item.lastAttended}
-        </span>
-      ),
-    },
-    {
       key: "status",
       header: "Status",
       cell: (item) => <StudentStatusBadge status={item.status} />,
@@ -106,7 +87,7 @@ export const AttendanceViewTable = () => {
   return (
     <div className="bg-white rounded-2xl hidden md:block w-full overflow-x-auto p-4 lg:p-6">
       <DataTable
-        data={mockStudentAttendance}
+        data={data}
         columns={tableColumns}
         keyExtractor={(o) => o.id}
         selectable

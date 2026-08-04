@@ -3,13 +3,28 @@
 import { DataList } from "@/components/ui/data-list";
 import { Checkbox } from "@/components/ui/checkbox";
 import { MoreVertical } from "lucide-react";
-import { dummyRevenueData } from "./instructor-course-revenue-table";
+import { useCourseRevenueRows } from "./instructor-course-revenue-table";
+
+const statusStyle: Record<string, string> = {
+  Active: "bg-[#DBEAFE] text-[#3B82F6]",
+  Draft: "bg-[#FEE2E2] text-[#EF4444]",
+  Archived: "bg-[#F3E8FF] text-[#A855F7]",
+};
 
 export const InstructorCourseRevenueList = () => {
+  const { rows, isLoading } = useCourseRevenueRows();
+
+  if (isLoading) {
+    return <p className="text-sm text-gray-400 py-6 text-center">Loading…</p>;
+  }
+  if (rows.length === 0) {
+    return <p className="text-sm text-gray-400 py-6 text-center">No courses yet</p>;
+  }
+
   return (
     <div className="my-6 p-4 bg-white rounded-xl">
       <DataList
-        data={dummyRevenueData}
+        data={rows}
         keyExtractor={(item) => item.id}
         renderItem={(item) => (
           <div className="flex flex-col w-full gap-3">
@@ -35,14 +50,10 @@ export const InstructorCourseRevenueList = () => {
             <div className="flex justify-between items-center w-full pl-8">
               <span
                 className={`px-3 py-1 w-fit text-[13px] rounded-full font-medium ${
-                  item.courseName === "AI for Beginners"
-                    ? "bg-[#F3E8FF] text-[#A855F7]"
-                    : item.courseName === "Data Science Bootcamp"
-                      ? "bg-[#DBEAFE] text-[#3B82F6]"
-                      : "bg-[#FEE2E2] text-[#EF4444]"
+                  statusStyle[item.status ?? ""] ?? "bg-gray-100 text-gray-600"
                 }`}
               >
-                {item.status}
+                {item.status ?? "-"}
               </span>
               <span className="text-gray-600 text-[17px]">
                 {item.studentsEnrolled}

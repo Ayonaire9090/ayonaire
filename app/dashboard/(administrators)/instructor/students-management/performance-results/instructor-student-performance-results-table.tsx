@@ -3,18 +3,33 @@
 import { useState } from "react";
 import { DataTable, ColumnDef } from "@/components/ui/data-table";
 import { AppDropdown, AppDropdownItem } from "@/components/ui/app-dropdown";
-import { MoreVertical, ClipboardList } from "lucide-react";
-import { DUMMY_ASSIGNMENTS, AssignmentData, getAssignmentStatusColor } from "./dummy-performance-data";
+import { MoreVertical, ClipboardList, FileQuestionMark } from "lucide-react";
+import {
+  SubmissionRow,
+  StudentQuizAttemptRow,
+  getSubmissionStatusColor,
+  useInstructorSubmissions,
+  useInstructorStudentQuizAttempts,
+} from "./instructor-performance-data";
 
-export const InstructorStudentPerformanceResultsTable = () => {
+export const InstructorStudentPerformanceResultsTable = ({ studentId }: { studentId?: string }) => {
   const [activeTab, setActiveTab] = useState<"assignments" | "quizzes" | "projects">("assignments");
+  const { rows, isLoading } = useInstructorSubmissions(studentId);
+  const { rows: quizRows, isLoading: quizLoading } = useInstructorStudentQuizAttempts(studentId);
 
-  const columns: ColumnDef<AssignmentData>[] = [
+  const columns: ColumnDef<SubmissionRow>[] = [
+    {
+      key: "student",
+      header: "Student",
+      cell: (item) => (
+        <span className="font-medium text-[15px] text-gray-900">{item.student}</span>
+      ),
+    },
     {
       key: "lesson",
-      header: "Lesson",
+      header: "Assignment",
       cell: (item) => (
-        <span className="font-medium text-[15px] text-gray-900">{item.lesson}</span>
+        <span className="text-[15px] text-gray-600">{item.lesson}</span>
       ),
     },
     {
@@ -35,7 +50,7 @@ export const InstructorStudentPerformanceResultsTable = () => {
       key: "status",
       header: "Status",
       cell: (item) => (
-        <span className={`px-3 py-1.5 rounded-full text-xs font-medium ${getAssignmentStatusColor(item.status)}`}>
+        <span className={`px-3 py-1.5 rounded-full text-xs font-medium ${getSubmissionStatusColor(item.status)}`}>
           {item.status}
         </span>
       ),
@@ -43,7 +58,7 @@ export const InstructorStudentPerformanceResultsTable = () => {
     {
       key: "actions",
       header: "Actions",
-      cell: (item) => (
+      cell: () => (
         <AppDropdown
           trigger={
             <button className="p-2 hover:bg-gray-100 rounded-full transition-colors outline-none focus:ring-2 focus:ring-primary/20">
@@ -53,13 +68,78 @@ export const InstructorStudentPerformanceResultsTable = () => {
         >
           <AppDropdownItem>View</AppDropdownItem>
           <AppDropdownItem>Grade now</AppDropdownItem>
-          <AppDropdownItem>Download</AppDropdownItem>
         </AppDropdown>
       ),
     },
   ];
 
+  const quizColumns: ColumnDef<StudentQuizAttemptRow>[] = [
+    {
+      key: "quizTitle",
+      header: "Quiz",
+      cell: (item) => (
+        <span className="font-medium text-[15px] text-gray-900">{item.quizTitle}</span>
+      ),
+    },
+    {
+      key: "score",
+      header: "Score",
+      cell: (item) => <span className="text-[15px] text-gray-600">{item.score}%</span>,
+    },
+    {
+      key: "submissionDate",
+      header: "Submission Date",
+      cell: (item) => (
+        <span className="text-[15px] text-gray-600">{item.submissionDate}</span>
+      ),
+    },
+    {
+      key: "status",
+      header: "Status",
+      cell: (item) => (
+        <span className={`px-3 py-1.5 rounded-full text-xs font-medium ${getSubmissionStatusColor(item.status)}`}>
+          {item.status}
+        </span>
+      ),
+    },
+  ];
+
   const renderContent = () => {
+    if (activeTab === "quizzes") {
+      if (!studentId) {
+        return (
+          <div className="bg-white rounded-2xl w-full p-8 flex flex-col items-center justify-center min-h-[300px]">
+            <h3 className="text-lg font-bold text-gray-500">No student selected</h3>
+            <p className="text-gray-400 mt-2 text-center">
+              Select a student to view their quiz attempt history.
+            </p>
+          </div>
+        );
+      }
+      return (
+        <div className="bg-white rounded-2xl w-full">
+          <div className="flex items-center gap-2 mb-2 p-6 pb-0">
+            <FileQuestionMark className="size-6 text-[#FF5A1F]" />
+            <h2 className="text-xl font-bold text-[#1f2937]">Quiz Attempts</h2>
+          </div>
+          <div className="p-6 pt-0">
+            {quizLoading ? (
+              <p className="text-sm text-gray-400 py-6 text-center">Loading…</p>
+            ) : quizRows.length === 0 ? (
+              <p className="text-sm text-gray-400 py-6 text-center">No quiz attempts yet</p>
+            ) : (
+              <DataTable
+                data={quizRows}
+                columns={quizColumns}
+                keyExtractor={(item) => item.id}
+                selectable
+              />
+            )}
+          </div>
+        </div>
+      );
+    }
+
     if (activeTab === "assignments") {
       return (
         <div className="bg-white rounded-2xl w-full">
@@ -68,12 +148,18 @@ export const InstructorStudentPerformanceResultsTable = () => {
             <h2 className="text-xl font-bold text-[#1f2937]">Recent Assignments</h2>
           </div>
           <div className="p-6 pt-0">
-            <DataTable
-              data={DUMMY_ASSIGNMENTS}
-              columns={columns}
-              keyExtractor={(item) => item.id}
-              selectable
-            />
+            {isLoading ? (
+              <p className="text-sm text-gray-400 py-6 text-center">Loading…</p>
+            ) : rows.length === 0 ? (
+              <p className="text-sm text-gray-400 py-6 text-center">No assignments yet</p>
+            ) : (
+              <DataTable
+                data={rows}
+                columns={columns}
+                keyExtractor={(item) => item.id}
+                selectable
+              />
+            )}
           </div>
         </div>
       );

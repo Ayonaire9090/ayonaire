@@ -157,11 +157,11 @@ export const InstructorMessagesHeader = ({
       </div>
 
       <div className="flex items-center gap-4">
-        <button className="relative flex h-11 w-11 items-center justify-center rounded-full bg-white hover:bg-white/80 transition-colors">
+        <button
+          onClick={() => router.push("/dashboard/instructor/notifications")}
+          className="relative flex h-11 w-11 items-center justify-center rounded-full bg-white hover:bg-white/80 transition-colors"
+        >
           <Bell className="h-5 w-5 text-black" fill="currentColor" />
-          <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-[#E33B44] text-[10px] font-bold text-white border-2 border-[#F8F9FA]">
-            8
-          </span>
         </button>
 
         <DashboardUserDropDown>

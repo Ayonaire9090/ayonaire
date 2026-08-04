@@ -80,12 +80,8 @@ export const AttendanceSessionFilters = () => {
     setSearchQuery,
     selectedBulkActions,
     setSelectedBulkActions,
-    selectedSessions,
-    setSelectedSessions,
     selectedStatuses,
     setSelectedStatuses,
-    selectedSources,
-    setSelectedSources,
     toggleSet,
   } = useAttendanceSessionContext();
 
@@ -123,35 +119,6 @@ export const AttendanceSessionFilters = () => {
           </PopoverContent>
         </Popover>
 
-        {/* Session Filter */}
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button
-              variant="outline"
-              className="h-10 px-4 bg-white lg:bg-[#F6F6F6] border-none text-gray-500 font-normal hover:bg-gray-50 rounded-[8px] shadow-none text-[15px]"
-            >
-              Session Filter{" "}
-              <ChevronDown className="ml-1.5 size-4 text-gray-400" />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent
-            align="start"
-            className="w-[280px] p-0 rounded-[20px] border-gray-100 shadow-[0_12px_40px_-8px_rgba(0,0,0,0.12)] bg-white lg:bg-[#F6F6F6]"
-          >
-            <FilterPopoverHeader title="Session Filter" />
-            <div className="pb-3 flex flex-col gap-0.5">
-              {["Session 1", "Session 2"].map((action) => (
-                <CheckboxItem
-                  key={action}
-                  label={action}
-                  checked={selectedSessions.has(action)}
-                  onToggle={() => toggleSet(setSelectedSessions, action)}
-                />
-              ))}
-            </div>
-          </PopoverContent>
-        </Popover>
-
         {/* Status Filter */}
         <Popover>
           <PopoverTrigger asChild>
@@ -181,35 +148,6 @@ export const AttendanceSessionFilters = () => {
           </PopoverContent>
         </Popover>
 
-        {/* Source Filter */}
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button
-              variant="outline"
-              className="h-10 px-4 bg-white lg:bg-[#F6F6F6] border-none text-gray-500 font-normal hover:bg-gray-50 rounded-[8px] shadow-none text-[15px]"
-            >
-              Source Filter{" "}
-              <ChevronDown className="ml-1.5 size-4 text-gray-400" />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent
-            align="start"
-            className="w-[280px] p-0 rounded-[20px] border-gray-100 shadow-[0_12px_40px_-8px_rgba(0,0,0,0.12)] bg-white lg:bg-[#F6F6F6]"
-          >
-            <FilterPopoverHeader title="Source Filter" />
-            <div className="pb-3 flex flex-col gap-0.5">
-              {["Device", "Manual"].map((action) => (
-                <CheckboxItem
-                  key={action}
-                  label={action}
-                  checked={selectedSources.has(action)}
-                  onToggle={() => toggleSet(setSelectedSources, action)}
-                />
-              ))}
-            </div>
-          </PopoverContent>
-        </Popover>
-
         {/* Apply Button */}
         <Button className="h-10 px-6 bg-[#FF6B35] text-white font-medium rounded-[8px] text-[15px] hover:bg-[#FF6B35]/90 border-none shadow-none">
           Apply
@@ -220,7 +158,7 @@ export const AttendanceSessionFilters = () => {
       <div className="relative w-full lg:w-auto shrink-0 min-w-[320px]">
         <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-gray-400" />
         <Input
-          placeholder="Search by: Student name Student ID Email"
+          placeholder="Search by name or email"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="pl-[42px] rounded-full border-none bg-white lg:bg-[#F6F6F6] h-11 text-[15px] placeholder:text-gray-400 focus-visible:ring-0 focus-visible:bg-gray-50 hover:bg-gray-50 transition-colors shadow-none"

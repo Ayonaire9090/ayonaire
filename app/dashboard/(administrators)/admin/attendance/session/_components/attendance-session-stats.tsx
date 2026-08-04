@@ -1,21 +1,44 @@
 import React from "react";
+import { AttendanceSessionDetail } from "@/lib/api/endpoints/attendance";
 
-export const AttendanceSessionViewStats = () => {
+function toApprovalLabel(status: string) {
+  if (status === "approved") return { label: "Approved", className: "bg-[#E6F6EC] text-[#24A164]" };
+  if (status === "rejected") return { label: "Rejected", className: "bg-[#FFEBE9] text-[#E5383B]" };
+  return { label: "Pending Approval", className: "bg-[#FFF4E5] text-[#F59E0B]" };
+}
+
+export const AttendanceSessionViewStats = ({
+  session,
+}: {
+  session: AttendanceSessionDetail;
+}) => {
+  const courseTitle =
+    typeof session.course === "object" ? session.course?.title : session.course;
+  const cohortName =
+    typeof session.cohort === "object" ? session.cohort?.name : session.cohort;
+  const date = new Date(session.date);
+  const approval = toApprovalLabel(session.approvalStatus);
+  const marked = session.records.filter((r) => r.status !== "unmarked").length;
+  const unmarked = session.records.filter((r) => r.status === "unmarked").length;
+
   return (
     <div className="w-full bg-white rounded-2xl p-5 md:p-6 mb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 overflow-x-auto">
-      {/* Left side: Course Info */}
+      {/* Left side: Session Info */}
       <div className="flex flex-col gap-2.5 shrink-0">
         <div className="flex items-center gap-3">
           <h2 className="text-[20px] md:text-[22px] font-bold text-gray-900 leading-tight">
-            AI Automation – Cohort 3
+            {session.title}
           </h2>
-          <span className="inline-flex items-center justify-center rounded-full bg-[#FFF4E5] px-3 py-1 text-[13px] font-medium text-[#F59E0B]">
-            Pending Approval
+          <span
+            className={`inline-flex items-center justify-center rounded-full px-3 py-1 text-[13px] font-medium ${approval.className}`}
+          >
+            {approval.label}
           </span>
         </div>
 
         <div className="text-[14px] text-gray-900 font-medium">
-          Machine Learning Basics
+          {courseTitle ?? "Uncategorized"}
+          {cohortName ? ` · ${cohortName}` : ""}
         </div>
       </div>
 
@@ -25,10 +48,11 @@ export const AttendanceSessionViewStats = () => {
       {/* Middle: Date & Time */}
       <div className="flex flex-col gap-1 shrink-0">
         <span className="text-[16px] md:text-[18px] font-bold text-gray-900">
-          Date&Time
+          Date
         </span>
         <span className="text-[14px] text-gray-500 font-medium">
-          Mar 10, 2026 6:00 PM – 8:00 PM
+          {date.toLocaleDateString()}{" "}
+          {date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
         </span>
       </div>
 
@@ -43,7 +67,7 @@ export const AttendanceSessionViewStats = () => {
             Total Students
           </span>
           <span className="text-[22px] lg:text-[24px] font-bold text-gray-900 text-center md:text-left">
-            30
+            {session.records.length}
           </span>
         </div>
 
@@ -53,7 +77,7 @@ export const AttendanceSessionViewStats = () => {
             Marked
           </span>
           <span className="text-[22px] lg:text-[24px] font-bold text-[#24A164] text-center md:text-left">
-            7
+            {marked}
           </span>
         </div>
 
@@ -63,7 +87,7 @@ export const AttendanceSessionViewStats = () => {
             Unmarked
           </span>
           <span className="text-[22px] lg:text-[24px] font-bold text-[#EF4444] text-center md:text-left">
-            3
+            {unmarked}
           </span>
         </div>
       </div>
