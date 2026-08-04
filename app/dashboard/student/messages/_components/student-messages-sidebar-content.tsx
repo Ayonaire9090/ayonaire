@@ -11,10 +11,11 @@ import {
 } from "@/components/ui/sidebar";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { X, Menu, ChevronsUpDown, MessageSquarePlus } from "lucide-react";
+import { X, Menu, ChevronsUpDown } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { toast } from "sonner";
 import { useGetRooms } from "@/hooks/api/use-rooms";
 import { useAuthStore } from "@/store/auth.store";
 import {
@@ -22,6 +23,9 @@ import {
   lastMessagePreview,
   lastMessageTimestamp,
 } from "../_data/message-data";
+import { NewMessagePopover } from "./new-message-popover";
+
+type InboxTab = "chatroom" | "inbox";
 
 export function StudentMessagesSidebarContent({
   ...props
@@ -30,16 +34,21 @@ export function StudentMessagesSidebarContent({
   const isCollapsed = state === "collapsed" && !isMobile;
   const pathname = usePathname();
   const user = useAuthStore((s) => s.user);
+  const [activeInboxTab, setActiveInboxTab] = React.useState<InboxTab>("inbox");
 
   const isPinned = open;
 
   const { data: roomsData, isLoading } = useGetRooms();
   const rooms = roomsData?.data ?? [];
-  const conversations = rooms.map((room) => ({
+  const allConversations = rooms.map((room) => ({
     conv: mapRoomToConversation(room, user?._id),
     preview: lastMessagePreview(room),
     timestamp: lastMessageTimestamp(room),
   }));
+  // "Chatroom" = group rooms, "Inbox" = 1:1 direct messages.
+  const conversations = allConversations.filter(({ conv }) =>
+    activeInboxTab === "chatroom" ? conv.type === "group" : conv.type === "individual",
+  );
 
   return (
     <Sidebar className="bg-white border-r border-gray-200" {...props}>
@@ -99,21 +108,42 @@ export function StudentMessagesSidebarContent({
         {!isCollapsed && (
           <div className="mt-2 space-y-4">
             <div className="flex gap-2">
-              <button className="flex-1 text-center text-[13px] font-medium py-2 rounded-lg bg-gray-50 text-gray-500 hover:bg-gray-100 transition-colors">
+              <button
+                onClick={() => setActiveInboxTab("chatroom")}
+                className={cn(
+                  "flex-1 text-center text-[13px] font-medium py-2 rounded-lg transition-colors",
+                  activeInboxTab === "chatroom"
+                    ? "bg-[#F15D23] text-white"
+                    : "bg-gray-50 text-gray-500 hover:bg-gray-100",
+                )}
+              >
                 Chatroom
               </button>
-              <button className="flex-1 text-center text-[13px] font-medium py-2 rounded-lg bg-[#F15D23] text-white">
+              <button
+                onClick={() => setActiveInboxTab("inbox")}
+                className={cn(
+                  "flex-1 text-center text-[13px] font-medium py-2 rounded-lg transition-colors",
+                  activeInboxTab === "inbox"
+                    ? "bg-[#F15D23] text-white"
+                    : "bg-gray-50 text-gray-500 hover:bg-gray-100",
+                )}
+              >
                 Inbox
               </button>
             </div>
 
             <div className="flex items-center gap-2">
-              <button className="px-3 py-1.5 bg-gray-50 text-gray-600 text-xs font-medium rounded-lg hover:bg-gray-100 transition-colors">
+              <button
+                onClick={() =>
+                  toast.info(
+                    "Chat with Admin isn't available yet - needs a backend-provided support contact.",
+                  )
+                }
+                className="px-3 py-1.5 bg-gray-50 text-gray-600 text-xs font-medium rounded-lg hover:bg-gray-100 transition-colors"
+              >
                 Chat with Admin
               </button>
-              <button className="ml-auto p-1.5 text-gray-500 hover:text-black transition-colors">
-                <MessageSquarePlus className="w-5 h-5" />
-              </button>
+              <NewMessagePopover />
             </div>
           </div>
         )}
@@ -128,7 +158,9 @@ export function StudentMessagesSidebarContent({
           ) : conversations.length === 0 ? (
             !isCollapsed && (
               <p className="px-4 py-6 text-sm text-gray-400 text-center">
-                No conversations yet.
+                {activeInboxTab === "chatroom"
+                  ? "No group chats yet."
+                  : "No direct messages yet."}
               </p>
             )
           ) : (

@@ -9,6 +9,7 @@ import { ProjectEntry } from "./resume-projects-section";
 import { SkillEntry } from "./resume-skills-section";
 import { CertificationEntry } from "./resume-certifications-section";
 import { ExtraCurricularEntry } from "./resume-extra-curricular-section";
+import { HonorEntry } from "./resume-honors-section";
 
 const ZOOM_MIN = 50;
 const ZOOM_MAX = 150;
@@ -25,6 +26,7 @@ export function ResumeLivePreview({
   skillEntries = [],
   certificationEntries = [],
   extraCurricularEntries = [],
+  honorEntries = [],
   visitedSections = [],
 }: {
   contact: ContactFormData;
@@ -36,6 +38,7 @@ export function ResumeLivePreview({
   skillEntries?: SkillEntry[];
   certificationEntries?: CertificationEntry[];
   extraCurricularEntries?: ExtraCurricularEntry[];
+  honorEntries?: HonorEntry[];
   visitedSections?: string[];
 }) {
   const [zoom, setZoom] = useState(ZOOM_DEFAULT);
@@ -59,6 +62,7 @@ export function ResumeLivePreview({
   const filledSkills = skillEntries.filter((e) => e.category.trim());
   const filledCertifications = certificationEntries.filter((e) => e.name.trim());
   const filledExtraCurricular = extraCurricularEntries.filter((e) => e.role.trim() || e.organization.trim());
+  const filledHonors = honorEntries.filter((e) => e.title.trim());
 
   const visited = new Set(visitedSections);
   const showSummary = visited.has("summary") || !!summary;
@@ -68,7 +72,7 @@ export function ResumeLivePreview({
   const showProjects = visited.has("projects") || filledProjects.length > 0;
   const showSkills = visited.has("skills") || filledSkills.length > 0;
   const showCertifications = visited.has("certification") || filledCertifications.length > 0;
-  const showHonourAward = visited.has("honour-award");
+  const showHonourAward = visited.has("honour-award") || filledHonors.length > 0;
   const showExtraCurricular = visited.has("extra-curriculum") || filledExtraCurricular.length > 0;
 
   const hasAnyContent =
@@ -315,6 +319,20 @@ export function ResumeLivePreview({
                     <h4 className="text-sm font-semibold text-gray-900 border-b border-gray-200 pb-1 mb-2">
                       Honors &amp; Awards
                     </h4>
+                    {filledHonors.length > 0 && (
+                      <ul className="list-disc list-inside text-sm text-gray-700">
+                        {filledHonors.map((honor) => (
+                          <li key={honor.id}>
+                            {honor.title}
+                            {honor.issuingOrganization && ` - ${honor.issuingOrganization}`}
+                            {honor.dateReceived && ` (${honor.dateReceived})`}
+                            {honor.description && (
+                              <span className="block pl-4">{honor.description}</span>
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
                 )}
 
