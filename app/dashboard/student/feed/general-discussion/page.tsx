@@ -1,8 +1,21 @@
+"use client";
+
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 import { FeedNewPost } from "../_components/feed-new-post";
 import { FeedPost } from "../_components/feed-post";
+import { useGetFeeds } from "@/hooks/api/use-feeds";
+import { useAuthStore } from "@/store/auth.store";
+import { mapFeedRecordToFeedPost } from "../_components/feed-data";
+
+const TAG = "general-discussion";
 
 export default function StudentFeedGeneralDiscussionPage() {
+  const user = useAuthStore((state) => state.user);
+  const { data, isLoading, isError } = useGetFeeds({ tag: TAG });
+  const posts = (data?.data ?? []).map((feed) =>
+    mapFeedRecordToFeedPost(feed, user?._id),
+  );
+
   return (
     <div className="w-full max-w-5xl mx-auto">
       <div className="pb-2 lg:py-2 px-4 lg:px-6">
@@ -25,27 +38,38 @@ export default function StudentFeedGeneralDiscussionPage() {
       </div>
       <div className="flex flex-1 flex-col gap-4 p-0 lg:p-6 pb-24 md:pb-6">
         <div className="@container/main flex flex-1 flex-col gap-6 ">
-          <FeedNewPost />
+          <FeedNewPost tag={TAG} />
           <div className="flex flex-col gap-6">
             {/* Posts */}
-            <FeedPost
-              authorName="Aisha Kumar"
-              authorSubtitle="In About 7 Hours"
-              isPinned={false}
-              textContent="Hi everyone! I'm Aisha from Mumbai IN. Excited to learn ML and build real-world Al apps! Can't wait to connect with all of you."
-            />
-            <FeedPost
-              authorName="Rohan patel"
-              authorSubtitle="in About 8 Hours"
-              isPinned={false}
-              textContent="Hey everyone! Rohan here from Delhi. Background in software engineering, now diving deep into ML. Looking forward to learning together!"
-            />
-            <FeedPost
-              authorName="Priya Sharma"
-              authorSubtitle="in About 9 Hours"
-              isPinned={false}
-              textContent="Hi everyone, I'm Priya. I work as a data analyst and am looking to transition into machine learning. Excited to be part of this community!"
-            />
+            {isLoading ? (
+              <div className="flex items-center justify-center py-16">
+                <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+              </div>
+            ) : isError ? (
+              <div className="flex items-center justify-center py-16 text-[15px] text-red-500">
+                Failed to load posts. Please try again.
+              </div>
+            ) : posts.length === 0 ? (
+              <div className="flex items-center justify-center py-16 text-[15px] text-gray-500">
+                No posts yet. Be the first to start a discussion!
+              </div>
+            ) : (
+              posts.map((post) => (
+                <FeedPost
+                  key={post.id}
+                  feedId={post.id}
+                  authorName={post.authorName}
+                  authorSubtitle={post.authorSubtitle}
+                  tags={post.tags}
+                  textContent={post.textContent}
+                  imageUrl={post.imageUrl}
+                  likesCount={post.likesCount}
+                  commentsCount={post.commentsCount}
+                  sharesCount={post.sharesCount}
+                  isLikedByMe={post.isLikedByMe}
+                />
+              ))
+            )}
           </div>
         </div>
       </div>

@@ -1,6 +1,13 @@
-import { Badge } from "@/components/ui/badge";
+"use client";
+
+import { CircleHelp } from "lucide-react";
 import { FeedPost } from "./feed-post";
-import { CircleHelp, CircleCheck, Clock, CheckCircle } from "lucide-react";
+import { FeedNewPost } from "./feed-new-post";
+import { useGetFeeds } from "@/hooks/api/use-feeds";
+import { useAuthStore } from "@/store/auth.store";
+import { mapFeedRecordToFeedPost } from "./feed-data";
+
+const TAG = "ask-for-help";
 
 interface AskForHelpCardProps {
   title: string;
@@ -37,59 +44,58 @@ const AskForHelpCard = ({
 };
 
 export const FeedAskForHelp = () => {
+  const user = useAuthStore((state) => state.user);
+  const { data, isLoading, isError } = useGetFeeds({ tag: TAG });
+  const posts = (data?.data ?? []).map((feed) =>
+    mapFeedRecordToFeedPost(feed, user?._id),
+  );
+
   return (
     <div className="flex flex-col gap-6">
       {/* Ask for help cards */}
       <div className="flex overflow-x-auto gap-4 pb-4 px-4 lg:px-0 lg:grid lg:grid-cols-3 snap-x snap-proximity hide-scrollbar">
         <AskForHelpCard
           title="Total Questions"
-          value={2}
+          value={isLoading ? "-" : posts.length}
           icon={<CircleHelp className="w-6 h-6" />}
           iconBg="bg-[#FDF0EA]"
           iconColor="text-[#F86432]"
         />
-        <AskForHelpCard
-          title="Solved"
-          value={1}
-          icon={<CircleCheck className="w-6 h-6" />}
-          iconBg="bg-[#EAF7EC]"
-          iconColor="text-[#2E7D32]"
-        />
-        <AskForHelpCard
-          title="Awaiting Help"
-          value={1}
-          icon={<Clock className="w-6 h-6" />}
-          iconBg="bg-[#EBF0FF]"
-          iconColor="text-[#3F51B5]"
-        />
       </div>
+
+      <FeedNewPost tag={TAG} />
 
       {/* Posts */}
       <div className="flex flex-col gap-6">
-        <FeedPost
-          authorName="Aisha Kumar"
-          authorSubtitle="in about 7 hours"
-          badge={
-            <Badge variant="outline" className="bg-[#EAF7EC] text-[#2E7D32]">
-              <CheckCircle className="w-3 h-3 text-[#2E7D32]" />
-              Solved
-            </Badge>
-          }
-          tags={["Python", "PyTorch", "DeepLearning"]}
-          textContent="How do I fix dimension mismatch in PyTorch during concat? I'm getting RuntimeError: Sizes of tensors must match except in dimension 1."
-        />
-        <FeedPost
-          authorName="Mai Cheng"
-          authorSubtitle="in about 7 hours"
-          badge={
-            <Badge variant="outline" className="bg-[#EBF0FF] text-[#3F51B5]">
-              <Clock className="w-3 h-3 text-[#3F51B5]" />
-              Awaiting
-            </Badge>
-          }
-          tags={["Python", "MachineLearning", "BestPractices"]}
-          textContent="Any tips for writing clean Python classes for ML pipelines? I want to make my code more modular and reusable."
-        />
+        {isLoading ? (
+          <div className="flex items-center justify-center py-16">
+            <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+          </div>
+        ) : isError ? (
+          <div className="flex items-center justify-center py-16 text-[15px] text-red-500">
+            Failed to load questions. Please try again.
+          </div>
+        ) : posts.length === 0 ? (
+          <div className="flex items-center justify-center py-16 text-[15px] text-gray-500">
+            No questions yet. Ask the community for help!
+          </div>
+        ) : (
+          posts.map((post) => (
+            <FeedPost
+              key={post.id}
+              feedId={post.id}
+              authorName={post.authorName}
+              authorSubtitle={post.authorSubtitle}
+              tags={post.tags}
+              textContent={post.textContent}
+              imageUrl={post.imageUrl}
+              likesCount={post.likesCount}
+              commentsCount={post.commentsCount}
+              sharesCount={post.sharesCount}
+              isLikedByMe={post.isLikedByMe}
+            />
+          ))
+        )}
       </div>
     </div>
   );

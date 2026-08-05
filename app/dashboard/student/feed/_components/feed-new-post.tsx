@@ -8,7 +8,11 @@ import Image from "next/image";
 import { X } from "lucide-react";
 import { useCreateFeedMutation } from "@/hooks/api/use-feeds";
 
-export const FeedNewPost = () => {
+interface FeedNewPostProps {
+  tag?: string;
+}
+
+export const FeedNewPost = ({ tag }: FeedNewPostProps) => {
   const [text, setText] = useState("");
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -34,6 +38,7 @@ export const FeedNewPost = () => {
 
     const formData = new FormData();
     formData.append("content", trimmed);
+    if (tag) formData.append("tag", tag);
     if (image) formData.append("media", image);
 
     createFeedMutation.mutate(formData, {
