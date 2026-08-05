@@ -98,8 +98,10 @@ export const lessonsApi = {
   uploadVideo: (payload: UploadLessonVideoPayload) => {
     const formData = new FormData();
     formData.append("lessonId", payload.lessonId);
+    // Sent as a single JSON-encoded array (not repeated "titles" fields) -
+    // multer only keeps the last value for repeated same-named text fields.
+    formData.append("titles", JSON.stringify(payload.videos.map((v) => v.title)));
     payload.videos.forEach((video) => {
-      formData.append("titles", video.title);
       formData.append("videos", video.file);
     });
 

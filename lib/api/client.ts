@@ -97,6 +97,8 @@ async function performRequest<T>(
     if (mergedHeaders[key] === undefined) delete mergedHeaders[key];
   }
 
+  console.log("Fetching:", `${API_BASE_URL}${endpoint}`);
+
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
     ...rest,
     headers: mergedHeaders,

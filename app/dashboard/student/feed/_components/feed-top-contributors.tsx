@@ -1,8 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { useGetLeaderboard } from "@/hooks/api/use-leaderboard";
 
@@ -24,25 +24,21 @@ export const FeedTopContributors = () => {
 
       {isLoading ? (
         <div className="flex items-center justify-center py-6">
-          <div className="w-5 h-5 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+          <div className="w-6 h-6 border-4 border-primary border-t-transparent rounded-full animate-spin" />
         </div>
       ) : isError ? (
-        <p className="py-6 text-center text-sm text-red-500">
-          Failed to load contributors.
-        </p>
+        <div className="py-6 text-center text-sm text-red-500">
+          Failed to load top contributors.
+        </div>
       ) : leaders.length === 0 ? (
-        <p className="py-6 text-center text-sm text-gray-400">
-          No activity yet.
-        </p>
+        <div className="py-6 text-center text-sm text-gray-500">No activity yet.</div>
       ) : (
         <div className="flex flex-col gap-4">
           {leaders.map((leader) => (
             <div key={leader.user.id} className="flex items-center gap-5">
               <Avatar className="-mr-3">
                 <AvatarImage src={leader.user.profile?.url} />
-                <AvatarFallback>
-                  {leader.user.name.slice(0, 2).toUpperCase()}
-                </AvatarFallback>
+                <AvatarFallback>{leader.user.name.slice(0, 2).toUpperCase()}</AvatarFallback>
               </Avatar>
               <p className="flex flex-col font-semibold">
                 {leader.user.name}
@@ -56,9 +52,9 @@ export const FeedTopContributors = () => {
       )}
 
       <Button
+        asChild
         variant="ghost"
         className="w-fit self-start text-primary font-medium cursor-pointer! hover:bg-transparent!"
-        asChild
       >
         <Link href="/dashboard/student/feed/leaderboard">
           View All Contributors <ArrowRight className="w-3 h-3 text-primary" />

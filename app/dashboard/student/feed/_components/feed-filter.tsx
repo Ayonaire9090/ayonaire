@@ -1,19 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { ListFilter, X, Shield, Sparkles, Database, Check } from "lucide-react";
+import { ListFilter, X, Check } from "lucide-react";
 import {
   Sheet,
   SheetTrigger,
   SheetContent,
   SheetClose,
 } from "@/components/ui/sheet";
-
-const TAG_OPTIONS = [
-  { value: "cyberSecurity", label: "Cyber Security", icon: Shield },
-  { value: "ai-engineering", label: "AI Engineering", icon: Sparkles },
-  { value: "data_science", label: "Data Science", icon: Database },
-];
+import { FEED_TAG_OPTIONS } from "./feed-tags";
 
 interface FeedFilterProps {
   selectedTag?: string;
@@ -62,7 +57,7 @@ export const FeedFilter = ({ selectedTag, onApply }: FeedFilterProps) => {
           <div className="flex flex-col gap-3 pt-2">
             <label className="text-base font-medium text-gray-900">Tags</label>
             <div className="flex flex-col gap-3">
-              {TAG_OPTIONS.map(({ value, label, icon: Icon }) => {
+              {FEED_TAG_OPTIONS.map(({ value, label, icon: Icon }) => {
                 const isSelected = pendingTag === value;
                 return (
                   <button

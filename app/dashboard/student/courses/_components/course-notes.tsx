@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Plus,
   ChevronDown,
@@ -16,11 +16,8 @@ import {
   Image as ImageIcon,
   RemoveFormatting,
   Code,
-  Type,
-  AlignLeft,
-  AlignRight,
-  AlignCenter,
   Minus,
+  Trash2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -30,11 +27,99 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export const CourseNotes = () => {
+interface StoredNote {
+  id: string;
+  lessonId: string;
+  lessonTitle: string;
+  content: string;
+  createdAt: string;
+}
+
+interface CourseNotesProps {
+  courseId: string;
+  lessonId?: string;
+  lessonTitle?: string;
+}
+
+// Notes only persist to this browser (localStorage) - there's no backend
+// endpoint for notes yet, so they don't sync across devices.
+function storageKey(courseId: string) {
+  return `ayonaire:notes:${courseId}`;
+}
+
+function loadNotes(courseId: string): StoredNote[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = window.localStorage.getItem(storageKey(courseId));
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveNotes(courseId: string, notes: StoredNote[]) {
+  try {
+    window.localStorage.setItem(storageKey(courseId), JSON.stringify(notes));
+  } catch {
+    // localStorage unavailable (private browsing, quota) - fail silently,
+    // notes just won't persist for this session.
+  }
+}
+
+export const CourseNotes = ({
+  courseId,
+  lessonId,
+  lessonTitle,
+}: CourseNotesProps) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [lectureFilter, setLectureFilter] = useState("All Lectures");
-  const [sortOrder, setSortOrder] = useState("Sort by most recent");
+  const [lectureFilter, setLectureFilter] = useState<
+    "All Lectures" | "Current Lectures"
+  >("All Lectures");
+  const [sortOrder, setSortOrder] = useState<
+    "Sort by most recent" | "Sort by oldest"
+  >("Sort by most recent");
   const [noteContent, setNoteContent] = useState("");
+  const [notes, setNotes] = useState<StoredNote[]>([]);
+
+  useEffect(() => {
+    setNotes(loadNotes(courseId));
+  }, [courseId]);
+
+  const handleSave = () => {
+    if (!noteContent.trim() || !lessonId) {
+      setIsEditing(false);
+      setNoteContent("");
+      return;
+    }
+    const newNote: StoredNote = {
+      id: crypto.randomUUID(),
+      lessonId,
+      lessonTitle: lessonTitle ?? "Untitled Lesson",
+      content: noteContent.trim(),
+      createdAt: new Date().toISOString(),
+    };
+    const updated = [newNote, ...notes];
+    setNotes(updated);
+    saveNotes(courseId, updated);
+    setIsEditing(false);
+    setNoteContent("");
+  };
+
+  const handleDelete = (id: string) => {
+    const updated = notes.filter((n) => n.id !== id);
+    setNotes(updated);
+    saveNotes(courseId, updated);
+  };
+
+  const visibleNotes = notes
+    .filter((n) =>
+      lectureFilter === "Current Lectures" ? n.lessonId === lessonId : true,
+    )
+    .sort((a, b) =>
+      sortOrder === "Sort by most recent"
+        ? b.createdAt.localeCompare(a.createdAt)
+        : a.createdAt.localeCompare(b.createdAt),
+    );
 
   const renderFilterBar = () => (
     <div className="flex items-center gap-3">
@@ -104,7 +189,7 @@ export const CourseNotes = () => {
           onClick={() => setIsEditing(true)}
         >
           <span className="text-gray-400 text-sm md:text-base">
-            Create a note at 12:45
+            Create a note for this lesson
           </span>
           <Button
             size="icon"
@@ -135,15 +220,6 @@ export const CourseNotes = () => {
                 className="w-8 h-8 text-gray-600 hover:bg-gray-100 rounded-md"
               >
                 <List className="w-4 h-4" />
-                <ChevronDown className="w-3 h-3 absolute bottom-1 right-1 opacity-50" />
-              </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="w-8 h-8 text-gray-600 hover:bg-gray-100 rounded-md relative"
-              >
-                <div className="w-4 h-4 bg-black rounded-sm border border-gray-200" />
-                <ChevronDown className="w-3 h-3 absolute bottom-0.5 right-0 opacity-50" />
               </Button>
               <div className="w-px h-4 bg-gray-200 mx-1" />
               <Button
@@ -240,7 +316,7 @@ export const CourseNotes = () => {
               </Button>
               <div className="flex-1" />
               <span className="text-xs text-gray-400 font-medium px-2">
-                1000
+                {noteContent.length}
               </span>
             </div>
             <textarea
@@ -265,10 +341,8 @@ export const CourseNotes = () => {
             </Button>
             <Button
               className="bg-[#F86432] hover:bg-[#F86432]/90 text-white px-6 h-10 shadow-none font-medium rounded-md"
-              onClick={() => {
-                setIsEditing(false);
-                setNoteContent("");
-              }}
+              onClick={handleSave}
+              disabled={!noteContent.trim()}
             >
               Save notes
             </Button>
@@ -278,12 +352,49 @@ export const CourseNotes = () => {
 
       {renderFilterBar()}
 
-      <div className="flex flex-col items-center justify-center py-24 text-center px-4">
-        <p className="text-gray-400 text-base md:text-lg">
-          Click the "Create a new note" box, the "+" button, or press "B" to
-          make your first note.
-        </p>
-      </div>
+      {visibleNotes.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-24 text-center px-4">
+          <p className="text-gray-400 text-base md:text-lg">
+            Click the &quot;Create a note&quot; box or the &quot;+&quot; button to make your
+            first note.
+          </p>
+        </div>
+      ) : (
+        <div className="flex flex-col gap-3">
+          {visibleNotes.map((note) => (
+            <div
+              key={note.id}
+              className="border border-gray-100 rounded-xl p-4 flex flex-col gap-2 bg-white shadow-sm"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex flex-col gap-0.5">
+                  <span className="text-[13px] font-semibold text-[#F86432]">
+                    {note.lessonTitle}
+                  </span>
+                  <span className="text-[12px] text-gray-400">
+                    {new Date(note.createdAt).toLocaleString(undefined, {
+                      month: "short",
+                      day: "numeric",
+                      hour: "numeric",
+                      minute: "2-digit",
+                    })}
+                  </span>
+                </div>
+                <button
+                  onClick={() => handleDelete(note.id)}
+                  className="text-gray-300 hover:text-red-500 transition-colors shrink-0"
+                  title="Delete note"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </button>
+              </div>
+              <p className="text-[15px] text-gray-700 whitespace-pre-wrap">
+                {note.content}
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

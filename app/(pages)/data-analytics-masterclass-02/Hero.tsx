@@ -1,12 +1,12 @@
 'use client';
 
-import { useState } from 'react';
-import Image from 'next/image';
-import RegistrationModal from './RegistrationModal';
-import Navbar from './Navbar';
-import { sora } from '@/app/fonts';
-import { CtaButton } from './_components/CtaButton';
-import { typeScale } from './_components/type';
+import { useState } from "react";
+import Image from "next/image";
+import RegistrationModal from "./RegistrationModal";
+import Navbar from "./Navbar";
+import { sora } from "@/app/fonts";
+import { CtaButton } from "./_components/CtaButton";
+import { typeScale } from "./_components/type";
 
 const VideoIcon = () => (
   <svg
@@ -50,7 +50,7 @@ export default function Hero() {
             aria-hidden="true"
           />
 
-          <div className="container relative z-10 flex flex-col items-center pb-10 pt-24 text-center md:pb-12 md:pt-36">
+          <div className="container relative z-10 flex flex-col items-center pb-10 pt-24 text-center md:pb-12 md:pt-32">
             {/* Badge */}
             <span
               className={`${sora.className} inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-medium text-[#121315] shadow-[0_4px_16px_rgba(0,0,0,0.06)]`}
@@ -64,7 +64,7 @@ export default function Hero() {
               className={`${sora.className} ${typeScale.h1} mt-6 max-w-[980px] font-bold leading-[1.18] tracking-tight text-[#121315] lg:leading-[1.14]`}
             >
               Before You Learn <span className="text-[#F25E25]">Data</span>
-              <br className="hidden lg:block" />{' '}
+              <br className="hidden lg:block" />{" "}
               <span className="relative box-decoration-clone bg-[#F25E25]/10 px-2 text-[#F25E25]">
                 Analytics In 2026,
                 <span
@@ -79,7 +79,7 @@ export default function Hero() {
                 >
                   <span className="absolute -bottom-1 left-1/2 hidden h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-[#F25E25] md:block" />
                 </span>
-              </span>{' '}
+              </span>{" "}
               Know What
               <br className="hidden lg:block" /> Hiring Managers Actually Look
               For
@@ -89,13 +89,13 @@ export default function Hero() {
             <p
               className={`${sora.className} ${typeScale.body} mt-[15px] max-w-[560px] font-semibold leading-relaxed text-[#26282B] lg:max-w-[600px]`}
             >
-              Join a Senior Data Analyst, a Hiring Executive, and a Remote Data Analyst as they reveal
-               the hiring standards, career roadmap, and
+              Join a Senior Data Analyst, a Hiring Executive, and a Remote Data
+              Analyst as they reveal the hiring standards, career roadmap, and
               mistakes that determine who gets jobs — and who never hears back.
             </p>
 
             {/* CTA */}
-            <div className="mt-8 w-full px-2 md:w-auto md:px-0">
+            <div className="mt-8 w-full px-12 md:w-auto  md:px-0">
               <CtaButton
                 size="lg"
                 onClick={() => setModalOpen(true)}
@@ -122,7 +122,10 @@ export default function Hero() {
         </div>
       </section>
 
-      <RegistrationModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
+      <RegistrationModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+      />
     </>
   );
 }

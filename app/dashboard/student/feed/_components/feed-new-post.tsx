@@ -5,17 +5,20 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
-import { X } from "lucide-react";
+import { X, Tag, ChevronDown } from "lucide-react";
 import { useCreateFeedMutation } from "@/hooks/api/use-feeds";
+import { FEED_TAG_OPTIONS } from "./feed-tags";
 
 interface FeedNewPostProps {
-  tag?: string;
+  channel?: string;
 }
 
-export const FeedNewPost = ({ tag }: FeedNewPostProps) => {
+export const FeedNewPost = ({ channel }: FeedNewPostProps = {}) => {
   const [text, setText] = useState("");
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [selectedTag, setSelectedTag] = useState<string | undefined>(undefined);
+  const [isTagDropdownOpen, setIsTagDropdownOpen] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const createFeedMutation = useCreateFeedMutation();
 
@@ -38,12 +41,14 @@ export const FeedNewPost = ({ tag }: FeedNewPostProps) => {
 
     const formData = new FormData();
     formData.append("content", trimmed);
-    if (tag) formData.append("tag", tag);
+    if (channel) formData.append("channel", channel);
+    if (selectedTag) formData.append("tag", selectedTag);
     if (image) formData.append("media", image);
 
     createFeedMutation.mutate(formData, {
       onSuccess: () => {
         setText("");
+        setSelectedTag(undefined);
         removeImage();
       },
     });
@@ -91,7 +96,7 @@ export const FeedNewPost = ({ tag }: FeedNewPostProps) => {
 
             {/* Post Actions */}
             <div className="flex justify-between items-center flex-wrap py-2 pt-4">
-              <div className="flex gap-2">
+              <div className="flex items-center gap-2">
                 <Image
                   src="/assets/icons/link-1.svg"
                   alt="Link"
@@ -122,6 +127,51 @@ export const FeedNewPost = ({ tag }: FeedNewPostProps) => {
                   height={20}
                   className="stroke-gray-900 w-5 h-5 lg:w-6 lg:h-6 cursor-pointer opacity-40"
                 />
+
+                <div className="relative">
+                  <button
+                    type="button"
+                    onClick={() => setIsTagDropdownOpen(!isTagDropdownOpen)}
+                    className="flex items-center gap-1 text-gray-500 hover:text-gray-800 transition-colors"
+                  >
+                    <Tag className="w-4 h-4" />
+                    {selectedTag && (
+                      <span className="bg-gray-100 text-gray-700 text-xs font-medium px-2 py-0.5 rounded-full">
+                        #{selectedTag}
+                      </span>
+                    )}
+                    <ChevronDown className="w-3 h-3" />
+                  </button>
+
+                  {isTagDropdownOpen && (
+                    <>
+                      <div
+                        className="fixed inset-0 z-40"
+                        onClick={() => setIsTagDropdownOpen(false)}
+                      />
+                      <div className="absolute left-0 bottom-full mb-1.5 w-56 bg-white border border-gray-100 rounded-xl shadow-lg py-1.5 z-50">
+                        {FEED_TAG_OPTIONS.map(({ value, label, icon: Icon }) => (
+                          <button
+                            key={value}
+                            type="button"
+                            onClick={() => {
+                              setSelectedTag(selectedTag === value ? undefined : value);
+                              setIsTagDropdownOpen(false);
+                            }}
+                            className={`flex w-full items-center gap-2.5 text-left px-3.5 py-2 text-sm transition-colors cursor-pointer hover:bg-gray-50 ${
+                              selectedTag === value
+                                ? "text-[#F86432] font-semibold bg-[#FEECE5]/30"
+                                : "text-gray-600 hover:text-gray-900"
+                            }`}
+                          >
+                            <Icon className="w-4 h-4" />
+                            {label}
+                          </button>
+                        ))}
+                      </div>
+                    </>
+                  )}
+                </div>
               </div>
 
               {/* Button */}

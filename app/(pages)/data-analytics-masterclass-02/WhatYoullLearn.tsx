@@ -32,10 +32,10 @@ const items: { title: string; description: string; icon: LucideIcon }[] = [
     icon: Route,
   },
   {
-    title: "Build in Public' strategy",
+    title: "Build in Public strategy",
     description:
-      "How non-tech people broke into Data Analysis...the real path from zero background to working for Global companies.",
-    icon: Globe,
+      "The 'Build in Public' strategy top candidates are using to get noticed by recruiters before they even apply.",
+    icon: ChartColumnIncreasing,
   },
   {
     title: "International remote roles",
@@ -43,12 +43,13 @@ const items: { title: string; description: string; icon: LucideIcon }[] = [
       "How to land international internships and remote Data Analyst roles....even from outside the US/EU",
     icon: Earth,
   },
-  {
-    title: "Industry specialization",
+    {
+    title: "Career Transitioning",
     description:
-      "The 'Build in Public' strategy top candidates are using to get noticed by recruiters before they even apply.",
-    icon: ChartColumnIncreasing,
+      "How non-tech people broke into Data Analysis...the real path from zero background to working for Global companies.",
+    icon: Globe,
   },
+
   {
     title: "Non-tech success",
     description:
@@ -80,17 +81,17 @@ function CurriculumCard({
         {index + 1}
       </span>
 
-      <div
-        className="h-full rounded-2xl p-6 pb-10 shadow-[0_10px_28px_rgba(18,19,21,0.14)] md:pb-8"
-        style={{
-          backgroundColor: "rgba(248,100,50,0.08)",
-        }}
-      >
+<div
+  className="h-full rounded-2xl p-6 pb-10 shadow-[0_10px_28px_rgba(18,19,21,0.14)] md:pb-8"
+  style={{
+    backgroundImage: "radial-gradient(circle at top right, rgba(248,100,50,0.2) 0%, rgba(248,100,50,0.02) 70%)",
+  }}
+>
         <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#F86432]/20 md:h-14 md:w-14">
           <Icon
             size={20}
             strokeWidth={2}
-            className="text-[#E4562B] md:h-6 md:w-6"
+            className="text-[#E4562B]  md:h-6 md:w-6"
           />
         </div>
 
@@ -146,7 +147,7 @@ export default function WhatYoullLearn() {
         </p>
 
         {/* Cards */}
-        <div className="mt-12 grid w-full grid-cols-1 gap-6 md:mt-16 md:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-12 grid w-full grid-cols-1 gap-12 md:mt-16 md:grid-cols-2 lg:grid-cols-4">
           {items.map((item, index) => (
             <CurriculumCard key={index} item={item} index={index} />
           ))}

@@ -1,8 +1,23 @@
+"use client";
+
 import { Sparkles } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
+import { useGetAnnouncements } from "@/hooks/api/use-announcements";
+
+const formatAnnouncementDate = (dateString?: string) => {
+  if (!dateString) return null;
+  return new Date(dateString).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+  });
+};
 
 export const FeedUpcomingAnnouncements = () => {
+  const { data, isLoading, isError } = useGetAnnouncements();
+  const announcements = (data?.data?.announcement ?? [])
+    .filter((a) => a.status === "published")
+    .slice(0, 2);
+
   return (
     <div className="w-full bg-white p-4 lg:p-5 lg:rounded-2xl flex flex-col gap-4 border border-gray-100/50">
       {/* Header */}
@@ -21,27 +36,38 @@ export const FeedUpcomingAnnouncements = () => {
         </Link>
       </div>
 
-      {/* Announcement Content Card */}
-      <div className="bg-[#F8F9FA] rounded-2xl p-4 border-l-4 border-l-[#F86432] flex gap-4 items-start justify-between">
-        <div className="flex flex-col justify-between min-w-0 flex-1 min-h-[80px]">
-          <p className="text-gray-600 font-medium text-sm sm:text-base leading-relaxed line-clamp-3">
-            New Workshop Added: Building RAG Agents Join us on March 12, 7 PM
-            IST. We&apos;ll cover: - RAG...
-          </p>
-          <span className="text-gray-400 text-sm font-normal mt-2 block">
-            Nov 28
-          </span>
+      {isLoading ? (
+        <div className="flex items-center justify-center py-6">
+          <div className="w-6 h-6 border-4 border-primary border-t-transparent rounded-full animate-spin" />
         </div>
-
-        <div className="relative w-28 h-16 sm:w-32 sm:h-20 rounded-xl overflow-hidden shrink-0 border border-gray-100 self-center">
-          <Image
-            src="/assets/courses/ai-engineering.webp"
-            alt="AI Engineering"
-            fill
-            className="object-cover"
-          />
+      ) : isError ? (
+        <div className="py-6 text-center text-sm text-red-500">
+          Failed to load announcements.
         </div>
-      </div>
+      ) : announcements.length === 0 ? (
+        <div className="py-6 text-center text-sm text-gray-500">
+          No announcements yet.
+        </div>
+      ) : (
+        announcements.map((announcement) => (
+          <div
+            key={announcement.id}
+            className="bg-[#F8F9FA] rounded-2xl p-4 border-l-4 border-l-[#F86432] flex flex-col min-w-0"
+          >
+            <p className="text-gray-900 font-semibold text-sm sm:text-base leading-relaxed line-clamp-2">
+              {announcement.title}
+            </p>
+            <p className="text-gray-600 font-medium text-sm leading-relaxed line-clamp-2 mt-1">
+              {announcement.summary}
+            </p>
+            {formatAnnouncementDate(announcement.createdAt) && (
+              <span className="text-gray-400 text-sm font-normal mt-2 block">
+                {formatAnnouncementDate(announcement.createdAt)}
+              </span>
+            )}
+          </div>
+        ))
+      )}
     </div>
   );
 };

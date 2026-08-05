@@ -90,12 +90,15 @@ export function feedSocketRequest<T = any>(
     };
     const handleConnectError = (err: Error) => {
       cleanup();
-      // The /feed namespace's auth middleware is the only thing that can
-      // reject a connection here, so any connect_error means the stored
-      // token is missing/expired/invalid - clear it so AuthGuard bounces
-      // the user back to sign-in instead of leaving them stuck on a feed
-      // that will never load.
-      useAuthStore.getState().clearAuth();
+      // connect_error fires for plain network/transport failures too (cold
+      // start, timeout, offline), not just rejected auth - only the auth
+      // middleware's own errors are prefixed like this, so only those should
+      // sign the user out. Anything else should just fail this request and
+      // let the caller retry.
+      const isAuthRejection = /^(Unauthorized|Forbidden)/.test(err.message);
+      if (isAuthRejection) {
+        useAuthStore.getState().clearAuth();
+      }
       reject(err);
     };
     const cleanup = () => {

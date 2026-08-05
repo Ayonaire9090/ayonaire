@@ -1,8 +1,13 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { DataList } from "@/components/ui/data-list";
-import { mapQuizRecordToQuiz } from "./quiz-data";
+import {
+  QuizFilterState,
+  applyQuizFilters,
+  emptyQuizFilters,
+  mapQuizRecordToQuiz,
+} from "./quiz-data";
 import { QuizActions } from "./quiz-actions";
 import { Checkbox } from "@/components/ui/checkbox";
 import { QuizFilters } from "./quiz-filters";
@@ -39,12 +44,19 @@ const getProgressBarColor = (status: string) => {
 };
 
 export const QuizList = () => {
+  const [filters, setFilters] = useState<QuizFilterState>(emptyQuizFilters);
   const { data, isLoading, isError } = useGetQuizzes();
   const quizzes = (data?.quizzes ?? []).map(mapQuizRecordToQuiz);
+  const filteredQuizzes = applyQuizFilters(quizzes, filters);
+  const courseOptions = [...new Set(quizzes.map((q) => q.course))].sort();
 
   return (
     <>
-      <QuizFilters />
+      <QuizFilters
+        filters={filters}
+        onFiltersChange={setFilters}
+        courseOptions={courseOptions}
+      />
       <div className="w-full bg-white p-4 rounded-xl">
         {isLoading ? (
           <div className="flex items-center justify-center py-16">
@@ -54,13 +66,15 @@ export const QuizList = () => {
           <div className="flex items-center justify-center py-16 text-[15px] text-red-500">
             Failed to load quizzes. Please try again.
           </div>
-        ) : quizzes.length === 0 ? (
+        ) : filteredQuizzes.length === 0 ? (
           <div className="flex items-center justify-center py-16 text-[15px] text-gray-500">
-            No quizzes found.
+            {quizzes.length === 0
+              ? "No quizzes found."
+              : "No quizzes match the current filters."}
           </div>
         ) : (
         <DataList
-          data={quizzes}
+          data={filteredQuizzes}
           keyExtractor={(item) => item.id}
           renderItem={(item) => {
             const percentage = Math.min(

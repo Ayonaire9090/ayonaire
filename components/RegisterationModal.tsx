@@ -84,7 +84,7 @@ export default function RegistrationModal({
                 const encodedEmail = encodeURIComponent(email);
 
                 router.push(
-                    `/ai-engineering-thank-you?name=${encodedName}&email=${encodedEmail}`
+                    `/data-analytics-thank-you-02?name=${encodedName}&email=${encodedEmail}`
                 );
             }, 500);
         } catch (err: any) {

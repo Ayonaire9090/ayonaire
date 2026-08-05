@@ -117,25 +117,13 @@ export default function RegistrationModal({
                 {/* Full-bleed Image Layer */}
                 <div className="relative h-[215px] w-full">
                     <Image
-                        src="/Hero.png"
-                        alt="Data Analytics Masterclass"
+                        src="/assets/images/become-data-analyst-hero.png"
+                        alt="Become the Data Analyst that gets hired Fast"
                         fill
                         sizes="380px"
                         className="object-cover object-top"
                         priority
                     />
-                    <div
-                        className="absolute inset-0"
-                        style={{
-                            background:
-                                "linear-gradient(180deg, rgba(18,19,21,0.15) 0%, rgba(18,19,21,0.75) 100%)",
-                        }}
-                    />
-                    <div className="absolute inset-0 flex items-center justify-center px-6 text-center">
-                        <p className="text-white text-xl sm:text-2xl font-bold drop-shadow-md">
-                            Free Data Analytics Masterclass 2026
-                        </p>
-                    </div>
                 </div>
 
                 {/* Lower Form Fields Container */}

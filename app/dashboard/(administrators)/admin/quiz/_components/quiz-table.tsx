@@ -1,11 +1,24 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
+import { toast } from "sonner";
+import { Upload } from "lucide-react";
 import { DataTable, ColumnDef } from "@/components/ui/data-table";
-import { Quiz, mapQuizRecordToQuiz } from "./quiz-data";
+import {
+  Quiz,
+  QuizFilterState,
+  applyQuizFilters,
+  emptyQuizFilters,
+  mapQuizRecordToQuiz,
+} from "./quiz-data";
 import { QuizActions } from "./quiz-actions";
-import { QuizFilters } from "./quiz-filters";
-import { useGetQuizzes } from "@/hooks/api/use-quiz";
+import { QuizBulkAction, QuizFilters } from "./quiz-filters";
+import {
+  useDeleteQuizMutation,
+  useGetQuizzes,
+  useUpdateQuizMutation,
+} from "@/hooks/api/use-quiz";
+import { downloadCsv } from "@/lib/export-csv";
 
 const getStatusStyle = (status: string) => {
   switch (status) {
@@ -136,12 +149,77 @@ const columns: ColumnDef<Quiz>[] = [
 ];
 
 export const QuizTable = () => {
-  const { data, isLoading, isError } = useGetQuizzes();
+  const [page, setPage] = useState(1);
+  const [filters, setFilters] = useState<QuizFilterState>(emptyQuizFilters);
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+
+  const { data, isLoading, isError } = useGetQuizzes({ page });
+  const updateQuiz = useUpdateQuizMutation();
+  const deleteQuiz = useDeleteQuizMutation();
+
   const quizzes: Quiz[] = (data?.quizzes ?? []).map(mapQuizRecordToQuiz);
+  const filteredQuizzes = applyQuizFilters(quizzes, filters);
+  const courseOptions = [...new Set(quizzes.map((q) => q.course))].sort();
+  const totalPages = data?.pagination?.totalPages ?? 1;
+
+  // Selection can hold ids of rows that were deleted or filtered out
+  const selectedQuizzes = filteredQuizzes.filter((q) => selectedIds.has(q.id));
+
+  const handleBulkAction = async (action: QuizBulkAction) => {
+    if (selectedQuizzes.length === 0) return;
+
+    if (
+      action === "delete" &&
+      !window.confirm(
+        `Delete ${selectedQuizzes.length} selected quiz(zes)? This cannot be undone.`,
+      )
+    ) {
+      return;
+    }
+
+    const results = await Promise.allSettled(
+      selectedQuizzes.map((quiz) =>
+        action === "delete"
+          ? deleteQuiz.mutateAsync(quiz.id)
+          : updateQuiz.mutateAsync({
+              quizId: quiz.id,
+              status: action === "publish" ? "published" : "draft",
+            }),
+      ),
+    );
+
+    const failed = results.filter((r) => r.status === "rejected").length;
+    const succeeded = results.length - failed;
+    if (succeeded > 0)
+      toast.success(`${succeeded} quiz(zes) ${action === "delete" ? "deleted" : action + "ed"}`);
+    if (failed > 0) toast.error(`${failed} quiz(zes) failed`);
+  };
+
+  const handleExport = () => {
+    downloadCsv(
+      "quizzes",
+      ["Title", "Course", "Created By", "Questions", "Submissions", "Avg Score", "Status"],
+      filteredQuizzes.map((q) => [
+        q.title,
+        q.course,
+        q.createdBy,
+        q.questions,
+        q.submissions,
+        q.avgScore,
+        q.status,
+      ]),
+    );
+  };
 
   return (
     <div className="w-full bg-white p-4 rounded-xl">
-      <QuizFilters />
+      <QuizFilters
+        filters={filters}
+        onFiltersChange={setFilters}
+        courseOptions={courseOptions}
+        selectedCount={selectedQuizzes.length}
+        onBulkAction={handleBulkAction}
+      />
       {isLoading ? (
         <div className="flex items-center justify-center py-16">
           <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
@@ -150,18 +228,32 @@ export const QuizTable = () => {
         <div className="flex items-center justify-center py-16 text-[15px] text-red-500">
           Failed to load quizzes. Please try again.
         </div>
-      ) : quizzes.length === 0 ? (
+      ) : filteredQuizzes.length === 0 ? (
         <div className="flex items-center justify-center py-16 text-[15px] text-gray-500">
-          No quizzes found.
+          {quizzes.length === 0
+            ? "No quizzes found."
+            : "No quizzes match the current filters."}
         </div>
       ) : (
         <DataTable
-          data={quizzes}
+          data={filteredQuizzes}
           columns={columns}
           keyExtractor={(item) => item.id}
           selectable={true}
-          onSelectionChange={(selectedIds) => {
-            console.log("Selected:", selectedIds);
+          onSelectionChange={setSelectedIds}
+          footerContent={
+            <button
+              onClick={handleExport}
+              className="flex items-center gap-2 text-[15px] text-gray-600 hover:text-gray-900 transition-colors"
+            >
+              <Upload className="size-4" /> Export Quizzes
+            </button>
+          }
+          pagination={{
+            page,
+            totalPages,
+            onPrev: () => setPage((p) => Math.max(1, p - 1)),
+            onNext: () => setPage((p) => Math.min(totalPages, p + 1)),
           }}
         />
       )}

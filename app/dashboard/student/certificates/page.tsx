@@ -1,123 +1,91 @@
 "use client";
 
+import { useMemo, useState } from "react";
+import { toast } from "sonner";
+import { Award } from "lucide-react";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { StudentFeedSidebarContent } from "../_components/student-feed-sidebar-content";
 import { StudentDashboardHeader } from "../_components/student-dashboard-header";
+import { ProfileCertificateCard } from "@/components/dashboard/profile/profile-certificate-card";
 import { useGetMyCertificates } from "@/hooks/api/use-certificates";
-import { Award, Copy, Download } from "lucide-react";
-import { toast } from "sonner";
-
-function courseTitle(course: { title: string } | string | undefined): string {
-  if (!course) return "Untitled Course";
-  return typeof course === "string" ? course : course.title;
-}
+import { useAuthStore } from "@/store/auth.store";
+import {
+  mapCertificateRecordToStudentCertificate,
+  StudentCertificate,
+} from "./_components/certificate-data";
+import { CertificateDetailDialog } from "./_components/certificate-detail-dialog";
 
 export default function StudentCertificatesPage() {
   const { data, isLoading, isError } = useGetMyCertificates();
-  const certificates = data?.data ?? [];
+  const studentName = useAuthStore((state) => state.user?.name) ?? "you";
 
-  const handleCopyId = (certificateId: string) => {
-    navigator.clipboard.writeText(certificateId);
-    toast.success("Certificate ID copied");
-  };
+  const [selectedCertificate, setSelectedCertificate] =
+    useState<StudentCertificate | null>(null);
+
+  const certificates = useMemo(
+    () => (data?.data ?? []).map(mapCertificateRecordToStudentCertificate),
+    [data],
+  );
 
   const handleDownload = () => {
-    toast.info(
-      "PDF download isn't available yet - pending confirmation from the backend on how certificate files are served.",
-    );
+    toast.info("Certificate download is coming soon.");
   };
 
   return (
     <>
-      <StudentFeedSidebarContent variant="sidebar" collapsible="offcanvas" />
+      <StudentFeedSidebarContent variant="sidebar" collapsible="icon" />
       <SidebarInset className="bg-[#F6F6F6] min-h-screen">
         <StudentDashboardHeader />
-        <div className="flex flex-col gap-6 p-4 lg:p-8 max-w-5xl mx-auto w-full">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">My Certificates</h1>
-            <p className="text-gray-500 text-[15px] mt-1">
-              Certificates you've earned from completed courses.
-            </p>
-          </div>
+
+        <div className="lg:bg-white flex flex-1 flex-col lg:my-6 lg:rounded-3xl lg:p-8 lg:min-w-4xl lg:mx-auto pb-24">
+          <h1 className="text-xl lg:text-2xl font-bold text-gray-900 mb-6 p-4 lg:p-0">
+            Certificates
+          </h1>
 
           {isLoading ? (
-            <div className="flex items-center justify-center py-24">
+            <div className="flex items-center justify-center py-16">
               <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
             </div>
           ) : isError ? (
-            <div className="flex items-center justify-center py-24 text-[15px] text-red-500">
+            <div className="flex items-center justify-center py-16 text-[15px] text-red-500">
               Failed to load certificates. Please try again.
             </div>
           ) : certificates.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-24 text-center gap-3 bg-white rounded-2xl">
-              <div className="w-16 h-16 rounded-2xl bg-gray-100 flex items-center justify-center">
-                <Award className="w-8 h-8 text-gray-300" />
+            <div className="flex flex-col items-center justify-center gap-3 py-20 px-4 text-center">
+              <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center">
+                <Award className="w-7 h-7 text-primary" />
               </div>
-              <h2 className="text-lg font-semibold text-gray-800">
+              <h2 className="text-base font-semibold text-gray-900">
                 No certificates yet
               </h2>
-              <p className="text-sm text-gray-400 max-w-sm">
-                Complete a course to earn your first certificate.
+              <p className="text-sm text-gray-500 max-w-sm">
+                Complete a course with a certificate of completion and it
+                will show up here.
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {certificates.map((cert) => (
-                <div
-                  key={cert._id}
-                  className="bg-white rounded-2xl p-5 flex flex-col gap-4 border border-gray-100"
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="w-12 h-12 rounded-xl bg-[#FFF5F2] flex items-center justify-center shrink-0">
-                      <Award className="w-6 h-6 text-[#F86432]" />
-                    </div>
-                    <span
-                      className={`px-2.5 py-1 rounded-full text-[11px] font-semibold ${
-                        cert.status === "active"
-                          ? "bg-[#ECFDF5] text-[#10B981]"
-                          : "bg-[#FEF2F2] text-[#EF4444]"
-                      }`}
-                    >
-                      {cert.status === "active" ? "Active" : "Revoked"}
-                    </span>
-                  </div>
-
-                  <div>
-                    <h3 className="font-semibold text-gray-900 text-[16px]">
-                      {courseTitle(cert.course)}
-                    </h3>
-                    <p className="text-[13px] text-gray-400 mt-0.5">
-                      Issued {new Date(cert.issuedAt).toLocaleDateString(undefined, {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                      })}
-                    </p>
-                  </div>
-
-                  <div className="flex items-center justify-between gap-2 pt-3 border-t border-gray-100">
-                    <button
-                      onClick={() => handleCopyId(cert.certificateId)}
-                      className="flex items-center gap-1.5 text-[13px] text-gray-500 hover:text-gray-800 transition-colors"
-                      title="Copy certificate ID"
-                    >
-                      <Copy className="w-3.5 h-3.5" />
-                      {cert.certificateId}
-                    </button>
-                    <button
-                      onClick={handleDownload}
-                      className="flex items-center gap-1.5 text-[13px] font-medium text-[#F86432] hover:text-[#E55A2B] transition-colors"
-                    >
-                      <Download className="w-3.5 h-3.5" />
-                      Download
-                    </button>
-                  </div>
-                </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 px-4 lg:px-0">
+              {certificates.map((certificate) => (
+                <ProfileCertificateCard
+                  key={certificate.id}
+                  title={certificate.title}
+                  issueDate={certificate.issueDate}
+                  certificateId={certificate.certificateId}
+                  imageSrc={certificate.imageSrc}
+                  onView={() => setSelectedCertificate(certificate)}
+                  onDownload={handleDownload}
+                />
               ))}
             </div>
           )}
         </div>
       </SidebarInset>
+
+      <CertificateDetailDialog
+        certificate={selectedCertificate}
+        studentName={studentName}
+        onClose={() => setSelectedCertificate(null)}
+      />
     </>
   );
 }
