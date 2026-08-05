@@ -119,7 +119,7 @@ export const OrdersList = () => {
 
                     {/* Row 3: Status badges */}
                     <div className="flex flex-wrap items-center gap-1.5 mt-2">
-                      <OrderStatusBadge status={order.orderStatus} />
+                      <OrderStatusBadge status={order.orderStatus} orderId={order.id} />
                       <PaymentStatusBadge status={order.paymentStatus} />
                       <EnrollmentStatusBadge status={order.enrollmentStatus} />
                     </div>

@@ -6,19 +6,9 @@ interface StatsSummaryProps {
   className?: string;
 }
 
-const mockSummaryData = [
-  { title: "All", number: "44" },
-  { title: "Active", number: "20" },
-  { title: "Pending Cancellation", number: "1" },
-  { title: "Pending Payment", number: "3" },
-  { title: "On Hold", number: "4" },
-  { title: "Cancelled", number: "16" },
-];
+export const StatsSummary = ({ data, className }: StatsSummaryProps) => {
+  if (!data || data.length === 0) return null;
 
-export const StatsSummary = ({
-  data = mockSummaryData,
-  className,
-}: StatsSummaryProps) => {
   return (
     <div
       className={`hidden md:block text-[15px] mb-6 text-gray-500 ${className}`}

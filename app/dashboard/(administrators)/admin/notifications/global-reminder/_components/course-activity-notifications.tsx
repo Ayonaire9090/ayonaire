@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { toast } from "sonner";
 import { AppSelect } from "@/components/ui/app-select";
 
 export const CourseActivityNotifications = () => {
@@ -102,14 +103,15 @@ export const CourseActivityNotifications = () => {
           <h3 className="text-[17px] lg:text-[18px] font-medium text-gray-900 mb-1">
             Automation Change History
           </h3>
-          <p className="text-[14px] text-gray-400">
-            Last Modified By: Admin Name
-          </p>
-          <p className="text-[14px] text-gray-400">
-            Last Updated: Mar 04, 2026 – 11:32 AM
-          </p>
+          {/* No audit-log endpoint exists for these settings yet (they aren't
+              persisted anywhere - see the "Save Settings" stub on this page),
+              so there's nothing real to report here. */}
+          <p className="text-[14px] text-gray-400">No changes recorded yet</p>
         </div>
-        <button className="px-5 py-2.5 bg-white border border-gray-200 rounded-[10px] text-[14px] font-medium text-gray-600 hover:bg-gray-50 transition-colors shadow-xs shrink-0 focus-visible:outline-none">
+        <button
+          onClick={() => toast.info("Audit logging isn't available yet - these settings aren't persisted.")}
+          className="px-5 py-2.5 bg-white border border-gray-200 rounded-[10px] text-[14px] font-medium text-gray-600 hover:bg-gray-50 transition-colors shadow-xs shrink-0 focus-visible:outline-none"
+        >
           View Audit Log
         </button>
       </div>

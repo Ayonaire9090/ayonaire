@@ -35,6 +35,7 @@ import { ResumeProjectsSection, ProjectEntry } from "./_components/resume-projec
 import { ResumeSkillsSection, SkillEntry } from "./_components/resume-skills-section";
 import { ResumeCertificationsSection, CertificationEntry } from "./_components/resume-certifications-section";
 import { ResumeExtraCurricularSection, ExtraCurricularEntry } from "./_components/resume-extra-curricular-section";
+import { ResumeHonorsSection, HonorEntry } from "./_components/resume-honors-section";
 import { ResumeUndesignedSection } from "./_components/resume-undesigned-section";
 import { ResumeLinkedInModal } from "./_components/resume-linkedin-modal";
 import { ResumeSetupScreen, ResumeFocus } from "./_components/resume-setup-screen";
@@ -86,6 +87,8 @@ export default function ResumeBuilderPage() {
   const [certificationInstruction, setCertificationInstruction] = useState("");
   const [extraCurricularEntries, setExtraCurricularEntries] = useState<ExtraCurricularEntry[]>([]);
   const [extraCurricularInstruction, setExtraCurricularInstruction] = useState("");
+  const [honorEntries, setHonorEntries] = useState<HonorEntry[]>([]);
+  const [honorInstruction, setHonorInstruction] = useState("");
   // Instruction text for sections that don't have a real form yet.
   const [sectionInstructions, setSectionInstructions] = useState<Record<string, string>>({});
   const [visitedSections, setVisitedSections] = useState<string[]>([]);
@@ -161,6 +164,7 @@ export default function ResumeBuilderPage() {
   const skillCompletion = skillEntries.some((e) => e.category.trim()) ? 1 : 0;
   const certificationCompletion = certificationEntries.some((e) => e.name.trim()) ? 1 : 0;
   const extraCurricularCompletion = extraCurricularEntries.some((e) => e.role.trim()) ? 1 : 0;
+  const honorCompletion = honorEntries.some((e) => e.title.trim()) ? 1 : 0;
   const progressPercent = Math.round(
     ((contactCompletion +
       summaryCompletion +
@@ -170,7 +174,8 @@ export default function ResumeBuilderPage() {
       projectCompletion +
       skillCompletion +
       certificationCompletion +
-      extraCurricularCompletion) /
+      extraCurricularCompletion +
+      honorCompletion) /
       resumeSections.length) *
       100,
   );
@@ -223,6 +228,10 @@ export default function ResumeBuilderPage() {
       .filter((e) => e.role.trim())
       .map((e) => `${e.role} at ${e.organization}`.trim())
       .join("\n");
+    const honorsText = honorEntries
+      .filter((e) => e.title.trim())
+      .map((e) => e.title)
+      .join("\n");
     const content = [
       ...Object.values(contact).filter(Boolean),
       summary,
@@ -233,6 +242,7 @@ export default function ResumeBuilderPage() {
       skillsText,
       certificationText,
       extraCurricularText,
+      honorsText,
     ]
       .filter(Boolean)
       .join("\n");
@@ -510,6 +520,7 @@ export default function ResumeBuilderPage() {
                       skillEntries={skillEntries}
                       certificationEntries={certificationEntries}
                       extraCurricularEntries={extraCurricularEntries}
+                      honorEntries={honorEntries}
                       visitedSections={visitedSections}
                     />
                   </div>
@@ -539,6 +550,7 @@ export default function ResumeBuilderPage() {
                       skillEntries={skillEntries}
                       certificationEntries={certificationEntries}
                       extraCurricularEntries={extraCurricularEntries}
+                      honorEntries={honorEntries}
                       visitedSections={visitedSections}
                     />
                   </div>
@@ -564,6 +576,7 @@ export default function ResumeBuilderPage() {
                       skillEntries={skillEntries}
                       certificationEntries={certificationEntries}
                       extraCurricularEntries={extraCurricularEntries}
+                      honorEntries={honorEntries}
                       visitedSections={visitedSections}
                     />
                   </div>
@@ -589,6 +602,7 @@ export default function ResumeBuilderPage() {
                       skillEntries={skillEntries}
                       certificationEntries={certificationEntries}
                       extraCurricularEntries={extraCurricularEntries}
+                      honorEntries={honorEntries}
                       visitedSections={visitedSections}
                     />
                   </div>
@@ -614,6 +628,7 @@ export default function ResumeBuilderPage() {
                       skillEntries={skillEntries}
                       certificationEntries={certificationEntries}
                       extraCurricularEntries={extraCurricularEntries}
+                      honorEntries={honorEntries}
                       visitedSections={visitedSections}
                     />
                   </div>
@@ -639,6 +654,7 @@ export default function ResumeBuilderPage() {
                       skillEntries={skillEntries}
                       certificationEntries={certificationEntries}
                       extraCurricularEntries={extraCurricularEntries}
+                      honorEntries={honorEntries}
                       visitedSections={visitedSections}
                     />
                   </div>
@@ -659,6 +675,7 @@ export default function ResumeBuilderPage() {
                       skillEntries={skillEntries}
                       certificationEntries={certificationEntries}
                       extraCurricularEntries={extraCurricularEntries}
+                      honorEntries={honorEntries}
                       visitedSections={visitedSections}
                     />
                   </div>
@@ -684,6 +701,33 @@ export default function ResumeBuilderPage() {
                       skillEntries={skillEntries}
                       certificationEntries={certificationEntries}
                       extraCurricularEntries={extraCurricularEntries}
+                      honorEntries={honorEntries}
+                      visitedSections={visitedSections}
+                    />
+                  </div>
+                </div>
+              ) : activeSection === "honour-award" ? (
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <div className="bg-white lg:rounded-3xl rounded-2xl p-4 lg:p-8 order-2 lg:order-1">
+                    <ResumeHonorsSection
+                      entries={honorEntries}
+                      onChange={setHonorEntries}
+                      instruction={honorInstruction}
+                      onInstructionChange={setHonorInstruction}
+                    />
+                  </div>
+                  <div className="order-1 lg:order-2">
+                    <ResumeLivePreview
+                      contact={contact}
+                      summary={summary}
+                      domainEntries={domainEntries}
+                      educationEntries={educationEntries}
+                      experienceEntries={experienceEntries}
+                      projectEntries={projectEntries}
+                      skillEntries={skillEntries}
+                      certificationEntries={certificationEntries}
+                      extraCurricularEntries={extraCurricularEntries}
+                      honorEntries={honorEntries}
                       visitedSections={visitedSections}
                     />
                   </div>
@@ -709,6 +753,7 @@ export default function ResumeBuilderPage() {
                       skillEntries={skillEntries}
                       certificationEntries={certificationEntries}
                       extraCurricularEntries={extraCurricularEntries}
+                      honorEntries={honorEntries}
                       visitedSections={visitedSections}
                     />
                   </div>

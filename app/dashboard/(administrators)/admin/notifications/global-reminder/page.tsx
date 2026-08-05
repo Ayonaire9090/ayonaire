@@ -1,6 +1,9 @@
+"use client";
+
 import { AdminDashboardButton } from "@/components/dashboard/admin-dashboard-button";
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 import { DashboardSearch } from "@/components/dashboard/dashboard-search";
+import { toast } from "sonner";
 import { NotificationsGlobalReminderTable } from "./_components/notifications-global-reminder-table";
 import { NotificationsGlobalReminderList } from "./_components/notifications-global-reminder-list";
 import { DefaultRecurringSettings } from "./_components/default-recurring-settings";
@@ -22,8 +25,16 @@ export default function AdminHistoryGlobalReminderPage() {
           <AdminDashboardButton
             className="bg-transparent! border-gray-300! text-gray-600!"
             title="Discard"
+            onClick={() => toast.info("No unsaved changes to discard.")}
           />
-          <AdminDashboardButton title="Save Settings" />
+          <AdminDashboardButton
+            title="Save Settings"
+            onClick={() =>
+              toast.info(
+                "Saving default recurring/recipient/trigger settings isn't available yet.",
+              )
+            }
+          />
         </div>
       </div>
 

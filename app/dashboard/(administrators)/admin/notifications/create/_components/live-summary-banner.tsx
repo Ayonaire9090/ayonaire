@@ -1,10 +1,14 @@
-import { useState } from "react";
+interface LiveSummaryBannerProps {
+  recipientType?: string;
+  sendOption?: string;
+  status?: string;
+}
 
-export const LiveSummaryBanner = () => {
-  const [type, setType] = useState("");
-  const [recipientType, setRecipientType] = useState("");
-  const [sendOption, setSendOption] = useState("");
-
+export const LiveSummaryBanner = ({
+  recipientType,
+  sendOption,
+  status,
+}: LiveSummaryBannerProps) => {
   return (
     <div className="mt-2 bg-[#F86432]/10 rounded-lg p-4 md:p-6 flex flex-col gap-5 border-0">
       <h2 className="text-[17px] font-semibold text-gray-900 mb-1">
@@ -29,8 +33,10 @@ export const LiveSummaryBanner = () => {
           </span>
         </div>
         <div className="flex justify-between items-center pb-4 border-b border-[#F9E2D8]">
-          <span className="text-primary text-[15px] font-medium">Status::</span>
-          <span className="text-primary font-medium text-[15px]">Draft</span>
+          <span className="text-primary text-[15px] font-medium">Status:</span>
+          <span className="text-primary font-medium text-[15px]">
+            {status || "Draft"}
+          </span>
         </div>
       </div>
     </div>

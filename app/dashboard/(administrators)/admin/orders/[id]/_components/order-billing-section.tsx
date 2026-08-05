@@ -1,13 +1,26 @@
 "use client";
 
 import React, { useState } from "react";
-import { OrderData } from "../../_components/orders-types";
+import { OrderData, BillingAddress } from "../../_components/orders-types";
 import { AppInput } from "@/components/ui/app-input";
 import { AppSelect } from "@/components/ui/app-select";
 import Image from "next/image";
 
-export const OrderBillingSection = ({ order }: { order: OrderData }) => {
+interface OrderBillingSectionProps {
+  order: OrderData;
+  billing: BillingAddress;
+  onBillingChange: (next: BillingAddress) => void;
+}
+
+export const OrderBillingSection = ({
+  order,
+  billing,
+  onBillingChange,
+}: OrderBillingSectionProps) => {
   const [isEditing, setIsEditing] = useState(false);
+
+  const setField = (field: keyof BillingAddress) => (value: string) =>
+    onBillingChange({ ...billing, [field]: value });
 
   return (
     <div className="flex flex-col gap-6">
@@ -27,13 +40,13 @@ export const OrderBillingSection = ({ order }: { order: OrderData }) => {
             />
           </button>
         </div>
-        {order.billing?.firstName || order.billing?.lastName ? (
+        {billing.firstName || billing.lastName ? (
           <div className="mt-1 text-[14px] text-gray-500 flex flex-col gap-1 w-[80%] leading-relaxed">
             <p>
-              {order.billing.firstName} {order.billing.lastName}
+              {billing.firstName} {billing.lastName}
             </p>
-            {order.billing.email && <p>Email Address: {order.billing.email}</p>}
-            {order.billing.phone && <p>Phone: {order.billing.phone}</p>}
+            {billing.email && <p>Email Address: {billing.email}</p>}
+            {billing.phone && <p>Phone: {billing.phone}</p>}
           </div>
         ) : (
           <p className="mt-2 text-[14px] text-gray-400 font-medium h-[44px]">
@@ -47,59 +60,70 @@ export const OrderBillingSection = ({ order }: { order: OrderData }) => {
           <AppInput
             label="First Name"
             className="border border-gray-100 bg-[#FBFBFB]!"
-            defaultValue={order.billing?.firstName}
+            value={billing.firstName}
+            onChange={(e) => setField("firstName")(e.target.value)}
           />
           <AppInput
             label="Last Name"
             className="border border-gray-100 bg-[#FBFBFB]!"
-            defaultValue={order.billing?.lastName}
+            value={billing.lastName}
+            onChange={(e) => setField("lastName")(e.target.value)}
           />
           <AppInput
             label="Company"
             className="border border-gray-100 bg-[#FBFBFB]!"
-            defaultValue={order.billing?.company}
+            value={billing.company}
+            onChange={(e) => setField("company")(e.target.value)}
           />
           <AppInput
             label="Address line 1"
             className="border border-gray-100 bg-[#FBFBFB]!"
-            defaultValue={order.billing?.address1}
+            value={billing.address1}
+            onChange={(e) => setField("address1")(e.target.value)}
           />
           <AppInput
             label="Address line 2"
             className="border border-gray-100 bg-[#FBFBFB]!"
-            defaultValue={order.billing?.address2}
+            value={billing.address2}
+            onChange={(e) => setField("address2")(e.target.value)}
           />
           <AppInput
             label="City"
             className="border border-gray-100 bg-[#FBFBFB]!"
-            defaultValue={order.billing?.city}
+            value={billing.city}
+            onChange={(e) => setField("city")(e.target.value)}
           />
           <AppInput
             label="Postcode/ZIP"
             className="border border-gray-100 bg-[#FBFBFB]!"
-            defaultValue={order.billing?.postcode}
+            value={billing.postcode}
+            onChange={(e) => setField("postcode")(e.target.value)}
           />
           <AppSelect
             label="Country/Region"
-            value={order.billing?.country || "Nigeria"}
+            value={billing.country || "Nigeria"}
+            onChange={setField("country")}
             className="border-gray-100 bg-[#FBFBFB]!"
             options={[{ label: "Nigeria", value: "Nigeria" }]}
           />
           <AppSelect
             label="State/County."
-            value={order.billing?.state || "Lagos"}
+            value={billing.state || "Lagos"}
+            onChange={setField("state")}
             className="border-gray-100 bg-[#FBFBFB]!"
             options={[{ label: "Lagos", value: "Lagos" }]}
           />
           <AppInput
             label="Email address"
             className="border border-gray-100 bg-[#FBFBFB]!"
-            defaultValue={order.billing?.email}
+            value={billing.email}
+            onChange={(e) => setField("email")(e.target.value)}
           />
           <AppInput
             label="Phone"
             className="border border-gray-100 bg-[#FBFBFB]!"
-            defaultValue={order.billing?.phone}
+            value={billing.phone}
+            onChange={(e) => setField("phone")(e.target.value)}
           />
 
           <AppSelect
@@ -116,6 +140,7 @@ export const OrderBillingSection = ({ order }: { order: OrderData }) => {
             label="Transaction ID"
             className="border border-gray-100 bg-[#FBFBFB]!"
             defaultValue={order.transactionId}
+            disabled
           />
         </div>
       )}

@@ -53,14 +53,16 @@ export const NotificationsTable = ({ data }: NotificationsTableProps) => {
     {
       key: "status",
       header: "Status",
-      cell: (item) => <NotificationStatusBadge status={item.status} />,
+      cell: (item) => (
+        <NotificationStatusBadge status={item.status} notificationId={item.id} />
+      ),
     },
     {
       key: "action",
       header: "Actions",
       headerClassName: "pr-4",
       className: "pr-4",
-      cell: () => <NotificationActions />,
+      cell: (item) => <NotificationActions notificationId={item.id} />,
     },
   ];
 

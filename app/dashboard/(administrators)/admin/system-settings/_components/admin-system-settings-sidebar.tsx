@@ -14,7 +14,11 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-export const AdminSystemSettingsSidebar = () => {
+export const AdminSystemSettingsSidebar = ({
+  searchQuery = "",
+}: {
+  searchQuery?: string;
+}) => {
   const pathname = usePathname();
 
   const links = [
@@ -60,10 +64,17 @@ export const AdminSystemSettingsSidebar = () => {
     },
   ];
 
+  const filteredLinks = links.filter((link) =>
+    link.name.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
+
   return (
     // Add bg-[#F8F9FA] and border-gray-100/80 for extra beautiful design
     <div className="flex flex-col gap-1.5 w-full  p-3 rounded-[20px]">
-      {links.map((link) => {
+      {filteredLinks.length === 0 && (
+        <p className="px-4 py-3 text-sm text-gray-400">No matching settings</p>
+      )}
+      {filteredLinks.map((link) => {
         const isActive = pathname === link.href;
         const Icon = link.icon;
         return (

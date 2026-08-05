@@ -7,6 +7,8 @@ export type StudentStatus = "Completed" | "In Progress" | "Enrolled";
 
 export interface StudentData {
   id: string;
+  studentId: string | null;
+  courseId: string | null;
   name: string;
   email: string;
   course: string;
@@ -49,6 +51,8 @@ export function mapEnrollmentToStudentData(
 
   return {
     id: enrollment._id,
+    studentId: student?._id ?? null,
+    courseId: course?._id ?? null,
     name: student?.name ?? "Unknown Student",
     email: student?.email ?? "",
     course: course?.title ?? "Unknown Course",

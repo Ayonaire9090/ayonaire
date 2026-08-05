@@ -1,35 +1,33 @@
-import { CheckCircle, FileQuestionMark } from "lucide-react";
+"use client";
 
-const DummyQuizResultsAttempts: InstructorStudentPerformanceQuizResultCardProps[] =
-  [
-    {
-      title: "Python Quiz",
-      attempts: 1,
-      percentage: "80%",
-    },
-    {
-      title: "Python Quiz",
-      attempts: 1,
-      percentage: "90%",
-    },
-  ];
+import { CheckCircle, FileQuestionMark } from "lucide-react";
+import { useInstructorQuizResultCards } from "./instructor-performance-data";
+
 export const InstructorStudentPerformanceQuizResults = () => {
+  const { cards, isLoading } = useInstructorQuizResultCards();
+
   return (
     <div className="mb-4 lg:mb-6">
       <div className="flex items-center gap-2 py-4">
         <FileQuestionMark className="size-6 text-[#FF5A1F]" />
         <h2 className="text-xl font-bold text-[#1f2937]">Quiz Results</h2>
       </div>
-      <div className="flex items-center overflow-x-auto lg:overflow-x-hidden lg:grid grid-cols-2  gap-4 w-full hide-scrollbar">
-        {DummyQuizResultsAttempts.map((quiz, idx) => (
-          <InstructorStudentPerformanceQuizResultCard
-            key={idx}
-            title={quiz.title}
-            attempts={quiz.attempts}
-            percentage={quiz.percentage}
-          />
-        ))}
-      </div>
+      {isLoading ? (
+        <p className="text-sm text-gray-400 py-6">Loading…</p>
+      ) : cards.length === 0 ? (
+        <p className="text-sm text-gray-400 py-6">No quiz attempts yet</p>
+      ) : (
+        <div className="flex items-center overflow-x-auto lg:overflow-x-hidden lg:grid grid-cols-2  gap-4 w-full hide-scrollbar">
+          {cards.map((quiz) => (
+            <InstructorStudentPerformanceQuizResultCard
+              key={quiz.id}
+              title={quiz.title}
+              attempts={quiz.attempts}
+              percentage={quiz.percentage}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

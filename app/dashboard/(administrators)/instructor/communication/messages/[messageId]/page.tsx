@@ -1,7 +1,6 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { getConversationById } from "../_data/mock-messages";
 
 import { SidebarInset } from "@/components/ui/sidebar";
 import { InstructorMessagesSidebarContent } from "../_components/student-messages-sidebar-content";
@@ -10,19 +9,49 @@ import { InstructorGroupMessagesHeader } from "../_components/instructor-group-m
 import { InstructorMessageList } from "../_components/instructor-message-list";
 import { InstructorMessageComposer } from "../_components/instructor-message-composer";
 import { InstructorGroupSidebar } from "../_components/instructor-group-sidebar";
+import { useGetRooms } from "@/hooks/api/use-rooms";
+import { useGetMessages, useSendMessageMutation } from "@/hooks/api/use-messages";
+import { useAuthStore } from "@/store/auth.store";
 
 export default function InstructorMessageDetails() {
   const params = useParams();
-  const messageId = params.messageId as string;
-  const conversation = getConversationById(messageId);
+  const roomId = params.messageId as string;
+  const currentUserId = useAuthStore((s) => s.user?._id);
 
-  if (!conversation) {
+  const { data: roomsData, isLoading: roomsLoading } = useGetRooms();
+  const room = roomsData?.data?.find((r) => r.id === roomId);
+
+  const { data: messagesData, isLoading: messagesLoading, isError: messagesError } =
+    useGetMessages(roomId);
+  const messages = messagesData?.data?.messages ?? [];
+
+  const sendMessageMutation = useSendMessageMutation();
+
+  const handleSend = (text: string) => {
+    const formData = new FormData();
+    formData.append("roomId", roomId);
+    formData.append("text", text);
+    sendMessageMutation.mutate(formData);
+  };
+
+  if (roomsLoading || messagesLoading) {
     return (
       <>
-        <InstructorMessagesSidebarContent
-          variant="sidebar"
-          collapsible="icon"
-        />
+        <InstructorMessagesSidebarContent variant="sidebar" collapsible="icon" />
+        <SidebarInset className="bg-[#F6F6F6] pb-[72px] md:pb-0 flex flex-col h-dvh overflow-hidden">
+          <InstructorMessagesHeader />
+          <div className="flex-1 flex items-center justify-center">
+            <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+          </div>
+        </SidebarInset>
+      </>
+    );
+  }
+
+  if (!room || messagesError) {
+    return (
+      <>
+        <InstructorMessagesSidebarContent variant="sidebar" collapsible="icon" />
         <SidebarInset className="bg-[#F6F6F6] pb-[72px] md:pb-0 flex flex-col h-dvh overflow-hidden">
           <InstructorMessagesHeader />
           <div className="flex-1 flex items-center justify-center">
@@ -33,7 +62,7 @@ export default function InstructorMessageDetails() {
     );
   }
 
-  const isGroup = conversation.type === "group";
+  const isGroup = room.isGroup;
 
   return (
     <>
@@ -42,37 +71,22 @@ export default function InstructorMessageDetails() {
         <InstructorMessagesHeader />
 
         {/* Chat header */}
-        <InstructorGroupMessagesHeader
-          messageImage={conversation.avatar}
-          messageHeadingTitle={
-            isGroup
-              ? conversation.course || conversation.title
-              : conversation.title
-          }
-          messageHeadingDescription={
-            isGroup ? "Click here for more info" : undefined
-          }
-          type={conversation.type}
-          online={conversation.online}
-          lastSeen={conversation.lastSeen}
-        />
+        <InstructorGroupMessagesHeader room={room} currentUserId={currentUserId} />
+
         {/* Chat content wrapper */}
         <div className="flex-1 flex lg:flex-row min-h-0 overflow-hidden relative">
           {/* Main chat column */}
           <div className="flex flex-col flex-1 min-h-0 overflow-hidden">
             {/* Messages list */}
-            <InstructorMessageList
-              messages={conversation.messages}
-              isGroup={isGroup}
-            />
+            <InstructorMessageList messages={messages} currentUserId={currentUserId} />
             {/* Message composer */}
-            <InstructorMessageComposer isGroup={isGroup} />
+            <InstructorMessageComposer isGroup={isGroup} onSend={handleSend} />
           </div>
 
           {/* Right sidebar for group messages */}
           {isGroup && (
             <div className="hidden lg:block w-[320px] xl:w-[350px] shrink-0 border-l border-gray-100 overflow-y-auto bg-white h-full">
-              <InstructorGroupSidebar />
+              <InstructorGroupSidebar room={room} />
             </div>
           )}
         </div>

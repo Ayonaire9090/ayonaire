@@ -1,7 +1,8 @@
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
-import { StatsSummary } from "@/components/dashboard/stats-summary";
+import { StudentPurchasesStats } from "./_components/student-purchases-stats";
 import { AdminStudentPurchasesTable } from "./_components/student-purchases-table";
 import { AdminStudentPurchasesList } from "./_components/students-purchases-list";
+import { PaymentsTabs } from "../_components/payments-tabs";
 
 export default async function AdminPaymentsStudentsPurchasesPage() {
   return (
@@ -10,7 +11,8 @@ export default async function AdminPaymentsStudentsPurchasesPage() {
         title="Student Purchases"
         subTitle="Recent student purchases on your platform"
       />
-      <StatsSummary />
+      <PaymentsTabs />
+      <StudentPurchasesStats />
       <div className="hidden lg:block w-full">
         <AdminStudentPurchasesTable />
       </div>

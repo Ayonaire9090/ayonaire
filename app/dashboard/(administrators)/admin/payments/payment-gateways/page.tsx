@@ -1,5 +1,6 @@
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 import { PaymentGatewayList } from "./_components/payment-gateway-list";
+import { PaymentsTabs } from "../_components/payments-tabs";
 
 export default async function AdminPaymentGatewaysPage() {
   return (
@@ -8,6 +9,7 @@ export default async function AdminPaymentGatewaysPage() {
         title="Payment Gateway Integration"
         subTitle="Manage and connect payment providers for course purchases"
       />
+      <PaymentsTabs />
       <PaymentGatewayList />
     </div>
   );

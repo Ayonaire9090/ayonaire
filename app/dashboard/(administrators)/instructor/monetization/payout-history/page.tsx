@@ -1,7 +1,9 @@
+"use client";
+
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 import { DashboardSearch } from "@/components/dashboard/dashboard-search";
 import { InstructorDashboardButton } from "../../_components/instructor-dashboard-button";
-import { ArrowDown, ArrowUp, CheckCircle, Clock, Wallet } from "lucide-react";
+import { ArrowDown, ArrowUp, Clock, Wallet } from "lucide-react";
 import {
   CourseRevenueAnalyticsCardProps,
   InstructorCourseRevenueAnalytics,
@@ -9,34 +11,32 @@ import {
 import { Button } from "@/components/ui/button";
 import { InstructorPayoutHistoryTable } from "./_components/instructor-payout-history-table";
 import { InstructorPayoutHistoryList } from "./_components/instructor-payout-history-list";
+import { useInstructorAnalytics } from "../../analytics-reporting/_components/instructor-analytics-data";
 
-const PayoutAnalytics: CourseRevenueAnalyticsCardProps[] = [
-  {
-    icon: Wallet,
-    iconBgColor: "bg-[#A855F7]/10",
-    iconColor: "text-[#A855F7]",
-    title: "Total Revenue",
-    value: "$13,955.00",
-    description: "+12.5% from last month",
-  },
-  {
-    icon: Clock,
-    iconBgColor: "bg-[#F86432]/10",
-    iconColor: "text-[#F86432]",
-    title: "Total Enrollments",
-    value: "245",
-    description: "+8.2% from last month",
-  },
-  {
-    icon: CheckCircle,
-    iconBgColor: "bg-[#009F42]/10",
-    iconColor: "text-[#009F42]",
-    title: "Avg. Course Price",
-    value: "$55.60",
-    description: "Steady performance",
-  },
-];
+function usePayoutAnalyticsCards(): CourseRevenueAnalyticsCardProps[] {
+  const { totalRevenue, totalStudents, isLoading } = useInstructorAnalytics();
+
+  return [
+    {
+      icon: Wallet,
+      iconBgColor: "bg-[#A855F7]/10",
+      iconColor: "text-[#A855F7]",
+      title: "Total Revenue",
+      value: isLoading ? "-" : `$${totalRevenue.toLocaleString()}`,
+    },
+    {
+      icon: Clock,
+      iconBgColor: "bg-[#F86432]/10",
+      iconColor: "text-[#F86432]",
+      title: "Total Enrollments",
+      value: isLoading ? "-" : String(totalStudents),
+    },
+  ];
+}
+
 export default function InstructorPayoutHistoryPage() {
+  const PayoutAnalytics = usePayoutAnalyticsCards();
+
   return (
     <>
       <DashboardHeader

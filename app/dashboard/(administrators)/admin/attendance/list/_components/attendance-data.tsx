@@ -133,7 +133,7 @@ export const AttendanceActions = ({ id }: { id?: string }) => {
     >
       <AppDropdownItem
         variant="menu"
-        onClick={() => id && router.push(`/dashboard/admin/attendance/view?sessionId=${id}`)}
+        onClick={() => id && router.push(`/dashboard/admin/attendance/session/${id}`)}
       >
         View Details
       </AppDropdownItem>

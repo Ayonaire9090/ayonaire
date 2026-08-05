@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
   Bar,
   BarChart,
@@ -8,7 +8,6 @@ import {
   XAxis,
   YAxis,
   Cell,
-  Rectangle,
 } from "recharts";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -16,14 +15,11 @@ import {
   ChartContainer,
   ChartTooltip,
 } from "@/components/ui/chart";
+import { useGetPaymentAnalytics } from "@/hooks/api/use-payments";
 
-const revenueData = [
-  { month: "Jan", revenue: 150 },
-  { month: "Feb", revenue: 350 },
-  { month: "Mar", revenue: 250 },
-  { month: "Apr", revenue: 420 },
-  { month: "May", revenue: 140 },
-  { month: "Jun", revenue: 250 },
+const MONTH_LABELS = [
+  "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
 ];
 
 const chartConfig = {
@@ -83,98 +79,130 @@ function RevenueTooltipContent({
 
   return (
     <div className="rounded-lg bg-gray-900 px-3 py-1.5 text-sm font-medium text-white shadow-lg">
-      ${value?.toLocaleString()}
+      NGN {value?.toLocaleString()}
     </div>
   );
 }
 
 export const AdminDashboardRevenueAnalytics = () => {
+  const { data } = useGetPaymentAnalytics();
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const analytics = data?.data;
+
+  const chartData = useMemo(() => {
+    const monthly = analytics?.monthlyRevenue ?? [];
+    return [...monthly]
+      .sort((a, b) => a.year - b.year || a.month - b.month)
+      .slice(-6)
+      .map((entry) => ({
+        month: MONTH_LABELS[entry.month - 1] ?? String(entry.month),
+        revenue: entry.revenue,
+      }));
+  }, [analytics]);
+
+  const percentChange = useMemo(() => {
+    if (chartData.length < 2) return null;
+    const prev = chartData[chartData.length - 2].revenue;
+    const current = chartData[chartData.length - 1].revenue;
+    if (!prev) return null;
+    return ((current - prev) / prev) * 100;
+  }, [chartData]);
 
   return (
     <div className="rounded-[16px]! px-5 py-5 space-y-4 bg-white shadow-sm">
       {/* Header */}
       <div className="space-y-1">
         <p className="text-2xl font-semibold">Revenue (Monthly)</p>
-        <p className="text-2xl font-bold tabular-nums tracking-tight">10,213</p>
-        <div className="flex items-center gap-1.5 text-sm">
-          <Badge
-            variant="outline"
-            className="text-primary border-0! border-none! bg-[#F86432]/10 rounded-full!"
-          >
-            +12%
-          </Badge>
-          <span className="text-muted-foreground">from last month</span>
-        </div>
+        <p className="text-2xl font-bold tabular-nums tracking-tight">
+          NGN {(analytics?.totalRevenue ?? 0).toLocaleString()}
+        </p>
+        {percentChange !== null && (
+          <div className="flex items-center gap-1.5 text-sm">
+            <Badge
+              variant="outline"
+              className="text-primary border-0! border-none! bg-[#F86432]/10 rounded-full!"
+            >
+              {percentChange >= 0 ? "+" : ""}
+              {percentChange.toFixed(1)}%
+            </Badge>
+            <span className="text-muted-foreground">from last month</span>
+          </div>
+        )}
       </div>
 
       {/* Chart */}
-      <ChartContainer
-        config={chartConfig}
-        className="aspect-auto h-[250px] w-full"
-      >
-        <BarChart
-          data={revenueData}
-          margin={{ top: 20, right: 0, left: -10, bottom: 0 }}
-          onMouseLeave={() => setActiveIndex(null)}
+      {chartData.length === 0 ? (
+        <div className="flex h-[250px] items-center justify-center text-sm text-muted-foreground">
+          No revenue data yet
+        </div>
+      ) : (
+        <ChartContainer
+          config={chartConfig}
+          className="aspect-auto h-[250px] w-full"
         >
-          {/* SVG hatched diagonal line pattern */}
-          <defs>
-            <pattern
-              id={PATTERN_ID}
-              patternUnits="userSpaceOnUse"
-              width="6"
-              height="6"
-              patternTransform="rotate(45)"
-            >
-              <line
-                x1="0"
-                y1="0"
-                x2="0"
-                y2="6"
-                stroke={SOLID_COLOR}
-                strokeWidth="3"
-                strokeOpacity="0.6"
-              />
-            </pattern>
-          </defs>
-
-          <CartesianGrid vertical={false} strokeDasharray="" stroke="#f0f0f0" />
-
-          <XAxis
-            dataKey="month"
-            tickLine={false}
-            axisLine={false}
-            tick={{ fill: "#9ca3af", fontSize: 13 }}
-            dy={8}
-          />
-
-          <YAxis
-            tickLine={false}
-            axisLine={false}
-            tick={{ fill: "#9ca3af", fontSize: 12 }}
-            tickCount={5}
-            domain={[0, "auto"]}
-          />
-
-          <ChartTooltip cursor={false} content={<RevenueTooltipContent />} />
-
-          <Bar
-            dataKey="revenue"
-            shape={(props: unknown) => (
-              <RoundedBar {...(props as Record<string, unknown>)} />
-            )}
-            onMouseEnter={(_, index) => setActiveIndex(index)}
+          <BarChart
+            data={chartData}
+            margin={{ top: 20, right: 0, left: -10, bottom: 0 }}
+            onMouseLeave={() => setActiveIndex(null)}
           >
-            {revenueData.map((_, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={activeIndex === index ? SOLID_COLOR : HATCH_FILL}
-              />
-            ))}
-          </Bar>
-        </BarChart>
-      </ChartContainer>
+            {/* SVG hatched diagonal line pattern */}
+            <defs>
+              <pattern
+                id={PATTERN_ID}
+                patternUnits="userSpaceOnUse"
+                width="6"
+                height="6"
+                patternTransform="rotate(45)"
+              >
+                <line
+                  x1="0"
+                  y1="0"
+                  x2="0"
+                  y2="6"
+                  stroke={SOLID_COLOR}
+                  strokeWidth="3"
+                  strokeOpacity="0.6"
+                />
+              </pattern>
+            </defs>
+
+            <CartesianGrid vertical={false} strokeDasharray="" stroke="#f0f0f0" />
+
+            <XAxis
+              dataKey="month"
+              tickLine={false}
+              axisLine={false}
+              tick={{ fill: "#9ca3af", fontSize: 13 }}
+              dy={8}
+            />
+
+            <YAxis
+              tickLine={false}
+              axisLine={false}
+              tick={{ fill: "#9ca3af", fontSize: 12 }}
+              tickCount={5}
+              domain={[0, "auto"]}
+            />
+
+            <ChartTooltip cursor={false} content={<RevenueTooltipContent />} />
+
+            <Bar
+              dataKey="revenue"
+              shape={(props: unknown) => (
+                <RoundedBar {...(props as Record<string, unknown>)} />
+              )}
+              onMouseEnter={(_, index) => setActiveIndex(index)}
+            >
+              {chartData.map((_, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={activeIndex === index ? SOLID_COLOR : HATCH_FILL}
+                />
+              ))}
+            </Bar>
+          </BarChart>
+        </ChartContainer>
+      )}
     </div>
   );
 };

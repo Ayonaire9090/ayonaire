@@ -1,40 +1,55 @@
-import {
-  GraduationCap,
-  Play,
-  CalendarDays,
-  Users,
-  Waypoints,
-} from "lucide-react";
-import Image from "next/image";
+"use client";
 
-const statsGrid = [
-  {
-    label: "Active Classes",
-    value: "14",
-    icon: "/assets/icons/blue-grad-hat.svg",
-    iconColor: "text-[#3B82F6]",
-  },
-  {
-    label: "Live Now",
-    value: "2",
-    icon: "/assets/icons/red-tv.svg",
-    iconColor: "text-[#F86432]",
-  },
-  {
-    label: "Upcoming Today",
-    value: "4",
-    icon: "/assets/icons/blue-calendar.svg",
-    iconColor: "text-[#3B82F6]",
-  },
-  {
-    label: "Instructors Online",
-    value: "6",
-    icon: "/assets/icons/orange-person-talk.svg",
-    iconColor: "text-[#F59E0B]",
-  },
-];
+import Image from "next/image";
+import { useMemo } from "react";
+import { useGetWorkshops } from "@/hooks/api/use-workshops";
+import { useGetSupportTickets } from "@/hooks/api/use-support";
 
 export const AdminDashboardSystemHealthCard = () => {
+  const { data: workshopsData } = useGetWorkshops(1, 200);
+  const { data: ticketsData } = useGetSupportTickets({ limit: 200 });
+
+  const workshops = workshopsData?.data?.workshops ?? [];
+  const tickets = ticketsData?.tickets ?? [];
+
+  const liveCount = useMemo(
+    () => workshops.filter((w) => w.status === "live").length,
+    [workshops],
+  );
+  const upcomingCount = useMemo(
+    () => workshops.filter((w) => w.status === "upcoming").length,
+    [workshops],
+  );
+  const openTickets = useMemo(
+    () =>
+      tickets.filter((t) => t.status === "open" || t.status === "in-progress")
+        .length,
+    [tickets],
+  );
+
+  const statsGrid = [
+    {
+      label: "Total Workshops",
+      value: workshops.length,
+      icon: "/assets/icons/blue-grad-hat.svg",
+    },
+    {
+      label: "Live Now",
+      value: liveCount,
+      icon: "/assets/icons/red-tv.svg",
+    },
+    {
+      label: "Upcoming",
+      value: upcomingCount,
+      icon: "/assets/icons/blue-calendar.svg",
+    },
+    {
+      label: "Open Tickets",
+      value: openTickets,
+      icon: "/assets/icons/orange-person-talk.svg",
+    },
+  ];
+
   return (
     <div className="rounded-2xl bg-white overflow-hidden flex flex-col h-full">
       {/* Header */}
@@ -52,15 +67,17 @@ export const AdminDashboardSystemHealthCard = () => {
             System Health & Live Ops
           </h3>
         </div>
-        <div className="flex items-center gap-1.5">
-          <span className="relative flex size-2.5">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full size-2.5 bg-red-500"></span>
-          </span>
-          <span className="text-[10px] lg:text-xs font-semibold text-red-500 uppercase tracking-wider">
-            Live
-          </span>
-        </div>
+        {liveCount > 0 && (
+          <div className="flex items-center gap-1.5">
+            <span className="relative flex size-2.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full size-2.5 bg-red-500"></span>
+            </span>
+            <span className="text-[10px] lg:text-xs font-semibold text-red-500 uppercase tracking-wider">
+              Live
+            </span>
+          </div>
+        )}
       </div>
 
       {/* Stats Grid */}
@@ -108,11 +125,13 @@ export const AdminDashboardSystemHealthCard = () => {
                 Open Support Tickets
               </p>
               <p className="text-xs text-gray-400 mt-0.5">
-                Average response time: 14m
+                Tickets awaiting a response
               </p>
             </div>
           </div>
-          <p className="text-3xl font-bold text-[#EF4444] tabular-nums">3</p>
+          <p className="text-3xl font-bold text-[#EF4444] tabular-nums">
+            {openTickets}
+          </p>
         </div>
       </div>
     </div>

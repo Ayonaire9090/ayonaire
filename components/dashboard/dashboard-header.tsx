@@ -11,6 +11,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
+import { toast } from "sonner";
 import { DashboardUserDropDown } from "./dashboard-user-dropdown";
 import { useAuthStore } from "@/store/auth.store";
 
@@ -37,6 +38,32 @@ export function DashboardHeader({
       : pathname.includes("/student")
         ? "student"
         : "";
+
+  // Only admin and instructor have a real notifications page; only admin has
+  // a real settings page. Student has neither, and instructor has no
+  // settings page - those show an honest "not available yet" toast instead
+  // of a dead button or a made-up destination.
+  const notificationsPath = pathname.includes("/admin")
+    ? "/dashboard/admin/notifications"
+    : pathname.includes("/instructor")
+      ? "/dashboard/instructor/notifications"
+      : null;
+  const settingsPath = pathname.includes("/admin")
+    ? "/dashboard/admin/system-settings"
+    : null;
+
+  const handleNotificationsClick = () => {
+    if (notificationsPath) router.push(notificationsPath);
+    else toast.info("Notifications aren't available for this dashboard yet.");
+  };
+  const handleSettingsClick = () => {
+    if (settingsPath) router.push(settingsPath);
+    else toast.info("Settings aren't available for this dashboard yet.");
+  };
+  const handleAiClick = () => {
+    toast.info("AI assistant isn't available here yet.");
+  };
+
   return (
     <>
       {/*MOBILE HEADER*/}
@@ -54,13 +81,19 @@ export function DashboardHeader({
             priority
           />
           <div className="flex items-center gap-2">
-            <button className="flex h-10 w-10 items-center justify-center rounded-full hover:bg-black/5 transition-colors">
+            <button
+              onClick={handleNotificationsClick}
+              className="flex h-10 w-10 items-center justify-center rounded-full hover:bg-black/5 transition-colors"
+            >
               <IconBell
                 className="h-[22px] w-[22px] text-gray-800"
                 stroke={1.8}
               />
             </button>
-            <button className="flex h-10 w-10 items-center justify-center rounded-full hover:bg-black/5 transition-colors">
+            <button
+              onClick={handleSettingsClick}
+              className="flex h-10 w-10 items-center justify-center rounded-full hover:bg-black/5 transition-colors"
+            >
               <IconSettings
                 className="h-[22px] w-[22px] text-gray-800"
                 stroke={1.8}
@@ -115,13 +148,22 @@ export function DashboardHeader({
 
         <div className="flex items-center gap-4 w-auto">
           <div className="flex items-center gap-3">
-            <button className="flex h-12 w-12 items-center justify-center rounded-full bg-white hover:bg-white/80 transition-colors">
+            <button
+              onClick={handleAiClick}
+              className="flex h-12 w-12 items-center justify-center rounded-full bg-white hover:bg-white/80 transition-colors"
+            >
               <IconSparkles className="h-5 w-5" />
             </button>
-            <button className="flex h-12 w-12 items-center justify-center rounded-full bg-white hover:bg-white/80 transition-colors">
+            <button
+              onClick={handleNotificationsClick}
+              className="flex h-12 w-12 items-center justify-center rounded-full bg-white hover:bg-white/80 transition-colors"
+            >
               <IconBell className="h-5 w-5" />
             </button>
-            <button className="flex h-12 w-12 items-center justify-center rounded-full bg-white hover:bg-white/80 transition-colors">
+            <button
+              onClick={handleSettingsClick}
+              className="flex h-12 w-12 items-center justify-center rounded-full bg-white hover:bg-white/80 transition-colors"
+            >
               <IconSettings className="h-5 w-5" />
             </button>
 

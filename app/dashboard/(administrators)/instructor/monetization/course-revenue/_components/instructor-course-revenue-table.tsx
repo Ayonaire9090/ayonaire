@@ -3,6 +3,8 @@
 import { DataTable, ColumnDef } from "@/components/ui/data-table";
 import { Button } from "@/components/ui/button";
 import { Download, MoreVertical } from "lucide-react";
+import { Course } from "@/lib/api/endpoints/courses";
+import { useInstructorAnalytics } from "../../../analytics-reporting/_components/instructor-analytics-data";
 
 export type CourseRevenue = {
   id: string;
@@ -10,37 +12,33 @@ export type CourseRevenue = {
   studentsEnrolled: number;
   price: number;
   totalRevenue: number;
-  status: "Active" | "Draft";
+  status: Course["status"];
 };
 
-export const dummyRevenueData: CourseRevenue[] = [
-  {
-    id: "1",
-    courseName: "AI for Beginners",
-    studentsEnrolled: 120,
-    price: 49,
-    totalRevenue: 5880,
-    status: "Active",
-  },
-  {
-    id: "2",
-    courseName: "Data Science Bootcamp",
-    studentsEnrolled: 80,
-    price: 79,
-    totalRevenue: 6320,
-    status: "Active",
-  },
-  {
-    id: "3",
-    courseName: "UI/UX Fundamentals",
-    studentsEnrolled: 45,
-    price: 39,
-    totalRevenue: 1755,
-    status: "Draft",
-  },
-];
+export function useCourseRevenueRows(): { rows: CourseRevenue[]; isLoading: boolean } {
+  const { perCourse, isLoading } = useInstructorAnalytics();
+  return {
+    rows: perCourse.map((c) => ({
+      id: c.course._id,
+      courseName: c.course.title,
+      studentsEnrolled: c.enrollmentCount,
+      price: c.course.price ?? 0,
+      totalRevenue: c.revenue,
+      status: c.course.status,
+    })),
+    isLoading,
+  };
+}
+
+const statusStyle: Record<string, string> = {
+  Active: "bg-[#DBEAFE] text-[#3B82F6]",
+  Draft: "bg-[#FEE2E2] text-[#EF4444]",
+  Archived: "bg-[#F3E8FF] text-[#A855F7]",
+};
 
 export const InstructorCourseRevenueTable = () => {
+  const { rows, isLoading } = useCourseRevenueRows();
+
   const columns: ColumnDef<CourseRevenue>[] = [
     {
       key: "courseName",
@@ -76,14 +74,10 @@ export const InstructorCourseRevenueTable = () => {
       cell: (item) => (
         <span
           className={`px-3 py-1 text-[13px] rounded-full font-medium ${
-            item.courseName === "AI for Beginners"
-              ? "bg-[#F3E8FF] text-[#A855F7]"
-              : item.courseName === "Data Science Bootcamp"
-                ? "bg-[#DBEAFE] text-[#3B82F6]"
-                : "bg-[#FEE2E2] text-[#EF4444]"
+            statusStyle[item.status ?? ""] ?? "bg-gray-100 text-gray-600"
           }`}
         >
-          {item.status}
+          {item.status ?? "-"}
         </span>
       ),
     },
@@ -104,26 +98,26 @@ export const InstructorCourseRevenueTable = () => {
         variant="secondary"
         className="bg-[#F6F6F6] shadow-none! border-0! hover:bg-gray-200 text-gray-700 text-sm gap-2"
       >
-        <Download className="w-4 h-4" /> Export Quizzes
-      </Button>
-      <Button
-        variant="secondary"
-        className="bg-[#F6F6F6] shadow-none! border-0! hover:bg-gray-200 text-gray-700 text-sm gap-2"
-      >
-        <Download className="w-4 h-4" /> Export Result
+        <Download className="w-4 h-4" /> Export Revenue
       </Button>
     </div>
   );
 
   return (
     <div className="mt-6 p-6 bg-white rounded-2xl mb-6">
-      <DataTable
-        data={dummyRevenueData}
-        columns={columns}
-        keyExtractor={(item) => item.id}
-        selectable
-        footerContent={footerContent}
-      />
+      {isLoading ? (
+        <p className="text-sm text-gray-400 py-6 text-center">Loading…</p>
+      ) : rows.length === 0 ? (
+        <p className="text-sm text-gray-400 py-6 text-center">No courses yet</p>
+      ) : (
+        <DataTable
+          data={rows}
+          columns={columns}
+          keyExtractor={(item) => item.id}
+          selectable
+          footerContent={footerContent}
+        />
+      )}
     </div>
   );
 };

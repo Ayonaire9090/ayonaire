@@ -2,10 +2,12 @@
 
 import { useState } from "react";
 import { DataList } from "@/components/ui/data-list";
-import { HistoryLog, historyLogsData } from "./mock-data";
+import { HistoryLog, mapNotificationToHistoryLog } from "./history-data";
 import { MoreVertical } from "lucide-react";
+import { toast } from "sonner";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
+import { useGetNotifications } from "@/hooks/api/use-notifications";
 
 const getStatusBadge = (status: HistoryLog["status"]) => {
   switch (status) {
@@ -40,6 +42,8 @@ const getStatusBadge = (status: HistoryLog["status"]) => {
 
 export const HistoryLogsList = () => {
   const [selectedItems, setSelectedItems] = useState<Set<string>>(new Set());
+  const { data } = useGetNotifications();
+  const logs = (data?.notifications ?? []).map(mapNotificationToHistoryLog);
 
   const toggleItem = (id: string) => {
     setSelectedItems((prev) => {
@@ -56,7 +60,7 @@ export const HistoryLogsList = () => {
   return (
     <div className="w-full flex flex-col gap-4 md:hidden bg-white rounded-xl p-2">
       <DataList
-        data={historyLogsData}
+        data={logs}
         keyExtractor={(item) => item.id}
         itemClassName="flex-col items-stretch gap-0"
         renderItem={(item) => (
@@ -78,7 +82,10 @@ export const HistoryLogsList = () => {
                 </div>
                 <div className="flex items-center gap-2">
                   {getStatusBadge(item.status)}
-                  <button className="text-gray-500 hover:text-black transition-colors -mr-2">
+                  <button
+                    onClick={() => toast.info("Log detail view isn't available yet.")}
+                    className="text-gray-500 hover:text-black transition-colors -mr-2"
+                  >
                     <MoreVertical className="size-5" />
                   </button>
                 </div>
@@ -102,11 +109,15 @@ export const HistoryLogsList = () => {
       <div className="flex items-center gap-3 mt-2 px-1">
         <Button
           variant="secondary"
+          onClick={() => toast.info("Resending notifications isn't available yet.")}
           className="bg-[#F6F6F6] flex-1 text-gray-500 hover:bg-gray-200 h-12 rounded-lg font-medium"
         >
           Resend selected
         </Button>
-        <Button className="bg-[#FF6A3D] flex-1 hover:bg-[#ff5b29] text-white h-12 rounded-lg font-medium">
+        <Button
+          onClick={() => toast.info("Exporting logs isn't available yet.")}
+          className="bg-[#FF6A3D] flex-1 hover:bg-[#ff5b29] text-white h-12 rounded-lg font-medium"
+        >
           Export Logs
         </Button>
       </div>

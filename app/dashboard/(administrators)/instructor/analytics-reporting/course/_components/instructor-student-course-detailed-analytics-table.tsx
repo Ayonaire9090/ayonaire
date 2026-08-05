@@ -10,66 +10,14 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { ActivityEvent, useInstructorCourseActivity } from "./instructor-course-activity-data";
 
-export type DetailedAnalyticsData = {
-  id: string;
-  course: string;
-  cohort: string;
-  notification: string;
-  student: string;
-  date: string;
-  time: string;
-  status: "Read" | "Unread";
-  statusColor: "blue" | "orange" | "red";
-};
-
-export const detailedAnalyticsData: DetailedAnalyticsData[] = [
-  {
-    id: "1",
-    course: "AI Engineering",
-    cohort: "Cohort: SP-24",
-    notification: "New Student Enrolled",
-    student: "Sarah Khan",
-    date: "Oct 24, 2023",
-    time: "02:30 PM",
-    status: "Read",
-    statusColor: "blue",
-  },
-  {
-    id: "2",
-    course: "AI Engineering",
-    cohort: "Cohort: SP-24",
-    notification: "Assignment Submitted",
-    student: "Sarah Khan",
-    date: "Oct 24, 2023",
-    time: "02:30 PM",
-    status: "Read",
-    statusColor: "orange",
-  },
-  {
-    id: "3",
-    course: "AI Engineering",
-    cohort: "Cohort: SP-24",
-    notification: "Quiz Completed (100%)",
-    student: "Sarah Khan",
-    date: "Oct 24, 2023",
-    time: "02:30 PM",
-    status: "Unread",
-    statusColor: "red",
-  },
-];
-
-const columns: ColumnDef<DetailedAnalyticsData>[] = [
+const columns: ColumnDef<ActivityEvent>[] = [
   {
     key: "course",
     header: "Course",
     cell: (item) => (
-      <div className="flex flex-col gap-0.5">
-        <span className="text-gray-900 font-semibold text-[15px]">
-          {item.course}
-        </span>
-        <span className="text-gray-400 text-[13px]">{item.cohort}</span>
-      </div>
+      <span className="text-gray-900 font-semibold text-[15px]">{item.course}</span>
     ),
   },
   {
@@ -131,9 +79,6 @@ const columns: ColumnDef<DetailedAnalyticsData>[] = [
           <DropdownMenuItem className="cursor-pointer text-[15px] py-2 rounded-lg hover:bg-gray-50">
             View
           </DropdownMenuItem>
-          <DropdownMenuItem className="cursor-pointer text-[15px] py-2 rounded-lg hover:bg-gray-50">
-            Grade Now
-          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     ),
@@ -141,18 +86,26 @@ const columns: ColumnDef<DetailedAnalyticsData>[] = [
 ];
 
 export const InstructorCourseDetailedAnalyticsTable = () => {
+  const { events, isLoading } = useInstructorCourseActivity();
+
   return (
     <div className="w-full my-6">
       <div className="bg-white rounded-2xl border border-gray-100 p-4 lg:p-6 overflow-x-auto">
         <h2 className="text-lg font-bold text-gray-900 mb-6">
           Course Detailed Analytics
         </h2>
-        <DataTable
-          data={detailedAnalyticsData}
-          columns={columns}
-          keyExtractor={(item) => item.id}
-          selectable={true}
-        />
+        {isLoading ? (
+          <p className="text-sm text-gray-400 py-6 text-center">Loading…</p>
+        ) : events.length === 0 ? (
+          <p className="text-sm text-gray-400 py-6 text-center">No recent activity yet</p>
+        ) : (
+          <DataTable
+            data={events}
+            columns={columns}
+            keyExtractor={(item) => item.id}
+            selectable={true}
+          />
+        )}
       </div>
     </div>
   );

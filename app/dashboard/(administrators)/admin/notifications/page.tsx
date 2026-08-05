@@ -5,6 +5,7 @@ import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 import { Search, ChevronDown, X, Plus } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 import {
   Popover,
   PopoverContent,
@@ -13,9 +14,10 @@ import {
 } from "@/components/ui/popover";
 import { NotificationsTable } from "./_components/notifications-table";
 import { NotificationsList } from "./_components/notifications-list";
-import { mockNotifications } from "./_components/notifications-data";
+import { mapNotificationToNotificationData } from "./_components/notifications-data";
 import { AdminDashboardButton } from "@/components/dashboard/admin-dashboard-button";
 import { useRouter } from "next/navigation";
+import { useGetNotifications } from "@/hooks/api/use-notifications";
 
 function FilterPopoverHeader({ title }: { title: string }) {
   return (
@@ -93,7 +95,12 @@ export default function AdminNotificationsPage() {
     });
   };
 
-  const filteredNotifications = mockNotifications.filter(
+  const { data, isLoading, isError } = useGetNotifications();
+  const notifications = (data?.notifications ?? []).map(
+    mapNotificationToNotificationData,
+  );
+
+  const filteredNotifications = notifications.filter(
     (n) =>
       n.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       n.course.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -230,18 +237,38 @@ export default function AdminNotificationsPage() {
         </div>
 
         {/* Data Views */}
-        <NotificationsTable data={filteredNotifications} />
-        <NotificationsList data={filteredNotifications} />
+        {isLoading ? (
+          <p className="py-10 text-center text-sm text-gray-400">
+            Loading notifications...
+          </p>
+        ) : isError ? (
+          <p className="py-10 text-center text-sm text-red-500">
+            Failed to load notifications.
+          </p>
+        ) : filteredNotifications.length === 0 ? (
+          <p className="py-10 text-center text-sm text-gray-400">
+            No notifications yet
+          </p>
+        ) : (
+          <>
+            <NotificationsTable data={filteredNotifications} />
+            <NotificationsList data={filteredNotifications} />
+          </>
+        )}
 
         {/* Bottom Actions */}
         <div className="mt-6 grid grid-cols-2 md:flex justify-end gap-3">
           <Button
             variant="outline"
+            onClick={() => toast.info("Select notifications from the list above to delete them.")}
             className="h-11 px-6 sm:px-10 bg-[#F6F6F6] border border-[#EBEBEB] text-gray-600 font-medium hover:bg-gray-200 rounded-[8px] text-[15px]"
           >
             Delete
           </Button>
-          <Button className="h-11 px-6 sm:px-10 bg-primary hover:bg-[#E04818] text-white font-medium rounded-[8px] text-[15px] border-none shadow-none">
+          <Button
+            onClick={() => toast.info("Use the Send option on a notification's status badge to send it.")}
+            className="h-11 px-6 sm:px-10 bg-primary hover:bg-[#E04818] text-white font-medium rounded-[8px] text-[15px] border-none shadow-none"
+          >
             Send now
           </Button>
         </div>

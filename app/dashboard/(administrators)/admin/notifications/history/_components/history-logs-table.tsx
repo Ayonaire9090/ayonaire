@@ -1,9 +1,11 @@
 "use client";
 
 import { DataTable, ColumnDef } from "@/components/ui/data-table";
-import { HistoryLog, historyLogsData } from "./mock-data";
+import { HistoryLog, mapNotificationToHistoryLog } from "./history-data";
 import { MoreVertical } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import { useGetNotifications } from "@/hooks/api/use-notifications";
 
 const getStatusBadge = (status: HistoryLog["status"]) => {
   switch (status) {
@@ -74,7 +76,10 @@ const columns: ColumnDef<HistoryLog>[] = [
     key: "actions",
     header: "Actions",
     cell: () => (
-      <button className="text-gray-500 hover:text-black transition-colors">
+      <button
+        onClick={() => toast.info("Log detail view isn't available yet.")}
+        className="text-gray-500 hover:text-black transition-colors"
+      >
         <MoreVertical className="size-5" />
       </button>
     ),
@@ -82,23 +87,34 @@ const columns: ColumnDef<HistoryLog>[] = [
 ];
 
 export const HistoryLogsTable = () => {
+  const { data, isLoading } = useGetNotifications();
+  const logs = (data?.notifications ?? []).map(mapNotificationToHistoryLog);
+
   return (
     <div className="w-full flex-col bg-white p-4 rounded-xl gap-4 hidden md:flex">
-      <DataTable
-        data={historyLogsData}
-        columns={columns}
-        keyExtractor={(item) => item.id}
-        selectable={true}
-      />
+      {isLoading ? (
+        <p className="py-10 text-center text-sm text-gray-400">Loading history...</p>
+      ) : (
+        <DataTable
+          data={logs}
+          columns={columns}
+          keyExtractor={(item) => item.id}
+          selectable={true}
+        />
+      )}
 
       <div className="flex items-center gap-4 mt-2">
         <Button
           variant="secondary"
+          onClick={() => toast.info("Resending notifications isn't available yet.")}
           className="bg-[#F6F6F6] text-gray-500 hover:bg-gray-200 min-w-[160px] h-12 rounded-lg font-medium"
         >
           Resend selected
         </Button>
-        <Button className="bg-[#FF6A3D] hover:bg-[#ff5b29] text-white min-w-[160px] h-12 rounded-lg font-medium">
+        <Button
+          onClick={() => toast.info("Exporting logs isn't available yet.")}
+          className="bg-[#FF6A3D] hover:bg-[#ff5b29] text-white min-w-[160px] h-12 rounded-lg font-medium"
+        >
           Export Logs
         </Button>
       </div>

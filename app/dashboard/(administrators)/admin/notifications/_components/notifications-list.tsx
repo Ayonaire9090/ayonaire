@@ -33,9 +33,9 @@ export const NotificationsList = ({ data }: NotificationsListProps) => {
                 </div>
               </div>
               <div className="flex items-center gap-1">
-                <NotificationStatusBadge status={item.status} />
+                <NotificationStatusBadge status={item.status} notificationId={item.id} />
                 <div className="mt-0.5">
-                  <NotificationActions />
+                  <NotificationActions notificationId={item.id} />
                 </div>
               </div>
             </div>

@@ -2,9 +2,7 @@
 
 import React, { useState } from "react";
 import {
-  mockSessionAttendance,
   SessionStatusBadge,
-  SessionSourceBadge,
   SessionAttendanceAction,
 } from "./attendance-session-data";
 import { AttendanceSessionFilters } from "./attendance-session-filters";
@@ -62,7 +60,7 @@ export const AttendanceSessionList = () => {
                   {item.name}
                 </span>
                 <span className="text-[13px] text-gray-500 mt-0.5">
-                  {item.studentId}
+                  {item.email}
                 </span>
               </div>
             </div>
@@ -94,20 +92,12 @@ export const AttendanceSessionList = () => {
               <span className="text-[14px] text-gray-500">{item.timeOut}</span>
             </div>
 
-            {/* Source */}
-            <div className="flex flex-col gap-1 items-start">
+            {/* Notes */}
+            <div className="flex flex-col gap-1 items-start col-span-2">
               <span className="text-[14px] font-medium text-gray-900 mb-0.5">
-                Source
+                Notes
               </span>
-              <SessionSourceBadge source={item.source} />
-            </div>
-
-            {/* Marked By */}
-            <div className="flex flex-col gap-1 text-right">
-              <span className="text-[14px] font-medium text-gray-900">
-                Marked By
-              </span>
-              <span className="text-[14px] text-gray-500">{item.markedBy}</span>
+              <span className="text-[14px] text-gray-500">{item.notes}</span>
             </div>
           </div>
         </div>

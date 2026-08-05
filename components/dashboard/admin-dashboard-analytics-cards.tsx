@@ -17,67 +17,75 @@ import {
   FileClock,
   Landmark,
 } from "lucide-react";
-
-const BasicAnalytics = [
-  {
-    heading: "Total Users",
-    title: "10,213",
-    icon: Users2,
-    rate: "+12%",
-    description: "from last month",
-  },
-  {
-    heading: "Active Students",
-    title: "1,212",
-    icon: GraduationCap,
-    rate: "-2.5%",
-    description: "from last month",
-  },
-  {
-    heading: "Instructors",
-    title: "3",
-    icon: Users,
-    rate: "-2.5%",
-    description: "from last month",
-  },
-  {
-    heading: "Total Courses",
-    title: "421",
-    icon: BookOpen,
-    rate: "+4.5%",
-    description: "from last month",
-  },
-  {
-    heading: "Revenue Today",
-    title: "₦120,000",
-    icon: Banknote,
-    rate: "+4.5%",
-    description: "from last month",
-  },
-  {
-    heading: "Pending Pay",
-    title: "34",
-    icon: Wallet,
-    rate: "+4.5%",
-    description: "from last month",
-  },
-  {
-    heading: "Pending Apps",
-    title: "12",
-    icon: FileClock,
-    rate: "+4.5%",
-    description: "from last month",
-  },
-  {
-    heading: "Total Revenue",
-    title: "12",
-    icon: Landmark,
-    rate: "+4.5%",
-    description: "from last month",
-  },
-];
+import { useGetPaymentAnalytics, useGetAllPayments } from "@/hooks/api/use-payments";
+import { useGetAdminUsers } from "@/hooks/api/use-admin";
+import { useGetAllInstructorProfiles } from "@/hooks/api/use-instructor";
+import { useGetCourses } from "@/hooks/api/use-courses";
 
 export const AdminDashboardAnalyticsCards = () => {
+  const { data: paymentAnalyticsData } = useGetPaymentAnalytics();
+  const { data: paymentsData } = useGetAllPayments({ limit: 200 });
+  const { data: usersData } = useGetAdminUsers();
+  const { data: instructorData } = useGetAllInstructorProfiles();
+  const { data: coursesData } = useGetCourses({ limit: 1 });
+
+  const analytics = paymentAnalyticsData?.data;
+  const payments = paymentsData?.data?.data ?? [];
+  const users = usersData?.users ?? [];
+  const instructors = instructorData?.data ?? [];
+
+  const activeStudents = users.filter(
+    (u) => (u.role === "student" || u.role === "user") && u.status === "active",
+  ).length;
+  const instructorUsers = users.filter((u) => u.role === "instructor").length;
+  const pendingPayments = payments.filter((p) => p.status === "pending").length;
+  const pendingApplications = instructors.filter(
+    (i) => i.applicationStatus === "pending",
+  ).length;
+
+  const BasicAnalytics = [
+    {
+      heading: "Total Users",
+      title: (usersData?.count ?? users.length).toLocaleString(),
+      icon: Users2,
+    },
+    {
+      heading: "Active Students",
+      title: activeStudents.toLocaleString(),
+      icon: GraduationCap,
+    },
+    {
+      heading: "Instructors",
+      title: instructorUsers.toLocaleString(),
+      icon: Users,
+    },
+    {
+      heading: "Total Courses",
+      title: (coursesData?.pagination?.total ?? 0).toLocaleString(),
+      icon: BookOpen,
+    },
+    {
+      heading: "Total Revenue",
+      title: `NGN ${(analytics?.totalRevenue ?? 0).toLocaleString()}`,
+      icon: Banknote,
+    },
+    {
+      heading: "Pending Payments",
+      title: pendingPayments.toLocaleString(),
+      icon: Wallet,
+    },
+    {
+      heading: "Pending Apps",
+      title: pendingApplications.toLocaleString(),
+      icon: FileClock,
+    },
+    {
+      heading: "Platform Fees",
+      title: `NGN ${(analytics?.platformFees ?? 0).toLocaleString()}`,
+      icon: Landmark,
+    },
+  ];
+
   return (
     <>
       {/* ── Mobile / Tablet: Embla carousel with peeking ── */}
@@ -101,8 +109,6 @@ export const AdminDashboardAnalyticsCards = () => {
                   heading={analytic.heading}
                   title={analytic.title}
                   icon={analytic.icon}
-                  rate={analytic.rate}
-                  description={analytic.description}
                 />
               </CarouselItem>
             ))}
@@ -118,8 +124,6 @@ export const AdminDashboardAnalyticsCards = () => {
             heading={analytic.heading}
             title={analytic.title}
             icon={analytic.icon}
-            rate={analytic.rate}
-            description={analytic.description}
           />
         ))}
       </div>
@@ -131,8 +135,8 @@ interface AdminDashboardAnalyticsCardProps {
   heading: string;
   title: string;
   icon: LucideIcon;
-  rate: string;
-  description: string;
+  rate?: string;
+  description?: string;
 }
 
 export const AdminDashboardSectionFeatureCard = ({
@@ -153,15 +157,19 @@ export const AdminDashboardSectionFeatureCard = ({
           {title}
         </p>
       </div>
-      <div className="flex items-start gap-1.5 text-sm pt-0!">
-        <Badge
-          variant="outline"
-          className="text-[#F86432] border-0! border-none! bg-[#F86432]/10 rounded-full!"
-        >
-          {rate}
-        </Badge>
-        <div className="text-muted-foreground">{description}</div>
-      </div>
+      {(rate || description) && (
+        <div className="flex items-start gap-1.5 text-sm pt-0!">
+          {rate && (
+            <Badge
+              variant="outline"
+              className="text-[#F86432] border-0! border-none! bg-[#F86432]/10 rounded-full!"
+            >
+              {rate}
+            </Badge>
+          )}
+          {description && <div className="text-muted-foreground">{description}</div>}
+        </div>
+      )}
     </div>
   );
 };

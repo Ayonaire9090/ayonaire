@@ -6,76 +6,40 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { AttendanceReportEntry } from "@/lib/api/endpoints/attendance";
 
 export interface StudentAttendanceData {
   id: string;
   name: string;
-  studentId: string;
   email: string;
   sessionsPresent: number;
   sessionsAbsent: number;
   attendancePercent: number;
-  lastAttended: string;
-  status: "Good Standing" | "At Risk" | "Critical" | "Inactive";
+  status: "Good Standing" | "At Risk" | "Critical";
 }
 
-export const mockStudentAttendance: StudentAttendanceData[] = [
-  {
-    id: "1",
-    name: "Sarah Ahmed",
-    studentId: "STU-2024-001",
-    email: "sarah.ahmed@example.com",
-    sessionsPresent: 11,
-    sessionsAbsent: 1,
-    attendancePercent: 92,
-    lastAttended: "Feb 28, 2026",
-    status: "Good Standing",
-  },
-  {
-    id: "2",
-    name: "Ali Hassan",
-    studentId: "STU-2024-002",
-    email: "ali.hassan@example.com",
-    sessionsPresent: 10,
-    sessionsAbsent: 2,
-    attendancePercent: 83,
-    lastAttended: "Feb 25, 2026",
-    status: "Good Standing",
-  },
-  {
-    id: "3",
-    name: "Fatima Khan",
-    studentId: "STU-2024-003",
-    email: "fatima.khan@example.com",
-    sessionsPresent: 9,
-    sessionsAbsent: 3,
-    attendancePercent: 75,
-    lastAttended: "Feb 26, 2026",
-    status: "At Risk",
-  },
-  {
-    id: "4",
-    name: "Omar Siddiqui",
-    studentId: "STU-2024-004",
-    email: "omar.siddiqui@example.com",
-    sessionsPresent: 7,
-    sessionsAbsent: 5,
-    attendancePercent: 58,
-    lastAttended: "Feb 27, 2026",
-    status: "Critical",
-  },
-  {
-    id: "5",
-    name: "Sarah Ahmed",
-    studentId: "STU-2024-005",
-    email: "sarah.ahmed@example.com",
-    sessionsPresent: 12,
-    sessionsAbsent: 0,
-    attendancePercent: 100,
-    lastAttended: "Feb 28, 2026",
-    status: "Good Standing",
-  },
-];
+const STATUS_MAP: Record<AttendanceReportEntry["status"], StudentAttendanceData["status"]> = {
+  "good-standing": "Good Standing",
+  "at-risk": "At Risk",
+  critical: "Critical",
+};
+
+// "Last Attended" isn't in the report response (only aggregate counts), so
+// it's intentionally dropped rather than faked.
+export function mapReportEntryToStudentAttendanceData(
+  entry: AttendanceReportEntry,
+  index: number,
+): StudentAttendanceData {
+  return {
+    id: entry.student._id || String(index),
+    name: entry.student.name,
+    email: entry.student.email,
+    sessionsPresent: entry.sessionsAttended,
+    sessionsAbsent: entry.sessionsMissed,
+    attendancePercent: entry.attendanceRate,
+    status: STATUS_MAP[entry.status] ?? "At Risk",
+  };
+}
 
 export const StudentStatusBadge = ({ status }: { status: StudentAttendanceData["status"] }) => {
   switch (status) {
@@ -95,12 +59,6 @@ export const StudentStatusBadge = ({ status }: { status: StudentAttendanceData["
       return (
         <span className="inline-flex items-center justify-center rounded-full bg-[#FEE2E2] px-2.5 py-0.5 text-[12px] font-medium text-[#EF4444]">
           Critical
-        </span>
-      );
-    case "Inactive":
-      return (
-        <span className="inline-flex items-center justify-center rounded-full bg-gray-100 px-2.5 py-0.5 text-[12px] font-medium text-gray-600">
-          Inactive
         </span>
       );
     default:

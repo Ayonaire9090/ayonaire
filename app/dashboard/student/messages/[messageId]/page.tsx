@@ -11,16 +11,33 @@ import {
 } from "../_data/message-data";
 import { StudentGroupMessagesHeader } from "../_components/student-group-messages-header";
 import { StudentMessageList } from "../_components/student-message-list";
-import { StudentMessageComposer } from "../_components/student-message-composer";
-import { SidebarInset } from "@/components/ui/sidebar";
+import {
+  StudentMessageComposer,
+  ComposerAttachment,
+} from "../_components/student-message-composer";
+import { SidebarInset, useSidebar } from "@/components/ui/sidebar";
 import { StudentMessagesSidebarContent } from "../_components/student-messages-sidebar-content";
 import { StudentGroupSidebar } from "../_components/student-group-sidebar";
 import { StudentDashboardHeader } from "../../_components/student-dashboard-header";
+import { ChevronLeft } from "lucide-react";
 
 export default function StudentMessageDetails() {
   const params = useParams();
   const roomId = params.messageId as string;
   const user = useAuthStore((s) => s.user);
+  const { isMobile, setOpenMobile } = useSidebar();
+
+  // Reopening the off-canvas conversation list is how mobile users get
+  // back to their inbox - there's no other visible entry point on this page.
+  const backToConversations = isMobile && (
+    <button
+      onClick={() => setOpenMobile(true)}
+      className="md:hidden flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-gray-700 bg-white border-b border-gray-100"
+    >
+      <ChevronLeft className="w-4 h-4" />
+      Conversations
+    </button>
+  );
 
   const { data: roomsData, isLoading: isRoomsLoading } = useGetRooms();
   const room = roomsData?.data?.find((r) => r.id === roomId);
@@ -40,10 +57,11 @@ export default function StudentMessageDetails() {
 
   const { mutate: sendMessage } = useSendMessageMutation();
 
-  const handleSend = (text: string) => {
+  const handleSend = (text: string, attachment?: ComposerAttachment) => {
     const formData = new FormData();
     formData.append("roomId", roomId);
     formData.append("text", text);
+    if (attachment) formData.append(attachment.kind, attachment.file);
     sendMessage(formData);
   };
 
@@ -53,6 +71,7 @@ export default function StudentMessageDetails() {
         <StudentMessagesSidebarContent variant="sidebar" collapsible="icon" />
         <SidebarInset className="bg-[#F6F6F6] pb-[72px] md:pb-0 flex flex-col h-dvh overflow-hidden">
           <StudentDashboardHeader />
+          {backToConversations}
           <div className="flex-1 flex items-center justify-center">
             <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
           </div>
@@ -67,6 +86,7 @@ export default function StudentMessageDetails() {
         <StudentMessagesSidebarContent variant="sidebar" collapsible="icon" />
         <SidebarInset className="bg-[#F6F6F6] pb-[72px] md:pb-0 flex flex-col h-dvh overflow-hidden">
           <StudentDashboardHeader />
+          {backToConversations}
           <div className="flex-1 flex items-center justify-center">
             <p className="text-gray-400">Conversation not found</p>
           </div>
@@ -82,6 +102,7 @@ export default function StudentMessageDetails() {
       <StudentMessagesSidebarContent variant="sidebar" collapsible="icon" />
       <SidebarInset className="bg-[#F6F6F6] pb-[72px] md:pb-0">
         <StudentDashboardHeader />
+        {backToConversations}
 
         {/* Chat header */}
         <StudentGroupMessagesHeader

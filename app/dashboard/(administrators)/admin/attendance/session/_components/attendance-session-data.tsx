@@ -1,81 +1,40 @@
 import React from "react";
 import { Edit } from "lucide-react";
+import { AttendanceSessionDetail } from "@/lib/api/endpoints/attendance";
 
 export interface SessionAttendanceData {
   id: string;
   name: string;
-  studentId: string;
   email: string;
   status: "Present" | "Absent" | "Late" | "Unmarked";
   timeIn: string;
   timeOut: string;
-  source: "Device" | "Manual";
-  markedBy: string;
   notes: string;
 }
 
-export const mockSessionAttendance: SessionAttendanceData[] = [
-  {
-    id: "1",
-    name: "Sarah Ahmed",
-    studentId: "STU-2024-001",
-    email: "sarah.ahmed@example.com",
-    status: "Present",
-    timeIn: "6:02 PM",
-    timeOut: "8:00 PM",
-    source: "Device",
-    markedBy: "System",
-    notes: "-",
-  },
-  {
-    id: "2",
-    name: "Ali Hassan",
-    studentId: "STU-2024-002",
-    email: "ali.hassan@example.com",
-    status: "Present",
-    timeIn: "6:02 PM",
-    timeOut: "8:00 PM",
-    source: "Manual",
-    markedBy: "System",
-    notes: "-",
-  },
-  {
-    id: "3",
-    name: "Fatima Khan",
-    studentId: "STU-2024-003",
-    email: "fatima.khan@example.com",
-    status: "Late",
-    timeIn: "6:02 PM",
-    timeOut: "8:00 PM",
-    source: "Manual",
-    markedBy: "Dr. Ahmed",
-    notes: "Informed about de",
-  },
-  {
-    id: "4",
-    name: "Omar Siddiqui",
-    studentId: "STU-2024-004",
-    email: "omar.siddiqui@example.com",
-    status: "Absent",
-    timeIn: "6:02 PM",
-    timeOut: "8:00 PM",
-    source: "Device",
-    markedBy: "Dr. Ahmed",
-    notes: "Medical emergency",
-  },
-  {
-    id: "5",
-    name: "Sarah Ahmed",
-    studentId: "STU-2024-005",
-    email: "sarah.ahmed@example.com",
-    status: "Present",
-    timeIn: "6:02 PM",
-    timeOut: "8:00 PM",
-    source: "Device",
-    markedBy: "System",
-    notes: "-",
-  },
-];
+const STATUS_MAP: Record<string, SessionAttendanceData["status"]> = {
+  present: "Present",
+  absent: "Absent",
+  late: "Late",
+  unmarked: "Unmarked",
+};
+
+// The backend record model has no "source" (Device/Manual) or "markedBy"
+// field - only present/absent/late/unmarked + optional time/notes - so
+// those columns are dropped rather than faked.
+export function mapSessionRecordsToAttendanceData(
+  records: AttendanceSessionDetail["records"],
+): SessionAttendanceData[] {
+  return records.map((record, index) => ({
+    id: record.student._id || String(index),
+    name: record.student.name,
+    email: record.student.email,
+    status: STATUS_MAP[record.status] ?? "Unmarked",
+    timeIn: record.timeIn ?? "-",
+    timeOut: record.timeOut ?? "-",
+    notes: record.notes ?? "-",
+  }));
+}
 
 export const SessionStatusBadge = ({
   status,
@@ -105,29 +64,6 @@ export const SessionStatusBadge = ({
       return (
         <span className="inline-flex items-center justify-center rounded-full bg-gray-100 px-2.5 py-0.5 text-[12px] font-medium text-gray-600">
           Unmarked
-        </span>
-      );
-    default:
-      return null;
-  }
-};
-
-export const SessionSourceBadge = ({
-  source,
-}: {
-  source: SessionAttendanceData["source"];
-}) => {
-  switch (source) {
-    case "Device":
-      return (
-        <span className="inline-flex items-center justify-center rounded-full bg-[#E6F6EC] px-2.5 py-0.5 text-[12px] font-medium text-[#24A164]">
-          Device
-        </span>
-      );
-    case "Manual":
-      return (
-        <span className="inline-flex items-center justify-center rounded-full bg-[#FFF4E5] px-2.5 py-0.5 text-[12px] font-medium text-[#F59E0B]">
-          Manual
         </span>
       );
     default:

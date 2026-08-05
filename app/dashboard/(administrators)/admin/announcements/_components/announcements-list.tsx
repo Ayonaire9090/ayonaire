@@ -88,8 +88,9 @@ export const AnnouncementsList = () => {
               </div>
             </div>
 
-            <div className="shrink-0 -mt-1">
+            <div className="shrink-0 -mt-1 flex items-center gap-1">
               <AnnouncementStatusBadge status={item.status} announcementId={item.id} />
+              <AnnouncementActions announcement={item} />
             </div>
           </div>
         )}

@@ -15,7 +15,24 @@ import { X, Menu, ChevronsUpDown, MessageSquarePlus } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { CONVERSATIONS } from "../_data/mock-messages";
+import { format } from "date-fns";
+import { useGetRooms } from "@/hooks/api/use-rooms";
+import { useAuthStore } from "@/store/auth.store";
+import type { RoomRecord } from "@/lib/api/endpoints/rooms";
+
+function otherParticipant(room: RoomRecord, currentUserId?: string) {
+  return room.participants.find((p) => p.id !== currentUserId) ?? room.participants[0];
+}
+
+function roomDisplayTitle(room: RoomRecord, currentUserId?: string) {
+  if (room.isGroup) return room.name ?? "Untitled Group";
+  return otherParticipant(room, currentUserId)?.name ?? "Unknown";
+}
+
+function roomAvatar(room: RoomRecord, currentUserId?: string) {
+  if (room.isGroup) return room.profile?.url ?? "/assets/logos/logo-dark.png";
+  return otherParticipant(room, currentUserId)?.profile?.url;
+}
 
 export function InstructorMessagesSidebarContent({
   ...props
@@ -23,6 +40,9 @@ export function InstructorMessagesSidebarContent({
   const { state, toggleSidebar, open, isMobile } = useSidebar();
   const isCollapsed = state === "collapsed" && !isMobile;
   const pathname = usePathname();
+  const currentUserId = useAuthStore((s) => s.user?._id);
+  const { data, isLoading, isError } = useGetRooms();
+  const rooms = data?.data ?? [];
 
   const isPinned = open;
 
@@ -106,85 +126,95 @@ export function InstructorMessagesSidebarContent({
 
       <SidebarContent className="bg-transparent pt-2">
         <div className="flex flex-col gap-1 pb-4">
-          {CONVERSATIONS.map((conv) => {
-            const isActive = pathname.includes(conv.id);
-            const lastMsg = conv.messages[conv.messages.length - 1];
+          {isLoading ? (
+            <div className="flex items-center justify-center py-10">
+              <div className="w-6 h-6 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+            </div>
+          ) : isError ? (
+            <p className="px-4 py-6 text-sm text-red-500">
+              Failed to load conversations.
+            </p>
+          ) : rooms.length === 0 ? (
+            <p className="px-4 py-6 text-sm text-gray-400">
+              No conversations yet.
+            </p>
+          ) : (
+            rooms.map((room) => {
+              const isActive = pathname.includes(room.id);
+              const title = roomDisplayTitle(room, currentUserId);
+              const avatar = roomAvatar(room, currentUserId);
+              const lastMsg = room.lastMessage;
 
-            return (
-              <Link
-                key={conv.id}
-                href={`/dashboard/Instructor/messages/${conv.id}`}
-                className={cn(
-                  "flex items-start gap-3 p-3 transition-colors",
-                  isActive ? "bg-[#F6F6F6]" : "hover:bg-gray-50",
-                  isCollapsed && "justify-center px-0",
-                )}
-              >
-                {conv.type === "group" ? (
-                  <>
-                    <div className="relative shrink-0">
-                      <Image
-                        src={conv.avatar}
-                        width={40}
-                        height={40}
-                        alt={conv.title}
-                        className="rounded-md object-cover"
-                      />
-                    </div>
-                    {!isCollapsed && (
-                      <div className="flex-1 min-w-0 flex flex-col justify-center h-10">
-                        <div className="flex items-center gap-2">
+              return (
+                <Link
+                  key={room.id}
+                  href={`/dashboard/instructor/communication/messages/${room.id}`}
+                  className={cn(
+                    "flex items-start gap-3 p-3 transition-colors",
+                    isActive ? "bg-[#F6F6F6]" : "hover:bg-gray-50",
+                    isCollapsed && "justify-center px-0",
+                  )}
+                >
+                  {room.isGroup ? (
+                    <>
+                      <div className="relative shrink-0">
+                        <Image
+                          src={avatar ?? "/assets/logos/logo-dark.png"}
+                          width={40}
+                          height={40}
+                          alt={title}
+                          className="rounded-md object-cover"
+                        />
+                      </div>
+                      {!isCollapsed && (
+                        <div className="flex-1 min-w-0 flex flex-col justify-center h-10">
                           <span className="text-sm font-medium text-gray-900 truncate">
-                            {conv.title}
+                            {title}
                           </span>
-                          {conv.role && (
-                            <span className="px-2 py-0.5 rounded-full bg-red-100 text-[#F15D23] text-[10px] font-medium whitespace-nowrap">
-                              {conv.role}
-                            </span>
+                          {room.description && (
+                            <p className="text-[13px] font-medium text-gray-500 truncate">
+                              {room.description}
+                            </p>
                           )}
                         </div>
-                        <p className="text-[13px] font-medium text-gray-900 truncate">
-                          {conv.course}
-                        </p>
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      <div className="relative shrink-0">
+                        <Avatar className="w-10 h-10 rounded-xl!">
+                          <AvatarImage src={avatar} />
+                          <AvatarFallback>{title[0]}</AvatarFallback>
+                        </Avatar>
                       </div>
-                    )}
-                  </>
-                ) : (
-                  <>
-                    <div className="relative shrink-0">
-                      <Avatar className="w-10 h-10 rounded-xl!">
-                        <AvatarImage src={conv.avatar} />
-                        <AvatarFallback>{conv.title[0]}</AvatarFallback>
-                      </Avatar>
-                      <span
-                        className={cn(
-                          "absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full border-2 border-white",
-                          conv.online
-                            ? "bg-[#4ADE80]"
-                            : "bg-white border-gray-300",
-                        )}
-                      />
-                    </div>
-                    {!isCollapsed && (
-                      <div className="flex-1 min-w-0">
-                        <div className="flex justify-between items-baseline mb-0.5">
-                          <span className="text-[15px] font-medium text-gray-900">
-                            {conv.title}
-                          </span>
-                          <span className="text-xs text-gray-400 shrink-0 ml-2">
-                            {lastMsg?.timestamp}
-                          </span>
+                      {!isCollapsed && (
+                        <div className="flex-1 min-w-0">
+                          <div className="flex justify-between items-baseline mb-0.5">
+                            <span className="text-[15px] font-medium text-gray-900">
+                              {title}
+                            </span>
+                            {lastMsg && (
+                              <span className="text-xs text-gray-400 shrink-0 ml-2">
+                                {format(new Date(lastMsg.createdAt), "h:mm a")}
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-[13px] text-gray-500 line-clamp-2 leading-tight">
+                            {lastMsg?.text ??
+                              (lastMsg?.hasMedia
+                                ? "Sent a photo"
+                                : lastMsg?.hasFile
+                                  ? "Sent a file"
+                                  : "No messages yet")}
+                          </p>
                         </div>
-                        <p className="text-[13px] text-gray-500 line-clamp-2 leading-tight">
-                          {lastMsg?.content}
-                        </p>
-                      </div>
-                    )}
-                  </>
-                )}
-              </Link>
-            );
-          })}
+                      )}
+                    </>
+                  )}
+                </Link>
+              );
+            })
+          )}
         </div>
       </SidebarContent>
     </Sidebar>

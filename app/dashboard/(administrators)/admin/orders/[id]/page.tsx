@@ -1,20 +1,31 @@
+"use client";
+
+import { useParams } from "next/navigation";
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
-import { mockOrders } from "../_components/orders-types";
-import { notFound } from "next/navigation";
+import { mapOrderRecordToOrderData } from "../_components/orders-types";
 import { OrderDetailsManager } from "./_components/order-details-manager";
+import { useGetSingleOrder } from "@/hooks/api/use-payments";
 
-export default async function OrderDetailsPage({
-  params,
-}: {
-  params: { id: string };
-}) {
-  const { id } = await params;
+export default function OrderDetailsPage() {
+  const { id } = useParams<{ id: string }>();
+  const { data, isLoading, isError } = useGetSingleOrder(id);
+  const rawOrder = data?.data;
+  const order = rawOrder ? mapOrderRecordToOrderData(rawOrder) : null;
 
-  // Find the order from the shared mock data (replace with real DB query)
-  const order = mockOrders.find((o) => o.id === id);
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center py-24 text-sm text-gray-400">
+        Loading order...
+      </div>
+    );
+  }
 
-  if (!order) {
-    notFound();
+  if (isError || !order) {
+    return (
+      <div className="flex items-center justify-center py-24 text-sm text-red-500">
+        Failed to load this order. It may not exist.
+      </div>
+    );
   }
 
   return (
