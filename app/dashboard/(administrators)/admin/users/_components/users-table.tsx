@@ -15,6 +15,7 @@ export const UsersTable = ({ data, isInstructor }: UsersTableProps) => {
     {
       key: "name",
       header: "Name",
+      sortAccessor: (user) => user.name.toLowerCase(),
       cell: (user) => (
         <div className="flex items-center gap-4">
           <Avatar className="size-11">
@@ -32,6 +33,7 @@ export const UsersTable = ({ data, isInstructor }: UsersTableProps) => {
     {
       key: "uniqueId",
       header: "ID",
+      sortAccessor: (user) => user.uniqueId,
       cell: (user) => (
         <span className="text-gray-500 text-[15px] whitespace-nowrap">
           {user.uniqueId}
@@ -50,11 +52,13 @@ export const UsersTable = ({ data, isInstructor }: UsersTableProps) => {
     {
       key: "status",
       header: "Status",
+      sortAccessor: (user) => user.status,
       cell: (user) => <StatusBadge status={user.status} userId={user.id} />,
     },
     {
       key: "enrollments",
       header: "Enrollments",
+      sortAccessor: (user) => user.enrollments,
       cell: (user) => (
         <span className="text-gray-700 text-[15px] pl-4">
           {user.enrollments}
@@ -74,6 +78,7 @@ export const UsersTable = ({ data, isInstructor }: UsersTableProps) => {
     {
       key: "name",
       header: "Instructor",
+      sortAccessor: (user) => user.name.toLowerCase(),
       cell: (user) => (
         <div className="flex items-center gap-4">
           <Avatar className="size-11">
@@ -91,6 +96,7 @@ export const UsersTable = ({ data, isInstructor }: UsersTableProps) => {
     {
       key: "uniqueId",
       header: "ID",
+      sortAccessor: (user) => user.uniqueId,
       cell: (user) => (
         <span className="text-gray-500 text-[15px] whitespace-nowrap">
           {user.uniqueId}
@@ -100,6 +106,7 @@ export const UsersTable = ({ data, isInstructor }: UsersTableProps) => {
     {
       key: "status",
       header: "Status",
+      sortAccessor: (user) => user.status,
       cell: (user) => <StatusBadge status={user.status} userId={user.id} />,
     },
     {

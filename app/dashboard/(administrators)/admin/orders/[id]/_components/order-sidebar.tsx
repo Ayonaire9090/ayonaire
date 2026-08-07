@@ -1,14 +1,40 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { OrderData } from "../../_components/orders-types";
 import { AppSelect } from "@/components/ui/app-select";
 import { Button } from "@/components/ui/button";
 import { ChevronUp } from "lucide-react";
 import { AppInput } from "@/components/ui/app-input";
 import { OrderCustomerHistory } from "./order-customer-history";
+import { useAddOrderNoteMutation } from "@/hooks/api/use-payments";
+import { toast } from "sonner";
 
 export const OrderSidebar = ({ order }: { order: OrderData }) => {
+  const [noteContent, setNoteContent] = useState("");
+  const [noteVisibility, setNoteVisibility] = useState("Private Note");
+  const addOrderNote = useAddOrderNoteMutation();
+
+  const handleAddNote = () => {
+    if (!noteContent.trim()) return;
+    addOrderNote.mutate(
+      {
+        orderId: order.id,
+        content: noteContent.trim(),
+        isPrivate: noteVisibility === "Private Note",
+      },
+      {
+        onSuccess: () => {
+          toast.success("Note added");
+          setNoteContent("");
+        },
+        onError: (err) => {
+          toast.error(err instanceof Error ? err.message : "Failed to add note");
+        },
+      }
+    );
+  };
+
   return (
     <div className="flex flex-col gap-6">
       {/* Order Actions */}
@@ -66,7 +92,10 @@ export const OrderSidebar = ({ order }: { order: OrderData }) => {
                     <span>
                       {note.createdAt} By {note.author}
                     </span>
-                    <button className="text-red-400 hover:text-red-500 font-medium transition-colors ml-1">
+                    <button
+                      onClick={() => toast.info("Deleting notes isn't available yet.")}
+                      className="text-red-400 hover:text-red-500 font-medium transition-colors ml-1"
+                    >
                       Delete Note
                     </button>
                   </div>
@@ -79,20 +108,33 @@ export const OrderSidebar = ({ order }: { order: OrderData }) => {
             </div>
           )}
 
-          <div className="flex w-full gap-3 mt-2">
-            <div className="flex-1">
-              <AppSelect
-                value="Private Note"
-                options={[
-                  { label: "Private Note", value: "Private Note" },
-                  { label: "Note to customer", value: "Note to customer" },
-                ]}
-                className="border-gray-100 h-11! bg-[#FBFBFB]"
-              />
+          <div className="flex flex-col gap-3 mt-2">
+            <AppInput
+              className="bg-white border border-gray-200 h-11!"
+              placeholder="Add a note..."
+              value={noteContent}
+              onChange={(e) => setNoteContent(e.target.value)}
+            />
+            <div className="flex w-full gap-3">
+              <div className="flex-1">
+                <AppSelect
+                  value={noteVisibility}
+                  onChange={setNoteVisibility}
+                  options={[
+                    { label: "Private Note", value: "Private Note" },
+                    { label: "Note to customer", value: "Note to customer" },
+                  ]}
+                  className="border-gray-100 h-11! bg-[#FBFBFB]"
+                />
+              </div>
+              <Button
+                onClick={handleAddNote}
+                disabled={addOrderNote.isPending || !noteContent.trim()}
+                className="h-11 px-6 bg-[#ff6b22] hover:bg-[#ff6b22]/90 text-white rounded-xl font-medium shadow-none disabled:opacity-60"
+              >
+                {addOrderNote.isPending ? "Adding..." : "Add"}
+              </Button>
             </div>
-            <Button className="h-11 px-6 bg-[#ff6b22] hover:bg-[#ff6b22]/90 text-white rounded-xl font-medium shadow-none">
-              Add
-            </Button>
           </div>
         </div>
       </div>

@@ -51,6 +51,33 @@ export interface SubmitQuizPayload {
   }[];
 }
 
+// NOT verified against backend source (unlike the rest of this file) - the
+// question-listing endpoint/response shape was never confirmed, only guessed
+// by following the existing /api/v1/quiz/quiz/:id URL convention. Confirm
+// against the real API before trusting this in production.
+export interface QuizQuestionOption {
+  _id: string;
+  text: string;
+}
+
+export interface QuizQuestion {
+  _id: string;
+  quiz: string;
+  question: string;
+  options: QuizQuestionOption[];
+  multipleCorrectAnswer?: boolean;
+  points?: number;
+}
+
+export interface SubmitQuizResponse {
+  score?: number;
+  totalPoints?: number;
+  correctCount?: number;
+  totalQuestions?: number;
+  completed?: boolean;
+  submittedAt?: string;
+}
+
 export interface CreateQuizPayload {
   title: string;
   module: string;
@@ -86,11 +113,18 @@ export const quizApi = {
     }),
 
   submitQuiz: (payload: SubmitQuizPayload) =>
-    apiClient<ApiResponse>("/api/v1/quiz/quiz/submit", {
+    apiClient<ApiResponse<SubmitQuizResponse>>("/api/v1/quiz/quiz/submit", {
       method: "POST",
       body: JSON.stringify(payload),
       requireAuth: true,
     }),
+
+  // NOT verified against backend - see QuizQuestion comment above.
+  getQuestions: (quizId: string) =>
+    apiClient<ApiResponse & { questions: QuizQuestion[] }>(
+      `/api/v1/quiz/quiz/${quizId}/questions`,
+      { method: "GET", requireAuth: true }
+    ),
 
   createQuiz: (payload: CreateQuizPayload) =>
     apiClient<ApiResponse<QuizRecord>>("/api/v1/quiz/quiz", {

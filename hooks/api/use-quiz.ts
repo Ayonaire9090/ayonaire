@@ -32,6 +32,14 @@ export const useGetQuizResults = (quizId: string) => {
   });
 };
 
+export const useGetQuizQuestions = (quizId: string) => {
+  return useQuery({
+    queryKey: [...queryKeys.quiz.all, "questions", quizId] as const,
+    queryFn: () => quizApi.getQuestions(quizId),
+    enabled: !!quizId,
+  });
+};
+
 export const useCreateQuizQuestionMutation = () => {
   const queryClient = useQueryClient();
 

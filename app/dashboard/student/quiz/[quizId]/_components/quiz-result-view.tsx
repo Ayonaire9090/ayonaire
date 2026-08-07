@@ -1,12 +1,47 @@
-import {
-  CheckCircle2,
-  Calendar,
-  Clock,
-  Trophy,
-  ChevronLeft,
-} from "lucide-react";
+import { CheckCircle2, Calendar, Clock, Trophy, ChevronLeft } from "lucide-react";
+import { QuizRecord, SubmitQuizResponse } from "@/lib/api/endpoints/quiz";
 
-export const QuizResultView = () => {
+interface QuizResultViewProps {
+  quiz: QuizRecord;
+  result: SubmitQuizResponse | null;
+  startedAt: Date | null;
+  completedAt: Date | null;
+  onBackToCourse: () => void;
+  onReviewQuestions: () => void;
+}
+
+const formatDateTime = (date: Date | null) =>
+  date
+    ? date.toLocaleString(undefined, {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+      })
+    : "—";
+
+const formatDuration = (start: Date | null, end: Date | null) => {
+  if (!start || !end) return "—";
+  const minutes = Math.max(0, Math.round((end.getTime() - start.getTime()) / 60000));
+  return `${minutes} min`;
+};
+
+export const QuizResultView = ({
+  quiz,
+  result,
+  startedAt,
+  completedAt,
+  onBackToCourse,
+  onReviewQuestions,
+}: QuizResultViewProps) => {
+  const totalPoints = result?.totalPoints ?? quiz.totalPoints ?? 0;
+  const score = result?.score;
+  const percent =
+    typeof score === "number" && totalPoints
+      ? Math.round((score / totalPoints) * 100)
+      : null;
+
   return (
     <div className="flex flex-col gap-8 w-full max-w-5xl mx-auto">
       {/* Top Banner / Final Grade */}
@@ -19,28 +54,32 @@ export const QuizResultView = () => {
         </span>
         <div className="flex items-end gap-2 text-gray-900">
           <span className="text-[48px] md:text-[56px] font-bold leading-none tracking-tight">
-            30
+            {typeof score === "number" ? score : "—"}
           </span>
           <span className="text-[32px] md:text-[40px] font-semibold text-gray-400 mb-1">
-            / 30
+            / {totalPoints || "—"}
           </span>
         </div>
-        <span className="text-[#10B981] font-bold text-[16px] md:text-[18px]">
-          100%
-        </span>
-        <div className="flex items-center gap-2 bg-[#E9F7EF] text-[#10B981] px-4 py-1.5 rounded-full font-medium text-[13px] md:text-[14px]">
-          <Trophy className="w-4 h-4" /> Mastery Achieved
-        </div>
+        {percent !== null && (
+          <span className="text-[#10B981] font-bold text-[16px] md:text-[18px]">
+            {percent}%
+          </span>
+        )}
+        {!result?.completed && (
+          <div className="flex items-center gap-2 bg-[#FEF4F0] text-[#F97316] px-4 py-1.5 rounded-full font-medium text-[13px] md:text-[14px]">
+            Pending Evaluation
+          </div>
+        )}
       </div>
 
-      {/* Attempts Details */}
+      {/* Attempt Details */}
       <div className="flex flex-col gap-4">
         <div className="flex items-center justify-between px-1">
           <h3 className="font-semibold text-gray-900 text-[18px] md:text-[20px]">
-            Attempts
+            Attempt
           </h3>
           <span className="text-gray-600 text-[14px] md:text-[15px]">
-            1 of 3 attempts used
+            {quiz.allowRetakes ? "Retakes allowed" : "Single attempt only"}
           </span>
         </div>
 
@@ -56,7 +95,7 @@ export const QuizResultView = () => {
                   Started
                 </span>
                 <span className="text-gray-900 font-medium text-[15px] md:text-[16px]">
-                  March 6, 2026, 10:15 AM
+                  {formatDateTime(startedAt)}
                 </span>
               </div>
             </div>
@@ -71,7 +110,7 @@ export const QuizResultView = () => {
                   Completed
                 </span>
                 <span className="text-gray-900 font-medium text-[15px] md:text-[16px]">
-                  March 6, 2026, 10:28 AM
+                  {formatDateTime(completedAt)}
                 </span>
               </div>
             </div>
@@ -86,7 +125,7 @@ export const QuizResultView = () => {
                   Duration
                 </span>
                 <span className="text-gray-900 font-medium text-[15px] md:text-[16px]">
-                  13 min
+                  {formatDuration(startedAt, completedAt)}
                 </span>
               </div>
             </div>
@@ -100,7 +139,7 @@ export const QuizResultView = () => {
             <div className="flex flex-col">
               <span className="text-gray-500 text-[13px]">Grade</span>
               <span className="text-gray-900 font-bold text-[20px] md:text-[22px] leading-tight">
-                30 / 30
+                {typeof score === "number" ? score : "—"} / {totalPoints || "—"}
               </span>
             </div>
           </div>
@@ -109,10 +148,16 @@ export const QuizResultView = () => {
 
       {/* Footer */}
       <div className="flex flex-col md:flex-row items-center justify-between mt-2 p-2 gap-4">
-        <button className="flex items-center gap-2 text-gray-600 hover:text-gray-900 font-medium text-[14px] md:text-[15px] self-start md:self-auto">
+        <button
+          onClick={onBackToCourse}
+          className="flex items-center gap-2 text-gray-600 hover:text-gray-900 font-medium text-[14px] md:text-[15px] self-start md:self-auto"
+        >
           <ChevronLeft className="w-4 h-4" /> Back to Course
         </button>
-        <button className="w-full md:w-auto px-8 md:px-12 py-3.5 bg-[#F97316] text-white rounded-[12px] font-medium text-[14px] md:text-[15px] hover:bg-[#EA580C] transition-colors">
+        <button
+          onClick={onReviewQuestions}
+          className="w-full md:w-auto px-8 md:px-12 py-3.5 bg-[#F97316] text-white rounded-[12px] font-medium text-[14px] md:text-[15px] hover:bg-[#EA580C] transition-colors"
+        >
           Review Questions
         </button>
       </div>

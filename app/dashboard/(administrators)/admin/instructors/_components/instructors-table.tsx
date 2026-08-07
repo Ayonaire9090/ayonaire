@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useRouter } from "next/navigation";
 import { DataTable, ColumnDef } from "@/components/ui/data-table";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -12,6 +13,7 @@ import {
 } from "./instructors-data";
 
 export const InstructorsTable = () => {
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = React.useState("");
 
   const { data, isLoading, isError } = useGetAllInstructorProfiles();
@@ -63,6 +65,19 @@ export const InstructorsTable = () => {
       key: "status",
       header: "Status",
       cell: (item) => <InstructorStatusBadge status={item.status} />,
+    },
+    {
+      key: "actions",
+      header: "",
+      cell: (item) => (
+        <button
+          onClick={() => router.push(`/dashboard/admin/instructors/${item.userId}`)}
+          disabled={!item.userId}
+          className="text-[13px] font-medium text-[#F06B30] hover:underline disabled:opacity-40 disabled:no-underline"
+        >
+          View Profile
+        </button>
+      ),
     },
   ];
 

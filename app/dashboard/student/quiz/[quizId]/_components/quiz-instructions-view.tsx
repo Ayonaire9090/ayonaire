@@ -1,13 +1,15 @@
 import { Sparkles } from "lucide-react";
+import { QuizRecord } from "@/lib/api/endpoints/quiz";
 
 interface QuizInstructionsViewProps {
+  quiz: QuizRecord;
   onStartQuiz: () => void;
   onCancel: () => void;
 }
 
 export const QuizInstructionsView = ({
+  quiz,
   onStartQuiz,
-  onCancel,
 }: QuizInstructionsViewProps) => {
   return (
     <div className="bg-white p-0 md:p-8 rounded-none md:rounded-[20px] w-full flex flex-col gap-6 md:gap-10 shadow-none border border-transparent md:border-gray-100">
@@ -25,9 +27,7 @@ export const QuizInstructionsView = ({
                 Assessment Name
               </span>
               <span className="text-[18px] md:text-[22px] font-semibold text-gray-900 leading-tight">
-                AI Engineering
-                <br />
-                Quiz 1
+                {quiz.title}
               </span>
             </div>
             {/* Card 2 */}
@@ -36,9 +36,7 @@ export const QuizInstructionsView = ({
                 Course
               </span>
               <span className="text-[18px] md:text-[22px] font-semibold text-[#0084FF] leading-tight">
-                AI Engineering
-                <br />
-                1.0
+                {quiz.course?.title ?? "—"}
               </span>
             </div>
             {/* Card 3 */}
@@ -48,7 +46,7 @@ export const QuizInstructionsView = ({
               </span>
               <div className="flex-1 flex items-center justify-center mt-3">
                 <span className="text-[22px] md:text-[28px] font-bold text-[#10B981]">
-                  20
+                  {quiz.questionsCount ?? "—"}
                 </span>
               </div>
             </div>
@@ -59,7 +57,7 @@ export const QuizInstructionsView = ({
               </span>
               <div className="flex-1 flex items-center justify-center mt-3">
                 <span className="text-[22px] md:text-[28px] font-bold text-[#10B981]">
-                  20
+                  {quiz.totalPoints ?? "—"}
                 </span>
               </div>
             </div>
@@ -68,13 +66,11 @@ export const QuizInstructionsView = ({
           <div className="flex justify-center md:justify-start w-full mt-2 md:mt-0">
             <div className="flex flex-col bg-[#F6F6F6] p-4 md:p-6 rounded-none md:rounded-2xl shadow-none w-[180px] md:w-[calc(50%-0.5rem)]">
               <span className="text-[14px] md:text-[15px] text-gray-500 md:text-left text-center">
-                Time Limit
+                Retakes
               </span>
               <div className="flex-1 flex items-center justify-center mt-3">
                 <span className="text-[20px] md:text-[24px] font-bold text-[#10B981] leading-tight text-center">
-                  30
-                  <br />
-                  Minutes
+                  {quiz.allowRetakes ? "Allowed" : "Not Allowed"}
                 </span>
               </div>
             </div>
@@ -94,9 +90,11 @@ export const QuizInstructionsView = ({
           <div className="bg-[#FEF4F0] p-6 md:p-8 flex-1 h-full">
             <ul className="list-disc pl-5 space-y-4 text-gray-600 text-[15px] md:text-[16px] marker:text-gray-400">
               <li>Do not refresh the page during the assessment</li>
-              <li>Timer starts once exam begins and cannot be paused</li>
               <li>All questions must be answered to complete the quiz</li>
               <li>Ensure a stable internet connection before starting</li>
+              {!quiz.allowRetakes && (
+                <li>This quiz can only be attempted once</li>
+              )}
             </ul>
           </div>
         </div>

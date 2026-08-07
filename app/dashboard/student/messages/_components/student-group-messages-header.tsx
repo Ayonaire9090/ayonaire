@@ -10,6 +10,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { StudentGroupSidebar } from "./student-group-sidebar";
+import type { RoomRecord } from "@/lib/api/endpoints/rooms";
 
 interface StudentGroupMessagesHeaderProps {
   messageImage?: string;
@@ -18,6 +19,7 @@ interface StudentGroupMessagesHeaderProps {
   type?: "group" | "individual";
   online?: boolean;
   lastSeen?: string;
+  room?: RoomRecord;
 }
 
 export const StudentGroupMessagesHeader = ({
@@ -27,6 +29,7 @@ export const StudentGroupMessagesHeader = ({
   type = "group",
   online = false,
   lastSeen,
+  room,
 }: StudentGroupMessagesHeaderProps) => {
   const [open, setOpen] = useState(false);
 
@@ -109,7 +112,7 @@ export const StudentGroupMessagesHeader = ({
             className="w-[320px] sm:max-w-[360px] p-0 overflow-y-auto"
           >
             <SheetTitle className="sr-only">Group Details Sidebar</SheetTitle>
-            <StudentGroupSidebar />
+            {room && <StudentGroupSidebar room={room} />}
           </SheetContent>
         </Sheet>
       </div>

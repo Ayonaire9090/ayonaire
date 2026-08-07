@@ -1,10 +1,13 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
+import { toast } from "sonner";
 import { AppInput } from "@/components/ui/app-input";
 import { AppSelect } from "@/components/ui/app-select";
-import { FileText } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { FileText, Plus, X } from "lucide-react";
 import { CourseCategory } from "@/lib/api/endpoints/courses";
+import { useCreateCategoryMutation } from "@/hooks/api/use-courses";
 
 export interface ClassInfoValue {
   title: string;
@@ -41,6 +44,28 @@ export function ClassInformationStep({
     value: cat._id,
   }));
 
+  const [isAddingCategory, setIsAddingCategory] = useState(false);
+  const [newCategoryTitle, setNewCategoryTitle] = useState("");
+  const createCategory = useCreateCategoryMutation();
+
+  const handleCreateCategory = () => {
+    if (!newCategoryTitle.trim()) return;
+    createCategory.mutate(
+      { title: newCategoryTitle.trim() },
+      {
+        onSuccess: (res) => {
+          toast.success("Category created");
+          setNewCategoryTitle("");
+          setIsAddingCategory(false);
+          if (res.data?._id) onChange({ category: res.data._id });
+        },
+        onError: (err) => {
+          toast.error(err instanceof Error ? err.message : "Failed to create category");
+        },
+      },
+    );
+  };
+
   const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] ?? null;
     onChange({
@@ -72,17 +97,56 @@ export function ClassInformationStep({
       />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-        <AppSelect
-          label={
-            <span className="font-semibold">
-              Category <span className="text-red-500">*</span>
-            </span>
-          }
-          placeholder="Select category"
-          options={categoryOptions}
-          value={value.category}
-          onChange={(val) => onChange({ category: val })}
-        />
+        <div className="flex flex-col gap-1.5">
+          <AppSelect
+            label={
+              <span className="font-semibold">
+                Category <span className="text-red-500">*</span>
+              </span>
+            }
+            placeholder="Select category"
+            options={categoryOptions}
+            value={value.category}
+            onChange={(val) => onChange({ category: val })}
+          />
+          {isAddingCategory ? (
+            <div className="flex items-center gap-2 mt-1">
+              <AppInput
+                placeholder="New category name"
+                value={newCategoryTitle}
+                onChange={(e) => setNewCategoryTitle(e.target.value)}
+                className="h-10!"
+              />
+              <Button
+                type="button"
+                size="sm"
+                onClick={handleCreateCategory}
+                disabled={createCategory.isPending || !newCategoryTitle.trim()}
+                className="h-10 shrink-0"
+              >
+                {createCategory.isPending ? "Adding..." : "Add"}
+              </Button>
+              <button
+                type="button"
+                onClick={() => {
+                  setIsAddingCategory(false);
+                  setNewCategoryTitle("");
+                }}
+                className="text-gray-400 hover:text-gray-600 shrink-0"
+              >
+                <X className="size-4" />
+              </button>
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={() => setIsAddingCategory(true)}
+              className="flex items-center gap-1 text-[13px] font-medium text-primary hover:underline w-fit mt-1"
+            >
+              <Plus className="size-3.5" /> Add new category
+            </button>
+          )}
+        </div>
         <AppSelect
           label={<span className="font-semibold">Course Level</span>}
           options={levelOptions}

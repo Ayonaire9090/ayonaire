@@ -6,6 +6,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { MoreVertical } from "lucide-react";
 import React from "react";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { format } from "date-fns";
 import { UserProfile } from "@/lib/api/types";
@@ -126,6 +127,7 @@ export function StatusBadge({ status, userId }: { status: UserStatus; userId: st
 }
 
 export function UserActions({ userId }: { userId: string }) {
+  const router = useRouter();
   const deleteUser = useDeleteUserMutation();
 
   const handleDelete = () => {
@@ -150,11 +152,17 @@ export function UserActions({ userId }: { userId: string }) {
         </Button>
       }
     >
-      <AppDropdownItem variant="menu" onClick={() => toast.info("User profile detail page isn't available yet.")}>
+      <AppDropdownItem
+        variant="menu"
+        onClick={() => router.push(`/dashboard/admin/users/${userId}`)}
+      >
         View User Profile
       </AppDropdownItem>
       <AppDropdownSeparator />
-      <AppDropdownItem variant="menu" onClick={() => toast.info("Editing user details isn't available yet.")}>
+      <AppDropdownItem
+        variant="menu"
+        onClick={() => router.push(`/dashboard/admin/users/${userId}`)}
+      >
         Edit
       </AppDropdownItem>
       <AppDropdownSeparator />

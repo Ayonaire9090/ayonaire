@@ -1,12 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis, Cell } from "recharts";
-import { Badge } from "@/components/ui/badge";
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
+  ChartTooltipContent,
 } from "@/components/ui/chart";
 import {
   CalendarClock,
@@ -15,19 +14,10 @@ import {
   TrendingUp,
   Upload,
   UserSquare,
-  ChevronDown,
 } from "lucide-react";
+import { useGetAttendanceSessions } from "@/hooks/api/use-attendance";
 
 // --- Data ---
-
-const attendanceData = [
-  { day: "Mon", attendance: 75 },
-  { day: "Tue", attendance: 90 },
-  { day: "Wed", attendance: 80 },
-  { day: "Thu", attendance: 100 }, // Thursday is the active solid block
-  { day: "Fri", attendance: 85 },
-  { day: "Sat", attendance: 70 },
-];
 
 const quickActionsData = [
   {
@@ -65,54 +55,14 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-const PATTERN_ID = "attendance-hatch-pattern";
-const BAR_RADIUS = 8;
-const SOLID_COLOR = "#F86432";
-const HATCH_FILL = `url(#${PATTERN_ID})`;
-
-function RoundedBar(props: unknown) {
-  const { x, y, width, height, fill } = props as {
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-    fill: string;
-  };
-
-  if (!height || height <= 0) return null;
-
-  const r = Math.min(BAR_RADIUS, width / 2, height);
-
+function AttendanceTooltipFormatter(value: unknown) {
   return (
-    <path
-      d={`
-        M ${x},${y + height}
-        L ${x},${y + r}
-        Q ${x},${y} ${x + r},${y}
-        L ${x + width - r},${y}
-        Q ${x + width},${y} ${x + width},${y + r}
-        L ${x + width},${y + height}
-        Z
-      `}
-      fill={fill}
-      stroke="none"
-    />
-  );
-}
-
-function AttendanceTooltipContent({
-  active,
-  payload,
-}: {
-  active?: boolean;
-  payload?: Array<{ value?: number; payload?: { day?: string } }>;
-}) {
-  if (!active || !payload?.length) return null;
-  const value = payload[0].value;
-
-  return (
-    <div className="rounded-lg bg-gray-900 px-3 py-1.5 text-sm font-medium text-white shadow-lg">
-      {value}%
+    <div className="flex w-full items-center justify-between gap-3">
+      <span className="flex items-center gap-1.5 text-muted-foreground">
+        <span className="h-2 w-2 rounded-full bg-[#F86432]" />
+        Attendance
+      </span>
+      <span className="font-mono font-medium tabular-nums text-foreground">{Number(value)}%</span>
     </div>
   );
 }
@@ -120,111 +70,92 @@ function AttendanceTooltipContent({
 // --- Components ---
 
 const AttendanceTrendChart = () => {
-  const [activeIndex, setActiveIndex] = useState<number | null>(3); // Set 'Thu' (index 3) as active by default based on mockup
+  const { data, isLoading } = useGetAttendanceSessions({ limit: 6 });
+
+  const attendanceData = [...(data?.sessions ?? [])]
+    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+    .map((session) => ({
+      day: new Date(session.date).toLocaleDateString(undefined, {
+        month: "short",
+        day: "numeric",
+      }),
+      attendance: Math.round(session.attendanceRate),
+    }));
+
+  const lastIndex = attendanceData.length - 1;
+
+  if (isLoading) {
+    return (
+      <div className="rounded-xl p-5 bg-white border border-gray-200 h-full flex items-center justify-center min-h-[280px]">
+        <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  if (attendanceData.length === 0) {
+    return (
+      <div className="rounded-xl p-5 bg-white border border-gray-200 h-full flex items-center justify-center min-h-[280px] text-gray-400 text-[15px]">
+        No attendance sessions recorded yet.
+      </div>
+    );
+  }
+
+  const latestAttendance = attendanceData[lastIndex].attendance;
 
   return (
-    <div className="rounded-[16px] p-4 space-y-4 bg-white border border-gray-100 shadow-xs h-full flex flex-col">
+    <div className="rounded-xl p-5 space-y-1 bg-white border border-gray-200 h-full flex flex-col">
       {/* Header */}
-      <div className="flex flex-col gap-3">
-        <div className="flex justify-between items-center w-full">
-          <h2 className="text-[20px] lg:text-[22px] font-bold text-gray-900 tracking-tight">
-            Weekly Attendance Trend
-          </h2>
-          <ChevronDown className="size-4 text-gray-400 cursor-pointer" />
-        </div>
-        <div className="flex items-center gap-2 text-[14px]">
-          <Badge
-            variant="outline"
-            className="text-[#F86432] border-none bg-[#FFF5F0] rounded-full px-2 py-0.5 font-medium"
-          >
-            +12%
-          </Badge>
-          <span className="text-gray-500 font-medium">
-            Daily attendance percentage for the last 6 days
-          </span>
-        </div>
+      <div className="flex items-start justify-between gap-3">
+        <p className="text-[13px] font-medium text-gray-600">Weekly Attendance Trend</p>
+        <span className="text-[13px] font-semibold text-[#F86432] whitespace-nowrap">
+          {latestAttendance}% Latest
+        </span>
       </div>
+      <p className="text-[11px] text-gray-400 mb-3">
+        Attendance rate across the last {attendanceData.length} session
+        {attendanceData.length === 1 ? "" : "s"}
+      </p>
 
       {/* Chart */}
-      <div className="flex-1 min-h-[300px]">
+      <div className="flex-1 min-h-[200px]">
         <ChartContainer
           config={chartConfig}
           className="aspect-auto h-full w-full"
         >
           <BarChart
             data={attendanceData}
-            margin={{ top: 10, right: 0, left: -20, bottom: 0 }}
-            onMouseLeave={() => setActiveIndex(3)} // Return to Thursday by default
+            margin={{ top: 5, right: 0, left: -20, bottom: 0 }}
           >
-            <defs>
-              <pattern
-                id={PATTERN_ID}
-                patternUnits="userSpaceOnUse"
-                width="6"
-                height="6"
-                patternTransform="rotate(45)"
-              >
-                <line
-                  x1="0"
-                  y1="0"
-                  x2="0"
-                  y2="6"
-                  stroke={SOLID_COLOR}
-                  strokeWidth="2.5"
-                  strokeOpacity="0.4"
-                />
-              </pattern>
-            </defs>
-
-            <CartesianGrid
-              vertical={false}
-              strokeDasharray=""
-              stroke="#f3f4f6"
-            />
+            <CartesianGrid vertical horizontal={false} strokeDasharray="3 3" stroke="#e5e7eb" />
 
             <XAxis
               dataKey="day"
               tickLine={false}
               axisLine={false}
-              tick={{ fill: "#6b7280", fontSize: 13, fontWeight: 500 }}
-              dy={12}
+              tick={{ fill: "#9ca3af", fontSize: 11 }}
+              dy={8}
             />
 
             <YAxis
               tickLine={false}
               axisLine={false}
-              tick={{ fill: "#6b7280", fontSize: 13, fontWeight: 500 }}
+              tick={{ fill: "#9ca3af", fontSize: 11 }}
               ticks={[0, 25, 50, 75, 100]}
               domain={[0, 100]}
             />
 
             <ChartTooltip
-              cursor={false}
-              content={<AttendanceTooltipContent />}
+              cursor={{ fill: "#FAFAFA" }}
+              content={<ChartTooltipContent formatter={AttendanceTooltipFormatter} />}
             />
 
-            <Bar
-              dataKey="attendance"
-              shape={(props: unknown) => (
-                <RoundedBar {...(props as Record<string, unknown>)} />
-              )}
-              onMouseEnter={(_, index) => setActiveIndex(index)}
-              barSize={50}
-            >
-              {attendanceData.map((_, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={activeIndex === index ? SOLID_COLOR : HATCH_FILL}
-                  className="transition-all duration-300 cursor-pointer"
-                />
-              ))}
-            </Bar>
+            <Bar dataKey="attendance" name="Attendance" fill="#F86432" radius={[3, 3, 0, 0]} maxBarSize={28} />
           </BarChart>
         </ChartContainer>
       </div>
 
       <div className="pt-2">
-        <button className="text-[#F86432] text-[14px] font-medium flex items-center gap-1 hover:opacity-80 transition-opacity">
+        <button className="text-[#F86432] text-[13px] font-medium flex items-center gap-1 hover:opacity-80 transition-opacity">
           View Detailed Report <ChevronRight className="size-3.5" />
         </button>
       </div>
@@ -234,7 +165,7 @@ const AttendanceTrendChart = () => {
 
 const QuickActionsList = () => {
   return (
-    <div className="rounded-[16px] bg-white border border-gray-100 shadow-xs h-full flex flex-col">
+    <div className="rounded-xl bg-white border border-gray-200 h-full flex flex-col">
       {/* Header */}
       <div className="flex items-center gap-2 px-6 pt-7 pb-4">
         <CalendarClock className="size-[22px] text-[#F86432]" />
@@ -277,7 +208,7 @@ export const AttendanceTrendAndActions = () => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-4 w-full -mt-2">
       {/* Attendance Trend */}
-      <div className="w-full h-full min-h-[450px]">
+      <div className="w-full h-full min-h-[400px]">
         <AttendanceTrendChart />
       </div>
 

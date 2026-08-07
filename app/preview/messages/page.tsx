@@ -14,6 +14,7 @@ import {
 } from "@/app/dashboard/student/messages/_components/student-message-composer";
 import { StudentGroupSidebar } from "@/app/dashboard/student/messages/_components/student-group-sidebar";
 import type { Conversation, Message } from "@/app/dashboard/student/messages/_data/mock-messages";
+import type { RoomRecord } from "@/lib/api/endpoints/rooms";
 
 const SAMPLE_CONVERSATIONS: (Conversation & { preview: string; timestamp: string })[] = [
   {
@@ -149,6 +150,24 @@ export default function MessagesScreenPreviewPage() {
   const isGroup = activeConversation.type === "group";
   const messages = messagesByConv[activeId] ?? [];
 
+  // Sample RoomRecord so the real StudentGroupSidebar/header can be
+  // previewed without a backend - not real data.
+  const previewRoom: RoomRecord = {
+    id: activeConversation.id,
+    name: activeConversation.title,
+    isGroup: true,
+    profile: activeConversation.avatar ? { url: activeConversation.avatar, publicId: "" } : undefined,
+    roomCreator: "preview-user",
+    participants: [
+      { id: "p1", name: "Ayo Smith", profile: null },
+      { id: "p2", name: "Sarah Jenkins", profile: null },
+      { id: "p3", name: "Chinedu Okoye", profile: null },
+    ],
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    lastMessage: null,
+  };
+
   const handleSend = (text: string, attachment?: ComposerAttachment) => {
     if (!text.trim() && !attachment) return;
     // Note: blob: URLs from the local file can't be rendered through the
@@ -263,6 +282,7 @@ export default function MessagesScreenPreviewPage() {
               type={activeConversation.type}
               online={activeConversation.online}
               lastSeen={activeConversation.lastSeen}
+              room={previewRoom}
             />
             <StudentMessageList messages={messages} isGroup={isGroup} />
             <StudentMessageComposer isGroup={isGroup} onSend={handleSend} />
@@ -270,7 +290,7 @@ export default function MessagesScreenPreviewPage() {
 
           {isGroup && (
             <div className="hidden lg:block w-[320px] xl:w-[350px] shrink-0 border-l border-gray-100 overflow-y-auto bg-white">
-              <StudentGroupSidebar />
+              <StudentGroupSidebar room={previewRoom} />
             </div>
           )}
         </div>

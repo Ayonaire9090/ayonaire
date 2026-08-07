@@ -4,33 +4,32 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { ProfileCourseCard } from "./profile-course-card";
 import { ProfileCerificateContent } from "./profile-certificate-content";
-import { courses } from "@/constants";
+import { useGetEnrolledCourses } from "@/hooks/api/use-enrollment";
 
 type CourseSubTab = "My Courses" | "My Certificates";
-
-// Flatten all courses from the categories and assign mock statuses for demo
-const allCourses = courses.flatMap((category) =>
-  category.courses.map((course) => ({
-    title: course.title,
-    description: course.description,
-    imageSrc: course.imageSrc,
-    slug: course.slug,
-  })),
-);
-
-// Mock enrolled courses for demo (simulate user's enrolled courses with statuses)
-const enrolledCourses = [
-  { ...allCourses[0], status: "Completed" as const },
-  { ...allCourses[1], status: "Completed" as const },
-  { ...allCourses[2], status: "In Progress" as const },
-  { ...allCourses[3], status: "Completed" as const },
-  { ...allCourses[4], status: "In Progress" as const },
-];
 
 const subTabs: CourseSubTab[] = ["My Courses", "My Certificates"];
 
 export function ProfileCoursesContent() {
   const [activeSubTab, setActiveSubTab] = useState<CourseSubTab>("My Courses");
+  const { data, isLoading, isError } = useGetEnrolledCourses();
+
+  const enrolledCourses = (data?.data ?? [])
+    .filter((enrollment) => typeof enrollment.course === "object" && enrollment.course)
+    .map((enrollment) => {
+      const course = enrollment.course as Exclude<typeof enrollment.course, string>;
+      return {
+        id: course._id,
+        title: course.title,
+        description: "",
+        imageSrc: course.thumbnail?.url || "/assets/icons/branded-learning.svg",
+        status: enrollment.completed
+          ? ("Completed" as const)
+          : enrollment.progress > 0
+          ? ("In Progress" as const)
+          : ("Not Started" as const),
+      };
+    });
 
   return (
     <div className="py-6 md:py-8 w-full max-w-[96%] md:max-w-full mx-auto">
@@ -58,15 +57,26 @@ export function ProfileCoursesContent() {
       {/* My Courses Tab Content */}
       {activeSubTab === "My Courses" && (
         <div>
-          {enrolledCourses.length > 0 ? (
+          {isLoading ? (
+            <div className="flex items-center justify-center py-16">
+              <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+            </div>
+          ) : isError ? (
+            <div className="py-16 text-center">
+              <p className="text-red-500 text-[15px]">
+                Failed to load your courses. Please try again.
+              </p>
+            </div>
+          ) : enrolledCourses.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {enrolledCourses.map((course) => (
                 <ProfileCourseCard
-                  key={course.slug}
+                  key={course.id}
                   imageSrc={course.imageSrc}
                   title={course.title}
                   description={course.description}
-                  slug={course.slug}
+                  slug={course.id}
+                  href={`/dashboard/student/courses/${course.id}`}
                   status={course.status}
                 />
               ))}

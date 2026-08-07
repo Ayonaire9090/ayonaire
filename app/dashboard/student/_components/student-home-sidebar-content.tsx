@@ -24,6 +24,8 @@ import {
   MessageCircleMore,
   Folder,
   Trophy,
+  ClipboardList,
+  LifeBuoy,
 } from "lucide-react";
 
 const studentHomeSidebarNav = [
@@ -46,6 +48,11 @@ const studentHomeSidebarNav = [
   { title: "Workshop", url: "/dashboard/student/workshop", icon: Video },
   { title: "Courses", url: "/dashboard/student/courses", icon: BookOpen },
   {
+    title: "Assessments",
+    url: "/dashboard/student/quiz",
+    icon: ClipboardList,
+  },
+  {
     title: "Chatrooms",
     url: "/dashboard/student/chatrooms",
     icon: MessageCircleMore,
@@ -55,6 +62,11 @@ const studentHomeSidebarNav = [
     title: "Leader board",
     url: "/dashboard/student/leaderboard",
     icon: Trophy,
+  },
+  {
+    title: "Support",
+    url: "/dashboard/student/support",
+    icon: LifeBuoy,
   },
 ];
 

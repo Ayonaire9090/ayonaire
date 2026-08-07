@@ -1,11 +1,27 @@
 import { CheckCircle2, HelpCircle, XCircle, Check, ChevronLeft } from "lucide-react";
+import { QuizQuestion } from "@/lib/api/endpoints/quiz";
 
 interface ReviewQuizViewProps {
+  questions: QuizQuestion[];
+  answers: Record<string, string[]>;
+  isSubmitting: boolean;
+  onGoTo: (index: number) => void;
   onBack: () => void;
   onSubmit: () => void;
 }
 
-export const ReviewQuizView = ({ onBack, onSubmit }: ReviewQuizViewProps) => {
+export const ReviewQuizView = ({
+  questions,
+  answers,
+  isSubmitting,
+  onGoTo,
+  onBack,
+  onSubmit,
+}: ReviewQuizViewProps) => {
+  const total = questions.length;
+  const answeredCount = questions.filter((q) => (answers[q._id]?.length ?? 0) > 0).length;
+  const unansweredCount = total - answeredCount;
+
   return (
     <div className="flex flex-col gap-6 md:gap-8 w-full max-w-5xl mx-auto">
       {/* Cards */}
@@ -17,7 +33,7 @@ export const ReviewQuizView = ({ onBack, onSubmit }: ReviewQuizViewProps) => {
             </div>
             <span className="text-gray-500 text-[14px] md:text-[15px]">Total Questions</span>
           </div>
-          <span className="text-[24px] md:text-[28px] font-bold text-[#0084FF]">20</span>
+          <span className="text-[24px] md:text-[28px] font-bold text-[#0084FF]">{total}</span>
         </div>
 
         <div className="bg-white p-5 md:p-6 rounded-[16px] md:rounded-[20px] shadow-none flex flex-col items-center justify-center gap-2 border border-gray-100">
@@ -27,7 +43,7 @@ export const ReviewQuizView = ({ onBack, onSubmit }: ReviewQuizViewProps) => {
             </div>
             <span className="text-gray-500 text-[14px] md:text-[15px]">Answered</span>
           </div>
-          <span className="text-[24px] md:text-[28px] font-bold text-[#10B981]">18</span>
+          <span className="text-[24px] md:text-[28px] font-bold text-[#10B981]">{answeredCount}</span>
         </div>
 
         <div className="col-span-2 md:col-span-1 bg-white p-5 md:p-6 rounded-[16px] md:rounded-[20px] shadow-none flex flex-col items-center justify-center gap-2 border border-gray-100">
@@ -37,7 +53,7 @@ export const ReviewQuizView = ({ onBack, onSubmit }: ReviewQuizViewProps) => {
             </div>
             <span className="text-gray-500 text-[14px] md:text-[15px]">Unanswered</span>
           </div>
-          <span className="text-[24px] md:text-[28px] font-bold text-[#EF4444]">2</span>
+          <span className="text-[24px] md:text-[28px] font-bold text-[#EF4444]">{unansweredCount}</span>
         </div>
       </div>
 
@@ -47,13 +63,13 @@ export const ReviewQuizView = ({ onBack, onSubmit }: ReviewQuizViewProps) => {
           Question Navigator
         </h3>
         <div className="flex flex-wrap gap-3 md:gap-4 justify-center md:justify-start">
-          {Array.from({ length: 20 }).map((_, i) => {
-            const num = i + 1;
-            const answered = num !== 5 && num !== 10; // Mock data for 2 unanswered
+          {questions.map((q, i) => {
+            const answered = (answers[q._id]?.length ?? 0) > 0;
             return (
               <div
-                key={num}
-                className={`relative flex items-center justify-center w-14 h-14 md:w-16 md:h-16 rounded-[12px] md:rounded-[16px] border ${
+                key={q._id}
+                onClick={() => onGoTo(i)}
+                className={`relative flex items-center justify-center w-14 h-14 md:w-16 md:h-16 rounded-[12px] md:rounded-[16px] border cursor-pointer ${
                   answered ? "bg-[#E9F7EF] border-[#A7F3D0]" : "bg-[#F6F6F6] border-gray-200"
                 }`}
               >
@@ -62,7 +78,7 @@ export const ReviewQuizView = ({ onBack, onSubmit }: ReviewQuizViewProps) => {
                     answered ? "text-gray-700" : "text-gray-400"
                   }`}
                 >
-                  {num}
+                  {i + 1}
                 </span>
                 {answered && (
                   <div className="absolute -top-1.5 -right-1.5 w-4 h-4 md:w-5 md:h-5 bg-[#10B981] rounded-full flex items-center justify-center border-[1.5px] border-white">
@@ -84,14 +100,17 @@ export const ReviewQuizView = ({ onBack, onSubmit }: ReviewQuizViewProps) => {
           </button>
 
           <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6 w-full md:w-auto justify-end">
-            <div className="flex items-center gap-2 text-[#F97316] text-[13px] md:text-[14px] font-medium bg-[#FFF5F0] px-3.5 py-1.5 rounded-full">
-              <CheckCircle2 className="w-4 h-4" /> 2 questions remaining
-            </div>
+            {unansweredCount > 0 && (
+              <div className="flex items-center gap-2 text-[#F97316] text-[13px] md:text-[14px] font-medium bg-[#FFF5F0] px-3.5 py-1.5 rounded-full">
+                <CheckCircle2 className="w-4 h-4" /> {unansweredCount} question{unansweredCount === 1 ? "" : "s"} remaining
+              </div>
+            )}
             <button
               onClick={onSubmit}
-              className="w-full md:w-auto px-10 py-3.5 bg-[#F97316] text-white rounded-[10px] md:rounded-[12px] font-medium text-[14px] md:text-[15px] hover:bg-[#EA580C] transition-colors"
+              disabled={isSubmitting}
+              className="w-full md:w-auto px-10 py-3.5 bg-[#F97316] text-white rounded-[10px] md:rounded-[12px] font-medium text-[14px] md:text-[15px] hover:bg-[#EA580C] transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              Submit Quiz
+              {isSubmitting ? "Submitting..." : "Submit Quiz"}
             </button>
           </div>
         </div>

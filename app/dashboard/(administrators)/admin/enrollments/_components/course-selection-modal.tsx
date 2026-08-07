@@ -1,17 +1,18 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { Search, ChevronLeft, ChevronRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { AppSimpleModal } from "@/components/modals/app-simple-modal";
-import { courses as allCourseCategories } from "@/constants";
+import { useGetCourses } from "@/hooks/api/use-courses";
+import { EnrollmentCourseData } from "./enrollment-course-card";
 
 interface CourseSelectionModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSelect: (course: any) => void;
+  onSelect: (course: EnrollmentCourseData) => void;
 }
 
 export const CourseSelectionModal = ({
@@ -21,41 +22,16 @@ export const CourseSelectionModal = ({
 }: CourseSelectionModalProps) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4;
+  const limit = 4;
 
-  // Flatten all courses from all categories
-  const allCourses = useMemo(() => {
-    return allCourseCategories
-      .flatMap((category) => category.courses)
-      .map((course) => ({
-        id: course.slug || course.title,
-        title: course.title,
-        duration: course.duration || "N/A",
-        // Add a fallback price since it might not be in the constant data
-        price: "$120",
-        description:
-          course.description ||
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit.....",
-        imageSrc:
-          course.thumbnail ||
-          course.imageSrc ||
-          "/assets/icons/branded-learning.svg",
-      }));
-  }, []);
+  const { data, isLoading } = useGetCourses({
+    page: currentPage,
+    limit,
+    search: searchQuery || undefined,
+  });
 
-  // Filter courses by search query
-  const filteredCourses = useMemo(() => {
-    return allCourses.filter((course) =>
-      course.title.toLowerCase().includes(searchQuery.toLowerCase()),
-    );
-  }, [allCourses, searchQuery]);
-
-  // Pagination logic
-  const totalPages = Math.ceil(filteredCourses.length / itemsPerPage) || 1;
-  const paginatedCourses = filteredCourses.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage,
-  );
+  const courses = data?.courses ?? [];
+  const pagination = data?.pagination;
 
   return (
     <AppSimpleModal
@@ -73,23 +49,22 @@ export const CourseSelectionModal = ({
             value={searchQuery}
             onChange={(e) => {
               setSearchQuery(e.target.value);
-              setCurrentPage(1); // Reset to first page on search
+              setCurrentPage(1);
             }}
             className="pl-11 rounded-full border-none bg-[#F6F6F6] h-11 text-[15px] placeholder:text-gray-400 focus-visible:ring-0 focus-visible:bg-gray-100 shadow-none w-full"
           />
         </div>
 
         <div className="flex flex-col flex-1 divide-y divide-gray-100">
-          {paginatedCourses.length > 0 ? (
-            paginatedCourses.map((course, index) => (
-              <div
-                key={`${course.id}-${index}`}
-                className="flex gap-4 py-5"
-              >
+          {isLoading ? (
+            <div className="py-8 text-center text-gray-500">Loading courses...</div>
+          ) : courses.length > 0 ? (
+            courses.map((course) => (
+              <div key={course._id} className="flex gap-4 py-5">
                 {/* Image */}
                 <div className="relative w-[120px] h-[85px] lg:w-[110px] lg:h-[75px] shrink-0 rounded-md overflow-hidden bg-gray-100">
                   <Image
-                    src={course.imageSrc}
+                    src={course.thumbnail?.url || "/assets/icons/branded-learning.svg"}
                     alt={course.title}
                     fill
                     className="object-cover"
@@ -104,12 +79,12 @@ export const CourseSelectionModal = ({
                       {course.title}
                     </h4>
                     <p className="text-[13px] text-gray-500 leading-snug mb-auto line-clamp-2 pr-2">
-                      {course.description}
+                      {course.description || "No description available."}
                     </p>
                     <div className="text-[13.5px] mt-2">
                       <span className="text-gray-500">Price: </span>
                       <span className="text-[#F06B30] font-semibold">
-                        {course.price}
+                        {typeof course.price === "number" ? `$${course.price}` : "Free"}
                       </span>
                     </div>
                   </div>
@@ -117,10 +92,29 @@ export const CourseSelectionModal = ({
                   {/* Actions / Meta */}
                   <div className="flex flex-col justify-between items-end shrink-0 pl-2">
                     <span className="text-[12.5px] text-gray-400 whitespace-nowrap">
-                      Duration: {course.duration}
+                      {course.enrollmentCount ?? 0} enrolled
                     </span>
                     <Button
-                      onClick={() => onSelect(course)}
+                      onClick={() =>
+                        onSelect({
+                          id: course._id,
+                          title: course.title,
+                          duration: course.courseLevel ?? "N/A",
+                          price:
+                            typeof course.price === "number" ? `$${course.price}` : "Free",
+                          imageSrc:
+                            course.thumbnail?.url || "/assets/icons/branded-learning.svg",
+                          dateStr: course.createdAt
+                            ? new Date(course.createdAt).toLocaleString(undefined, {
+                                month: "short",
+                                day: "numeric",
+                                year: "numeric",
+                                hour: "numeric",
+                                minute: "2-digit",
+                              })
+                            : undefined,
+                        })
+                      }
                       className="h-8 px-6 rounded bg-[#F06B30] hover:bg-[#F06B30]/90 text-white text-[13.5px] font-medium shadow-none mt-auto"
                     >
                       Select
@@ -131,7 +125,7 @@ export const CourseSelectionModal = ({
             ))
           ) : (
             <div className="py-8 text-center text-gray-500">
-              No courses found matching "{searchQuery}"
+              No courses found{searchQuery ? ` matching "${searchQuery}"` : ""}
             </div>
           )}
         </div>
@@ -139,7 +133,7 @@ export const CourseSelectionModal = ({
         {/* Pagination Bottom */}
         <div className="flex items-center justify-between pt-4 mt-2 border-t border-transparent shrink-0">
           <span className="text-[14px] font-medium text-gray-800">
-            Page {currentPage} of {totalPages}
+            Page {pagination?.page ?? currentPage} of {pagination?.totalPages ?? 1}
           </span>
           <div className="flex items-center gap-6">
             <button
@@ -150,8 +144,10 @@ export const CourseSelectionModal = ({
               <ChevronLeft className="size-4" strokeWidth={2.5} /> Prev.
             </button>
             <button
-              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-              disabled={currentPage === totalPages}
+              onClick={() =>
+                setCurrentPage((p) => Math.min(pagination?.totalPages ?? p, p + 1))
+              }
+              disabled={!pagination || currentPage >= pagination.totalPages}
               className="flex items-center gap-1.5 text-[14px] font-medium text-gray-800 hover:text-black transition-colors disabled:opacity-50 disabled:hover:text-gray-800"
             >
               Next <ChevronRight className="size-4" strokeWidth={2.5} />

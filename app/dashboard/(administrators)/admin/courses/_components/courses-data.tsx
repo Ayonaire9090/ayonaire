@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Edit, MoreVertical, Trash2 } from "lucide-react";
 import { AppDropdown, AppDropdownItem, AppDropdownSeparator } from "@/components/ui/app-dropdown";
 import { Button } from "@/components/ui/button";
@@ -8,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Course } from "@/lib/api/endpoints/courses";
 import { useTogglePublishMutation, useDeleteCourseMutation } from "@/hooks/api/use-courses";
+import { AssignInstructorModal } from "./assign-instructor-modal";
 
 export type CourseStatus = "Active" | "Draft" | "Pending" | "Private";
 
@@ -116,6 +118,7 @@ export function CourseActions({
 }) {
   const router = useRouter();
   const deleteCourse = useDeleteCourseMutation();
+  const [isAssigningInstructor, setIsAssigningInstructor] = useState(false);
 
   const handleDelete = () => {
     if (!window.confirm("Delete this course? This cannot be undone.")) return;
@@ -160,9 +163,18 @@ export function CourseActions({
         >
           <AppDropdownItem variant="menu" onClick={viewCourse}>View Course</AppDropdownItem>
           <AppDropdownSeparator />
+          <AppDropdownItem variant="menu" onClick={() => setIsAssigningInstructor(true)}>
+            Assign Instructor
+          </AppDropdownItem>
+          <AppDropdownSeparator />
           <AppDropdownItem variant="danger-menu" onClick={handleDelete}>Delete Course</AppDropdownItem>
         </AppDropdown>
       )}
+
+      <AssignInstructorModal
+        courseId={isAssigningInstructor ? courseId : null}
+        onClose={() => setIsAssigningInstructor(false)}
+      />
     </div>
   );
 }

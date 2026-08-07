@@ -19,6 +19,7 @@ import { format } from "date-fns";
 import { useGetRooms } from "@/hooks/api/use-rooms";
 import { useAuthStore } from "@/store/auth.store";
 import type { RoomRecord } from "@/lib/api/endpoints/rooms";
+import { CreateGroupModal } from "./create-group-modal";
 
 function otherParticipant(room: RoomRecord, currentUserId?: string) {
   return room.participants.find((p) => p.id !== currentUserId) ?? room.participants[0];
@@ -43,6 +44,7 @@ export function InstructorMessagesSidebarContent({
   const currentUserId = useAuthStore((s) => s.user?._id);
   const { data, isLoading, isError } = useGetRooms();
   const rooms = data?.data ?? [];
+  const [isCreateGroupOpen, setIsCreateGroupOpen] = React.useState(false);
 
   const isPinned = open;
 
@@ -116,7 +118,10 @@ export function InstructorMessagesSidebarContent({
               <button className="px-3 py-1.5 bg-gray-50 text-gray-600 text-xs font-medium rounded-lg hover:bg-gray-100 transition-colors">
                 Chat with Admin
               </button>
-              <button className="ml-auto p-1.5 text-gray-500 hover:text-black transition-colors">
+              <button
+                onClick={() => setIsCreateGroupOpen(true)}
+                className="ml-auto p-1.5 text-gray-500 hover:text-black transition-colors"
+              >
                 <MessageSquarePlus className="w-5 h-5" />
               </button>
             </div>
@@ -217,6 +222,8 @@ export function InstructorMessagesSidebarContent({
           )}
         </div>
       </SidebarContent>
+
+      <CreateGroupModal isOpen={isCreateGroupOpen} onClose={() => setIsCreateGroupOpen(false)} />
     </Sidebar>
   );
 }

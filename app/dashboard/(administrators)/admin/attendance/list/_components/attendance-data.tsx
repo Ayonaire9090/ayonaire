@@ -10,8 +10,13 @@ import { MoreVertical } from "lucide-react";
 import React from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { useState } from "react";
 import { AttendanceSessionSummary } from "@/lib/api/endpoints/attendance";
-import { useApproveAttendanceSessionMutation } from "@/hooks/api/use-attendance";
+import {
+  useApproveAttendanceSessionMutation,
+  useDeleteAttendanceSessionMutation,
+} from "@/hooks/api/use-attendance";
+import { EditAttendanceSessionModal } from "./edit-attendance-session-modal";
 
 export type AttendanceStatus = "Recorded" | "Missing";
 export type ApprovalStatus = "Pending" | "Approved" | "Rejected";
@@ -105,6 +110,8 @@ export const ApprovalStatusBadge = ({ status }: { status: ApprovalStatus }) => {
 export const AttendanceActions = ({ id }: { id?: string }) => {
   const router = useRouter();
   const approveSession = useApproveAttendanceSessionMutation();
+  const deleteSession = useDeleteAttendanceSessionMutation();
+  const [editingSessionId, setEditingSessionId] = useState<string | null>(null);
 
   const handleApprove = (approve: boolean) => {
     if (!id) return;
@@ -117,33 +124,56 @@ export const AttendanceActions = ({ id }: { id?: string }) => {
     );
   };
 
+  const handleDelete = () => {
+    if (!id) return;
+    if (!window.confirm("Delete this attendance session? This cannot be undone.")) return;
+    deleteSession.mutate(id, {
+      onSuccess: () => toast.success("Session deleted"),
+      onError: (err) => toast.error(err instanceof Error ? err.message : "Failed to delete session"),
+    });
+  };
+
   return (
-    <AppDropdown
-      variant="white"
-      align="end"
-      trigger={
-        <Button
-          variant="ghost"
-          size="icon"
-          className="h-8 w-8 hover:bg-transparent"
-        >
-          <MoreVertical className="size-[18px] text-black" />
-        </Button>
-      }
-    >
-      <AppDropdownItem
-        variant="menu"
-        onClick={() => id && router.push(`/dashboard/admin/attendance/session/${id}`)}
+    <>
+      <AppDropdown
+        variant="white"
+        align="end"
+        trigger={
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8 hover:bg-transparent"
+          >
+            <MoreVertical className="size-[18px] text-black" />
+          </Button>
+        }
       >
-        View Details
-      </AppDropdownItem>
-      <AppDropdownSeparator />
-      <AppDropdownItem variant="menu" onClick={() => handleApprove(true)}>
-        Approve
-      </AppDropdownItem>
-      <AppDropdownItem variant="menu" onClick={() => handleApprove(false)}>
-        Reject
-      </AppDropdownItem>
-    </AppDropdown>
+        <AppDropdownItem
+          variant="menu"
+          onClick={() => id && router.push(`/dashboard/admin/attendance/session/${id}`)}
+        >
+          View Details
+        </AppDropdownItem>
+        <AppDropdownSeparator />
+        <AppDropdownItem variant="menu" onClick={() => handleApprove(true)}>
+          Approve
+        </AppDropdownItem>
+        <AppDropdownItem variant="menu" onClick={() => handleApprove(false)}>
+          Reject
+        </AppDropdownItem>
+        <AppDropdownSeparator />
+        <AppDropdownItem variant="menu" onClick={() => id && setEditingSessionId(id)}>
+          Edit Session
+        </AppDropdownItem>
+        <AppDropdownItem variant="danger-menu" onClick={handleDelete}>
+          Delete Session
+        </AppDropdownItem>
+      </AppDropdown>
+
+      <EditAttendanceSessionModal
+        sessionId={editingSessionId}
+        onClose={() => setEditingSessionId(null)}
+      />
+    </>
   );
 };

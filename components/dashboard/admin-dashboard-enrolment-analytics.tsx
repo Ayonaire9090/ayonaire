@@ -30,11 +30,12 @@ const chartConfig = {
   },
   completed: {
     label: "Completed",
-    color: "#E5E5E5",
+    color: "#FDE5D9",
   },
 } satisfies ChartConfig;
 
 type Period = "Weekly" | "Monthly" | "Yearly";
+const PERIODS: Period[] = ["Weekly", "Monthly", "Yearly"];
 
 function bucketEnrollments(
   enrollments: { createdAt: string; completed: boolean }[],
@@ -91,116 +92,101 @@ export const AdminDashbordEnrolmentAnalytics = () => {
     [enrollments, period],
   );
 
+  const totalEnrollments = chartData.reduce((sum, d) => sum + d.enrollments, 0);
+
   return (
-    <div className="rounded-[16px]! px-5 py-5 space-y-4 bg-white shadow-sm">
+    <div className="rounded-xl border border-gray-200 p-5 bg-white">
       {/* Header */}
-      <div className="flex items-start justify-between">
-        <div className="space-y-2">
-          <p className="text-2xl font-bold tracking-tight">Enrollments</p>
-          {/* Legend */}
-          <div className="flex items-center gap-4 text-sm text-muted-foreground">
-            <div className="flex items-center gap-1.5">
-              <span className="inline-block size-3 rounded-[3px] bg-[#F86432]" />
-              Enrollments
-            </div>
-            <div className="flex items-center gap-1.5">
-              <span className="inline-block size-3 rounded-[3px] bg-[#E5E5E5]" />
-              Completed
-            </div>
+      <div className="flex items-start justify-between gap-3 mb-1">
+        <p className="text-[13px] font-medium text-gray-600">Enrollments</p>
+        <span className="text-[13px] font-semibold text-[#F86432] whitespace-nowrap">
+          {totalEnrollments.toLocaleString()} Total
+        </span>
+      </div>
+
+      <div className="flex items-center justify-between gap-3 mb-4">
+        {/* Legend */}
+        <div className="flex items-center gap-3 text-[11px] text-gray-500">
+          <div className="flex items-center gap-1.5">
+            <span className="inline-block size-2 rounded-full bg-[#F86432]" />
+            Enrollments
+          </div>
+          <div className="flex items-center gap-1.5">
+            <span className="inline-block size-2 rounded-full bg-[#FDE5D9]" />
+            Completed
           </div>
         </div>
 
         {/* Period selector */}
-        <div className="relative">
-          <select
-            value={period}
-            onChange={(e) => setPeriod(e.target.value as Period)}
-            className="appearance-none rounded-lg border border-gray-200 bg-white px-3 py-1.5 pr-7 text-sm font-medium text-gray-700 outline-none cursor-pointer hover:border-gray-300 transition-colors"
-          >
-            <option value="Weekly">Weekly</option>
-            <option value="Monthly">Monthly</option>
-            <option value="Yearly">Yearly</option>
-          </select>
-          <svg
-            className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 size-3.5 text-gray-500"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              fillRule="evenodd"
-              d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
-              clipRule="evenodd"
-            />
-          </svg>
+        <div className="flex items-center gap-2 text-[11px]">
+          {PERIODS.map((p) => (
+            <button
+              key={p}
+              onClick={() => setPeriod(p)}
+              className={`transition-colors ${
+                period === p ? "text-[#F86432] font-medium" : "text-gray-400 hover:text-gray-600"
+              }`}
+            >
+              {p}
+            </button>
+          ))}
         </div>
       </div>
 
       {/* Chart */}
       {chartData.length === 0 ? (
-        <div className="flex h-[280px] items-center justify-center text-sm text-muted-foreground">
+        <div className="flex h-[200px] items-center justify-center text-sm text-muted-foreground">
           No enrollment data yet
         </div>
       ) : (
         <ChartContainer
           config={chartConfig}
-          className="aspect-auto h-[280px] w-full"
+          className="aspect-auto h-[200px] w-full"
         >
           <ComposedChart
             data={chartData}
-            margin={{ top: 10, right: 10, left: -10, bottom: 0 }}
+            margin={{ top: 5, right: 0, left: -10, bottom: 0 }}
             barGap={0}
-            barCategoryGap="25%"
+            barCategoryGap="30%"
           >
-            <CartesianGrid
-              horizontal={true}
-              vertical={false}
-              strokeDasharray="4 4"
-              stroke="#e5e5e5"
-            />
+            <CartesianGrid vertical horizontal={false} strokeDasharray="3 3" stroke="#e5e7eb" />
 
             <XAxis
               dataKey="month"
               tickLine={false}
               axisLine={false}
-              tick={{ fill: "#9ca3af", fontSize: 13 }}
+              tick={{ fill: "#9ca3af", fontSize: 11 }}
               dy={8}
             />
 
             <YAxis
               tickLine={false}
               axisLine={false}
-              tick={{ fill: "#9ca3af", fontSize: 12 }}
+              tick={{ fill: "#9ca3af", fontSize: 11 }}
               allowDecimals={false}
             />
 
-            <ChartTooltip content={<ChartTooltipContent />} />
+            <ChartTooltip
+              cursor={{ fill: "#FAFAFA" }}
+              content={<ChartTooltipContent />}
+            />
 
             <Bar
               dataKey="completed"
-              name="completed"
-              fill="#E5E5E5"
-              radius={[10, 10, 10, 10]}
-              barSize={40}
+              name="Completed"
+              fill="#FDE5D9"
+              radius={[3, 3, 0, 0]}
+              maxBarSize={18}
             />
 
             <Line
               dataKey="enrollments"
+              name="Enrollments"
               type="monotone"
-              stroke="#1a1a1a"
-              strokeWidth={3}
-              dot={{
-                r: 5,
-                fill: "#ffffff",
-                stroke: "#1a1a1a",
-                strokeWidth: 3,
-              }}
-              activeDot={{
-                r: 6,
-                fill: "#ffffff",
-                stroke: "#1a1a1a",
-                strokeWidth: 3,
-              }}
+              stroke="#F86432"
+              strokeWidth={1.75}
+              dot={false}
+              activeDot={{ r: 4 }}
             />
           </ComposedChart>
         </ChartContainer>

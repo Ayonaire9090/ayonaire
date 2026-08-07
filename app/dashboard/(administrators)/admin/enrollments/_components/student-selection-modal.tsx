@@ -6,38 +6,7 @@ import { Search, ChevronLeft, ChevronRight, Minus } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { AppSimpleModal } from "@/components/modals/app-simple-modal";
-
-// Dummy data using consistent seeds or placeholders for avatars
-const mockStudents = [
-  {
-    id: "1",
-    name: "Iyanuoluwa Awosanya",
-    email: "delightfocus756@gmail.com",
-    avatar: "/assets/profile.png",
-    status: "",
-  },
-  {
-    id: "2",
-    name: "Festus Uwabor",
-    email: "festyuwabs@gmail.com",
-    avatar: "/assets/profile.png",
-    status: "Enrollment Status (Approved)",
-  },
-  {
-    id: "3",
-    name: "Mercy Nwankudu",
-    email: "festyuwabs@gmail.com",
-    avatar: "/assets/profile.png",
-    status: "Enrollment Status (Approved)",
-  },
-  {
-    id: "4",
-    name: "Iyanuoluwa Awosanya 2",
-    email: "delightfocus756@gmail.com",
-    avatar: "/assets/profile.png",
-    status: "",
-  },
-];
+import { useGetAdminUsers } from "@/hooks/api/use-admin";
 
 export interface StudentData {
   id: string;
@@ -53,40 +22,64 @@ interface StudentSelectionModalProps {
   onAddStudents: (students: StudentData[]) => void;
 }
 
+const PAGE_SIZE = 6;
+
 export const StudentSelectionModal = ({
   isOpen,
   onClose,
   onAddStudents,
 }: StudentSelectionModalProps) => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
 
-  // Reset internal selection state if opened afresh, or keep it depending on UX.
-  // We'll clear it on open for simplicity so we don't carry over old selections accidentally.
+  const { data, isLoading } = useGetAdminUsers();
+
+  const students: StudentData[] = useMemo(() => {
+    return (data?.users ?? [])
+      .filter((u) => u.role === "student")
+      .map((u) => ({
+        id: u._id,
+        name: u.name,
+        email: u.email,
+        avatar: u.profile?.url || "/assets/profile.png",
+        status: u.status !== "active" ? u.status : undefined,
+      }));
+  }, [data]);
+
   useEffect(() => {
     if (isOpen) {
       setSelectedIds(new Set());
       setSearchQuery("");
+      setCurrentPage(1);
     }
   }, [isOpen]);
 
   const filteredStudents = useMemo(() => {
-    return mockStudents.filter((s) =>
+    return students.filter((s) =>
       s.name.toLowerCase().includes(searchQuery.toLowerCase()),
     );
-  }, [searchQuery]);
+  }, [students, searchQuery]);
+
+  const totalPages = Math.max(1, Math.ceil(filteredStudents.length / PAGE_SIZE));
+  const pagedStudents = filteredStudents.slice(
+    (currentPage - 1) * PAGE_SIZE,
+    currentPage * PAGE_SIZE,
+  );
 
   const allSelected =
-    filteredStudents.length > 0 && selectedIds.size === filteredStudents.length;
+    pagedStudents.length > 0 && pagedStudents.every((s) => selectedIds.has(s.id));
   const someSelected =
-    selectedIds.size > 0 && selectedIds.size < filteredStudents.length;
+    pagedStudents.some((s) => selectedIds.has(s.id)) && !allSelected;
 
   const toggleSelectAll = () => {
+    const next = new Set(selectedIds);
     if (allSelected) {
-      setSelectedIds(new Set());
+      pagedStudents.forEach((s) => next.delete(s.id));
     } else {
-      setSelectedIds(new Set(filteredStudents.map((s) => s.id)));
+      pagedStudents.forEach((s) => next.add(s.id));
     }
+    setSelectedIds(next);
   };
 
   const toggleSelect = (id: string) => {
@@ -100,7 +93,7 @@ export const StudentSelectionModal = ({
   };
 
   const handleAdd = () => {
-    const docs = mockStudents.filter((s) => selectedIds.has(s.id));
+    const docs = students.filter((s) => selectedIds.has(s.id));
     onAddStudents(docs);
   };
 
@@ -119,9 +112,12 @@ export const StudentSelectionModal = ({
         <div className="relative w-full shrink-0">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-[18px] text-gray-500" />
           <Input
-            placeholder="Search course...." /* Kept similar to mockup to avoid confusion */
+            placeholder="Search student...."
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setCurrentPage(1);
+            }}
             className="pl-11 rounded-full border-none bg-[#F6F6F6] h-11 text-[15px] placeholder:text-gray-400 focus-visible:ring-0 focus-visible:bg-gray-100 shadow-none w-full"
           />
         </div>
@@ -139,25 +135,11 @@ export const StudentSelectionModal = ({
             }`}
           >
             {allSelected && (
-              <svg
-                width="12"
-                height="12"
-                viewBox="0 0 12 12"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M10 3L4.5 8.5L2 6"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 3L4.5 8.5L2 6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             )}
-            {someSelected && (
-              <Minus className="size-3.5 text-white" strokeWidth={3} />
-            )}
+            {someSelected && <Minus className="size-3.5 text-white" strokeWidth={3} />}
           </div>
           <span className="font-semibold text-gray-900 text-[16px] ml-1">
             Name
@@ -166,12 +148,13 @@ export const StudentSelectionModal = ({
 
         {/* List */}
         <div className="flex flex-col flex-1 divide-y divide-gray-100 min-h-[300px]">
-          {filteredStudents.length > 0 ? (
-            filteredStudents.map((student) => {
+          {isLoading ? (
+            <div className="py-8 text-center text-gray-500">Loading students...</div>
+          ) : pagedStudents.length > 0 ? (
+            pagedStudents.map((student) => {
               const isChecked = selectedIds.has(student.id);
               return (
                 <div key={student.id} className="flex items-center gap-4 py-4">
-                  {/* Custom Styled Checkbox wrapper to match active state orange precisely */}
                   <div
                     role="checkbox"
                     aria-checked={isChecked}
@@ -183,26 +166,13 @@ export const StudentSelectionModal = ({
                     }`}
                   >
                     {isChecked && (
-                      <svg
-                        width="12"
-                        height="12"
-                        viewBox="0 0 12 12"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M10 3L4.5 8.5L2 6"
-                          stroke="white"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 3L4.5 8.5L2 6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                     )}
                   </div>
 
                   <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-200 shrink-0 relative">
-                    {/* Placeholder image, real implementations use next/image optimally */}
                     <Image
                       src={student.avatar}
                       alt={student.name}
@@ -217,7 +187,7 @@ export const StudentSelectionModal = ({
                         {student.name}
                       </span>
                       {student.status && (
-                        <span className="bg-gray-100 text-gray-700 text-[11px] px-2 py-0.5 rounded-sm font-medium">
+                        <span className="bg-gray-100 text-gray-700 text-[11px] px-2 py-0.5 rounded-sm font-medium capitalize">
                           {student.status}
                         </span>
                       )}
@@ -240,13 +210,21 @@ export const StudentSelectionModal = ({
         <div className="flex flex-col sm:flex-row sm:items-center justify-between pt-4 mt-2 shrink-0 gap-4">
           <div className="flex items-center justify-between w-full sm:w-auto sm:gap-6">
             <span className="text-[14px] font-medium text-gray-800">
-              Page 1 of 5
+              Page {currentPage} of {totalPages}
             </span>
             <div className="flex items-center gap-6">
-              <button className="flex items-center gap-1.5 text-[14px] font-medium text-gray-800 hover:text-black transition-colors">
+              <button
+                onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                disabled={currentPage === 1}
+                className="flex items-center gap-1.5 text-[14px] font-medium text-gray-800 hover:text-black transition-colors disabled:opacity-50"
+              >
                 <ChevronLeft className="size-4" strokeWidth={2.5} /> Prev.
               </button>
-              <button className="flex items-center gap-1.5 text-[14px] font-medium text-gray-800 hover:text-black transition-colors">
+              <button
+                onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                disabled={currentPage === totalPages}
+                className="flex items-center gap-1.5 text-[14px] font-medium text-gray-800 hover:text-black transition-colors disabled:opacity-50"
+              >
                 Next <ChevronRight className="size-4" strokeWidth={2.5} />
               </button>
             </div>
@@ -262,7 +240,7 @@ export const StudentSelectionModal = ({
             </Button>
             <Button
               onClick={handleAdd}
-              /* the Add button uses primary color when items are selected otherwise default/muted */
+              disabled={selectedIds.size === 0}
               className={`h-10 px-8 rounded-md shadow-none font-medium text-[14px] text-white ${
                 selectedIds.size > 0
                   ? "bg-[#F06B30] hover:bg-[#F06B30]/90"

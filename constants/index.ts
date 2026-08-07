@@ -134,6 +134,11 @@ export const dashboardData = {
       icon: DashboardUserCheckIcon,
     },
     {
+      title: "Cohorts",
+      url: "/dashboard/admin/cohorts",
+      icon: Users2,
+    },
+    {
       title: "Assignments",
       url: "/dashboard/admin/assignments",
       icon: DashboardFileTextIcon,
@@ -142,6 +147,11 @@ export const dashboardData = {
       title: "Quiz",
       url: "/dashboard/admin/quiz",
       icon: DashboardBulbIcon,
+    },
+    {
+      title: "Workshops",
+      url: "/dashboard/admin/workshops",
+      icon: IconVideo,
     },
     {
       title: "Attendance",

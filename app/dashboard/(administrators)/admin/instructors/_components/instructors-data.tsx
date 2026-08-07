@@ -8,6 +8,7 @@ export type InstructorStatus = "Pending" | "Approved" | "Rejected";
 
 export interface InstructorData {
   id: string;
+  userId: string;
   name: string;
   email: string;
   expertise: string;
@@ -34,6 +35,7 @@ export function mapInstructorProfileToInstructorData(
 
   return {
     id: instructor._id,
+    userId: user?._id ?? (typeof instructor.instructorId === "string" ? instructor.instructorId : ""),
     name: user?.name ?? "Unknown",
     email: user?.email ?? "",
     expertise: instructor.expertise?.join(", ") || "-",

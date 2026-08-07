@@ -118,6 +118,7 @@ export default function StudentMessageDetails() {
           type={conversation.type}
           online={conversation.online}
           lastSeen={conversation.lastSeen}
+          room={room}
         />
         {/* Chat content wrapper */}
         <div className="flex-1 flex lg:flex-row min-h-0 overflow-hidden relative">
@@ -136,9 +137,9 @@ export default function StudentMessageDetails() {
           </div>
 
           {/* Right sidebar for group messages */}
-          {isGroup && (
+          {isGroup && room && (
             <div className="hidden lg:block w-[320px] xl:w-[350px] shrink-0 border-l border-gray-100 overflow-y-auto bg-white h-full">
-              <StudentGroupSidebar />
+              <StudentGroupSidebar room={room} />
             </div>
           )}
         </div>

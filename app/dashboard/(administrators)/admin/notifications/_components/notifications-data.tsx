@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import {
   AppDropdown,
   AppDropdownItem,
@@ -150,6 +151,7 @@ export const NotificationStatusBadge = ({
 };
 
 export const NotificationActions = ({ notificationId }: { notificationId: string }) => {
+  const router = useRouter();
   const deleteNotification = useDeleteNotificationMutation();
   const createDuplicateSource = notificationId;
 
@@ -176,6 +178,13 @@ export const NotificationActions = ({ notificationId }: { notificationId: string
         </Button>
       }
     >
+      <AppDropdownItem
+        variant="menu"
+        onClick={() => router.push(`/dashboard/admin/notifications/${notificationId}`)}
+      >
+        View Details
+      </AppDropdownItem>
+      <AppDropdownSeparator />
       <AppDropdownItem variant="menu" onClick={() => toast.info("Editing a notification isn't available yet.")}>
         Edit
       </AppDropdownItem>

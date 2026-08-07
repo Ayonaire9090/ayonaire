@@ -1,6 +1,7 @@
 "use client";
 
 import { MoreVertical } from "lucide-react";
+import { useRouter } from "next/navigation";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,6 +16,8 @@ interface StudentQuizActionsProps {
 export const StudentQuizActions = ({
   assignmentId,
 }: StudentQuizActionsProps) => {
+  const router = useRouter();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="outline-none focus-visible:ring-0">
@@ -28,27 +31,9 @@ export const StudentQuizActions = ({
       >
         <DropdownMenuItem
           className="cursor-pointer text-[14px] text-gray-700 focus:bg-white focus:text-black rounded-lg py-2 transition-colors"
-          onClick={() => console.log("Publish", assignmentId)}
+          onClick={() => router.push(`/dashboard/student/quiz/${assignmentId}`)}
         >
-          Attempt Now
-        </DropdownMenuItem>
-        <DropdownMenuItem
-          className="cursor-pointer text-[14px] text-gray-700 focus:bg-white focus:text-black rounded-lg py-2 transition-colors"
-          onClick={() => console.log("View Result", assignmentId)}
-        >
-          View Result
-        </DropdownMenuItem>
-        <DropdownMenuItem
-          className="cursor-pointer text-[14px] text-gray-700 focus:bg-white focus:text-black rounded-lg py-2 transition-colors"
-          onClick={() => console.log("View Details", assignmentId)}
-        >
-          View Details
-        </DropdownMenuItem>
-        <DropdownMenuItem
-          className="cursor-pointer text-[14px] text-red-600 focus:bg-white focus:text-red-700 rounded-lg py-2 transition-colors"
-          onClick={() => console.log("Delete", assignmentId)}
-        >
-          Delete Quiz
+          Attempt / View Quiz
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

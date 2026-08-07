@@ -1,15 +1,34 @@
-import {
-  Clock,
-  ChevronLeft,
-  ChevronRight,
-  HelpCircle,
-} from "lucide-react";
+import { Clock, ChevronLeft, ChevronRight, HelpCircle } from "lucide-react";
+import { QuizQuestion } from "@/lib/api/endpoints/quiz";
 
 interface TakingQuizViewProps {
+  questions: QuizQuestion[];
+  currentIndex: number;
+  answers: Record<string, string[]>;
+  elapsedLabel: string;
+  onSelectOption: (questionId: string, optionId: string, multiple: boolean) => void;
+  onGoTo: (index: number) => void;
+  onNext: () => void;
+  onPrev: () => void;
   onReview: () => void;
 }
 
-export const TakingQuizView = ({ onReview }: TakingQuizViewProps) => {
+export const TakingQuizView = ({
+  questions,
+  currentIndex,
+  answers,
+  elapsedLabel,
+  onSelectOption,
+  onGoTo,
+  onNext,
+  onPrev,
+  onReview,
+}: TakingQuizViewProps) => {
+  const question = questions[currentIndex];
+  const selected = (question && answers[question._id]) || [];
+
+  if (!question) return null;
+
   return (
     <div className="bg-white p-4 md:p-8 rounded-none md:rounded-[20px] w-full flex flex-col gap-6 md:gap-10 shadow-none border border-transparent md:border-gray-100">
       <div className="flex flex-col md:flex-row gap-6 md:gap-10 w-full">
@@ -18,69 +37,75 @@ export const TakingQuizView = ({ onReview }: TakingQuizViewProps) => {
           {/* Header */}
           <div className="flex flex-col-reverse md:flex-row md:items-center justify-between gap-4">
             <h2 className="text-gray-900 font-semibold text-[16px] md:text-[18px]">
-              Question 3 of 20
+              Question {currentIndex + 1} of {questions.length}
             </h2>
             <div className="flex flex-col items-center justify-center bg-[#FEF4F0] text-gray-900 px-4 py-2 rounded-[12px] self-end md:self-auto">
               <div className="flex items-center gap-1.5 text-gray-500 text-[11px] md:text-[12px]">
                 <Clock className="w-3.5 h-3.5 text-[#F97316]" />
-                Time Remaining
+                Time Elapsed
               </div>
               <span className="font-bold text-[16px] md:text-[18px] leading-tight">
-                15:23
+                {elapsedLabel}
               </span>
             </div>
           </div>
 
           {/* Question Text */}
           <p className="text-gray-900 font-medium text-[15px] md:text-[16px]">
-            What is supervised learning?
+            {question.question}
           </p>
 
           {/* Options */}
           <div className="flex flex-col gap-3">
-            {[
-              {
-                id: "1",
-                text: "A machine learning method using labeled data",
-                selected: false,
-              },
-              { id: "2", text: "A type of database", selected: true },
-              { id: "3", text: "A programming language", selected: false },
-              { id: "4", text: "None of the above", selected: false },
-            ].map((opt) => (
-              <div
-                key={opt.id}
-                className="flex items-center gap-3 p-4 rounded-[12px] border border-gray-100 bg-[#F9F9F9] cursor-pointer hover:bg-gray-50 transition-colors"
-              >
+            {question.options.map((opt) => {
+              const isSelected = selected.includes(opt._id);
+              return (
                 <div
-                  className={`w-5 h-5 rounded-full border-[1.5px] flex items-center justify-center shrink-0 ${
-                    opt.selected ? "border-gray-900" : "border-gray-400"
-                  }`}
+                  key={opt._id}
+                  onClick={() =>
+                    onSelectOption(question._id, opt._id, !!question.multipleCorrectAnswer)
+                  }
+                  className="flex items-center gap-3 p-4 rounded-[12px] border border-gray-100 bg-[#F9F9F9] cursor-pointer hover:bg-gray-50 transition-colors"
                 >
-                  {opt.selected && (
-                    <div className="w-2.5 h-2.5 bg-gray-900 rounded-full" />
-                  )}
+                  <div
+                    className={`w-5 h-5 shrink-0 flex items-center justify-center border-[1.5px] ${
+                      question.multipleCorrectAnswer ? "rounded-[6px]" : "rounded-full"
+                    } ${isSelected ? "border-gray-900" : "border-gray-400"}`}
+                  >
+                    {isSelected && (
+                      <div
+                        className={`bg-gray-900 ${
+                          question.multipleCorrectAnswer ? "w-3 h-3 rounded-[3px]" : "w-2.5 h-2.5 rounded-full"
+                        }`}
+                      />
+                    )}
+                  </div>
+                  <span className="text-gray-600 text-[14px] md:text-[15px]">
+                    {opt.text}
+                  </span>
                 </div>
-                <span className="text-gray-600 text-[14px] md:text-[15px]">
-                  {opt.text}
-                </span>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* Navigation Buttons */}
           <div className="flex flex-col md:flex-row items-center justify-between mt-2 md:mt-4 gap-4">
             <div className="flex items-center gap-6 w-full md:w-auto justify-between md:justify-start px-2 md:px-0">
-              <button className="flex items-center gap-1.5 text-gray-600 hover:text-gray-900 font-medium text-[14px] md:text-[15px]">
+              <button
+                onClick={onPrev}
+                disabled={currentIndex === 0}
+                className="flex items-center gap-1.5 text-gray-600 hover:text-gray-900 font-medium text-[14px] md:text-[15px] disabled:opacity-40 disabled:cursor-not-allowed"
+              >
                 <ChevronLeft className="w-4 h-4" /> Prev.
               </button>
-              <button className="flex items-center gap-1.5 text-gray-600 hover:text-gray-900 font-medium text-[14px] md:text-[15px]">
+              <button
+                onClick={onNext}
+                disabled={currentIndex === questions.length - 1}
+                className="flex items-center gap-1.5 text-gray-600 hover:text-gray-900 font-medium text-[14px] md:text-[15px] disabled:opacity-40 disabled:cursor-not-allowed"
+              >
                 Next <ChevronRight className="w-4 h-4" />
               </button>
             </div>
-            <button className="w-full md:w-auto px-6 py-2.5 bg-[#F97316] text-white rounded-[10px] font-medium text-[14px] md:text-[15px] hover:bg-[#EA580C] transition-colors">
-              Submit Question
-            </button>
           </div>
         </div>
 
@@ -92,26 +117,25 @@ export const TakingQuizView = ({ onReview }: TakingQuizViewProps) => {
 
           {/* Navigator Grid */}
           <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
-            {Array.from({ length: 20 }).map((_, i) => {
-              const num = i + 1;
-              let state = "not-answered";
-              if (num <= 3) state = "answered";
-              if (num === 4) state = "current";
+            {questions.map((q, i) => {
+              const isAnswered = (answers[q._id]?.length ?? 0) > 0;
+              const isCurrent = i === currentIndex;
 
               let bgClass = "bg-[#F6F6F6] text-gray-900";
-              if (state === "answered") bgClass = "bg-[#10B981] text-white";
-              if (state === "current") bgClass = "bg-[#F97316] text-white";
+              if (isAnswered) bgClass = "bg-[#10B981] text-white";
+              if (isCurrent) bgClass = "bg-[#F97316] text-white";
 
               return (
                 <div
-                  key={num}
+                  key={q._id}
+                  onClick={() => onGoTo(i)}
                   className={`flex flex-col items-center justify-center py-2 md:py-2.5 rounded-[8px] cursor-pointer hover:opacity-90 ${bgClass}`}
                 >
                   <span className="text-[10px] md:text-[11px] opacity-90">
                     Question
                   </span>
                   <span className="text-[18px] md:text-[20px] font-bold leading-tight">
-                    {num}
+                    {i + 1}
                   </span>
                 </div>
               );
@@ -150,7 +174,7 @@ export const TakingQuizView = ({ onReview }: TakingQuizViewProps) => {
             onClick={onReview}
             className="w-full py-3 md:py-3.5 bg-[#F97316] text-white rounded-[10px] font-medium text-[14px] md:text-[15px] hover:bg-[#EA580C] transition-colors mt-4 md:mt-2"
           >
-            Submit Quiz
+            Review & Submit
           </button>
 
           {/* Need Help */}
