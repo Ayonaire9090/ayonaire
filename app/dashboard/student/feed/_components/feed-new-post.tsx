@@ -11,6 +11,8 @@ import { FEED_TAG_OPTIONS } from "./feed-tags";
 
 interface FeedNewPostProps {
   channel?: string;
+  tag?: string;
+  
 }
 
 export const FeedNewPost = ({ channel }: FeedNewPostProps = {}) => {
