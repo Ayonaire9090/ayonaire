@@ -1,6 +1,7 @@
 "use client";
 
-import Image from "next/image";
+import { ThumbsUp, MessageCircle } from "lucide-react";
+import { IoArrowRedoOutline } from "react-icons/io5";
 import {
   useLikeAskForHelpQuestionMutation,
   useShareAskForHelpQuestionMutation,
@@ -49,26 +50,19 @@ export const QuestionInteract = ({
           onClick={handleLike}
           disabled={likeMutation.isPending}
           className={`flex gap-2 items-center transition-colors group disabled:cursor-default ${
-            isLikedByMe ? "text-[#F86432]" : "text-gray-500 hover:text-gray-900"
+            isLikedByMe ? "text-[#1877F2]" : "text-gray-500 hover:text-gray-900"
           }`}
         >
-          <Image
-            src="/assets/icons/heart-like.svg"
-            alt="Like"
-            width={22}
-            height={22}
-            className="cursor-pointer opacity-70 group-hover:opacity-100 transition-opacity"
+          <ThumbsUp
+            size={20}
+            strokeWidth={2}
+            fill={isLikedByMe ? "#1877F2" : "none"}
+            className="cursor-pointer opacity-90 group-hover:opacity-100 transition-opacity"
           />
           <span className="text-[15px] font-medium">{likes}</span>
         </button>
         <div className="flex gap-2 items-center text-gray-500">
-          <Image
-            src="/assets/icons/chat-round.svg"
-            alt="Answers"
-            width={22}
-            height={22}
-            className="opacity-70"
-          />
+          <MessageCircle size={20} strokeWidth={2} className="opacity-90" />
           <span className="text-[15px] font-medium">{answers}</span>
         </div>
       </div>
@@ -80,28 +74,8 @@ export const QuestionInteract = ({
           title="Share question"
           className="flex items-center gap-1.5 hover:text-gray-900 transition-colors disabled:cursor-default"
         >
-          <Image
-            src="/assets/icons/arrow-share.svg"
-            alt="Share"
-            width={20}
-            height={20}
-            className="cursor-pointer"
-          />
+          <IoArrowRedoOutline size={22} className="cursor-pointer" />
           {shares > 0 && <span className="text-[15px] font-medium">{shares}</span>}
-        </button>
-        <button
-          onClick={handleShare}
-          disabled={shareMutation.isPending}
-          title="Copy link"
-          className="hover:text-gray-900 transition-colors disabled:cursor-default"
-        >
-          <Image
-            src="/assets/icons/share-icon.svg"
-            alt="share"
-            width={22}
-            height={22}
-            className="cursor-pointer"
-          />
         </button>
       </div>
     </div>
