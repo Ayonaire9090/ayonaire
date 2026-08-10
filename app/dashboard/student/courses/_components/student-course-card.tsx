@@ -88,7 +88,7 @@ export const StudentCourseCard = ({
         {/* Go to Course Button */}
         <div className="pt-6 mt-auto">
           <Link
-            href={`/courses/${slug}`}
+            href={`/dashboard/student/courses/${slug}`}
             className="flex items-center justify-center w-full py-3.5 bg-white rounded-xl text-[15px] font-bold text-gray-900 hover:bg-gray-50 transition-colors border border-gray-100 shadow-sm"
           >
             Go to Course
