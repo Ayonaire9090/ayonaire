@@ -1,9 +1,7 @@
 "use client";
 
-import { CalendarClock } from "lucide-react";
-import Image from "next/image";
+import { Banknote, UserPlus, ShieldCheck, AlertTriangle, LucideIcon } from "lucide-react";
 import Link from "next/link";
-import { Badge } from "../ui/badge";
 import { useGetAllPayments } from "@/hooks/api/use-payments";
 import { useGetAllEnrollments } from "@/hooks/api/use-enrollment";
 import { useGetAllInstructorProfiles } from "@/hooks/api/use-instructor";
@@ -22,55 +20,40 @@ export const AdminDashboardPendingActionCard = () => {
       title: "Manual Payments",
       description: "Requires verification from bank receipt",
       count: payments.filter((p) => p.status === "pending").length,
-      icon: "/assets/icons/money-notes.svg",
-      iconBg: "bg-[#F86432]/10",
+      icon: Banknote,
       href: "/dashboard/admin/payments",
     },
     {
       title: "Pending Enrollments",
       description: "Awaiting course start",
       count: enrollments.filter((e) => !e.completed && !e.progress).length,
-      icon: "/assets/icons/user-plus.svg",
-      iconBg: "bg-[#3B82F6]/10",
+      icon: UserPlus,
       href: "/dashboard/admin/enrollments",
     },
     {
       title: "Instructor Approvals",
       description: "New profile validation",
       count: instructors.filter((i) => i.applicationStatus === "pending").length,
-      icon: "/assets/icons/green-shield.svg",
-      iconBg: "bg-[#10B981]/10",
+      icon: ShieldCheck,
       href: "/dashboard/admin/instructor-approvals",
     },
     {
       title: "Failed Payments",
       description: "Transactions that need follow-up",
       count: payments.filter((p) => p.status === "failed").length,
-      icon: "/assets/icons/clock.svg",
-      iconBg: "bg-[#EF4444]/10",
+      icon: AlertTriangle,
       href: "/dashboard/admin/payments",
     },
   ];
 
+  const totalPending = pendingActions.reduce((sum, a) => sum + a.count, 0);
+
   return (
-    <div className="rounded-2xl bg-white overflow-hidden">
+    <div className="rounded-2xl bg-white border border-gray-100 p-5 flex flex-col gap-1">
       {/* Header */}
-      <div className="flex items-center justify-between px-5 py-4 bg-[#FFF5F1]">
-        <div className="flex items-center gap-2">
-          <div className="p-1.5 rounded-lg">
-            <CalendarClock className="size-5 text-[#F86432]" />
-          </div>
-          <h3 className="text-base lg:text-lg font-semibold text-gray-900">
-            Pending Actions Queue
-          </h3>
-        </div>
-        <Badge
-          variant="secondary"
-          className="flex justify-center items-center text-[10px] font-bold tracking-wider text-[#F86432] border-0 bg-[#F86432]/10 rounded-full px-2.5 py-1.5 uppercase"
-        >
-          Priority Actions
-        </Badge>
-      </div>
+      <h3 className="text-base font-semibold text-gray-900 mb-2">
+        Pending Actions Queue
+      </h3>
 
       {/* Action Items */}
       <div className="flex flex-col">
@@ -81,11 +64,22 @@ export const AdminDashboardPendingActionCard = () => {
             description={action.description}
             count={action.count}
             icon={action.icon}
-            iconBg={action.iconBg}
             href={action.href}
-            isLast={index === pendingActions.length - 1}
           />
         ))}
+      </div>
+
+      {/* Status */}
+      <div className="flex items-center justify-between pt-3 mt-2 border-t border-gray-100">
+        <span className="text-sm text-gray-500">Status</span>
+        <span className="flex items-center gap-1.5 text-sm font-medium text-gray-900">
+          <span
+            className={`size-2 rounded-full ${
+              totalPending === 0 ? "bg-[#24A164]" : "bg-[#F59E0B]"
+            }`}
+          />
+          {totalPending === 0 ? "All Clear" : `${totalPending} Awaiting Action`}
+        </span>
       </div>
     </div>
   );
@@ -95,46 +89,35 @@ interface PendingActionItemProps {
   title: string;
   description: string;
   count: number;
-  icon: string;
-  iconBg: string;
+  icon: LucideIcon;
   href: string;
-  isLast?: boolean;
 }
 
 const PendingActionItem = ({
   title,
   description,
   count,
-  icon,
-  iconBg,
+  icon: Icon,
   href,
-  isLast,
 }: PendingActionItemProps) => {
   return (
-    <div className="flex flex-col">
-      <Link
-        href={href}
-        className="flex items-center justify-between px-5 py-4 hover:bg-gray-50/50 transition-colors cursor-pointer"
-      >
-        <div className="flex items-center gap-4">
-          <div className={`p-3 rounded-lg ${iconBg}`}>
-            <Image src={icon} alt={title} width={20} height={20} />
-          </div>
-          <div>
-            <p className="font-semibold text-gray-900 text-base">{title}</p>
-            <p className="text-sm text-gray-400 mt-0.5">{description}</p>
-          </div>
+    <Link
+      href={href}
+      className="flex items-center justify-between py-3 hover:bg-gray-50/50 transition-colors rounded-lg -mx-2 px-2"
+    >
+      <div className="flex items-center gap-3 min-w-0">
+        <div className="flex items-center justify-center size-9 rounded-lg bg-gray-50 border border-gray-100 shrink-0">
+          <Icon className="size-4 text-gray-600" />
         </div>
-        <div className="flex flex-col items-center justify-center gap-1.5">
-          <div className="bg-[#F6F6F6] rounded-lg p-2 min-w-[35px] text-center">
-            <p className="text-lg font-bold text-gray-900 tabular-nums leading-none">
-              {count}
-            </p>
-          </div>
-          <p className="text-[13px] text-gray-400">Pending</p>
+        <div className="min-w-0">
+          <p className="font-semibold text-gray-900 text-[14px] truncate">{title}</p>
+          <p className="text-[12.5px] text-gray-400 truncate">{description}</p>
         </div>
-      </Link>
-      {!isLast && <div className="mx-5 border-b-2 border-gray-100" />}
-    </div>
+      </div>
+      <div className="text-right shrink-0 pl-3">
+        <p className="font-semibold text-gray-900 text-[14px] tabular-nums">{count}</p>
+        <p className="text-[12px] text-gray-400">Pending</p>
+      </div>
+    </Link>
   );
 };

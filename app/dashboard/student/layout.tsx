@@ -11,7 +11,7 @@ import {
   Presentation,
 } from "lucide-react";
 
-const studentFooterNav = [
+export const studentFooterNav = [
   { title: "Feed", url: "/dashboard/student/feed", icon: LayoutTemplate },
   { title: "Workshop", url: "/dashboard/student/workshop", icon: Video },
   {

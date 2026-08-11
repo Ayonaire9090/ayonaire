@@ -19,6 +19,9 @@ export interface Message {
   content: string;
   type: MessageType;
   timestamp: string;
+  /** Day-divider label ("Today", "Yesterday", "March 3, 2026"). Falls back
+   * to "Today" when absent, which mock fixtures rely on. */
+  dateLabel?: string;
   status: MessageStatus;
   replyTo?: {
     senderName: string;

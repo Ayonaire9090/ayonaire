@@ -1,7 +1,8 @@
 "use client";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Reply, MoreVertical, ArrowUpCircle } from "lucide-react";
+import { Reply, MoreVertical, SmilePlus } from "lucide-react";
+import { toast } from "sonner";
 import type { Message } from "../_data/mock-messages";
 import Image from "next/image";
 
@@ -18,7 +19,10 @@ export const StudentMessageBubble = ({
   showAvatar = true,
   showName = true,
 }: StudentMessageBubbleProps) => {
-  const isOutgoing = message.senderId === "me";
+  // In group/channel view every message renders as a standard labeled row
+  // (Slack-style), including the current user's own messages. The
+  // right-aligned bubble treatment is reserved for 1:1 DMs.
+  const isOutgoing = !isGroup && message.senderId === "me";
   const isSystem = message.type === "system";
 
   // System message (centered info)
@@ -100,7 +104,7 @@ export const StudentMessageBubble = ({
     );
   }
 
-  //Incoming message (left-aligned)
+  // Standard row (left-aligned): every group message, and incoming DMs.
   return (
     <div className="flex items-start gap-2.5 group max-w-[95%] lg:max-w-[85%] bg-white rounded-xl p-2">
       {/* Avatar */}
@@ -185,13 +189,15 @@ export const StudentMessageBubble = ({
       </div>
 
       {/* Actions */}
-      <div className="flex items-center gap-0.5 mt-1 shrink-0">
-        <span className="text-xs text-gray-900 font-medium">37</span>
+      <div className="flex items-center gap-0.5 mt-1 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
         <button
           className="p-1 rounded-md hover:bg-gray-100 text-gray-900"
-          aria-label="Upvote"
+          aria-label="React"
+          onClick={() =>
+            toast.info("Reactions aren't available yet — coming in a future update.")
+          }
         >
-          <ArrowUpCircle className="w-4 h-4" />
+          <SmilePlus className="w-4 h-4" />
         </button>
         <button
           className="p-1 rounded-md hover:bg-gray-100 text-gray-900"

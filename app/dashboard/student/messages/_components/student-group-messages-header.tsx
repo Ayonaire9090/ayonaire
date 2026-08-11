@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Phone, Video, SlidersHorizontal, MoreVertical } from "lucide-react";
+import { toast } from "sonner";
 import {
   Sheet,
   SheetContent,
@@ -20,6 +21,10 @@ interface StudentGroupMessagesHeaderProps {
   online?: boolean;
   lastSeen?: string;
   room?: RoomRecord;
+}
+
+function notAvailable(feature: string) {
+  toast.info(`${feature} isn't available yet — coming in a future update.`);
 }
 
 export const StudentGroupMessagesHeader = ({
@@ -65,10 +70,16 @@ export const StudentGroupMessagesHeader = ({
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <button className="flex items-center justify-center size-9 bg-[#F6F6F6] hover:bg-gray-200 text-black rounded-full transition-colors">
+          <button
+            onClick={() => notAvailable("Voice calls")}
+            className="flex items-center justify-center size-9 bg-[#F6F6F6] hover:bg-gray-200 text-black rounded-full transition-colors"
+          >
             <Phone className="w-4 h-4 fill-current" />
           </button>
-          <button className="flex items-center justify-center size-9 bg-[#F6F6F6] hover:bg-gray-200 text-black rounded-full transition-colors">
+          <button
+            onClick={() => notAvailable("Video calls")}
+            className="flex items-center justify-center size-9 bg-[#F6F6F6] hover:bg-gray-200 text-black rounded-full transition-colors"
+          >
             <Video className="w-4 h-4 fill-current" />
           </button>
         </div>
@@ -95,10 +106,16 @@ export const StudentGroupMessagesHeader = ({
       </div>
 
       <div className="flex items-center gap-2 text-gray-500">
-        <button className="flex items-center justify-center size-9 bg-[#F6F6F6] hover:bg-gray-200 text-black rounded-full transition-colors">
+        <button
+          onClick={() => notAvailable("Voice calls")}
+          className="flex items-center justify-center size-9 bg-[#F6F6F6] hover:bg-gray-200 text-black rounded-full transition-colors"
+        >
           <Phone className="w-4 h-4 fill-current" />
         </button>
-        <button className="flex items-center justify-center size-9 bg-[#F6F6F6] hover:bg-gray-200 text-black rounded-full transition-colors">
+        <button
+          onClick={() => notAvailable("Video calls")}
+          className="flex items-center justify-center size-9 bg-[#F6F6F6] hover:bg-gray-200 text-black rounded-full transition-colors"
+        >
           <Video className="w-4 h-4 fill-current" />
         </button>
         <Sheet open={open} onOpenChange={setOpen}>

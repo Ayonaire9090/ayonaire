@@ -1,6 +1,5 @@
 "use client";
 
-import { Badge } from "@/components/ui/badge";
 import {
   Carousel,
   CarouselContent,
@@ -9,7 +8,6 @@ import {
 import {
   BookOpen,
   GraduationCap,
-  LucideIcon,
   Users2,
   Users,
   Banknote,
@@ -21,6 +19,7 @@ import { useGetPaymentAnalytics, useGetAllPayments } from "@/hooks/api/use-payme
 import { useGetAdminUsers } from "@/hooks/api/use-admin";
 import { useGetAllInstructorProfiles } from "@/hooks/api/use-instructor";
 import { useGetCourses } from "@/hooks/api/use-courses";
+import { StatCard, computeTrendFromSeries } from "@/components/dashboard/stat-card";
 
 export const AdminDashboardAnalyticsCards = () => {
   const { data: paymentAnalyticsData } = useGetPaymentAnalytics();
@@ -43,46 +42,74 @@ export const AdminDashboardAnalyticsCards = () => {
     (i) => i.applicationStatus === "pending",
   ).length;
 
+  // Only Total Revenue / Platform Fees have a real previous-period source
+  // (monthlyRevenue). Every other metric here is a point-in-time count with
+  // no historical snapshot to diff against, so it gets no trend pill rather
+  // than a guessed one.
+  const revenueChange = computeTrendFromSeries(
+    analytics?.monthlyRevenue,
+    (e) => e.revenue,
+    (e) => e.year * 12 + e.month,
+  );
+
   const BasicAnalytics = [
     {
       heading: "Total Users",
       title: (usersData?.count ?? users.length).toLocaleString(),
       icon: Users2,
+      iconBg: "bg-[#3B82F6]",
+      change: null,
     },
     {
       heading: "Active Students",
       title: activeStudents.toLocaleString(),
       icon: GraduationCap,
+      iconBg: "bg-[#24A164]",
+      change: null,
     },
     {
       heading: "Instructors",
       title: instructorUsers.toLocaleString(),
       icon: Users,
+      iconBg: "bg-[#8B5CF6]",
+      change: null,
     },
     {
       heading: "Total Courses",
       title: (coursesData?.pagination?.total ?? 0).toLocaleString(),
       icon: BookOpen,
+      iconBg: "bg-[#F59E0B]",
+      change: null,
     },
     {
       heading: "Total Revenue",
       title: `NGN ${(analytics?.totalRevenue ?? 0).toLocaleString()}`,
       icon: Banknote,
+      iconBg: "bg-[#24A164]",
+      change: revenueChange,
     },
     {
       heading: "Pending Payments",
       title: pendingPayments.toLocaleString(),
       icon: Wallet,
+      iconBg: "bg-[#F86432]",
+      change: null,
     },
     {
       heading: "Pending Apps",
       title: pendingApplications.toLocaleString(),
       icon: FileClock,
+      iconBg: "bg-[#E5383B]",
+      change: null,
     },
     {
       heading: "Platform Fees",
       title: `NGN ${(analytics?.platformFees ?? 0).toLocaleString()}`,
       icon: Landmark,
+      iconBg: "bg-[#1E3A8A]",
+      // Fees are a fixed percentage of revenue, so their period-over-period
+      // % change is mathematically the same as revenue's.
+      change: revenueChange,
     },
   ];
 
@@ -105,10 +132,12 @@ export const AdminDashboardAnalyticsCards = () => {
                 // tablet (sm/md): ~31% → 3 cards + peek of 4th
                 className="pl-3 basis-[75%] sm:basis-[31%] md:basis-[31%]"
               >
-                <AdminDashboardSectionFeatureCard
-                  heading={analytic.heading}
-                  title={analytic.title}
+                <StatCard
+                  label={analytic.heading}
+                  value={analytic.title}
                   icon={analytic.icon}
+                  iconBg={analytic.iconBg}
+                  trend={analytic.change}
                 />
               </CarouselItem>
             ))}
@@ -119,57 +148,16 @@ export const AdminDashboardAnalyticsCards = () => {
       {/* ── Desktop: 4-column grid (unchanged) ── */}
       <div className="hidden lg:grid grid-cols-4 gap-4">
         {BasicAnalytics.map((analytic, index) => (
-          <AdminDashboardSectionFeatureCard
+          <StatCard
             key={index}
-            heading={analytic.heading}
-            title={analytic.title}
+            label={analytic.heading}
+            value={analytic.title}
             icon={analytic.icon}
+            iconBg={analytic.iconBg}
+            trend={analytic.change}
           />
         ))}
       </div>
     </>
-  );
-};
-
-interface AdminDashboardAnalyticsCardProps {
-  heading: string;
-  title: string;
-  icon: LucideIcon;
-  rate?: string;
-  description?: string;
-}
-
-export const AdminDashboardSectionFeatureCard = ({
-  heading,
-  title,
-  icon: Icon,
-  rate,
-  description,
-}: AdminDashboardAnalyticsCardProps) => {
-  return (
-    <div className="rounded-[16px]! px-4 py-5 space-y-3 bg-white h-full">
-      <div>
-        <p className="flex justify-between items-center text-sm text-gray-500 pb-2">
-          {heading}
-          <Icon className="size-10 text-[#F86432] bg-white rounded-lg p-2" />
-        </p>
-        <p className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-          {title}
-        </p>
-      </div>
-      {(rate || description) && (
-        <div className="flex items-start gap-1.5 text-sm pt-0!">
-          {rate && (
-            <Badge
-              variant="outline"
-              className="text-[#F86432] border-0! border-none! bg-[#F86432]/10 rounded-full!"
-            >
-              {rate}
-            </Badge>
-          )}
-          {description && <div className="text-muted-foreground">{description}</div>}
-        </div>
-      )}
-    </div>
   );
 };

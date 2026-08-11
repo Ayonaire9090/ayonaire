@@ -42,13 +42,19 @@ export interface GetPaymentsParams {
   sortBy?: string;
 }
 
+export interface MonthlyRevenueEntry {
+  year: number;
+  month: number;
+  revenue: number;
+}
+
 export interface PaymentAnalytics {
   totalRevenue: number;
   totalTransactions: number;
   platformFees: number;
   instructorPayouts: number;
   platformFeePercent: number;
-  monthlyRevenue: { year: number; month: number; revenue: number }[];
+  monthlyRevenue: MonthlyRevenueEntry[];
 }
 
 export interface OrderNote {

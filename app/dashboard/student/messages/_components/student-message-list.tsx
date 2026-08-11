@@ -53,15 +53,26 @@ export const StudentMessageList = ({
             const prevMessage = index > 0 ? messages[index - 1] : null;
             const sameSenderAsPrev =
               prevMessage && prevMessage.senderId === message.senderId;
+            const dateLabel = message.dateLabel ?? "Today";
+            const showDayDivider =
+              (prevMessage?.dateLabel ?? "Today") !== dateLabel;
 
             return (
-              <StudentMessageBubble
-                key={message.id}
-                message={message}
-                isGroup={isGroup}
-                showAvatar={!sameSenderAsPrev}
-                showName={!sameSenderAsPrev}
-              />
+              <React.Fragment key={message.id}>
+                {showDayDivider && (
+                  <div className="flex items-center gap-3 text-xs font-medium text-gray-400">
+                    <div className="flex-1 h-px bg-gray-100" />
+                    {dateLabel}
+                    <div className="flex-1 h-px bg-gray-100" />
+                  </div>
+                )}
+                <StudentMessageBubble
+                  message={message}
+                  isGroup={isGroup}
+                  showAvatar={!sameSenderAsPrev || showDayDivider}
+                  showName={!sameSenderAsPrev || showDayDivider}
+                />
+              </React.Fragment>
             );
           })}
           <div ref={bottomRef} />

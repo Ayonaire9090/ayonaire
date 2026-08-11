@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { format } from "date-fns";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { ChevronDown, Plus } from "lucide-react";
+import { ChevronDown, Plus, UserRound, CalendarDays, FileText } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { RoomRecord } from "@/lib/api/endpoints/rooms";
 
@@ -41,9 +42,20 @@ const attachments = [
 ];
 
 export const StudentGroupSidebar = ({ room }: { room: RoomRecord }) => {
+  const [infoOpen, setInfoOpen] = useState(true);
   const [attachmentsOpen, setAttachmentsOpen] = useState(true);
   const [membersOpen, setMembersOpen] = useState(true);
   const title = room.name ?? "Untitled Group";
+
+  const creatorName =
+    room.participants.find((p) => p.id === room.roomCreator)?.name ??
+    "Unknown";
+  let createdAtLabel: string | null = null;
+  try {
+    createdAtLabel = format(new Date(room.createdAt), "MMM d, yyyy");
+  } catch {
+    createdAtLabel = null;
+  }
 
   return (
     <div className="p-5 md:p-6 bg-white min-h-full flex flex-col h-full w-full">
@@ -65,6 +77,60 @@ export const StudentGroupSidebar = ({ room }: { room: RoomRecord }) => {
           {room.participants.length} member
           {room.participants.length === 1 ? "" : "s"}
         </p>
+      </div>
+
+      {/* Channel Info */}
+      <div className="mb-6">
+        <button
+          onClick={() => setInfoOpen(!infoOpen)}
+          className="flex items-center justify-between w-full py-2 mb-2 group"
+        >
+          <span className="text-[15px] font-medium text-gray-500 group-hover:text-gray-900 transition-colors">
+            Channel Info
+          </span>
+          <ChevronDown
+            className={cn(
+              "size-5 text-gray-400 transition-transform duration-200",
+              infoOpen && "rotate-180",
+            )}
+          />
+        </button>
+
+        {infoOpen && (
+          <div className="flex flex-col gap-3 mt-2">
+            <div className="flex items-start gap-3">
+              <UserRound className="size-4 text-gray-400 mt-0.5 shrink-0" />
+              <div className="min-w-0">
+                <p className="text-[11px] text-gray-400">Created by</p>
+                <p className="text-[13px] font-medium text-gray-900 truncate">
+                  {creatorName}
+                </p>
+              </div>
+            </div>
+            {createdAtLabel && (
+              <div className="flex items-start gap-3">
+                <CalendarDays className="size-4 text-gray-400 mt-0.5 shrink-0" />
+                <div className="min-w-0">
+                  <p className="text-[11px] text-gray-400">Date created</p>
+                  <p className="text-[13px] font-medium text-gray-900">
+                    {createdAtLabel}
+                  </p>
+                </div>
+              </div>
+            )}
+            {room.description && (
+              <div className="flex items-start gap-3">
+                <FileText className="size-4 text-gray-400 mt-0.5 shrink-0" />
+                <div className="min-w-0">
+                  <p className="text-[11px] text-gray-400">Description</p>
+                  <p className="text-[13px] text-gray-700 leading-relaxed">
+                    {room.description}
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Attachments */}

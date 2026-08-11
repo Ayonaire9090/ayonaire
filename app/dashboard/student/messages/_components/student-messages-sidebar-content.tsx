@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/sidebar";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { X, Menu, ChevronsUpDown } from "lucide-react";
+import { X, Menu, ChevronsUpDown, Search } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -35,6 +35,7 @@ export function StudentMessagesSidebarContent({
   const pathname = usePathname();
   const user = useAuthStore((s) => s.user);
   const [activeInboxTab, setActiveInboxTab] = React.useState<InboxTab>("inbox");
+  const [search, setSearch] = React.useState("");
 
   const isPinned = open;
 
@@ -46,12 +47,18 @@ export function StudentMessagesSidebarContent({
     timestamp: lastMessageTimestamp(room),
   }));
   // "Chatroom" = group rooms, "Inbox" = 1:1 direct messages.
-  const conversations = allConversations.filter(({ conv }) =>
-    activeInboxTab === "chatroom" ? conv.type === "group" : conv.type === "individual",
-  );
+  const conversations = allConversations
+    .filter(({ conv }) =>
+      activeInboxTab === "chatroom" ? conv.type === "group" : conv.type === "individual",
+    )
+    .filter(({ conv }) =>
+      search.trim()
+        ? conv.title.toLowerCase().includes(search.trim().toLowerCase())
+        : true,
+    );
 
   return (
-    <Sidebar className="bg-white border-r border-gray-200" {...props}>
+    <Sidebar className="bg-white border-r border-gray-200 md:left-16" {...props}>
       <SidebarHeader className="bg-transparent border-b border-gray-100 pb-4">
         <SidebarMenu>
           <SidebarMenuItem>
@@ -107,6 +114,16 @@ export function StudentMessagesSidebarContent({
 
         {!isCollapsed && (
           <div className="mt-2 space-y-4">
+            <div className="flex items-center gap-2 bg-gray-50 border border-gray-100 rounded-lg px-3 py-2">
+              <Search className="w-4 h-4 text-gray-400 shrink-0" />
+              <input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search conversations"
+                className="flex-1 bg-transparent text-[13px] outline-none placeholder:text-gray-400"
+              />
+            </div>
+
             <div className="flex gap-2">
               <button
                 onClick={() => setActiveInboxTab("chatroom")}
@@ -158,9 +175,11 @@ export function StudentMessagesSidebarContent({
           ) : conversations.length === 0 ? (
             !isCollapsed && (
               <p className="px-4 py-6 text-sm text-gray-400 text-center">
-                {activeInboxTab === "chatroom"
-                  ? "No group chats yet."
-                  : "No direct messages yet."}
+                {search.trim()
+                  ? `No results for "${search.trim()}".`
+                  : activeInboxTab === "chatroom"
+                    ? "No group chats yet."
+                    : "No direct messages yet."}
               </p>
             )
           ) : (

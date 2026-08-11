@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import { format, isToday, isYesterday } from "date-fns";
 import { RoomRecord } from "@/lib/api/endpoints/rooms";
 import { MessageRecord } from "@/lib/api/endpoints/messages";
 import type { Conversation, Message } from "./mock-messages";
@@ -37,11 +37,18 @@ export function mapRoomToConversation(
   };
 }
 
+function dayDividerLabel(date: Date): string {
+  if (isToday(date)) return "Today";
+  if (isYesterday(date)) return "Yesterday";
+  return format(date, "MMMM d, yyyy");
+}
+
 export function mapMessageRecordToMessage(
   message: MessageRecord,
   currentUserId?: string,
 ): Message {
   const isMine = message.senderId.id === currentUserId;
+  const createdAt = new Date(message.createdAt);
 
   let type: Message["type"] = "text";
   if (message.media) type = "image";
@@ -54,7 +61,8 @@ export function mapMessageRecordToMessage(
     senderAvatar: message.senderId.profile?.url || DEFAULT_AVATAR,
     content: message.text,
     type,
-    timestamp: format(new Date(message.createdAt), "h:mm a"),
+    timestamp: format(createdAt, "h:mm a"),
+    dateLabel: dayDividerLabel(createdAt),
     // No read-receipt tracking exists on the backend yet - every real
     // message reports "sent" rather than a guessed delivered/seen state.
     status: "sent",

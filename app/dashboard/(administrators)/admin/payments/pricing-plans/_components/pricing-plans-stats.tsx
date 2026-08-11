@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import { Layers, CheckCircle2, Clock } from "lucide-react";
 import { StatsSummary } from "@/components/dashboard/stats-summary";
 import { useGetPricingPlans } from "@/hooks/api/use-payments";
 
@@ -12,9 +13,9 @@ export const PricingPlansStats = () => {
     const active = plans.filter((p) => p.status === "active").length;
     const pending = plans.length - active;
     return [
-      { title: "All", number: String(plans.length) },
-      { title: "Active", number: String(active) },
-      { title: "Pending", number: String(pending) },
+      { title: "All", number: String(plans.length), icon: Layers, iconBg: "bg-[#3B82F6]" },
+      { title: "Active", number: String(active), icon: CheckCircle2, iconBg: "bg-[#24A164]" },
+      { title: "Pending", number: String(pending), icon: Clock, iconBg: "bg-[#F59E0B]" },
     ];
   }, [plans]);
 
