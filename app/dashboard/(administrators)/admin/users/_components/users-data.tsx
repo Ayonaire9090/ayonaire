@@ -6,7 +6,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { MoreVertical } from "lucide-react";
 import React from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { format } from "date-fns";
 import { UserProfile } from "@/lib/api/types";
@@ -128,7 +128,11 @@ export function StatusBadge({ status, userId }: { status: UserStatus; userId: st
 
 export function UserActions({ userId }: { userId: string }) {
   const router = useRouter();
+  const pathname = usePathname();
   const deleteUser = useDeleteUserMutation();
+  const profilePath = pathname.includes("/preview/admin")
+    ? `/preview/admin/users/${userId}`
+    : `/dashboard/admin/users/${userId}`;
 
   const handleDelete = () => {
     if (!window.confirm("Delete this user? This cannot be undone.")) return;
@@ -147,6 +151,7 @@ export function UserActions({ userId }: { userId: string }) {
           variant="ghost"
           size="icon"
           className="h-8 w-8 hover:bg-transparent"
+          aria-label="Open user actions"
         >
           <MoreVertical className="size-[18px] text-black" />
         </Button>
@@ -154,14 +159,14 @@ export function UserActions({ userId }: { userId: string }) {
     >
       <AppDropdownItem
         variant="menu"
-        onClick={() => router.push(`/dashboard/admin/users/${userId}`)}
+        onClick={() => router.push(profilePath)}
       >
         View User Profile
       </AppDropdownItem>
       <AppDropdownSeparator />
       <AppDropdownItem
         variant="menu"
-        onClick={() => router.push(`/dashboard/admin/users/${userId}`)}
+        onClick={() => router.push(profilePath)}
       >
         Edit
       </AppDropdownItem>

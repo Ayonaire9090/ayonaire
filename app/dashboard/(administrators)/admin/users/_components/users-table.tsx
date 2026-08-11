@@ -17,14 +17,14 @@ export const UsersTable = ({ data, isInstructor }: UsersTableProps) => {
       header: "Name",
       sortAccessor: (user) => user.name.toLowerCase(),
       cell: (user) => (
-        <div className="flex items-center gap-4">
-          <Avatar className="size-11">
+        <div className="flex items-center gap-3 min-w-[160px]">
+          <Avatar className="size-9 shrink-0">
             <AvatarImage src={user.avatar} alt={user.name} />
-            <AvatarFallback className="text-sm font-medium bg-primary/10 text-primary">
+            <AvatarFallback className="text-xs font-medium bg-primary/10 text-primary">
               {user.name.split(" ").map((n) => n[0]).join("")}
             </AvatarFallback>
           </Avatar>
-          <span className="font-medium text-gray-900 text-[15px] whitespace-nowrap">
+          <span className="font-medium text-gray-900 text-[14px] whitespace-nowrap">
             {user.name}
           </span>
         </div>
@@ -35,7 +35,7 @@ export const UsersTable = ({ data, isInstructor }: UsersTableProps) => {
       header: "ID",
       sortAccessor: (user) => user.uniqueId,
       cell: (user) => (
-        <span className="text-gray-500 text-[15px] whitespace-nowrap">
+        <span className="text-gray-500 text-[14px] whitespace-nowrap">
           {user.uniqueId}
         </span>
       ),
@@ -44,7 +44,7 @@ export const UsersTable = ({ data, isInstructor }: UsersTableProps) => {
       key: "email",
       header: "Email",
       cell: (user) => (
-        <span className="text-gray-900 text-[15px] whitespace-nowrap">
+        <span className="text-gray-700 text-[14px] whitespace-nowrap">
           {user.email}
         </span>
       ),
@@ -60,7 +60,7 @@ export const UsersTable = ({ data, isInstructor }: UsersTableProps) => {
       header: "Enrollments",
       sortAccessor: (user) => user.enrollments,
       cell: (user) => (
-        <span className="text-gray-700 text-[15px] pl-4">
+        <span className="text-gray-700 font-medium text-[14px] pl-4 tabular-nums">
           {user.enrollments}
         </span>
       ),
@@ -80,14 +80,14 @@ export const UsersTable = ({ data, isInstructor }: UsersTableProps) => {
       header: "Instructor",
       sortAccessor: (user) => user.name.toLowerCase(),
       cell: (user) => (
-        <div className="flex items-center gap-4">
-          <Avatar className="size-11">
+        <div className="flex items-center gap-3 min-w-[160px]">
+          <Avatar className="size-9 shrink-0">
             <AvatarImage src={user.avatar} alt={user.name} />
-            <AvatarFallback className="text-sm font-medium bg-primary/10 text-primary">
+            <AvatarFallback className="text-xs font-medium bg-primary/10 text-primary">
               {user.name.split(" ").map((n) => n[0]).join("")}
             </AvatarFallback>
           </Avatar>
-          <span className="font-medium text-gray-900 text-[15px] whitespace-nowrap">
+          <span className="font-medium text-gray-900 text-[14px] whitespace-nowrap">
             {user.name}
           </span>
         </div>
@@ -98,7 +98,7 @@ export const UsersTable = ({ data, isInstructor }: UsersTableProps) => {
       header: "ID",
       sortAccessor: (user) => user.uniqueId,
       cell: (user) => (
-        <span className="text-gray-500 text-[15px] whitespace-nowrap">
+        <span className="text-gray-500 text-[14px] whitespace-nowrap">
           {user.uniqueId}
         </span>
       ),
@@ -113,7 +113,7 @@ export const UsersTable = ({ data, isInstructor }: UsersTableProps) => {
       key: "courses",
       header: "Courses",
       cell: (user) => (
-        <span className="text-gray-700 text-[15px] whitespace-nowrap">
+        <span className="text-gray-700 font-medium text-[14px] whitespace-nowrap">
           {user.coursesCount || "-"}
         </span>
       ),
@@ -122,7 +122,7 @@ export const UsersTable = ({ data, isInstructor }: UsersTableProps) => {
       key: "batch",
       header: "Batch",
       cell: (user) => (
-        <span className="text-gray-700 text-[15px] whitespace-nowrap">
+        <span className="text-gray-700 text-[14px] whitespace-nowrap">
           {user.batch || "-"}
         </span>
       ),
@@ -131,7 +131,7 @@ export const UsersTable = ({ data, isInstructor }: UsersTableProps) => {
       key: "joined",
       header: "Joined",
       cell: (user) => (
-        <span className="text-gray-700 text-[15px] whitespace-nowrap">
+        <span className="text-gray-700 text-[14px] whitespace-nowrap">
           {user.joined || "-"}
         </span>
       ),
@@ -140,7 +140,7 @@ export const UsersTable = ({ data, isInstructor }: UsersTableProps) => {
       key: "lastActive",
       header: "Last Active",
       cell: (user) => (
-        <span className="text-gray-700 text-[15px] whitespace-nowrap">
+        <span className="text-gray-700 text-[14px] whitespace-nowrap">
           {user.lastActive || "-"}
         </span>
       ),

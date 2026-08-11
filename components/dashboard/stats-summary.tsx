@@ -1,4 +1,5 @@
 import { LucideIcon, Layers } from "lucide-react";
+import { StatCard } from "./stat-card";
 
 interface StatsSummaryItem {
   title: string;
@@ -23,24 +24,13 @@ export const StatsSummary = ({ data, className = "" }: StatsSummaryProps) => {
       {data.map((item, index) => {
         const Icon = item.icon ?? Layers;
         return (
-          <div
+          <StatCard
             key={index}
-            className="rounded-[16px] px-4 py-3 bg-white border border-gray-100 flex items-center gap-3"
-          >
-            <span
-              className={`flex items-center justify-center size-8 rounded-full shrink-0 ${
-                item.iconBg ?? "bg-[#3B82F6]"
-              }`}
-            >
-              <Icon className="size-4 text-white" />
-            </span>
-            <div className="min-w-0">
-              <p className="text-[13px] text-gray-500 truncate">{item.title}</p>
-              <p className="text-lg font-bold text-gray-900 tabular-nums leading-tight">
-                {item.number}
-              </p>
-            </div>
-          </div>
+            label={item.title}
+            value={item.number}
+            icon={Icon}
+            iconBg={item.iconBg}
+          />
         );
       })}
     </div>

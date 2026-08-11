@@ -2,7 +2,7 @@
 
 import React from "react";
 import { DataList } from "@/components/ui/data-list";
-import { Search, User } from "lucide-react";
+import { BookOpen, DollarSign, Search, User, Users } from "lucide-react";
 import {
   CourseStatusBadge,
   CourseActions,
@@ -59,65 +59,80 @@ export const CoursesList = () => {
           No courses found.
         </div>
       ) : (
-      <DataList
-        data={courses.filter(
-          (course) =>
-            course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            course.courseId.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            course.instructor.toLowerCase().includes(searchQuery.toLowerCase()),
-        )}
-        keyExtractor={(c) => c.id}
-        renderItem={(course) => (
-          <div className="w-full flex flex-col gap-2 relative">
-            <div className="flex items-center justify-between">
-              <span className="text-[14.5px] text-gray-500 font-normal">
-                {course.courseId}
-              </span>
-              <div className="flex items-center gap-1 -mr-2">
-                <CourseStatusBadge status={course.status} courseId={course.id} />
-                <CourseActions courseId={course.id} showEdit={false} />
+        <DataList
+          data={courses.filter(
+            (course) =>
+              course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+              course.courseId
+                .toLowerCase()
+                .includes(searchQuery.toLowerCase()) ||
+              course.instructor
+                .toLowerCase()
+                .includes(searchQuery.toLowerCase()),
+          )}
+          keyExtractor={(c) => c.id}
+          className="gap-3"
+          itemClassName="bg-white border border-gray-100 rounded-xl px-3 py-3"
+          renderItem={(course) => (
+            <div className="w-full min-w-0">
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex min-w-0 items-start gap-3">
+                  <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary/10">
+                    <BookOpen className="size-5 text-primary" />
+                  </div>
+                  <div className="min-w-0">
+                    <span className="block text-[13px] font-normal text-gray-500">
+                      {course.courseId}
+                    </span>
+                    <span className="mt-0.5 block truncate text-[14px] font-medium text-gray-900">
+                      {course.title}
+                    </span>
+                    <span className="mt-0.5 block truncate text-[13px] text-gray-500">
+                      {course.category}
+                    </span>
+                  </div>
+                </div>
+                <div className="flex shrink-0 items-center gap-1 -mr-1">
+                  <CourseStatusBadge
+                    status={course.status}
+                    courseId={course.id}
+                  />
+                  <CourseActions courseId={course.id} showEdit={false} />
+                </div>
               </div>
-            </div>
 
-            <div className="flex flex-col gap-0.5 mt-1 pr-6">
-              <span className="text-[16px] font-medium text-gray-900 truncate">
-                {course.title}
-              </span>
-              <span className="text-[14px] text-gray-400 font-normal">
-                {course.category}
-              </span>
-            </div>
+              <div className="mt-4 grid grid-cols-2 gap-2">
+                <div className="rounded-xl bg-[#FAFAFA] px-3 py-2.5">
+                  <div className="mb-1 flex items-center gap-1.5 text-[13px] font-medium text-gray-500">
+                    <DollarSign className="size-3.5 text-primary" />
+                    Price
+                  </div>
+                  <p className="text-[14px] font-medium text-gray-900 tabular-nums">
+                    ${course.price}
+                  </p>
+                </div>
+                <div className="rounded-xl bg-[#FAFAFA] px-3 py-2.5">
+                  <div className="mb-1 flex items-center gap-1.5 text-[13px] font-medium text-gray-500">
+                    <Users className="size-3.5 text-primary" />
+                    Enrollments
+                  </div>
+                  <p className="text-[14px] font-medium text-gray-900 tabular-nums">
+                    {course.enrollments}
+                  </p>
+                </div>
+              </div>
 
-            <div className="flex items-center gap-3 mt-3">
-              <div className="flex items-center justify-center p-1 border border-gray-200 rounded-lg shrink-0">
-                <User className="size-[18px] text-gray-800" />
-              </div>
-              <span className="text-[15px] font-medium text-gray-900 truncate">
-                {course.instructor}
-              </span>
-            </div>
-
-            <div className="flex items-center gap-12 mt-4 mb-2">
-              <div className="flex flex-col gap-1">
-                <span className="text-[13px] text-gray-500 font-normal">
-                  Price
+              <div className="mt-3 flex items-center gap-2 border-t border-gray-100 pt-3">
+                <span className="flex size-7 shrink-0 items-center justify-center rounded-lg border border-gray-100 bg-white">
+                  <User className="size-4 text-gray-600" />
                 </span>
-                <span className="text-[15px] text-gray-900 font-medium">
-                  ${course.price}
-                </span>
-              </div>
-              <div className="flex flex-col gap-1">
-                <span className="text-[13px] text-gray-500 font-normal">
-                  Enrollments
-                </span>
-                <span className="text-[15px] text-gray-900 font-medium">
-                  {course.enrollments}
+                <span className="min-w-0 truncate text-[13px] font-medium text-gray-700">
+                  {course.instructor}
                 </span>
               </div>
             </div>
-          </div>
-        )}
-      />
+          )}
+        />
       )}
       {/* Add new Course Mobile Only */}
       <div className="md:hidden fixed flex justify-center items-center right-3 top-[50%] translate-y-[-50%] z-90">

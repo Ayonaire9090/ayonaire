@@ -11,7 +11,16 @@ import {
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Plus, Search, ChevronDown, X } from "lucide-react";
+import {
+  Ban,
+  CheckCircle2,
+  Layers,
+  Plus,
+  Search,
+  UserX,
+  ChevronDown,
+  X,
+} from "lucide-react";
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 import { AdminDashboardButton } from "@/components/dashboard/admin-dashboard-button";
 import { StatsSummary } from "../../../../../components/dashboard/stats-summary";
@@ -92,22 +101,33 @@ export default function AdminUsersPage() {
   const usersData = (data?.users ?? []).map(mapUserProfileToUserData);
 
   const summaryData = [
-    { title: "All", number: String(usersData.length) },
+    {
+      title: "All",
+      number: String(usersData.length),
+      icon: Layers,
+      iconBg: "bg-[#3B82F6]",
+    },
     {
       title: "Active",
       number: String(usersData.filter((u) => u.status === "Active").length),
+      icon: CheckCircle2,
+      iconBg: "bg-[#24A164]",
     },
     {
       title: "Suspended",
       number: String(
         usersData.filter((u) => u.status === "Suspended").length,
       ),
+      icon: Ban,
+      iconBg: "bg-[#F59E0B]",
     },
     {
       title: "Deactivated",
       number: String(
         usersData.filter((u) => u.status === "Deactivate").length,
       ),
+      icon: UserX,
+      iconBg: "bg-[#E5383B]",
     },
   ];
 
