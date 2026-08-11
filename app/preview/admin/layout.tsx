@@ -14,6 +14,7 @@ import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { PreviewAdminSidebar } from "./_components/preview-admin-sidebar";
+import { PreviewAdminRouteBridge } from "./_components/preview-admin-route-bridge";
 import { DashboardMobileFooterWrapper } from "@/components/dashboard/dashboard-mobile-footer-wrapper";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { createSeededAdminQueryClient } from "./_seed/seed-query-client";
@@ -29,6 +30,7 @@ export default function PreviewAdminLayout({
 
   return (
     <QueryClientProvider client={queryClient}>
+      <PreviewAdminRouteBridge />
       <SidebarProvider defaultOpen={false}>
         <PreviewAdminSidebar variant="sidebar" collapsible="icon" />
         <SidebarInset className="bg-[#F6F6F6]">

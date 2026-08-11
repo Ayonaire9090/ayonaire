@@ -4,6 +4,14 @@ import { MoreVertical } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
 import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -30,71 +38,93 @@ export const AdminDashboardOrderInfoCard = () => {
   const payments = data?.data?.data ?? [];
 
   return (
-    <div className="rounded-2xl bg-white overflow-hidden py-5">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-4 px-5">
-        <h3 className="text-lg font-semibold text-gray-900">Recent Orders</h3>
+    <div className="w-full bg-white rounded-xl p-2 lg:p-4">
+      <div className="flex items-start justify-between gap-4 pb-4">
+        <div>
+          <h3 className="text-[18px] font-semibold text-gray-900">
+            Recent Orders
+          </h3>
+          <p className="mt-1 text-[14px] text-gray-500">
+            Latest payment transactions on your platform
+          </p>
+        </div>
         <Link
           href="/dashboard/admin/orders"
-          className="text-sm font-medium text-primary hover:underline"
+          className="shrink-0 text-[14px] font-medium text-primary hover:underline"
         >
           View All
         </Link>
       </div>
 
-      {/* Table */}
-      <div className="overflow-x-auto relative">
-        <table className="w-full">
-          <thead>
-            <tr className="bg-[#F6F6F6] relative w-full">
-              <th className="text-left text-base font-semibold text-gray-900 py-4 px-5">
+      <div className="rounded-2xl border border-gray-100 overflow-hidden bg-white">
+        <Table className="min-w-[560px] border-none">
+          <TableHeader className="bg-[#FAFAFA]">
+            <TableRow className="border-b border-gray-100 hover:bg-transparent">
+              <TableHead className="h-11 pl-4 text-[13px] font-medium text-gray-500">
                 Order ID
-              </th>
-              <th className="text-left text-base font-semibold text-gray-900 py-4 px-4">
+              </TableHead>
+              <TableHead className="h-11 text-[13px] font-medium text-gray-500">
+                Course
+              </TableHead>
+              <TableHead className="h-11 text-[13px] font-medium text-gray-500">
                 Status
-              </th>
-              <th className="text-left text-base font-semibold text-gray-900 py-4 px-4">
+              </TableHead>
+              <TableHead className="h-11 text-[13px] font-medium text-gray-500">
                 Amount
-              </th>
-              <th className="text-right text-base font-semibold text-gray-900 py-4 px-5">
+              </TableHead>
+              <TableHead className="h-11 pr-4 text-right text-[13px] font-medium text-gray-500">
                 Action
-              </th>
-            </tr>
-          </thead>
-          <tbody>
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
             {payments.length === 0 ? (
-              <tr>
-                <td colSpan={4} className="py-8 px-5 text-center text-sm text-gray-400">
+              <TableRow className="border-none hover:bg-transparent">
+                <TableCell
+                  colSpan={5}
+                  className="py-10 text-center text-[14px] text-gray-400"
+                >
                   No orders yet
-                </td>
-              </tr>
+                </TableCell>
+              </TableRow>
             ) : (
-              payments.map((order, index) => {
+              payments.map((order) => {
                 const status = toOrderStatus(order.status);
                 return (
-                  <tr
+                  <TableRow
                     key={order._id}
-                    className={
-                      index < payments.length - 1 ? "border-b border-gray-50" : ""
-                    }
+                    className="border-b border-gray-100 last:border-0 bg-white hover:bg-gray-50/70 transition-colors"
                   >
-                    <td className="py-5 px-5 text-base font-semibold text-gray-900">
-                      #{order._id.slice(-6).toUpperCase()}
-                    </td>
-                    <td className="py-5 px-4">
+                    <TableCell className="py-3 pl-4">
+                      <Link
+                        href={`/dashboard/admin/orders/${order._id}`}
+                        className="text-[14px] font-semibold text-gray-900 hover:text-primary"
+                      >
+                        #{order._id.slice(-6).toUpperCase()}
+                      </Link>
+                    </TableCell>
+                    <TableCell className="py-3">
+                      <span className="block max-w-[180px] truncate text-[14px] font-medium text-gray-700">
+                        {order.course?.title ?? "Course purchase"}
+                      </span>
+                    </TableCell>
+                    <TableCell className="py-3">
                       <span
-                        className={`text-xs font-semibold px-4 py-1.5 rounded-full ${statusStyles[status]}`}
+                        className={`inline-flex rounded-full px-4 py-1.5 text-[12px] font-semibold ${statusStyles[status]}`}
                       >
                         {status}
                       </span>
-                    </td>
-                    <td className="py-5 px-4 text-base font-bold text-gray-900">
+                    </TableCell>
+                    <TableCell className="py-3 text-[14px] font-bold text-gray-900">
                       {(order.currency ?? "NGN") + " " + order.amount.toLocaleString()}
-                    </td>
-                    <td className="py-5 px-5 text-right">
+                    </TableCell>
+                    <TableCell className="py-3 pr-4 text-right">
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <button className="text-gray-400 hover:text-gray-600 transition-colors">
+                          <button
+                            aria-label={`Open actions for order ${order._id.slice(-6).toUpperCase()}`}
+                            className="inline-flex size-8 items-center justify-center rounded-md text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20"
+                          >
                             <MoreVertical className="size-5 inline-block" />
                           </button>
                         </DropdownMenuTrigger>
@@ -125,13 +155,13 @@ export const AdminDashboardOrderInfoCard = () => {
                           </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
-                    </td>
-                  </tr>
+                    </TableCell>
+                  </TableRow>
                 );
               })
             )}
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
       </div>
     </div>
   );

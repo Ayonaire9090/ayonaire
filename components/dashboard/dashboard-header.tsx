@@ -44,12 +44,16 @@ export function DashboardHeader({
   // settings page - those show an honest "not available yet" toast instead
   // of a dead button or a made-up destination.
   const notificationsPath = pathname.includes("/admin")
-    ? "/dashboard/admin/notifications"
+    ? pathname.includes("/preview/admin")
+      ? "/preview/admin/notifications"
+      : "/dashboard/admin/notifications"
     : pathname.includes("/instructor")
       ? "/dashboard/instructor/notifications"
       : null;
   const settingsPath = pathname.includes("/admin")
-    ? "/dashboard/admin/system-settings"
+    ? pathname.includes("/preview/admin")
+      ? "/preview/admin/system-settings"
+      : "/dashboard/admin/system-settings"
     : null;
 
   const handleNotificationsClick = () => {

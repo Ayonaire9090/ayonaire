@@ -50,6 +50,11 @@ export const DashboardUserDropDown = ({
       : pathname.includes("/student")
         ? "student"
         : "";
+  const profileRoot = pathname.includes("/preview/admin")
+    ? "/preview/admin/profile"
+    : pathname.includes("/preview/instructor")
+      ? "/preview/instructor/profile"
+      : `/dashboard/${profilePath}/profile`;
 
   return (
     <DropdownMenu>
@@ -69,7 +74,7 @@ export const DashboardUserDropDown = ({
             className="h-5 w-5 text-gray-700"
           />
           <button
-            onClick={() => router.push(`/dashboard/${profilePath}/profile`)}
+            onClick={() => router.push(profileRoot)}
             className="flex w-full! h-full! cursor-pointer bg-transparent! flex-start! items-start"
           >
             View Profile
@@ -84,9 +89,7 @@ export const DashboardUserDropDown = ({
             className="h-5 w-5 text-gray-700"
           />
           <button
-            onClick={() =>
-              router.push(`/dashboard/${profilePath}/profile/edit`)
-            }
+            onClick={() => router.push(`${profileRoot}/edit`)}
             className="flex w-full! h-full! cursor-pointer bg-transparent! flex-start! items-start"
           >
             My account

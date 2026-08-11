@@ -5,24 +5,42 @@ import { usePathname } from "next/navigation";
 import { dashboardData } from "@/constants";
 import { MobileDashboardFooter } from "./mobile-dashboard-footer";
 
-/** Shared shape that all three icon libraries satisfy at runtime. */
 type NavItem = { title: string; url: string; icon: React.ElementType };
 
-/**
- * Thin client-side wrapper that resolves the correct nav items
- * based on the current pathname and passes them to the reusable
- * MobileDashboardFooter component.
- */
 export function DashboardMobileFooterWrapper() {
   const pathname = usePathname();
+  const isPreviewAdmin = pathname.includes("/preview/admin");
+  const isPreviewInstructor = pathname.includes("/preview/instructor");
 
-  // Pick the right nav set — same logic as AppSidebar
   let navItems: NavItem[] = dashboardData.studentNavMain as NavItem[];
-  if (pathname.includes("/dashboard/admin")) {
+  if (pathname.includes("/dashboard/admin") || isPreviewAdmin) {
     navItems = dashboardData.adminNavMain as NavItem[];
-  } else if (pathname.includes("/dashboard/instructor")) {
+  } else if (pathname.includes("/dashboard/instructor") || isPreviewInstructor) {
     navItems = dashboardData.instructorNavMain as NavItem[];
   }
 
-  return <MobileDashboardFooter items={navItems} />;
+  const items = navItems.map((item) => {
+    if (isPreviewAdmin) {
+      return { ...item, url: item.url.replace("/dashboard/admin", "/preview/admin") };
+    }
+    if (isPreviewInstructor) {
+      return {
+        ...item,
+        url: item.url.replace("/dashboard/instructor", "/preview/instructor"),
+      };
+    }
+    return item;
+  });
+
+  const profile = isPreviewAdmin
+    ? { name: "Preview Admin", fallback: "PA", href: "/preview/admin/profile" }
+    : isPreviewInstructor
+      ? {
+          name: "Preview Instructor",
+          fallback: "PI",
+          href: "/preview/instructor/profile",
+        }
+      : undefined;
+
+  return <MobileDashboardFooter items={items} profile={profile} />;
 }

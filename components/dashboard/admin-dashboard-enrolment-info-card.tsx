@@ -1,11 +1,19 @@
 "use client";
 
-import { Clock, ChevronRight } from "lucide-react";
+import { ChevronRight, Clock } from "lucide-react";
 import Link from "next/link";
 import { useMemo } from "react";
 import { formatDistanceToNow } from "date-fns";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useGetAllEnrollments } from "@/hooks/api/use-enrollment";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 export const AdminDashboardEnrolmentInfoCard = () => {
   const { data } = useGetAllEnrollments({ limit: 20 });
@@ -37,57 +45,95 @@ export const AdminDashboardEnrolmentInfoCard = () => {
   }, [enrollments]);
 
   return (
-    <div className="rounded-2xl bg-white overflow-hidden py-5 px-5">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-gray-900">
-          Recent Enrollments
-        </h3>
+    <div className="w-full bg-white rounded-xl p-2 lg:p-4">
+      <div className="flex items-start justify-between gap-4 pb-4">
+        <div>
+          <h3 className="text-[18px] font-semibold text-gray-900">
+            Recent Enrollments
+          </h3>
+          <p className="mt-1 text-[14px] text-gray-500">
+            Latest student access activity
+          </p>
+        </div>
         <Link
           href="/dashboard/admin/enrollments"
-          className="text-sm font-medium text-primary hover:underline"
+          className="shrink-0 text-[14px] font-medium text-primary hover:underline"
         >
           View All
         </Link>
       </div>
 
-      {/* Enrolment List */}
-      <div className="space-y-2">
-        {recentEnrolments.length === 0 ? (
-          <p className="py-6 text-center text-sm text-gray-400">
-            No enrollments yet
-          </p>
-        ) : (
-          recentEnrolments.map((enrolment) => (
-            <Link
-              key={enrolment.id}
-              href="/dashboard/admin/enrollments"
-              className="flex items-center justify-between py-4 bg-[#FBFBFB] hover:bg-[#F5F5F5] transition-colors cursor-pointer -mx-2 px-2 rounded-lg"
-            >
-              <div className="flex items-center gap-3">
-                <Avatar className="size-11 shrink-0">
-                  <AvatarFallback>
-                    {enrolment.studentName.slice(0, 2).toUpperCase()}
-                  </AvatarFallback>
-                </Avatar>
-                <div>
-                  <p className="text-sm font-semibold text-gray-900">
-                    {enrolment.studentName}{" "}
-                    <span className="text-gray-400">→</span>{" "}
-                    {enrolment.courseName}
-                  </p>
-                  <div className="flex items-center gap-1 mt-0.5">
-                    <Clock className="size-3.5 text-gray-400" />
-                    <span className="text-xs text-gray-400">
+      <div className="rounded-2xl border border-gray-100 overflow-hidden bg-white">
+        <Table className="min-w-[560px] border-none">
+          <TableHeader className="bg-[#FAFAFA]">
+            <TableRow className="border-b border-gray-100 hover:bg-transparent">
+              <TableHead className="h-11 pl-4 text-[13px] font-medium text-gray-500">
+                Student
+              </TableHead>
+              <TableHead className="h-11 text-[13px] font-medium text-gray-500">
+                Course
+              </TableHead>
+              <TableHead className="h-11 text-[13px] font-medium text-gray-500">
+                Time
+              </TableHead>
+              <TableHead className="h-11 pr-4 text-right text-[13px] font-medium text-gray-500">
+                Action
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {recentEnrolments.length === 0 ? (
+              <TableRow className="border-none hover:bg-transparent">
+                <TableCell
+                  colSpan={4}
+                  className="py-10 text-center text-[14px] text-gray-400"
+                >
+                  No enrollments yet
+                </TableCell>
+              </TableRow>
+            ) : (
+              recentEnrolments.map((enrolment) => (
+                <TableRow
+                  key={enrolment.id}
+                  className="border-b border-gray-100 last:border-0 bg-white hover:bg-gray-50/70 transition-colors"
+                >
+                  <TableCell className="py-3 pl-4">
+                    <div className="flex items-center gap-3">
+                      <Avatar className="size-9 shrink-0">
+                        <AvatarFallback className="text-xs font-medium bg-primary/10 text-primary">
+                          {enrolment.studentName.slice(0, 2).toUpperCase()}
+                        </AvatarFallback>
+                      </Avatar>
+                      <span className="max-w-[150px] truncate text-[14px] font-semibold text-gray-900">
+                        {enrolment.studentName}
+                      </span>
+                    </div>
+                  </TableCell>
+                  <TableCell className="py-3">
+                    <span className="block max-w-[180px] truncate text-[14px] font-medium text-gray-700">
+                      {enrolment.courseName}
+                    </span>
+                  </TableCell>
+                  <TableCell className="py-3">
+                    <span className="inline-flex items-center gap-1 text-[14px] font-medium text-gray-500">
+                      <Clock className="size-3.5 text-gray-400" />
                       {enrolment.timeAgo}
                     </span>
-                  </div>
-                </div>
-              </div>
-              <ChevronRight className="size-4 text-gray-400 shrink-0" />
-            </Link>
-          ))
-        )}
+                  </TableCell>
+                  <TableCell className="py-3 pr-4 text-right">
+                    <Link
+                      href="/dashboard/admin/enrollments"
+                      aria-label={`View enrollment for ${enrolment.studentName}`}
+                      className="inline-flex size-8 items-center justify-center rounded-md text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20"
+                    >
+                      <ChevronRight className="size-4" />
+                    </Link>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        </Table>
       </div>
     </div>
   );
