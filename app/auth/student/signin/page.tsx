@@ -70,9 +70,9 @@ export default function SignInPage() {
     <>
       {/* Header */}
       <AuthHeader
-        title="Welcome back"
+        title="Welcome Back"
         description="Sign in to continue to your account"
-        className="mb-8"
+        className="mb-7"
       />
 
       {/* Form */}
@@ -156,8 +156,8 @@ export default function SignInPage() {
           </Link>
         </div>
 
-        <AuthSubmitButton isLoading={isLoading} className="mt-8">
-          Sign In
+        <AuthSubmitButton isLoading={isLoading} className="mt-7">
+          Sign in
         </AuthSubmitButton>
       </form>
 

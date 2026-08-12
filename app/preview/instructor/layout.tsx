@@ -9,6 +9,7 @@
 
 import { usePathname } from "next/navigation";
 import { PreviewInstructorSidebar } from "./_components/preview-instructor-sidebar";
+import { PreviewInstructorRouteBridge } from "./_components/preview-instructor-route-bridge";
 import { DashboardMobileFooterWrapper } from "@/components/dashboard/dashboard-mobile-footer-wrapper";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
@@ -22,6 +23,7 @@ export default function PreviewInstructorLayout({
 
   return (
     <SidebarProvider defaultOpen={false}>
+      <PreviewInstructorRouteBridge />
       <PreviewInstructorSidebar variant="sidebar" collapsible="icon" />
       <SidebarInset className="bg-[#F6F6F6]">
         <div className="bg-amber-50 border-b border-amber-200 text-amber-800 text-[13px] text-center py-2 px-4">

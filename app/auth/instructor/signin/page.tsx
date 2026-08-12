@@ -70,9 +70,9 @@ export default function SignInPage() {
     <>
       {/* Header */}
       <AuthHeader
-        title="Welcome back"
+        title="Welcome back, Ayo"
         description="Sign in to continue to your account"
-        className="mb-8"
+        className="mb-7"
       />
 
       {/* Form */}
@@ -147,7 +147,6 @@ export default function SignInPage() {
             label="Remember Me"
             type="checkbox"
             checked={rememberMe}
-            required
           />
           <Link
             href="/auth/reset-password"
@@ -157,8 +156,8 @@ export default function SignInPage() {
           </Link>
         </div>
 
-        <AuthSubmitButton isLoading={isLoading} className="mt-8">
-          Sign In
+        <AuthSubmitButton isLoading={isLoading} className="mt-7">
+          Sign in
         </AuthSubmitButton>
       </form>
 

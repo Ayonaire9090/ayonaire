@@ -107,7 +107,8 @@ function InstructorBuildProfileContent() {
   const searchParams = useSearchParams();
   const [step, setStep] = useState<Step>("personal");
 
-  const { mutateAsync: applyInstructor, isPending: isLoading } = useApplyInstructorMutation();
+  const { mutateAsync: applyInstructor, isPending: isLoading } =
+    useApplyInstructorMutation();
 
   // Get name from query params if available
   const initialName = searchParams.get("name") || "Flores Juanita";
@@ -198,7 +199,7 @@ function InstructorBuildProfileContent() {
         expertise: expertiseData.selectedCourses,
         instructorCourseCategory: expertiseData.selectedSchools.join(", "),
       });
-      
+
       toast.success("Profile submitted successfully!");
       // Move to success step
       setStep("success");
@@ -221,9 +222,9 @@ function InstructorBuildProfileContent() {
         <>
           {/* Header */}
           <AuthHeader
-            title="Build your instructor profile"
-            description="This information will be visible to students"
-            className="mb-8"
+            title="Set up your instructor profile"
+            description="This information will be visible to students."
+            className="mb-7"
           />
 
           {/* Form */}
@@ -295,11 +296,11 @@ function InstructorBuildProfileContent() {
               <div className="flex items-center justify-between">
                 <Label
                   htmlFor="bio"
-                  className="text-sm font-medium text-foreground"
+                  className="text-sm font-bold text-foreground"
                 >
                   Short bio
                 </Label>
-                <span className="text-sm text-muted-foreground">
+                <span className="text-xs text-muted-foreground">
                   {formData.bio.length}/{maxBioLength}
                 </span>
               </div>
@@ -308,7 +309,7 @@ function InstructorBuildProfileContent() {
                 placeholder="Tell students about yourself, your experience, and what makes your teaching unique..."
                 value={formData.bio}
                 onChange={handleChange}
-                className="min-h-[100px] rounded-lg border-gray-200 bg-[#FBFBFB] px-4 py-3 text-base placeholder:text-muted-foreground/60 focus:border-primary focus:bg-white focus-visible:ring-primary/20 resize-none"
+                className="min-h-[98px] rounded-none border-0 border-b-[1.8px] border-b-[#121315] bg-[#FFFCC8] px-4 py-3 text-sm font-semibold text-[#121315] placeholder:text-[#121315]/70 focus:border-b-primary focus:bg-[#FFFCC8] focus-visible:ring-0 resize-none shadow-none"
               />
             </div>
 
@@ -328,7 +329,7 @@ function InstructorBuildProfileContent() {
                     handleSelectChange("country", value)
                   }
                 >
-                  <SelectTrigger className="w-full h-12! rounded-lg border-gray-200 bg-[#FBFBFB] px-4 text-base focus:border-primary focus:bg-white shadow-none">
+                  <SelectTrigger className="w-full h-12! rounded-none border-0 border-b-[1.8px] border-b-[#121315] bg-[#FFFCC8] px-4 text-sm font-semibold focus:border-b-primary focus:bg-[#FFFCC8] shadow-none">
                     <SelectValue placeholder="Select Country" />
                   </SelectTrigger>
                   <SelectContent className="max-h-[300px]">
@@ -355,7 +356,7 @@ function InstructorBuildProfileContent() {
                     handleSelectChange("timezone", value)
                   }
                 >
-                  <SelectTrigger className="w-full h-12! rounded-lg border-gray-200 bg-[#FBFBFB] px-4 text-base focus:border-primary focus:bg-white shadow-none">
+                  <SelectTrigger className="w-full h-12! rounded-none border-0 border-b-[1.8px] border-b-[#121315] bg-[#FFFCC8] px-4 text-sm font-semibold focus:border-b-primary focus:bg-[#FFFCC8] shadow-none">
                     <SelectValue placeholder="Select Timezone" />
                   </SelectTrigger>
                   <SelectContent>
@@ -382,9 +383,9 @@ function InstructorBuildProfileContent() {
         <>
           {/* Header */}
           <AuthHeader
-            title="What's your expertise?"
-            description="Help us match you with the right students"
-            className="mb-8"
+            title="Set up your expertise"
+            description="Tell us what you can teach."
+            className="mb-7"
           />
 
           {/* Form */}
@@ -407,10 +408,10 @@ function InstructorBuildProfileContent() {
                       type="button"
                       onClick={() => handleSchoolToggle(school.value)}
                       className={cn(
-                        "flex flex-col items-center justify-center gap-2 p-3 rounded-xl border-2 transition-all duration-200 cursor-pointer",
+                        "flex flex-col items-center justify-center gap-2 p-3 rounded-[8px] border transition-all duration-200 cursor-pointer",
                         isSelected
-                          ? "border-[#F86432] bg-[#F86432]/5 text-[#F86432]"
-                          : "border-gray-200 bg-white text-gray-600 hover:border-gray-300",
+                          ? "border-[#F86432] bg-[#F86432]/10 text-[#F86432]"
+                          : "border-[#F2EFA8] bg-[#FFFCC8] text-gray-700 hover:border-[#F86432]/40",
                       )}
                     >
                       <IconComponent className="w-5 h-5" />
@@ -434,7 +435,7 @@ function InstructorBuildProfileContent() {
                   value={expertiseData.selectedCourses}
                   onChange={handleCoursesChange}
                   placeholder="Select courses..."
-                  className="rounded-lg border-gray-200 bg-[#FBFBFB]"
+                  className="rounded-lg border-gray-200 bg-[#FFFCC8]"
                 />
               </div>
             )}
@@ -455,10 +456,10 @@ function InstructorBuildProfileContent() {
                       type="button"
                       onClick={() => handleExperienceChange(level.value)}
                       className={cn(
-                        "flex items-center justify-between w-full p-4 rounded-xl border-2 transition-all duration-200 cursor-pointer text-left",
+                        "flex items-center justify-between w-full p-4 rounded-[8px] border transition-all duration-200 cursor-pointer text-left",
                         isSelected
-                          ? "border-[#F86432] bg-[#F86432]/5"
-                          : "border-gray-200 bg-white hover:border-gray-300",
+                          ? "border-[#F86432] bg-[#F86432]/10"
+                          : "border-[#F2EFA8] bg-[#FFFCC8] hover:border-[#F86432]/40",
                       )}
                     >
                       <div>
@@ -516,12 +517,12 @@ function InstructorBuildProfileContent() {
 
             {/* Success Header */}
             <AuthHeader
-              title="You're ready to teach! 🎉"
+              title="You're ready to teach!"
               description={
                 <>
                   Your instructor account is all set up.
                   <br />
-                  Welcome to LearnHub!
+                  Welcome to Ayonaire.
                 </>
               }
               className="mb-8"
@@ -529,7 +530,7 @@ function InstructorBuildProfileContent() {
 
             {/* Go to Dashboard Button */}
             <Link href="/dashboard/instructor" className="w-full">
-              <Button className="w-full h-12 cursor-pointer rounded-[10px] text-base font-semibold bg-primary hover:bg-primary/90 text-white shadow-lg shadow-primary/30 transition-all duration-200">
+              <Button className="w-full h-12 cursor-pointer rounded-[8px] text-sm font-semibold bg-primary hover:bg-primary/90 text-white shadow-none transition-all duration-200">
                 Go to Dashboard
               </Button>
             </Link>

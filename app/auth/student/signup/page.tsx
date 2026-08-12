@@ -40,7 +40,7 @@ export default function SignUpPage() {
       toast.success("Account created! Please verify your email.");
       // Redirect to verify email page
       router.push(
-        `/auth/verify-email?email=${encodeURIComponent(formData.email)}&type=student`
+        `/auth/verify-email?email=${encodeURIComponent(formData.email)}&type=student`,
       );
     } catch (error: any) {
       console.error("Sign up failed:", error);
@@ -64,7 +64,7 @@ export default function SignUpPage() {
       <AuthHeader
         title="Create new account"
         description="Welcome, please enter your details to get started."
-        className="mb-8"
+        className="mb-7"
       />
 
       {/* Form */}

@@ -22,7 +22,7 @@ export function AuthSubmitButton({
       type="submit"
       disabled={disabled || isLoading}
       className={cn(
-        "w-full h-12 cursor-pointer rounded-[10px] text-base font-semibold bg-[#F86432] hover:bg-primary/90 text-white shadow-lg shadow-primary/30 transition-all duration-200",
+        "w-full h-12 cursor-pointer rounded-[8px] text-sm font-semibold bg-[#F86432] hover:bg-primary/90 text-white shadow-none transition-all duration-200",
         className,
       )}
       {...props}

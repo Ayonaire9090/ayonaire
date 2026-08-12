@@ -16,8 +16,8 @@ export function AuthHeader({ title, description, className }: AuthHeaderProps) {
         title={title}
         description={description}
         headingLevel="h1"
-        className="text-2xl text-center md:text-3xl lg:text-4xl"
-        descriptionClassName="text-sm md:text-base text-muted-foreground pt-2"
+        className="text-xl text-center md:text-2xl lg:text-[24px] leading-tight"
+        descriptionClassName="text-[13px] md:text-sm text-muted-foreground pt-3"
       />
     </div>
   );

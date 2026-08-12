@@ -63,9 +63,9 @@ export default function SignUpPage() {
     <>
       {/* Header */}
       <AuthHeader
-        title="Create Instructor Account"
-        description="Start Your Journey as an Instructor Today"
-        className="mb-8"
+        title="Create new account"
+        description="Welcome, please enter your details to get started."
+        className="mb-7"
       />
 
       {/* Form */}

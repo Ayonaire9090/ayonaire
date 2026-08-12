@@ -18,7 +18,10 @@ import {
   ResetPasswordEmailSchema,
   ResetPasswordSchema,
 } from "@/schemas/reset-password";
-import { useForgotPasswordMutation, useResetPasswordMutation } from "@/hooks/api/use-auth";
+import {
+  useForgotPasswordMutation,
+  useResetPasswordMutation,
+} from "@/hooks/api/use-auth";
 import { toast } from "sonner";
 
 type Step = "email" | "create-password" | "success";
@@ -41,8 +44,10 @@ function ResetPasswordContent() {
   });
   const [errors, setErrors] = useState<FormErrors>({});
 
-  const { mutateAsync: forgotPassword, isPending: isForgotLoading } = useForgotPasswordMutation();
-  const { mutateAsync: resetPassword, isPending: isResetLoading } = useResetPasswordMutation();
+  const { mutateAsync: forgotPassword, isPending: isForgotLoading } =
+    useForgotPasswordMutation();
+  const { mutateAsync: resetPassword, isPending: isResetLoading } =
+    useResetPasswordMutation();
 
   const isLoading = isForgotLoading || isResetLoading;
 
@@ -71,7 +76,9 @@ function ResetPasswordContent() {
     try {
       await forgotPassword({ email });
       toast.success("Reset link sent!");
-      alert("If an account exists, a password reset email has been sent. Please check your inbox and click the link to continue.");
+      alert(
+        "If an account exists, a password reset email has been sent. Please check your inbox and click the link to continue.",
+      );
     } catch (error: any) {
       setErrors({ email: error?.message || "Failed to send reset link" });
       toast.error(error?.message || "Failed to send reset link");
@@ -95,7 +102,10 @@ function ResetPasswordContent() {
     }
 
     if (!token) {
-      setErrors({ newPassword: "Reset token is missing. Please use the link sent to your email." });
+      setErrors({
+        newPassword:
+          "Reset token is missing. Please use the link sent to your email.",
+      });
       return;
     }
 
@@ -104,7 +114,9 @@ function ResetPasswordContent() {
       toast.success("Password reset successfully!");
       setStep("success");
     } catch (error: any) {
-      setErrors({ confirmPassword: error?.message || "Failed to reset password" });
+      setErrors({
+        confirmPassword: error?.message || "Failed to reset password",
+      });
       toast.error(error?.message || "Failed to reset password");
     }
   };
@@ -123,7 +135,7 @@ function ResetPasswordContent() {
           <AuthHeader
             title="Reset Password"
             description="Input your email address account to receive a reset link"
-            className="mb-8"
+            className="mb-7"
           />
 
           {/* Email Form */}
@@ -190,7 +202,7 @@ function ResetPasswordContent() {
           <AuthHeader
             title="Create new password"
             description="Let's create a new and more secure password"
-            className="mb-8"
+            className="mb-7"
           />
 
           {/* Password Form */}
@@ -234,7 +246,7 @@ function ResetPasswordContent() {
             <div className="space-y-2">
               <AuthPasswordField
                 id="confirmPassword"
-                label="Repeat New  Password"
+                label="Repeat New Password"
                 placeholder=""
                 value={passwords.confirmPassword}
                 onChange={handlePasswordChange}
@@ -294,13 +306,13 @@ function ResetPasswordContent() {
             {/* Success Header */}
             <AuthHeader
               title="Reset password successful"
-              description="Successfully changed password. you can enter the main page"
+              description="Successfully changed password. You can enter the main page."
               className="mb-8 text-xl!"
             />
 
             {/* Go to Main Page Button */}
             <Link href="/" className="w-full">
-              <Button className="w-full h-12 cursor-pointer rounded-[10px] text-base font-semibold bg-primary hover:bg-primary/90 text-white shadow-lg shadow-primary/30 transition-all duration-200">
+              <Button className="w-full h-12 cursor-pointer rounded-[8px] text-sm font-semibold bg-primary hover:bg-primary/90 text-white shadow-none transition-all duration-200">
                 Go to Main Page
               </Button>
             </Link>

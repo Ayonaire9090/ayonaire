@@ -37,14 +37,14 @@ export function AuthFooter({
           {/* Divider */}
           <div className="flex items-center gap-4">
             <div className="flex-1 h-px bg-gray-200" />
-            <span className="text-sm text-muted-foreground">
-              Other Login Options
+            <span className="text-[12px] text-muted-foreground">
+              Other log in options
             </span>
             <div className="flex-1 h-px bg-gray-200" />
           </div>
 
           {/* Social Buttons */}
-          <div className="flex gap-3 w-full max-w-[70%] lg:max-w-[50%] mx-auto">
+          <div className="flex gap-3 w-full max-w-[180px] mx-auto">
             <AuthSocialButton provider="google" onClick={onGoogleClick} />
             <AuthSocialButton provider="facebook" onClick={onFacebookClick} />
             <AuthSocialButton provider="apple" onClick={onFacebookClick} />
@@ -53,7 +53,7 @@ export function AuthFooter({
       )}
 
       {/* Navigation Link */}
-      <p className="text-center text-sm text-muted-foreground">
+      <p className="text-center text-[12px] text-muted-foreground">
         {promptText}{" "}
         <Link
           href={actionHref}

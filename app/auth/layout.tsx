@@ -21,10 +21,10 @@ export default function AuthLayout({
         />
 
         {/* Form Container */}
-        <div className="relative z-10 flex flex-col justify-center items-center w-full min-h-screen px-2 sm:px-6 lg:px-8 py-8 lg:py-12">
+        <div className="relative z-10 flex flex-col justify-center items-center w-full min-h-screen px-5 sm:px-6 lg:px-8 py-8 lg:py-12">
           {/* Auth Logo */}
-          <AuthLogo className="mb-0 lg:mb-3" />
-          <div className="w-full lg:max-w-[580px] bg-white rounded-[50px] lg:rounded-[80px] shadow-2xl px-6 py-8 lg:px-10 lg:py-12">
+          <AuthLogo className="mb-5 lg:mb-8" />
+          <div className="w-full max-w-[430px] bg-white rounded-[32px] shadow-[0_18px_55px_rgba(18,19,21,0.14)] px-6 py-8 sm:px-8 lg:px-10 lg:py-10">
             {children}
           </div>
         </div>

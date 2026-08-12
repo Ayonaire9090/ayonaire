@@ -23,21 +23,13 @@ const PREVIEW_ROOT = "/preview/instructor";
 
 // Same nav data as the real instructor sidebar (components/dashboard/app-sidebar.tsx),
 // just with URLs remapped from /dashboard/instructor/* to /preview/instructor/*
-// so clicking a nav item stays inside the auth-free preview instead of
-// bouncing into the real, guarded dashboard. Only Analytics & Reporting has
-// a preview route wired up so far (it's the only page with zero data-hook
-// dependencies) - the rest are filtered out rather than left as dead links.
-const IMPLEMENTED_PREVIEW_TITLES = ["Dashboard", "Analytics & Reporting"];
-
-const previewNavItems = dashboardData.instructorNavMain
-  .filter((item) => IMPLEMENTED_PREVIEW_TITLES.includes(item.title))
-  .map((item) => ({
-    ...item,
-    url:
-      item.title === "Dashboard"
-        ? PREVIEW_ROOT
-        : item.url.replace("/dashboard/instructor", PREVIEW_ROOT),
-  }));
+const previewNavItems = dashboardData.instructorNavMain.map((item) => ({
+  ...item,
+  url:
+    item.title === "Dashboard"
+      ? PREVIEW_ROOT
+      : item.url.replace("/dashboard/instructor", PREVIEW_ROOT),
+}));
 
 function PreviewNavMain({
   items,
@@ -99,7 +91,9 @@ function PreviewNavMain({
   );
 }
 
-export function PreviewInstructorSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function PreviewInstructorSidebar({
+  ...props
+}: React.ComponentProps<typeof Sidebar>) {
   const { state, toggleSidebar, open, isMobile } = useSidebar();
   const isCollapsed = state === "collapsed" && !isMobile;
   const isPinned = open;
