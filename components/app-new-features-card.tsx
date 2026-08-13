@@ -1,11 +1,5 @@
 import Image from "next/image";
-import { Spline_Sans } from "next/font/google";
-
-const splineSans = Spline_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-spline-sans",
-});
+import { splineSans } from "@/app/fonts";
 
 interface AppNewFeaturesCardProps {
   icon: string;

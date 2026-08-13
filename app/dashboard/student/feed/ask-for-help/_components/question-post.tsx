@@ -1,7 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle, Clock, RotateCcw, Trash2 } from "lucide-react";
+import { CheckCircle, Clock, Pencil, RotateCcw, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { FeedPostHeader } from "../../_components/feed-post-header";
 import { FeedPostContent } from "../../_components/feed-post-content";
@@ -14,6 +15,7 @@ import {
   useDeleteAskForHelpQuestionMutation,
   useResolveAskForHelpQuestionMutation,
 } from "@/hooks/api/use-ask-for-help";
+import { AskQuestionModal } from "./ask-question-modal";
 
 interface QuestionPostProps {
   question: QuestionData;
@@ -34,6 +36,7 @@ const ResolvedBadge = ({ resolved }: { resolved: boolean }) =>
   );
 
 export const QuestionPost = ({ question, currentUserId }: QuestionPostProps) => {
+  const [isEditOpen, setIsEditOpen] = useState(false);
   const resolveMutation = useResolveAskForHelpQuestionMutation();
   const deleteMutation = useDeleteAskForHelpQuestionMutation();
   const isOwner = !!currentUserId && currentUserId === question.authorId;
@@ -62,6 +65,11 @@ export const QuestionPost = ({ question, currentUserId }: QuestionPostProps) => 
 
   const postOptions: PostOption[] | undefined = isOwner
     ? [
+        {
+          label: "Edit question",
+          icon: <Pencil size={18} strokeWidth={2} />,
+          onClick: () => setIsEditOpen(true),
+        },
         question.resolved
           ? {
               label: "Reopen question",
@@ -120,6 +128,12 @@ export const QuestionPost = ({ question, currentUserId }: QuestionPostProps) => 
       <div className="mt-4">
         <QuestionWriteAnswer questionId={question.id} />
       </div>
+
+      <AskQuestionModal
+        isOpen={isEditOpen}
+        onClose={() => setIsEditOpen(false)}
+        question={question}
+      />
     </div>
   );
 };

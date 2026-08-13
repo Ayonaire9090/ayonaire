@@ -4,26 +4,46 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { ProfileCourseCard } from "./profile-course-card";
 import { ProfileCerificateContent } from "./profile-certificate-content";
-import { useGetEnrolledCourses } from "@/hooks/api/use-enrollment";
+import {
+  useGetCompletedCourses,
+  useGetEnrolledCourses,
+} from "@/hooks/api/use-enrollment";
+import { Enrollment } from "@/lib/api/endpoints/enrollment";
 
 type CourseSubTab = "My Courses" | "My Certificates";
 
 const subTabs: CourseSubTab[] = ["My Courses", "My Certificates"];
 
+function getCourseId(enrollment: Enrollment): string {
+  return typeof enrollment.course === "string"
+    ? enrollment.course
+    : enrollment.course?._id ?? enrollment._id;
+}
+
 export function ProfileCoursesContent() {
   const [activeSubTab, setActiveSubTab] = useState<CourseSubTab>("My Courses");
   const { data, isLoading, isError } = useGetEnrolledCourses();
+  const {
+    data: completedData,
+    isLoading: isCompletedLoading,
+    isError: isCompletedError,
+  } = useGetCompletedCourses();
+  const completedCourseIds = new Set(
+    (completedData?.data ?? []).map((enrollment) => getCourseId(enrollment)),
+  );
 
   const enrolledCourses = (data?.data ?? [])
     .filter((enrollment) => typeof enrollment.course === "object" && enrollment.course)
     .map((enrollment) => {
       const course = enrollment.course as Exclude<typeof enrollment.course, string>;
+      const isCompleted =
+        enrollment.completed || completedCourseIds.has(getCourseId(enrollment));
       return {
         id: course._id,
         title: course.title,
         description: "",
         imageSrc: course.thumbnail?.url || "/assets/icons/branded-learning.svg",
-        status: enrollment.completed
+        status: isCompleted
           ? ("Completed" as const)
           : enrollment.progress > 0
           ? ("In Progress" as const)
@@ -57,11 +77,11 @@ export function ProfileCoursesContent() {
       {/* My Courses Tab Content */}
       {activeSubTab === "My Courses" && (
         <div>
-          {isLoading ? (
+          {isLoading || isCompletedLoading ? (
             <div className="flex items-center justify-center py-16">
               <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
             </div>
-          ) : isError ? (
+          ) : isError || isCompletedError ? (
             <div className="py-16 text-center">
               <p className="text-red-500 text-[15px]">
                 Failed to load your courses. Please try again.

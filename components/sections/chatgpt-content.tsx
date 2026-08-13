@@ -1,5 +1,5 @@
 import React from "react";
-import { Spectral_SC } from "next/font/google";
+import { spectralSC as spectralSc } from "@/app/fonts";
 import { cn } from "@/lib/utils";
 import { AppSection } from "../app-section";
 import { ChatGPTAd, ChatGPTMiniAd } from "./chatgpt-ad";
@@ -7,12 +7,6 @@ import Image from "next/image";
 import { ChatGPTVideo } from "./chat-gpt-video";
 import { AppActionButton } from "../app-action-button";
 import { Share2 } from "lucide-react";
-
-const spectralSc = Spectral_SC({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-spectral-sc",
-});
 
 export const ChatGPTContent = () => {
   return (

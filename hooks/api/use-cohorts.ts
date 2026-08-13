@@ -14,6 +14,14 @@ export const useGetCohorts = (course?: string) => {
   });
 };
 
+export const useGetCohortById = (cohortId: string) => {
+  return useQuery({
+    queryKey: [...queryKeys.cohorts.all, "detail", cohortId] as const,
+    queryFn: () => cohortsApi.getById(cohortId),
+    enabled: !!cohortId,
+  });
+};
+
 export const useCreateCohortMutation = () => {
   const queryClient = useQueryClient();
 

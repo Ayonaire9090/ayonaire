@@ -1,17 +1,27 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AppSimpleModal } from "@/components/modals/app-simple-modal";
 import { Tag, X, ImagePlus, PlusCircle } from "lucide-react";
-import { useCreateAskForHelpQuestionMutation } from "@/hooks/api/use-ask-for-help";
+import {
+  useCreateAskForHelpQuestionMutation,
+  useEditAskForHelpQuestionMutation,
+} from "@/hooks/api/use-ask-for-help";
 import { toast } from "sonner";
+import { QuestionData } from "./question-data";
 
 interface AskQuestionModalProps {
   isOpen: boolean;
   onClose: () => void;
+  question?: QuestionData;
 }
 
-export const AskQuestionModal = ({ isOpen, onClose }: AskQuestionModalProps) => {
+export const AskQuestionModal = ({
+  isOpen,
+  onClose,
+  question,
+}: AskQuestionModalProps) => {
+  const isEditing = !!question;
   const [text, setText] = useState("");
   const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState("");
@@ -19,9 +29,20 @@ export const AskQuestionModal = ({ isOpen, onClose }: AskQuestionModalProps) => 
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const createMutation = useCreateAskForHelpQuestionMutation();
+  const editMutation = useEditAskForHelpQuestionMutation();
+  const isPending = createMutation.isPending || editMutation.isPending;
+
+  useEffect(() => {
+    if (!isOpen) return;
+    setText(question?.textContent ?? "");
+    setTags(question?.tags ?? []);
+    setTagInput("");
+    setImage(null);
+    setImagePreview(question?.imageUrl ?? null);
+  }, [isOpen, question]);
 
   const resetAndClose = () => {
-    setText("");
+    setText(question?.textContent ?? "");
     setTags([]);
     setTagInput("");
     setImage(null);
@@ -48,20 +69,27 @@ export const AskQuestionModal = ({ isOpen, onClose }: AskQuestionModalProps) => 
 
   const handlePublish = () => {
     const trimmed = text.trim();
-    if (!trimmed || createMutation.isPending) return;
+    if (!trimmed || isPending) return;
 
     const formData = new FormData();
+    if (question) formData.append("questionId", question.id);
     formData.append("content", trimmed);
     formData.append("tags", JSON.stringify(tags));
     if (image) formData.append("media", image);
 
-    createMutation.mutate(formData, {
+    const mutation = isEditing ? editMutation : createMutation;
+    mutation.mutate(formData, {
       onSuccess: () => {
-        toast.success("Question posted");
+        toast.success(isEditing ? "Question updated" : "Question posted");
         resetAndClose();
       },
       onError: (error: Error) =>
-        toast.error(error.message || "Couldn't post your question"),
+        toast.error(
+          error.message ||
+            (isEditing
+              ? "Couldn't update your question"
+              : "Couldn't post your question"),
+        ),
     });
   };
 
@@ -69,7 +97,7 @@ export const AskQuestionModal = ({ isOpen, onClose }: AskQuestionModalProps) => 
     <AppSimpleModal
       isOpen={isOpen}
       onClose={resetAndClose}
-      title="Ask a question"
+      title={isEditing ? "Edit question" : "Ask a question"}
       className="max-w-[600px]"
     >
       <div className="flex flex-col gap-4">
@@ -153,10 +181,16 @@ export const AskQuestionModal = ({ isOpen, onClose }: AskQuestionModalProps) => 
           <button
             type="button"
             onClick={handlePublish}
-            disabled={!text.trim() || createMutation.isPending}
+            disabled={!text.trim() || isPending}
             className="bg-[#F86432] hover:bg-[#F86432]/90 text-white font-semibold px-6 py-2.5 rounded-xl transition-all cursor-pointer border-none disabled:opacity-60 disabled:cursor-default"
           >
-            {createMutation.isPending ? "Posting..." : "Post Question"}
+            {isPending
+              ? isEditing
+                ? "Saving..."
+                : "Posting..."
+              : isEditing
+                ? "Save Changes"
+                : "Post Question"}
           </button>
         </div>
       </div>

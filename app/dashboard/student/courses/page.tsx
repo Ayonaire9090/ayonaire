@@ -13,12 +13,22 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { StudentHomeSidebarContent } from "../_components/student-home-sidebar-content";
-import { useGetEnrolledCourses } from "@/hooks/api/use-enrollment";
+import {
+  useGetCompletedCourses,
+  useGetEnrolledCourses,
+} from "@/hooks/api/use-enrollment";
+import { Enrollment } from "@/lib/api/endpoints/enrollment";
 
 function deriveStatus(completed: boolean, progress: number): CourseStatus {
   if (completed) return "Completed";
   if (progress > 0) return "In Progress";
   return "Not Started";
+}
+
+function getCourseId(enrollment: Enrollment): string {
+  return typeof enrollment.course === "string"
+    ? enrollment.course
+    : enrollment.course?._id ?? enrollment._id;
 }
 
 function StudentCoursesContent() {
@@ -31,11 +41,23 @@ function StudentCoursesContent() {
   const tabs = ["All", "In Progress", "Completed", "Expired", "Paid"];
 
   const { data, isLoading, isError } = useGetEnrolledCourses();
+  const {
+    data: completedData,
+    isLoading: isCompletedLoading,
+    isError: isCompletedError,
+  } = useGetCompletedCourses();
+  const completedCourseIds = new Set(
+    (completedData?.data ?? []).map((enrollment) => getCourseId(enrollment)),
+  );
 
   const allCourses = (data?.data ?? []).map((enrollment) => {
     const course =
       typeof enrollment.course === "string" ? null : enrollment.course;
-    const status = deriveStatus(enrollment.completed, enrollment.progress);
+    const courseId = getCourseId(enrollment);
+    const status = deriveStatus(
+      enrollment.completed || completedCourseIds.has(courseId),
+      enrollment.progress,
+    );
 
     return {
       id: enrollment._id,
@@ -45,7 +67,7 @@ function StudentCoursesContent() {
       // description is only available from the course detail endpoint.
       description: "No description available",
       imageSrc: course?.thumbnail?.url || "/assets/images/optin-hero.png",
-      slug: course?._id || enrollment._id,
+      slug: courseId,
       status,
       progress: enrollment.progress ?? 0,
       chaptersCompleted: enrollment.comletedLessons?.length ?? 0,
@@ -118,11 +140,11 @@ function StudentCoursesContent() {
 
         {/* Courses Grid */}
         <div className="w-full px-4 lg:px-8 mx-auto py-8 lg:py-12">
-          {isLoading ? (
+          {isLoading || isCompletedLoading ? (
             <div className="flex items-center justify-center py-20">
               <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
             </div>
-          ) : isError ? (
+          ) : isError || isCompletedError ? (
             <div className="flex items-center justify-center py-20 text-[15px] text-red-500">
               Failed to load courses. Please try again.
             </div>

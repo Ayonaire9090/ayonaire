@@ -5,7 +5,7 @@ import { AppHeading } from "../app-heading";
 import { AppSectionButton } from "../app-section-button";
 import { stepsToLearn } from "@/constants";
 import { cn } from "@/lib/utils";
-import { Spline_Sans } from "next/font/google";
+import { splineSans } from "@/app/fonts";
 import {
   Carousel,
   CarouselContent,
@@ -15,12 +15,6 @@ import {
 import { AppNextButton } from "../app-next-button";
 import { AppPreviousButton } from "../app-previous-button";
 import Autoplay from "embla-carousel-autoplay";
-
-const splineSans = Spline_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-spline-sans",
-});
 
 interface CourseHowToApplyProps {
   courseTitle?: string;

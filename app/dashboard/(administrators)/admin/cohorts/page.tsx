@@ -1,19 +1,27 @@
 "use client";
 
 import { useState } from "react";
-import { Plus } from "lucide-react";
+import { Eye, Plus } from "lucide-react";
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 import { AdminDashboardButton } from "@/components/dashboard/admin-dashboard-button";
-import { useGetCohorts } from "@/hooks/api/use-cohorts";
+import { AppSimpleModal } from "@/components/modals/app-simple-modal";
+import { useGetCohortById, useGetCohorts } from "@/hooks/api/use-cohorts";
 import { CreateCohortModal } from "./_components/create-cohort-modal";
 import { AssignCohortModal } from "./_components/assign-cohort-modal";
 
 export default function AdminCohortsPage() {
   const { data, isLoading, isError } = useGetCohorts();
   const [isCreateOpen, setIsCreateOpen] = useState(false);
+  const [selectedCohortId, setSelectedCohortId] = useState<string | null>(null);
   const [assigning, setAssigning] = useState<{ cohortId: string; mode: "student" | "instructor" } | null>(null);
+  const {
+    data: selectedCohortData,
+    isLoading: isSelectedCohortLoading,
+    isError: isSelectedCohortError,
+  } = useGetCohortById(selectedCohortId ?? "");
 
   const cohorts = data?.cohorts ?? [];
+  const selectedCohort = selectedCohortData?.data;
 
   return (
     <div className="flex flex-col gap-0 pb-4">
@@ -64,6 +72,13 @@ export default function AdminCohortsPage() {
                 )}
                 <div className="flex items-center gap-3 mt-2 pt-3 border-t border-gray-100">
                   <button
+                    onClick={() => setSelectedCohortId(cohort._id)}
+                    className="inline-flex items-center gap-1.5 text-[13px] font-medium text-gray-700 hover:text-[#F06B30]"
+                  >
+                    <Eye className="h-3.5 w-3.5" />
+                    Details
+                  </button>
+                  <button
                     onClick={() => setAssigning({ cohortId: cohort._id, mode: "student" })}
                     className="text-[13px] font-medium text-[#F06B30] hover:underline"
                   >
@@ -88,6 +103,69 @@ export default function AdminCohortsPage() {
         mode={assigning?.mode ?? "student"}
         onClose={() => setAssigning(null)}
       />
+      <AppSimpleModal
+        isOpen={!!selectedCohortId}
+        onClose={() => setSelectedCohortId(null)}
+        title="Cohort details"
+        className="max-w-[480px]"
+      >
+        {isSelectedCohortLoading ? (
+          <div className="flex items-center justify-center py-12">
+            <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+          </div>
+        ) : isSelectedCohortError || !selectedCohort ? (
+          <div className="py-10 text-center text-[15px] text-red-500">
+            Failed to load cohort details. Please try again.
+          </div>
+        ) : (
+          <div className="mt-2 flex flex-col gap-4">
+            <div>
+              <p className="text-xs font-semibold uppercase text-gray-400">Name</p>
+              <p className="mt-1 text-[16px] font-semibold text-gray-900">
+                {selectedCohort.name}
+              </p>
+            </div>
+            <div>
+              <p className="text-xs font-semibold uppercase text-gray-400">Course</p>
+              <p className="mt-1 text-[14px] text-gray-700">
+                {typeof selectedCohort.course === "object"
+                  ? selectedCohort.course.title
+                  : "Uncategorized"}
+              </p>
+            </div>
+            <div>
+              <p className="text-xs font-semibold uppercase text-gray-400">Status</p>
+              <p className="mt-1 text-[14px] text-gray-700">
+                {selectedCohort.isActive === false ? "Inactive" : "Active"}
+              </p>
+            </div>
+            {selectedCohort.description && (
+              <div>
+                <p className="text-xs font-semibold uppercase text-gray-400">
+                  Description
+                </p>
+                <p className="mt-1 text-[14px] leading-relaxed text-gray-700">
+                  {selectedCohort.description}
+                </p>
+              </div>
+            )}
+            {selectedCohort.createdAt && (
+              <div>
+                <p className="text-xs font-semibold uppercase text-gray-400">
+                  Created
+                </p>
+                <p className="mt-1 text-[14px] text-gray-700">
+                  {new Date(selectedCohort.createdAt).toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                  })}
+                </p>
+              </div>
+            )}
+          </div>
+        )}
+      </AppSimpleModal>
     </div>
   );
 }

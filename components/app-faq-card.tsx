@@ -4,13 +4,7 @@ import React from "react";
 import { cn } from "@/lib/utils";
 import { Plus, Minus } from "lucide-react";
 import { AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
-import { Spline_Sans } from "next/font/google";
-
-const splineSans = Spline_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-spline-sans",
-});
+import { splineSans } from "@/app/fonts";
 
 interface AppFaqCardProps {
   index: number;

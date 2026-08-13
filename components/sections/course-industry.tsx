@@ -2,14 +2,8 @@ import React from "react";
 import Image from "next/image";
 import { AppHeading } from "../app-heading";
 import { AppSectionButton } from "../app-section-button";
-import { Spline_Sans } from "next/font/google";
+import { splineSans } from "@/app/fonts";
 import { cn } from "@/lib/utils";
-
-const splineSans = Spline_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-spline-sans",
-});
 
 interface IndustryStat {
   icon: string;

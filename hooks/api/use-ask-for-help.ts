@@ -23,6 +23,14 @@ export const useCreateAskForHelpQuestionMutation = () => {
   });
 };
 
+export const useEditAskForHelpQuestionMutation = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (formData: FormData) => askForHelpApi.edit(formData),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: askForHelpKey }),
+  });
+};
+
 export const useDeleteAskForHelpQuestionMutation = () => {
   const queryClient = useQueryClient();
   return useMutation({

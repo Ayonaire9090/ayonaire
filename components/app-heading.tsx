@@ -1,13 +1,6 @@
 import { cn } from "@/lib/utils";
-import { Spline_Sans } from "next/font/google";
-import { melodrama } from "@/app/fonts";
+import { melodrama, splineSans } from "@/app/fonts";
 import React from "react";
-
-const splineSans = Spline_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-spline-sans",
-});
 interface AppHeadingProps {
   title: string | React.ReactNode;
   description?: string | React.ReactNode;

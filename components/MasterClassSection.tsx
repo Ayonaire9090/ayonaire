@@ -1,14 +1,9 @@
 // components/MasterclassSection.tsx
 'use client';
 
-import { Inter } from 'next/font/google';
 import RegistrationModal from './RegisterationModal';
 import { useState } from 'react';
-import { agile, adineue } from '@/app/fonts';
-const inter = Inter({
-  subsets: ['latin'],
-  weight: ['400', '500', '700'],
-});
+import { agile, adineue, inter } from '@/app/fonts';
 
 const CheckIcon = () => (
   <svg

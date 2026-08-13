@@ -3,7 +3,7 @@ import { AppHeading } from "@/components/app-heading";
 import { ArrowRight, Link2 } from "lucide-react";
 import Image from "next/image";
 import React from "react";
-import { Spline_Sans } from "next/font/google";
+import { splineSans } from "@/app/fonts";
 import { cn } from "@/lib/utils";
 import { OptinFeatureCard } from "@/components/optin-feature-card";
 import { communityOptinFeatures } from "@/constants";
@@ -20,12 +20,6 @@ export const metadata: Metadata = generateSEO({
   keywords:
     "tech community, waitlist, free access, networking, job opportunities, tech learning, online community",
   canonical: "/opt-in",
-});
-
-const splineSans = Spline_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-spline-sans",
 });
 
 export default function OptInPage() {

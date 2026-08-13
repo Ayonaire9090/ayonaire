@@ -2,14 +2,8 @@
 import React, { ReactNode } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { Spline_Sans } from "next/font/google";
+import { splineSans } from "@/app/fonts";
 import { LucideIcon } from "lucide-react";
-
-const splineSans = Spline_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-spline-sans",
-});
 
 interface AppHalfBorderCardProps {
   icon: string | ReactNode | LucideIcon;

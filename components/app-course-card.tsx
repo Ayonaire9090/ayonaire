@@ -4,13 +4,7 @@ import Link from "next/link";
 import { Card, CardContent } from "./ui/card";
 
 import { formatDate } from "@/lib/utils";
-import { Spline_Sans } from "next/font/google";
-
-const splineSans = Spline_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-spline-sans",
-});
+import { splineSans } from "@/app/fonts";
 
 export interface AppCourseCardProps {
   title: string;

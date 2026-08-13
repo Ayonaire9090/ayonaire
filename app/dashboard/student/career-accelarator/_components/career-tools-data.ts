@@ -55,7 +55,7 @@ export const careerTools: CareerTool[] = [
     description: "Compare your current skills with industry demands to find learning gaps.",
   },
   {
-    href: "/dashboard/student/career-accelarator/ai-career-agent",
+    href: "/dashboard/student/career-accelarator/career-roadmap",
     icon: Route,
     title: "AI Career Roadmap",
     description: "Visualize your path to your dream role with actionable career steps.",

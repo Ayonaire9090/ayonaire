@@ -1,6 +1,5 @@
 'use client';
 
-import { Inter } from 'next/font/google';
 import { FaYoutube } from "react-icons/fa";
 import {
 
@@ -8,15 +7,7 @@ import {
   Clock3,
   Wallet,
 } from 'lucide-react';
-
-
-const inter = Inter({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-});
-
-
-import { agile, adineue } from '@/app/fonts';
+import { agile, adineue, inter } from '@/app/fonts';
 
 export default function LiveSessionDetails() {
   const details = [
