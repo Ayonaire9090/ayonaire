@@ -30,10 +30,10 @@ export function AuthFooter({
   className,
 }: AuthFooterProps) {
   return (
-    <div className={cn("space-y-6", className)}>
+    <div className={cn("space-y-10 lg:space-y-7", className)}>
       {/* Social Login Section */}
       {showSocialLogin && (
-        <div className="space-y-4">
+        <div className="space-y-8">
           {/* Divider */}
           <div className="flex items-center gap-4">
             <div className="flex-1 h-px bg-gray-200" />
@@ -44,7 +44,7 @@ export function AuthFooter({
           </div>
 
           {/* Social Buttons */}
-          <div className="flex gap-3 w-full max-w-[180px] mx-auto">
+          <div className="flex gap-5 w-full max-w-[176px] mx-auto">
             <AuthSocialButton provider="google" onClick={onGoogleClick} />
             <AuthSocialButton provider="facebook" onClick={onFacebookClick} />
             <AuthSocialButton provider="apple" onClick={onFacebookClick} />

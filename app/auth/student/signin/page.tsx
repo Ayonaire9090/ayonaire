@@ -17,7 +17,7 @@ export default function SignInPage() {
   const router = useRouter();
   const { mutateAsync: login, isPending } = useLoginMutation();
   const isLoading = isPending;
-  const [rememberMe, setRememberMe] = useState(false);
+  const [rememberMe, setRememberMe] = useState(true);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -70,7 +70,7 @@ export default function SignInPage() {
     <>
       {/* Header */}
       <AuthHeader
-        title="Welcome Back"
+        title="Welcome back, Ayo"
         description="Sign in to continue to your account"
         className="mb-7"
       />
@@ -87,24 +87,25 @@ export default function SignInPage() {
           required
           labelClassName="font-bold! text-[14px]!"
           className="
+            h-[58px]! lg:h-10!
           text-[#121315]!
             bg-transparent!
             font-semibold!
             text-[14px]!
-            active:bg-[#FFFCC8]! 
-            focus:bg-[#FFFCC8]! 
+            active:bg-transparent!
+            focus:bg-transparent!
             active:outline-none!  
             focus:outline-none!
             focus:ring-0!
             active:ring-0!
             focus-visible:ring-0!
             active-visible:ring-0!
-            border-0! border-b-[1.8px]! border-b-[#121315] rounded-none!
+            border-0! border-b-[1.8px]! border-b-[#B7B7B7] rounded-none!
             focus:border-b-[1.8px]! focus:border-b-primary!
             focus-visible:border-b-[1.8px]! focus-visible:border-b-primary!
             active:border-b-[1.8px]! active:border-b-primary!
             active-visible:border-b-[1.8px]! active-visible:border-b-primary!
-            not-placeholder-shown:bg-[#FFFCC8]!
+            not-placeholder-shown:bg-transparent!
             not-placeholder-shown:border-b-primary!
             "
         />
@@ -116,25 +117,26 @@ export default function SignInPage() {
           value={formData.password}
           onChange={handleChange}
           required
-          labelClassName="font-bold! text-[14px]! pt-3!"
+          labelClassName="font-bold! text-[14px]!"
           className="
+            h-[58px]! lg:h-10!
             text-[#121315]!
             bg-transparent!
             font-semibold!
-            active:bg-[#FFFCC8]! 
-            focus:bg-[#FFFCC8]! 
+            active:bg-transparent!
+            focus:bg-transparent!
             active:outline-none!  
             focus:outline-none!
             focus:ring-0!
             active:ring-0!
             focus-visible:ring-0!
             active-visible:ring-0!
-            border-0! border-b-[1.8px]! border-b-[#121315] rounded-none!
+            border-0! border-b-[1.8px]! border-b-[#B7B7B7] rounded-none!
             focus:border-b-[1.8px]! focus:border-b-primary!
             focus-visible:border-b-[1.8px]! focus-visible:border-b-primary!
             active:border-b-[1.8px]! active:border-b-primary!
             active-visible:border-b-[1.8px]! active-visible:border-b-primary!
-            not-placeholder-shown:bg-[#FFFCC8]!
+            not-placeholder-shown:bg-transparent!
             not-placeholder-shown:border-b-primary!
             "
         />
@@ -156,7 +158,7 @@ export default function SignInPage() {
           </Link>
         </div>
 
-        <AuthSubmitButton isLoading={isLoading} className="mt-7">
+        <AuthSubmitButton isLoading={isLoading}>
           Sign in
         </AuthSubmitButton>
       </form>
@@ -168,7 +170,7 @@ export default function SignInPage() {
         actionHref="/auth/student/signup"
         onGoogleClick={handleGoogleSignIn}
         onFacebookClick={handleFacebookSignIn}
-        className="mt-6"
+        className="mt-10 lg:mt-6"
       />
     </>
   );

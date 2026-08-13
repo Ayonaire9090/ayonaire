@@ -76,7 +76,7 @@ export function AuthSocialButton({
       disabled={disabled}
       aria-label={`Sign in with ${config.label}`}
       className={cn(
-        "flex-1 h-12 cursor-pointer rounded-[10px] border-gray-200 bg-white hover:bg-gray-50 text-gray-700 font-medium flex items-center justify-center",
+        "flex-1 h-11 cursor-pointer rounded-[8px] border-[#EFEFEF] bg-white hover:bg-gray-50 text-gray-700 font-medium flex items-center justify-center shadow-[0_4px_14px_rgba(18,19,21,0.04)]",
         className,
       )}
     >

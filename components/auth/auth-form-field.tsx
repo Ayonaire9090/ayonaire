@@ -21,20 +21,37 @@ export const AuthFormField = forwardRef<HTMLInputElement, AuthFormFieldProps>(
 
     // Handle checkbox type differently
     if (type === "checkbox") {
+      const { checked, disabled, name, onChange, required, value } = props;
+
       return (
         <div className="flex items-center gap-3">
           <Checkbox
             id={fieldId}
-            required={props.required}
+            checked={checked}
+            disabled={disabled}
+            name={name}
+            required={required}
+            value={typeof value === "string" ? value : undefined}
+            onCheckedChange={(nextChecked) => {
+              onChange?.({
+                target: {
+                  checked: nextChecked === true,
+                  id: fieldId,
+                  name,
+                  value: nextChecked === true ? String(value ?? "on") : "",
+                },
+              } as React.ChangeEvent<HTMLInputElement>);
+            }}
             className={cn(
-              "w-5 h-5 rounded border-2 border-gray-300 data-[state=checked]:bg-[#F86432] data-[state=checked]:border-[#F86432] data-[state=checked]:text-white",
+              "size-[17px] rounded-[3px] border border-[#D7D7D7] shadow-none data-[state=checked]:bg-[#16A34A] data-[state=checked]:border-[#16A34A] data-[state=checked]:text-white",
               className,
             )}
           />
           <Label
             htmlFor={fieldId}
             className={cn(
-              "text-sm font-medium text-foreground cursor-pointer select-none",
+              "text-[13px] md:text-sm font-medium text-foreground cursor-pointer select-none",
+              labelClassName,
             )}
           >
             {label}
