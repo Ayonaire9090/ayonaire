@@ -312,18 +312,18 @@ function ExploreRoadmapCard({
   onStart: () => void;
 }) {
   return (
-    <article className="flex min-h-[252px] flex-col rounded-[10px] border border-[#D9E0EA] bg-white p-6 shadow-[0_1px_2px_rgba(16,24,40,0.03)]">
-      <h3 className="min-h-[72px] text-[21px] font-semibold leading-snug tracking-normal text-[#111827]">
+    <article className="flex min-h-[236px] flex-col rounded-[8px] border border-[#E4E8EF] bg-white p-6 shadow-[0_1px_2px_rgba(16,24,40,0.02)]">
+      <h3 className="min-h-[62px] text-[18px] font-semibold leading-snug tracking-normal text-[#111827]">
         {roadmap.title}
       </h3>
-      <div className="mt-3 grid gap-2 text-base text-[#536A87]">
+      <div className="mt-3 grid gap-2 text-sm text-[#536A87]">
         <p className="flex items-center justify-between">
           <span>Steps:</span>
           <span>{roadmap.steps}</span>
         </p>
         <p className="flex items-center justify-between">
           <span>Difficulty:</span>
-          <span className="rounded-full bg-[#E5F6EC] px-4 py-1 text-sm text-[#00A651]">
+          <span className="rounded-full bg-[#E5F6EC] px-3 py-1 text-xs font-medium text-[#00A651]">
             {roadmap.difficulty}
           </span>
         </p>
@@ -332,7 +332,7 @@ function ExploreRoadmapCard({
         type="button"
         variant="outline"
         onClick={onStart}
-        className="mt-auto h-14 rounded-[8px] border-[#111111] text-base font-semibold text-[#111111] hover:bg-[#F8F8F8]"
+        className="mt-auto h-12 rounded-[6px] border-[#111111] text-sm font-semibold text-[#111111] hover:bg-[#F8F8F8]"
       >
         Start Roadmap
       </Button>
@@ -342,27 +342,32 @@ function ExploreRoadmapCard({
 
 function MyRoadmapCard({
   roadmap,
+  selected,
   onOpen,
 }: {
   roadmap: (typeof myRoadmaps)[number];
+  selected: boolean;
   onOpen: () => void;
 }) {
   return (
     <button
       type="button"
       onClick={onOpen}
-      className="rounded-[10px] border border-[#E5E7EB] bg-white p-6 text-left transition hover:border-[#F85F35] hover:shadow-sm"
+      className={cn(
+        "rounded-[10px] border bg-white p-6 text-left transition hover:border-[#3B82F6] hover:shadow-sm",
+        selected ? "border-[#3B82F6]" : "border-[#E5E7EB]",
+      )}
     >
-      <div className="flex min-h-24 items-start justify-between gap-4">
-        <h3 className="max-w-[360px] text-xl font-semibold leading-snug tracking-normal text-[#111827]">
+      <div className="flex min-h-[92px] items-start justify-between gap-4">
+        <h3 className="max-w-[360px] text-[18px] font-semibold leading-snug tracking-normal text-[#111827]">
           {roadmap.title}
         </h3>
-        <span className="text-base font-semibold text-[#F85F35]">
+        <span className="text-sm font-semibold text-[#F85F35]">
           {roadmap.progress}%
         </span>
       </div>
       <p className="mt-3 text-sm text-[#536A87]">{roadmap.steps}</p>
-      <div className="mt-9 h-2 overflow-hidden rounded-full bg-[#F0F0F0]">
+      <div className="mt-8 h-2 overflow-hidden rounded-full bg-[#F0F0F0]">
         <div
           className="h-full rounded-full bg-[#F85F35]"
           style={{ width: `${roadmap.progress}%` }}
@@ -427,13 +432,13 @@ function AchievementCard({
 
 function AchievementsPanel() {
   return (
-    <section className="mx-auto mt-10 w-full max-w-[1250px] overflow-hidden rounded-[10px] border border-[#E9E9E9] bg-white px-5 py-9 md:px-11 md:py-12">
+    <section className="mt-10 w-full overflow-hidden rounded-[10px] border border-[#E9E9E9] bg-white px-5 py-9 md:px-11 md:py-12">
       <div>
-        <h2 className="text-[28px] font-semibold leading-none tracking-normal text-[#111111]">
+        <h2 className="text-[24px] font-semibold leading-none tracking-normal text-[#111111] md:text-[28px]">
           Your Achievements
         </h2>
       </div>
-      <p className="mt-8 text-[17px] leading-7 text-[#6B7280]">
+      <p className="mt-7 text-[15px] leading-7 text-[#6B7280] md:text-[17px]">
         Celebrate your learning milestones and progress
       </p>
       <div className="mt-9 grid gap-x-8 gap-y-8 md:grid-cols-2">
@@ -827,13 +832,13 @@ function RoadmapDetail({
 
 export function CareerRoadmapBuilder() {
   const [isBuilding, setIsBuilding] = React.useState(false);
-  const [activeTab, setActiveTab] = React.useState(tabs[2]);
+  const [activeTab, setActiveTab] = React.useState(tabs[0]);
   const [selectedRoadmap, setSelectedRoadmap] = React.useState<
     (typeof exploreRoadmaps)[number] | null
   >(null);
   const [selectedProgressRoadmap, setSelectedProgressRoadmap] = React.useState<
     (typeof myRoadmaps)[number] | null
-  >(null);
+  >(myRoadmaps[0]);
   const [stepIndex, setStepIndex] = React.useState(0);
   const [answers, setAnswers] = React.useState<Answers>({});
   const [generatedRoadmap, setGeneratedRoadmap] = React.useState<string | null>(
@@ -916,9 +921,9 @@ export function CareerRoadmapBuilder() {
   }, [selectedProgressRoadmap]);
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#F7F7F7] pb-24 md:pb-8">
-      <div className="mx-auto w-full max-w-[1380px] overflow-x-hidden bg-white md:min-h-screen">
-        <header className="flex items-center justify-between px-5 py-5 md:px-8 md:py-7">
+    <div className="min-h-screen overflow-x-hidden bg-white pb-24 md:pb-8">
+      <div className="mx-auto w-full overflow-x-hidden bg-white md:min-h-screen">
+        <header className="flex items-center justify-between px-5 py-5 md:hidden">
           <Image
             src="/assets/logos/full-logo-dark.svg"
             width={156}
@@ -945,12 +950,12 @@ export function CareerRoadmapBuilder() {
           </div>
         </header>
 
-        <main className="min-w-0 px-5 pb-10 md:px-8">
+        <main className="min-w-0 px-5 pb-10 pt-2 md:px-12 md:pt-12 xl:px-16">
           {!isBuilding ? (
             <>
               <div className="flex items-start justify-between gap-5">
                 <div>
-                  <h1 className="text-2xl font-semibold tracking-normal text-[#111111]">
+                  <h1 className="text-2xl font-semibold tracking-normal text-[#111111] md:text-[28px]">
                     Career Roadmaps
                   </h1>
                   <p className="mt-2 text-sm text-[#777777] md:text-base">
@@ -962,16 +967,16 @@ export function CareerRoadmapBuilder() {
                   type="button"
                   onClick={() => setIsBuilding(true)}
                   aria-label="Create roadmap"
-                  className="flex h-12 w-12 shrink-0 items-center justify-center gap-2 rounded-full bg-[#FFF0EA] px-0 text-[#F85F35] transition hover:bg-[#FFE4DA] sm:w-auto sm:rounded-[4px] sm:bg-[#F85F35] sm:px-5 sm:text-white sm:hover:bg-[#E85229]"
+                  className="flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-[#FFF0EA] px-0 text-[#F85F35] transition hover:bg-[#FFE4DA] sm:w-auto sm:rounded-[4px] sm:bg-[#F85F35] sm:px-5 sm:text-white sm:hover:bg-[#E85229] md:h-11"
                 >
-                  <Plus className="size-5" />
+                  <Plus className="size-4" />
                   <span className="hidden text-sm font-medium sm:inline">
                     Personalize Roadmap
                   </span>
                 </button>
               </div>
 
-              <div className="mt-8 overflow-hidden rounded-[12px] bg-[#F5F5F5] p-2">
+              <div className="mt-8 overflow-hidden rounded-[8px] bg-[#F5F5F5] p-1.5">
                 <div className="grid grid-cols-3 gap-2">
                   {tabs.map((tab) => (
                     <button
@@ -979,7 +984,7 @@ export function CareerRoadmapBuilder() {
                       key={tab}
                       onClick={() => setActiveTab(tab)}
                       className={cn(
-                        "h-14 min-w-0 rounded-[8px] px-2 text-sm transition md:text-base",
+                        "h-12 min-w-0 rounded-[6px] px-2 text-sm transition md:h-11 md:text-sm",
                         activeTab === tab
                           ? "bg-white text-black shadow-sm"
                           : "text-[#777777] hover:bg-white/60",
@@ -1013,13 +1018,26 @@ export function CareerRoadmapBuilder() {
                 <AchievementsPanel />
               ) : (
                 selectedProgressRoadmap ? (
-                  <RoadmapProgressDetail roadmap={selectedProgressRoadmap} />
+                  <>
+                    <section className="mt-10 grid gap-7 md:grid-cols-2">
+                      {myRoadmaps.map((roadmap) => (
+                        <MyRoadmapCard
+                          key={roadmap.title}
+                          roadmap={roadmap}
+                          selected={roadmap.title === selectedProgressRoadmap.title}
+                          onOpen={() => setSelectedProgressRoadmap(roadmap)}
+                        />
+                      ))}
+                    </section>
+                    <RoadmapProgressDetail roadmap={selectedProgressRoadmap} />
+                  </>
                 ) : (
                   <section className="mt-10 grid gap-7 md:grid-cols-2">
                     {myRoadmaps.map((roadmap) => (
                       <MyRoadmapCard
                         key={roadmap.title}
                         roadmap={roadmap}
+                        selected={false}
                         onOpen={() => setSelectedProgressRoadmap(roadmap)}
                       />
                     ))}
