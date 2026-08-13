@@ -313,7 +313,7 @@ function ExploreRoadmapCard({
 }) {
   return (
     <article className="flex min-h-[236px] flex-col rounded-[8px] border border-[#E4E8EF] bg-white p-6 shadow-[0_1px_2px_rgba(16,24,40,0.02)]">
-      <h3 className="min-h-[62px] text-[18px] font-semibold leading-snug tracking-normal text-[#111827]">
+      <h3 className="min-h-[58px] text-[16px] font-semibold leading-snug tracking-normal text-[#111827]">
         {roadmap.title}
       </h3>
       <div className="mt-3 grid gap-2 text-sm text-[#536A87]">
@@ -387,7 +387,7 @@ function AchievementCard({
   return (
     <article
       className={cn(
-        "flex min-h-[170px] min-w-0 gap-4 rounded-[10px] border px-5 py-7 shadow-[0_1px_2px_rgba(16,24,40,0.03)] md:gap-6 md:px-7 md:py-8",
+        "flex min-h-[160px] min-w-0 gap-4 rounded-[10px] border px-5 py-6 shadow-[0_1px_2px_rgba(16,24,40,0.03)] md:gap-5 md:px-6 md:py-7",
         earned
           ? "border-[#FFD8CC] bg-[#FFF0EA]"
           : "border-[#F1F1F1] bg-[#FAFAFA]",
@@ -402,10 +402,10 @@ function AchievementCard({
         <Medal className="size-5" />
       </span>
       <div className="min-w-0 flex-1 overflow-hidden">
-        <h3 className="max-w-full text-[18px] font-semibold leading-snug text-[#111827] [overflow-wrap:anywhere] md:text-[19px]">
+        <h3 className="max-w-full text-[16px] font-semibold leading-snug text-[#111827] [overflow-wrap:anywhere]">
           {item.title}
         </h3>
-        <p className="mt-4 max-w-full text-[15px] text-[#536A87] [overflow-wrap:anywhere]">
+        <p className="mt-3 max-w-full text-[14px] leading-5 text-[#536A87] [overflow-wrap:anywhere]">
           {item.subtitle}
         </p>
         {earned ? (
@@ -434,11 +434,11 @@ function AchievementsPanel() {
   return (
     <section className="mt-10 w-full overflow-hidden rounded-[10px] border border-[#E9E9E9] bg-white px-5 py-9 md:px-11 md:py-12">
       <div>
-        <h2 className="text-[24px] font-semibold leading-none tracking-normal text-[#111111] md:text-[28px]">
+        <h2 className="text-[22px] font-semibold leading-tight tracking-normal text-[#111111] md:text-[24px]">
           Your Achievements
         </h2>
       </div>
-      <p className="mt-7 text-[15px] leading-7 text-[#6B7280] md:text-[17px]">
+      <p className="mt-4 text-[14px] leading-6 text-[#6B7280] md:text-[15px]">
         Celebrate your learning milestones and progress
       </p>
       <div className="mt-9 grid gap-x-8 gap-y-8 md:grid-cols-2">
@@ -472,7 +472,7 @@ function RoadmapProgressDetail({
                     : "border-[#E5E7EB]",
                 )}
               >
-                <h2 className="min-h-16 text-[19px] font-semibold leading-snug text-[#111827]">
+                <h2 className="min-h-14 text-[16px] font-semibold leading-snug text-[#111827]">
                   {item.title}
                 </h2>
                 <div className="mt-5 flex items-center justify-between text-sm">
@@ -488,11 +488,11 @@ function RoadmapProgressDetail({
           <section className="rounded-[10px] border border-[#E5E7EB] bg-white p-6 md:p-8">
             <div className="flex items-center gap-3">
               <BookOpen className="size-6 text-[#111827]" />
-              <h1 className="text-2xl font-semibold tracking-normal text-[#111827]">
+              <h1 className="text-[22px] font-semibold leading-tight tracking-normal text-[#111827]">
                 {roadmap.title}
               </h1>
             </div>
-            <p className="mt-4 max-w-3xl text-base leading-7 text-[#6B7280]">
+            <p className="mt-3 max-w-3xl text-[14px] leading-6 text-[#6B7280]">
               {roadmap.description}
             </p>
             <div className="mt-7 flex items-center gap-4">
@@ -509,10 +509,10 @@ function RoadmapProgressDetail({
           </section>
 
           <section className="rounded-[10px] border border-[#E5E7EB] bg-white p-6 md:p-8">
-            <h2 className="text-2xl font-semibold tracking-normal text-[#111827]">
+            <h2 className="text-[22px] font-semibold leading-tight tracking-normal text-[#111827]">
               Learning Path
             </h2>
-            <p className="mt-4 text-base text-[#6B7280]">
+            <p className="mt-3 text-[14px] leading-6 text-[#6B7280]">
               Follow these steps to master ui/ux designer freelance career
               roadmap
             </p>
@@ -528,14 +528,14 @@ function RoadmapProgressDetail({
                     </span>
                     <div className="flex-1">
                       <div className="flex flex-wrap items-center justify-between gap-3">
-                        <h3 className="text-xl font-semibold text-[#111827]">
+                        <h3 className="text-[17px] font-semibold leading-snug text-[#111827]">
                           {step.title}
                         </h3>
                         <span className="text-sm text-[#6B7280]">
                           0/2 complete
                         </span>
                       </div>
-                      <p className="mt-4 max-w-3xl text-base leading-7 text-[#6B7280]">
+                      <p className="mt-3 max-w-3xl text-[14px] leading-6 text-[#6B7280]">
                         {step.body}
                       </p>
                       <Button
@@ -556,11 +556,11 @@ function RoadmapProgressDetail({
           <section className="rounded-[10px] border border-[#E5E7EB] bg-white p-7 text-center">
             <div className="mb-5 flex items-center gap-3 text-left">
               <Target className="size-6 text-[#111827]" />
-              <h2 className="text-xl font-semibold text-[#111827]">
+              <h2 className="text-[18px] font-semibold text-[#111827]">
                 Progress Summary
               </h2>
             </div>
-            <p className="text-4xl font-semibold text-[#F85F35]">
+            <p className="text-[30px] font-semibold leading-none text-[#F85F35]">
               {roadmap.progress}%
             </p>
             <p className="mt-2 text-sm text-[#6B7280]">Complete</p>
@@ -577,9 +577,9 @@ function RoadmapProgressDetail({
           </section>
 
           <section className="rounded-[10px] border border-[#E5E7EB] bg-white p-6">
-            <h2 className="text-xl font-semibold text-[#111827]">Next Steps</h2>
+            <h2 className="text-[18px] font-semibold text-[#111827]">Next Steps</h2>
             <div className="mt-5 rounded-[8px] bg-[#FFF0EA] p-5">
-              <p className="text-lg font-semibold text-[#F85F35]">
+              <p className="text-[16px] font-semibold text-[#F85F35]">
                 Continue Learning
               </p>
               <p className="mt-2 text-sm leading-6 text-[#F85F35]">
@@ -613,7 +613,7 @@ function MapNode({
       className={cn(
         "relative z-10 flex items-center justify-center rounded-[5px] bg-[#FFE18A] px-4 py-3 text-center font-medium text-[#111111]",
         variant === "main" &&
-          "bg-[#F8B900] px-7 py-5 text-lg font-bold shadow-sm",
+          "bg-[#F8B900] px-7 py-5 text-[17px] font-bold shadow-sm",
         variant === "small" && "px-3 py-2 text-sm",
         className,
       )}
@@ -733,7 +733,7 @@ function RoadmapDetail({
         <button
           type="button"
           onClick={onBack}
-          className="flex min-w-0 items-center gap-3 text-left text-xl font-medium text-[#111827]"
+          className="flex min-w-0 items-center gap-3 text-left text-[18px] font-medium text-[#111827]"
         >
           <ArrowLeft className="size-5 shrink-0" />
           <span className="truncate">{title}</span>
@@ -760,7 +760,7 @@ function RoadmapDetail({
 
       <div className="grid min-h-[calc(100vh-80px)] grid-cols-1 lg:grid-cols-[430px_1fr]">
         <aside className="border-r border-[#E5E7EB] bg-white p-5 md:p-7">
-          <h2 className="text-xl font-semibold text-[#111111]">
+          <h2 className="text-[18px] font-semibold text-[#111111]">
             Learning Path & Resources
           </h2>
           <div className="mt-6 space-y-5">
@@ -775,7 +775,7 @@ function RoadmapDetail({
                 <div className="flex gap-4">
                   <span
                     className={cn(
-                      "flex size-10 shrink-0 items-center justify-center rounded-full text-lg font-semibold",
+                      "flex size-10 shrink-0 items-center justify-center rounded-full text-[16px] font-semibold",
                       index === 0
                         ? "bg-[#3B82F6] text-white"
                         : "border-2 border-[#F85F35] text-[#F85F35]",
@@ -784,7 +784,7 @@ function RoadmapDetail({
                     {index + 1}
                   </span>
                   <div>
-                    <h3 className="text-lg font-semibold leading-snug text-[#111111]">
+                    <h3 className="text-[16px] font-semibold leading-snug text-[#111111]">
                       {module.title}
                     </h3>
                     <p className="mt-3 text-sm leading-6 text-[#666666]">
@@ -955,10 +955,10 @@ export function CareerRoadmapBuilder() {
             <>
               <div className="flex items-start justify-between gap-5">
                 <div>
-                  <h1 className="text-2xl font-semibold tracking-normal text-[#111111] md:text-[28px]">
+                  <h1 className="text-[24px] font-semibold leading-tight tracking-normal text-[#111111]">
                     Career Roadmaps
                   </h1>
-                  <p className="mt-2 text-sm text-[#777777] md:text-base">
+                  <p className="mt-2 text-[14px] leading-6 text-[#777777] md:text-[15px]">
                     Follow personalized learning paths to achieve your career
                     goals
                   </p>
@@ -998,10 +998,10 @@ export function CareerRoadmapBuilder() {
 
               {activeTab === "Explore" ? (
                 <section className="mt-10 rounded-[8px] border border-[#E5E7EB] bg-white p-6 md:p-8">
-                  <h2 className="text-2xl font-semibold tracking-normal text-[#111111]">
+                  <h2 className="text-[22px] font-semibold leading-tight tracking-normal text-[#111111]">
                     Explore Career Paths
                   </h2>
-                  <p className="mt-2 text-base text-[#6B7280]">
+                  <p className="mt-2 text-[14px] leading-6 text-[#6B7280]">
                     Discover new career opportunities and learning paths
                   </p>
                   <div className="mt-8 grid gap-7 md:grid-cols-2 xl:grid-cols-3">
@@ -1050,10 +1050,10 @@ export function CareerRoadmapBuilder() {
               {!generatedRoadmap ? (
                 <>
                   <div className="text-center">
-                    <h1 className="text-2xl font-semibold tracking-normal text-[#111111] md:text-[32px]">
+                    <h1 className="text-[24px] font-semibold leading-tight tracking-normal text-[#111111] md:text-[28px]">
                       Career Roadmap Builder
                     </h1>
-                    <p className="mt-4 text-base text-[#555555] md:text-lg">
+                    <p className="mt-3 text-[14px] leading-6 text-[#555555] md:text-[15px]">
                       Answer a few questions to create your personalized
                       learning roadmap
                     </p>
@@ -1064,7 +1064,7 @@ export function CareerRoadmapBuilder() {
                   </div>
 
                   <div className="mt-12 rounded-[8px] border border-[#D7D7D7] bg-white p-5 md:p-10">
-                    <h2 className="text-lg font-medium text-[#111111] md:text-xl">
+                    <h2 className="text-[17px] font-medium leading-snug text-[#111111] md:text-[18px]">
                       {step.title}
                     </h2>
 
@@ -1074,7 +1074,7 @@ export function CareerRoadmapBuilder() {
                         value={answer}
                         onChange={(event) => updateAnswer(event.target.value)}
                         placeholder={step.placeholder}
-                        className="mt-8 h-16 rounded-[8px] border-[#E7E7E7] px-6 text-base placeholder:text-[#9A9A9A] focus-visible:ring-[#F85F35]"
+                        className="mt-8 h-14 rounded-[8px] border-[#E7E7E7] px-5 text-[15px] placeholder:text-[#9A9A9A] focus-visible:ring-[#F85F35]"
                       />
                     ) : (
                       <div className="mt-8 grid gap-4 md:grid-cols-2">
@@ -1099,7 +1099,7 @@ export function CareerRoadmapBuilder() {
                           ? resetBuilder()
                           : setStepIndex((current) => current - 1)
                       }
-                      className="h-14 min-w-36 rounded-[4px] bg-[#F4F4F4] px-8 text-base font-normal text-[#777777] hover:bg-[#ECECEC]"
+                      className="h-12 min-w-32 rounded-[4px] bg-[#F4F4F4] px-7 text-[15px] font-normal text-[#777777] hover:bg-[#ECECEC]"
                     >
                       <ArrowLeft className="size-5" />
                       Back
@@ -1109,7 +1109,7 @@ export function CareerRoadmapBuilder() {
                       onClick={goNext}
                       disabled={!canContinue || generateRoadmap.isPending}
                       className={cn(
-                        "h-14 min-w-40 rounded-[4px] px-8 text-base font-normal",
+                        "h-12 min-w-36 rounded-[4px] px-7 text-[15px] font-normal",
                         canContinue
                           ? "bg-[#F85F35] text-white hover:bg-[#E85229]"
                           : "bg-[#FFF0EA] text-[#F85F35] hover:bg-[#FFF0EA]",
@@ -1136,10 +1136,10 @@ export function CareerRoadmapBuilder() {
               ) : (
                 <>
                   <div className="text-center">
-                    <h1 className="text-2xl font-semibold tracking-normal text-[#111111] md:text-[32px]">
+                    <h1 className="text-[24px] font-semibold leading-tight tracking-normal text-[#111111] md:text-[28px]">
                       Your Roadmap Is Ready
                     </h1>
-                    <p className="mt-4 text-base text-[#555555] md:text-lg">
+                    <p className="mt-3 text-[14px] leading-6 text-[#555555] md:text-[15px]">
                       A personalized learning path for {answers.targetRole}.
                     </p>
                   </div>
@@ -1158,7 +1158,7 @@ export function CareerRoadmapBuilder() {
                         setGeneratedRoadmap(null);
                         setStepIndex(steps.length - 1);
                       }}
-                      className="h-14 min-w-36 rounded-[4px] bg-[#F4F4F4] px-8 text-base font-normal text-[#777777] hover:bg-[#ECECEC]"
+                      className="h-12 min-w-32 rounded-[4px] bg-[#F4F4F4] px-7 text-[15px] font-normal text-[#777777] hover:bg-[#ECECEC]"
                     >
                       <ArrowLeft className="size-5" />
                       Back
@@ -1166,7 +1166,7 @@ export function CareerRoadmapBuilder() {
                     <Button
                       type="button"
                       onClick={resetBuilder}
-                      className="h-14 rounded-[4px] bg-[#F85F35] px-8 text-base font-normal text-white hover:bg-[#E85229]"
+                      className="h-12 rounded-[4px] bg-[#F85F35] px-7 text-[15px] font-normal text-white hover:bg-[#E85229]"
                     >
                       Create another roadmap
                     </Button>
