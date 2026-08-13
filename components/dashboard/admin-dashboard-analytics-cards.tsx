@@ -21,6 +21,12 @@ import { useGetAllInstructorProfiles } from "@/hooks/api/use-instructor";
 import { useGetCourses } from "@/hooks/api/use-courses";
 import { StatCard, computeTrendFromSeries } from "@/components/dashboard/stat-card";
 
+const formatNairaKpi = (amount: number) => {
+  if (amount >= 1_000_000) return `NGN ${(amount / 1_000_000).toFixed(2)}M`;
+  if (amount >= 1_000) return `NGN ${(amount / 1_000).toFixed(1)}K`;
+  return `NGN ${amount.toLocaleString()}`;
+};
+
 export const AdminDashboardAnalyticsCards = () => {
   const { data: paymentAnalyticsData } = useGetPaymentAnalytics();
   const { data: paymentsData } = useGetAllPayments({ limit: 200 });
@@ -83,7 +89,7 @@ export const AdminDashboardAnalyticsCards = () => {
     },
     {
       heading: "Total Revenue",
-      title: `NGN ${(analytics?.totalRevenue ?? 0).toLocaleString()}`,
+      title: formatNairaKpi(analytics?.totalRevenue ?? 0),
       icon: Banknote,
       iconBg: "bg-[#24A164]",
       change: revenueChange,
@@ -104,7 +110,7 @@ export const AdminDashboardAnalyticsCards = () => {
     },
     {
       heading: "Platform Fees",
-      title: `NGN ${(analytics?.platformFees ?? 0).toLocaleString()}`,
+      title: formatNairaKpi(analytics?.platformFees ?? 0),
       icon: Landmark,
       iconBg: "bg-[#1E3A8A]",
       // Fees are a fixed percentage of revenue, so their period-over-period
@@ -146,7 +152,7 @@ export const AdminDashboardAnalyticsCards = () => {
       </div>
 
       {/* ── Desktop: 4-column grid (unchanged) ── */}
-      <div className="hidden lg:grid grid-cols-4 gap-4">
+      <div className="hidden lg:grid grid-cols-4 gap-3">
         {BasicAnalytics.map((analytic, index) => (
           <StatCard
             key={index}
