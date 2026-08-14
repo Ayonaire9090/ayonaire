@@ -37,7 +37,7 @@ const checklistItems: ChecklistItem[] = [
     title: "Create your career roadmap",
     description: "Plan your career development path",
     actionLabel: "Create Roadmap",
-    href: "/dashboard/student/career-accelarator/ai-career-agent",
+    href: "/dashboard/student/career-accelarator/career-roadmap",
   },
   {
     title: "Add your GitHub profile",
