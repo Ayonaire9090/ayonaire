@@ -4,16 +4,32 @@ import * as React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import type { IconType } from "react-icons";
+import { FaMicrosoft } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
+import {
+  SiAdobe,
+  SiAmazon,
+  SiApple,
+  SiAtlassian,
+  SiMeta,
+  SiNetflix,
+  SiOracle,
+  SiSalesforce,
+  SiUber,
+} from "react-icons/si";
 import {
   BookOpen,
   Briefcase,
   ChevronRight,
+  Clock,
   CloudLightning,
   FileText,
   GraduationCap,
   Grid2X2,
   LayoutList,
   Link as LinkIcon,
+  Lock,
   Mic,
   Moon,
   Play,
@@ -45,6 +61,7 @@ type InterviewSelection = {
   category: string;
   initial: string;
   overview: string;
+  time?: string;
 };
 
 const defaultInterview: InterviewSelection = {
@@ -82,9 +99,10 @@ const practiceCards = [
 type CompanyCard = {
   name: string;
   label: string;
+  Logo: IconType;
   color: string;
   bg: string;
-  status: "Popular" | "Featured";
+  status: "Featured" | "Locked";
   description: string;
   rounds: string[];
 };
@@ -93,117 +111,190 @@ const companyCards: CompanyCard[] = [
   {
     name: "Google",
     label: "G",
+    Logo: FcGoogle,
     color: "#4285F4",
     bg: "#F5FAFF",
-    status: "Popular",
+    status: "Featured",
     description:
-      "Practice product thinking, system design, and structured problem solving for Google interviews.",
-    rounds: ["Screening", "Technical Interview", "System Design", "Behavioral"],
+      "Master Google's rigorous interview process focused on algorithmic problem-solving and structured thinking.",
+    rounds: ["Technical Interview 1", "Technical Interview 2", "Technical Interview 3", "System Design", "Googleyness & Leadership"],
   },
   {
     name: "Meta",
     label: "M",
+    Logo: SiMeta,
     color: "#1877F2",
     bg: "#F6FAFF",
     status: "Featured",
     description:
-      "Prepare for execution, product sense, coding, and behavioral rounds with Meta-style prompts.",
-    rounds: ["Recruiter Screen", "Coding", "Product Sense", "Leadership"],
+      "Experience Meta's fast-paced, bottom-up interview process where coding rounds test product-minded judgment.",
+    rounds: ["Coding Round 1", "Coding Round 2", "Product Sense", "System Design", "Behavioral"],
+  },
+  {
+    name: "Amazon",
+    label: "amazon",
+    Logo: SiAmazon,
+    color: "#111111",
+    bg: "#FFFFFF",
+    status: "Featured",
+    description:
+      "Master Amazon's Leadership Principles-driven interview process where every round combines technical depth.",
+    rounds: ["Online Assessment", "Technical Interview", "System Design", "Leadership Principles", "Bar Raiser"],
   },
   {
     name: "Microsoft",
     label: "M",
+    Logo: FaMicrosoft,
     color: "#737373",
     bg: "#FAFAFA",
-    status: "Popular",
+    status: "Featured",
     description:
-      "Build confidence for technical, design, and collaboration interviews at Microsoft.",
-    rounds: ["Phone Screen", "Technical", "Design", "Culture Fit"],
+      "Experience Microsoft's growth mindset-focused interview process emphasizing learning, collaboration, and design.",
+    rounds: ["Phone Screen", "Technical Round", "Design Round", "Collaboration", "Final Loop"],
   },
   {
     name: "Apple",
     label: "A",
+    Logo: SiApple,
     color: "#111111",
     bg: "#F8F8F8",
-    status: "Popular",
+    status: "Featured",
     description:
-      "Practice concise communication, product depth, and craftsmanship-focused interview answers.",
-    rounds: ["Screen", "Technical", "Product Depth", "Team Fit"],
+      "Master Apple's secretive and rigorous interview process where innovation and craftsmanship matter.",
+    rounds: ["Screen", "Technical", "Product Depth", "Team Fit", "Final Panel"],
   },
   {
     name: "Netflix",
     label: "N",
+    Logo: SiNetflix,
     color: "#E50914",
     bg: "#FFF7F7",
-    status: "Popular",
+    status: "Featured",
     description:
-      "Prepare for high-agency technical and culture interviews with Netflix-style scenarios.",
-    rounds: ["Recruiter", "Technical", "Culture Memo", "Final Panel"],
+      "Experience Netflix's engineering-focused interview style emphasizing system design excellence and practical judgment.",
+    rounds: ["Recruiter", "Technical", "System Design", "Culture Memo", "Final Panel"],
+  },
+  {
+    name: "Uber",
+    label: "Uber",
+    Logo: SiUber,
+    color: "#111111",
+    bg: "#FFFFFF",
+    status: "Featured",
+    description:
+      "Experience Uber's engineering interview process focused on real-time systems and practical architecture.",
+    rounds: ["Phone Screen", "Coding", "System Design", "Product Thinking", "Final Panel"],
   },
   {
     name: "Adobe",
     label: "A",
+    Logo: SiAdobe,
     color: "#FF0000",
     bg: "#FFF7F7",
     status: "Featured",
     description:
-      "Practice creative product thinking, technical depth, and portfolio storytelling for Adobe.",
-    rounds: ["Portfolio", "Technical", "Product", "Behavioral"],
+      "Experience Adobe's creative-tech interview process emphasizing product quality and design collaboration.",
+    rounds: ["Portfolio", "Technical", "Product", "Behavioral", "Final Panel"],
   },
   {
     name: "Salesforce",
     label: "S",
+    Logo: SiSalesforce,
     color: "#00A1E0",
     bg: "#F3FBFF",
-    status: "Popular",
+    status: "Featured",
     description:
-      "Prepare for customer-centric systems, cloud products, and scenario-based interview rounds.",
-    rounds: ["Screening", "Technical", "Scenario", "Values"],
+      "Experience Salesforce's interview process emphasizing multi-tenant SaaS architecture and customer success.",
+    rounds: ["Screening", "Technical", "Scenario", "Architecture", "Values"],
   },
   {
-    name: "Amazon",
+    name: "Atlassian",
     label: "A",
-    color: "#FF9900",
-    bg: "#FFF9F0",
-    status: "Popular",
+    Logo: SiAtlassian,
+    color: "#0052CC",
+    bg: "#F3F7FF",
+    status: "Featured",
     description:
-      "Practice leadership principles, bar-raiser questions, and scalable system design rounds.",
-    rounds: ["Online Assessment", "Technical", "Leadership", "Bar Raiser"],
+      "Experience Atlassian's engineering interview process emphasizing collaboration and distributed teamwork.",
+    rounds: ["Screening", "Technical", "System Design", "Collaboration", "Values"],
+  },
+  {
+    name: "Oracle",
+    label: "O",
+    Logo: SiOracle,
+    color: "#111111",
+    bg: "#FFFFFF",
+    status: "Featured",
+    description:
+      "Experience Oracle's engineering interview process emphasizing enterprise systems and database depth.",
+    rounds: ["Screening", "Technical", "Database Design", "System Design", "Final Panel"],
   },
 ];
 
-const googleRoadmap = [
-  {
-    title: "Technical Interview 1",
-    meta: "45 mins",
-    body: "Coding fundamentals, data structures, and problem-solving communication for Google-style interviews.",
-    status: "Start Test",
-  },
-  {
-    title: "Technical Interview 2",
-    meta: "45 mins",
-    body: "Algorithmic reasoning, edge cases, complexity analysis, and clean implementation habits.",
-    status: "Locked",
-  },
-  {
-    title: "System Design",
-    meta: "60 mins",
-    body: "Design scalable systems, discuss tradeoffs, data modeling, reliability, and monitoring.",
-    status: "Locked",
-  },
-  {
-    title: "Behavioral & Leadership",
-    meta: "30 mins",
-    body: "Practice structured stories using impact, ownership, collaboration, and ambiguity prompts.",
-    status: "Locked",
-  },
-  {
-    title: "Final Prep",
-    meta: "20 mins",
-    body: "Review weak spots, revise your answer strategy, and prepare thoughtful interviewer questions.",
-    status: "Locked",
-  },
-];
+type CompanyRoadmapRound = {
+  title: string;
+  meta: string;
+  body: string;
+  status: "Start Test" | "Locked";
+};
+
+const roundDescriptions: Record<string, string> = {
+  "Online Assessment":
+    "Practice timed problem solving, edge cases, and clear written reasoning for the first assessment stage.",
+  "Recruiter Screen":
+    "Prepare a concise career story, role alignment, compensation expectations, and thoughtful recruiter questions.",
+  "Phone Screen":
+    "Practice short technical explanations, resume walkthroughs, and first-round communication under time pressure.",
+  Screening:
+    "Build a strong first-round narrative around your background, target role, and core technical strengths.",
+  "Technical Interview":
+    "Answer role-specific technical questions with clean reasoning, examples, and tradeoff awareness.",
+  Technical:
+    "Practice technical depth, implementation choices, debugging scenarios, and structured problem solving.",
+  Coding:
+    "Work through coding prompts while explaining data structures, complexity, and test cases clearly.",
+  "Product Sense":
+    "Practice product strategy, metrics, user tradeoffs, and structured product judgment.",
+  "Product Depth":
+    "Prepare to discuss product decisions, execution quality, customer impact, and attention to detail.",
+  Product:
+    "Practice product thinking, prioritization, tradeoffs, and clear recommendation framing.",
+  "System Design":
+    "Design scalable systems while discussing data modeling, reliability, observability, and tradeoffs.",
+  Design:
+    "Practice architecture decisions, interface design, constraints, and collaboration tradeoffs.",
+  Scenario:
+    "Respond to realistic workplace and customer scenarios with structured judgment and practical next steps.",
+  Portfolio:
+    "Present your strongest projects with clear problem framing, process, technical choices, and business impact.",
+  "Culture Memo":
+    "Prepare high-agency examples that show judgment, autonomy, feedback, and culture alignment.",
+  "Culture Fit":
+    "Practice stories that show collaboration, ownership, communication, and how you work with a team.",
+  Behavioral:
+    "Refine STAR stories around ownership, conflict, ambiguity, leadership, and measurable impact.",
+  Leadership:
+    "Practice leadership examples around influence, decision quality, accountability, and team outcomes.",
+  "Bar Raiser":
+    "Prepare for high-standard behavioral prompts around ownership, customer focus, and long-term judgment.",
+  "Final Panel":
+    "Review your full interview strategy, strongest stories, technical themes, and closing questions.",
+  Values:
+    "Connect your working style and decisions to the company's values with concrete examples.",
+};
+
+function getCompanyRoadmap(company: CompanyCard): CompanyRoadmapRound[] {
+  return [
+    ...company.rounds.map<CompanyRoadmapRound>((round, index) => ({
+      title: round,
+      meta: "15 mins",
+      body:
+        roundDescriptions[round] ??
+        `Practice ${round.toLowerCase()} questions tailored to ${company.name}'s interview expectations.`,
+      status: index === 0 ? "Start Test" : "Locked",
+    })),
+  ];
+}
 
 const popularTopics = [
   {
@@ -231,6 +322,76 @@ const popularTopics = [
     time: "10 mins",
   },
 ];
+
+function getPopularTopicSelection(topic: (typeof popularTopics)[number]): InterviewSelection {
+  const category = topic.title.startsWith("Machine Learning")
+    ? "Machine Learning"
+    : topic.title.startsWith("Deep Learning")
+      ? "Deep Learning"
+      : topic.title.startsWith("NLP")
+        ? "Natural Language processing"
+        : "Project-Based Interview";
+
+  return {
+    title: topic.title,
+    category,
+    initial: topic.title[0],
+    overview: topic.body,
+    time: topic.time,
+  };
+}
+
+function getInterviewAgenda(selection: InterviewSelection) {
+  if (selection.category === "Company-Based Interview") {
+    return [
+      {
+        title: "Company Context",
+        body: `Review the expectations and interview style for ${selection.title.replace(/ Technical Interview 1$/, "")}.`,
+      },
+      {
+        title: "Role-Specific Questions",
+        body: selection.overview,
+      },
+      {
+        title: "Answer Structure",
+        body: "Practice concise explanations, clear examples, tradeoff reasoning, and measurable impact.",
+      },
+      {
+        title: "Feedback & Next Steps",
+        body: "Identify weak spots and turn them into a focused follow-up practice plan.",
+      },
+    ];
+  }
+
+  return [
+    {
+      title: `${selection.category} Fundamentals`,
+      body: `Warm up with the core concepts behind ${selection.title}.`,
+    },
+    {
+      title: "Applied Scenarios",
+      body: selection.overview,
+    },
+    {
+      title: "Technical Deep Dive",
+      body: "Explain implementation choices, tradeoffs, edge cases, and production considerations.",
+    },
+    {
+      title: "Interview Feedback",
+      body: "Review clarity, confidence, technical accuracy, and the next topic to practice.",
+    },
+  ];
+}
+
+function getLiveAgenda(selection: InterviewSelection) {
+  return getInterviewAgenda(selection).map((item, index) => ({
+    ...item,
+    body:
+      index === 0
+        ? `Starting with ${selection.title} so the session matches the practice you selected.`
+        : item.body,
+  }));
+}
 
 const categoryTabs = [
   "AI Engineering",
@@ -693,14 +854,7 @@ function Dashboard({
               <button
                 key={topic.title}
                 type="button"
-                onClick={() =>
-                  onSetup({
-                    title: topic.title,
-                    category: "Popular Topics",
-                    initial: topic.title[0],
-                    overview: topic.body,
-                  })
-                }
+                onClick={() => onSetup(getPopularTopicSelection(topic))}
                 className="flex min-h-[126px] items-center justify-between rounded-[8px] border border-[#e9e9e9] bg-[#fbfbfb] px-4 text-left"
               >
                 <div>
@@ -838,8 +992,8 @@ function CompanySelection({
 }) {
   return (
     <PageShell>
-      <div className="px-4 pb-16 pt-5 md:px-10 lg:px-12">
-        <div className="flex items-start justify-between gap-4 border-b border-[#dcdcdc] pb-6">
+      <div className="px-4 pb-20 pt-5 md:px-10 lg:px-12">
+        <div className="flex items-start justify-between gap-4">
           <div>
             <button
               type="button"
@@ -852,60 +1006,55 @@ function CompanySelection({
             <h1 className="text-[22px] font-semibold leading-tight tracking-normal">
               Interview Preparation
             </h1>
-            <p className="mt-2 max-w-[620px] text-[13px] leading-5 text-[#777777]">
-              Pick a company to practice with a structured interview roadmap,
-              realistic rounds, and focused feedback.
+            <p className="mt-2 max-w-[850px] text-[13px] leading-5 text-[#777777]">
+              Practice with real questions from top tech companies. Complete
+              sequential rounds to unlock your next opportunity.
             </p>
           </div>
-          <button
-            type="button"
-            className="hidden h-9 rounded-[4px] border border-[#e7e7e7] px-4 text-[12px] font-medium text-[#777777] md:block"
-          >
-            Generate
-          </button>
+          <span className="hidden h-9 shrink-0 items-center gap-2 rounded-full border border-[#eeeeee] bg-white px-4 text-[12px] text-[#777777] md:flex">
+            <Briefcase className="size-4" strokeWidth={1.8} />
+            {companyCards.length} Companies
+          </span>
         </div>
 
-        <section className="mt-6">
-          <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-[15px] font-semibold">Choose Company</h2>
-            <span className="text-[12px] text-[#ff5a2c]">Recommended</span>
-          </div>
-          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+        <section className="mt-10">
+          <div className="mx-auto grid max-w-[1360px] grid-cols-1 gap-x-6 gap-y-7 sm:grid-cols-2 lg:grid-cols-4">
             {companyCards.map((company) => (
               <button
                 key={company.name}
                 type="button"
                 onClick={() => onRoadmap(company)}
-                className="group min-h-[168px] rounded-[8px] border border-[#e8e8e8] bg-white p-4 text-left transition-colors hover:border-[#ff5a2c] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff5a2c] focus-visible:ring-offset-2 md:p-5"
+                className="group relative flex h-[224px] flex-col rounded-[8px] border border-[#dfe7f1] bg-white px-5 py-5 text-left transition-colors hover:border-[#ff5a2c] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff5a2c] focus-visible:ring-offset-2"
               >
-                <div className="flex items-start justify-between gap-3">
+                <div className="flex items-start justify-between gap-4">
                   <span
-                    className="flex size-11 items-center justify-center rounded-[8px] text-[20px] font-semibold"
-                    style={{ color: company.color, backgroundColor: company.bg }}
+                    className="flex size-10 shrink-0 items-center justify-center rounded-[7px] border border-[#eeeeee] bg-white shadow-[0_6px_14px_rgba(16,24,40,0.08)]"
+                    style={{ backgroundColor: company.bg }}
                   >
-                    {company.label}
+                    <company.Logo className="size-5" style={{ color: company.color }} />
                   </span>
                   <span
                     className={cn(
-                      "rounded-full px-2 py-1 text-[10px]",
-                      company.status === "Popular"
+                      "shrink-0 rounded-full px-3 py-1 text-[10px] font-medium",
+                      company.status === "Featured"
                         ? "bg-[#fff0eb] text-[#ff5a2c]"
-                        : "bg-[#dff6e6] text-[#12a453]",
+                        : "bg-[#f4f4f4] text-[#777777]",
                     )}
                   >
                     {company.status}
                   </span>
                 </div>
-                <h3 className="mt-5 text-[16px] font-semibold">{company.name}</h3>
-                <p className="mt-3 line-clamp-2 text-[13px] leading-5 text-[#777777]">
+                <h3 className="mt-5 text-[15px] font-semibold">{company.name}</h3>
+                <p className="mt-7 line-clamp-3 max-w-[245px] text-[12px] leading-5 text-[#777777]">
                   {company.description}
                 </p>
-                <div className="mt-5 flex items-center justify-between">
-                  <span className="text-[12px] text-[#777777]">
-                    {company.rounds.length} rounds
+                <div className="mt-auto flex items-center justify-between">
+                  <span className="flex items-center gap-2 text-[12px] text-[#777777]">
+                    <Briefcase className="size-4" strokeWidth={1.6} />
+                    {company.rounds.length} Rounds
                   </span>
-                  <span className="flex items-center gap-1 text-[12px] font-medium text-[#ff5a2c]">
-                    Start prep <ChevronRight className="size-3.5" />
+                  <span className="flex size-7 items-center justify-center rounded-full bg-[#f5f5f5] text-[#777777] transition-colors group-hover:bg-[#fff0eb] group-hover:text-[#ff5a2c]">
+                    <ChevronRight className="size-4" />
                   </span>
                 </div>
               </button>
@@ -926,126 +1075,151 @@ function CompanyRoadmap({
   onSetup: (selection: InterviewSelection) => void;
   company: CompanyCard;
 }) {
+  const roadmap = getCompanyRoadmap(company);
+  const completedRounds = 0;
+  const totalMinutes = roadmap.length * 15;
+
   return (
     <PageShell>
-      <div className="px-4 pb-16 pt-5 md:px-10 lg:px-12">
+      <div className="px-4 pb-20 pt-5 md:px-10 lg:px-12">
         <button
           type="button"
           onClick={onBack}
-          className="mb-5 flex items-center gap-2 text-[13px] text-[#777777] transition-colors hover:text-black"
+          className="mb-8 flex items-center gap-2 text-[13px] text-[#777777] transition-colors hover:text-black"
         >
           <ChevronRight className="size-4 rotate-180 text-black" />
-          Back to companies
+          Back to Companies
         </button>
 
-        <div className="grid gap-6 lg:grid-cols-[330px_1fr]">
-          <aside className="rounded-[8px] border border-[#e8e8e8] bg-white p-5">
-            <div className="flex items-center gap-3">
-              <span className="flex size-11 items-center justify-center rounded-[8px] bg-[#f5faff] text-[22px] font-semibold text-[#4285F4]">
-                {company.label}
-              </span>
-              <div>
-                <h1 className="text-[17px] font-semibold">{company.name}</h1>
-                <p className="mt-1 text-[12px] text-[#777777]">
-                  Company-based roadmap
-                </p>
+        <section className="grid gap-8 border-b border-[#eeeeee] pb-10 lg:grid-cols-[minmax(0,1fr)_280px]">
+          <div className="flex gap-5">
+            <span
+              className="flex size-16 shrink-0 items-center justify-center rounded-[8px] border border-[#eeeeee] bg-white shadow-[0_6px_14px_rgba(16,24,40,0.08)]"
+              style={{ backgroundColor: company.bg }}
+            >
+              <company.Logo className="size-10" style={{ color: company.color }} />
+            </span>
+            <div>
+              <h1 className="text-[26px] font-semibold leading-tight tracking-normal text-[#111827]">
+                {company.name} Interview Roadmap
+              </h1>
+              <p className="mt-4 max-w-[840px] text-[15px] leading-7 text-[#202020]">
+                {company.description} Practice through progressive coding rounds
+                covering core patterns, system design at scale, and company evaluation
+                themes. Rounds are structured to help you practice systematically
+                while preparing for any topic combination you might encounter.
+              </p>
+              <div className="mt-7 flex flex-wrap gap-3">
+                <span className="flex h-8 items-center gap-2 rounded-[5px] border border-[#eeeeee] bg-[#fbfbfb] px-4 text-[13px] text-[#777777]">
+                  <Grid2X2 className="size-4" strokeWidth={1.7} />
+                  {roadmap.length} Rounds
+                </span>
+                <span className="flex h-8 items-center gap-2 rounded-[5px] border border-[#eeeeee] bg-[#fbfbfb] px-4 text-[13px] text-[#777777]">
+                  <Clock className="size-4" strokeWidth={1.7} />
+                  {totalMinutes} mins total
+                </span>
               </div>
             </div>
-            <p className="mt-5 text-[13px] leading-5 text-[#777777]">
-              {company.description}
+          </div>
+
+          <aside className="h-fit rounded-[8px] border border-[#eeeeee] bg-[#fbfbfb] p-5">
+            <div className="mb-4 flex items-center justify-between text-[13px]">
+              <span className="font-semibold text-[#475467]">Your Progress</span>
+              <span className="font-semibold text-[#111827]">0%</span>
+            </div>
+            <div className="h-2 rounded-full bg-[#e5e7eb]">
+              <div className="h-2 w-0 rounded-full bg-[#ff5a2c]" />
+            </div>
+            <p className="mt-4 text-right text-[12px] text-[#777777]">
+              {completedRounds} of {roadmap.length} completed
             </p>
-            <div className="mt-6 space-y-3">
-              {["Technical depth", "System design", "Behavioral clarity"].map(
-                (item) => (
-                  <div
-                    key={item}
-                    className="flex items-center justify-between rounded-[6px] bg-[#fbfbfb] px-3 py-3 text-[12px]"
-                  >
-                    <span>{item}</span>
-                    <span className="text-[#ff5a2c]">Ready</span>
-                  </div>
-                ),
-              )}
-            </div>
           </aside>
+        </section>
 
-          <section className="rounded-[8px] border border-[#e8e8e8] bg-white p-5 md:p-6">
-            <div className="flex flex-col gap-4 border-b border-[#eeeeee] pb-5 md:flex-row md:items-start md:justify-between">
-              <div>
-                <h2 className="text-[20px] font-semibold">
-                  {company.name} Interview Roadmap
-                </h2>
-                <p className="mt-2 max-w-[620px] text-[13px] leading-5 text-[#777777]">
-                  Follow this roadmap step-by-step to practice the interview
-                  rounds you are most likely to face.
-                </p>
-              </div>
-              <button className="h-9 rounded-[4px] border border-[#e8e8e8] px-4 text-[12px] text-[#777777]">
-                Company
-              </button>
-            </div>
+        <section className="mt-8">
+          <h2 className="text-[22px] font-semibold tracking-normal text-[#111827]">
+            Interview Rounds
+          </h2>
+          <div className="mt-8 space-y-5">
+            {roadmap.map((round, index) => {
+              const isAvailable = round.status === "Start Test";
 
-            <div className="mt-5 space-y-4">
-              {googleRoadmap.map((round, index) => (
+              return (
                 <article
                   key={round.title}
-                  className="rounded-[8px] border border-[#eeeeee] bg-white p-4"
+                  className={cn(
+                    "rounded-[8px] border border-[#eeeeee] bg-white p-6",
+                    !isAvailable && "opacity-55",
+                  )}
                 >
-                  <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                    <div className="flex gap-4">
-                      <span className="flex size-8 shrink-0 items-center justify-center rounded-[6px] bg-[#fff0eb] text-[13px] font-semibold text-[#ff5a2c]">
-                        {index + 1}
-                      </span>
-                      <div>
-                        <div className="flex flex-wrap items-center gap-2">
-                          <h3 className="text-[15px] font-semibold">
-                            {round.title}
-                          </h3>
-                          <span className="rounded-full bg-[#f7f7f7] px-2 py-0.5 text-[10px] text-[#777777]">
-                            {round.meta}
-                          </span>
-                        </div>
-                        <p className="mt-2 max-w-[720px] text-[13px] leading-5 text-[#777777]">
-                          {round.body}
-                        </p>
+                  <div className="grid gap-5 lg:grid-cols-[76px_minmax(0,1fr)_240px] lg:items-center">
+                    <span className="flex size-[58px] items-center justify-center rounded-[8px] border border-[#eeeeee] bg-white text-[22px] font-semibold text-[#777777]">
+                      {index + 1}
+                    </span>
+                    <div className="min-w-0">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <h3 className="text-[18px] font-semibold text-[#111827]">
+                          {round.title}
+                        </h3>
+                        <span className="rounded-[5px] border border-[#e7e7e7] bg-white px-3 py-1 text-[11px] text-[#777777]">
+                          Locked
+                        </span>
+                        <span className="rounded-[5px] border border-[#e7e7e7] bg-white px-3 py-1 text-[11px] text-[#777777]">
+                          Medium
+                        </span>
+                      </div>
+                      <p className="mt-4 max-w-[780px] text-[14px] leading-6 text-[#777777]">
+                        {round.body}
+                      </p>
+                      <div className="mt-5 flex flex-wrap gap-3">
+                        <span className="flex h-7 items-center gap-2 rounded-[5px] border border-[#eeeeee] bg-[#fbfbfb] px-3 text-[12px] text-[#777777]">
+                          <Clock className="size-4" strokeWidth={1.7} />
+                          {round.meta}
+                        </span>
+                        <span className="h-7 rounded-[5px] border border-[#eeeeee] bg-[#fbfbfb] px-3 text-[12px] leading-7 text-[#777777]">
+                          Technical Coding
+                        </span>
                       </div>
                     </div>
                     <button
                       type="button"
+                      disabled={!isAvailable}
                       onClick={
-                        round.status === "Start Test"
+                        isAvailable
                           ? () =>
                               onSetup({
                                 title: `${company.name} ${round.title}`,
                                 category: "Company-Based Interview",
                                 initial: company.label,
                                 overview: round.body,
+                                time: round.meta,
                               })
                           : undefined
                       }
                       className={cn(
-                        "h-9 shrink-0 rounded-[4px] px-5 text-[12px] font-medium",
-                        round.status === "Start Test"
-                          ? "bg-[#ff5a2c] text-white"
-                          : "bg-[#f4f4f4] text-[#777777]",
+                        "h-11 rounded-[5px] text-[13px] font-semibold transition-colors",
+                        isAvailable
+                          ? "bg-[#ff5a2c] text-white hover:bg-[#eb4f25]"
+                          : "border border-[#eeeeee] bg-[#fbfbfb] text-[#777777]",
                       )}
                     >
-                      {round.status}
+                      {isAvailable ? (
+                        <>
+                          Start Round <Play className="ml-2 inline size-4 fill-current" />
+                        </>
+                      ) : (
+                        <>
+                          <Lock className="mr-2 inline size-4" />
+                          Locked
+                        </>
+                      )}
                     </button>
                   </div>
                 </article>
-              ))}
-            </div>
-
-            <div className="mt-6 rounded-[8px] bg-[#fff0eb] px-5 py-4 text-[#ff5a2c]">
-              <p className="text-[13px] font-medium">Note:</p>
-              <p className="mt-1 text-[12px] leading-5">
-                Complete each round in order. Your feedback will update the next
-                recommended practice path.
-              </p>
-            </div>
-          </section>
-        </div>
+              );
+            })}
+          </div>
+        </section>
       </div>
     </PageShell>
   );
@@ -1147,6 +1321,8 @@ function Guidelines({
 }: {
   selection?: InterviewSelection;
 }) {
+  const selectedAgenda = getInterviewAgenda(selection);
+
   return (
     <section className="rounded-[10px] border border-[#ededed] bg-white px-6 py-8 md:px-8">
       <div className="flex items-center gap-4">
@@ -1161,7 +1337,7 @@ function Guidelines({
       </p>
       <h3 className="mt-8 text-[16px] font-semibold">Interview Agenda</h3>
       <div className="mt-8 space-y-10">
-        {agenda.map((item, index) => (
+        {selectedAgenda.map((item, index) => (
           <div key={item.title} className="flex gap-6">
             <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-[#ff5a2c] text-xs font-semibold text-white">
               {index + 1}
@@ -1246,7 +1422,7 @@ function StartInterviewModal({
         <h2 className="mt-5 text-[20px] font-semibold tracking-normal">
           {selection.title}
         </h2>
-        <p className="mt-2 text-[13px] text-[#777777]">15 min interview</p>
+        <p className="mt-2 text-[13px] text-[#777777]">{selection.time ?? "15 mins"} interview</p>
         <button
           type="button"
           onClick={onStart}
@@ -1268,6 +1444,8 @@ function Live({
   onDone: () => void;
   selection?: InterviewSelection;
 }) {
+  const selectedLiveAgenda = getLiveAgenda(selection);
+
   return (
     <PageShell>
       <div className="px-5 pb-20 pt-4 md:px-10 lg:px-12">
@@ -1322,7 +1500,7 @@ function Live({
           <aside className="rounded-[10px] border border-[#ededed] bg-white px-6 py-6">
             <h2 className="text-[17px] font-semibold">Interview Agenda</h2>
             <div className="mt-9 space-y-14">
-              {liveAgenda.map((item, index) => (
+              {selectedLiveAgenda.map((item, index) => (
                 <div key={item.title} className="flex gap-6">
                   <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-[#ff5a2c] text-xs font-semibold text-white">
                     {index + 1}
@@ -1398,23 +1576,32 @@ export default function StudentAiCareerAgentPage() {
     React.useState<InterviewSelection>(defaultInterview);
   const [selectedCompany, setSelectedCompany] =
     React.useState<CompanyCard>(companyCards[0]);
+  const [setupBackScreen, setSetupBackScreen] =
+    React.useState<Screen>("dashboard");
   const [showComplete, setShowComplete] = React.useState(false);
-  const openSetup = React.useCallback((selection = defaultInterview) => {
-    setSelectedInterview(selection);
-    setScreen("setup");
-  }, []);
+  const openSetup = React.useCallback(
+    (selection = defaultInterview, backScreen: Screen = "dashboard") => {
+      setSelectedInterview(selection);
+      setSetupBackScreen(backScreen);
+      setScreen("setup");
+    },
+    [],
+  );
 
   return (
     <>
       {screen === "dashboard" && (
         <Dashboard
           onTopics={() => setScreen("topics")}
-          onSetup={openSetup}
+          onSetup={(selection) => openSetup(selection, "dashboard")}
           onCompanies={() => setScreen("companies")}
         />
       )}
       {screen === "topics" && (
-        <Topics onBack={() => setScreen("dashboard")} onSetup={openSetup} />
+        <Topics
+          onBack={() => setScreen("dashboard")}
+          onSetup={(selection) => openSetup(selection, "topics")}
+        />
       )}
       {screen === "companies" && (
         <CompanySelection
@@ -1428,13 +1615,13 @@ export default function StudentAiCareerAgentPage() {
       {screen === "company-roadmap" && (
         <CompanyRoadmap
           onBack={() => setScreen("companies")}
-          onSetup={openSetup}
+          onSetup={(selection) => openSetup(selection, "company-roadmap")}
           company={selectedCompany}
         />
       )}
       {screen === "setup" && (
         <Setup
-          onBack={() => setScreen("topics")}
+          onBack={() => setScreen(setupBackScreen)}
           onLive={() => setScreen("confirm")}
           selection={selectedInterview}
         />
@@ -1442,7 +1629,7 @@ export default function StudentAiCareerAgentPage() {
       {screen === "confirm" && (
         <>
           <Setup
-            onBack={() => setScreen("topics")}
+            onBack={() => setScreen(setupBackScreen)}
             onLive={() => setScreen("confirm")}
             selection={selectedInterview}
           />
