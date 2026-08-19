@@ -31,13 +31,18 @@ export const StudentSelectionModal = ({
 }: StudentSelectionModalProps) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [selectedById, setSelectedById] = useState<Map<string, StudentData>>(
+    new Map(),
+  );
 
-  const { data, isLoading } = useGetAdminUsers();
+  const { data, isLoading } = useGetAdminUsers({
+    page: currentPage,
+    limit: PAGE_SIZE,
+    search: searchQuery,
+  });
 
   const students: StudentData[] = useMemo(() => {
     return (data?.users ?? [])
-      .filter((u) => u.role === "user" || u.role === "student" || !u.role)
       .map((u) => ({
         id: u._id,
         name: u.name,
@@ -49,59 +54,46 @@ export const StudentSelectionModal = ({
 
   useEffect(() => {
     if (isOpen) {
-      setSelectedIds(new Set());
+      setSelectedById(new Map());
       setSearchQuery("");
       setCurrentPage(1);
     }
   }, [isOpen]);
 
-  const filteredStudents = useMemo(() => {
-    const query = searchQuery.toLowerCase();
-    return students.filter(
-      (s) =>
-        s.name.toLowerCase().includes(query) ||
-        s.email.toLowerCase().includes(query),
-    );
-  }, [students, searchQuery]);
-
-  const totalPages = Math.max(1, Math.ceil(filteredStudents.length / PAGE_SIZE));
-  const pagedStudents = filteredStudents.slice(
-    (currentPage - 1) * PAGE_SIZE,
-    currentPage * PAGE_SIZE,
-  );
+  const totalPages = Math.max(1, data?.pagination?.totalPages ?? 1);
+  const pagedStudents = students;
 
   const allSelected =
-    pagedStudents.length > 0 && pagedStudents.every((s) => selectedIds.has(s.id));
+    pagedStudents.length > 0 && pagedStudents.every((s) => selectedById.has(s.id));
   const someSelected =
-    pagedStudents.some((s) => selectedIds.has(s.id)) && !allSelected;
+    pagedStudents.some((s) => selectedById.has(s.id)) && !allSelected;
 
   const toggleSelectAll = () => {
-    const next = new Set(selectedIds);
+    const next = new Map(selectedById);
     if (allSelected) {
       pagedStudents.forEach((s) => next.delete(s.id));
     } else {
-      pagedStudents.forEach((s) => next.add(s.id));
+      pagedStudents.forEach((s) => next.set(s.id, s));
     }
-    setSelectedIds(next);
+    setSelectedById(next);
   };
 
-  const toggleSelect = (id: string) => {
-    const next = new Set(selectedIds);
-    if (next.has(id)) {
-      next.delete(id);
+  const toggleSelect = (student: StudentData) => {
+    const next = new Map(selectedById);
+    if (next.has(student.id)) {
+      next.delete(student.id);
     } else {
-      next.add(id);
+      next.set(student.id, student);
     }
-    setSelectedIds(next);
+    setSelectedById(next);
   };
 
   const handleAdd = () => {
-    const docs = students.filter((s) => selectedIds.has(s.id));
-    onAddStudents(docs);
+    onAddStudents(Array.from(selectedById.values()));
   };
 
   const title =
-    selectedIds.size > 0 ? `${selectedIds.size} Selected` : "Selected";
+    selectedById.size > 0 ? `${selectedById.size} Selected` : "Selected";
 
   return (
     <AppSimpleModal
@@ -155,13 +147,13 @@ export const StudentSelectionModal = ({
             <div className="py-8 text-center text-gray-500">Loading students...</div>
           ) : pagedStudents.length > 0 ? (
             pagedStudents.map((student) => {
-              const isChecked = selectedIds.has(student.id);
+              const isChecked = selectedById.has(student.id);
               return (
                 <div key={student.id} className="flex items-center gap-4 py-4">
                   <div
                     role="checkbox"
                     aria-checked={isChecked}
-                    onClick={() => toggleSelect(student.id)}
+                    onClick={() => toggleSelect(student)}
                     className={`flex size-5 shrink-0 items-center justify-center rounded border cursor-pointer border-gray-300 transition-colors ${
                       isChecked
                         ? "bg-[#F06B30] border-[#F06B30] text-white"
@@ -243,9 +235,9 @@ export const StudentSelectionModal = ({
             </Button>
             <Button
               onClick={handleAdd}
-              disabled={selectedIds.size === 0}
+              disabled={selectedById.size === 0}
               className={`h-10 px-8 rounded-md shadow-none font-medium text-[14px] text-white ${
-                selectedIds.size > 0
+                selectedById.size > 0
                   ? "bg-[#F06B30] hover:bg-[#F06B30]/90"
                   : "bg-gray-200 text-gray-400 hover:bg-gray-200 cursor-not-allowed border-0"
               }`}

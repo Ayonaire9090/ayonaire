@@ -1,11 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { adminApi, UpdateUserPayload } from "@/lib/api/endpoints/admin";
+import { adminApi, GetAdminUsersParams, UpdateUserPayload } from "@/lib/api/endpoints/admin";
 import { queryKeys } from "@/lib/api/query-keys";
 
-export const useGetAdminUsers = () => {
+export const useGetAdminUsers = (params: GetAdminUsersParams = {}) => {
   return useQuery({
-    queryKey: queryKeys.admin.users(),
-    queryFn: () => adminApi.getUsers(),
+    queryKey: queryKeys.admin.users(params),
+    queryFn: () => adminApi.getUsers(params),
   });
 };
 

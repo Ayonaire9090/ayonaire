@@ -11,15 +11,29 @@ export interface UpdateUserPayload {
 export interface AdminUsersResponse extends ApiResponse<UserProfile[]> {
   count: number;
   users: UserProfile[];
+  pagination?: { total: number; page: number; limit: number; totalPages: number };
+}
+
+export interface GetAdminUsersParams {
+  page?: number;
+  limit?: number;
+  search?: string;
 }
 
 // Paths corrected 2026-07-14 against the live Swagger spec
 // (https://ayonaire.onrender.com/api-docs/) - the previous team had these
 // under /api/v1/user/*, but the real routes are under /api/v1/auth/*.
 export const adminApi = {
-  getUsers: () =>
+  getUsers: (params: GetAdminUsersParams = {}) => {
+    const query = new URLSearchParams();
+    Object.entries(params).forEach(([key, value]) => {
+      if (value !== undefined && value !== "") query.append(key, String(value));
+    });
+    const qs = query.toString() ? `?${query.toString()}` : "";
+
+    return (
     apiClient<ApiResponse<UserProfile[]>>(
-      "/api/v1/auth/non-admin-users",
+      `/api/v1/auth/non-admin-users${qs}`,
       {
         method: "GET",
         requireAuth: true,
@@ -28,7 +42,9 @@ export const adminApi = {
       ...res,
       count: res.count ?? res.data?.length ?? 0,
       users: res.users ?? res.data ?? [],
-    })),
+    }))
+    );
+  },
 
   updateUser: (id: string, payload: UpdateUserPayload) =>
     apiClient<{ success: boolean; message: string; user?: UserProfile }>(
