@@ -66,6 +66,11 @@ export default function StudentCourseLessonPage({
     () => modules.flatMap((mod) => mod.lessons),
     [modules],
   );
+  const completedLessonsCount = flatLessons.filter((lesson) => lesson.isCompleted).length;
+  const shareUrl =
+    typeof window !== "undefined"
+      ? window.location.href
+      : `/dashboard/student/courses/${courseId}`;
   const activeLessonIndex = flatLessons.findIndex(
     (l) => l._id === activeLesson?._id,
   );
@@ -103,7 +108,12 @@ export default function StudentCourseLessonPage({
         >
           {/* Black top section for Header and Video */}
           <div className="bg-black w-full flex flex-col">
-            <LessonHeader title={activeLesson?.title || title} />
+            <LessonHeader
+              title={activeLesson?.title || title}
+              completedLessons={completedLessonsCount}
+              totalLessons={flatLessons.length}
+              shareUrl={shareUrl}
+            />
             <div className="w-full relative">
               <LessonVideoPlayer
                 lessonId={activeLesson?._id}
@@ -131,7 +141,10 @@ export default function StudentCourseLessonPage({
               {/* Placeholder for tab contents */}
               {activeTab === "Transcription" ? (
                 <div className="max-w-4xl mx-auto w-full pt-4">
-                  <CourseTranscription />
+                  <CourseTranscription
+                    courseId={courseId}
+                    lessonId={activeLesson?._id}
+                  />
                 </div>
               ) : activeTab === "Course Content" ? (
                 <div className="max-w-3xl mx-auto">
@@ -144,7 +157,11 @@ export default function StudentCourseLessonPage({
                 </div>
               ) : activeTab === "Ai Assistant" ? (
                 <div className="max-w-3xl mx-auto h-fit border border-gray-100 rounded-xl overflow-hidden">
-                  <CourseAiAssistant className="h-full" />
+                  <CourseAiAssistant
+                    className="h-full"
+                    courseId={courseId}
+                    lessonId={activeLesson?._id}
+                  />
                 </div>
               ) : activeTab === "Overview" ? (
                 <div className="max-w-4xl mx-auto w-full pt-4">
@@ -156,7 +173,7 @@ export default function StudentCourseLessonPage({
                 </div>
               ) : activeTab === "Q&A" ? (
                 <div className="max-w-3xl mx-auto w-full">
-                  <CourseQAndA />
+                  <CourseQAndA courseId={courseId} lessonId={activeLesson?._id} />
                 </div>
               ) : activeTab === "Notes" ? (
                 <div className="max-w-3xl mx-auto w-full">
@@ -172,11 +189,11 @@ export default function StudentCourseLessonPage({
                 </div>
               ) : activeTab === "Reviews" ? (
                 <div className="max-w-5xl mx-auto w-full">
-                  <CourseReviews />
+                  <CourseReviews courseId={courseId} />
                 </div>
               ) : activeTab === "Learning Tools" ? (
                 <div className="max-w-4xl mx-auto w-full">
-                  <CourseLearningTools />
+                  <CourseLearningTools courseId={courseId} courseTitle={title} />
                 </div>
               ) : (
                 <div className="py-8 text-center text-gray-500">

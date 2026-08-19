@@ -55,6 +55,17 @@ export const queryKeys = {
     courseContent: (courseId: string) => [...queryKeys.lessons.all, "course-content", courseId] as const,
     instructorCourseContent: (courseId: string) => [...queryKeys.lessons.all, "instructor-course-content", courseId] as const,
   },
+  courseInteractions: {
+    all: ["course-interactions"] as const,
+    questions: (courseId: string, lessonId?: string) =>
+      [...queryKeys.courseInteractions.all, "questions", courseId, lessonId] as const,
+    reviews: (courseId: string) =>
+      [...queryKeys.courseInteractions.all, "reviews", courseId] as const,
+    transcription: (courseId: string, lessonId?: string) =>
+      [...queryKeys.courseInteractions.all, "transcription", courseId, lessonId] as const,
+    reminders: (courseId: string) =>
+      [...queryKeys.courseInteractions.all, "reminders", courseId] as const,
+  },
   modules: {
     all: ["modules"] as const,
     forCourse: (courseId: string) => ["modules", "course", courseId] as const,

@@ -28,16 +28,22 @@ import { Input } from "@/components/ui/input";
 
 interface LessonHeaderProps {
   title: string;
+  completedLessons?: number;
+  totalLessons?: number;
+  shareUrl?: string;
 }
 
-const CourseCompletionDropdownContent = () => (
+const CourseCompletionDropdownContent = ({
+  completedLessons = 0,
+  totalLessons = 0,
+}: Pick<LessonHeaderProps, "completedLessons" | "totalLessons">) => (
   <DropdownMenuContent
     align="end"
     className="w-[280px] bg-[#F6F6F6] shadow-sm rounded-xl p-0 border-gray-200"
   >
     <div className="flex flex-col py-2 px-1">
       <div className="px-4 py-2.5 text-[15px] text-gray-700 font-medium">
-        2 Of 427 Complete
+        {completedLessons} Of {totalLessons} Complete
       </div>
       <div className="h-px w-full bg-gray-200/60 my-1" />
       <DropdownMenuItem className="px-4 py-3 text-[15px] text-gray-700 cursor-pointer rounded-lg hover:bg-gray-100/50">
@@ -47,7 +53,12 @@ const CourseCompletionDropdownContent = () => (
   </DropdownMenuContent>
 );
 
-export const LessonHeader = ({ title }: LessonHeaderProps) => {
+export const LessonHeader = ({
+  title,
+  completedLessons = 0,
+  totalLessons = 0,
+  shareUrl = "",
+}: LessonHeaderProps) => {
   const [isRatingModalOpen, setIsRatingModalOpen] = useState(false);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [ratingHover, setRatingHover] = useState(0);
@@ -89,7 +100,10 @@ export const LessonHeader = ({ title }: LessonHeaderProps) => {
                   <MoreVertical size={16} />
                 </button>
               </DropdownMenuTrigger>
-              <CourseCompletionDropdownContent />
+              <CourseCompletionDropdownContent
+                completedLessons={completedLessons}
+                totalLessons={totalLessons}
+              />
             </DropdownMenu>
           </div>
         </div>
@@ -129,7 +143,10 @@ export const LessonHeader = ({ title }: LessonHeaderProps) => {
                 <MoreVertical size={16} />
               </button>
             </DropdownMenuTrigger>
-            <CourseCompletionDropdownContent />
+            <CourseCompletionDropdownContent
+              completedLessons={completedLessons}
+              totalLessons={totalLessons}
+            />
           </DropdownMenu>
 
           <button
@@ -194,7 +211,7 @@ export const LessonHeader = ({ title }: LessonHeaderProps) => {
 
           <div className="w-full flex items-center gap-3">
             <Input
-              defaultValue="https://ayonaire.com/courses/ai-engineering"
+              value={shareUrl}
               className="flex-1 h-12 md:h-14 rounded-xl border-gray-200 px-4 text-base bg-white"
               readOnly
             />

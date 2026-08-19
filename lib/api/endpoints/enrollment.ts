@@ -110,6 +110,30 @@ export const enrollmentApi = {
     >(`/api/v1/enrollment/admin/students${qs}`, {
       method: "GET",
       requireAuth: true,
+    }).catch(async (error) => {
+      if (error?.status !== 404) throw error;
+
+      const fallback = await apiClient<
+        ApiResponse<UserProfile[]> & {
+          users?: UserProfile[];
+          pagination?: { total: number; page: number; limit: number; totalPages: number };
+        }
+      >(`/api/v1/auth/non-admin-users${qs}`, {
+        method: "GET",
+        requireAuth: true,
+      });
+      const students = fallback.users ?? fallback.data ?? [];
+
+      return {
+        ...fallback,
+        students,
+        pagination: fallback.pagination ?? {
+          total: students.length,
+          page: params.page ?? 1,
+          limit: params.limit ?? students.length,
+          totalPages: 1,
+        },
+      };
     });
   },
 
