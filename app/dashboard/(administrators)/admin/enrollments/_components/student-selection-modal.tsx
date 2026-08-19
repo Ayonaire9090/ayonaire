@@ -6,7 +6,7 @@ import { Search, ChevronLeft, ChevronRight, Minus } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { AppSimpleModal } from "@/components/modals/app-simple-modal";
-import { useGetAdminUsers } from "@/hooks/api/use-admin";
+import { useGetAssignableStudents } from "@/hooks/api/use-enrollment";
 
 export interface StudentData {
   id: string;
@@ -35,14 +35,14 @@ export const StudentSelectionModal = ({
     new Map(),
   );
 
-  const { data, isLoading } = useGetAdminUsers({
+  const { data, isLoading } = useGetAssignableStudents({
     page: currentPage,
     limit: PAGE_SIZE,
     search: searchQuery,
   });
 
   const students: StudentData[] = useMemo(() => {
-    return (data?.users ?? [])
+    return (data?.students ?? [])
       .map((u) => ({
         id: u._id,
         name: u.name,

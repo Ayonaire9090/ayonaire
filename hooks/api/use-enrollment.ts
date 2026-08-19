@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   enrollmentApi,
   GetAllEnrollmentsParams,
+  GetAssignableStudentsParams,
   EnrollStudentsPayload,
 } from "@/lib/api/endpoints/enrollment";
 import { queryKeys } from "@/lib/api/query-keys";
@@ -32,6 +33,15 @@ export const useGetAllEnrollments = (params: GetAllEnrollmentsParams = {}) => {
   return useQuery({
     queryKey: [...queryKeys.enrollment.all, "admin-all", params] as const,
     queryFn: () => enrollmentApi.getAllEnrollments(params),
+  });
+};
+
+export const useGetAssignableStudents = (
+  params: GetAssignableStudentsParams = {},
+) => {
+  return useQuery({
+    queryKey: [...queryKeys.enrollment.all, "admin-students", params] as const,
+    queryFn: () => enrollmentApi.getAssignableStudents(params),
   });
 };
 

@@ -1,5 +1,6 @@
 import { apiClient } from "../client";
 import { ApiResponse } from "../types";
+import { UserProfile } from "../types";
 
 export interface Enrollment {
   _id: string;
@@ -51,6 +52,12 @@ export interface EnrollStudentsPayload {
   studentIds: string[];
 }
 
+export interface GetAssignableStudentsParams {
+  page?: number;
+  limit?: number;
+  search?: string;
+}
+
 export const enrollmentApi = {
   getEnrolledCourses: () =>
     apiClient<ApiResponse<Enrollment[]>>("/api/v1/enrollment/enrolled-courses", {
@@ -87,6 +94,23 @@ export const enrollmentApi = {
         pagination: { total: number; page: number; limit: number; totalPages: number };
       }
     >(`/api/v1/enrollment/admin/all${qs}`, { method: "GET", requireAuth: true });
+  },
+
+  getAssignableStudents: (params: GetAssignableStudentsParams = {}) => {
+    const query = new URLSearchParams();
+    Object.entries(params).forEach(([key, value]) => {
+      if (value !== undefined && value !== "") query.append(key, String(value));
+    });
+    const qs = query.toString() ? `?${query.toString()}` : "";
+    return apiClient<
+      ApiResponse & {
+        students: UserProfile[];
+        pagination: { total: number; page: number; limit: number; totalPages: number };
+      }
+    >(`/api/v1/enrollment/admin/students${qs}`, {
+      method: "GET",
+      requireAuth: true,
+    });
   },
 
   enrollStudents: (payload: EnrollStudentsPayload) =>
