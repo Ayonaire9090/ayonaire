@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/popover";
 import { DataTable, ColumnDef } from "@/components/ui/data-table";
 import { DataList } from "@/components/ui/data-list";
-import { useGetEnrolledCourses } from "@/hooks/api/use-enrollment";
+import { useGetAllEnrollments } from "@/hooks/api/use-enrollment";
 import {
   EnrollmentData,
   EnrollmentStatusBadge,
@@ -32,8 +32,8 @@ export const EnrollmentsList = ({ onEnrollClick }: EnrollmentsListProps) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isBulkOpen, setIsBulkOpen] = useState(false);
 
-  const { data, isLoading, isError } = useGetEnrolledCourses();
-  const enrollments: EnrollmentData[] = (data?.data ?? []).map(
+  const { data, isLoading, isError } = useGetAllEnrollments({ limit: 100 });
+  const enrollments: EnrollmentData[] = (data?.enrollments ?? []).map(
     mapEnrollmentToEnrollmentData,
   );
   const filteredEnrollments = enrollments.filter(

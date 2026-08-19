@@ -37,7 +37,7 @@ export const StudentSelectionModal = ({
 
   const students: StudentData[] = useMemo(() => {
     return (data?.users ?? [])
-      .filter((u) => u.role === "student")
+      .filter((u) => u.role === "user" || u.role === "student" || !u.role)
       .map((u) => ({
         id: u._id,
         name: u.name,
@@ -56,8 +56,11 @@ export const StudentSelectionModal = ({
   }, [isOpen]);
 
   const filteredStudents = useMemo(() => {
-    return students.filter((s) =>
-      s.name.toLowerCase().includes(searchQuery.toLowerCase()),
+    const query = searchQuery.toLowerCase();
+    return students.filter(
+      (s) =>
+        s.name.toLowerCase().includes(query) ||
+        s.email.toLowerCase().includes(query),
     );
   }, [students, searchQuery]);
 

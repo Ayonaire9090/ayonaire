@@ -41,6 +41,7 @@ export const useEnrollStudentsMutation = () => {
     mutationFn: (payload: EnrollStudentsPayload) => enrollmentApi.enrollStudents(payload),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.enrollment.all });
+      queryClient.invalidateQueries({ queryKey: queryKeys.courses.all });
     },
   });
 };
@@ -52,6 +53,7 @@ export const useEnrollStudentsCsvMutation = () => {
       enrollmentApi.enrollStudentsCsv(courseId, file),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.enrollment.all });
+      queryClient.invalidateQueries({ queryKey: queryKeys.courses.all });
     },
   });
 };
