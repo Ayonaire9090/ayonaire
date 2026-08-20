@@ -139,7 +139,10 @@ export default function StudentMessageDetails() {
           {/* Right sidebar for group messages */}
           {isGroup && room && (
             <div className="hidden lg:block w-[320px] xl:w-[350px] shrink-0 border-l border-gray-100 overflow-y-auto bg-white h-full">
-              <StudentGroupSidebar room={room} />
+              <StudentGroupSidebar
+                room={room}
+                messages={messagesData?.data?.messages ?? []}
+              />
             </div>
           )}
         </div>

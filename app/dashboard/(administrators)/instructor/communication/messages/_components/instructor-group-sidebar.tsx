@@ -1,53 +1,59 @@
 "use client";
 
 import { useState } from "react";
+import { format } from "date-fns";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { ChevronDown, Plus } from "lucide-react";
+import { ChevronDown, FileText, ImageIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { RoomRecord } from "@/lib/api/endpoints/rooms";
+import type { MessageRecord } from "@/lib/api/endpoints/messages";
 
-// No backend endpoint lists files shared in a room (RoomLastMessage only
-// exposes hasMedia/hasFile booleans on the latest message, not a full
-// history), so this panel stays mock until that endpoint exists.
-const attachments = [
-  {
-    id: 1,
-    name: "Very important file.figma",
-    size: "7.5 MB",
-    date: "3.22.22, 11:15 AM",
-    iconUrl: "/assets/icons/figma.svg",
-    fallbackColor: "bg-pink-500",
-  },
-  {
-    id: 2,
-    name: "Some file. scratch",
-    size: "7.5 MB",
-    date: "3.22.22, 11:15 AM",
-    iconUrl: "/assets/icons/scratch.svg",
-    fallbackColor: "bg-yellow-500",
-  },
-  {
-    id: 3,
-    name: "List of someting. xd",
-    size: "7.5 MB",
-    date: "3.22.22, 11:15 AM",
-    iconUrl: "/assets/icons/xd.svg",
-    fallbackColor: "bg-purple-600",
-  },
-  {
-    id: 4,
-    name: "Very important fil.svg",
-    size: "7.5 MB",
-    date: "3.22.22, 11:15 AM",
-    iconUrl: "/assets/icons/svg.svg",
-    fallbackColor: "bg-yellow-400",
-  },
-];
+function attachmentName(url: string, fallback: string) {
+  try {
+    const name = decodeURIComponent(new URL(url).pathname.split("/").pop() ?? "");
+    return name || fallback;
+  } catch {
+    return fallback;
+  }
+}
 
-export const InstructorGroupSidebar = ({ room }: { room: RoomRecord }) => {
+function roomAttachments(messages: MessageRecord[]) {
+  return messages.flatMap((message) => {
+    const sentAt = format(new Date(message.createdAt), "MMM d, yyyy, h:mm a");
+    const items = [];
+    if (message.media) {
+      items.push({
+        id: `${message.id}-media`,
+        name: attachmentName(message.media.url, "Image attachment"),
+        url: message.media.url,
+        date: sentAt,
+        type: "media" as const,
+      });
+    }
+    if (message.file) {
+      items.push({
+        id: `${message.id}-file`,
+        name: attachmentName(message.file.url, "File attachment"),
+        url: message.file.url,
+        date: sentAt,
+        type: "file" as const,
+      });
+    }
+    return items;
+  });
+}
+
+export const InstructorGroupSidebar = ({
+  room,
+  messages = [],
+}: {
+  room: RoomRecord;
+  messages?: MessageRecord[];
+}) => {
   const [attachmentsOpen, setAttachmentsOpen] = useState(true);
   const [membersOpen, setMembersOpen] = useState(true);
   const title = room.name ?? "Untitled Group";
+  const attachments = roomAttachments(messages);
 
   return (
     <div className="p-5 md:p-6 bg-white min-h-full flex flex-col h-full w-full">
@@ -90,9 +96,17 @@ export const InstructorGroupSidebar = ({ room }: { room: RoomRecord }) => {
 
         {attachmentsOpen && (
           <div className="flex flex-col gap-4 mt-2">
-            {attachments.map((file) => (
-              <div
+            {attachments.length === 0 ? (
+              <p className="text-[13px] text-gray-400">
+                Files shared in this room will appear here.
+              </p>
+            ) : (
+              attachments.map((file) => (
+              <a
                 key={file.id}
+                href={file.url}
+                target="_blank"
+                rel="noreferrer"
                 className="flex items-center gap-3 group cursor-pointer"
               >
                 <div
@@ -100,24 +114,23 @@ export const InstructorGroupSidebar = ({ room }: { room: RoomRecord }) => {
                     "size-10 rounded-full flex items-center justify-center shrink-0 bg-[#2d2d3f]",
                   )}
                 >
-                  {/* Mock icons for files, falling back to a colored circle if missing */}
-                  <div
-                    className={cn("size-5 rounded-sm", file.fallbackColor)}
-                  />
+                  {file.type === "media" ? (
+                    <ImageIcon className="size-5 text-white" />
+                  ) : (
+                    <FileText className="size-5 text-white" />
+                  )}
                 </div>
                 <div className="flex flex-col min-w-0">
                   <span className="text-[14px] font-medium text-gray-900 truncate group-hover:text-primary transition-colors">
                     {file.name}
                   </span>
                   <span className="text-[12px] text-gray-400">
-                    {file.size} {file.date}
+                    {file.date}
                   </span>
                 </div>
-              </div>
-            ))}
-            <button className="text-[13px] text-[#4F46E5] font-medium text-left mt-1 hover:underline">
-              View all
-            </button>
+              </a>
+              ))
+            )}
           </div>
         )}
       </div>
@@ -141,15 +154,6 @@ export const InstructorGroupSidebar = ({ room }: { room: RoomRecord }) => {
 
         {membersOpen && (
           <div className="flex flex-col gap-1 mt-2">
-            <button className="flex items-center gap-3 py-2 px-1 rounded-lg hover:bg-gray-50 transition-colors w-full group">
-              <div className="size-10 rounded-full bg-[#2d2d3f] flex items-center justify-center shrink-0">
-                <Plus className="size-5 text-white" />
-              </div>
-              <span className="text-[14px] font-medium text-[#4F46E5] group-hover:text-[#3730a3] transition-colors">
-                Add Member
-              </span>
-            </button>
-
             {room.participants.map((member) => (
               <div
                 key={member.id}

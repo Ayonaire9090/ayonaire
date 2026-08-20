@@ -34,6 +34,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useAuthStore } from "@/store/auth.store";
 import {
   Collapsible,
   CollapsibleContent,
@@ -104,6 +105,7 @@ export function StudentFeedSidebarContent({
   const { state, toggleSidebar, open, isMobile } = useSidebar();
   const isCollapsed = state === "collapsed" && !isMobile;
   const pathname = usePathname();
+  const user = useAuthStore((state) => state.user);
 
   const isPinned = open;
   const [isCreateModalOpen, setIsCreateModalOpen] = React.useState(false);
@@ -167,15 +169,20 @@ export function StudentFeedSidebarContent({
               <>
                 <div className="flex items-center gap-3 mb-2">
                   <Avatar className="h-10 w-10 border border-gray-200">
-                    <AvatarImage src={dashboardData.user.avatar} alt="Ayo" />
-                    <AvatarFallback>AY</AvatarFallback>
+                    <AvatarImage
+                      src={user?.profile?.url ?? dashboardData.user.avatar}
+                      alt={user?.name ?? dashboardData.user.name}
+                    />
+                    <AvatarFallback>
+                      {(user?.name ?? dashboardData.user.name).slice(0, 2).toUpperCase()}
+                    </AvatarFallback>
                   </Avatar>
                   <div className="flex flex-col">
                     <span className="font-semibold text-sm text-gray-900">
-                      Ayo
+                      {user?.name ?? dashboardData.user.name}
                     </span>
                     <span className="text-xs text-gray-500">
-                      ayo.holt@example.com
+                      {user?.email ?? dashboardData.user.email}
                     </span>
                   </div>
                 </div>

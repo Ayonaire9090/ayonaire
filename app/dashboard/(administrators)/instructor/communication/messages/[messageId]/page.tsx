@@ -8,6 +8,7 @@ import { InstructorMessagesHeader } from "../_components/instructor-messages-hea
 import { InstructorGroupMessagesHeader } from "../_components/instructor-group-messages-header";
 import { InstructorMessageList } from "../_components/instructor-message-list";
 import { InstructorMessageComposer } from "../_components/instructor-message-composer";
+import type { ComposerAttachment } from "../_components/instructor-message-composer";
 import { InstructorGroupSidebar } from "../_components/instructor-group-sidebar";
 import { useGetRooms } from "@/hooks/api/use-rooms";
 import { useGetMessages, useSendMessageMutation } from "@/hooks/api/use-messages";
@@ -27,10 +28,11 @@ export default function InstructorMessageDetails() {
 
   const sendMessageMutation = useSendMessageMutation();
 
-  const handleSend = (text: string) => {
+  const handleSend = (text: string, attachment?: ComposerAttachment) => {
     const formData = new FormData();
     formData.append("roomId", roomId);
     formData.append("text", text);
+    if (attachment) formData.append(attachment.kind, attachment.file);
     sendMessageMutation.mutate(formData);
   };
 
@@ -86,7 +88,7 @@ export default function InstructorMessageDetails() {
           {/* Right sidebar for group messages */}
           {isGroup && (
             <div className="hidden lg:block w-[320px] xl:w-[350px] shrink-0 border-l border-gray-100 overflow-y-auto bg-white h-full">
-              <InstructorGroupSidebar room={room} />
+              <InstructorGroupSidebar room={room} messages={messages} />
             </div>
           )}
         </div>

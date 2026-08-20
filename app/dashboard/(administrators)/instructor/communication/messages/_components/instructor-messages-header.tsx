@@ -25,7 +25,7 @@ import { useAuthStore } from "@/store/auth.store";
 import { DashboardUserDropDown } from "@/components/dashboard/dashboard-user-dropdown";
 
 const headerNav = [
-  { title: "Feed", url: "/dInstructor/feed", icon: LayoutTemplate },
+  { title: "Feed", url: "/dashboard/instructor/feed", icon: LayoutTemplate },
   { title: "Workshop", url: "/dashboard/instructor/workshop", icon: Video },
   {
     title: "Job Fair Sessions",
@@ -55,7 +55,7 @@ const careerAcceleratorSubNav = [
   },
   {
     title: "Freelancing Assistance",
-    url: "/dashboard/instructor/career-accelarator/freelance-assistance-system",
+    url: "/dashboard/instructor/career-accelarator/freelance-assistance",
   },
   {
     title: "Talent Marketplace",

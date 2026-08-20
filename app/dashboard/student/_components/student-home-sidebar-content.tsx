@@ -32,17 +32,17 @@ const studentHomeSidebarNav = [
   { title: "Feed", url: "/dashboard/student/feed", icon: LayoutGrid },
   {
     title: "Announcements",
-    url: "/dashboard/student/announcements",
+    url: "/dashboard/student/feed/announcements",
     icon: Megaphone,
   },
   {
     title: "Introductions",
-    url: "/dashboard/student/introductions",
+    url: "/dashboard/student/feed/introductions",
     icon: Users2,
   },
   {
     title: "Ask For Help",
-    url: "/dashboard/student/ask-for-help",
+    url: "/dashboard/student/feed/ask-for-help",
     icon: HelpCircle,
   },
   { title: "Workshop", url: "/dashboard/student/workshop", icon: Video },
@@ -54,13 +54,13 @@ const studentHomeSidebarNav = [
   },
   {
     title: "Chatrooms",
-    url: "/dashboard/student/chatrooms",
+    url: "/dashboard/student/messages",
     icon: MessageCircleMore,
   },
-  { title: "Resources", url: "/dashboard/student/resources", icon: Folder },
+  { title: "Resources", url: "/dashboard/student/courses", icon: Folder },
   {
     title: "Leader board",
-    url: "/dashboard/student/leaderboard",
+    url: "/dashboard/student/feed/leaderboard",
     icon: Trophy,
   },
   {

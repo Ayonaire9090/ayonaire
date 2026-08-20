@@ -11,6 +11,7 @@ import {
   NotebookText,
   LayoutGrid,
   Megaphone,
+  MessageCircleMore,
 } from "lucide-react";
 
 const BasicQuickActions = [
@@ -37,6 +38,12 @@ const BasicQuickActions = [
     icon: Megaphone,
     iconColor: "#10B981",
     href: "/dashboard/instructor/communication",
+  },
+  {
+    title: "Open Rooms",
+    icon: MessageCircleMore,
+    iconColor: "#2563EB",
+    href: "/dashboard/instructor/communication/messages",
   },
 ];
 
@@ -76,7 +83,7 @@ export const InstructorDashboardQuickActions = () => {
       </div>
 
       {/* ── Desktop: 4-column grid (unchanged) ── */}
-      <div className="hidden lg:grid grid-cols-4 gap-4">
+      <div className="hidden lg:grid grid-cols-5 gap-4">
         {BasicQuickActions.map((action, index) => (
           <InstructorDashboardSectionFeatureCard
             key={index}

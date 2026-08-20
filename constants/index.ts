@@ -238,6 +238,16 @@ export const dashboardData = {
       icon: DashboardCoursesIcon,
     },
     {
+      title: "Feed",
+      url: "/dashboard/instructor/feed",
+      icon: LayoutGrid,
+    },
+    {
+      title: "Workshops",
+      url: "/dashboard/instructor/workshop",
+      icon: IconVideo,
+    },
+    {
       title: "Assignments",
       url: "/dashboard/instructor/assignments",
       icon: DashboardFileTextIcon,
@@ -266,6 +276,11 @@ export const dashboardData = {
       title: "Communication",
       url: "/dashboard/instructor/communication",
       icon: DashboardSpeechBubbleIcon,
+    },
+    {
+      title: "Rooms",
+      url: "/dashboard/instructor/communication/messages",
+      icon: MessageCircleMore,
     },
     {
       title: "Monetization",
