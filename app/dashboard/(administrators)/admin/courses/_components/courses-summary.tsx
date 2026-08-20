@@ -6,11 +6,16 @@ import { useGetCourses } from "@/hooks/api/use-courses";
 import { mapCourseToCourseData } from "./courses-data";
 
 export const CoursesSummary = () => {
-  const { data } = useGetCourses();
+  const { data } = useGetCourses({ limit: 200 });
   const courses = (data?.courses ?? []).map(mapCourseToCourseData);
 
   const summaryData = [
-    { title: "All", number: String(courses.length), icon: Layers, iconBg: "bg-[#3B82F6]" },
+    {
+      title: "All",
+      number: String(data?.pagination?.total ?? courses.length),
+      icon: Layers,
+      iconBg: "bg-[#3B82F6]",
+    },
     {
       title: "Active",
       number: String(courses.filter((c) => c.status === "Active").length),

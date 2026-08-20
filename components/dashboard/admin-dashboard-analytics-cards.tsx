@@ -42,10 +42,12 @@ export const AdminDashboardAnalyticsCards = () => {
   const activeStudents = users.filter(
     (u) => (u.role === "student" || u.role === "user") && u.status === "active",
   ).length;
-  const instructorUsers = users.filter((u) => u.role === "instructor").length;
+  const instructorUsers = instructors.filter(
+    (i) => i.applicationStatus?.toLowerCase() === "approved",
+  ).length;
   const pendingPayments = payments.filter((p) => p.status === "pending").length;
   const pendingApplications = instructors.filter(
-    (i) => i.applicationStatus === "pending",
+    (i) => i.applicationStatus?.toLowerCase() === "pending",
   ).length;
 
   // Only Total Revenue / Platform Fees have a real previous-period source

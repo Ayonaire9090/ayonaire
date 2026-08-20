@@ -17,9 +17,16 @@ import { useGetCourses } from "@/hooks/api/use-courses";
 export const CoursesTable = () => {
   const [searchQuery, setSearchQuery] = React.useState("");
   const [addCourseOpen, setAddCourseOpen] = React.useState(false);
+  const [page, setPage] = React.useState(1);
+  const limit = 10;
 
-  const { data, isLoading, isError } = useGetCourses();
+  const { data, isLoading, isError } = useGetCourses({
+    page,
+    limit,
+    search: searchQuery || undefined,
+  });
   const courses: CourseData[] = (data?.courses ?? []).map(mapCourseToCourseData);
+  const totalPages = data?.pagination?.totalPages ?? 1;
 
   const tableColumns: ColumnDef<CourseData>[] = [
     {
@@ -104,7 +111,10 @@ export const CoursesTable = () => {
               <Input
                 placeholder={`Search courses....`}
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  setPage(1);
+                }}
                 className="pl-11 rounded-full border-none bg-[#F6F6F6] h-11 text-[15px] placeholder:text-gray-400 focus-visible:ring-0 focus-visible:bg-gray-100 shadow-none"
               />
             </div>
@@ -131,15 +141,16 @@ export const CoursesTable = () => {
         </div>
       ) : (
         <DataTable
-          data={courses.filter(
-            (course) =>
-              course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-              course.courseId.toLowerCase().includes(searchQuery.toLowerCase()) ||
-              course.instructor.toLowerCase().includes(searchQuery.toLowerCase()),
-          )}
+          data={courses}
           columns={tableColumns}
           keyExtractor={(c) => c.id}
           selectable
+          pagination={{
+            page: data?.pagination?.page ?? page,
+            totalPages,
+            onPrev: () => setPage((p) => Math.max(1, p - 1)),
+            onNext: () => setPage((p) => Math.min(totalPages, p + 1)),
+          }}
         />
       )}
       <AddCourseModal

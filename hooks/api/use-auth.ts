@@ -36,6 +36,7 @@ export const useRegisterMutation = () => {
 export const useGetProfile = () => {
   const token = useAuthStore((state) => state.token);
   const setUser = useAuthStore((state) => state.setUser);
+  const user = useAuthStore((state) => state.user);
 
   return useQuery({
     queryKey: queryKeys.auth.profile(),
@@ -43,7 +44,7 @@ export const useGetProfile = () => {
       const data = await authApi.getProfile();
       const profile = data.user ?? data.data;
       if (data.success && profile) {
-        setUser(profile);
+        setUser(user ? { ...user, ...profile } : profile);
       }
       return data;
     },

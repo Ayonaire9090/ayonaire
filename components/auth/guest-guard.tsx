@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/auth.store";
 import { AppLoadingSpinner } from "../app-loaing-spinner";
+import { normalizeDashboardRole } from "@/lib/auth/roles";
 
 interface GuestGuardProps {
   children: React.ReactNode;
@@ -23,14 +24,7 @@ export function GuestGuard({ children }: GuestGuardProps) {
     if (!isHydrated) return;
 
     if (token && user) {
-      const userRole = user.role === "user" ? "student" : user.role;
-      if (userRole === "admin") {
-        router.replace("/dashboard/admin");
-      } else if (userRole === "instructor") {
-        router.replace("/dashboard/instructor");
-      } else {
-        router.replace("/dashboard/student");
-      }
+      router.replace(`/dashboard/${normalizeDashboardRole(user.role)}`);
     }
   }, [isHydrated, token, user, router]);
 

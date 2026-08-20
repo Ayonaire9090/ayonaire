@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { SquarePen } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/auth.store";
+import { normalizeDashboardRole } from "@/lib/auth/roles";
 
 const INPUT_CLASSNAME = `text-[#121315]!
   bg-transparent!
@@ -32,12 +33,7 @@ export function ProfileForm() {
   const user = useAuthStore((state) => state.user);
 
   // Derive the correct edit path from the user's role
-  const roleSegment =
-    user?.role === "admin"
-      ? "admin"
-      : user?.role === "instructor"
-        ? "instructor"
-        : "student";
+  const roleSegment = normalizeDashboardRole(user?.role);
 
   const editPath =
     roleSegment === "student"

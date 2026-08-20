@@ -12,6 +12,7 @@ import {
 import { useLoginMutation } from "@/hooks/api/use-auth";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { normalizeDashboardRole } from "@/lib/auth/roles";
 
 export default function SignInPage() {
   const router = useRouter();
@@ -42,13 +43,7 @@ export default function SignInPage() {
           throw new Error("User data not found in response");
         }
         toast.success("Signed in successfully!");
-        if (user.role === "admin") {
-          router.push("/dashboard/admin");
-        } else if (user.role === "instructor") {
-          router.push("/dashboard/instructor");
-        } else {
-          router.push("/dashboard/student");
-        }
+        router.push(`/dashboard/${normalizeDashboardRole(user.role)}`);
       }
     } catch (error: any) {
       console.error("Sign in failed:", error);

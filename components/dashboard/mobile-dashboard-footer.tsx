@@ -9,6 +9,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useSidebar } from "@/components/ui/sidebar";
 import { useAuthStore } from "@/store/auth.store";
 import { DashboardUserDropDown } from "./dashboard-user-dropdown";
+import { normalizeDashboardRole } from "@/lib/auth/roles";
 
 interface FooterNavItem {
   title: string;
@@ -40,10 +41,8 @@ export function MobileDashboardFooter({
   const scrollRef = useRef<HTMLDivElement>(null);
   const { setOpenMobile } = useSidebar();
   const user = useAuthStore((state) => state.user);
-  const rolePath = user?.role === "user" ? "student" : user?.role;
-  const derivedProfileHref = rolePath
-    ? `/dashboard/${rolePath}/profile`
-    : "/dashboard/student/profile";
+  const rolePath = normalizeDashboardRole(user?.role);
+  const derivedProfileHref = `/dashboard/${rolePath}/profile`;
 
   const profile =
     profileProp !== undefined

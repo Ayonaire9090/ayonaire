@@ -3,6 +3,7 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import React from "react";
 import Image from "next/image";
+import type { DataTablePagination } from "./data-table";
 
 interface DataListProps<T> {
   data: T[];
@@ -11,6 +12,7 @@ interface DataListProps<T> {
   className?: string;
   itemClassName?: string;
   footerContent?: React.ReactNode;
+  pagination?: DataTablePagination;
 }
 
 export function DataList<T>({
@@ -20,6 +22,7 @@ export function DataList<T>({
   className = "",
   itemClassName = "",
   footerContent,
+  pagination,
 }: DataListProps<T>) {
   return (
     <div className={`flex flex-col gap-4 ${className}`}>
@@ -51,14 +54,23 @@ export function DataList<T>({
         </div>
       )}
 
-      {/* Pagination placeholder */}
       <div className="flex items-center justify-between mt-8 p-4 border-t border-gray-100">
-        <span className="text-gray-900 text-[15px]">Page 1 of 5</span>
+        <span className="text-gray-900 text-[15px]">
+          Page {pagination?.page ?? 1} of {Math.max(pagination?.totalPages ?? 1, 1)}
+        </span>
         <div className="flex items-center gap-6">
-          <button className="flex items-center gap-1.5 text-gray-900 text-[15px] hover:text-black transition-colors">
+          <button
+            onClick={pagination?.onPrev}
+            disabled={!pagination || pagination.page <= 1}
+            className="flex items-center gap-1.5 text-gray-900 text-[15px] hover:text-black transition-colors disabled:text-gray-300 disabled:cursor-not-allowed"
+          >
             <ChevronLeft className="size-4" /> Prev
           </button>
-          <button className="flex items-center gap-1.5 text-gray-900 text-[15px] hover:text-black transition-colors">
+          <button
+            onClick={pagination?.onNext}
+            disabled={!pagination || pagination.page >= pagination.totalPages}
+            className="flex items-center gap-1.5 text-gray-900 text-[15px] hover:text-black transition-colors disabled:text-gray-300 disabled:cursor-not-allowed"
+          >
             Next <ChevronRight className="size-4" />
           </button>
         </div>

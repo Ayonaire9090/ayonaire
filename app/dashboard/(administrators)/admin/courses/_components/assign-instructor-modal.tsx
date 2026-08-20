@@ -5,8 +5,9 @@ import { toast } from "sonner";
 import { AppSimpleModal } from "@/components/modals/app-simple-modal";
 import { AppSelect } from "@/components/ui/app-select";
 import { Button } from "@/components/ui/button";
-import { useGetAdminUsers } from "@/hooks/api/use-admin";
 import { useAssignInstructorToCourseMutation } from "@/hooks/api/use-courses";
+import { useGetAllInstructorProfiles } from "@/hooks/api/use-instructor";
+import { mapInstructorProfileToInstructorData } from "../../instructors/_components/instructors-data";
 
 interface AssignInstructorModalProps {
   courseId: string | null;
@@ -15,14 +16,18 @@ interface AssignInstructorModalProps {
 
 export function AssignInstructorModal({ courseId, onClose }: AssignInstructorModalProps) {
   const [instructorId, setInstructorId] = useState("");
-  const { data: usersData } = useGetAdminUsers();
+  const { data: instructorData } = useGetAllInstructorProfiles();
   const assignInstructor = useAssignInstructorToCourseMutation();
 
   const options = useMemo(() => {
-    return (usersData?.users ?? [])
-      .filter((u) => u.role === "instructor")
-      .map((u) => ({ label: `${u.name} (${u.email})`, value: u._id }));
-  }, [usersData]);
+    return (instructorData?.data ?? [])
+      .map(mapInstructorProfileToInstructorData)
+      .filter((instructor) => instructor.status === "Approved")
+      .map((instructor) => ({
+        label: `${instructor.name} (${instructor.email})`,
+        value: instructor.userId,
+      }));
+  }, [instructorData]);
 
   const handleClose = () => {
     setInstructorId("");

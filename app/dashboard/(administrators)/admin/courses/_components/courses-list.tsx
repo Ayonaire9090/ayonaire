@@ -17,9 +17,16 @@ import { useGetCourses } from "@/hooks/api/use-courses";
 export const CoursesList = () => {
   const [searchQuery, setSearchQuery] = React.useState("");
   const [addCourseOpen, setAddCourseOpen] = React.useState(false);
+  const [page, setPage] = React.useState(1);
+  const limit = 10;
 
-  const { data, isLoading, isError } = useGetCourses();
+  const { data, isLoading, isError } = useGetCourses({
+    page,
+    limit,
+    search: searchQuery || undefined,
+  });
   const courses = (data?.courses ?? []).map(mapCourseToCourseData);
+  const totalPages = data?.pagination?.totalPages ?? 1;
 
   return (
     <div className="md:hidden mt-2 bg-white rounded-xl p-2 lg:p-4 relative">
@@ -40,7 +47,10 @@ export const CoursesList = () => {
             <Input
               placeholder={`Search courses....`}
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                setPage(1);
+              }}
               className="pl-11 rounded-full border-none bg-[#F6F6F6] h-11 text-[15px] placeholder:text-gray-400 focus-visible:ring-0 focus-visible:bg-gray-100 shadow-none"
             />
           </div>
@@ -60,19 +70,16 @@ export const CoursesList = () => {
         </div>
       ) : (
         <DataList
-          data={courses.filter(
-            (course) =>
-              course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-              course.courseId
-                .toLowerCase()
-                .includes(searchQuery.toLowerCase()) ||
-              course.instructor
-                .toLowerCase()
-                .includes(searchQuery.toLowerCase()),
-          )}
+          data={courses}
           keyExtractor={(c) => c.id}
           className="gap-3"
           itemClassName="bg-white border border-gray-100 rounded-xl px-3 py-3"
+          pagination={{
+            page: data?.pagination?.page ?? page,
+            totalPages,
+            onPrev: () => setPage((p) => Math.max(1, p - 1)),
+            onNext: () => setPage((p) => Math.min(totalPages, p + 1)),
+          }}
           renderItem={(course) => (
             <div className="w-full min-w-0">
               <div className="flex items-start justify-between gap-3">

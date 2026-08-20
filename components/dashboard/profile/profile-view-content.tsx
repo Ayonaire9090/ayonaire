@@ -20,6 +20,7 @@ import { ProfileTimelineContent } from "@/components/dashboard/profile/profile-t
 import { useAuthStore } from "@/store/auth.store";
 import { useGetProfile } from "@/hooks/api/use-auth";
 import { useState } from "react";
+import { normalizeDashboardRole } from "@/lib/auth/roles";
 
 /**
  * Shared profile view content used by all role-specific profile pages.
@@ -45,10 +46,11 @@ export function ProfileViewContent({ showHeader = true }: ProfileViewContentProp
   const coverPhotoUrl = user?.coverPhoto?.url;
 
   // Map API role to display label
+  const dashboardRole = normalizeDashboardRole(user?.role);
   const roleLabel =
-    user?.role === "admin"
+    dashboardRole === "admin"
       ? "Admin"
-      : user?.role === "instructor"
+      : dashboardRole === "instructor"
         ? "Instructor"
         : "Student";
 

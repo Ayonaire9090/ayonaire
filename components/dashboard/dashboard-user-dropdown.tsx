@@ -12,6 +12,7 @@ import { BellDot } from "lucide-react";
 import { DropdownMenuContentProps } from "@radix-ui/react-dropdown-menu";
 import { useLogoutMutation } from "@/hooks/api/use-auth";
 import { useAuthStore } from "@/store/auth.store";
+import { normalizeDashboardRole } from "@/lib/auth/roles";
 
 export const DashboardUserDropDown = ({
   children,
@@ -44,14 +45,14 @@ export const DashboardUserDropDown = ({
     }
   };
 
-  const rolePath = user?.role === "user" ? "student" : user?.role;
+  const rolePath = normalizeDashboardRole(user?.role);
   const profilePath = pathname.includes("/admin")
     ? "admin"
     : pathname.includes("instructor")
       ? "instructor"
       : pathname.includes("/student")
         ? "student"
-        : rolePath ?? "student";
+        : rolePath;
   const profileRoot = pathname.includes("/preview/admin")
     ? "/preview/admin/profile"
     : pathname.includes("/preview/instructor")
