@@ -10,15 +10,13 @@ interface RegistrationModalProps {
     onClose: () => void;
 }
 
-const SOURCE = 'data-analytics-masterclass-2026';
-
 async function registerUser(fullName: string, email: string, phoneNumber: string) {
     const res = await fetch('/api/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ fullName, email, phoneNumber, source: SOURCE }),
+        body: JSON.stringify({ fullName, email, phoneNumber }),
     });
 
     const data = await res.json();

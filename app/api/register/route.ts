@@ -4,7 +4,7 @@ import { getSupabaseClient } from '@/lib/supabase';
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { fullName, email, phoneNumber, source } = body;
+    const { fullName, email, phoneNumber } = body;
 
     // 1. Basic validation
     if (!fullName || !email || !phoneNumber) {
@@ -24,16 +24,12 @@ export async function POST(req: Request) {
       );
     }
 
-    // 3. Prepare payload (Include source if your table has a source column)
-    const payload: Record<string, any> = {
+    // 3. Prepare payload
+    const payload = {
       full_name: fullName,
       email,
       phone_number: phoneNumber,
     };
-
-    if (source) {
-      payload.source = source;
-    }
 
     // 4. Perform Supabase Insertion
     const { error } = await supabase.from('registrations').insert([payload]);
