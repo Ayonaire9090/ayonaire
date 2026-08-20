@@ -30,6 +30,7 @@ export const DashboardUserDropDown = ({
   const pathname = usePathname();
   const logoutMutation = useLogoutMutation();
   const clearAuth = useAuthStore((state) => state.clearAuth);
+  const user = useAuthStore((state) => state.user);
 
   const handleLogout = async () => {
     // Attempt to hit the logout endpoint, and clear the auth store regardless of success
@@ -43,13 +44,14 @@ export const DashboardUserDropDown = ({
     }
   };
 
+  const rolePath = user?.role === "user" ? "student" : user?.role;
   const profilePath = pathname.includes("/admin")
     ? "admin"
     : pathname.includes("instructor")
       ? "instructor"
       : pathname.includes("/student")
         ? "student"
-        : "";
+        : rolePath ?? "student";
   const profileRoot = pathname.includes("/preview/admin")
     ? "/preview/admin/profile"
     : pathname.includes("/preview/instructor")

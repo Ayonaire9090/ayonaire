@@ -26,7 +26,7 @@ export interface ApplyInstructorPayload {
 }
 
 export interface RejectInstructorPayload {
-  applicationId: string;
+  userId: string;
   reason: string;
 }
 
@@ -38,10 +38,10 @@ export const instructorApi = {
       requireAuth: true,
     }),
 
-  approve: (applicationId: string) =>
+  approve: (userId: string) =>
     apiClient<ApiResponse>("/api/v1/instructor-management/approve", {
       method: "POST",
-      body: JSON.stringify({ applicationId }),
+      body: JSON.stringify({ userId }),
       requireAuth: true,
     }),
 

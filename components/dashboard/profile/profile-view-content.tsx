@@ -42,6 +42,7 @@ export function ProfileViewContent({ showHeader = true }: ProfileViewContentProp
   const displayName = user?.name ?? "—";
   const displayEmail = user?.email ?? "—";
   const avatarUrl = user?.profile?.url;
+  const coverPhotoUrl = user?.coverPhoto?.url;
 
   // Map API role to display label
   const roleLabel =
@@ -76,7 +77,7 @@ export function ProfileViewContent({ showHeader = true }: ProfileViewContentProp
         {/* Main content */}
         <div className="min-w-0">
           {/* Cover Banner */}
-          <ProfileCoverBanner />
+          <ProfileCoverBanner coverPhotoUrl={coverPhotoUrl} />
 
           {/* Profile Info */}
           <ProfileInfoSection

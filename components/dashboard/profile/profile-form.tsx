@@ -50,9 +50,9 @@ export function ProfileForm() {
   const phone = user?.phoneNumber ?? "";
 
   // Fields not yet available in the API – kept as placeholders for future use
-  const bio = "";
-  const linkedIn = "";
-  const website = "";
+  const bio = user?.bio ?? "";
+  const linkedIn = user?.linkedin ?? "";
+  const website = user?.website ?? "";
 
   return (
     <div className="py-6 md:py-8 bg-white p-4 rounded-2xl my-3">

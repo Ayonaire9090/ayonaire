@@ -2,7 +2,7 @@
 
 import React, { useRef } from "react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { MoreVertical } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -39,8 +39,11 @@ export function MobileDashboardFooter({
   const pathname = usePathname();
   const scrollRef = useRef<HTMLDivElement>(null);
   const { setOpenMobile } = useSidebar();
-  const router = useRouter();
   const user = useAuthStore((state) => state.user);
+  const rolePath = user?.role === "user" ? "student" : user?.role;
+  const derivedProfileHref = rolePath
+    ? `/dashboard/${rolePath}/profile`
+    : "/dashboard/student/profile";
 
   const profile =
     profileProp !== undefined
@@ -49,7 +52,7 @@ export function MobileDashboardFooter({
           name: user?.name ?? "—",
           avatar: user?.profile?.url,
           fallback: user?.name ? user.name.slice(0, 2).toUpperCase() : "AY",
-          href: "/dashboard/profile",
+          href: derivedProfileHref,
         };
 
   // Split items into visible and overflow
@@ -67,15 +70,6 @@ export function MobileDashboardFooter({
       item.url !== "/dashboard/instructor";
     return isStrictlyActive || isChildActive;
   };
-
-  // Get the profile path based on route (update this later to be session based):
-  const profilePath = pathname.includes("/admin")
-    ? "admin"
-    : pathname.includes("/instructor")
-      ? "instructor"
-      : pathname.includes("/student")
-        ? "student"
-        : "";
 
   return (
     <footer

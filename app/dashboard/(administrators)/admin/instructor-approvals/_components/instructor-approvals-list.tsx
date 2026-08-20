@@ -95,7 +95,7 @@ export const InstructorApprovalsList = () => {
 
   const handleReject = async (id: string, reason: string) => {
     try {
-      await reject({ applicationId: id, reason });
+      await reject({ userId: id, reason });
       toast.success("Instructor application rejected");
     } catch (error: any) {
       toast.error(error?.message || "Failed to reject instructor");
@@ -199,7 +199,7 @@ export const InstructorApprovalsList = () => {
               <div className="flex items-center gap-2 shrink-0">
                 <Button
                   disabled={isApproving}
-                  onClick={() => handleApprove(application.id)}
+                  onClick={() => handleApprove(application.userId)}
                   className="h-9 px-4 rounded-lg bg-[#24A164] hover:bg-[#24A164]/90 text-white font-medium text-[14px]"
                 >
                   <Check className="mr-1.5 size-4" />
@@ -207,7 +207,7 @@ export const InstructorApprovalsList = () => {
                 </Button>
                 <RejectPopover
                   isPending={isRejecting}
-                  onConfirm={(reason) => handleReject(application.id, reason)}
+                  onConfirm={(reason) => handleReject(application.userId, reason)}
                 />
               </div>
             </div>
