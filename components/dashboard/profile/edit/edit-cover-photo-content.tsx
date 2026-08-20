@@ -2,18 +2,37 @@
 
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Upload, ImageIcon } from "lucide-react";
+import { Upload, ImageIcon, Loader2 } from "lucide-react";
+import { useAuthStore } from "@/store/auth.store";
+import { useEditProfileMutation } from "@/hooks/api/use-users";
 
 export function EditCoverPhotoContent() {
+  const user = useAuthStore((state) => state.user);
+  const editProfileMutation = useEditProfileMutation();
   const [preview, setPreview] = useState<string | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const currentCoverUrl = user?.coverPhoto?.url;
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      setSelectedFile(file);
       const url = URL.createObjectURL(file);
       setPreview(url);
     }
+  };
+
+  const handleSave = () => {
+    if (!selectedFile) return;
+    const formData = new FormData();
+    formData.append("coverPhoto", selectedFile);
+    editProfileMutation.mutate(formData, {
+      onSuccess: () => {
+        setSelectedFile(null);
+        setPreview(null);
+      },
+    });
   };
 
   return (
@@ -25,9 +44,9 @@ export function EditCoverPhotoContent() {
 
       {/* Current cover preview */}
       <div className="relative w-full h-[140px] md:h-[180px] rounded-xl overflow-hidden bg-[#1a1a2e] mb-6">
-        {preview ? (
+        {preview || currentCoverUrl ? (
           <img
-            src={preview}
+            src={preview || currentCoverUrl}
             alt="Cover preview"
             className="w-full h-full object-cover"
           />
@@ -67,7 +86,14 @@ export function EditCoverPhotoContent() {
 
       {/* Save button */}
       <div className="mt-6">
-        <Button className="bg-primary hover:bg-primary/90 text-white font-semibold px-6 h-10 rounded-lg text-[14px]">
+        <Button
+          onClick={handleSave}
+          disabled={!selectedFile || editProfileMutation.isPending}
+          className="bg-primary hover:bg-primary/90 text-white font-semibold px-6 h-10 rounded-lg text-[14px]"
+        >
+          {editProfileMutation.isPending && (
+            <Loader2 className="size-4 mr-2 animate-spin" />
+          )}
           Save Changes
         </Button>
       </div>

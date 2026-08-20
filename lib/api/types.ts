@@ -33,6 +33,10 @@ export interface UserProfile {
     url: string;
     publicId: string;
   };
+  coverPhoto?: {
+    url: string;
+    publicId: string;
+  };
   isEmailVerified?: boolean;
   role: "admin" | "instructor" | "student" | "user";
   status: "active" | "inactive" | "suspended";
@@ -117,6 +121,7 @@ export interface EditProfilePayload {
   linkedin?: string;
   instagram?: string;
   profile?: File; // For multipart/form-data
+  coverPhoto?: File;
 }
 
 // Instructor

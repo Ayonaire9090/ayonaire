@@ -30,3 +30,14 @@ export const useCreateDMMutation = () => {
     },
   });
 };
+
+export const useCreateCourseRoomMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (courseId: string) => roomsApi.createCourseRoom(courseId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.rooms.all });
+    },
+  });
+};

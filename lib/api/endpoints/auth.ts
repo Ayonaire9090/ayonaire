@@ -38,7 +38,7 @@ export const authApi = {
     }),
 
   getProfile: () =>
-    apiClient<{ success: boolean; user: UserProfile }>(
+    apiClient<{ success: boolean; user?: UserProfile; data?: UserProfile }>(
       "/api/v1/auth/get-profile",
       {
         method: "POST",

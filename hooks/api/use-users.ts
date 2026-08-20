@@ -37,8 +37,13 @@ export const useEditProfileMutation = () => {
       // the photo, so only apply it when truthy to avoid clobbering an
       // existing avatar.
       if (user && res.data) {
-        const { profile, ...rest } = res.data;
-        setUser({ ...user, ...rest, ...(profile ? { profile } : {}) });
+        const { profile, coverPhoto, ...rest } = res.data;
+        setUser({
+          ...user,
+          ...rest,
+          ...(profile ? { profile } : {}),
+          ...(coverPhoto ? { coverPhoto } : {}),
+        });
       }
     },
   });

@@ -41,8 +41,9 @@ export const useGetProfile = () => {
     queryKey: queryKeys.auth.profile(),
     queryFn: async () => {
       const data = await authApi.getProfile();
-      if (data.success && data.user) {
-        setUser(data.user);
+      const profile = data.user ?? data.data;
+      if (data.success && profile) {
+        setUser(profile);
       }
       return data;
     },

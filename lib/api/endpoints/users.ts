@@ -15,6 +15,7 @@ export interface EditProfileResponseData {
   company?: string;
   instagram?: string;
   profile?: { url: string; publicId: string } | null;
+  coverPhoto?: { url: string; publicId: string } | null;
 }
 
 export const usersApi = {

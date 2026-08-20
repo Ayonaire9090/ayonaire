@@ -20,6 +20,7 @@ export interface RoomRecord {
   name?: string;
   description?: string;
   isGroup: boolean;
+  course?: string;
   profile?: { url: string; publicId: string };
   roomCreator: string;
   participants: RoomParticipant[];
@@ -46,6 +47,12 @@ export const roomsApi = {
     apiClient<ApiResponse<RoomRecord>>("/api/v1/room/dm", {
       method: "POST",
       body: JSON.stringify({ otherUserId }),
+      requireAuth: true,
+    }),
+
+  createCourseRoom: (courseId: string) =>
+    apiClient<ApiResponse<RoomRecord>>(`/api/v1/room/course/${courseId}`, {
+      method: "POST",
       requireAuth: true,
     }),
 };
