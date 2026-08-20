@@ -99,8 +99,9 @@ export const useCreateLearningReminderMutation = (courseId: string) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (payload: Omit<LearningReminder, "_id" | "user" | "createdAt">) =>
-      courseInteractionsApi.createReminder(payload),
+    mutationFn: (
+      payload: Omit<LearningReminder, "_id" | "course" | "user" | "createdAt">,
+    ) => courseInteractionsApi.createReminder({ ...payload, courseId }),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: queryKeys.courseInteractions.reminders(courseId),

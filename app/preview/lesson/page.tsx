@@ -22,6 +22,7 @@ import { ModuleWithLessons, LessonWithProgress } from "@/lib/api/endpoints/lesso
 import { cn } from "@/lib/utils";
 
 const DEMO_VIDEO = "/assets/videos/learning-tips-demo.mp4";
+const PREVIEW_COURSE_ID = "preview-course";
 
 function sampleLesson(
   id: string,
@@ -34,7 +35,7 @@ function sampleLesson(
     _id: id,
     title,
     module: moduleId,
-    course: "preview-course",
+    course: PREVIEW_COURSE_ID,
     order,
     duration: 480,
     isPublished: true,
@@ -115,7 +116,7 @@ export default function LessonScreenPreviewPage() {
     <div
       className={cn(
         "flex flex-col min-h-screen pb-24",
-        ["Course Content", "Ai assistant", "Q&A"].includes(activeTab)
+        ["Course Content", "Ai Assistant", "Q&A"].includes(activeTab)
           ? "bg-white"
           : "bg-[#F6F6F6]",
         (activeTab === "Overview" ||
@@ -136,7 +137,7 @@ export default function LessonScreenPreviewPage() {
         <div className="w-full relative">
           <LessonVideoPlayer
             lessonId={activeLesson?._id}
-            courseId="preview-course"
+            courseId={PREVIEW_COURSE_ID}
             videoUrl={activeLesson?.videos?.[0]?.url}
             isCompleted={activeLesson?.isCompleted}
             onOpenChapters={() => setIsSheetOpen(true)}
@@ -158,7 +159,10 @@ export default function LessonScreenPreviewPage() {
         <div className="flex-1 w-full max-w-7xl mx-auto p-4 lg:p-8">
           {activeTab === "Transcription" ? (
             <div className="max-w-4xl mx-auto w-full pt-4">
-              <CourseTranscription />
+              <CourseTranscription
+                courseId={PREVIEW_COURSE_ID}
+                lessonId={activeLesson?._id}
+              />
             </div>
           ) : activeTab === "Course Content" ? (
             <div className="max-w-3xl mx-auto">
@@ -171,7 +175,11 @@ export default function LessonScreenPreviewPage() {
             </div>
           ) : activeTab === "Ai Assistant" ? (
             <div className="max-w-3xl mx-auto h-fit border border-gray-100 rounded-xl overflow-hidden">
-              <CourseAiAssistant className="h-full" />
+              <CourseAiAssistant
+                className="h-full"
+                courseId={PREVIEW_COURSE_ID}
+                lessonId={activeLesson?._id}
+              />
             </div>
           ) : activeTab === "Overview" ? (
             <div className="max-w-4xl mx-auto w-full pt-4">
@@ -186,23 +194,29 @@ export default function LessonScreenPreviewPage() {
             </div>
           ) : activeTab === "Q&A" ? (
             <div className="max-w-3xl mx-auto w-full">
-              <CourseQAndA />
+              <CourseQAndA
+                courseId={PREVIEW_COURSE_ID}
+                lessonId={activeLesson?._id}
+              />
             </div>
           ) : activeTab === "Notes" ? (
             <div className="max-w-3xl mx-auto w-full">
               <CourseNotes
-                courseId="preview-course"
+                courseId={PREVIEW_COURSE_ID}
                 lessonId={activeLesson?._id}
                 lessonTitle={activeLesson?.title}
               />
             </div>
           ) : activeTab === "Reviews" ? (
             <div className="max-w-5xl mx-auto w-full">
-              <CourseReviews />
+              <CourseReviews courseId={PREVIEW_COURSE_ID} />
             </div>
           ) : activeTab === "Learning Tools" ? (
             <div className="max-w-4xl mx-auto w-full">
-              <CourseLearningTools />
+              <CourseLearningTools
+                courseId={PREVIEW_COURSE_ID}
+                courseTitle="Sample Course"
+              />
             </div>
           ) : (
             <div className="py-8 text-center text-gray-500">
