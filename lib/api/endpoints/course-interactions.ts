@@ -154,6 +154,15 @@ export const courseInteractionsApi = {
       },
     ),
 
+  deleteReminder: (courseId: string, reminderId: string) =>
+    apiClient<ApiResponse<{ deleted: boolean }>>(
+      `/api/v1/course-interactions/${courseId}/reminders/${reminderId}`,
+      {
+        method: "DELETE",
+        requireAuth: true,
+      },
+    ),
+
   askAssistant: (payload: {
     courseId: string;
     lessonId?: string;

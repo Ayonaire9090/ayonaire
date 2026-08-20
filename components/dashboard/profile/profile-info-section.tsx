@@ -18,10 +18,10 @@ export function ProfileInfoSection({
   name,
   email,
   avatarUrl,
-  popularity = 790,
-  thumbsUp = 1456,
+  popularity,
+  thumbsUp,
   joinedDate,
-  linkedInUrl = "#",
+  linkedInUrl,
   userType = "Student",
 }: ProfileInfoSectionProps) {
   // Derive initials from name for the avatar fallback
@@ -53,33 +53,38 @@ export function ProfileInfoSection({
               <p className="text-[14px] text-gray-500 mt-0.5">{email}</p>
             )}
 
-            {/* Stats row */}
-            <div className="flex items-center gap-4 mt-2">
-              <div className="flex items-center gap-1.5">
-                <Image
-                  src="/assets/icons/award-badge.svg"
-                  alt="popularity"
-                  width={18}
-                  height={18}
-                  className="w-5.5 h-5.5"
-                />
-                <span className="text-[14px] font-semibold text-gray-800">
-                  {popularity}
-                </span>
+            {(popularity !== undefined || thumbsUp !== undefined) && (
+              <div className="flex items-center gap-4 mt-2">
+                {popularity !== undefined && (
+                  <div className="flex items-center gap-1.5">
+                    <Image
+                      src="/assets/icons/award-badge.svg"
+                      alt="Academy points"
+                      width={18}
+                      height={18}
+                      className="w-5.5 h-5.5"
+                    />
+                    <span className="text-[14px] font-semibold text-gray-800">
+                      {popularity}
+                    </span>
+                  </div>
+                )}
+                {thumbsUp !== undefined && (
+                  <div className="flex items-center gap-1.5">
+                    <Image
+                      src="/assets/icons/thumbs-up.svg"
+                      alt="Community points"
+                      width={18}
+                      height={18}
+                      className="w-5 h-5"
+                    />
+                    <span className="text-[14px] font-semibold text-gray-800">
+                      {thumbsUp}
+                    </span>
+                  </div>
+                )}
               </div>
-              <div className="flex items-center gap-1.5">
-                <Image
-                  src="/assets/icons/thumbs-up.svg"
-                  alt="thumbs Up"
-                  width={18}
-                  height={18}
-                  className="w-5 h-5"
-                />
-                <span className="text-[14px] font-semibold text-gray-800">
-                  {thumbsUp}
-                </span>
-              </div>
-            </div>
+            )}
 
             {/* Role badge */}
             <span className="inline-block mt-2 px-2.5 py-0.5 text-[12px] font-semibold text-primary bg-primary/10 rounded-full">
@@ -93,22 +98,25 @@ export function ProfileInfoSection({
               </p>
             )}
 
-            {/* LinkedIn icon */}
-            <a
-              href={linkedInUrl}
-              className="inline-flex mt-1.5"
-              aria-label="LinkedIn profile"
-            >
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="#0A66C2"
-                xmlns="http://www.w3.org/2000/svg"
+            {linkedInUrl && (
+              <a
+                href={linkedInUrl}
+                className="inline-flex mt-1.5"
+                aria-label="LinkedIn profile"
+                target="_blank"
+                rel="noreferrer"
               >
-                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-              </svg>
-            </a>
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="#0A66C2"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                </svg>
+              </a>
+            )}
           </div>
 
           {/* Set Featured button */}

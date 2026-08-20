@@ -110,6 +110,20 @@ export const useCreateLearningReminderMutation = (courseId: string) => {
   });
 };
 
+export const useDeleteLearningReminderMutation = (courseId: string) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (reminderId: string) =>
+      courseInteractionsApi.deleteReminder(courseId, reminderId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.courseInteractions.reminders(courseId),
+      });
+    },
+  });
+};
+
 export const useAskCourseAssistantMutation = () =>
   useMutation({
     mutationFn: courseInteractionsApi.askAssistant,

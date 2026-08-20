@@ -60,6 +60,7 @@ export default function StudentCourseLessonPage({
     }
     return undefined;
   }, [modules, selectedLessonId]);
+  const activeVideo = activeLesson?.videos?.[0] ?? course?.introVideo;
 
   // Flat lesson order across all modules, for prev/next navigation.
   const flatLessons = useMemo(
@@ -118,7 +119,7 @@ export default function StudentCourseLessonPage({
               <LessonVideoPlayer
                 lessonId={activeLesson?._id}
                 courseId={courseId}
-                videoUrl={activeLesson?.videos?.[0]?.url}
+                videoUrl={activeVideo?.url}
                 isCompleted={activeLesson?.isCompleted}
                 onOpenChapters={() => setIsSheetOpen(true)}
                 hasPrevious={!!previousLesson}

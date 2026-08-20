@@ -12,7 +12,13 @@ function formatDuration(totalSeconds: number): string {
 }
 
 function moduleDurationSeconds(mod: ModuleWithLessons): number {
-  return mod.lessons.reduce((sum, lesson) => sum + (lesson.duration ?? 0), 0);
+  return mod.lessons.reduce(
+    (sum, lesson) =>
+      sum +
+      (lesson.duration ??
+        lesson.videos.reduce((videoSum, video) => videoSum + (video.duration ?? 0), 0)),
+    0,
+  );
 }
 
 interface CourseContentAccordionProps {
@@ -117,7 +123,15 @@ export const CourseContentAccordion = ({
                           <span className="text-[14px] font-medium text-gray-800">{lesson.title}</span>
                           <div className="flex items-center gap-1.5 text-xs text-gray-500 mt-1">
                             <MonitorPlay size={14} />
-                            <span>{formatDuration(lesson.duration ?? 0)}</span>
+                            <span>
+                              {formatDuration(
+                                lesson.duration ??
+                                  lesson.videos.reduce(
+                                    (sum, video) => sum + (video.duration ?? 0),
+                                    0,
+                                  ),
+                              )}
+                            </span>
                           </div>
                         </div>
                       </div>

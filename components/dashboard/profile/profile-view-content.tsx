@@ -21,6 +21,7 @@ import { useAuthStore } from "@/store/auth.store";
 import { useGetProfile } from "@/hooks/api/use-auth";
 import { useState } from "react";
 import { normalizeDashboardRole } from "@/lib/auth/roles";
+import { useGetLeaderboard } from "@/hooks/api/use-leaderboard";
 
 /**
  * Shared profile view content used by all role-specific profile pages.
@@ -38,12 +39,16 @@ export function ProfileViewContent({ showHeader = true }: ProfileViewContentProp
 
   // Keep profile data fresh
   useGetProfile();
+  const { data: leaderboardData } = useGetLeaderboard("all-time", 100);
 
   // Derive display values from the user object
   const displayName = user?.name ?? "—";
   const displayEmail = user?.email ?? "—";
   const avatarUrl = user?.profile?.url;
   const coverPhotoUrl = user?.coverPhoto?.url;
+  const leaderboardEntry = (leaderboardData?.data ?? []).find(
+    (entry) => entry.user.id === user?._id,
+  );
 
   // Map API role to display label
   const dashboardRole = normalizeDashboardRole(user?.role);
@@ -86,9 +91,10 @@ export function ProfileViewContent({ showHeader = true }: ProfileViewContentProp
             name={displayName}
             email={displayEmail}
             avatarUrl={avatarUrl}
-            popularity={3760}
+            popularity={leaderboardEntry?.points}
             userType={roleLabel}
             joinedDate={joinedDate}
+            linkedInUrl={user?.linkedin}
           />
 
           {/* Tabs */}
