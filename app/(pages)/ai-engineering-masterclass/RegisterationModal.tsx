@@ -10,13 +10,13 @@ interface RegistrationModalProps {
     onClose: () => void;
 }
 
-async function registerUser(fullName: string, email: string) {
+async function registerUser(fullName: string, email: string, phoneNumber: string) {
     const res = await fetch('/api/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ fullName, email }),
+        body: JSON.stringify({ fullName, email, phoneNumber }),
     });
 
     const data = await res.json();
@@ -36,11 +36,13 @@ export default function RegistrationModal({
 
     const [fullName, setFullName] = useState('');
     const [email, setEmail] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [fieldErrors, setFieldErrors] = useState<{
         name?: string;
         email?: string;
+        phone?: string;
     }>({});
 
     const handleSubmit = async () => {
@@ -57,10 +59,17 @@ export default function RegistrationModal({
                 ? 'Enter a valid email address.'
                 : undefined;
 
-        if (nameErr || emailErr) {
+        const phoneErr = !phoneNumber.trim()
+            ? 'Phone number is required.'
+            : !/^[0-9+\s\-()]{7,15}$/.test(phoneNumber)
+                ? 'Enter a valid phone number.'
+                : undefined;
+
+        if (nameErr || emailErr || phoneErr) {
             setFieldErrors({
                 name: nameErr,
                 email: emailErr,
+                phone: phoneErr,
             });
             return;
         }
@@ -68,7 +77,7 @@ export default function RegistrationModal({
         setLoading(true);
 
         try {
-            await registerUser(fullName, email);
+            await registerUser(fullName, email, phoneNumber);
             window.dataLayer = window.dataLayer || [];
 
             window.dataLayer.push({
@@ -76,18 +85,20 @@ export default function RegistrationModal({
                 form_name: 'registration_form',
                 full_name: fullName,
                 email: email,
+                phone_number: phoneNumber,
             });
 
             setTimeout(() => {
                 const encodedName = encodeURIComponent(fullName);
                 const encodedEmail = encodeURIComponent(email);
+                const encodedPhone = encodeURIComponent(phoneNumber);
 
                 router.push(
-                    `/ai-engineering-thank-you?name=${encodedName}&email=${encodedEmail}`
+                    `/ai-engineering-thank-you?name=${encodedName}&email=${encodedEmail}&phone=${encodedPhone}`
                 );
             }, 500);
         } catch (err: any) {
-            console.log(err)
+            console.log(err);
             setError(
                 err.message ||
                 'Something went wrong. Please try again.'
@@ -102,7 +113,7 @@ export default function RegistrationModal({
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4 backdrop-blur-sm">
             {/* Main Outer Container Wrapper Box */}
             <div className="relative w-full max-w-[380px] sm:max-w-[400px] md:max-w-[470px] lg:max-w-[510px] overflow-hidden rounded-[24px] bg-[#121315] shadow-2xl border border-white/10">
-                {/* Top Close Button (Stays clear over the full-bleed layout image context) */}
+                {/* Top Close Button */}
                 {!loading && (
                     <button
                         onClick={onClose}
@@ -112,7 +123,7 @@ export default function RegistrationModal({
                     </button>
                 )}
 
-                {/* 1. Full-bleed Image Layer Frame taking up full horizontal and layout ceiling space */}
+                {/* 1. Full-bleed Image Layer Frame */}
                 <div className="relative h-[215px] w-full">
                     <Image
                         src="/m.jpeg"
@@ -124,7 +135,7 @@ export default function RegistrationModal({
                     />
                 </div>
 
-                {/* 2. Lower Form Fields Container featuring the /Bg.png file texture + custom gray overlay style */}
+                {/* 2. Lower Form Fields Container */}
                 <div
                     className="relative px-6 pb-8 pt-3 bg-[#DBDBDB] bg-cover bg-center rounded-t-none -mt-4 z-10 border-t border-white/20"
                     style={{
@@ -139,13 +150,10 @@ export default function RegistrationModal({
                         }}
                     />
 
-                    {/* Relative Content Frame above the inputs backdrop background mask setup */}
+                    {/* Relative Content Frame */}
                     <div className="relative z-10 w-full flex flex-col">
 
-                        <h1
-                            className={`${adineue.className} font-bold text-center text-[22px] sm:text-[28px] text-[#1A1C1E]`}
-                            
-                        >
+                        <h1 className={`${adineue.className} font-bold text-center text-[22px] sm:text-[28px] text-[#1A1C1E]`}>
                             One Last Step
                         </h1>
 
@@ -215,7 +223,33 @@ export default function RegistrationModal({
                                 )}
                             </div>
 
-                            {/* Main CTA Submission Button Component Element */}
+                            {/* Phone Number block */}
+                            <div className="w-full">
+                                <input
+                                    type="tel"
+                                    placeholder="Phone number"
+                                    value={phoneNumber}
+                                    disabled={loading}
+                                    onChange={(e) => {
+                                        setPhoneNumber(e.target.value);
+                                        setFieldErrors((p) => ({
+                                            ...p,
+                                            phone: undefined,
+                                        }));
+                                    }}
+                                    className={`h-[45px] w-full rounded-[12px] border bg-white px-4 text-sm text-[#121315] placeholder-gray-400 font-medium shadow-sm transition-all outline-none ${fieldErrors.phone
+                                        ? 'border-red-400 focus:border-red-500 ring-2 ring-red-100'
+                                        : 'border-gray-200 focus:border-[#F66A1B] focus:ring-2 focus:ring-orange-100'
+                                        }`}
+                                />
+                                {fieldErrors.phone && (
+                                    <p className="mt-1 pl-2 text-xs font-semibold text-red-600">
+                                        {fieldErrors.phone}
+                                    </p>
+                                )}
+                            </div>
+
+                            {/* Main CTA Submission Button */}
                             <button
                                 onClick={handleSubmit}
                                 disabled={loading}

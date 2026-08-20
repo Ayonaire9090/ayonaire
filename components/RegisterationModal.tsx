@@ -4,19 +4,18 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-
 interface RegistrationModalProps {
     isOpen: boolean;
     onClose: () => void;
 }
 
-async function registerUser(fullName: string, email: string) {
+async function registerUser(fullName: string, email: string, phoneNumber: string) {
     const res = await fetch('/api/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ fullName, email }),
+        body: JSON.stringify({ fullName, email, phoneNumber }),
     });
 
     const data = await res.json();
@@ -36,11 +35,13 @@ export default function RegistrationModal({
 
     const [fullName, setFullName] = useState('');
     const [email, setEmail] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [fieldErrors, setFieldErrors] = useState<{
         name?: string;
         email?: string;
+        phone?: string;
     }>({});
 
     const handleSubmit = async () => {
@@ -57,10 +58,17 @@ export default function RegistrationModal({
                 ? 'Enter a valid email address.'
                 : undefined;
 
-        if (nameErr || emailErr) {
+        const phoneErr = !phoneNumber.trim()
+            ? 'Phone number is required.'
+            : !/^[0-9+\s\-()]{7,15}$/.test(phoneNumber)
+                ? 'Enter a valid phone number.'
+                : undefined;
+
+        if (nameErr || emailErr || phoneErr) {
             setFieldErrors({
                 name: nameErr,
                 email: emailErr,
+                phone: phoneErr,
             });
             return;
         }
@@ -69,7 +77,7 @@ export default function RegistrationModal({
 
         try {
             // Register user
-            await registerUser(fullName, email);
+            await registerUser(fullName, email, phoneNumber);
             window.dataLayer = window.dataLayer || [];
 
             window.dataLayer.push({
@@ -77,14 +85,16 @@ export default function RegistrationModal({
                 form_name: 'registration_form',
                 full_name: fullName,
                 email: email,
+                phone_number: phoneNumber,
             });
             // Navigate to thank you page
             setTimeout(() => {
                 const encodedName = encodeURIComponent(fullName);
                 const encodedEmail = encodeURIComponent(email);
+                const encodedPhone = encodeURIComponent(phoneNumber);
 
                 router.push(
-                    `/data-analytics-thank-you-02?name=${encodedName}&email=${encodedEmail}`
+                    `/data-analytics-thank-you-02?name=${encodedName}&email=${encodedEmail}&phone=${encodedPhone}`
                 );
             }, 500);
         } catch (err: any) {
@@ -211,6 +221,32 @@ export default function RegistrationModal({
                             {fieldErrors.email && (
                                 <p className="mt-1 pl-2 text-xs text-red-500">
                                     {fieldErrors.email}
+                                </p>
+                            )}
+                        </div>
+
+                        {/* Phone Number */}
+                        <div>
+                            <input
+                                type="tel"
+                                placeholder="Phone number"
+                                value={phoneNumber}
+                                onChange={(e) => {
+                                    setPhoneNumber(e.target.value);
+                                    setFieldErrors((p) => ({
+                                        ...p,
+                                        phone: undefined,
+                                    }));
+                                }}
+                                className={`h-[42px] w-full rounded-full border bg-white px-4 text-sm outline-none ${fieldErrors.phone
+                                    ? 'border-red-400'
+                                    : 'border-transparent'
+                                    }`}
+                            />
+
+                            {fieldErrors.phone && (
+                                <p className="mt-1 pl-2 text-xs text-red-500">
+                                    {fieldErrors.phone}
                                 </p>
                             )}
                         </div>

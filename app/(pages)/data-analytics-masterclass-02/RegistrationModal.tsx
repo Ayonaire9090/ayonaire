@@ -12,13 +12,13 @@ interface RegistrationModalProps {
 
 const SOURCE = 'data-analytics-masterclass-2026';
 
-async function registerUser(fullName: string, email: string) {
+async function registerUser(fullName: string, email: string, phoneNumber: string) {
     const res = await fetch('/api/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ fullName, email, source: SOURCE }),
+        body: JSON.stringify({ fullName, email, phoneNumber, source: SOURCE }),
     });
 
     const data = await res.json();
@@ -38,11 +38,13 @@ export default function RegistrationModal({
 
     const [fullName, setFullName] = useState('');
     const [email, setEmail] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [fieldErrors, setFieldErrors] = useState<{
         name?: string;
         email?: string;
+        phone?: string;
     }>({});
 
     const handleSubmit = async () => {
@@ -59,10 +61,17 @@ export default function RegistrationModal({
                 ? 'Enter a valid email address.'
                 : undefined;
 
-        if (nameErr || emailErr) {
+        const phoneErr = !phoneNumber.trim()
+            ? 'Phone number is required.'
+            : !/^[0-9+\s\-()]{7,15}$/.test(phoneNumber)
+                ? 'Enter a valid phone number.'
+                : undefined;
+
+        if (nameErr || emailErr || phoneErr) {
             setFieldErrors({
                 name: nameErr,
                 email: emailErr,
+                phone: phoneErr,
             });
             return;
         }
@@ -70,7 +79,7 @@ export default function RegistrationModal({
         setLoading(true);
 
         try {
-            await registerUser(fullName, email);
+            await registerUser(fullName, email, phoneNumber);
             window.dataLayer = window.dataLayer || [];
 
             window.dataLayer.push({
@@ -78,18 +87,20 @@ export default function RegistrationModal({
                 form_name: 'data_analytics_registration_form',
                 full_name: fullName,
                 email: email,
+                phone_number: phoneNumber,
             });
 
             setTimeout(() => {
                 const encodedName = encodeURIComponent(fullName);
                 const encodedEmail = encodeURIComponent(email);
+                const encodedPhone = encodeURIComponent(phoneNumber);
 
                 router.push(
-                    `/data-analytics-thank-you-02?name=${encodedName}&email=${encodedEmail}`
+                    `/data-analytics-thank-you-02?name=${encodedName}&email=${encodedEmail}&phone=${encodedPhone}`
                 );
             }, 500);
         } catch (err: any) {
-            console.log(err)
+            console.log(err);
             setError(
                 err.message ||
                 'Something went wrong. Please try again.'
@@ -158,6 +169,7 @@ export default function RegistrationModal({
                         )}
 
                         <div className="mt-6 flex flex-col gap-4 w-full max-w-[340px] mx-auto px-2">
+                            {/* Full Name block */}
                             <div className="w-full">
                                 <input
                                     type="text"
@@ -183,6 +195,7 @@ export default function RegistrationModal({
                                 )}
                             </div>
 
+                            {/* Email Address block */}
                             <div className="w-full">
                                 <input
                                     type="email"
@@ -208,6 +221,33 @@ export default function RegistrationModal({
                                 )}
                             </div>
 
+                            {/* Phone Number block */}
+                            <div className="w-full">
+                                <input
+                                    type="tel"
+                                    placeholder="Phone number"
+                                    value={phoneNumber}
+                                    disabled={loading}
+                                    onChange={(e) => {
+                                        setPhoneNumber(e.target.value);
+                                        setFieldErrors((p) => ({
+                                            ...p,
+                                            phone: undefined,
+                                        }));
+                                    }}
+                                    className={`h-[45px] w-full rounded-[12px] border bg-white px-4 text-sm text-[#121315] placeholder-gray-400 font-medium shadow-sm transition-all outline-none ${fieldErrors.phone
+                                        ? 'border-red-400 focus:border-red-500 ring-2 ring-red-100'
+                                        : 'border-gray-200 focus:border-[#F67219] focus:ring-2 focus:ring-orange-100'
+                                        }`}
+                                />
+                                {fieldErrors.phone && (
+                                    <p className="mt-1 pl-2 text-xs font-semibold text-red-600">
+                                        {fieldErrors.phone}
+                                    </p>
+                                )}
+                            </div>
+
+                            {/* Main CTA Submission Button */}
                             <button
                                 onClick={handleSubmit}
                                 disabled={loading}

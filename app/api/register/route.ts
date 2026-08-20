@@ -4,34 +4,55 @@ import { getSupabaseClient } from '@/lib/supabase';
 export async function POST(req: Request) {
   try {
     const body = await req.json();
+    const { fullName, email, phoneNumber, source } = body;
 
-    const { fullName, email } = body;
-
-    if (!fullName || !email) {
+    // 1. Basic validation
+    if (!fullName || !email || !phoneNumber) {
       return NextResponse.json(
-        { error: 'Missing fields' },
+        { error: 'Missing required fields' },
         { status: 400 }
       );
     }
 
-    const { error } = await getSupabaseClient().from('registrations').insert([
-      {
-        full_name: fullName,
-        email,
-      },
-    ]);
-
-    if (error) {
+    // 2. Initialize Supabase client safely
+    const supabase = getSupabaseClient();
+    if (!supabase) {
+      console.error('Supabase client failed to initialize. Check your env variables.');
       return NextResponse.json(
-        { error: error.message },
+        { error: 'Database configuration error' },
         { status: 500 }
       );
     }
 
-    return NextResponse.json({ success: true });
-  } catch (err) {
+    // 3. Prepare payload (Include source if your table has a source column)
+    const payload: Record<string, any> = {
+      full_name: fullName,
+      email,
+      phone_number: phoneNumber,
+    };
+
+    if (source) {
+      payload.source = source;
+    }
+
+    // 4. Perform Supabase Insertion
+    const { error } = await supabase.from('registrations').insert([payload]);
+
+    if (error) {
+      console.error('Supabase Insert Error:', error);
+      return NextResponse.json(
+        { error: error.message || 'Failed to save registration' },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json({ success: true }, { status: 200 });
+  } catch (err: any) {
+    // Log the exact error in your server console to diagnose issues immediately
+    console.error('Unhandled Registration API Error:', err);
+    
     return NextResponse.json(
-      { error: 'Server error' },
+      { error: err.message || 'Server error' },
       { status: 500 }
     );
   }
