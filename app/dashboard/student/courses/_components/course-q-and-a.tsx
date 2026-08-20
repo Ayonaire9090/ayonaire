@@ -69,7 +69,7 @@ export const CourseQAndA = ({ courseId, lessonId }: CourseQAndAProps) => {
       { questionId: selectedQuestion.id, text: answer },
       {
         onSuccess: (response) => {
-          setSelectedQuestion(response.data);
+          setSelectedQuestion(response.data ?? selectedQuestion);
           setAnswer("");
         },
       },

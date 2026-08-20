@@ -16,7 +16,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export const CourseLearningTools = () => {
+interface CourseLearningToolsProps {
+  courseId?: string;
+  courseTitle?: string;
+}
+
+export const CourseLearningTools = ({
+  courseTitle = "Complete Python With DSA Bootcamp + LEETCODE Exercises",
+}: CourseLearningToolsProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
 
@@ -73,7 +80,7 @@ export const CourseLearningTools = () => {
             </div>
 
             <p className="text-gray-500 text-base md:text-lg max-w-xl">
-              Course: Complete Python With DSA Bootcamp + LEETCODE Exercises
+              Course: {courseTitle}
             </p>
 
             <Button

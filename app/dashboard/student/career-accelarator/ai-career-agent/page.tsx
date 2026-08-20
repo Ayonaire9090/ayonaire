@@ -5,17 +5,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { IconType } from "react-icons";
-import { FaMicrosoft } from "react-icons/fa";
+import { FaAmazon, FaMicrosoft, FaSalesforce } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import {
-  SiAdobe,
-  SiAmazon,
   SiApple,
   SiAtlassian,
   SiMeta,
   SiNetflix,
-  SiOracle,
-  SiSalesforce,
   SiUber,
 } from "react-icons/si";
 import {
@@ -55,6 +51,26 @@ type Screen =
   | "done";
 
 const orange = "#ff5a2c";
+
+const LetterLogo: IconType = ({ className, style, title }) => (
+  <span
+    aria-hidden={title ? undefined : true}
+    className={cn("inline-flex items-center justify-center font-bold", className)}
+    style={style}
+  >
+    {title?.slice(0, 1) ?? "A"}
+  </span>
+);
+
+const OracleLogo: IconType = ({ className, style, title }) => (
+  <span
+    aria-hidden={title ? undefined : true}
+    className={cn("inline-flex items-center justify-center font-bold", className)}
+    style={style}
+  >
+    {title?.slice(0, 1) ?? "O"}
+  </span>
+);
 
 type InterviewSelection = {
   title: string;
@@ -133,7 +149,7 @@ const companyCards: CompanyCard[] = [
   {
     name: "Amazon",
     label: "amazon",
-    Logo: SiAmazon,
+    Logo: FaAmazon,
     color: "#111111",
     bg: "#FFFFFF",
     status: "Featured",
@@ -188,7 +204,7 @@ const companyCards: CompanyCard[] = [
   {
     name: "Adobe",
     label: "A",
-    Logo: SiAdobe,
+    Logo: LetterLogo,
     color: "#FF0000",
     bg: "#FFF7F7",
     status: "Featured",
@@ -199,7 +215,7 @@ const companyCards: CompanyCard[] = [
   {
     name: "Salesforce",
     label: "S",
-    Logo: SiSalesforce,
+    Logo: FaSalesforce,
     color: "#00A1E0",
     bg: "#F3FBFF",
     status: "Featured",
@@ -221,7 +237,7 @@ const companyCards: CompanyCard[] = [
   {
     name: "Oracle",
     label: "O",
-    Logo: SiOracle,
+    Logo: OracleLogo,
     color: "#111111",
     bg: "#FFFFFF",
     status: "Featured",

@@ -54,7 +54,11 @@ const RATING_STATS = [
   { stars: 1, percentage: 2 },
 ];
 
-export const CourseReviews = () => {
+interface CourseReviewsProps {
+  courseId?: string;
+}
+
+export const CourseReviews = (_props: CourseReviewsProps) => {
   return (
     <div className="w-full flex flex-col gap-6">
       {/* Title (hidden on mobile, or just standard?) */}

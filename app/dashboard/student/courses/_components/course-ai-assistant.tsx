@@ -2,14 +2,17 @@
 
 import { Sparkles, ArrowUp, Link2 } from "lucide-react";
 import { useState } from "react";
+import type { ReactNode } from "react";
 
 interface CourseAiAssistantProps {
   className?: string;
+  courseId?: string;
+  lessonId?: string;
 }
 
 export const CourseAiAssistant = ({ className }: CourseAiAssistantProps) => {
   const [messages, setMessages] = useState<
-    { role: "user" | "ai"; content: string | React.ReactNode }[]
+    { role: "user" | "ai"; content: string | ReactNode }[]
   >([]);
   const [inputValue, setInputValue] = useState("");
 

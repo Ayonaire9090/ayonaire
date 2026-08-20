@@ -96,7 +96,7 @@ export default function StudentCourseLessonPage({
         <div
           className={cn(
             "flex flex-col min-h-screen pb-24",
-            ["Course Content", "Ai assistant", "Q&A"].includes(activeTab)
+            ["Course Content", "Ai Assistant", "Q&A"].includes(activeTab)
               ? "bg-white"
               : "bg-[#F6F6F6]",
             (activeTab === "Overview" ||
