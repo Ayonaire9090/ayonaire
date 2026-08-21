@@ -8,11 +8,13 @@ import { ChevronDown } from "lucide-react";
 interface StudentMessageListProps {
   messages: Message[];
   isGroup?: boolean;
+  onReact?: (messageId: string, emoji: string) => void;
 }
 
 export const StudentMessageList = ({
   messages,
   isGroup = false,
+  onReact,
 }: StudentMessageListProps) => {
   const bottomRef = React.useRef<HTMLDivElement>(null);
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -71,6 +73,7 @@ export const StudentMessageList = ({
                   isGroup={isGroup}
                   showAvatar={!sameSenderAsPrev || showDayDivider}
                   showName={!sameSenderAsPrev || showDayDivider}
+                  onReact={onReact}
                 />
               </React.Fragment>
             );

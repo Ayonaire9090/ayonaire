@@ -3,7 +3,11 @@
 import { useParams } from "next/navigation";
 import { useMemo } from "react";
 import { useGetRooms } from "@/hooks/api/use-rooms";
-import { useGetMessages, useSendMessageMutation } from "@/hooks/api/use-messages";
+import {
+  useGetMessages,
+  useReactToMessageMutation,
+  useSendMessageMutation,
+} from "@/hooks/api/use-messages";
 import { useAuthStore } from "@/store/auth.store";
 import {
   mapRoomToConversation,
@@ -56,6 +60,7 @@ export default function StudentMessageDetails() {
   );
 
   const { mutate: sendMessage } = useSendMessageMutation();
+  const reactToMessage = useReactToMessageMutation();
 
   const handleSend = (text: string, attachment?: ComposerAttachment) => {
     const formData = new FormData();
@@ -63,6 +68,10 @@ export default function StudentMessageDetails() {
     formData.append("text", text);
     if (attachment) formData.append(attachment.kind, attachment.file);
     sendMessage(formData);
+  };
+
+  const handleReact = (messageId: string, emoji: string) => {
+    reactToMessage.mutate({ messageId, emoji });
   };
 
   if (isRoomsLoading) {
@@ -130,7 +139,11 @@ export default function StudentMessageDetails() {
                 <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
               </div>
             ) : (
-              <StudentMessageList messages={messages} isGroup={isGroup} />
+              <StudentMessageList
+                messages={messages}
+                isGroup={isGroup}
+                onReact={handleReact}
+              />
             )}
             {/* Message composer */}
             <StudentMessageComposer isGroup={isGroup} onSend={handleSend} />

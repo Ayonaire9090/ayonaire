@@ -75,9 +75,29 @@ export function useMessagingRealtimeSync() {
       );
     };
 
+    const handleMessageReaction = (message: MessageRecord) => {
+      queryClient.setQueryData<ApiResponse<GetMessagesResult>>(
+        queryKeys.messages.forRoom(message.roomId),
+        (old) => {
+          if (!old?.data) return old;
+          return {
+            ...old,
+            data: {
+              ...old.data,
+              messages: old.data.messages.map((item) =>
+                item.id === message.id ? message : item,
+              ),
+            },
+          };
+        },
+      );
+    };
+
     socket.on("message:new", handleNewMessage);
+    socket.on("message:reaction", handleMessageReaction);
     return () => {
       socket.off("message:new", handleNewMessage);
+      socket.off("message:reaction", handleMessageReaction);
     };
   }, [queryClient]);
 }

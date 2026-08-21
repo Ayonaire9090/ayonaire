@@ -1,16 +1,85 @@
 "use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { MessageCircle, Reply, MoreVertical, SmilePlus } from "lucide-react";
-import { toast } from "sonner";
-import type { Message } from "../_data/mock-messages";
 import Image from "next/image";
+import { MessageCircle, MoreVertical, Reply, SmilePlus } from "lucide-react";
+import { toast } from "sonner";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import type { Message } from "../_data/mock-messages";
+import { EmojiPicker } from "./emoji-picker";
 
 interface StudentMessageBubbleProps {
   message: Message;
   isGroup?: boolean;
   showAvatar?: boolean;
   showName?: boolean;
+  onReact?: (messageId: string, emoji: string) => void;
+}
+
+function ReactionChips({
+  message,
+  onReact,
+}: {
+  message: Message;
+  onReact?: (messageId: string, emoji: string) => void;
+}) {
+  if (!message.reactions?.length) return null;
+
+  return (
+    <div className="mt-3 flex flex-wrap gap-1.5">
+      {message.reactions.map((reaction) => (
+        <button
+          key={reaction.emoji}
+          onClick={() => onReact?.(message.id, reaction.emoji)}
+          className={`rounded-full border px-2 py-0.5 text-xs font-medium transition-colors ${
+            reaction.reactedByMe
+              ? "border-[#F15D23]/30 bg-[#FFF3EF] text-[#F15D23]"
+              : "border-gray-200 bg-gray-50 text-gray-700 hover:bg-gray-100"
+          }`}
+        >
+          {reaction.emoji} {reaction.count}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function MessageAttachments({ message }: { message: Message }) {
+  return (
+    <>
+      {message.images && message.images.length > 0 && (
+        <div className="mt-2 flex flex-wrap gap-2">
+          {message.images.map((img, i) => (
+            <div
+              key={i}
+              className="relative h-24 w-36 overflow-hidden rounded-lg bg-gray-100"
+            >
+              <Image src={img} alt="attachment" fill className="object-cover" />
+            </div>
+          ))}
+        </div>
+      )}
+
+      {message.video && (
+        <div className="mt-2 flex w-64 max-w-full justify-center overflow-hidden rounded-lg bg-black">
+          <video controls className="max-h-48 w-full object-contain">
+            <source src={message.video} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      )}
+
+      {message.file && (
+        <a
+          href={message.file.url}
+          target="_blank"
+          rel="noreferrer"
+          className="mt-2 inline-flex rounded-lg border border-gray-100 bg-gray-50 px-3 py-2 text-xs font-medium text-gray-700 hover:bg-gray-100"
+        >
+          {message.file.name}
+        </a>
+      )}
+    </>
+  );
 }
 
 export const StudentMessageBubble = ({
@@ -18,85 +87,54 @@ export const StudentMessageBubble = ({
   isGroup = false,
   showAvatar = true,
   showName = true,
+  onReact,
 }: StudentMessageBubbleProps) => {
-  // In group/channel view every message renders as a standard labeled row
-  // (Slack-style), including the current user's own messages. The
-  // right-aligned bubble treatment is reserved for 1:1 DMs.
   const isOutgoing = !isGroup && message.senderId === "me";
   const isSystem = message.type === "system";
+  const reactionTotal =
+    message.reactions?.reduce((sum, reaction) => sum + reaction.count, 0) ?? 0;
 
-  // System message (centered info)
   if (isSystem) {
     return (
-      <div className="flex flex-col items-center justify-center py-8 gap-3">
+      <div className="flex flex-col items-center justify-center gap-3 py-8">
         <Image
           src="/assets/logos/full-logo-dark.svg"
           width={120}
           height={40}
           alt="Ayonaire"
         />
-        <p className="text-sm font-medium text-gray-900">Ayobami Awosanya</p>
-        <p className="text-xs text-gray-500">Data Science And Ge...+2</p>
+        <p className="text-sm font-medium text-gray-900">Ayonaire Academy</p>
         <p className="text-xs text-gray-400">{message.timestamp}</p>
       </div>
     );
   }
 
-  // Outgoing message (right-aligned)
   if (isOutgoing) {
     return (
-      <div className="flex flex-col items-end gap-1 group max-w-[95%] lg:max-w-[85%] ml-auto">
-        {/* Action buttons */}
-        <div className="flex items-center gap-1 mb-1">
+      <div className="group ml-auto flex max-w-[95%] flex-col items-end gap-1 lg:max-w-[85%]">
+        <div className="mb-1 flex items-center gap-1">
           <button
-            className="p-1 rounded-md hover:bg-gray-100 text-gray-400"
+            className="rounded-md p-1 text-gray-400 hover:bg-gray-100"
             aria-label="Reply"
           >
-            <Reply className="w-4 h-4" />
+            <Reply className="h-4 w-4" />
           </button>
           <button
-            className="p-1 rounded-md hover:bg-gray-100 text-gray-400"
+            className="rounded-md p-1 text-gray-400 hover:bg-gray-100"
             aria-label="More options"
           >
-            <MoreVertical className="w-4 h-4" />
+            <MoreVertical className="h-4 w-4" />
           </button>
         </div>
 
-        <div className="bg-white border border-gray-100 rounded-2xl rounded-br-md px-4 py-3 max-w-full">
-          <p className="text-sm font-semibold text-gray-900 mb-1">You</p>
-          <p className="text-sm text-gray-600 whitespace-pre-wrap leading-relaxed">
+        <div className="max-w-full rounded-2xl rounded-br-md border border-gray-100 bg-white px-4 py-3">
+          <p className="mb-1 text-sm font-semibold text-gray-900">You</p>
+          <p className="whitespace-pre-wrap text-sm leading-relaxed text-gray-600">
             {message.content}
           </p>
-
-          {/* Image attachments */}
-          {message.images && message.images.length > 0 && (
-            <div className="flex gap-2 mt-2 flex-wrap justify-end">
-              {message.images.map((img, i) => (
-                <div
-                  key={i}
-                  className="relative w-36 h-24 rounded-lg overflow-hidden bg-gray-100"
-                >
-                  <Image
-                    src={img}
-                    alt="attachment"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              ))}
-            </div>
-          )}
-
-          {/* Video attachment */}
-          {message.video && (
-            <div className="mt-2 rounded-lg overflow-hidden bg-black flex justify-center w-64 max-w-full ml-auto">
-              <video controls className="max-h-48 w-full object-contain">
-                <source src={message.video} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-            </div>
-          )}
-          <p className="text-[11px] text-gray-400 text-right mt-2">
+          <MessageAttachments message={message} />
+          <ReactionChips message={message} onReact={onReact} />
+          <p className="mt-2 text-right text-[11px] text-gray-400">
             {message.timestamp}
           </p>
         </div>
@@ -104,12 +142,10 @@ export const StudentMessageBubble = ({
     );
   }
 
-  // Standard row (left-aligned): every group message, and incoming DMs.
   return (
-    <div className="flex items-start gap-3 group w-full bg-white rounded-lg px-4 py-4 shadow-[0_1px_0_rgba(0,0,0,0.03)]">
-      {/* Avatar */}
+    <div className="group flex w-full items-start gap-3 rounded-lg bg-white px-4 py-4 shadow-[0_1px_0_rgba(0,0,0,0.03)]">
       {showAvatar ? (
-        <Avatar className="w-10 h-10 shrink-0 mt-1">
+        <Avatar className="mt-1 h-10 w-10 shrink-0">
           <AvatarImage src={message.senderAvatar} />
           <AvatarFallback className="text-xs">
             {message.senderName[0]}
@@ -119,15 +155,11 @@ export const StudentMessageBubble = ({
         <div className="w-10 shrink-0" />
       )}
 
-      <div className="flex-1 min-w-0">
-        {/* Sender name + timestamp */}
+      <div className="min-w-0 flex-1">
         {showName && (
-          <div className="flex items-center gap-2 mb-2">
+          <div className="mb-2 flex items-center gap-2">
             <span className="text-[13px] font-semibold text-gray-950">
               {message.senderName}
-            </span>
-            <span className="text-[11px] font-medium text-[#F15D23]">
-              Class 25
             </span>
             <span className="text-[11px] text-gray-400">
               {message.timestamp}
@@ -135,88 +167,57 @@ export const StudentMessageBubble = ({
           </div>
         )}
 
-        {/* Reply preview */}
+        <p className="whitespace-pre-wrap text-[13px] leading-relaxed text-gray-900">
+          {message.content}
+        </p>
+
         {message.replyTo && (
-          <div className="border-l-2 border-[#F15D23] bg-[#FFF3EF] rounded-r-sm px-3 py-2 mt-3">
-            <div className="flex items-center gap-1.5 mb-0.5">
-              <Reply className="w-3.5 h-3.5 text-[#F15D23]" />
+          <div className="mt-3 rounded-r-sm border-l-2 border-[#F15D23] bg-[#FFF3EF] px-3 py-2">
+            <div className="mb-0.5 flex items-center gap-1.5">
+              <Reply className="h-3.5 w-3.5 text-[#F15D23]" />
               <span className="text-xs font-medium text-[#F15D23]">Reply</span>
-              <span className="text-xs font-medium text-gray-800 truncate">
+              <span className="truncate text-xs font-medium text-gray-800">
                 {message.replyTo.senderName}
               </span>
             </div>
-            <p className="text-xs text-gray-500 line-clamp-2">
+            <p className="line-clamp-2 text-xs text-gray-500">
               {message.replyTo.content}
             </p>
           </div>
         )}
 
-        {/* Message body */}
-        <p className="text-[13px] text-gray-900 whitespace-pre-wrap leading-relaxed">
-          {message.content}
-        </p>
-
-        {/* Timestamp for messages without name shown */}
         {!showName && (
-          <p className="text-[11px] text-gray-400 mt-1">{message.timestamp}</p>
+          <p className="mt-1 text-[11px] text-gray-400">{message.timestamp}</p>
         )}
 
-        {/* Image attachments */}
-        {message.images && message.images.length > 0 && (
-          <div className="flex gap-2 mt-2 flex-wrap">
-            {message.images.map((img, i) => (
-              <div
-                key={i}
-                className="relative w-36 h-24 rounded-lg overflow-hidden bg-gray-100"
-              >
-                <Image
-                  src={img}
-                  alt="attachment"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* Video attachment */}
-        {message.video && (
-          <div className="mt-2 rounded-lg overflow-hidden bg-black flex justify-center w-64 max-w-full">
-            <video controls className="max-h-48 w-full object-contain">
-              <source src={message.video} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          </div>
-        )}
+        <MessageAttachments message={message} />
+        <ReactionChips message={message} onReact={onReact} />
       </div>
 
-      {/* Actions */}
-      <div className="flex items-center gap-2 mt-1 shrink-0 text-gray-900">
-        <span className="text-[11px] font-semibold">57</span>
+      <div className="mt-1 flex shrink-0 items-center gap-2 text-gray-900">
+        <span className="text-[11px] font-semibold">{reactionTotal}</span>
         <button
           className="rounded-md text-gray-700 hover:text-gray-950"
           aria-label="Reply"
           onClick={() =>
-            toast.info("Threaded replies aren't available yet - coming in a future update.")
+            toast.info("Threaded replies are coming in a future update.")
           }
         >
-          <MessageCircle className="w-4 h-4" />
+          <MessageCircle className="h-4 w-4" />
         </button>
-        <button
-          className="rounded-md text-gray-700 hover:text-gray-950"
-          aria-label="React"
-          onClick={() =>
-            toast.info("Reactions aren't available yet — coming in a future update.")
-          }
-        >
-          <SmilePlus className="w-4 h-4" />
-        </button>
+        {onReact ? (
+          <EmojiPicker
+            onSelect={(emoji) => onReact(message.id, emoji)}
+            triggerClassName="rounded-md text-gray-700 hover:text-gray-950"
+          />
+        ) : (
+          <SmilePlus className="h-4 w-4" />
+        )}
         <button
           className="rounded-md text-gray-700 hover:text-gray-950"
           aria-label="More options"
         >
-          <MoreVertical className="w-4 h-4" />
+          <MoreVertical className="h-4 w-4" />
         </button>
       </div>
     </div>

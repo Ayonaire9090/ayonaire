@@ -23,6 +23,11 @@ export interface Message {
    * to "Today" when absent, which mock fixtures rely on. */
   dateLabel?: string;
   status: MessageStatus;
+  reactions?: {
+    emoji: string;
+    count: number;
+    reactedByMe?: boolean;
+  }[];
   replyTo?: {
     senderName: string;
     content: string;

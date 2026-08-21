@@ -14,6 +14,11 @@ export interface MessageRecord {
   text: string;
   media?: { url: string; publicId: string };
   file?: { url: string; publicId: string };
+  reactions: {
+    emoji: string;
+    users: MessageSender[];
+    count: number;
+  }[];
   createdAt: string;
 }
 
@@ -34,6 +39,16 @@ export const messagesApi = {
       body: formData,
       requireAuth: true,
     }),
+
+  react: (payload: { messageId: string; emoji: string }) =>
+    apiClient<ApiResponse<MessageRecord>>(
+      `/api/v1/message/${payload.messageId}/reactions`,
+      {
+        method: "POST",
+        body: JSON.stringify({ emoji: payload.emoji }),
+        requireAuth: true,
+      },
+    ),
 
   getForRoom: (roomId: string, page = 1, limit = 50) =>
     apiClient<ApiResponse<GetMessagesResult>>(
