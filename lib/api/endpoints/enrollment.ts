@@ -6,9 +6,10 @@ export interface Enrollment {
   _id: string;
   course:
     | string
-    | {
+      | {
         _id: string;
         title: string;
+        description?: string;
         thumbnail?: { url: string; publicId: string };
         status?: string;
         instructor?: { name: string } | null;

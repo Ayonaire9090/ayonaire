@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ArrowUp, MessageCircle, Search, Send } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -12,6 +12,7 @@ import {
   useUpvoteCourseQuestionMutation,
 } from "@/hooks/api/use-course-interactions";
 import { CourseQuestion } from "@/lib/api/endpoints/course-interactions";
+import { useCourseQnaRealtimeSync } from "@/hooks/socket/use-course-qna-realtime-sync";
 
 interface CourseQAndAProps {
   courseId: string;
@@ -38,8 +39,16 @@ export const CourseQAndA = ({ courseId, lessonId }: CourseQAndAProps) => {
   const createQuestion = useCreateCourseQuestionMutation();
   const answerQuestion = useAnswerCourseQuestionMutation(courseId, lessonId);
   const upvoteQuestion = useUpvoteCourseQuestionMutation(courseId, lessonId);
+  useCourseQnaRealtimeSync(courseId, lessonId);
 
   const questions = data?.data?.questions ?? [];
+  useEffect(() => {
+    if (!selectedQuestion) return;
+    const updatedQuestion = questions.find(
+      (question) => question.id === selectedQuestion.id,
+    );
+    if (updatedQuestion) setSelectedQuestion(updatedQuestion);
+  }, [questions, selectedQuestion]);
   const visibleQuestions = useMemo(() => {
     const query = searchQuery.toLowerCase();
     return questions.filter(

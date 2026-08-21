@@ -7,11 +7,19 @@ import {
   StudentCourseCard,
   CourseStatus,
 } from "./_components/student-course-card";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
   SidebarInset,
   useSidebar,
 } from "@/components/ui/sidebar";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Checkbox } from "@/components/ui/checkbox";
 import { StudentHomeSidebarContent } from "../_components/student-home-sidebar-content";
 import {
   useGetCompletedCourses,
@@ -33,6 +41,11 @@ function getCourseId(enrollment: Enrollment): string {
 
 function StudentCoursesContent() {
   const [activeTab, setActiveTab] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
+  const [serviceSearchQuery, setServiceSearchQuery] = useState("");
+  const [selectedCourseIds, setSelectedCourseIds] = useState<string[]>([]);
+  const [draftSelectedCourseIds, setDraftSelectedCourseIds] = useState<string[]>([]);
   const { state } = useSidebar();
 
   // "Expired"/"Paid" have no backend equivalent (enrollments don't carry a
@@ -62,10 +75,7 @@ function StudentCoursesContent() {
     return {
       id: enrollment._id,
       title: course?.title ?? "Unknown Course",
-      // The enrolled-courses list endpoint doesn't project a description
-      // field (see GET /api/v1/enrollment/enrolled-courses) - the full
-      // description is only available from the course detail endpoint.
-      description: "No description available",
+      description: course?.description?.trim() || "No description available",
       imageSrc: course?.thumbnail?.url || "/assets/images/optin-hero.png",
       slug: courseId,
       status,
@@ -74,11 +84,46 @@ function StudentCoursesContent() {
     };
   });
 
+  const filteredServiceOptions = useMemo(() => {
+    const query = serviceSearchQuery.trim().toLowerCase();
+    return allCourses.filter((course) =>
+      course.title.toLowerCase().includes(query),
+    );
+  }, [allCourses, serviceSearchQuery]);
+
+  const openServiceModal = () => {
+    setDraftSelectedCourseIds(selectedCourseIds);
+    setServiceSearchQuery("");
+    setIsServiceModalOpen(true);
+  };
+
+  const toggleDraftCourse = (courseId: string) => {
+    setDraftSelectedCourseIds((current) =>
+      current.includes(courseId)
+        ? current.filter((id) => id !== courseId)
+        : [...current, courseId],
+    );
+  };
+
+  const applyServiceFilter = () => {
+    setSelectedCourseIds(draftSelectedCourseIds);
+    setIsServiceModalOpen(false);
+  };
+
   const filteredCourses = allCourses.filter((c) => {
-    if (activeTab === "All") return true;
-    if (activeTab === "In Progress") return c.status === "In Progress";
-    if (activeTab === "Completed") return c.status === "Completed";
-    return false;
+    const matchesTab =
+      activeTab === "All" ||
+      (activeTab === "In Progress" && c.status === "In Progress") ||
+      (activeTab === "Completed" && c.status === "Completed");
+    const query = searchQuery.trim().toLowerCase();
+    const matchesSearch =
+      !query ||
+      c.title.toLowerCase().includes(query) ||
+      c.description.toLowerCase().includes(query);
+    const matchesService =
+      selectedCourseIds.length === 0 || selectedCourseIds.includes(c.slug);
+
+    return matchesTab && matchesSearch && matchesService;
   });
 
   return (
@@ -104,10 +149,19 @@ function StudentCoursesContent() {
                 <input
                   type="text"
                   placeholder="search by course title or description"
+                  value={searchQuery}
+                  onChange={(event) => setSearchQuery(event.target.value)}
                   className="w-full bg-white border-none rounded-full py-2.5 lg:py-3.5 pl-12 pr-6 text-sm text-gray-700 placeholder:text-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#F86432]/20"
                 />
               </div>
-              <button className="w-auto flex items-center justify-between gap-1 lg:gap-3 bg-white border-none rounded-full py-2.5 lg:py-3.5 px-3 lg:px-6 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 transition-colors">
+              <button
+                onClick={() => {
+                  setActiveTab("All");
+                  setSelectedCourseIds([]);
+                  setSearchQuery("");
+                }}
+                className="w-auto flex items-center justify-between gap-1 lg:gap-3 bg-white border-none rounded-full py-2.5 lg:py-3.5 px-3 lg:px-6 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 transition-colors"
+              >
                 <span>All Courses</span>
                 <ChevronDown size={18} className="text-gray-400" />
               </button>
@@ -130,8 +184,11 @@ function StudentCoursesContent() {
                   {tab}
                 </button>
               ))}
-              <button className="shrink-0 flex items-center gap-1.5 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-sm font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-50 transition-all">
-                Service
+              <button
+                onClick={openServiceModal}
+                className="shrink-0 flex items-center gap-1.5 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-sm font-medium text-gray-500 hover:text-gray-900 hover:bg-gray-50 transition-all"
+              >
+                Service{selectedCourseIds.length ? ` (${selectedCourseIds.length})` : ""}
                 <ChevronDown size={16} />
               </button>
             </div>
@@ -170,6 +227,80 @@ function StudentCoursesContent() {
             </div>
           )}
         </div>
+
+        <Dialog open={isServiceModalOpen} onOpenChange={setIsServiceModalOpen}>
+          <DialogContent className="max-w-[560px] rounded-2xl border-0 p-0 gap-0 overflow-hidden">
+            <DialogHeader className="relative flex-row items-center justify-center border-b border-gray-100 px-6 py-4">
+              <DialogTitle className="text-center text-[15px] font-bold text-gray-900">
+                Select service
+              </DialogTitle>
+              <DialogClose className="absolute right-4 top-1/2 -translate-y-1/2 grid size-8 place-items-center rounded-full bg-gray-100 text-gray-400 hover:text-gray-700">
+                <span className="sr-only">Close</span>
+                x
+              </DialogClose>
+            </DialogHeader>
+
+            <div className="flex flex-col gap-4 px-5 py-4">
+              <div>
+                <p className="text-sm font-medium text-gray-900">
+                  Filter out courses based on service
+                </p>
+                <p className="mt-1 text-xs text-gray-500">
+                  Select service from below
+                </p>
+              </div>
+
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-gray-400" />
+                <input
+                  value={serviceSearchQuery}
+                  onChange={(event) => setServiceSearchQuery(event.target.value)}
+                  placeholder="Search service by name"
+                  className="h-10 w-full rounded-md border border-gray-200 bg-white pl-9 pr-3 text-sm outline-none focus:border-[#F86432] focus:ring-2 focus:ring-[#F86432]/10"
+                />
+              </div>
+
+              <div className="max-h-[280px] overflow-y-auto rounded-md border border-gray-100">
+                {filteredServiceOptions.length > 0 ? (
+                  filteredServiceOptions.map((course) => (
+                    <label
+                      key={course.slug}
+                      className="flex cursor-pointer items-center justify-between gap-4 border-b border-gray-100 px-3 py-3 last:border-b-0 hover:bg-gray-50"
+                    >
+                      <span className="text-[13px] font-medium leading-snug text-gray-800">
+                        {course.title}
+                      </span>
+                      <Checkbox
+                        checked={draftSelectedCourseIds.includes(course.slug)}
+                        onCheckedChange={() => toggleDraftCourse(course.slug)}
+                        className="rounded-[4px] border-gray-300"
+                      />
+                    </label>
+                  ))
+                ) : (
+                  <div className="px-3 py-8 text-center text-sm text-gray-500">
+                    No service found.
+                  </div>
+                )}
+              </div>
+
+              <div className="flex items-center justify-between gap-3 pt-1">
+                <button
+                  onClick={() => setDraftSelectedCourseIds([])}
+                  className="text-sm font-medium text-gray-500 hover:text-gray-900"
+                >
+                  Clear
+                </button>
+                <button
+                  onClick={applyServiceFilter}
+                  className="rounded-md bg-black px-5 py-2.5 text-sm font-semibold text-white hover:bg-gray-900"
+                >
+                  Done
+                </button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
       </SidebarInset>
     </>
   );

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Phone, Video, SlidersHorizontal, MoreVertical } from "lucide-react";
+import { Phone, Video, SlidersHorizontal } from "lucide-react";
 import { toast } from "sonner";
 import {
   Sheet,
@@ -89,17 +89,17 @@ export const StudentGroupMessagesHeader = ({
 
   // Group header
   return (
-    <div className="flex items-center justify-between px-4 py-3 bg-white border-b border-gray-100">
+    <div className="flex items-center justify-between px-5 py-2.5 bg-white border-b border-gray-100">
       <div className="flex items-center gap-3">
-        <Avatar className="h-10 w-10 border-2 border-transparent bg-gray-200 rounded-lg">
+        <Avatar className="h-9 w-9 border-2 border-transparent bg-gray-200 rounded-lg">
           <AvatarImage src={messageImage} className="rounded-lg" />
           <AvatarFallback className="rounded-lg">AY</AvatarFallback>
         </Avatar>
         <div className="flex flex-col">
-          <span className="font-medium text-gray-900 text-[15px]">
+          <span className="font-semibold text-gray-900 text-[15px] leading-tight">
             {messageHeadingTitle}
           </span>
-          <span className="text-sm text-gray-500">
+          <span className="text-xs text-gray-500 leading-tight">
             {messageHeadingDescription}
           </span>
         </div>
@@ -108,13 +108,13 @@ export const StudentGroupMessagesHeader = ({
       <div className="flex items-center gap-2 text-gray-500">
         <button
           onClick={() => notAvailable("Voice calls")}
-          className="flex items-center justify-center size-9 bg-[#F6F6F6] hover:bg-gray-200 text-black rounded-full transition-colors"
+          className="hidden sm:flex items-center justify-center size-8 bg-[#F6F6F6] hover:bg-gray-200 text-black rounded-full transition-colors"
         >
           <Phone className="w-4 h-4 fill-current" />
         </button>
         <button
           onClick={() => notAvailable("Video calls")}
-          className="flex items-center justify-center size-9 bg-[#F6F6F6] hover:bg-gray-200 text-black rounded-full transition-colors"
+          className="hidden sm:flex items-center justify-center size-8 bg-[#F6F6F6] hover:bg-gray-200 text-black rounded-full transition-colors"
         >
           <Video className="w-4 h-4 fill-current" />
         </button>

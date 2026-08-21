@@ -100,7 +100,7 @@ export default function StudentMessageDetails() {
   return (
     <>
       <StudentMessagesSidebarContent variant="sidebar" collapsible="icon" />
-      <SidebarInset className="bg-[#F6F6F6] pb-[72px] md:pb-0">
+      <SidebarInset className="bg-[#F4F4F4] pb-[72px] md:pb-0 flex flex-col h-dvh overflow-hidden">
         <StudentDashboardHeader />
         {backToConversations}
 
@@ -123,7 +123,7 @@ export default function StudentMessageDetails() {
         {/* Chat content wrapper */}
         <div className="flex-1 flex lg:flex-row min-h-0 overflow-hidden relative">
           {/* Main chat column */}
-          <div className="flex flex-col flex-1 min-h-0 overflow-hidden">
+          <div className="flex flex-col flex-1 min-h-0 overflow-hidden bg-[#F4F4F4]">
             {/* Messages list */}
             {isMessagesLoading ? (
               <div className="flex-1 flex items-center justify-center">

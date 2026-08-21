@@ -1,7 +1,7 @@
 "use client";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Reply, MoreVertical, SmilePlus } from "lucide-react";
+import { MessageCircle, Reply, MoreVertical, SmilePlus } from "lucide-react";
 import { toast } from "sonner";
 import type { Message } from "../_data/mock-messages";
 import Image from "next/image";
@@ -106,25 +106,28 @@ export const StudentMessageBubble = ({
 
   // Standard row (left-aligned): every group message, and incoming DMs.
   return (
-    <div className="flex items-start gap-2.5 group max-w-[95%] lg:max-w-[85%] bg-white rounded-xl p-2">
+    <div className="flex items-start gap-3 group w-full bg-white rounded-lg px-4 py-4 shadow-[0_1px_0_rgba(0,0,0,0.03)]">
       {/* Avatar */}
       {showAvatar ? (
-        <Avatar className="w-8 h-8 shrink-0 mt-1">
+        <Avatar className="w-10 h-10 shrink-0 mt-1">
           <AvatarImage src={message.senderAvatar} />
           <AvatarFallback className="text-xs">
             {message.senderName[0]}
           </AvatarFallback>
         </Avatar>
       ) : (
-        <div className="w-8 shrink-0" />
+        <div className="w-10 shrink-0" />
       )}
 
       <div className="flex-1 min-w-0">
         {/* Sender name + timestamp */}
         {showName && (
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-sm font-medium text-gray-900">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-[13px] font-semibold text-gray-950">
               {message.senderName}
+            </span>
+            <span className="text-[11px] font-medium text-[#F15D23]">
+              Class 25
             </span>
             <span className="text-[11px] text-gray-400">
               {message.timestamp}
@@ -134,7 +137,7 @@ export const StudentMessageBubble = ({
 
         {/* Reply preview */}
         {message.replyTo && (
-          <div className="border-l-2 border-[#F15D23] bg-[#FFF5F2] rounded-r-lg px-3 py-2 mb-2">
+          <div className="border-l-2 border-[#F15D23] bg-[#FFF3EF] rounded-r-sm px-3 py-2 mt-3">
             <div className="flex items-center gap-1.5 mb-0.5">
               <Reply className="w-3.5 h-3.5 text-[#F15D23]" />
               <span className="text-xs font-medium text-[#F15D23]">Reply</span>
@@ -149,7 +152,7 @@ export const StudentMessageBubble = ({
         )}
 
         {/* Message body */}
-        <p className="text-sm text-gray-700 whitespace-pre-wrap leading-relaxed">
+        <p className="text-[13px] text-gray-900 whitespace-pre-wrap leading-relaxed">
           {message.content}
         </p>
 
@@ -189,9 +192,19 @@ export const StudentMessageBubble = ({
       </div>
 
       {/* Actions */}
-      <div className="flex items-center gap-0.5 mt-1 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+      <div className="flex items-center gap-2 mt-1 shrink-0 text-gray-900">
+        <span className="text-[11px] font-semibold">57</span>
         <button
-          className="p-1 rounded-md hover:bg-gray-100 text-gray-900"
+          className="rounded-md text-gray-700 hover:text-gray-950"
+          aria-label="Reply"
+          onClick={() =>
+            toast.info("Threaded replies aren't available yet - coming in a future update.")
+          }
+        >
+          <MessageCircle className="w-4 h-4" />
+        </button>
+        <button
+          className="rounded-md text-gray-700 hover:text-gray-950"
           aria-label="React"
           onClick={() =>
             toast.info("Reactions aren't available yet — coming in a future update.")
@@ -200,7 +213,7 @@ export const StudentMessageBubble = ({
           <SmilePlus className="w-4 h-4" />
         </button>
         <button
-          className="p-1 rounded-md hover:bg-gray-100 text-gray-900"
+          className="rounded-md text-gray-700 hover:text-gray-950"
           aria-label="More options"
         >
           <MoreVertical className="w-4 h-4" />

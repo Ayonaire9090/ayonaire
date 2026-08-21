@@ -8,21 +8,6 @@ import {
   Send,
   MapPin,
   MoreHorizontal,
-  ChevronDown,
-  AlignLeft,
-  Bold,
-  Italic,
-  Underline,
-  Strikethrough,
-  Code,
-  Eraser,
-  List,
-  ListOrdered,
-  Link,
-  CodeSquare,
-  Quote,
-  Minus,
-  AtSign,
   Paperclip,
   FileText,
   X,
@@ -303,148 +288,66 @@ export const StudentMessageComposer = ({
   return (
     <div
       className={cn(
-        "sticky bottom-0 bg-white px-4 py-4 border-t border-gray-100",
+        "sticky bottom-0 bg-white px-3 md:px-5 py-2.5 border-t border-gray-100",
         className,
       )}
     >
       {hiddenInputs}
       {attachmentPreview}
-      <div className="bg-[#F6F6F6] rounded-3xl flex flex-col overflow-hidden">
-        {/* Top Toolbar */}
-        <div className="flex items-center gap-1.5 px-4 pt-3 pb-2 overflow-x-auto border-b border-gray-200/50 scrollbar-hide">
-          {/* Dropdowns */}
-          <button
-            onClick={() => notAvailable("Text styles")}
-            className="flex items-center gap-1 text-xs text-gray-700 font-medium hover:bg-gray-200 px-2 py-1 rounded"
-          >
-            Normal text <ChevronDown className="w-3 h-3" />
-          </button>
-          <button
-            onClick={() => notAvailable("Text alignment")}
-            className="flex items-center gap-1 text-gray-700 hover:bg-gray-200 p-1 rounded"
-          >
-            <AlignLeft className="w-4 h-4" /> <ChevronDown className="w-3 h-3" />
-          </button>
-          <button
-            onClick={() => notAvailable("Text color")}
-            className="flex items-center gap-1 text-gray-700 hover:bg-gray-200 p-1 rounded"
-          >
-            <div className="w-4 h-4 bg-black rounded-sm" /> <ChevronDown className="w-3 h-3" />
-          </button>
+      <div className="flex items-end gap-2">
+        <button
+          onClick={() => fileInputRef.current?.click()}
+          className="mb-1 flex size-8 shrink-0 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 hover:bg-gray-50"
+          aria-label="Add attachment"
+        >
+          <Plus className="w-4 h-4" />
+        </button>
 
-          <div className="w-px h-4 bg-gray-300 mx-1 shrink-0" />
-
-          {/* Formatting */}
-          {[
-            { icon: Bold, label: "Bold" },
-            { icon: Italic, label: "Italic" },
-            { icon: Underline, label: "Underline" },
-            { icon: Strikethrough, label: "Strikethrough" },
-            { icon: Code, label: "Inline code" },
-            { icon: Eraser, label: "Clear formatting" },
-          ].map(({ icon: Icon, label }) => (
-            <button
-              key={label}
-              onClick={() => notAvailable(label)}
-              className="p-1.5 text-gray-700 hover:bg-gray-200 rounded"
-            >
-              <Icon className="w-4 h-4" />
-            </button>
-          ))}
-
-          <div className="w-px h-4 bg-gray-300 mx-1 shrink-0" />
-
-          {/* Blocks */}
-          {[
-            { icon: List, label: "Bulleted list" },
-            { icon: ListOrdered, label: "Numbered list" },
-            { icon: Link, label: "Link" },
-          ].map(({ icon: Icon, label }) => (
-            <button
-              key={label}
-              onClick={() => notAvailable(label)}
-              className="p-1.5 text-gray-700 hover:bg-gray-200 rounded"
-            >
-              <Icon className="w-4 h-4" />
-            </button>
-          ))}
-          <button
-            onClick={() => imageInputRef.current?.click()}
-            className="p-1.5 text-gray-700 hover:bg-gray-200 rounded"
-            aria-label="Attach image"
-          >
-            <ImageIcon className="w-4 h-4" />
-          </button>
-          {[
-            { icon: CodeSquare, label: "Code block" },
-            { icon: Quote, label: "Quote" },
-            { icon: Minus, label: "Divider" },
-          ].map(({ icon: Icon, label }) => (
-            <button
-              key={label}
-              onClick={() => notAvailable(label)}
-              className="p-1.5 text-gray-700 hover:bg-gray-200 rounded"
-            >
-              <Icon className="w-4 h-4" />
-            </button>
-          ))}
-        </div>
-
-        {/* Text Area */}
-        <div className="px-4 py-3">
+        <div className="flex min-h-10 flex-1 items-center rounded-full bg-[#F4F4F4] px-4">
           <textarea
             ref={textareaRef}
-            rows={2}
+            rows={1}
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={handleKeyDown}
             onInput={handleInput}
-            placeholder="Message ..."
-            className="w-full bg-transparent text-sm text-gray-800 placeholder-gray-500 resize-none outline-none max-h-[120px] leading-relaxed"
+            placeholder="Type a message"
+            className="w-full resize-none bg-transparent py-2 text-sm leading-relaxed text-gray-800 outline-none max-h-[96px] placeholder:text-gray-400"
           />
-        </div>
-
-        {/* Bottom Actions */}
-        <div className="flex items-center justify-between px-3 pb-3">
-          <div className="flex items-center gap-1">
-            <button
-              onClick={() => fileInputRef.current?.click()}
-              className="flex items-center justify-center w-8 h-8 rounded-full bg-white shadow-sm border border-gray-200 text-gray-700 hover:bg-gray-50 transition-colors"
-              aria-label="Add attachment"
-            >
-              <Plus className="w-4 h-4" />
-            </button>
-            <button
-              onClick={() => notAvailable("Text styles")}
-              className="p-2 text-gray-600 hover:text-gray-900 transition-colors font-medium text-[15px]"
-            >
-              Aa
-            </button>
-            <EmojiPicker
-              onSelect={handleEmojiSelect}
-              triggerClassName="p-2 text-gray-600 hover:text-gray-900 transition-colors"
-            />
-            <button
-              onClick={() => notAvailable("Mentions")}
-              className="p-2 text-gray-600 hover:text-gray-900 transition-colors"
-            >
-              <AtSign className="w-5 h-5" />
-            </button>
-            <button
-              onClick={() => notAvailable("More options")}
-              className="p-2 text-gray-600 hover:text-gray-900 transition-colors"
-            >
-              <MoreHorizontal className="w-5 h-5" />
-            </button>
-          </div>
-
           <button
-            onClick={handleSend}
-            className="p-2 text-[#F15D23] hover:text-[#d04c1b] transition-colors"
+            onClick={() => notAvailable("Voice messages")}
+            className="ml-2 text-gray-500 hover:text-gray-900"
+            aria-label="Voice message"
           >
-            <Send className="w-6 h-6 fill-current" />
+            <Mic className="w-4 h-4" />
           </button>
         </div>
+
+        <EmojiPicker
+          onSelect={handleEmojiSelect}
+          triggerClassName="mb-1 p-1.5 text-gray-600 hover:text-gray-900 transition-colors"
+        />
+        <button
+          onClick={() => imageInputRef.current?.click()}
+          className="mb-1 p-1.5 text-gray-600 hover:text-gray-900"
+          aria-label="Attach image"
+        >
+          <ImageIcon className="w-4 h-4" />
+        </button>
+        <button
+          onClick={() => notAvailable("Location sharing")}
+          className="mb-1 p-1.5 text-gray-600 hover:text-gray-900"
+          aria-label="Location"
+        >
+          <MapPin className="w-4 h-4" />
+        </button>
+        <button
+          onClick={handleSend}
+          className="mb-1 p-1.5 text-gray-700 hover:text-[#F15D23]"
+          aria-label="Send message"
+        >
+          <Send className="w-5 h-5 fill-current" />
+        </button>
       </div>
     </div>
   );
