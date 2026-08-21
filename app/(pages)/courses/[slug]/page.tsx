@@ -43,7 +43,7 @@ import AppHeroCallToAction from "@/components/sections/app-hero-call-to-action";
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
   const course = findCourseBySlug(slug);
@@ -83,7 +83,7 @@ export async function generateStaticParams() {
 export default async function CoursePage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
   const course = findCourseBySlug(slug);

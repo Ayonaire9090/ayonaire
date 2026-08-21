@@ -71,6 +71,15 @@ export function mapMessageRecordToMessage(
       count: reaction.count,
       reactedByMe: reaction.users.some((user) => user.id === currentUserId),
     })),
+    replyTo: message.replyTo
+      ? {
+          senderName:
+            message.replyTo.senderId.id === currentUserId
+              ? "You"
+              : message.replyTo.senderId.name,
+          content: message.replyTo.text,
+        }
+      : undefined,
     images: message.media ? [message.media.url] : undefined,
     file: message.file
       ? { name: "Attachment", size: "", url: message.file.url }

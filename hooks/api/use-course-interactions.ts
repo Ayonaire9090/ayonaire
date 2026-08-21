@@ -1,9 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
+  CourseQuestion,
   courseInteractionsApi,
   LearningReminder,
 } from "@/lib/api/endpoints/course-interactions";
 import { queryKeys } from "@/lib/api/query-keys";
+import { ApiResponse } from "@/lib/api/types";
+import { useAuthStore } from "@/store/auth.store";
 
 export const useCourseQuestions = (courseId: string, lessonId?: string) =>
   useQuery({
@@ -36,10 +39,56 @@ export const useAnswerCourseQuestionMutation = (
 
   return useMutation({
     mutationFn: courseInteractionsApi.answerQuestion,
+    onMutate: async (variables) => {
+      const user = useAuthStore.getState().user;
+      if (!user) return {};
+
+      const queryKey = queryKeys.courseInteractions.questions(courseId, lessonId);
+      await queryClient.cancelQueries({ queryKey });
+      const optimisticAnswer = {
+        id: `optimistic-${Date.now()}`,
+        text: variables.text,
+        author: {
+          id: user._id,
+          name: user.name,
+          profile: user.profile ?? null,
+        },
+        createdAt: new Date().toISOString(),
+      };
+
+      queryClient.setQueryData<ApiResponse<{ questions: CourseQuestion[] }>>(
+        queryKey,
+        (old) => {
+          if (!old?.data) return old;
+          return {
+            ...old,
+            data: {
+              ...old.data,
+              questions: old.data.questions.map((question) =>
+                question.id === variables.questionId
+                  ? {
+                      ...question,
+                      answers: [...question.answers, optimisticAnswer],
+                      commentCount: question.commentCount + 1,
+                    }
+                  : question,
+              ),
+            },
+          };
+        },
+      );
+
+      return { queryKey };
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: queryKeys.courseInteractions.questions(courseId, lessonId),
       });
+    },
+    onError: (_error, _variables, context) => {
+      if (context?.queryKey) {
+        queryClient.invalidateQueries({ queryKey: context.queryKey });
+      }
     },
   });
 };
@@ -52,10 +101,49 @@ export const useUpvoteCourseQuestionMutation = (
 
   return useMutation({
     mutationFn: courseInteractionsApi.upvoteQuestion,
+    onMutate: async (questionId) => {
+      const user = useAuthStore.getState().user;
+      if (!user) return {};
+
+      const queryKey = queryKeys.courseInteractions.questions(courseId, lessonId);
+      await queryClient.cancelQueries({ queryKey });
+
+      queryClient.setQueryData<ApiResponse<{ questions: CourseQuestion[] }>>(
+        queryKey,
+        (old) => {
+          if (!old?.data) return old;
+          return {
+            ...old,
+            data: {
+              ...old.data,
+              questions: old.data.questions.map((question) => {
+                if (question.id !== questionId) return question;
+                const hasUpvoted = question.upvotes.includes(user._id);
+                const upvotes = hasUpvoted
+                  ? question.upvotes.filter((id) => id !== user._id)
+                  : [...question.upvotes, user._id];
+                return {
+                  ...question,
+                  upvotes,
+                  upvoteCount: upvotes.length,
+                };
+              }),
+            },
+          };
+        },
+      );
+
+      return { queryKey };
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: queryKeys.courseInteractions.questions(courseId, lessonId),
       });
+    },
+    onError: (_error, _variables, context) => {
+      if (context?.queryKey) {
+        queryClient.invalidateQueries({ queryKey: context.queryKey });
+      }
     },
   });
 };

@@ -9,12 +9,14 @@ interface StudentMessageListProps {
   messages: Message[];
   isGroup?: boolean;
   onReact?: (messageId: string, emoji: string) => void;
+  onReply?: (message: Message) => void;
 }
 
 export const StudentMessageList = ({
   messages,
   isGroup = false,
   onReact,
+  onReply,
 }: StudentMessageListProps) => {
   const bottomRef = React.useRef<HTMLDivElement>(null);
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -74,6 +76,7 @@ export const StudentMessageList = ({
                   showAvatar={!sameSenderAsPrev || showDayDivider}
                   showName={!sameSenderAsPrev || showDayDivider}
                   onReact={onReact}
+                  onReply={onReply}
                 />
               </React.Fragment>
             );

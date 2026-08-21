@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/tooltip";
 import { DashboardUserDropDown } from "@/components/dashboard/dashboard-user-dropdown";
 import { useAuthStore } from "@/store/auth.store";
-import { studentFooterNav } from "../../layout";
+import { studentFooterNav } from "../../_data/student-footer-nav";
 
 function isNavActive(pathname: string, url: string) {
   return pathname === url || pathname.startsWith(url + "/");

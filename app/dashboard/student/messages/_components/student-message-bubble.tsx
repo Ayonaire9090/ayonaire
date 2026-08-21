@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { MessageCircle, MoreVertical, Reply, SmilePlus } from "lucide-react";
-import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import type { Message } from "../_data/mock-messages";
 import { EmojiPicker } from "./emoji-picker";
@@ -13,6 +12,7 @@ interface StudentMessageBubbleProps {
   showAvatar?: boolean;
   showName?: boolean;
   onReact?: (messageId: string, emoji: string) => void;
+  onReply?: (message: Message) => void;
 }
 
 function ReactionChips({
@@ -88,6 +88,7 @@ export const StudentMessageBubble = ({
   showAvatar = true,
   showName = true,
   onReact,
+  onReply,
 }: StudentMessageBubbleProps) => {
   const isOutgoing = !isGroup && message.senderId === "me";
   const isSystem = message.type === "system";
@@ -116,6 +117,7 @@ export const StudentMessageBubble = ({
           <button
             className="rounded-md p-1 text-gray-400 hover:bg-gray-100"
             aria-label="Reply"
+            onClick={() => onReply?.(message)}
           >
             <Reply className="h-4 w-4" />
           </button>
@@ -199,9 +201,7 @@ export const StudentMessageBubble = ({
         <button
           className="rounded-md text-gray-700 hover:text-gray-950"
           aria-label="Reply"
-          onClick={() =>
-            toast.info("Threaded replies are coming in a future update.")
-          }
+          onClick={() => onReply?.(message)}
         >
           <MessageCircle className="h-4 w-4" />
         </button>

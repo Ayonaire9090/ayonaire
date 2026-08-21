@@ -21,6 +21,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { EmojiPicker } from "./emoji-picker";
+import type { Message } from "../_data/mock-messages";
 
 export interface ComposerAttachment {
   file: File;
@@ -28,9 +29,15 @@ export interface ComposerAttachment {
 }
 
 interface StudentMessageComposerProps {
-  onSend?: (message: string, attachment?: ComposerAttachment) => void;
+  onSend?: (
+    message: string,
+    attachment?: ComposerAttachment,
+    replyTo?: Message,
+  ) => void;
   className?: string;
   isGroup?: boolean;
+  replyTo?: Message | null;
+  onCancelReply?: () => void;
 }
 
 function notAvailable(feature: string) {
@@ -47,6 +54,8 @@ export const StudentMessageComposer = ({
   onSend,
   className,
   isGroup = false,
+  replyTo,
+  onCancelReply,
 }: StudentMessageComposerProps) => {
   const [message, setMessage] = React.useState("");
   const [attachment, setAttachment] = React.useState<ComposerAttachment | null>(null);
@@ -66,7 +75,7 @@ export const StudentMessageComposer = ({
 
   const handleSend = () => {
     if (!message.trim() && !attachment) return;
-    onSend?.(message.trim(), attachment ?? undefined);
+    onSend?.(message.trim(), attachment ?? undefined, replyTo ?? undefined);
     setMessage("");
     setAttachment(null);
     if (textareaRef.current) {
@@ -293,6 +302,26 @@ export const StudentMessageComposer = ({
       )}
     >
       {hiddenInputs}
+      {replyTo && (
+        <div className="mb-2 flex items-center justify-between gap-3 rounded-r-sm border-l-2 border-[#F15D23] bg-[#FFF3EF] px-3 py-2">
+          <div className="min-w-0">
+            <div className="mb-0.5 flex items-center gap-2">
+              <span className="text-xs font-semibold text-[#F15D23]">Reply</span>
+              <span className="truncate text-xs font-semibold text-gray-900">
+                {replyTo.senderName}
+              </span>
+            </div>
+            <p className="truncate text-xs text-gray-600">{replyTo.content}</p>
+          </div>
+          <button
+            onClick={onCancelReply}
+            className="shrink-0 rounded-full p-1 text-gray-400 hover:bg-white hover:text-gray-700"
+            aria-label="Cancel reply"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        </div>
+      )}
       {attachmentPreview}
       <div className="flex items-end gap-2">
         <button

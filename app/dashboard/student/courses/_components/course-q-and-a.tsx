@@ -227,10 +227,14 @@ function QuestionCard({
             <span className="text-sm">{question.upvoteCount}</span>
             <ArrowUp className="w-4 h-4" />
           </button>
-          <div className="flex items-center gap-1.5 font-medium text-gray-700">
+          <button
+            onClick={onOpen}
+            className="flex items-center gap-1.5 font-medium text-gray-700 hover:text-[#F86432]"
+            aria-label="Open comments"
+          >
             <span className="text-sm">{question.commentCount}</span>
             <MessageCircle className="w-4 h-4" />
-          </div>
+          </button>
         </div>
       </div>
     </div>

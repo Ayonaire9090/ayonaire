@@ -3,12 +3,12 @@ import { notFound } from "next/navigation";
 import { courseSurveys } from "@/constants/course-surveys";
 import { SurveyClient } from "./survey-client";
 
-export default function EligibilityTestPage({
+export default async function EligibilityTestPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const { slug } = params;
+  const { slug } = await params;
   const course = findCourseBySlug(slug);
 
   if (!course) {

@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useGetRooms } from "@/hooks/api/use-rooms";
 import {
   useGetMessages,
@@ -13,6 +13,7 @@ import {
   mapRoomToConversation,
   mapMessageRecordToMessage,
 } from "../_data/message-data";
+import type { Message } from "../_data/mock-messages";
 import { StudentGroupMessagesHeader } from "../_components/student-group-messages-header";
 import { StudentMessageList } from "../_components/student-message-list";
 import {
@@ -30,6 +31,7 @@ export default function StudentMessageDetails() {
   const roomId = params.messageId as string;
   const user = useAuthStore((s) => s.user);
   const { isMobile, setOpenMobile } = useSidebar();
+  const [replyTo, setReplyTo] = useState<Message | null>(null);
 
   // Reopening the off-canvas conversation list is how mobile users get
   // back to their inbox - there's no other visible entry point on this page.
@@ -62,12 +64,18 @@ export default function StudentMessageDetails() {
   const { mutate: sendMessage } = useSendMessageMutation();
   const reactToMessage = useReactToMessageMutation();
 
-  const handleSend = (text: string, attachment?: ComposerAttachment) => {
+  const handleSend = (
+    text: string,
+    attachment?: ComposerAttachment,
+    selectedReply?: Message,
+  ) => {
     const formData = new FormData();
     formData.append("roomId", roomId);
     formData.append("text", text);
+    if (selectedReply) formData.append("replyTo", selectedReply.id);
     if (attachment) formData.append(attachment.kind, attachment.file);
     sendMessage(formData);
+    setReplyTo(null);
   };
 
   const handleReact = (messageId: string, emoji: string) => {
@@ -143,10 +151,16 @@ export default function StudentMessageDetails() {
                 messages={messages}
                 isGroup={isGroup}
                 onReact={handleReact}
+                onReply={setReplyTo}
               />
             )}
             {/* Message composer */}
-            <StudentMessageComposer isGroup={isGroup} onSend={handleSend} />
+            <StudentMessageComposer
+              isGroup={isGroup}
+              onSend={handleSend}
+              replyTo={replyTo}
+              onCancelReply={() => setReplyTo(null)}
+            />
           </div>
 
           {/* Right sidebar for group messages */}

@@ -12,6 +12,11 @@ export interface MessageRecord {
   senderId: MessageSender;
   roomId: string;
   text: string;
+  replyTo?: {
+    id: string;
+    text: string;
+    senderId: MessageSender;
+  } | null;
   media?: { url: string; publicId: string };
   file?: { url: string; publicId: string };
   reactions: {
