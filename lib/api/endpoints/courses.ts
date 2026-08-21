@@ -15,6 +15,14 @@ export interface Course {
   courseLevel?: "Beginner" | "Intermediate" | "Advanced";
   status?: "Draft" | "Active" | "Archived";
   thumbnail?: { url: string; publicId: string };
+  introVideo?: {
+    title?: string;
+    url: string;
+    publicId?: string;
+    duration: number;
+    sourceType?: "upload" | "url";
+    provider?: string;
+  };
   enrollmentCount?: number;
   completionCount?: number;
   completionCertificate?: boolean;
@@ -39,6 +47,9 @@ export interface CreateCoursePayload {
   status?: "Draft" | "Active" | "Archived";
   thumbnail: File;
   introVideo?: File;
+  introVideoUrl?: string;
+  introVideoTitle?: string;
+  introVideoDuration?: number;
   instructorId?: string;
   completionCertificate?: boolean;
 }
@@ -81,6 +92,12 @@ function buildCourseFormData(
     formData.append("completionCertificate", String(payload.completionCertificate));
   if (payload.thumbnail) formData.append("thumbnail", payload.thumbnail);
   if (payload.introVideo) formData.append("introVideo", payload.introVideo);
+  if (payload.introVideoUrl !== undefined)
+    formData.append("introVideoUrl", payload.introVideoUrl);
+  if (payload.introVideoTitle !== undefined)
+    formData.append("introVideoTitle", payload.introVideoTitle);
+  if (payload.introVideoDuration !== undefined)
+    formData.append("introVideoDuration", String(payload.introVideoDuration));
   return formData;
 }
 

@@ -27,10 +27,41 @@ import { useMarkLessonCompletedMutation } from "@/hooks/api/use-lessons";
 // complete automatically (standard LMS behavior).
 const AUTO_COMPLETE_THRESHOLD = 0.9;
 
+const getEmbedUrl = (url?: string, provider?: string) => {
+  if (!url) return undefined;
+
+  try {
+    const parsedUrl = new URL(url);
+
+    if (provider === "youtube") {
+      const host = parsedUrl.hostname.replace(/^www\./, "");
+      const videoId =
+        host === "youtu.be"
+          ? parsedUrl.pathname.replace("/", "")
+          : parsedUrl.searchParams.get("v") ||
+            parsedUrl.pathname.match(/\/embed\/([^/?]+)/)?.[1] ||
+            parsedUrl.pathname.match(/\/shorts\/([^/?]+)/)?.[1];
+
+      return videoId ? `https://www.youtube.com/embed/${videoId}` : url;
+    }
+
+    if (provider === "vimeo") {
+      const videoId = parsedUrl.pathname.split("/").filter(Boolean).pop();
+      return videoId ? `https://player.vimeo.com/video/${videoId}` : url;
+    }
+
+    return url;
+  } catch {
+    return url;
+  }
+};
+
 interface LessonVideoPlayerProps {
   lessonId?: string;
   courseId: string;
   videoUrl?: string;
+  videoSourceType?: "upload" | "url";
+  videoProvider?: string;
   isCompleted?: boolean;
   onOpenChapters?: () => void;
   hasPrevious?: boolean;
@@ -44,6 +75,8 @@ export const LessonVideoPlayer = ({
   lessonId,
   courseId,
   videoUrl,
+  videoSourceType,
+  videoProvider,
   isCompleted,
   onOpenChapters,
   hasPrevious,
@@ -70,6 +103,11 @@ export const LessonVideoPlayer = ({
   const [showControls, setShowControls] = useState(true);
   const [isBuffering, setIsBuffering] = useState(false);
   const [hasEnded, setHasEnded] = useState(false);
+  const embedUrl = getEmbedUrl(videoUrl, videoProvider);
+  const usesEmbeddedPlayer =
+    videoSourceType === "url" &&
+    !!embedUrl &&
+    ["youtube", "vimeo"].includes(videoProvider ?? "");
 
   // Reset per-lesson state when the lesson (and therefore the video) changes.
   useEffect(() => {
@@ -272,6 +310,54 @@ export const LessonVideoPlayer = ({
             </button>
           )}
         </div>
+      </div>
+    );
+  }
+
+  if (usesEmbeddedPlayer) {
+    return (
+      <div className="relative w-full bg-black flex items-center justify-center group">
+        <button
+          onClick={onPrevious}
+          disabled={!hasPrevious}
+          className="absolute left-2 lg:left-8 z-10 p-2 lg:p-3 bg-[#F86432] text-white rounded-md hover:bg-[#E55A2B] transition shadow-lg opacity-0 group-hover:opacity-100 disabled:opacity-0 disabled:pointer-events-none"
+          title="Previous lesson"
+        >
+          <ArrowLeft size={20} />
+        </button>
+
+        <div className="relative w-full max-w-6xl aspect-video lg:max-h-[400px] bg-black overflow-hidden shadow-2xl">
+          <iframe
+            src={embedUrl}
+            title="Lesson video"
+            className="absolute inset-0 h-full w-full"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          />
+          {lessonId && (
+            <button
+              onClick={() => markCompleted({ lessonId, courseId })}
+              disabled={isMarkingComplete || isMarkedComplete}
+              className={`absolute right-4 bottom-4 z-10 flex items-center gap-1.5 text-xs font-semibold rounded px-3 py-2 transition ${
+                isMarkedComplete
+                  ? "bg-black/70 text-[#10B981]"
+                  : "bg-black/70 text-white border border-white/30 hover:bg-black/85"
+              }`}
+            >
+              <CheckCircle2 size={14} />
+              {isMarkedComplete ? "Completed" : "Mark Complete"}
+            </button>
+          )}
+        </div>
+
+        <button
+          onClick={onNext}
+          disabled={!hasNext}
+          className="absolute right-2 lg:right-8 z-10 p-2 lg:p-3 bg-[#F86432] text-white rounded-md hover:bg-[#E55A2B] transition shadow-lg opacity-0 group-hover:opacity-100 disabled:opacity-0 disabled:pointer-events-none"
+          title="Next lesson"
+        >
+          <ArrowRight size={20} />
+        </button>
       </div>
     );
   }

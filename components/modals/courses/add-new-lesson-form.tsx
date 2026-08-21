@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { FileText, Loader2 } from "lucide-react";
 import {
+  useAddLessonVideoUrlMutation,
   useUploadLessonMutation,
   useUploadLessonVideoMutation,
 } from "@/hooks/api/use-lessons";
@@ -47,11 +48,14 @@ export function AddNewLessonForm({
 }) {
   const [title, setTitle] = useState("");
   const [freePreview, setFreePreview] = useState(false);
+  const [videoSource, setVideoSource] = useState<"url" | "upload">("url");
+  const [videoUrl, setVideoUrl] = useState("");
   const [videoFile, setVideoFile] = useState<File | null>(null);
   const [error, setError] = useState("");
 
   const uploadLesson = useUploadLessonMutation();
   const uploadVideo = useUploadLessonVideoMutation();
+  const addVideoUrl = useAddLessonVideoUrlMutation();
 
   const handleSave = async () => {
     if (!title.trim()) {
@@ -77,6 +81,12 @@ export function AddNewLessonForm({
           lessonId,
           videos: [{ title, file: videoFile }],
         });
+      } else if (lessonId && videoUrl.trim()) {
+        await addVideoUrl.mutateAsync({
+          lessonId,
+          title,
+          url: videoUrl.trim(),
+        });
       }
 
       onCreated({ _id: lessonId ?? crypto.randomUUID(), title, isFreePreview: freePreview });
@@ -85,7 +95,8 @@ export function AddNewLessonForm({
     }
   };
 
-  const isSaving = uploadLesson.isPending || uploadVideo.isPending;
+  const isSaving =
+    uploadLesson.isPending || uploadVideo.isPending || addVideoUrl.isPending;
 
   return (
     <div className="flex flex-col gap-5 p-4 md:p-6 bg-primary/4 border-t border-primary/10 rounded-b-2xl w-full">
@@ -109,16 +120,55 @@ export function AddNewLessonForm({
         <label className="text-[13px] md:text-[14px] font-semibold text-gray-900">
           Lesson Video (optional)
         </label>
-        <label className="flex items-center gap-3 px-4 h-11 rounded-xl border border-dashed border-gray-200 hover:border-gray-300 text-[14px] text-gray-500 bg-white cursor-pointer">
-          <FileText className="size-4 shrink-0" />
-          <span className="truncate">{videoFile ? videoFile.name : "Click to upload a video file"}</span>
+        <div className="grid grid-cols-2 gap-2">
+          <button
+            type="button"
+            onClick={() => {
+              setVideoSource("url");
+              setVideoFile(null);
+            }}
+            className={`h-10 rounded-xl text-[14px] font-medium border transition-colors ${
+              videoSource === "url"
+                ? "bg-primary text-white border-primary"
+                : "bg-white text-gray-700 border-gray-200 hover:bg-gray-50"
+            }`}
+          >
+            Video URL
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setVideoSource("upload");
+              setVideoUrl("");
+            }}
+            className={`h-10 rounded-xl text-[14px] font-medium border transition-colors ${
+              videoSource === "upload"
+                ? "bg-primary text-white border-primary"
+                : "bg-white text-gray-700 border-gray-200 hover:bg-gray-50"
+            }`}
+          >
+            Upload
+          </button>
+        </div>
+        {videoSource === "url" ? (
           <input
-            type="file"
-            accept="video/*"
-            className="hidden"
-            onChange={(e) => setVideoFile(e.target.files?.[0] ?? null)}
+            className="w-full px-4 h-11 rounded-xl border border-gray-100/50 hover:border-gray-200 text-[14px] placeholder:text-gray-400 focus:outline-none focus:border-primary/30 focus:ring-1 focus:ring-primary/30 transition-colors bg-white"
+            placeholder="https://youtube.com/watch?v=..."
+            value={videoUrl}
+            onChange={(e) => setVideoUrl(e.target.value)}
           />
-        </label>
+        ) : (
+          <label className="flex items-center gap-3 px-4 h-11 rounded-xl border border-dashed border-gray-200 hover:border-gray-300 text-[14px] text-gray-500 bg-white cursor-pointer">
+            <FileText className="size-4 shrink-0" />
+            <span className="truncate">{videoFile ? videoFile.name : "Click to upload a video file"}</span>
+            <input
+              type="file"
+              accept="video/*"
+              className="hidden"
+              onChange={(e) => setVideoFile(e.target.files?.[0] ?? null)}
+            />
+          </label>
+        )}
       </div>
 
       <div className="flex items-center justify-between p-4 md:p-5 rounded-xl border border-primary bg-white mt-1">

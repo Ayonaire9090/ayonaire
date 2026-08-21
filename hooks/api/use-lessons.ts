@@ -3,6 +3,7 @@ import {
   lessonsApi,
   UploadLessonPayload,
   UploadLessonVideoPayload,
+  AddLessonVideoUrlPayload,
   UpdateLastLessonPayload,
   MarkLessonCompletedPayload,
 } from "@/lib/api/endpoints/lessons";
@@ -24,6 +25,18 @@ export const useUploadLessonVideoMutation = () => {
 
   return useMutation({
     mutationFn: (payload: UploadLessonVideoPayload) => lessonsApi.uploadVideo(payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.lessons.all });
+    },
+  });
+};
+
+export const useAddLessonVideoUrlMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (payload: AddLessonVideoUrlPayload) =>
+      lessonsApi.addVideoUrl(payload),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.lessons.all });
     },

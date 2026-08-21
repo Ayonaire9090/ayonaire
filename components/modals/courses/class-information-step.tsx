@@ -17,6 +17,8 @@ export interface ClassInfoValue {
   courseLevel: "Beginner" | "Intermediate" | "Advanced";
   thumbnailFile: File | null;
   thumbnailPreviewUrl: string | null;
+  introVideoSource: "url" | "upload";
+  introVideoUrl: string;
   introVideoFile: File | null;
 }
 
@@ -75,7 +77,7 @@ export function ClassInformationStep({
   };
 
   const handleIntroVideoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange({ introVideoFile: e.target.files?.[0] ?? null });
+    onChange({ introVideoFile: e.target.files?.[0] ?? null, introVideoUrl: "" });
   };
 
   return (
@@ -189,23 +191,51 @@ export function ClassInformationStep({
           <h4 className="text-[17px] font-semibold text-gray-900">
             Intro Video <span className="text-gray-400 font-normal text-[13px]">(optional)</span>
           </h4>
-          <label className="flex flex-col items-center justify-center border-[1.5px] border-dashed border-gray-200 rounded-xl bg-transparent hover:bg-white/50 transition-colors cursor-pointer min-h-[200px] px-4 text-center">
-            <div className="size-11 rounded-full bg-[#FAFAFA] flex items-center justify-center mb-3 text-gray-700 shadow-sm border border-gray-100/50">
-              <FileText className="size-5" />
-            </div>
-            <span className="text-[14px] font-medium text-gray-900 mb-1">
-              {value.introVideoFile ? value.introVideoFile.name : "Click to upload intro video"}
-            </span>
-            <span className="text-[12px] text-gray-500 uppercase tracking-tight">
-              MP4, MOV or WEBM
-            </span>
-            <input
-              type="file"
-              accept="video/*"
-              className="hidden"
-              onChange={handleIntroVideoChange}
+          <div className="grid grid-cols-2 gap-2">
+            <Button
+              type="button"
+              variant={value.introVideoSource === "url" ? "default" : "outline"}
+              onClick={() => onChange({ introVideoSource: "url", introVideoFile: null })}
+              className="h-10 rounded-xl"
+            >
+              Video URL
+            </Button>
+            <Button
+              type="button"
+              variant={value.introVideoSource === "upload" ? "default" : "outline"}
+              onClick={() => onChange({ introVideoSource: "upload", introVideoUrl: "" })}
+              className="h-10 rounded-xl"
+            >
+              Upload
+            </Button>
+          </div>
+          {value.introVideoSource === "url" ? (
+            <AppInput
+              placeholder="https://youtube.com/watch?v=..."
+              value={value.introVideoUrl}
+              onChange={(e) =>
+                onChange({ introVideoUrl: e.target.value, introVideoFile: null })
+              }
             />
-          </label>
+          ) : (
+            <label className="flex flex-col items-center justify-center border-[1.5px] border-dashed border-gray-200 rounded-xl bg-transparent hover:bg-white/50 transition-colors cursor-pointer min-h-[150px] px-4 text-center">
+              <div className="size-11 rounded-full bg-[#FAFAFA] flex items-center justify-center mb-3 text-gray-700 shadow-sm border border-gray-100/50">
+                <FileText className="size-5" />
+              </div>
+              <span className="text-[14px] font-medium text-gray-900 mb-1">
+                {value.introVideoFile ? value.introVideoFile.name : "Click to upload intro video"}
+              </span>
+              <span className="text-[12px] text-gray-500 uppercase tracking-tight">
+                MP4, MOV or WEBM
+              </span>
+              <input
+                type="file"
+                accept="video/*"
+                className="hidden"
+                onChange={handleIntroVideoChange}
+              />
+            </label>
+          )}
         </div>
 
         {/* Course Thumbnail */}

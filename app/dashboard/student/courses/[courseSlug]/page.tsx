@@ -120,6 +120,8 @@ export default function StudentCourseLessonPage({
                 lessonId={activeLesson?._id}
                 courseId={courseId}
                 videoUrl={activeVideo?.url}
+                videoSourceType={activeVideo?.sourceType}
+                videoProvider={activeVideo?.provider}
                 isCompleted={activeLesson?.isCompleted}
                 onOpenChapters={() => setIsSheetOpen(true)}
                 hasPrevious={!!previousLesson}

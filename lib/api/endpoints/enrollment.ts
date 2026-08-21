@@ -28,7 +28,14 @@ export interface EnrolledCourseDetail {
   title: string;
   description?: string;
   thumbnail?: { url: string; publicId: string };
-  introVideo?: { url: string; publicId: string; duration: number };
+  introVideo?: {
+    title?: string;
+    url: string;
+    publicId?: string;
+    duration: number;
+    sourceType?: "upload" | "url";
+    provider?: string;
+  };
   category?: string;
   instructor?: { id: string; name: string } | null;
   price: number;

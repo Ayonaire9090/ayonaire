@@ -8,8 +8,17 @@ export interface ResumeLessonInfo {
 export interface LessonVideo {
   title: string;
   url: string;
-  publicId: string;
+  publicId?: string;
   duration: number;
+  sourceType?: "upload" | "url";
+  provider?:
+    | "cloudinary"
+    | "youtube"
+    | "vimeo"
+    | "mux"
+    | "bunny"
+    | "cloudflare"
+    | "external";
 }
 
 export interface LessonMaterial {
@@ -77,6 +86,13 @@ export interface UploadLessonVideoPayload {
   videos: { title: string; file: File }[];
 }
 
+export interface AddLessonVideoUrlPayload {
+  lessonId: string;
+  title: string;
+  url: string;
+  duration?: number;
+}
+
 export interface UpdateLastLessonPayload {
   courseId: string;
   lessonId: string;
@@ -111,6 +127,13 @@ export const lessonsApi = {
       requireAuth: true,
     });
   },
+
+  addVideoUrl: (payload: AddLessonVideoUrlPayload) =>
+    apiClient<ApiResponse<LessonVideo>>("/api/v1/lesson/add-video-url", {
+      method: "POST",
+      body: JSON.stringify(payload),
+      requireAuth: true,
+    }),
 
   markCompleted: ({ courseId, lessonId }: MarkLessonCompletedPayload) =>
     apiClient<ApiResponse>("/api/v1/lesson/mark-lesson-as-completed", {

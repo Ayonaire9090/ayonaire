@@ -29,6 +29,8 @@ const emptyClassInfo: ClassInfoValue = {
   courseLevel: "Beginner",
   thumbnailFile: null,
   thumbnailPreviewUrl: null,
+  introVideoSource: "url",
+  introVideoUrl: "",
   introVideoFile: null,
 };
 
@@ -90,7 +92,15 @@ export function AddCourseModal({
         courseLevel: classInfo.courseLevel,
         status,
         thumbnail: classInfo.thumbnailFile as File,
-        introVideo: classInfo.introVideoFile ?? undefined,
+        introVideo:
+          classInfo.introVideoSource === "upload"
+            ? classInfo.introVideoFile ?? undefined
+            : undefined,
+        introVideoUrl:
+          classInfo.introVideoSource === "url" && classInfo.introVideoUrl.trim()
+            ? classInfo.introVideoUrl.trim()
+            : undefined,
+        introVideoTitle: classInfo.title,
       });
 
       const newCourseId = (res.data as any)?._id ?? null;
