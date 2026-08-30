@@ -13,6 +13,7 @@ export interface StudentWorkshop {
   title: string;
   author: string;
   platform: string;
+  link: string;
   month: string;
   day: string;
   label: string;
@@ -52,6 +53,7 @@ export function mapWorkshopRecordToStudentWorkshop(
     title: workshop.title,
     author,
     platform: workshop.platform?.name || "-",
+    link: workshop.platform?.link || "",
     month: format(startDate, "MMM"),
     day: format(startDate, "d"),
     label: getDayLabel(startDate),

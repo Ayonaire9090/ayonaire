@@ -8,6 +8,7 @@ import { WorkshopDateFilter } from "@/app/dashboard/student/workshop/_components
 import { WorkshopSchedule } from "@/app/dashboard/student/workshop/_components/workshop-schedule";
 import { WorkshopCalendar } from "@/app/dashboard/student/workshop/_components/workshop-calendar";
 import { WorkshopHistory } from "@/app/dashboard/student/workshop/_components/workshop-history";
+import { AdminDashboardUploadLiveClassButton } from "@/components/dashboard/admin-dashboard-upload-live-class-button";
 import {
   groupWorkshopsByDate,
   isWithinDateRange,
@@ -56,12 +57,15 @@ export default function InstructorWorkshopPage() {
 
   return (
     <>
-      <DashboardHeader
-        title="Workshops"
-        subTitle="Manage upcoming and completed workshop sessions."
-      />
+      <div className="flex items-center justify-between px-4 lg:px-0">
+        <DashboardHeader
+          title="Workshops"
+          subTitle="Manage upcoming and completed workshop sessions."
+        />
+        <AdminDashboardUploadLiveClassButton />
+      </div>
 
-      <div className="flex flex-col gap-5 rounded-lg bg-white p-4 lg:p-8">
+      <div className="mt-4 flex flex-col gap-5 rounded-lg bg-white p-4 lg:p-8">
         <div className="grid w-full grid-cols-2 items-start rounded-lg border border-gray-200 bg-[#F6F6F6] p-1 shadow-sm sm:w-fit sm:flex">
           <button
             onClick={() => setActiveTab("upcoming")}

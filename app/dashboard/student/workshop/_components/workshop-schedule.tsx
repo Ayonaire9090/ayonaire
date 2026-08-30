@@ -10,6 +10,7 @@ export interface WorkshopScheduleCardProps {
   day: string;
   title: string;
   author: string;
+  link?: string;
   endTime?: string;
   className?: string;
 }
@@ -22,6 +23,7 @@ export const WorkshopScheduleCard = ({
   day,
   title,
   author,
+  link,
   endTime,
   className = "",
 }: WorkshopScheduleCardProps) => {
@@ -91,11 +93,21 @@ export const WorkshopScheduleCard = ({
               </>
             )}
           </span>
-          <button className="flex items-center justify-center gap-2 bg-[#F86432]/10 sm:bg-[#F86432] hover:bg-[#F86432]/20 sm:hover:bg-[#e05a2d] text-[#F86432] sm:text-white px-5 sm:px-6 py-2 sm:py-2.5 rounded-xl font-medium transition-colors text-sm sm:text-base ml-auto">
+          <a
+            href={link || undefined}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-disabled={!link}
+            className={`flex items-center justify-center gap-2 px-5 sm:px-6 py-2 sm:py-2.5 rounded-xl font-medium transition-colors text-sm sm:text-base ml-auto ${
+              link
+                ? "bg-[#F86432]/10 sm:bg-[#F86432] hover:bg-[#F86432]/20 sm:hover:bg-[#e05a2d] text-[#F86432] sm:text-white"
+                : "pointer-events-none bg-gray-100 text-gray-400"
+            }`}
+          >
             <Video size={18} className="hidden sm:block" />
             <Video size={16} className="sm:hidden" />
             <span>Join</span>
-          </button>
+          </a>
         </div>
       </div>
     </div>

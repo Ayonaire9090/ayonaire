@@ -74,12 +74,16 @@ export const CourseQAndA = ({ courseId, lessonId }: CourseQAndAProps) => {
 
   const handleAnswer = () => {
     if (!selectedQuestion || !answer.trim()) return;
+    const answerText = answer.trim();
+    setAnswer("");
     answerQuestion.mutate(
-      { questionId: selectedQuestion.id, text: answer },
+      { questionId: selectedQuestion.id, text: answerText },
       {
         onSuccess: (response) => {
           setSelectedQuestion(response.data ?? selectedQuestion);
-          setAnswer("");
+        },
+        onError: () => {
+          setAnswer(answerText);
         },
       },
     );
@@ -121,6 +125,12 @@ export const CourseQAndA = ({ courseId, lessonId }: CourseQAndAProps) => {
           <Input
             value={answer}
             onChange={(event) => setAnswer(event.target.value)}
+            onKeyDown={(event) => {
+              if (event.key === "Enter") {
+                event.preventDefault();
+                handleAnswer();
+              }
+            }}
             placeholder="Add an answer"
             className="h-12 rounded-xl"
           />
@@ -210,7 +220,7 @@ function QuestionCard({
           <AvatarImage src={question.author.profile?.url} />
           <AvatarFallback>{initials(question.author.name)}</AvatarFallback>
         </Avatar>
-        <button onClick={onOpen} className="flex-1 text-left">
+        <button type="button" onClick={onOpen} className="flex-1 text-left">
           <h5 className="font-medium text-gray-900 text-base mb-1">
             {question.title}
           </h5>
@@ -221,16 +231,25 @@ function QuestionCard({
         </button>
         <div className="flex flex-col items-center gap-2 shrink-0">
           <button
-            onClick={onUpvote}
-            className="flex items-center gap-1.5 font-medium text-gray-700"
+            type="button"
+            onClick={(event) => {
+              event.stopPropagation();
+              onUpvote();
+            }}
+            className="flex items-center gap-1.5 font-medium text-gray-700 hover:text-[#F86432]"
+            aria-label="Upvote question"
           >
             <span className="text-sm">{question.upvoteCount}</span>
             <ArrowUp className="w-4 h-4" />
           </button>
           <button
-            onClick={onOpen}
+            type="button"
+            onClick={(event) => {
+              event.stopPropagation();
+              onOpen();
+            }}
             className="flex items-center gap-1.5 font-medium text-gray-700 hover:text-[#F86432]"
-            aria-label="Open comments"
+            aria-label="Open replies"
           >
             <span className="text-sm">{question.commentCount}</span>
             <MessageCircle className="w-4 h-4" />

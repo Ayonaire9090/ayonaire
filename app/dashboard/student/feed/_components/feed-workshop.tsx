@@ -55,6 +55,7 @@ export const FeedWorkShop = () => {
               time={workshop.time}
               title={workshop.title}
               author={workshop.author}
+              link={workshop.link}
               className="min-w-[300px] sm:min-w-[380px] md:min-w-[420px] shrink-0"
             />
           ))

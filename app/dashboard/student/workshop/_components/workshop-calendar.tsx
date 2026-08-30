@@ -1,4 +1,4 @@
-import { Calendar, Clock, MoreHorizontal } from "lucide-react";
+import { Calendar, Clock, MoreHorizontal, Video } from "lucide-react";
 import React from "react";
 import { StudentWorkshop } from "./workshop-data";
 
@@ -10,6 +10,7 @@ export interface WorkshopCalendarCardProps {
   time: string;
   title: string;
   author: string;
+  link?: string;
   className?: string;
 }
 
@@ -21,6 +22,7 @@ export const WorkshopCalendarCard = ({
   time,
   title,
   author,
+  link,
   className = "",
 }: WorkshopCalendarCardProps) => {
   return (
@@ -66,9 +68,25 @@ export const WorkshopCalendarCard = ({
           <h3 className="font-medium sm:font-semibold text-gray-900 text-sm sm:text-base md:text-lg tracking-tight leading-snug line-clamp-2">
             {title}
           </h3>
-          <p className="text-gray-500 text-xs sm:text-sm mt-1 sm:mt-1.5">
-            By {author}
-          </p>
+          <div className="mt-2 flex items-center justify-between gap-3">
+            <p className="min-w-0 truncate text-gray-500 text-xs sm:text-sm">
+              By {author}
+            </p>
+            <a
+              href={link || undefined}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-disabled={!link}
+              className={`inline-flex shrink-0 items-center justify-center gap-1.5 rounded-lg px-3 py-2 text-xs font-medium transition-colors ${
+                link
+                  ? "bg-[#F86432] text-white hover:bg-[#e05a2d]"
+                  : "pointer-events-none bg-gray-100 text-gray-400"
+              }`}
+            >
+              <Video size={14} />
+              <span>Join</span>
+            </a>
+          </div>
         </div>
       </div>
     </div>
