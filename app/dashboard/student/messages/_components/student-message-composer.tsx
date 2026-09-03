@@ -139,6 +139,9 @@ export const StudentMessageComposer = ({
         </div>
       )}
       <div className="min-w-0">
+        <p className="text-[11px] font-semibold uppercase tracking-wide text-gray-400">
+          {attachment.kind === "media" ? "Image attachment" : "File attachment"}
+        </p>
         <p className="text-[13px] font-medium text-gray-900 truncate max-w-[180px]">
           {attachment.file.name}
         </p>

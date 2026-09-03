@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { Info, MoreVertical, Reply, SmilePlus, Trash2 } from "lucide-react";
+import { FileText, Info, MoreVertical, Reply, SmilePlus, Trash2 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import type { Message } from "../_data/mock-messages";
 import { EmojiPicker } from "./emoji-picker";
@@ -39,11 +39,11 @@ function MessageActions({
   const [infoOpen, setInfoOpen] = React.useState(false);
   const isOwnMessage = message.senderId === "me";
   const attachmentType = message.images?.length
-    ? "Image"
+    ? "Image attachment"
     : message.video
-      ? "Video"
+      ? "Video attachment"
       : message.file
-        ? "File"
+        ? "File attachment"
         : "None";
 
   return (
@@ -140,7 +140,7 @@ function MessageAttachments({ message }: { message: Message }) {
               key={i}
               className="relative h-24 w-36 overflow-hidden rounded-lg bg-gray-100"
             >
-              <Image src={img} alt="attachment" fill className="object-cover" />
+              <Image src={img} alt="Image attachment" fill className="object-cover" />
             </div>
           ))}
         </div>
@@ -160,9 +160,11 @@ function MessageAttachments({ message }: { message: Message }) {
           href={message.file.url}
           target="_blank"
           rel="noreferrer"
-          className="mt-2 inline-flex rounded-lg border border-gray-100 bg-gray-50 px-3 py-2 text-xs font-medium text-gray-700 hover:bg-gray-100"
+          className="mt-2 inline-flex max-w-full items-center rounded-lg border border-gray-100 bg-gray-50 px-3 py-2 text-xs font-medium text-gray-700 hover:bg-gray-100"
         >
-          {message.file.name}
+          <FileText className="mr-2 h-4 w-4 shrink-0" />
+          <span className="shrink-0 text-gray-500">Attachment:</span>
+          <span className="ml-1 truncate">{message.file.name}</span>
         </a>
       )}
     </>
@@ -178,7 +180,8 @@ export const StudentMessageBubble = ({
   onReply,
   onDelete,
 }: StudentMessageBubbleProps) => {
-  const isOutgoing = !isGroup && message.senderId === "me";
+  const isOwnMessage = message.senderId === "me";
+  const isOutgoing = isOwnMessage;
   const isSystem = message.type === "system";
   const reactionTotal =
     message.reactions?.reduce((sum, reaction) => sum + reaction.count, 0) ?? 0;
@@ -213,7 +216,17 @@ export const StudentMessageBubble = ({
         </div>
 
         <div className="max-w-full rounded-2xl rounded-br-md border border-gray-100 bg-white px-4 py-3">
-          <p className="mb-1 text-sm font-semibold text-gray-900">You</p>
+          <div className="mb-1 flex items-center justify-end gap-2">
+            <p className="text-sm font-semibold text-gray-900">{message.senderName || "You"}</p>
+            {showAvatar && (
+              <Avatar className="h-6 w-6 shrink-0">
+                <AvatarImage src={message.senderAvatar} />
+                <AvatarFallback className="text-[10px]">
+                  {(message.senderName || "You")[0]}
+                </AvatarFallback>
+              </Avatar>
+            )}
+          </div>
           <p className="whitespace-pre-wrap text-sm leading-relaxed text-gray-600">
             {message.content}
           </p>
