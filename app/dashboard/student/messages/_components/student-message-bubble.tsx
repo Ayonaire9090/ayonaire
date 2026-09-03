@@ -1,10 +1,23 @@
 "use client";
 
+import * as React from "react";
 import Image from "next/image";
-import { MessageCircle, MoreVertical, Reply, SmilePlus } from "lucide-react";
+import { Info, MoreVertical, Reply, SmilePlus, Trash2 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import type { Message } from "../_data/mock-messages";
 import { EmojiPicker } from "./emoji-picker";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface StudentMessageBubbleProps {
   message: Message;
@@ -13,8 +26,82 @@ interface StudentMessageBubbleProps {
   showName?: boolean;
   onReact?: (messageId: string, emoji: string) => void;
   onReply?: (message: Message) => void;
+  onDelete?: (message: Message) => void;
 }
 
+function MessageActions({
+  message,
+  onDelete,
+}: {
+  message: Message;
+  onDelete?: (message: Message) => void;
+}) {
+  const [infoOpen, setInfoOpen] = React.useState(false);
+  const isOwnMessage = message.senderId === "me";
+  const attachmentType = message.images?.length
+    ? "Image"
+    : message.video
+      ? "Video"
+      : message.file
+        ? "File"
+        : "None";
+
+  return (
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <button
+            className="rounded-md p-1 text-gray-500 hover:bg-gray-100 hover:text-gray-950"
+            aria-label="More options"
+          >
+            <MoreVertical className="h-4 w-4" />
+          </button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align={isOwnMessage ? "end" : "start"} className="w-44">
+          <DropdownMenuItem onClick={() => setInfoOpen(true)}>
+            <Info className="mr-2 h-4 w-4" />
+            Message info
+          </DropdownMenuItem>
+          {isOwnMessage && onDelete && (
+            <DropdownMenuItem
+              className="text-red-600 focus:text-red-600"
+              onClick={() => onDelete(message)}
+            >
+              <Trash2 className="mr-2 h-4 w-4" />
+              Delete message
+            </DropdownMenuItem>
+          )}
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      <Dialog open={infoOpen} onOpenChange={setInfoOpen}>
+        <DialogContent className="sm:max-w-sm">
+          <DialogHeader>
+            <DialogTitle>Message info</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-3 text-sm text-gray-700">
+            <div className="flex justify-between gap-4">
+              <span className="text-gray-500">Sender</span>
+              <span className="text-right font-medium text-gray-900">{message.senderName}</span>
+            </div>
+            <div className="flex justify-between gap-4">
+              <span className="text-gray-500">Sent</span>
+              <span className="text-right font-medium text-gray-900">{message.dateLabel ?? "Today"}, {message.timestamp}</span>
+            </div>
+            <div className="flex justify-between gap-4">
+              <span className="text-gray-500">Attachment</span>
+              <span className="text-right font-medium text-gray-900">{attachmentType}</span>
+            </div>
+            <div className="flex justify-between gap-4">
+              <span className="text-gray-500">Status</span>
+              <span className="text-right font-medium capitalize text-gray-900">{message.status}</span>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </>
+  );
+}
 function ReactionChips({
   message,
   onReact,
@@ -89,6 +176,7 @@ export const StudentMessageBubble = ({
   showName = true,
   onReact,
   onReply,
+  onDelete,
 }: StudentMessageBubbleProps) => {
   const isOutgoing = !isGroup && message.senderId === "me";
   const isSystem = message.type === "system";
@@ -121,12 +209,7 @@ export const StudentMessageBubble = ({
           >
             <Reply className="h-4 w-4" />
           </button>
-          <button
-            className="rounded-md p-1 text-gray-400 hover:bg-gray-100"
-            aria-label="More options"
-          >
-            <MoreVertical className="h-4 w-4" />
-          </button>
+          <MessageActions message={message} onDelete={onDelete} />
         </div>
 
         <div className="max-w-full rounded-2xl rounded-br-md border border-gray-100 bg-white px-4 py-3">
@@ -203,7 +286,7 @@ export const StudentMessageBubble = ({
           aria-label="Reply"
           onClick={() => onReply?.(message)}
         >
-          <MessageCircle className="h-4 w-4" />
+          <Reply className="h-4 w-4" />
         </button>
         {onReact ? (
           <EmojiPicker
@@ -213,12 +296,7 @@ export const StudentMessageBubble = ({
         ) : (
           <SmilePlus className="h-4 w-4" />
         )}
-        <button
-          className="rounded-md text-gray-700 hover:text-gray-950"
-          aria-label="More options"
-        >
-          <MoreVertical className="h-4 w-4" />
-        </button>
+        <MessageActions message={message} onDelete={onDelete} />
       </div>
     </div>
   );

@@ -4,26 +4,33 @@ import * as React from "react";
 import { InstructorMessageBubble } from "./instructor-message-bubble";
 import type { MessageRecord } from "@/lib/api/endpoints/messages";
 import { ChevronDown } from "lucide-react";
+import { format, isToday, isYesterday } from "date-fns";
 
 interface InstructorMessageListProps {
   messages: MessageRecord[];
   currentUserId?: string;
+  onDelete?: (messageId: string) => void;
+}
+
+function dayDividerLabel(date: Date): string {
+  if (isToday(date)) return "Today";
+  if (isYesterday(date)) return "Yesterday";
+  return format(date, "MMMM d, yyyy");
 }
 
 export const InstructorMessageList = ({
   messages,
   currentUserId,
+  onDelete,
 }: InstructorMessageListProps) => {
   const bottomRef = React.useRef<HTMLDivElement>(null);
   const containerRef = React.useRef<HTMLDivElement>(null);
   const [showScrollBtn, setShowScrollBtn] = React.useState(false);
 
-  // Auto-scroll to bottom on mount
   React.useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "instant" });
   }, [messages]);
 
-  // Show/hide scroll-to-bottom button
   React.useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -53,22 +60,35 @@ export const InstructorMessageList = ({
             const prevMessage = index > 0 ? messages[index - 1] : null;
             const sameSenderAsPrev =
               prevMessage && prevMessage.senderId.id === message.senderId.id;
+            const dateLabel = dayDividerLabel(new Date(message.createdAt));
+            const prevDateLabel = prevMessage
+              ? dayDividerLabel(new Date(prevMessage.createdAt))
+              : null;
+            const showDayDivider = prevDateLabel !== dateLabel;
 
             return (
-              <InstructorMessageBubble
-                key={message.id}
-                message={message}
-                currentUserId={currentUserId}
-                showAvatar={!sameSenderAsPrev}
-                showName={!sameSenderAsPrev}
-              />
+              <React.Fragment key={message.id}>
+                {showDayDivider && (
+                  <div className="flex items-center gap-3 text-xs font-medium text-gray-400">
+                    <div className="flex-1 h-px bg-gray-100" />
+                    {dateLabel}
+                    <div className="flex-1 h-px bg-gray-100" />
+                  </div>
+                )}
+                <InstructorMessageBubble
+                  message={message}
+                  currentUserId={currentUserId}
+                  showAvatar={!sameSenderAsPrev || showDayDivider}
+                  showName={!sameSenderAsPrev || showDayDivider}
+                  onDelete={onDelete}
+                />
+              </React.Fragment>
             );
           })}
           <div ref={bottomRef} />
         </div>
       </div>
 
-      {/* Scroll to bottom FAB */}
       {showScrollBtn && (
         <button
           onClick={scrollToBottom}

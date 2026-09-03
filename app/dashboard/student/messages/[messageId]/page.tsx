@@ -4,6 +4,7 @@ import { useParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import { useGetRooms } from "@/hooks/api/use-rooms";
 import {
+  useDeleteMessageMutation,
   useGetMessages,
   useReactToMessageMutation,
   useSendMessageMutation,
@@ -25,6 +26,8 @@ import { StudentMessagesSidebarContent } from "../_components/student-messages-s
 import { StudentGroupSidebar } from "../_components/student-group-sidebar";
 import { StudentDashboardHeader } from "../../_components/student-dashboard-header";
 import { ChevronLeft } from "lucide-react";
+import { toast } from "sonner";
+
 
 export default function StudentMessageDetails() {
   const params = useParams();
@@ -55,14 +58,21 @@ export default function StudentMessageDetails() {
   const { data: messagesData, isLoading: isMessagesLoading } = useGetMessages(roomId);
   const messages = useMemo(
     () =>
-      (messagesData?.data?.messages ?? []).map((m) =>
-        mapMessageRecordToMessage(m, user?._id),
+      (messagesData?.data?.messages ?? [])
+        .slice()
+        .sort(
+          (a, b) =>
+            new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+        )
+        .map((m) =>
+          mapMessageRecordToMessage(m, user?._id),
       ),
     [messagesData, user?._id],
   );
 
   const { mutate: sendMessage } = useSendMessageMutation();
   const reactToMessage = useReactToMessageMutation();
+  const deleteMessage = useDeleteMessageMutation();
 
   const handleSend = (
     text: string,
@@ -80,6 +90,15 @@ export default function StudentMessageDetails() {
 
   const handleReact = (messageId: string, emoji: string) => {
     reactToMessage.mutate({ messageId, emoji });
+  };
+  const handleDelete = (message: Message) => {
+    deleteMessage.mutate(message.id, {
+      onSuccess: () => toast.success("Message deleted"),
+      onError: (error) =>
+        toast.error(
+          error instanceof Error ? error.message : "Failed to delete message",
+        ),
+    });
   };
 
   if (isRoomsLoading) {
@@ -152,6 +171,7 @@ export default function StudentMessageDetails() {
                 isGroup={isGroup}
                 onReact={handleReact}
                 onReply={setReplyTo}
+                onDelete={handleDelete}
               />
             )}
             {/* Message composer */}

@@ -9,6 +9,11 @@ import { MessageRecord, GetMessagesResult } from "@/lib/api/endpoints/messages";
 import { RoomRecord } from "@/lib/api/endpoints/rooms";
 import { useGetRooms } from "@/hooks/api/use-rooms";
 
+const sortMessagesByCreatedAt = (messages: MessageRecord[]) =>
+  [...messages].sort(
+    (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+  );
+
 // Mount once for the whole messages section (see messages/layout.tsx).
 // Joins every room the user belongs to so conversation previews update
 // live even when that conversation isn't the one currently open, and
@@ -42,7 +47,7 @@ export function useMessagingRealtimeSync() {
             ...old,
             data: {
               ...old.data,
-              messages: [...old.data.messages, message],
+              messages: sortMessagesByCreatedAt([...old.data.messages, message]),
             },
           };
         },
@@ -93,11 +98,32 @@ export function useMessagingRealtimeSync() {
       );
     };
 
+    const handleMessageDeleted = (payload: { id: string; roomId: string }) => {
+      queryClient.setQueryData<ApiResponse<GetMessagesResult>>(
+        queryKeys.messages.forRoom(payload.roomId),
+        (old) => {
+          if (!old?.data) return old;
+          return {
+            ...old,
+            data: {
+              ...old.data,
+              messages: old.data.messages.filter(
+                (message) => message.id !== payload.id,
+              ),
+            },
+          };
+        },
+      );
+      queryClient.invalidateQueries({ queryKey: queryKeys.rooms.all });
+    };
+
     socket.on("message:new", handleNewMessage);
     socket.on("message:reaction", handleMessageReaction);
+    socket.on("message:deleted", handleMessageDeleted);
     return () => {
       socket.off("message:new", handleNewMessage);
       socket.off("message:reaction", handleMessageReaction);
+      socket.off("message:deleted", handleMessageDeleted);
     };
   }, [queryClient]);
 }

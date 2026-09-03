@@ -10,6 +10,7 @@ interface StudentMessageListProps {
   isGroup?: boolean;
   onReact?: (messageId: string, emoji: string) => void;
   onReply?: (message: Message) => void;
+  onDelete?: (message: Message) => void;
 }
 
 export const StudentMessageList = ({
@@ -17,6 +18,7 @@ export const StudentMessageList = ({
   isGroup = false,
   onReact,
   onReply,
+  onDelete,
 }: StudentMessageListProps) => {
   const bottomRef = React.useRef<HTMLDivElement>(null);
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -77,6 +79,7 @@ export const StudentMessageList = ({
                   showName={!sameSenderAsPrev || showDayDivider}
                   onReact={onReact}
                   onReply={onReply}
+                  onDelete={onDelete}
                 />
               </React.Fragment>
             );

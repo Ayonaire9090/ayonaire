@@ -55,6 +55,15 @@ export const messagesApi = {
       },
     ),
 
+  delete: (messageId: string) =>
+    apiClient<ApiResponse<{ id: string; roomId: string }>>(
+      `/api/v1/message/${messageId}`,
+      {
+        method: "DELETE",
+        requireAuth: true,
+      },
+    ),
+
   getForRoom: (roomId: string, page = 1, limit = 50) =>
     apiClient<ApiResponse<GetMessagesResult>>(
       `/api/v1/message/${roomId}?page=${page}&limit=${limit}`,

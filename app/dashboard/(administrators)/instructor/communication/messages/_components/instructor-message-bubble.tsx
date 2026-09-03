@@ -1,16 +1,123 @@
 "use client";
 
+import * as React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { MoreVertical } from "lucide-react";
+import { Info, MoreVertical, Trash2 } from "lucide-react";
 import type { MessageRecord } from "@/lib/api/endpoints/messages";
 import { format } from "date-fns";
 import Image from "next/image";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface InstructorMessageBubbleProps {
   message: MessageRecord;
   currentUserId?: string;
   showAvatar?: boolean;
   showName?: boolean;
+  onDelete?: (messageId: string) => void;
+}
+
+function MessageActions({
+  message,
+  isOwnMessage,
+  onDelete,
+}: {
+  message: MessageRecord;
+  isOwnMessage: boolean;
+  onDelete?: (messageId: string) => void;
+}) {
+  const [infoOpen, setInfoOpen] = React.useState(false);
+  const createdAt = message.createdAt ? new Date(message.createdAt) : null;
+  const attachmentType = message.media ? "Image" : message.file ? "File" : "None";
+
+  return (
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <button
+            className="p-1 rounded-md hover:bg-gray-100 text-gray-700 hover:text-gray-950"
+            aria-label="More options"
+          >
+            <MoreVertical className="w-4 h-4" />
+          </button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align={isOwnMessage ? "end" : "start"} className="w-44">
+          <DropdownMenuItem onClick={() => setInfoOpen(true)}>
+            <Info className="mr-2 h-4 w-4" />
+            Message info
+          </DropdownMenuItem>
+          {isOwnMessage && onDelete && (
+            <DropdownMenuItem
+              className="text-red-600 focus:text-red-600"
+              onClick={() => onDelete(message.id)}
+            >
+              <Trash2 className="mr-2 h-4 w-4" />
+              Delete message
+            </DropdownMenuItem>
+          )}
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      <Dialog open={infoOpen} onOpenChange={setInfoOpen}>
+        <DialogContent className="sm:max-w-sm">
+          <DialogHeader>
+            <DialogTitle>Message info</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-3 text-sm text-gray-700">
+            <div className="flex justify-between gap-4">
+              <span className="text-gray-500">Sender</span>
+              <span className="text-right font-medium text-gray-900">
+                {isOwnMessage ? "You" : message.senderId.name}
+              </span>
+            </div>
+            <div className="flex justify-between gap-4">
+              <span className="text-gray-500">Sent</span>
+              <span className="text-right font-medium text-gray-900">
+                {createdAt ? format(createdAt, "MMMM d, yyyy, h:mm a") : "Unknown"}
+              </span>
+            </div>
+            <div className="flex justify-between gap-4">
+              <span className="text-gray-500">Attachment</span>
+              <span className="text-right font-medium text-gray-900">{attachmentType}</span>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </>
+  );
+}
+
+function MessageAttachments({ message, isOutgoing }: { message: MessageRecord; isOutgoing: boolean }) {
+  return (
+    <>
+      {message.media && (
+        <div className={`relative w-36 h-24 rounded-lg overflow-hidden bg-gray-100 mt-2 ${isOutgoing ? "ml-auto" : ""}`}>
+          <Image src={message.media.url} alt="attachment" fill className="object-cover" />
+        </div>
+      )}
+
+      {message.file && (
+        <a
+          href={message.file.url}
+          target="_blank"
+          rel="noreferrer"
+          className="mt-2 inline-flex rounded-lg border border-gray-100 bg-gray-50 px-3 py-2 text-xs font-medium text-gray-700 hover:bg-gray-100"
+        >
+          Attachment
+        </a>
+      )}
+    </>
+  );
 }
 
 export const InstructorMessageBubble = ({
@@ -18,62 +125,34 @@ export const InstructorMessageBubble = ({
   currentUserId,
   showAvatar = true,
   showName = true,
+  onDelete,
 }: InstructorMessageBubbleProps) => {
   const isOutgoing = message.senderId.id === currentUserId;
   const timestamp = message.createdAt
     ? format(new Date(message.createdAt), "h:mm a")
     : "";
 
-  // Outgoing message (right-aligned)
   if (isOutgoing) {
     return (
       <div className="flex flex-col items-end gap-1 group max-w-[95%] lg:max-w-[85%] ml-auto">
         <div className="flex items-center gap-1 mb-1">
-          <button
-            className="p-1 rounded-md hover:bg-gray-100 text-gray-400"
-            aria-label="More options"
-          >
-            <MoreVertical className="w-4 h-4" />
-          </button>
+          <MessageActions message={message} isOwnMessage={isOutgoing} onDelete={onDelete} />
         </div>
 
         <div className="bg-white border border-gray-100 rounded-2xl rounded-br-md px-4 py-3 max-w-full">
           <p className="text-sm font-semibold text-gray-900 mb-1">You</p>
-          <p className="text-sm text-gray-600 whitespace-pre-wrap leading-relaxed">
-            {message.text}
-          </p>
-
-          {message.media && (
-            <div className="relative w-36 h-24 rounded-lg overflow-hidden bg-gray-100 mt-2 ml-auto">
-              <Image
-                src={message.media.url}
-                alt="attachment"
-                fill
-                className="object-cover"
-              />
-            </div>
+          {message.text && (
+            <p className="text-sm text-gray-600 whitespace-pre-wrap leading-relaxed">
+              {message.text}
+            </p>
           )}
-
-          {message.file && (
-            <a
-              href={message.file.url}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-2 block text-xs text-primary underline"
-            >
-              View attached file
-            </a>
-          )}
-
-          <p className="text-[11px] text-gray-400 text-right mt-2">
-            {timestamp}
-          </p>
+          <MessageAttachments message={message} isOutgoing={isOutgoing} />
+          <p className="text-[11px] text-gray-400 text-right mt-2">{timestamp}</p>
         </div>
       </div>
     );
   }
 
-  // Incoming message (left-aligned)
   return (
     <div className="flex items-start gap-2.5 group max-w-[95%] lg:max-w-[85%] bg-white rounded-xl p-2">
       {showAvatar ? (
@@ -97,44 +176,21 @@ export const InstructorMessageBubble = ({
           </div>
         )}
 
-        <p className="text-sm text-gray-700 whitespace-pre-wrap leading-relaxed">
-          {message.text}
-        </p>
+        {message.text && (
+          <p className="text-sm text-gray-700 whitespace-pre-wrap leading-relaxed">
+            {message.text}
+          </p>
+        )}
 
         {!showName && (
           <p className="text-[11px] text-gray-400 mt-1">{timestamp}</p>
         )}
 
-        {message.media && (
-          <div className="relative w-36 h-24 rounded-lg overflow-hidden bg-gray-100 mt-2">
-            <Image
-              src={message.media.url}
-              alt="attachment"
-              fill
-              className="object-cover"
-            />
-          </div>
-        )}
-
-        {message.file && (
-          <a
-            href={message.file.url}
-            target="_blank"
-            rel="noreferrer"
-            className="mt-2 block text-xs text-primary underline"
-          >
-            View attached file
-          </a>
-        )}
+        <MessageAttachments message={message} isOutgoing={isOutgoing} />
       </div>
 
       <div className="flex items-center gap-0.5 mt-1 shrink-0">
-        <button
-          className="p-1 rounded-md hover:bg-gray-100 text-gray-900"
-          aria-label="More options"
-        >
-          <MoreVertical className="w-4 h-4" />
-        </button>
+        <MessageActions message={message} isOwnMessage={isOutgoing} onDelete={onDelete} />
       </div>
     </div>
   );

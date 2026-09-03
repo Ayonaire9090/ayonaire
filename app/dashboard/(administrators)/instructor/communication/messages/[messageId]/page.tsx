@@ -11,8 +11,9 @@ import { InstructorMessageComposer } from "../_components/instructor-message-com
 import type { ComposerAttachment } from "../_components/instructor-message-composer";
 import { InstructorGroupSidebar } from "../_components/instructor-group-sidebar";
 import { useGetRooms } from "@/hooks/api/use-rooms";
-import { useGetMessages, useSendMessageMutation } from "@/hooks/api/use-messages";
+import { useDeleteMessageMutation, useGetMessages, useSendMessageMutation } from "@/hooks/api/use-messages";
 import { useAuthStore } from "@/store/auth.store";
+import { toast } from "sonner";
 
 export default function InstructorMessageDetails() {
   const params = useParams();
@@ -24,9 +25,15 @@ export default function InstructorMessageDetails() {
 
   const { data: messagesData, isLoading: messagesLoading, isError: messagesError } =
     useGetMessages(roomId);
-  const messages = messagesData?.data?.messages ?? [];
+  const messages = (messagesData?.data?.messages ?? [])
+    .slice()
+    .sort(
+      (a, b) =>
+        new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+    );
 
   const sendMessageMutation = useSendMessageMutation();
+  const deleteMessageMutation = useDeleteMessageMutation();
 
   const handleSend = (text: string, attachment?: ComposerAttachment) => {
     const formData = new FormData();
@@ -34,6 +41,15 @@ export default function InstructorMessageDetails() {
     formData.append("text", text);
     if (attachment) formData.append(attachment.kind, attachment.file);
     sendMessageMutation.mutate(formData);
+  };
+  const handleDelete = (messageId: string) => {
+    deleteMessageMutation.mutate(messageId, {
+      onSuccess: () => toast.success("Message deleted"),
+      onError: (error) =>
+        toast.error(
+          error instanceof Error ? error.message : "Failed to delete message",
+        ),
+    });
   };
 
   if (roomsLoading || messagesLoading) {
@@ -80,7 +96,7 @@ export default function InstructorMessageDetails() {
           {/* Main chat column */}
           <div className="flex flex-col flex-1 min-h-0 overflow-hidden">
             {/* Messages list */}
-            <InstructorMessageList messages={messages} currentUserId={currentUserId} />
+            <InstructorMessageList messages={messages} currentUserId={currentUserId} onDelete={handleDelete} />
             {/* Message composer */}
             <InstructorMessageComposer isGroup={isGroup} onSend={handleSend} />
           </div>
