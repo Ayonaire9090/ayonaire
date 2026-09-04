@@ -60,65 +60,109 @@ const builderChallenges = [
   {
     text: (
       <>
-        Can you build a <strong>RAG document search system</strong> that helps
-        companies ask questions from internal documents?
+        Can you build a <strong>Machine Learning system</strong> that learns
+        from business data to predict outcomes, identify risks or support better
+        decisions?
       </>
     ),
   },
   {
     text: (
       <>
-        Can you build a <strong>recommendation system</strong> like{" "}
-        <strong>Amazon</strong> and <strong>Netflix</strong> that suggests
-        products, movies, or content based on user behaviour?
+        Can you build a <strong>fraud or network intrusion detection system</strong>{" "}
+        that identifies suspicious patterns and flags potentially harmful
+        activity?
       </>
     ),
   },
   {
     text: (
       <>
-        Can you build an <strong>AI career assistant</strong> that improves
-        resumes, prepares users for jobs, and strengthens their profiles?
+        Can you build a <strong>recommendation system</strong> that suggests
+        relevant products, content or services based on user behaviour?
       </>
     ),
   },
   {
     text: (
       <>
-        Can you build an <strong>insurance claim support agent</strong> that
-        helps customers process claims and retrieve policy information?
+        Can you build a <strong>forecasting system</strong> that uses historical
+        data to predict future demand, sales, revenue or other business
+        outcomes?
       </>
     ),
   },
   {
     text: (
       <>
-        Can you build a <strong>customer support agent</strong> that remembers
-        conversations and solves customer issues automatically?
+        Can you build a <strong>Computer Vision system</strong> that analyses
+        images to classify objects, detect defects or identify important visual
+        patterns?
       </>
     ),
   },
   {
     text: (
       <>
-        Can you build a <strong>tumor detection system</strong> that supports
-        medical image analysis?
+        Can you build a <strong>Natural Language Processing system</strong> that
+        can classify, summarise, translate or extract useful information from
+        large volumes of text?
       </>
     ),
   },
   {
     text: (
       <>
-        Can you build a <strong>loan approval system</strong> that helps lenders
-        assess credit risk and customer eligibility?
+        Can you build a <strong>Generative AI application</strong> that uses
+        Large Language Models to solve a real business problem instead of simply
+        creating another ChatGPT clone?
       </>
     ),
   },
   {
     text: (
       <>
-        Can you build a <strong>business intelligence agent</strong> that
-        analyzes company data and generates reports automatically?
+        Can you build a <strong>RAG system</strong> that allows an organisation
+        to securely ask questions across its own documents and retrieve answers
+        grounded in its internal knowledge?
+      </>
+    ),
+  },
+  {
+    text: (
+      <>
+        Can you build an <strong>AI Agent</strong> that can understand a request,
+        use tools, interact with APIs or databases and complete a multi-step
+        workflow?
+      </>
+    ),
+  },
+  {
+    text: (
+      <>
+        Can you build a <strong>Multi-Agent System</strong> where specialised AI
+        Agents collaborate to research, analyse, evaluate and complete a larger
+        task?
+      </>
+    ),
+  },
+  {
+    text: (
+      <>
+        And when the system finally works, can you take it beyond your notebook
+        and turn it into an API, containerise it, deploy it to the cloud,
+        evaluate it, secure it, monitor it and keep it reliable in production?
+      </>
+    ),
+  },
+  {
+    text: <>Because that is where the difference begins.</>,
+  },
+  {
+    text: (
+      <>
+        <strong>DON'T JUST LEARN AI.</strong> DEVELOP THE CAPABILITY TO BUILD AI
+        SYSTEMS THAT SOLVE REAL PROBLEMS.
       </>
     ),
   },
@@ -149,23 +193,23 @@ export default function AIBuildersSection() {
    <div className="text-center mb-16 max-w-[340px] sm:max-w-[900px] mx-auto px-4">
   {/* Header Section */}
   <h2 className={`${exo.className} text-[22px] sm:text-5xl lg:text-[48px] font-bold tracking-[-2.56px] sm:tracking-tight text-[#000000] sm:text-[#121315] leading-[33px] sm:leading-tight`}>
-    Companies Pay For{" "}
+    COMPANIES PAY FOR PEOPLE WHO CAN BUILD {renderTextWithAdineueA("AI")} SYSTEMS{" "}
     <span className="text-[#F25E25]">
-      {renderTextWithAdineueA("AI")} Builders,
-    </span>{" "}
-    Not {renderTextWithAdineueA("AI")}
-    <br className="block sm:hidden" /> {/* Forces "Consumers." onto the next line exactly like Figma */}
-    <span className="text-[#F25E25]"> Consumers.</span>
+      {"\u2014"} NOT JUST PEOPLE WHO CAN USE {renderTextWithAdineueA("AI")} TOOLS.
+    </span>
   </h2>
 
   {/* Subtitle Section */}
   <p className={`${adineue.className} mt-4 text-[18px] sm:text-[22px] text-[#55565A] font-normal tracking-tight`}>
-    Using {renderTextWithAdineueA("AI")} tools is not enough anymore.
+    Knowing how to use <strong className="font-bold text-black">ChatGPT</strong>,{" "}
+    <strong className="font-bold text-black">Claude</strong> or automation tools can
+    make you more productive. But when companies hire AI/ML Engineers, the
+    bigger question is:
   </p>
 
   {/* Accent Question Callout */}
   <p className={`${exo.className} sm:${adineue.className} mt-2 text-[18px] sm:text-[22px] text-[#F25E25] font-semibold tracking-tight`}>
-    The real question is:
+    WHAT CAN YOU ACTUALLY BUILD?
   </p>
 </div>
 

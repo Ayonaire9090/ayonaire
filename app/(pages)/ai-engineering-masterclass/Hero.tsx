@@ -75,7 +75,7 @@ export default function Hero() {
 
             {/* Subtitle / Paragraph */}
             <p className={`${adineue.className} max-w-2xl text-base leading-relaxed text-[#4A4A4A] sm:text-lg md:text-xl`}>
-              Become the kind of <strong className="font-bold text-black">AI Builder companies</strong> are urgently hiring for <strong className="font-bold text-black">globally</strong>.
+              Become the kind of <strong className="font-bold text-black">AI/ML Engineer</strong> who can build production systems across <strong className="font-bold text-black">Machine Learning</strong>, <strong className="font-bold text-black">Generative AI</strong>, <strong className="font-bold text-black">Agentic AI</strong> and modern AI infrastructure.
             </p>
 
             {/* CTA Button */}
