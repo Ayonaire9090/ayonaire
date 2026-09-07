@@ -27,9 +27,9 @@ export default function DifferenceSection() {
           </h2>
           
           <p className="text-base font-medium leading-relaxed text-[#121315] sm:text-lg md:text-xl">
-            {renderTextWithAdineueA('AI')} Consumers use {renderTextWithAdineueA('AI')} tools.{' '}
+           Using {renderTextWithAdineueA('AI')} is one thing.{' '}
             <span className="block text-[#F25E25] sm:inline">
-              {renderTextWithAdineueA('AI')} Builders create {renderTextWithAdineueA('AI')} systems.
+             Engineering {renderTextWithAdineueA('AI')} systems that <br/> solve real problems is another.
             </span>
           </p>
         </div>

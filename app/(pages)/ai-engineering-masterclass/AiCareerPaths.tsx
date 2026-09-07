@@ -98,7 +98,7 @@ export default function AICareerPaths() {
                             }}
                         >
                             <span className="text-sm whitespace-nowrap">
-                                I want to Become AI Builder
+                                I WANT TO BUILD REAL AI SYSTEMS
                             </span>
 
                             <span className="flex h-[33px] w-[33px] shrink-0 items-center justify-center rounded-[7px] bg-white">
