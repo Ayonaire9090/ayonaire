@@ -36,9 +36,9 @@ export default function DifferenceSection() {
 
         {/* Subtext Description */}
         <p className={`${adineue.className} mt-8 text-lg leading-relaxed tracking-tight text-[#5C5E63] sm:text-xl md:text-xl md:leading-[32px]`}>
-          This free masterclass will show you the roadmap to move from learning{' '}
-          {renderTextWithAdineueA('AI')} randomly to building real-world{' '}
-          {renderTextWithAdineueA('AI')} systems with structure.
+          This free masterclass will gives  you the structure path from learning{' '}
+          {renderTextWithAdineueA('AI')} the foundations of building{' '},
+          {renderTextWithAdineueA('AI')} deploying and presenting real world AI systems.
         </p>
 
       </div>

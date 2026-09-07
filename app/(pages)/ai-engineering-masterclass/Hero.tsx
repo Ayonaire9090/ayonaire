@@ -70,7 +70,7 @@ export default function Hero() {
   <span className="text-[#F4683F] font-normal lowercase">
     {renderTextWithAdineueA('year')}
   </span>{' '}
-  {renderTextWithAdineueA('AI Engineering salaries')}
+  {renderTextWithAdineueA('AI/ML Engineering salaries')}
 </h1>
 
             {/* Subtitle / Paragraph */}

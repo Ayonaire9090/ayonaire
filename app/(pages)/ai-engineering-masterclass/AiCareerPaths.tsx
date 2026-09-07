@@ -15,7 +15,7 @@ const aiRoles = [
   { name: "NLP Engineer", src: "/NLP.png" },
   { name: "Computer Vision Engineer", src: "/Computer.png" },
   { name: "Deep Learning Engineer", src: "/Deep.png" },
-  { name: "AI Product Engineer", src: "/Product.png" },
+  { name: "AI Forward Deployed Engineer", src: "/Product.png" },
 ];
 
 export default function AICareerPaths() {
