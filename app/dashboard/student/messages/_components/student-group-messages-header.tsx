@@ -39,7 +39,13 @@ export const StudentGroupMessagesHeader = ({
     return (
       <div className="flex items-center justify-between px-4 py-3 bg-white border-b border-gray-100">
         <div className="flex items-center gap-3">
-          <div className="relative">
+          <Link
+            href="/dashboard/student/feed"
+            className="inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-xs font-semibold text-gray-700 transition-colors hover:bg-[#FFF3EF] hover:text-[#F15D23]"
+          >
+            <ChevronLeft className="h-4 w-4" />
+            Back to Feed
+          </Link>          <div className="relative">
             <Avatar className="h-10 w-10">
               <AvatarImage src={messageImage} />
               <AvatarFallback>{messageHeadingTitle[0]}</AvatarFallback>
@@ -66,13 +72,7 @@ export const StudentGroupMessagesHeader = ({
             </span>
           </div>
         </div>
-        <Link
-          href="/dashboard/student/feed"
-          className="inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-xs font-semibold text-gray-700 transition-colors hover:bg-[#FFF3EF] hover:text-[#F15D23]"
-        >
-          <ChevronLeft className="h-4 w-4" />
-          Back to Feed
-        </Link>
+
       </div>
     );
   }
@@ -96,13 +96,7 @@ export const StudentGroupMessagesHeader = ({
       </div>
 
       <div className="flex items-center gap-2 text-gray-500">
-        <Link
-          href="/dashboard/student/feed"
-          className="inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-xs font-semibold text-gray-700 transition-colors hover:bg-[#FFF3EF] hover:text-[#F15D23]"
-        >
-          <ChevronLeft className="h-4 w-4" />
-          Back to Feed
-        </Link>
+
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild>
             <button className="p-2 text-black hover:bg-gray-100 rounded-full transition-colors ml-1 lg:hidden">
