@@ -167,9 +167,9 @@ export default function StudentMessageDetails() {
           room={room}
         />
         {/* Chat content wrapper */}
-        <div className="flex-1 flex min-h-0 overflow-hidden relative bg-[#FAFAFA] bg-[radial-gradient(circle_at_1px_1px,rgba(17,24,39,0.05)_1px,transparent_0)] [background-size:22px_22px]">
+        <div className="flex-1 flex min-h-0 overflow-hidden relative bg-[#FAFAFA] bg-[url('/wt.jpg')] bg-repeat [background-size:420px_auto]">
           {/* Main chat column */}
-          <div className="flex flex-col flex-1 min-h-0 overflow-hidden bg-[#FAFAFA]">
+          <div className="flex flex-col flex-1 min-h-0 overflow-hidden bg-white/75 backdrop-blur-[1px]">
             {/* Messages list */}
             {isMessagesLoading ? (
               <div className="flex-1 flex items-center justify-center">
