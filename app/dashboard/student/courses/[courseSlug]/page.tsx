@@ -108,7 +108,7 @@ export default function StudentCourseLessonPage({
               "bg-white lg:bg-[#F6F6F6]",
           )}
         >
-          {/* Top section for Header, Video and Course Content */}
+          {/* Black top section for Header and Video */}
           <div className="bg-black w-full flex flex-col">
             <LessonHeader
               title={activeLesson?.title || title}
@@ -116,46 +116,26 @@ export default function StudentCourseLessonPage({
               totalLessons={flatLessons.length}
               shareUrl={shareUrl}
             />
-            <div className="w-full grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_420px]">
-              <div className="min-w-0">
-                <LessonVideoPlayer
-                  lessonId={activeLesson?._id}
-                  courseId={courseId}
-                  videoUrl={activeVideo?.url}
-                  videoSourceType={activeVideo?.sourceType}
-                  videoProvider={activeVideo?.provider}
-                  isCompleted={activeLesson?.isCompleted}
-                  onOpenChapters={() => setIsSheetOpen(true)}
-                  hasPrevious={!!previousLesson}
-                  hasNext={!!nextLesson}
-                  nextLessonTitle={nextLesson?.title}
-                  onPrevious={() =>
-                    previousLesson && handleSelectLesson(previousLesson._id)
-                  }
-                  onNext={() => nextLesson && handleSelectLesson(nextLesson._id)}
-                />
-              </div>
-
-              <aside className="hidden xl:flex h-[min(62vh,560px)] min-h-[420px] flex-col border-l border-gray-200 bg-white">
-                <div className="flex items-center justify-between border-b border-gray-200 px-5 py-4">
-                  <h2 className="text-2xl font-semibold text-gray-900">
-                    Content
-                  </h2>
-                  <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-600">
-                    {completedLessonsCount} of {flatLessons.length} complete
-                  </span>
-                </div>
-                <div className="min-h-0 flex-1 overflow-hidden">
-                  <CourseContentAccordion
-                    modules={modules}
-                    activeLessonId={activeLesson?._id}
-                    onSelectLesson={handleSelectLesson}
-                    isLoading={isContentLoading}
-                  />
-                </div>
-              </aside>
+            <div className="w-full relative">
+              <LessonVideoPlayer
+                lessonId={activeLesson?._id}
+                courseId={courseId}
+                videoUrl={activeVideo?.url}
+                videoSourceType={activeVideo?.sourceType}
+                videoProvider={activeVideo?.provider}
+                isCompleted={activeLesson?.isCompleted}
+                onOpenChapters={() => setIsSheetOpen(true)}
+                hasPrevious={!!previousLesson}
+                hasNext={!!nextLesson}
+                nextLessonTitle={nextLesson?.title}
+                onPrevious={() =>
+                  previousLesson && handleSelectLesson(previousLesson._id)
+                }
+                onNext={() => nextLesson && handleSelectLesson(nextLesson._id)}
+              />
             </div>
           </div>
+
           {/* Tabs and Content Section */}
           <div className="w-full flex flex-col flex-1">
             <LessonTabs

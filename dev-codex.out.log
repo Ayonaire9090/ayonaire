@@ -31,3 +31,4 @@ Creating turbopack project {
  GET /auth/student/signin 200 in 937ms
  ✓ Compiled in 3.9s
  ✓ Compiled in 4.6s
+ ✓ Compiled in 3.8s
