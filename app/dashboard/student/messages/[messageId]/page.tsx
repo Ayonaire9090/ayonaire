@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import { useGetRooms } from "@/hooks/api/use-rooms";
@@ -47,17 +46,6 @@ export default function StudentMessageDetails() {
     </button>
   );
 
-  const backToFeed = (
-    <div className="flex items-center justify-between border-b border-gray-100 bg-white px-4 py-2.5">
-      <Link
-        href="/dashboard/student/feed"
-        className="inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-xs font-semibold text-gray-700 transition-colors hover:bg-[#FFF3EF] hover:text-[#F15D23]"
-      >
-        <ChevronLeft className="h-4 w-4" />
-        Back to Feed
-      </Link>
-    </div>
-  );
   const { data: roomsData, isLoading: isRoomsLoading } = useGetRooms();
   const room = roomsData?.data?.find((r) => r.id === roomId);
   const conversation = useMemo(
@@ -116,7 +104,6 @@ export default function StudentMessageDetails() {
       <>
         <StudentMessagesSidebarContent variant="sidebar" collapsible="icon" />
         <SidebarInset className="bg-[#F6F6F6] pb-[72px] md:pb-0 flex flex-col h-dvh overflow-hidden">
-          {backToFeed}
           {backToConversations}
           <div className="flex-1 flex items-center justify-center">
             <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
@@ -131,7 +118,6 @@ export default function StudentMessageDetails() {
       <>
         <StudentMessagesSidebarContent variant="sidebar" collapsible="icon" />
         <SidebarInset className="bg-[#F6F6F6] pb-[72px] md:pb-0 flex flex-col h-dvh overflow-hidden">
-          {backToFeed}
           {backToConversations}
           <div className="flex-1 flex items-center justify-center">
             <p className="text-gray-400">Conversation not found</p>
@@ -147,7 +133,6 @@ export default function StudentMessageDetails() {
     <>
       <StudentMessagesSidebarContent variant="sidebar" collapsible="icon" />
       <SidebarInset className="bg-white pb-[72px] md:pb-0 flex flex-col h-dvh overflow-hidden">
-        {backToFeed}
         {backToConversations}
 
         {/* Chat header */}

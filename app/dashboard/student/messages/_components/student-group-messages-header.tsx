@@ -1,9 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Phone, Video, SlidersHorizontal } from "lucide-react";
-import { toast } from "sonner";
+import { ChevronLeft, SlidersHorizontal } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -23,9 +23,6 @@ interface StudentGroupMessagesHeaderProps {
   room?: RoomRecord;
 }
 
-function notAvailable(feature: string) {
-  toast.info(`${feature} isn't available yet — coming in a future update.`);
-}
 
 export const StudentGroupMessagesHeader = ({
   messageImage = "/assets/persons/mr-ayo.png",
@@ -69,20 +66,13 @@ export const StudentGroupMessagesHeader = ({
             </span>
           </div>
         </div>
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => notAvailable("Voice calls")}
-            className="flex items-center justify-center size-9 bg-[#F6F6F6] hover:bg-gray-200 text-black rounded-full transition-colors"
-          >
-            <Phone className="w-4 h-4 fill-current" />
-          </button>
-          <button
-            onClick={() => notAvailable("Video calls")}
-            className="flex items-center justify-center size-9 bg-[#F6F6F6] hover:bg-gray-200 text-black rounded-full transition-colors"
-          >
-            <Video className="w-4 h-4 fill-current" />
-          </button>
-        </div>
+        <Link
+          href="/dashboard/student/feed"
+          className="inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-xs font-semibold text-gray-700 transition-colors hover:bg-[#FFF3EF] hover:text-[#F15D23]"
+        >
+          <ChevronLeft className="h-4 w-4" />
+          Back to Feed
+        </Link>
       </div>
     );
   }
@@ -106,18 +96,13 @@ export const StudentGroupMessagesHeader = ({
       </div>
 
       <div className="flex items-center gap-2 text-gray-500">
-        <button
-          onClick={() => notAvailable("Voice calls")}
-          className="hidden sm:flex items-center justify-center size-8 bg-[#F6F6F6] hover:bg-gray-200 text-black rounded-full transition-colors"
+        <Link
+          href="/dashboard/student/feed"
+          className="inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-xs font-semibold text-gray-700 transition-colors hover:bg-[#FFF3EF] hover:text-[#F15D23]"
         >
-          <Phone className="w-4 h-4 fill-current" />
-        </button>
-        <button
-          onClick={() => notAvailable("Video calls")}
-          className="hidden sm:flex items-center justify-center size-8 bg-[#F6F6F6] hover:bg-gray-200 text-black rounded-full transition-colors"
-        >
-          <Video className="w-4 h-4 fill-current" />
-        </button>
+          <ChevronLeft className="h-4 w-4" />
+          Back to Feed
+        </Link>
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild>
             <button className="p-2 text-black hover:bg-gray-100 rounded-full transition-colors ml-1 lg:hidden">

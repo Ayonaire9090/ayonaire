@@ -20,9 +20,6 @@ import {
   lastMessagePreview,
   lastMessageTimestamp,
 } from "../_data/message-data";
-import { NewMessagePopover } from "./new-message-popover";
-
-type InboxTab = "chatroom" | "inbox";
 
 export function StudentMessagesSidebarContent({
   ...props
@@ -31,7 +28,6 @@ export function StudentMessagesSidebarContent({
   const isCollapsed = state === "collapsed" && !isMobile;
   const pathname = usePathname();
   const user = useAuthStore((s) => s.user);
-  const [activeInboxTab, setActiveInboxTab] = React.useState<InboxTab>("chatroom");
   const [search, setSearch] = React.useState("");
 
   const { data: roomsData, isLoading } = useGetRooms();
@@ -42,12 +38,8 @@ export function StudentMessagesSidebarContent({
     timestamp: lastMessageTimestamp(room),
   }));
   const groupCount = allConversations.filter(({ conv }) => conv.type === "group").length;
-  const inboxCount = allConversations.filter(({ conv }) => conv.type === "individual").length;
-  // "Chatroom" = group rooms, "Inbox" = 1:1 direct messages.
   const conversations = allConversations
-    .filter(({ conv }) =>
-      activeInboxTab === "chatroom" ? conv.type === "group" : conv.type === "individual",
-    )
+    .filter(({ conv }) => conv.type === "group")
     .filter(({ conv }) =>
       search.trim()
         ? conv.title.toLowerCase().includes(search.trim().toLowerCase())
@@ -77,52 +69,11 @@ export function StudentMessagesSidebarContent({
         ) : (
           <div className="space-y-3">
             <div className="flex items-center gap-2">
-              <button
-                onClick={() => setActiveInboxTab("chatroom")}
-                className={cn(
-                  "flex h-10 items-center gap-2 rounded-full px-4 text-sm font-semibold transition-colors",
-                  activeInboxTab === "chatroom"
-                    ? "bg-[#F15D23] text-white shadow-sm"
-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200",
-                )}
-              >
+              <div className="flex h-10 items-center gap-2 rounded-full bg-[#F15D23] px-4 text-sm font-semibold text-white shadow-sm">
                 Chatrooms
-                <span
-                  className={cn(
-                    "flex size-5 items-center justify-center rounded-full text-[11px] font-bold",
-                    activeInboxTab === "chatroom"
-                      ? "bg-white text-[#F15D23]"
-                      : "bg-[#F15D23] text-white",
-                  )}
-                >
+                <span className="flex size-5 items-center justify-center rounded-full bg-white text-[11px] font-bold text-[#F15D23]">
                   {groupCount}
                 </span>
-              </button>
-              <button
-                onClick={() => setActiveInboxTab("inbox")}
-                className={cn(
-                  "flex h-10 items-center gap-2 rounded-full px-4 text-sm font-semibold transition-colors",
-                  activeInboxTab === "inbox"
-                    ? "bg-[#F15D23] text-white shadow-sm"
-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200",
-                )}
-              >
-                Inbox
-                {inboxCount > 0 && (
-                  <span
-                    className={cn(
-                      "flex size-5 items-center justify-center rounded-full text-[11px] font-bold",
-                      activeInboxTab === "inbox"
-                        ? "bg-white text-[#F15D23]"
-                        : "bg-[#F15D23] text-white",
-                    )}
-                  >
-                    {inboxCount}
-                  </span>
-                )}
-              </button>
-              <div className="ml-auto">
-                <NewMessagePopover />
               </div>
             </div>
 
@@ -148,11 +99,7 @@ export function StudentMessagesSidebarContent({
           ) : conversations.length === 0 ? (
             !isCollapsed && (
               <p className="px-4 py-6 text-sm text-gray-400 text-center">
-                {search.trim()
-                  ? `No results for "${search.trim()}".`
-                  : activeInboxTab === "chatroom"
-                    ? "No chatrooms yet."
-                    : "No direct messages yet."}
+                {search.trim() ? `No results for "${search.trim()}".` : "No chatrooms yet."}
               </p>
             )
           ) : (
