@@ -203,7 +203,7 @@ export const StudentMessageBubble = ({
 
   if (isOutgoing) {
     return (
-      <div className="group ml-auto flex max-w-[95%] flex-col items-end gap-1 lg:max-w-[85%]">
+      <div className="group ml-auto flex max-w-[88%] flex-col items-end gap-1 lg:max-w-[68%]">
         <div className="mb-1 flex items-center gap-1">
           <button
             className="rounded-md p-1 text-gray-400 hover:bg-gray-100"
@@ -215,9 +215,9 @@ export const StudentMessageBubble = ({
           <MessageActions message={message} onDelete={onDelete} />
         </div>
 
-        <div className="max-w-full rounded-2xl rounded-br-md border border-gray-100 bg-white px-4 py-3">
+        <div className="max-w-full rounded-2xl rounded-br-md border border-[#F15D23]/15 bg-[#FFF3EF] px-4 py-3 shadow-sm">
           <div className="mb-1 flex items-center justify-end gap-2">
-            <p className="text-sm font-semibold text-gray-900">{message.senderName || "You"}</p>
+            <p className="text-sm font-semibold text-[#D94F1E]">{message.senderName || "You"}</p>
             {showAvatar && (
               <Avatar className="h-6 w-6 shrink-0">
                 <AvatarImage src={message.senderAvatar} />
@@ -227,7 +227,7 @@ export const StudentMessageBubble = ({
               </Avatar>
             )}
           </div>
-          <p className="whitespace-pre-wrap text-sm leading-relaxed text-gray-600">
+          <p className="whitespace-pre-wrap text-sm leading-relaxed text-gray-700">
             {message.content}
           </p>
           <MessageAttachments message={message} />
@@ -241,7 +241,7 @@ export const StudentMessageBubble = ({
   }
 
   return (
-    <div className="group flex w-full items-start gap-3 rounded-lg bg-white px-4 py-4 shadow-[0_1px_0_rgba(0,0,0,0.03)]">
+    <div className="group flex w-full items-start gap-3 px-3 py-1.5 md:px-4">
       {showAvatar ? (
         <Avatar className="mt-1 h-10 w-10 shrink-0">
           <AvatarImage src={message.senderAvatar} />
@@ -253,7 +253,7 @@ export const StudentMessageBubble = ({
         <div className="w-10 shrink-0" />
       )}
 
-      <div className="min-w-0 flex-1">
+      <div className="min-w-0 max-w-[88%] flex-1 rounded-2xl rounded-tl-md bg-white px-4 py-3 shadow-sm ring-1 ring-gray-100 lg:max-w-[68%]">
         {showName && (
           <div className="mb-2 flex items-center gap-2">
             <span className="text-[13px] font-semibold text-gray-950">
@@ -285,14 +285,14 @@ export const StudentMessageBubble = ({
         )}
 
         {!showName && (
-          <p className="mt-1 text-[11px] text-gray-400">{message.timestamp}</p>
+          <p className="mt-2 text-right text-[11px] text-gray-400">{message.timestamp}</p>
         )}
 
         <MessageAttachments message={message} />
         <ReactionChips message={message} onReact={onReact} />
       </div>
 
-      <div className="mt-1 flex shrink-0 items-center gap-2 text-gray-900">
+      <div className="mt-2 flex shrink-0 items-center gap-2 text-gray-500 opacity-0 transition-opacity group-hover:opacity-100">
         <span className="text-[11px] font-semibold">{reactionTotal}</span>
         <button
           className="rounded-md text-gray-700 hover:text-gray-950"

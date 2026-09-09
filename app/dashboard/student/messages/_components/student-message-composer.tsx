@@ -187,7 +187,7 @@ export const StudentMessageComposer = ({
       >
         {hiddenInputs}
         {attachmentPreview}
-        <div className="flex items-end gap-2">
+        <div className="flex items-end gap-2 md:gap-3">
           {/* Attachment button */}
           <button
             onClick={() => fileInputRef.current?.click()}
@@ -300,7 +300,7 @@ export const StudentMessageComposer = ({
   return (
     <div
       className={cn(
-        "sticky bottom-0 bg-white px-3 md:px-5 py-2.5 border-t border-gray-100",
+        "sticky bottom-0 border-t border-gray-100 bg-white/95 px-3 py-3 shadow-[0_-8px_24px_rgba(15,23,42,0.04)] backdrop-blur md:px-5",
         className,
       )}
     >
@@ -326,16 +326,16 @@ export const StudentMessageComposer = ({
         </div>
       )}
       {attachmentPreview}
-      <div className="flex items-end gap-2">
+      <div className="flex items-end gap-2 md:gap-3">
         <button
           onClick={() => fileInputRef.current?.click()}
-          className="mb-1 flex size-8 shrink-0 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 hover:bg-gray-50"
+          className="mb-0.5 flex size-10 shrink-0 items-center justify-center rounded-full bg-black text-white shadow-sm transition-colors hover:bg-[#F15D23]"
           aria-label="Add attachment"
         >
-          <Plus className="w-4 h-4" />
+          <Plus className="w-5 h-5" />
         </button>
 
-        <div className="flex min-h-10 flex-1 items-center rounded-full bg-[#F4F4F4] px-4">
+        <div className="flex min-h-11 flex-1 items-center rounded-full bg-[#F1F1F1] px-4 ring-1 ring-transparent focus-within:bg-white focus-within:ring-[#F15D23]/25">
           <textarea
             ref={textareaRef}
             rows={1}
@@ -344,11 +344,11 @@ export const StudentMessageComposer = ({
             onKeyDown={handleKeyDown}
             onInput={handleInput}
             placeholder="Type a message"
-            className="w-full resize-none bg-transparent py-2 text-sm leading-relaxed text-gray-800 outline-none max-h-[96px] placeholder:text-gray-400"
+            className="max-h-[96px] w-full resize-none bg-transparent py-2.5 text-sm leading-relaxed text-gray-800 outline-none placeholder:text-gray-400"
           />
           <button
             onClick={() => notAvailable("Voice messages")}
-            className="ml-2 text-gray-500 hover:text-gray-900"
+            className="ml-2 text-gray-500 transition-colors hover:text-[#F15D23]"
             aria-label="Voice message"
           >
             <Mic className="w-4 h-4" />
@@ -357,25 +357,25 @@ export const StudentMessageComposer = ({
 
         <EmojiPicker
           onSelect={handleEmojiSelect}
-          triggerClassName="mb-1 p-1.5 text-gray-600 hover:text-gray-900 transition-colors"
+          triggerClassName="mb-1 p-1.5 text-gray-600 hover:text-[#F15D23] transition-colors"
         />
         <button
           onClick={() => imageInputRef.current?.click()}
-          className="mb-1 p-1.5 text-gray-600 hover:text-gray-900"
+          className="mb-1 p-1.5 text-gray-600 transition-colors hover:text-[#F15D23]"
           aria-label="Attach image"
         >
           <ImageIcon className="w-4 h-4" />
         </button>
         <button
           onClick={() => notAvailable("Location sharing")}
-          className="mb-1 p-1.5 text-gray-600 hover:text-gray-900"
+          className="mb-1 p-1.5 text-gray-600 transition-colors hover:text-[#F15D23]"
           aria-label="Location"
         >
           <MapPin className="w-4 h-4" />
         </button>
         <button
           onClick={handleSend}
-          className="mb-1 p-1.5 text-gray-700 hover:text-[#F15D23]"
+          className="mb-0.5 flex size-10 items-center justify-center rounded-full bg-[#F15D23] text-white shadow-sm transition-colors hover:bg-[#D94F1E]"
           aria-label="Send message"
         >
           <Send className="w-5 h-5 fill-current" />

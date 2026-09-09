@@ -14,3 +14,20 @@ Creating turbopack project {
 }
  ✓ Ready in 10.7s
  ○ Compiling / ...
+ ✓ Compiled / in 31.1s
+ GET / 200 in 39210ms
+ ○ Compiling /_not-found/page ...
+ ✓ Compiled /_not-found/page in 4.2s
+ GET /dasboard/student 404 in 5487ms
+ ○ Compiling /dashboard/student ...
+ ✓ Compiled /dashboard/student in 5.7s
+ GET /dashboard/student 200 in 7645ms
+ ○ Compiling /auth ...
+ ✓ Compiled /auth in 5.1s
+ GET /auth?mode=signin 200 in 6102ms
+ ○ Compiling /auth/student/signin ...
+ ✓ Compiled /auth/student/signin in 2.4s
+ GET /auth/student/signin 200 in 3291ms
+ GET /auth/student/signin 200 in 937ms
+ ✓ Compiled in 3.9s
+ ✓ Compiled in 4.6s

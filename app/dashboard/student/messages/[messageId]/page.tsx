@@ -23,7 +23,6 @@ import {
 } from "../_components/student-message-composer";
 import { SidebarInset, useSidebar } from "@/components/ui/sidebar";
 import { StudentMessagesSidebarContent } from "../_components/student-messages-sidebar-content";
-import { StudentGroupSidebar } from "../_components/student-group-sidebar";
 import { StudentDashboardHeader } from "../../_components/student-dashboard-header";
 import { ChevronLeft } from "lucide-react";
 import { toast } from "sonner";
@@ -136,7 +135,7 @@ export default function StudentMessageDetails() {
   return (
     <>
       <StudentMessagesSidebarContent variant="sidebar" collapsible="icon" />
-      <SidebarInset className="bg-[#F4F4F4] pb-[72px] md:pb-0 flex flex-col h-dvh overflow-hidden">
+      <SidebarInset className="bg-white pb-[72px] md:pb-0 flex flex-col h-dvh overflow-hidden">
         <StudentDashboardHeader />
         {backToConversations}
 
@@ -157,9 +156,9 @@ export default function StudentMessageDetails() {
           room={room}
         />
         {/* Chat content wrapper */}
-        <div className="flex-1 flex lg:flex-row min-h-0 overflow-hidden relative">
+        <div className="flex-1 flex min-h-0 overflow-hidden relative bg-[#FAFAFA] bg-[radial-gradient(circle_at_1px_1px,rgba(17,24,39,0.05)_1px,transparent_0)] [background-size:22px_22px]">
           {/* Main chat column */}
-          <div className="flex flex-col flex-1 min-h-0 overflow-hidden bg-[#F4F4F4]">
+          <div className="flex flex-col flex-1 min-h-0 overflow-hidden bg-[#FAFAFA]">
             {/* Messages list */}
             {isMessagesLoading ? (
               <div className="flex-1 flex items-center justify-center">
@@ -182,16 +181,6 @@ export default function StudentMessageDetails() {
               onCancelReply={() => setReplyTo(null)}
             />
           </div>
-
-          {/* Right sidebar for group messages */}
-          {isGroup && room && (
-            <div className="hidden lg:block w-[320px] xl:w-[350px] shrink-0 border-l border-gray-100 overflow-y-auto bg-white h-full">
-              <StudentGroupSidebar
-                room={room}
-                messages={messagesData?.data?.messages ?? []}
-              />
-            </div>
-          )}
         </div>
       </SidebarInset>
     </>

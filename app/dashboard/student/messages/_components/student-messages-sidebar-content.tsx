@@ -5,17 +5,14 @@ import {
   Sidebar,
   SidebarContent,
   SidebarHeader,
-  SidebarMenu,
-  SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { X, Menu, ChevronsUpDown, Search } from "lucide-react";
+import { X, Menu, Search } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { toast } from "sonner";
 import { useGetRooms } from "@/hooks/api/use-rooms";
 import { useAuthStore } from "@/store/auth.store";
 import {
@@ -30,14 +27,12 @@ type InboxTab = "chatroom" | "inbox";
 export function StudentMessagesSidebarContent({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
-  const { state, toggleSidebar, open, isMobile, setOpenMobile } = useSidebar();
+  const { state, toggleSidebar, isMobile, setOpenMobile } = useSidebar();
   const isCollapsed = state === "collapsed" && !isMobile;
   const pathname = usePathname();
   const user = useAuthStore((s) => s.user);
-  const [activeInboxTab, setActiveInboxTab] = React.useState<InboxTab>("inbox");
+  const [activeInboxTab, setActiveInboxTab] = React.useState<InboxTab>("chatroom");
   const [search, setSearch] = React.useState("");
-
-  const isPinned = open;
 
   const { data: roomsData, isLoading } = useGetRooms();
   const rooms = roomsData?.data ?? [];
@@ -46,6 +41,8 @@ export function StudentMessagesSidebarContent({
     preview: lastMessagePreview(room),
     timestamp: lastMessageTimestamp(room),
   }));
+  const groupCount = allConversations.filter(({ conv }) => conv.type === "group").length;
+  const inboxCount = allConversations.filter(({ conv }) => conv.type === "individual").length;
   // "Chatroom" = group rooms, "Inbox" = 1:1 direct messages.
   const conversations = allConversations
     .filter(({ conv }) =>
@@ -58,116 +55,92 @@ export function StudentMessagesSidebarContent({
     );
 
   return (
-    <Sidebar className="bg-white border-r border-gray-200 md:left-16" {...props}>
-      <SidebarHeader className="bg-transparent border-b border-gray-100 pb-4">
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <div
-              className={cn(
-                "flex items-center",
-                isCollapsed
-                  ? "flex-col justify-center gap-4 mt-2"
-                  : "justify-between p-1.5 bg-white rounded-[10px]",
-              )}
+    <Sidebar className="bg-white border-r border-gray-200" {...props}>
+      <SidebarHeader className="bg-white border-b border-gray-100 px-3 py-4">
+        {isCollapsed ? (
+          <div className="flex flex-col items-center gap-4">
+            <Image
+              src="/assets/logos/logo-dark.png"
+              width={34}
+              height={34}
+              alt="Ayonaire"
+              className="object-contain"
+            />
+            <button
+              onClick={toggleSidebar}
+              className="text-gray-500 hover:text-black transition-colors"
+              aria-label="Toggle Sidebar"
             >
-              <a
-                href="/dashboard"
-                className="shrink-0 flex items-center justify-center gap-2"
-              >
-                {isCollapsed ? (
-                  <Image
-                    src="/assets/logos/logo-dark.png"
-                    width={32}
-                    height={32}
-                    alt="logo"
-                    className="object-contain"
-                  />
-                ) : (
-                  <>
-                    <Image
-                      src="/assets/logos/full-logo-dark.svg"
-                      width={120}
-                      height={40}
-                      alt="logo"
-                    />
-                  </>
-                )}
-              </a>
+              {isMobile ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
+        ) : (
+          <div className="space-y-3">
+            <div className="flex items-center gap-2">
               <button
-                onClick={toggleSidebar}
-                className="text-gray-500 hover:text-black transition-colors"
-                aria-label="Toggle Sidebar"
+                onClick={() => setActiveInboxTab("chatroom")}
+                className={cn(
+                  "flex h-10 items-center gap-2 rounded-full px-4 text-sm font-semibold transition-colors",
+                  activeInboxTab === "chatroom"
+                    ? "bg-[#F15D23] text-white shadow-sm"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200",
+                )}
               >
-                {isMobile ? (
-                  <X className="w-5 h-5" />
-                ) : !isPinned && !isCollapsed ? (
-                  <X className="w-5 h-5" />
-                ) : isCollapsed ? (
-                  <Menu className="w-5 h-5" />
-                ) : (
-                  <ChevronsUpDown className="w-5 h-5 text-gray-400" />
+                Chatrooms
+                <span
+                  className={cn(
+                    "flex size-5 items-center justify-center rounded-full text-[11px] font-bold",
+                    activeInboxTab === "chatroom"
+                      ? "bg-white text-[#F15D23]"
+                      : "bg-[#F15D23] text-white",
+                  )}
+                >
+                  {groupCount}
+                </span>
+              </button>
+              <button
+                onClick={() => setActiveInboxTab("inbox")}
+                className={cn(
+                  "flex h-10 items-center gap-2 rounded-full px-4 text-sm font-semibold transition-colors",
+                  activeInboxTab === "inbox"
+                    ? "bg-[#F15D23] text-white shadow-sm"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200",
+                )}
+              >
+                Inbox
+                {inboxCount > 0 && (
+                  <span
+                    className={cn(
+                      "flex size-5 items-center justify-center rounded-full text-[11px] font-bold",
+                      activeInboxTab === "inbox"
+                        ? "bg-white text-[#F15D23]"
+                        : "bg-[#F15D23] text-white",
+                    )}
+                  >
+                    {inboxCount}
+                  </span>
                 )}
               </button>
+              <div className="ml-auto">
+                <NewMessagePopover />
+              </div>
             </div>
-          </SidebarMenuItem>
-        </SidebarMenu>
 
-        {!isCollapsed && (
-          <div className="mt-2 space-y-4">
-            <div className="flex items-center gap-2 bg-gray-50 border border-gray-100 rounded-lg px-3 py-2">
+            <div className="flex items-center gap-2 rounded-full border border-gray-100 bg-gray-50 px-3 py-2.5">
               <Search className="w-4 h-4 text-gray-400 shrink-0" />
               <input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search conversations"
-                className="flex-1 bg-transparent text-[13px] outline-none placeholder:text-gray-400"
+                className="min-w-0 flex-1 bg-transparent text-[13px] outline-none placeholder:text-gray-400"
               />
-            </div>
-
-            <div className="flex gap-2">
-              <button
-                onClick={() => setActiveInboxTab("chatroom")}
-                className={cn(
-                  "flex-1 text-center text-[13px] font-medium py-2 rounded-lg transition-colors",
-                  activeInboxTab === "chatroom"
-                    ? "bg-[#F15D23] text-white"
-                    : "bg-gray-50 text-gray-500 hover:bg-gray-100",
-                )}
-              >
-                Chatroom
-              </button>
-              <button
-                onClick={() => setActiveInboxTab("inbox")}
-                className={cn(
-                  "flex-1 text-center text-[13px] font-medium py-2 rounded-lg transition-colors",
-                  activeInboxTab === "inbox"
-                    ? "bg-[#F15D23] text-white"
-                    : "bg-gray-50 text-gray-500 hover:bg-gray-100",
-                )}
-              >
-                Inbox
-              </button>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() =>
-                  toast.info(
-                    "Chat with Admin isn't available yet - needs a backend-provided support contact.",
-                  )
-                }
-                className="px-3 py-1.5 bg-gray-50 text-gray-600 text-xs font-medium rounded-lg hover:bg-gray-100 transition-colors"
-              >
-                Chat with Admin
-              </button>
-              <NewMessagePopover />
             </div>
           </div>
         )}
       </SidebarHeader>
 
-      <SidebarContent className="bg-transparent pt-2">
-        <div className="flex flex-col gap-1 pb-4">
+      <SidebarContent className="bg-[#FBFBFB] pt-2">
+        <div className="flex flex-col gap-2 px-2 pb-4">
           {isLoading ? (
             <div className="flex items-center justify-center py-8">
               <div className="w-6 h-6 border-4 border-primary border-t-transparent rounded-full animate-spin" />
@@ -178,7 +151,7 @@ export function StudentMessagesSidebarContent({
                 {search.trim()
                   ? `No results for "${search.trim()}".`
                   : activeInboxTab === "chatroom"
-                    ? "No group chats yet."
+                    ? "No chatrooms yet."
                     : "No direct messages yet."}
               </p>
             )
@@ -197,8 +170,8 @@ export function StudentMessagesSidebarContent({
                   if (isMobile) setOpenMobile(false);
                 }}
                 className={cn(
-                  "flex items-start gap-3 p-3 transition-colors",
-                  isActive ? "bg-[#F6F6F6]" : "hover:bg-gray-50",
+                  "flex items-start gap-3 rounded-lg p-3 transition-all",
+                  isActive ? "bg-[#F1F2F6] shadow-sm" : "bg-white hover:bg-gray-50",
                   isCollapsed && "justify-center px-0",
                 )}
               >
@@ -210,17 +183,18 @@ export function StudentMessagesSidebarContent({
                         width={40}
                         height={40}
                         alt={conv.title}
-                        className="rounded-md object-cover"
+                        className="rounded-lg object-cover"
                       />
                     </div>
                     {!isCollapsed && (
-                      <div className="flex-1 min-w-0 flex flex-col justify-center h-10">
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm font-medium text-gray-900 truncate">
+                      <div className="flex-1 min-w-0 flex flex-col justify-center">
+                        <div className="mb-1 flex items-center justify-between gap-2">
+                          <span className="truncate text-sm font-semibold text-gray-900">
                             {conv.title}
                           </span>
+                          <span className="shrink-0 text-[11px] text-gray-400">{timestamp}</span>
                         </div>
-                        <p className="text-[13px] font-medium text-gray-900 truncate">
+                        <p className="truncate text-[13px] font-medium text-gray-500">
                           {preview}
                         </p>
                       </div>
