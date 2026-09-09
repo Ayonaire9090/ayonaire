@@ -121,8 +121,13 @@ export const CourseContentAccordion = ({
 
                         <div className="flex flex-col">
                           <span className="text-[14px] font-medium text-gray-800">{lesson.title}</span>
-                          <div className="flex items-center gap-1.5 text-xs text-gray-500 mt-1">
+                          <div className="flex flex-wrap items-center gap-x-1.5 gap-y-1 text-xs text-gray-500 mt-1">
                             <MonitorPlay size={14} />
+                            <span>Video</span>
+                            <span aria-hidden="true">&middot;</span>
+                            <Folder size={13} />
+                            <span>Resources ({lesson.materials.length})</span>
+                            <span aria-hidden="true">&middot;</span>
                             <span>
                               {formatDuration(
                                 lesson.duration ??

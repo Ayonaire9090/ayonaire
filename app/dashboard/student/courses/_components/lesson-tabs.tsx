@@ -3,9 +3,14 @@ import { Search } from "lucide-react";
 interface LessonTabsProps {
   activeTab: string;
   onTabChange: (tab: string) => void;
+  resourceCount?: number;
 }
 
-export const LessonTabs = ({ activeTab, onTabChange }: LessonTabsProps) => {
+export const LessonTabs = ({
+  activeTab,
+  onTabChange,
+  resourceCount = 0,
+}: LessonTabsProps) => {
   const tabs = [
     "Transcription",
     "Course Content",
@@ -39,7 +44,7 @@ export const LessonTabs = ({ activeTab, onTabChange }: LessonTabsProps) => {
                     : "text-gray-500 hover:text-gray-900"
                 }`}
               >
-                {tab}
+                {tab === "Resources" ? `Resources (${resourceCount})` : tab}
                 {isActive && (
                   <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#F86432]" />
                 )}
