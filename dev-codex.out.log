@@ -1,6 +1,6 @@
 
 > ayonaire@0.1.0 dev
-> next dev --turbopack --hostname 127.0.0.1 --port 3000
+> next dev --turbopack --hostname 127.0.0.1
 
    ▲ Next.js 15.5.23 (Turbopack)
    - Local:        http://127.0.0.1:3000
@@ -8,29 +8,63 @@
    - Environments: .env.local
 
  ✓ Starting...
-Creating turbopack project {
-  dir: 'C:\\Users\\ABDULBASIT\\Desktop\\AyoinaireMain\\client',
-  testMode: true
-}
- ✓ Ready in 10.7s
- ○ Compiling / ...
- ✓ Compiled / in 31.1s
- GET / 200 in 39210ms
- ○ Compiling /_not-found/page ...
- ✓ Compiled /_not-found/page in 4.2s
- GET /dasboard/student 404 in 5487ms
- ○ Compiling /dashboard/student ...
- ✓ Compiled /dashboard/student in 5.7s
- GET /dashboard/student 200 in 7645ms
- ○ Compiling /auth ...
- ✓ Compiled /auth in 5.1s
- GET /auth?mode=signin 200 in 6102ms
- ○ Compiling /auth/student/signin ...
- ✓ Compiled /auth/student/signin in 2.4s
- GET /auth/student/signin 200 in 3291ms
- GET /auth/student/signin 200 in 937ms
- ✓ Compiled in 3.9s
- ✓ Compiled in 4.6s
- ✓ Compiled in 3.8s
- ✓ Compiled in 4.7s
- ✓ Compiled in 5.1s
+ ✓ Ready in 18.1s
+ ○ Compiling /ai-fullstack-engineering ...
+ ✓ Compiled /ai-fullstack-engineering in 27.7s
+ GET /ai-fullstack-engineering 200 in 31609ms
+ GET /ai-fullstack-engineering 200 in 4149ms
+ ○ Compiling /favicon.ico ...
+ ✓ Compiled /favicon.ico in 6.7s
+ GET /favicon.ico 200 in 9703ms
+ GET /ai-fullstack-engineering 200 in 3059ms
+ ✓ Compiled in 2.7s
+ ✓ Compiled in 3.5s
+ ✓ Compiled /ai-fullstack-engineering in 233ms
+ GET /ai-fullstack-engineering 200 in 1374ms
+ GET /favicon.ico?favicon.ffdbe382.ico 200 in 1268ms
+ GET /favicon.ico 200 in 1368ms
+ GET /ai-fullstack-engineering 200 in 1933ms
+ ✓ Compiled in 4.4s
+ ✓ Compiled /ai-fullstack-engineering in 284ms
+ GET /ai-fullstack-engineering 200 in 1548ms
+ GET /ai-fullstack-engineering 200 in 2240ms
+ GET /ai-fullstack-engineering 200 in 2499ms
+ ✓ Compiled in 2.6s
+ GET /ai-fullstack-engineering 200 in 4216ms
+ ✓ Compiled in 8.2s
+ ○ Compiling /ai-fullstack-engineering ...
+ ✓ Compiled /ai-fullstack-engineering in 687ms
+ GET /ai-fullstack-engineering 200 in 4708ms
+ GET /favicon.ico?favicon.ffdbe382.ico 200 in 1150ms
+ GET /favicon.ico 200 in 1089ms
+ ✓ Compiled in 2.6s
+ ✓ Compiled in 4s
+ ✓ Compiled /ai-fullstack-engineering in 332ms
+ GET /ai-fullstack-engineering 200 in 1890ms
+ GET /favicon.ico?favicon.ffdbe382.ico 200 in 1915ms
+ GET /favicon.ico 200 in 2286ms
+ GET /ai-fullstack-engineering 200 in 2908ms
+ ✓ Compiled in 5.3s
+ ✓ Compiled in 8.5s
+ ○ Compiling /ai-fullstack-engineering ...
+ ✓ Compiled /ai-fullstack-engineering in 1111ms
+ GET /ai-fullstack-engineering 200 in 3860ms
+ GET /favicon.ico 200 in 6670ms
+ GET /favicon.ico?favicon.ffdbe382.ico 200 in 6688ms
+ GET /ai-fullstack-engineering 200 in 6550ms
+ ✓ Compiled in 3.6s
+ ✓ Compiled in 4.3s
+ ○ Compiling /ai-fullstack-engineering ...
+ ✓ Compiled /ai-fullstack-engineering in 752ms
+ GET /ai-fullstack-engineering 200 in 3471ms
+ GET /favicon.ico 200 in 5170ms
+ GET /favicon.ico?favicon.ffdbe382.ico 200 in 5291ms
+ GET /ai-fullstack-engineering 200 in 7529ms
+ ✓ Compiled in 4.8s
+ ✓ Compiled in 14.4s
+ ○ Compiling /ai-fullstack-engineering ...
+ ✓ Compiled /ai-fullstack-engineering in 907ms
+ GET /ai-fullstack-engineering 200 in 6853ms
+ GET /favicon.ico?favicon.ffdbe382.ico 200 in 2548ms
+ GET /favicon.ico 200 in 2534ms
+ ✓ Compiled in 3.5s
