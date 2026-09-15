@@ -67,7 +67,7 @@ export default function RegistrationSuccess() {
 
           {/* Action Button */}
          <a
-  href="https://chat.whatsapp.com/CiDk807qbFI8i35D6T6ZTl?s=cl&p=i&mlu=4&ilr=4"
+  href="https://chat.whatsapp.com/LDlk17NHqo6GpcFEmJnr4s?s=cl&p=i&mlu=4&ilr=4"
   target="_blank"
   rel="noopener noreferrer"
   className={`${adineue.className} group relative mt-8 flex h-14 items-center gap-4 rounded-[14px] pl-7 pr-4 text-lg sm:text-lg  text-white transition-all duration-300 hover:scale-[1.03] shadow-lg`}
