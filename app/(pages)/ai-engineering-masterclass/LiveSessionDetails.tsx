@@ -46,7 +46,7 @@ export default function LiveSessionDetails() {
     {
       icon: <DateIcon />,
       title: 'Date',
-      value: '6th June, 2026',
+      value: '26th September, 2026',
       subValue: 'Saturday',
     },
     {
