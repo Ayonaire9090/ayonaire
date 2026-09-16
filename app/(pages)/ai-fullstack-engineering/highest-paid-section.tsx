@@ -1,13 +1,13 @@
 import Image from "next/image";
-import { adineue, melodrama } from "@/app/fonts";
+import { exo, melodrama } from "@/app/fonts";
 
 export default function HighestPaidSection() {
   return (
-    <section className="bg-[#f8f5f1] px-4 py-14 sm:px-8 sm:py-18 lg:py-20">
+    <section className="bg-[#f8f5f1] px-5 py-14 sm:px-8 lg:px-12 xl:px-16 sm:py-18 lg:py-20">
       <div className="mx-auto flex w-full flex-col items-center gap-[56px] sm:gap-[68px] lg:gap-[76px]">
-        <div className="flex w-full max-w-[853px] flex-col gap-12 sm:gap-16 lg:gap-20">
+        <div className="flex w-full max-w-[1120px] flex-col gap-12 sm:gap-16 lg:gap-20">
           <h2
-            className={`${melodrama.className} relative max-w-[860px] text-[38px] font-bold leading-[1.04] tracking-[1.1px] text-[#181c23] sm:text-[48px] lg:text-[56px] lg:leading-[67px] lg:tracking-[1.76px]`}
+            className={`${melodrama.className} relative max-w-[860px] text-[30px] font-bold leading-[1.1] tracking-[1.1px] text-[#181c23] sm:text-[36px] lg:text-[34px] lg:leading-[1.15] lg:tracking-[0.2px]`}
           >
             AI/ML Engineers Are{" "}
             <span className="relative inline-block text-[#f25e25]">
@@ -26,7 +26,7 @@ export default function HighestPaidSection() {
           </h2>
 
           <div
-            className={`${adineue.className} space-y-7 text-justify text-[19px] font-medium leading-[1.48] tracking-[0.6px] text-[#5a4136] sm:text-[22px] sm:leading-[32px] lg:text-[24px] lg:leading-[35px] lg:tracking-[1px]`}
+            className={`${exo.className} space-y-5 lg:space-y-6 text-justify text-[17px] font-medium leading-[1.48] tracking-[0.2px] text-[#5a4136] sm:text-[18px] sm:leading-[1.55] lg:text-[20px] lg:leading-[1.45] lg:tracking-[0.4px]`}
           >
             <p>I know you&apos;ve recently seen social media posts about AI Engineering.</p>
 
@@ -40,7 +40,7 @@ export default function HighestPaidSection() {
 
             <p>And many thoughts raced through your mind, you thought:</p>
 
-            <div className="space-y-4 leading-[1.8] lg:leading-[56px]">
+            <div className="space-y-3 leading-[1.65] lg:leading-[1.65]">
               <p>&quot;Wait... people are actually being paid this much to work in AI?&quot;</p>
               <p>&quot;If I earned that much, I&apos;ll sure have a better life&quot;</p>
               <p>&quot;I wish I could land a job that pays that much&quot;</p>

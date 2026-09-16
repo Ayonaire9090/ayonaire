@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { adineue, melodrama } from "@/app/fonts";
+import { exo, melodrama } from "@/app/fonts";
 
 const skills = [
   "Python",
@@ -31,10 +31,10 @@ const skills = [
 export default function TwoSetsSection() {
   return (
     <section className="bg-[#fdfbf9]">
-      <div className="mx-auto flex w-full max-w-[1288px] flex-col items-center gap-16 px-4 py-16 sm:px-8 lg:gap-20 lg:py-20">
-        <div className="relative flex w-full max-w-[846px] flex-col items-center gap-12 text-center lg:gap-14">
+      <div className="mx-auto flex w-full max-w-[1288px] flex-col items-center gap-16 px-5 py-16 sm:px-8 lg:px-12 xl:px-16 lg:gap-20 lg:py-20">
+        <div className="relative flex w-full max-w-[1120px] flex-col items-center gap-12 text-center lg:gap-14">
           <h2
-            className={`${melodrama.className} relative text-[38px] font-bold leading-[1.08] tracking-[-0.95px] text-[#181c23] sm:text-[48px] lg:text-[56px] lg:leading-[60.48px] lg:tracking-[-1.4px]`}
+            className={`${melodrama.className} relative text-[30px] font-bold leading-[1.12] tracking-[-0.95px] text-[#181c23] sm:text-[36px] lg:text-[34px] lg:leading-[1.16] lg:tracking-[-0.6px]`}
           >
             There are{" "}
             <span className="relative inline-block text-[#f25e25]">
@@ -66,7 +66,7 @@ export default function TwoSetsSection() {
           </div>
 
           <p
-            className={`${melodrama.className} w-full text-left text-[34px] font-bold leading-tight tracking-[-0.9px] text-black sm:text-[44px] lg:text-[56px] lg:leading-[60.48px] lg:tracking-[-1.4px]`}
+            className={`${melodrama.className} w-full text-left text-[30px] font-bold leading-tight tracking-[-0.9px] text-black sm:text-[36px] lg:text-[34px] lg:leading-[1.16] lg:tracking-[-0.6px]`}
           >
             I want you to be{" "}
             <span className="text-[#f25e25]">that person</span>
@@ -82,7 +82,7 @@ export default function TwoSetsSection() {
             />
 
             <ol
-              className={`${adineue.className} relative z-10 space-y-6 text-left text-[22px] font-medium leading-[1.45] text-[#f5f5f5] sm:text-[25px] lg:max-w-[700px] lg:text-[28px] lg:leading-[65px]`}
+              className={`${exo.className} relative z-10 space-y-6 text-left text-[17px] font-medium leading-[1.45] text-[#f5f5f5] sm:text-[18px] lg:max-w-[700px] lg:text-[20px] lg:leading-[1.7]`}
             >
               {[
                 "That desires,",
@@ -100,7 +100,7 @@ export default function TwoSetsSection() {
             </ol>
 
             <div
-              className={`${adineue.className} relative z-10 mt-12 max-w-[945px] whitespace-pre-wrap text-left text-[22px] font-normal leading-[1.45] text-[#f5f5f5] sm:text-[25px] lg:mt-20 lg:text-[28px] lg:leading-[38px]`}
+              className={`${exo.className} relative z-10 mt-12 max-w-[945px] space-y-5 whitespace-pre-wrap lg:space-y-6 text-left text-[17px] font-normal leading-[1.45] text-[#f5f5f5] sm:text-[18px] lg:mt-20 lg:text-[20px] lg:leading-[1.6]`}
             >
               <p>Now, Ask yourself this question,</p>
               <p className="my-6 font-bold lowercase text-white">
@@ -113,7 +113,7 @@ export default function TwoSetsSection() {
 
           <a
             href="#ai-engineering-path"
-            className={`${adineue.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-10 py-5 text-[18px] text-white shadow-[0px_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01]`}
+            className={`${exo.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-10 py-5 text-[17px] text-white shadow-[0px_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01]`}
           >
             SHOW ME THE AI ENGINEERING PATH
             <Image
@@ -127,7 +127,7 @@ export default function TwoSetsSection() {
         </div>
 
         <div className="flex items-center justify-center">
-          <p className="rotate-[-5deg] text-center text-[28px] tracking-[0.6px] text-[#181c23] lg:text-[32px]">
+          <p className="rotate-[-5deg] text-center text-[16px] tracking-[0.2px] text-[#181c23] lg:text-[16px]">
             BUT WAIT?..
           </p>
           <Image
@@ -140,14 +140,14 @@ export default function TwoSetsSection() {
         </div>
       </div>
 
-      <div className="bg-gradient-to-b from-white to-[rgba(248,100,50,0)] px-4 pb-20 pt-10 sm:px-8 lg:pb-[120px]">
+      <div className="bg-gradient-to-b from-white to-[rgba(248,100,50,0)] px-4 pb-20 pt-10 sm:px-8 lg:px-12 xl:px-16 lg:pb-[120px]">
         <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-14 lg:gap-[120px]">
           <p
-            className={`${adineue.className} max-w-[1163px] text-center text-[22px] font-normal leading-[1.55] tracking-[0.6px] text-[#181c23] lg:text-[28px] lg:leading-[54px]`}
+            className={`${exo.className} max-w-[1163px] text-center text-[17px] font-normal leading-[1.55] tracking-[0.2px] text-[#181c23] lg:text-[20px] lg:leading-[1.6]`}
           >
             Because that births another question that you must answer before you
             start your journey{" "}
-            <strong className="text-[26px] font-bold italic lg:text-[32px]">
+            <strong className="text-[16px] font-bold italic lg:text-[16px]">
               so you don&apos;t end up miserable and unemployable like others.
             </strong>
           </p>
@@ -171,11 +171,11 @@ export default function TwoSetsSection() {
 
       <div
         id="ai-engineering-path"
-        className="bg-[#fff5ee] px-4 py-16 sm:px-8 lg:py-[120px]"
+        className="bg-[#fff5ee] px-5 py-16 sm:px-8 lg:px-12 xl:px-16 lg:py-[120px]"
       >
         <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-14 lg:gap-20">
           <h2
-            className={`${melodrama.className} relative text-[38px] font-bold leading-tight tracking-[-0.95px] text-[#181c23] sm:text-[48px] lg:text-[56px] lg:leading-[60.48px] lg:tracking-[-1.4px]`}
+            className={`${melodrama.className} relative text-[30px] font-bold leading-tight tracking-[-0.95px] text-[#181c23] sm:text-[36px] lg:text-[34px] lg:leading-[1.16] lg:tracking-[-0.6px]`}
           >
             AI Engineering{" "}
             <span className="relative inline-block text-[#f25e25]">
@@ -197,10 +197,10 @@ export default function TwoSetsSection() {
                 key={skill}
                 className="relative flex min-h-[96px] items-center overflow-hidden rounded-[14px] bg-white px-6 py-5 shadow-[0px_1px_6px_rgba(0,0,0,0.12)] lg:min-h-[122px]"
               >
-                <span className="absolute left-6 top-1/2 -translate-y-1/2 text-[58px] font-bold leading-none tracking-[-0.166px] text-[#f25e25] opacity-20 lg:text-[88px]">
+                <span className="absolute left-6 top-1/2 -translate-y-1/2 text-[16px] font-bold leading-none tracking-[-0.166px] text-[#f25e25] opacity-20 lg:text-[72px]">
                   {String(index + 1).padStart(2, "0")}
                 </span>
-                <span className="relative ml-[120px] text-[22px] font-bold tracking-[-0.319px] text-black lg:text-[32px]">
+                <span className="relative ml-[120px] text-[16px] font-bold tracking-[-0.319px] text-black lg:text-[16px]">
                   {skill}
                 </span>
               </div>
@@ -233,10 +233,10 @@ function BlackWarningCard({
         className="object-fill"
       />
       <div className="relative z-10 flex h-full min-h-[270px] flex-col justify-center px-10 py-8 text-left text-[#f5f5f5]">
-        <p className="mb-6 rotate-[-2deg] text-[22px] text-white lg:text-[28px]">
+        <p className="mb-6 rotate-[-2deg] text-[16px] text-white lg:text-[16px]">
           {label}
         </p>
-        <p className={`${adineue.className} text-[20px] leading-[1.45] lg:text-[24px] lg:leading-[36px]`}>
+        <p className={`${exo.className} text-[17px] leading-[1.45] lg:text-[20px] lg:leading-[1.55]`}>
           {text}
         </p>
       </div>
@@ -254,7 +254,7 @@ function NumberPill({ value }: { value: string }) {
         sizes="56px"
         className="object-fill"
       />
-      <span className="relative text-[18px] font-bold text-[#f25e25]">
+      <span className="relative text-[16px] font-bold text-[#f25e25]">
         {value}
       </span>
     </span>
@@ -274,7 +274,7 @@ function QuestionCard({
 }) {
   return (
     <article className="relative min-h-[520px] rounded-[14px] bg-white px-8 pb-10 pt-24 shadow-[0px_1px_6px_rgba(0,0,0,0.12)] lg:min-h-[606px] lg:px-11">
-      <div className="absolute -top-12 left-11 flex size-[100px] items-center justify-center rounded border border-[#ff6b00] bg-white text-[48px] font-bold tracking-[1.6px] text-black shadow-[0px_0px_6px_0px_rgba(248,100,50,0.25)]">
+      <div className="absolute -top-12 left-11 flex size-[100px] items-center justify-center rounded border border-[#ff6b00] bg-white text-[16px] font-bold tracking-[0.2px] text-black shadow-[0px_0px_6px_0px_rgba(248,100,50,0.25)]">
         {number}
       </div>
       <Image
@@ -284,11 +284,10 @@ function QuestionCard({
         height={115}
         className="mb-10 size-[115px] object-cover"
       />
-      <h3 className="mb-8 text-[28px] font-bold leading-[1.25] tracking-[1.2px] text-black lg:text-[32px] lg:leading-[42px]">
-        {title}
+      <h3 className={`${melodrama.className} mb-8 text-[30px] font-bold leading-[1.25] tracking-[0.4px] text-black lg:text-[34px] lg:leading-[1.4]`}>        {title}
       </h3>
       <p
-        className={`${adineue.className} text-justify text-[22px] leading-[1.5] tracking-[-0.319px] text-black lg:text-[28px] lg:leading-[44px]`}
+        className={`${exo.className} text-justify text-[17px] leading-[1.5] tracking-[-0.319px] text-black lg:text-[20px] lg:leading-[1.45]`}
       >
         {body}
       </p>

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { adineue, melodrama } from "@/app/fonts";
+import { exo, melodrama } from "@/app/fonts";
 
 const roles = [
   { number: "01", label: "AI Engineer." },
@@ -14,9 +14,9 @@ const roles = [
 export default function LinkedInSearchSection() {
   return (
     <section className="bg-[#fdfbf9]">
-      <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-14 px-4 py-16 sm:px-8 lg:gap-20 lg:py-20">
+      <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-14 px-5 py-16 sm:px-8 lg:px-12 xl:px-16 lg:gap-20 lg:py-20">
         <h2
-          className={`${melodrama.className} max-w-[655px] whitespace-pre-wrap text-[38px] font-bold leading-[1.08] tracking-[-0.95px] text-[#181c23] sm:text-[48px] lg:text-[56px] lg:leading-[60.48px] lg:tracking-[-1.4px]`}
+          className={`${melodrama.className} max-w-[655px] space-y-5 whitespace-pre-wrap lg:space-y-6 text-[30px] font-bold leading-[1.12] tracking-[-0.95px] text-[#181c23] sm:text-[36px] lg:text-[34px] lg:leading-[1.16] lg:tracking-[-0.6px]`}
         >
           Don&apos;t take our word for it.{"\n"}
           <span className="relative inline-block text-[#f25e25]">
@@ -32,11 +32,11 @@ export default function LinkedInSearchSection() {
         </h2>
 
         <div className="grid items-end gap-10 lg:grid-cols-[1fr_683px] lg:gap-20">
-          <ol className={`${adineue.className} flex flex-col gap-7 text-[#181c23]`}>
+          <ol className={`${exo.className} flex flex-col gap-7 text-[17px]`}>
             {roles.map((role) => (
               <li key={role.number} className="flex items-center gap-7">
                 <NumberPill value={role.number} />
-                <span className="text-[24px] font-normal tracking-[0.6px] sm:text-[28px] lg:text-[32px]">
+                <span className="text-[16px] font-normal tracking-[0.2px] sm:text-[16px] lg:text-[16px]">
                   {role.label}
                 </span>
               </li>
@@ -54,7 +54,7 @@ export default function LinkedInSearchSection() {
         </div>
 
         <div className="flex flex-col gap-10 text-[#181c23]">
-          <div className={`${adineue.className} space-y-2 text-[22px] font-medium leading-[1.4] tracking-[1px] lg:text-[28px] lg:leading-[38px] lg:tracking-[1.6px]`}>
+          <div className={`${exo.className} space-y-2 text-[17px] font-medium leading-[1.4] tracking-[0.4px] lg:text-[20px] lg:leading-[1.6] lg:tracking-[0.2px]`}>
             {[
               "Look at the companies hiring.",
               "Look at what they expect applicants to know.",
@@ -67,11 +67,11 @@ export default function LinkedInSearchSection() {
             ))}
           </div>
 
-          <p className="text-[24px] font-bold leading-[1.5] tracking-[-0.4px] lg:text-[28px] lg:leading-[48px]">
+          <p className="text-[16px] font-bold leading-[1.5] tracking-[-0.4px] lg:text-[16px] lg:leading-[1.55]">
             Then ask yourself the next question:
           </p>
 
-          <div className={`${adineue.className} whitespace-pre-wrap text-[22px] leading-[1.7] tracking-[-0.4px] text-[#181c23] lg:text-[28px] lg:leading-[60px]`}>
+          <div className={`${exo.className} space-y-5 whitespace-pre-wrap lg:space-y-6 text-[17px] leading-[1.7] tracking-[-0.4px] text-[#181c23] lg:text-[20px] lg:leading-[1.65]`}>
             <p>
               How can I start to learn these skills following the right sequence
               abd getting as much hands on experience along the way...
@@ -86,7 +86,7 @@ export default function LinkedInSearchSection() {
         </div>
       </div>
 
-      <div className="relative overflow-hidden bg-[#171717] px-4 py-20 sm:px-8 lg:min-h-[921px] lg:py-[120px]">
+      <div className="relative overflow-hidden bg-[#171717] px-5 py-20 sm:px-8 lg:px-12 xl:px-16 lg:min-h-[921px] lg:py-[120px]">
         <Image
           src="/assets/images/ai-fullstack-engineering/linkedin-dark-ellipse-top.svg"
           alt=""
@@ -111,7 +111,7 @@ export default function LinkedInSearchSection() {
 
         <div className="relative z-10 mx-auto flex w-full max-w-[1187px] flex-col items-center text-white">
           <h2
-            className={`${melodrama.className} relative text-center text-[36px] font-bold leading-[1.1] tracking-[-0.95px] sm:text-[48px] lg:text-[56px] lg:leading-[60.48px] lg:tracking-[-1.4px]`}
+            className={`${melodrama.className} relative text-center text-[30px] font-bold leading-[1.1] tracking-[-0.95px] sm:text-[36px] lg:text-[34px] lg:leading-[1.16] lg:tracking-[-0.6px]`}
           >
             And really, it&apos;s absolutely unnecessary...so today, we&apos;ll
             show you the{" "}
@@ -122,7 +122,7 @@ export default function LinkedInSearchSection() {
             from where you are now to:..
           </h2>
 
-          <div className={`${adineue.className} mt-16 w-full max-w-[652px] self-start space-y-5 text-[24px] leading-[1.55] tracking-[-0.8px] lg:mt-24 lg:text-[32px] lg:leading-[56px] lg:tracking-[-1.4px]`}>
+          <div className={`${exo.className} mt-16 w-full max-w-[652px] self-start space-y-5 text-[17px] leading-[1.55] tracking-[-0.8px] lg:mt-24 lg:text-[20px] lg:leading-[1.65] lg:tracking-[-0.6px]`}>
             {[
               "getting into this crazy million dollar industry,",
               "develop the right skills, and of course,",
@@ -135,7 +135,7 @@ export default function LinkedInSearchSection() {
             ))}
           </div>
 
-          <div className={`${adineue.className} mt-14 max-w-[1187px] text-center text-[24px] leading-[1.45] tracking-[-0.8px] lg:mt-20 lg:text-[32px] lg:leading-[42px] lg:tracking-[-1.4px]`}>
+          <div className={`${exo.className} mt-14 max-w-[1187px] text-center text-[17px] leading-[1.45] tracking-[-0.8px] lg:mt-20 lg:text-[20px] lg:leading-[1.4] lg:tracking-[-0.6px]`}>
             <p>Even if you have no experience whatsoever.</p>
             <p className="font-semibold italic underline">
               And no, you don&apos;t need to have any technical knowledge to get
@@ -145,7 +145,7 @@ export default function LinkedInSearchSection() {
 
           <a
             href="#ai-engineering-path"
-            className={`${adineue.className} mt-12 inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-10 py-5 text-[18px] uppercase text-white shadow-[0px_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01]`}
+            className={`${exo.className} mt-12 inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-10 py-5 text-[17px] uppercase text-white shadow-[0px_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01]`}
           >
             let&apos;s get into it
             <Image
@@ -172,7 +172,7 @@ function NumberPill({ value }: { value: string }) {
         sizes="56px"
         className="object-fill"
       />
-      <span className="relative text-[18px] font-bold text-white">
+      <span className="relative text-[16px] font-bold text-white">
         {value}
       </span>
     </span>

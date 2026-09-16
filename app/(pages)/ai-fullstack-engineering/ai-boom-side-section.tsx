@@ -1,19 +1,19 @@
 import Image from "next/image";
-import { adineue, melodrama } from "@/app/fonts";
+import { exo, melodrama } from "@/app/fonts";
 
 export default function AiBoomSideSection() {
   return (
-    <section className="bg-[#fff5ee] px-4 py-16 sm:px-8 lg:py-[120px]">
+    <section className="bg-[#fff5ee] px-5 py-16 sm:px-8 lg:px-12 xl:px-16 lg:py-[120px]">
       <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-10">
         <h2
-          className={`${melodrama.className} w-full text-[36px] font-bold leading-[1.12] tracking-[-0.95px] text-[#181c23] sm:text-[48px] lg:text-[56px] lg:leading-[60.48px] lg:tracking-[-1.4px]`}
+          className={`${melodrama.className} w-full text-[30px] font-bold leading-[1.12] tracking-[-0.95px] text-[#181c23] sm:text-[36px] lg:text-[34px] lg:leading-[1.16] lg:tracking-[-0.6px]`}
         >
           But here&apos;s the other side of the{" "}
           <span className="text-[#f25e25]">AI Boom.</span>
         </h2>
 
         <div
-          className={`${adineue.className} w-full whitespace-pre-wrap text-justify text-[22px] font-normal leading-[1.55] tracking-[-0.3px] text-[#181c23] lg:text-[28px] lg:leading-[40px] lg:tracking-[-0.4px]`}
+          className={`${exo.className} w-full space-y-5 whitespace-pre-wrap lg:space-y-6 text-justify text-[17px] font-normal leading-[1.55] tracking-[-0.3px] text-[#181c23] lg:text-[20px] lg:leading-[1.65] lg:tracking-[-0.4px]`}
         >
           <p>I know, to some extent, you must already be thinking:</p>
           <p className="font-bold">&quot;Almost every job role is changing...&quot;</p>
@@ -83,7 +83,7 @@ export default function AiBoomSideSection() {
         </div>
 
         <div
-          className={`${adineue.className} max-w-[981px] whitespace-pre-wrap text-[22px] leading-[1.8] tracking-[0.4px] text-[#181c23] lg:text-[28px] lg:leading-[57px] lg:tracking-[0.6px]`}
+          className={`${exo.className} max-w-[981px] space-y-5 whitespace-pre-wrap lg:space-y-6 text-[17px] leading-[1.65] tracking-[0.4px] text-[#181c23] lg:text-[20px] lg:leading-[1.65] lg:tracking-[0.2px]`}
         >
           <p className="font-medium">
             And I think you already know which path creates the bigger technical
@@ -142,14 +142,13 @@ function PathCard({
         className="object-fill"
       />
       <div className="relative z-10 flex min-h-[520px] flex-col justify-center px-8 py-16 text-[#f5f5f5] sm:px-14 lg:min-h-[inherit] lg:px-[108px]">
-        <p className="mb-7 rotate-[1deg] text-[30px] text-white lg:text-[36px]">
+        <p className="mb-7 rotate-[1deg] text-[16px] text-white lg:text-[16px]">
           {number}
         </p>
-        <h3 className="mb-8 text-[25px] font-bold leading-[1.25] tracking-[0.4px] text-white lg:text-[36px] lg:leading-[44px] lg:tracking-[0.6px]">
-          {title}
+        <h3 className={`${melodrama.className} mb-8 text-[30px] font-bold leading-[1.25] tracking-[0.4px] text-white lg:text-[34px] lg:leading-[1.45] lg:tracking-[0.2px]`}>          {title}
         </h3>
         <div
-          className={`${adineue.className} space-y-3 whitespace-pre-wrap text-[22px] leading-[1.65] lg:text-[32px] lg:leading-[58px]`}
+          className={`${exo.className} space-y-5 whitespace-pre-wrap lg:space-y-6 text-[17px] leading-[1.65] lg:text-[20px] lg:leading-[1.65]`}
         >
           {children}
         </div>

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { adineue, melodrama } from "@/app/fonts";
+import { exo, melodrama } from "@/app/fonts";
 
 const examples = [
   {
@@ -28,19 +28,19 @@ const examples = [
   },
   {
     title: "Generative AI",
-    body: "When ChatGPT generates an answer, an AI assistant drafts content or a system creates text, images or other new outputs, you are entering the world of Generative AI. ...",
+    body: "When ChatGPT generates an answer, an AI assistant drafts content or a system creates text, images or other new outputs, you are entering the world of Generative AI.",
   },
   {
     title: "RAG & Enterprise Knowledge Systems",
-    body: "Imagine asking questions about thousands of your company's private documents and receiving answers grounded in those documents. ...",
+    body: "Imagine asking questions about thousands of your company's private documents and receiving answers grounded in those documents.",
   },
   {
     title: "Agentic AI",
-    body: "Imagine an AI system that does more than answer questions. It can understand a request, retrieve information, use tools, query a database and perform approved actions. ...",
+    body: "Imagine an AI system that does more than answer questions. It can understand a request, retrieve information, use tools, query a database and perform approved actions.",
   },
   {
     title: "Multi-Agent Systems",
-    body: "Imagine planning a trip where one AI Agent searches for flights, another compares hotels, another creates the itinerary and another checks the budget. ...",
+    body: "Imagine planning a trip where one AI Agent searches for flights, another compares hotels, another creates the itinerary and another checks the budget.",
   },
   {
     title: "Production AI Engineering",
@@ -48,31 +48,33 @@ const examples = [
   },
   {
     title: "Forward Deployed Engineering",
-    body: "When a bank, hospital or large company wants an AI system connected to its private data, internal tools and existing workflows, someone has to make that system...",
+    body: "When a bank, hospital or large company wants an AI system connected to its private data, internal tools and existing workflows, someone has to make that system work inside the real business environment.",
   },
   {
     title: "AI Engineer",
-    body: "When a company wants to build an AI-powered product, automate a workflow, add intelligence to an application or solve a business problem with AI, an AI Engineer helps bring the system together. ....",
+    body: "When a company wants to build an AI-powered product, automate a workflow, add intelligence to an application or solve a business problem with AI, an AI Engineer helps bring the system together.",
   },
 ];
 
 export default function AiEngineeringExplainedSection() {
   return (
     <section
-      className="relative overflow-hidden px-4 py-16 sm:px-8 lg:py-[120px]"
+      className="relative overflow-hidden px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16"
       style={{
         background:
           "linear-gradient(180deg, #ffffff 0%, rgba(255,220,196,0.28) 18.376%, rgba(248,100,50,0) 47.172%, #ffffff 66.703%, rgba(255,220,196,0.04) 89.124%, rgba(248,100,50,0.25) 100%)",
       }}
     >
       <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center">
-        <div className="flex w-full max-w-[1035px] flex-col items-center gap-[46px] text-center">
+        {/* HEADER */}
+        <div className="flex w-full max-w-[1120px] flex-col items-center gap-[46px] text-center">
           <h2
-            className={`${melodrama.className} relative max-w-[1003px] text-[34px] font-bold uppercase leading-[1.12] tracking-[-0.95px] text-[#181c23] sm:text-[46px] lg:text-[56px] lg:leading-[60.48px] lg:tracking-[-1.4px]`}
+            className={`${melodrama.className} relative max-w-[1003px] text-[30px] font-bold uppercase leading-[1.12] tracking-[-0.95px] text-[#181c23] sm:text-[36px] lg:text-[34px] lg:leading-[1.16] lg:tracking-[-0.6px]`}
           >
             Which one do you think creates the{" "}
             <span className="relative inline-block text-[#f25e25]">
               bigger career opportunity?
+
               <Image
                 src="/assets/images/ai-fullstack-engineering/ai-engineering-explained-highlight.svg"
                 alt=""
@@ -84,36 +86,53 @@ export default function AiEngineeringExplainedSection() {
           </h2>
 
           <h3
-            className={`${melodrama.className} text-[32px] font-bold leading-tight tracking-[0.4px] text-[#181c23] sm:text-[40px] lg:text-[48px] lg:leading-[70px] lg:tracking-[0.6px]`}
+            className={`${melodrama.className} text-[30px] font-bold leading-tight tracking-[0.4px] text-[#181c23] sm:text-[36px] lg:text-[34px] lg:leading-[1.2] lg:tracking-[0.2px]`}
           >
             So what exactly is{" "}
             <span className="text-[#f25e25]">AI Engineering?</span>
           </h3>
 
           <p
-            className={`${adineue.className} text-justify text-[22px] font-normal leading-[1.55] tracking-[0.4px] text-[#181c23] lg:text-[28px] lg:leading-[40px] lg:tracking-[0.6px]`}
+            className={`${exo.className} text-justify text-[17px] font-normal leading-[1.55] tracking-[0.4px] text-[#181c23] lg:text-[20px] lg:leading-[1.65] lg:tracking-[0.2px]`}
           >
             You probably interact with AI Engineering much more often than you
             realise.
           </p>
         </div>
 
-        <div className="relative mt-20 w-full">
-          <div className="absolute left-1/2 top-0 hidden h-[calc(100%-260px)] w-px -translate-x-1/2 lg:block">
-            {Array.from({ length: 13 }).map((_, index) => (
-              <Image
-                key={index}
-                src="/assets/images/ai-fullstack-engineering/ai-engineering-timeline-line.svg"
-                alt=""
-                width={16}
-                height={383}
-                className="absolute left-1/2 h-[383px] w-4 -translate-x-1/2"
-                style={{ top: `${index * 380}px` }}
-              />
-            ))}
-          </div>
+        {/* TIMELINE */}
+        <div className="relative mt-24 w-full">
+          {/* DESKTOP CENTER LINE */}
+          <div
+            className="
+              absolute
+              bottom-0
+              left-1/2
+              top-0
+              z-0
+              hidden
+              w-[2px]
+              -translate-x-1/2
+              bg-[#ff6b00]
+              lg:block
+            "
+          />
 
-          <div className="flex flex-col gap-10 lg:gap-10">
+          {/* MOBILE LINE */}
+          <div
+            className="
+              absolute
+              bottom-0
+              left-[7px]
+              top-0
+              z-0
+              w-[2px]
+              bg-[#ff6b00]
+              lg:hidden
+            "
+          />
+
+          <div className="flex flex-col gap-12 lg:gap-[54px]">
             {examples.map((example, index) => (
               <TimelineCard
                 key={example.title}
@@ -126,8 +145,9 @@ export default function AiEngineeringExplainedSection() {
           </div>
         </div>
 
+        {/* BOTTOM TEXT */}
         <p
-          className={`${adineue.className} mt-16 max-w-[1035px] text-justify text-[22px] leading-[1.55] tracking-[0.4px] text-[#181c23] lg:mt-20 lg:text-[28px] lg:leading-[40px] lg:tracking-[0.6px]`}
+          className={`${exo.className} mt-16 max-w-[1120px] text-justify text-[17px] leading-[1.55] tracking-[0.4px] text-[#181c23] lg:mt-24 lg:text-[20px] lg:leading-[1.65] lg:tracking-[0.2px]`}
         >
           They work across models, data, APIs, applications, deployment and
           production to turn AI capability into something people can actually
@@ -149,35 +169,168 @@ function TimelineCard({
   body: string;
   side: "left" | "right";
 }) {
-  const alignment =
-    side === "left" ? "lg:self-start lg:mr-auto" : "lg:self-end lg:ml-auto";
+  const isLeft = side === "left";
 
   return (
-    <article
-      className={`relative w-full max-w-[610px] rounded-[40px] bg-white px-6 pb-8 pt-16 shadow-[0px_1px_6px_rgba(0,0,0,0.12)] sm:px-8 lg:min-h-[350px] lg:px-20 lg:pb-9 lg:pt-20 ${alignment}`}
-    >
-      <div className="absolute -top-[50px] left-11 flex size-[100px] rotate-[3.26deg] items-center justify-center rounded border border-[#ff6b00] bg-white text-[48px] font-bold tracking-[1.6px] text-black shadow-[0px_0px_6px_0px_rgba(248,100,50,0.25)]">
-        {number}
-      </div>
+    <div
+      className="
+        relative
+        w-full
+        pl-8
 
-      <Image
-        src="/assets/images/ai-fullstack-engineering/ai-engineering-card-icon.png"
-        alt=""
-        width={80}
-        height={80}
-        className="absolute left-5 top-1/2 hidden size-20 -translate-y-1/2 object-cover sm:block"
+        lg:grid
+        lg:grid-cols-[minmax(0,1fr)_40px_minmax(0,1fr)]
+        lg:items-center
+        lg:pl-0
+      "
+    >
+      {/* TIMELINE NODE */}
+      <div
+        className="
+          absolute
+          left-[0px]
+          top-1/2
+          z-40
+          h-[16px]
+          w-[16px]
+          -translate-y-1/2
+          rounded-full
+          border-[3px]
+          border-white
+          bg-[#ff6b00]
+          shadow-[0_0_0_1px_rgba(255,107,0,0.12)]
+
+          lg:left-1/2
+          lg:-translate-x-1/2
+        "
       />
 
-      <div className="sm:pl-[104px]">
-        <h4 className="mb-5 text-[22px] font-bold uppercase leading-tight tracking-[1.2px] text-[#181c23] lg:text-[28px] lg:tracking-[1.76px]">
-          {title}
-        </h4>
-        <p
-          className={`${adineue.className} text-justify text-[20px] leading-[1.5] tracking-[0.45px] text-[#5a4136] lg:text-[24px] lg:leading-[36px] lg:tracking-[0.68px]`}
+      {/* CARD */}
+      <article
+        className={`
+          relative
+          z-10
+          w-full
+          max-w-[500px]
+          rounded-[24px]
+          bg-white
+          px-5
+          pb-7
+          pt-12
+          shadow-[0px_2px_10px_rgba(0,0,0,0.10)]
+
+          sm:px-7
+          sm:pb-8
+          sm:pt-14
+
+          lg:min-h-[250px]
+          lg:px-10
+          lg:pb-8
+          lg:pt-14
+
+          ${
+            isLeft
+              ? "lg:col-start-1 lg:justify-self-end"
+              : "lg:col-start-3 lg:justify-self-start"
+          }
+        `}
+      >
+        {/* NUMBER BADGE */}
+        <div
+          className="
+            absolute
+            -top-[25px]
+            left-6
+            z-30
+            flex
+            h-[64px]
+            w-[64px]
+            rotate-[3deg]
+            items-center
+            justify-center
+            rounded-[4px]
+            border
+            border-[#ff6b00]
+            bg-white
+            text-[16px]
+            font-bold
+            leading-none
+            tracking-[0.5px]
+            text-black
+            shadow-[0_0_6px_rgba(248,100,50,0.18)]
+
+            sm:left-7
+
+            lg:h-[68px]
+            lg:w-[68px]
+            lg:text-[16px]
+          "
         >
-          {body}
-        </p>
-      </div>
-    </article>
+          {number}
+        </div>
+
+        {/* ICON */}
+        <Image
+          src="/assets/images/ai-fullstack-engineering/ai-engineering-card-icon.png"
+          alt=""
+          width={52}
+          height={52}
+          className="
+            mb-4
+            h-[48px]
+            w-[48px]
+            object-contain
+
+            sm:absolute
+            sm:left-5
+            sm:top-1/2
+            sm:mb-0
+            sm:h-[52px]
+            sm:w-[52px]
+            sm:-translate-y-1/2
+
+            lg:left-6
+          "
+        />
+
+        {/* CONTENT */}
+        <div className="sm:pl-[68px] lg:pl-[72px]">
+          <h4
+            className={`
+              ${melodrama.className}
+              mb-2
+              text-[30px]
+              font-bold
+              leading-[1.2]
+              tracking-[0.4px]
+              text-[#181c23]
+
+              lg:text-[34px]
+              lg:tracking-[0.5px]
+            `}
+          >
+            {title}
+          </h4>
+
+          <p
+            className={`
+              ${exo.className}
+              text-left
+              text-[17px]
+              font-normal
+              leading-[1.55]
+              tracking-[0.2px]
+              text-[#5a4136]
+
+              lg:text-[20px]
+              lg:leading-[28px]
+              lg:tracking-[0.25px]
+            `}
+          >
+            {body}
+          </p>
+        </div>
+      </article>
+    </div>
   );
 }

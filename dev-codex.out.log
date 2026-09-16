@@ -68,3 +68,31 @@
  GET /favicon.ico?favicon.ffdbe382.ico 200 in 2548ms
  GET /favicon.ico 200 in 2534ms
  ✓ Compiled in 3.5s
+ ✓ Compiled in 8.4s
+ ○ Compiling /ai-fullstack-engineering ...
+ ✓ Compiled /ai-fullstack-engineering in 1147ms
+ GET /ai-fullstack-engineering 200 in 6890ms
+ GET /favicon.ico?favicon.ffdbe382.ico 200 in 3112ms
+ GET /favicon.ico 200 in 3318ms
+ GET /ai-fullstack-engineering 200 in 8860ms
+ ✓ Compiled in 6.7s
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 15.9s
+ GET /ai-fullstack-engineering 500 in 21173ms
+ ✓ Compiled in 18.2s
+ ○ Compiling /ai-fullstack-engineering ...
+ ✓ Compiled /ai-fullstack-engineering in 4.8s
+ GET /ai-fullstack-engineering 200 in 27730ms
+ GET /ai-fullstack-engineering 200 in 11335ms
+ ✓ Compiled in 4.6s
+ ✓ Compiled in 3.6s
+ ✓ Compiled in 5.6s
+ ✓ Compiled /ai-fullstack-engineering in 385ms
+ GET /ai-fullstack-engineering 200 in 2570ms
+ GET /favicon.ico?favicon.ffdbe382.ico 200 in 1614ms
+ GET /favicon.ico 200 in 1583ms
+ ○ Compiling /ai-engineering-masterclass ...
+ ✓ Compiled /ai-engineering-masterclass in 14.1s
+ GET /ai-engineering-masterclass 200 in 20802ms
+ GET /ai-fullstack-engineering 200 in 9289ms
+ GET /ai-fullstack-engineering 200 in 7315ms
