@@ -28,7 +28,7 @@ export default function WhyPaySection() {
         </div>
 
         <div className="flex w-full max-w-[777px] flex-col items-center gap-6 sm:gap-8">
-          <h2 className={`${melodrama.className} relative max-w-[713px] text-center text-[30px] font-bold leading-[1.12] tracking-[-0.95px] text-[#181c23] sm:text-[36px] lg:text-[34px] lg:leading-[1.16] lg:tracking-[-0.6px]`}>            <Image
+          <h2 className={`${melodrama.className} relative max-w-[713px] text-center text-[30px] font-bold leading-[1.12] tracking-[-0.95px] text-[#181c23] sm:text-[36px] lg:text-[44px] lg:leading-[1.16] lg:tracking-[-0.6px]`}>            <Image
               src="/assets/images/ai-fullstack-engineering/why-pay-highlight.svg"
               alt=""
               width={651}

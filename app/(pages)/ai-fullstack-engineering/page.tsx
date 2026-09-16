@@ -10,6 +10,12 @@ import AiEngineeringExplainedSection from "./ai-engineering-explained-section";
 import EverydaySystemsSection from "./everyday-systems-section";
 import ExplainedCtaSection from "./explained-cta-section";
 import ExperienceProofSection from "./experience-proof-section";
+import ProofOfWorkSection from "./proof-of-work-section";
+import LearningPathSection from "./learning-path-section";
+import LearningOptionsSection from "./learning-options-section";
+import WhatYouWillLearnSection from "./what-you-will-learn-section";
+import ProgramActsSection from "./program-acts-section";
+import CurriculumSection from "./curriculum-section";
 
 export default function AiFullstackEngineeringPage() {
   return (
@@ -25,6 +31,13 @@ export default function AiFullstackEngineeringPage() {
       <EverydaySystemsSection />
       <ExplainedCtaSection />
       <ExperienceProofSection />
+      <ProofOfWorkSection />
+      <LearningPathSection />
+      <LearningOptionsSection />
+      <WhatYouWillLearnSection />
+      <ProgramActsSection />
+      <CurriculumSection />
     </main>
   );
 }
+

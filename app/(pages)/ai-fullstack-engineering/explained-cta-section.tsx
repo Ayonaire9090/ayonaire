@@ -35,7 +35,7 @@ export default function ExplainedCtaSection() {
 
       <div className="relative z-10 mx-auto flex w-full max-w-[1187px] flex-col items-center text-center text-white">
         <h2
-          className={`${melodrama.className} text-[30px] font-bold uppercase leading-[1.18] tracking-[0.4px] sm:text-[36px] lg:text-[34px] lg:leading-[1.2] lg:tracking-[0.2px]`}
+          className={`${melodrama.className} text-[30px] font-bold uppercase leading-[1.18] tracking-[0.4px] sm:text-[36px] lg:text-[44px] lg:leading-[1.2] lg:tracking-[0.2px]`}
         >
           So... I just explained what 10s of Youtube videos fail to help many
           understand (of course many of them want to{" "}
@@ -71,7 +71,7 @@ export default function ExplainedCtaSection() {
 
         <a
           href="#ai-engineering-path"
-          className={`${exo.className} mt-12 inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-8 py-4 text-[17px] uppercase text-white shadow-[0px_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:text-[16px]`}
+          className={`${exo.className} mt-12 inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-8 py-4 text-[15px] uppercase text-white sm:text-[16px] shadow-[0px_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:text-[16px]`}
         >
           I want to build systems like these
           <Image

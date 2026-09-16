@@ -7,7 +7,7 @@ export default function HighestPaidSection() {
       <div className="mx-auto flex w-full flex-col items-center gap-[56px] sm:gap-[68px] lg:gap-[76px]">
         <div className="flex w-full max-w-[1120px] flex-col gap-12 sm:gap-16 lg:gap-20">
           <h2
-            className={`${melodrama.className} relative max-w-[860px] text-[30px] font-bold leading-[1.1] tracking-[1.1px] text-[#181c23] sm:text-[36px] lg:text-[34px] lg:leading-[1.15] lg:tracking-[0.2px]`}
+            className={`${melodrama.className} relative max-w-[860px] text-[30px] font-bold leading-[1.1] tracking-[1.1px] text-[#181c23] sm:text-[36px] lg:text-[44px] lg:leading-[1.15] lg:tracking-[0.2px]`}
           >
             AI/ML Engineers Are{" "}
             <span className="relative inline-block text-[#f25e25]">

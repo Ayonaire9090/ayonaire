@@ -69,7 +69,7 @@ export default function AiEngineeringExplainedSection() {
         {/* HEADER */}
         <div className="flex w-full max-w-[1120px] flex-col items-center gap-[46px] text-center">
           <h2
-            className={`${melodrama.className} relative max-w-[1003px] text-[30px] font-bold uppercase leading-[1.12] tracking-[-0.95px] text-[#181c23] sm:text-[36px] lg:text-[34px] lg:leading-[1.16] lg:tracking-[-0.6px]`}
+            className={`${melodrama.className} relative max-w-[1003px] text-[30px] font-bold uppercase leading-[1.12] tracking-[-0.95px] text-[#181c23] sm:text-[36px] lg:text-[44px] lg:leading-[1.16] lg:tracking-[-0.6px]`}
           >
             Which one do you think creates the{" "}
             <span className="relative inline-block text-[#f25e25]">
@@ -86,7 +86,7 @@ export default function AiEngineeringExplainedSection() {
           </h2>
 
           <h3
-            className={`${melodrama.className} text-[30px] font-bold leading-tight tracking-[0.4px] text-[#181c23] sm:text-[36px] lg:text-[34px] lg:leading-[1.2] lg:tracking-[0.2px]`}
+            className={`${melodrama.className} text-[30px] font-bold leading-tight tracking-[0.4px] text-[#181c23] sm:text-[36px] lg:text-[44px] lg:leading-[1.2] lg:tracking-[0.2px]`}
           >
             So what exactly is{" "}
             <span className="text-[#f25e25]">AI Engineering?</span>
@@ -305,7 +305,7 @@ function TimelineCard({
               tracking-[0.4px]
               text-[#181c23]
 
-              lg:text-[34px]
+              lg:text-[44px]
               lg:tracking-[0.5px]
             `}
           >

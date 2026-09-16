@@ -16,7 +16,7 @@ export default function LinkedInSearchSection() {
     <section className="bg-[#fdfbf9]">
       <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-14 px-5 py-16 sm:px-8 lg:px-12 xl:px-16 lg:gap-20 lg:py-20">
         <h2
-          className={`${melodrama.className} max-w-[655px] space-y-5 whitespace-pre-wrap lg:space-y-6 text-[30px] font-bold leading-[1.12] tracking-[-0.95px] text-[#181c23] sm:text-[36px] lg:text-[34px] lg:leading-[1.16] lg:tracking-[-0.6px]`}
+          className={`${melodrama.className} max-w-[655px] space-y-5 whitespace-pre-wrap lg:space-y-6 text-[30px] font-bold leading-[1.12] tracking-[-0.95px] text-[#181c23] sm:text-[36px] lg:text-[44px] lg:leading-[1.16] lg:tracking-[-0.6px]`}
         >
           Don&apos;t take our word for it.{"\n"}
           <span className="relative inline-block text-[#f25e25]">
@@ -36,7 +36,7 @@ export default function LinkedInSearchSection() {
             {roles.map((role) => (
               <li key={role.number} className="flex items-center gap-7">
                 <NumberPill value={role.number} />
-                <span className="text-[16px] font-normal tracking-[0.2px] sm:text-[16px] lg:text-[16px]">
+                <span className="text-[17px] font-normal tracking-[0.2px] sm:text-[18px] lg:text-[20px]">
                   {role.label}
                 </span>
               </li>
@@ -67,7 +67,7 @@ export default function LinkedInSearchSection() {
             ))}
           </div>
 
-          <p className="text-[16px] font-bold leading-[1.5] tracking-[-0.4px] lg:text-[16px] lg:leading-[1.55]">
+          <p className="text-[17px] font-bold leading-[1.5] tracking-[-0.4px] lg:text-[20px] lg:leading-[1.55]">
             Then ask yourself the next question:
           </p>
 
@@ -111,7 +111,7 @@ export default function LinkedInSearchSection() {
 
         <div className="relative z-10 mx-auto flex w-full max-w-[1187px] flex-col items-center text-white">
           <h2
-            className={`${melodrama.className} relative text-center text-[30px] font-bold leading-[1.1] tracking-[-0.95px] sm:text-[36px] lg:text-[34px] lg:leading-[1.16] lg:tracking-[-0.6px]`}
+            className={`${melodrama.className} relative text-center text-[30px] font-bold leading-[1.1] tracking-[-0.95px] sm:text-[36px] lg:text-[44px] lg:leading-[1.16] lg:tracking-[-0.6px]`}
           >
             And really, it&apos;s absolutely unnecessary...so today, we&apos;ll
             show you the{" "}
@@ -145,7 +145,7 @@ export default function LinkedInSearchSection() {
 
           <a
             href="#ai-engineering-path"
-            className={`${exo.className} mt-12 inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-10 py-5 text-[17px] uppercase text-white shadow-[0px_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01]`}
+            className={`${exo.className} mt-12 inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-10 py-5 text-[15px] uppercase text-white sm:text-[16px] shadow-[0px_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01]`}
           >
             let&apos;s get into it
             <Image

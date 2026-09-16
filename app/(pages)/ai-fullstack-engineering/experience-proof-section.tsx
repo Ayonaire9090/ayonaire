@@ -15,9 +15,9 @@ export default function ExperienceProofSection() {
       <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-[76px]">
         <div className="flex w-full flex-col items-start gap-11">
           <h2
-            className={`${melodrama.className} relative w-full text-center text-[30px] font-bold leading-[1.12] tracking-[0.4px] text-[#181c23] sm:text-[36px] lg:text-[34px] lg:leading-[1.16] lg:tracking-[0.2px]`}
+            className={`${melodrama.className} relative w-full text-center text-[30px] font-bold leading-[1.12] tracking-[0.4px] text-[#181c23] sm:text-[36px] lg:text-[44px] lg:leading-[1.16] lg:tracking-[0.2px]`}
           >
-            <span className="block text-[16px] lg:text-[16px]">
+            <span className="block text-[20px] lg:text-[24px]">
               It&apos;s equally worthy of note that
             </span>
             this is{" "}

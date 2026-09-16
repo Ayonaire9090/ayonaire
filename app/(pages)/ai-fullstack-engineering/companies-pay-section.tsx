@@ -6,7 +6,7 @@ export default function CompaniesPaySection() {
     <section className="bg-[#fdfbf9] px-5 py-16 sm:px-8 lg:px-12 xl:px-16 lg:py-20">
       <div className="mx-auto flex w-full max-w-[1120px] flex-col items-center gap-8">
         <h2
-          className={`${melodrama.className} text-center text-[30px] font-bold leading-[1.12] tracking-[0.4px] text-[#181c23] sm:text-[36px] lg:text-[34px] lg:leading-[1.16] lg:tracking-[0.2px]`}
+          className={`${melodrama.className} text-center text-[30px] font-bold leading-[1.12] tracking-[0.4px] text-[#181c23] sm:text-[36px] lg:text-[44px] lg:leading-[1.16] lg:tracking-[0.2px]`}
         >
           Companies Pay People Who Build AI Systems{" "}
           <span className="relative inline-block text-[#f25e25]">

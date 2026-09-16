@@ -34,7 +34,7 @@ export default function TwoSetsSection() {
       <div className="mx-auto flex w-full max-w-[1288px] flex-col items-center gap-16 px-5 py-16 sm:px-8 lg:px-12 xl:px-16 lg:gap-20 lg:py-20">
         <div className="relative flex w-full max-w-[1120px] flex-col items-center gap-12 text-center lg:gap-14">
           <h2
-            className={`${melodrama.className} relative text-[30px] font-bold leading-[1.12] tracking-[-0.95px] text-[#181c23] sm:text-[36px] lg:text-[34px] lg:leading-[1.16] lg:tracking-[-0.6px]`}
+            className={`${melodrama.className} relative text-[30px] font-bold leading-[1.12] tracking-[-0.95px] text-[#181c23] sm:text-[36px] lg:text-[44px] lg:leading-[1.16] lg:tracking-[-0.6px]`}
           >
             There are{" "}
             <span className="relative inline-block text-[#f25e25]">
@@ -66,7 +66,7 @@ export default function TwoSetsSection() {
           </div>
 
           <p
-            className={`${melodrama.className} w-full text-left text-[30px] font-bold leading-tight tracking-[-0.9px] text-black sm:text-[36px] lg:text-[34px] lg:leading-[1.16] lg:tracking-[-0.6px]`}
+            className={`${melodrama.className} w-full text-left text-[30px] font-bold leading-tight tracking-[-0.9px] text-black sm:text-[36px] lg:text-[44px] lg:leading-[1.16] lg:tracking-[-0.6px]`}
           >
             I want you to be{" "}
             <span className="text-[#f25e25]">that person</span>
@@ -113,7 +113,7 @@ export default function TwoSetsSection() {
 
           <a
             href="#ai-engineering-path"
-            className={`${exo.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-10 py-5 text-[17px] text-white shadow-[0px_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01]`}
+            className={`${exo.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-10 py-5 text-[15px] text-white sm:text-[16px] shadow-[0px_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01]`}
           >
             SHOW ME THE AI ENGINEERING PATH
             <Image
@@ -127,7 +127,7 @@ export default function TwoSetsSection() {
         </div>
 
         <div className="flex items-center justify-center">
-          <p className="rotate-[-5deg] text-center text-[16px] tracking-[0.2px] text-[#181c23] lg:text-[16px]">
+          <p className="rotate-[-5deg] text-center text-[20px] tracking-[0.2px] text-[#181c23] lg:text-[24px]">
             BUT WAIT?..
           </p>
           <Image
@@ -147,7 +147,7 @@ export default function TwoSetsSection() {
           >
             Because that births another question that you must answer before you
             start your journey{" "}
-            <strong className="text-[16px] font-bold italic lg:text-[16px]">
+            <strong className="text-[19px] font-bold italic lg:text-[22px]">
               so you don&apos;t end up miserable and unemployable like others.
             </strong>
           </p>
@@ -175,7 +175,7 @@ export default function TwoSetsSection() {
       >
         <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-14 lg:gap-20">
           <h2
-            className={`${melodrama.className} relative text-[30px] font-bold leading-tight tracking-[-0.95px] text-[#181c23] sm:text-[36px] lg:text-[34px] lg:leading-[1.16] lg:tracking-[-0.6px]`}
+            className={`${melodrama.className} relative text-[30px] font-bold leading-tight tracking-[-0.95px] text-[#181c23] sm:text-[36px] lg:text-[44px] lg:leading-[1.16] lg:tracking-[-0.6px]`}
           >
             AI Engineering{" "}
             <span className="relative inline-block text-[#f25e25]">
@@ -197,10 +197,10 @@ export default function TwoSetsSection() {
                 key={skill}
                 className="relative flex min-h-[96px] items-center overflow-hidden rounded-[14px] bg-white px-6 py-5 shadow-[0px_1px_6px_rgba(0,0,0,0.12)] lg:min-h-[122px]"
               >
-                <span className="absolute left-6 top-1/2 -translate-y-1/2 text-[16px] font-bold leading-none tracking-[-0.166px] text-[#f25e25] opacity-20 lg:text-[72px]">
+                <span className="absolute left-6 top-1/2 -translate-y-1/2 text-[44px] font-bold leading-none tracking-[-0.166px] text-[#f25e25] opacity-20 lg:text-[72px]">
                   {String(index + 1).padStart(2, "0")}
                 </span>
-                <span className="relative ml-[120px] text-[16px] font-bold tracking-[-0.319px] text-black lg:text-[16px]">
+                <span className="relative ml-[96px] text-[18px] font-bold tracking-[-0.319px] text-black lg:ml-[120px] lg:text-[22px]">
                   {skill}
                 </span>
               </div>
@@ -233,7 +233,7 @@ function BlackWarningCard({
         className="object-fill"
       />
       <div className="relative z-10 flex h-full min-h-[270px] flex-col justify-center px-10 py-8 text-left text-[#f5f5f5]">
-        <p className="mb-6 rotate-[-2deg] text-[16px] text-white lg:text-[16px]">
+        <p className="mb-6 rotate-[-2deg] text-[19px] text-white lg:text-[22px]">
           {label}
         </p>
         <p className={`${exo.className} text-[17px] leading-[1.45] lg:text-[20px] lg:leading-[1.55]`}>
@@ -274,7 +274,7 @@ function QuestionCard({
 }) {
   return (
     <article className="relative min-h-[520px] rounded-[14px] bg-white px-8 pb-10 pt-24 shadow-[0px_1px_6px_rgba(0,0,0,0.12)] lg:min-h-[606px] lg:px-11">
-      <div className="absolute -top-12 left-11 flex size-[100px] items-center justify-center rounded border border-[#ff6b00] bg-white text-[16px] font-bold tracking-[0.2px] text-black shadow-[0px_0px_6px_0px_rgba(248,100,50,0.25)]">
+      <div className="absolute -top-12 left-11 flex size-[100px] items-center justify-center rounded border border-[#ff6b00] bg-white text-[36px] font-bold tracking-[0.2px] text-black shadow-[0px_0px_6px_0px_rgba(248,100,50,0.25)]">
         {number}
       </div>
       <Image
@@ -284,7 +284,7 @@ function QuestionCard({
         height={115}
         className="mb-10 size-[115px] object-cover"
       />
-      <h3 className={`${melodrama.className} mb-8 text-[30px] font-bold leading-[1.25] tracking-[0.4px] text-black lg:text-[34px] lg:leading-[1.4]`}>        {title}
+      <h3 className={`${melodrama.className} mb-8 text-[30px] font-bold leading-[1.25] tracking-[0.4px] text-black lg:text-[44px] lg:leading-[1.4]`}>        {title}
       </h3>
       <p
         className={`${exo.className} text-justify text-[17px] leading-[1.5] tracking-[-0.319px] text-black lg:text-[20px] lg:leading-[1.45]`}

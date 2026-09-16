@@ -6,7 +6,7 @@ export default function AiBoomSideSection() {
     <section className="bg-[#fff5ee] px-5 py-16 sm:px-8 lg:px-12 xl:px-16 lg:py-[120px]">
       <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-10">
         <h2
-          className={`${melodrama.className} w-full text-[30px] font-bold leading-[1.12] tracking-[-0.95px] text-[#181c23] sm:text-[36px] lg:text-[34px] lg:leading-[1.16] lg:tracking-[-0.6px]`}
+          className={`${melodrama.className} w-full text-[30px] font-bold leading-[1.12] tracking-[-0.95px] text-[#181c23] sm:text-[36px] lg:text-[44px] lg:leading-[1.16] lg:tracking-[-0.6px]`}
         >
           But here&apos;s the other side of the{" "}
           <span className="text-[#f25e25]">AI Boom.</span>
@@ -142,10 +142,10 @@ function PathCard({
         className="object-fill"
       />
       <div className="relative z-10 flex min-h-[520px] flex-col justify-center px-8 py-16 text-[#f5f5f5] sm:px-14 lg:min-h-[inherit] lg:px-[108px]">
-        <p className="mb-7 rotate-[1deg] text-[16px] text-white lg:text-[16px]">
+        <p className="mb-7 rotate-[1deg] text-[22px] text-white lg:text-[26px]">
           {number}
         </p>
-        <h3 className={`${melodrama.className} mb-8 text-[30px] font-bold leading-[1.25] tracking-[0.4px] text-white lg:text-[34px] lg:leading-[1.45] lg:tracking-[0.2px]`}>          {title}
+        <h3 className={`${melodrama.className} mb-8 text-[30px] font-bold leading-[1.25] tracking-[0.4px] text-white lg:text-[44px] lg:leading-[1.45] lg:tracking-[0.2px]`}>          {title}
         </h3>
         <div
           className={`${exo.className} space-y-5 whitespace-pre-wrap lg:space-y-6 text-[17px] leading-[1.65] lg:text-[20px] lg:leading-[1.65]`}
