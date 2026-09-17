@@ -1,9 +1,9 @@
-import Image from "next/image";
+﻿import Image from "next/image";
 
 export default function Hero() {
   return (
     <section
-      className="relative min-h-[420px] overflow-hidden bg-black sm:min-h-[560px] lg:min-h-[666px]"
+      className="relative min-h-[520px] overflow-hidden bg-black sm:min-h-[720px] lg:min-h-[982px]"
       aria-label="AI Fullstack Engineering"
     >
       <Image
@@ -15,14 +15,14 @@ export default function Hero() {
         className="pointer-events-none select-none object-cover"
       />
 
-      <div className="relative z-10 flex min-h-[420px] justify-center sm:min-h-[560px] lg:min-h-[666px]">
-        <div className="relative mt-[74px] h-[75px] w-[min(303.846px,64vw)] sm:mt-[78px] lg:mt-[80px]">
+      <div className="relative z-10 flex min-h-[520px] justify-center sm:min-h-[720px] lg:min-h-[982px]">
+        <div className="relative mt-[72px] h-[52px] w-[210px] sm:mt-[104px] sm:h-[64px] sm:w-[259px] lg:mt-[143px] lg:h-[75px] lg:w-[304px]">
           <Image
             src="/assets/images/ai-fullstack-engineering/ayonaire-logo.png"
             alt="Ayonaire"
             fill
             priority
-            sizes="304px"
+            sizes="(min-width: 1024px) 304px, 259px"
             className="object-contain"
           />
         </div>
