@@ -10,13 +10,13 @@ export default function Hero() {
         min-h-[620px]
         overflow-visible
         bg-black
-        mb-[62px]
+        mb-[82px]
         sm:min-h-[700px]
-        sm:mb-[60px]
+        sm:mb-[80px]
         md:min-h-[760px]
-        md:mb-[88px]
+        md:mb-[128px]
         lg:min-h-[790px]
-        lg:mb-[98px]
+        lg:mb-[128px]
         xl:min-h-[820px]
       "
       aria-label="AI Fullstack Engineering"
@@ -100,9 +100,7 @@ export default function Hero() {
               drop-shadow-[0_8px_22px_rgba(0,0,0,0.55)]
             `}
           >
-            <span className="block">
-              Entry-Level AI/ML Engineers
-            </span>
+            <span className="block">Entry-Level AI/ML Engineers</span>
 
             <span className="mt-1 block sm:mt-2">
               Are Making{" "}
@@ -139,9 +137,7 @@ export default function Hero() {
               </span>
             </span>
 
-            <span className="mt-1 block sm:mt-2">
-              Every Single Month.
-            </span>
+            <span className="mt-1 block sm:mt-2">Every Single Month.</span>
           </h1>
 
           {/* DOWNWARD ARROW */}
@@ -207,14 +203,17 @@ export default function Hero() {
         className="
           absolute
           inset-x-0
-          bottom-[-63px]
+        
           z-20
           h-[115px]
-          sm:bottom-[-64px]
+          bottom-[-88px]
+          sm:bottom-[-104px]
+          md:bottom-[-136px]
+          lg:bottom-[-136px]
           sm:h-[135px]
-          md:bottom-[-86px]
+        
           md:h-[150px]
-          lg:bottom-[-96px]
+         
           lg:h-[175px]
         "
       >
@@ -259,7 +258,8 @@ export default function Hero() {
                 gap-2
                 rounded-[5px]
                 bg-[#ff6b00]
-                px-5
+                px-10
+                py-5
                 text-[10px]
                 font-black
                 uppercase
@@ -269,7 +269,7 @@ export default function Hero() {
                 transition-all
                 duration-300
                 hover:-translate-y-[1px]
-                hover:bg-[#ff7b1a]
+                hover:bg-[#F25E25]
                 hover:shadow-[0_7px_28px_rgba(255,107,0,0.45)]
                 focus-visible:outline
                 focus-visible:outline-2

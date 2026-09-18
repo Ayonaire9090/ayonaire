@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { exo, melodrama } from "@/app/fonts";
 
 export default function AiBoomSideSection() {
@@ -36,35 +35,39 @@ export default function AiBoomSideSection() {
           </p>
         </div>
 
-        <div className="flex w-full max-w-[1130px] flex-col items-center gap-2 pb-10">
+        {/* Path Cards Wrapper */}
+        <div className="flex w-full max-w-[1130px] flex-col items-center gap-10 pb-10">
           <PathCard
-            asset="/assets/images/ai-fullstack-engineering/ai-boom-card-top.svg"
             number="01"
             title="Use AI To Become More Productive"
-            className="lg:min-h-[738px]"
+            rotation="-rotate-1 sm:-rotate-2"
           >
             <p>
               You can learn how to integrate AI into your work, automate
               repetitive tasks and become more productive using tools like{" "}
-              <strong className="font-bold">n8n, Make, Claude</strong> and
+              <strong className="font-bold text-white">n8n, Make, Claude</strong> and
               other AI automation platforms.
             </p>
-            <p className="font-bold">For example:</p>
+            <p className="font-bold text-white">For example:</p>
             <p>
               An accountant might use AI tools to automate parts of reporting,
               reconciliation or repetitive workflows.
             </p>
             <p>That is valuable.</p>
             <p>
-              That is <strong className="font-bold">PRODUCTIVITY.</strong>
+              That is <strong className="font-bold text-white">PRODUCTIVITY.</strong>
             </p>
           </PathCard>
 
+          {/* Divider text between cards */}
+          <div className="text-center font-bold text-2xl tracking-widest text-[#181c23]/80 italic my-[-10px] z-10">
+            OR
+          </div>
+
           <PathCard
-            asset="/assets/images/ai-fullstack-engineering/ai-boom-card-bottom.svg"
             number="02"
             title="Learn How To Engineer AI Systems"
-            className="lg:min-h-[569px]"
+            rotation="rotate-1 sm:rotate-2"
           >
             <p>Or you can go deeper.</p>
             <p>
@@ -77,7 +80,7 @@ export default function AiBoomSideSection() {
               how certain jobs, tasks and workflows are done.
             </p>
             <p>
-              That is <strong className="font-semibold">AI ENGINEERING.</strong>
+              That is <strong className="font-semibold text-white">AI ENGINEERING.</strong>
             </p>
           </PathCard>
         </div>
@@ -120,38 +123,39 @@ export default function AiBoomSideSection() {
 }
 
 function PathCard({
-  asset,
   number,
   title,
   children,
-  className = "",
+  rotation = "",
 }: {
-  asset: string;
   number: string;
   title: string;
   children: React.ReactNode;
-  className?: string;
+  rotation?: string;
 }) {
   return (
-    <article className={`relative w-full max-w-[1130px] overflow-hidden ${className}`}>
-      <Image
-        src={asset}
-        alt=""
-        fill
-        sizes="(min-width: 1024px) 1130px, 100vw"
-        className="object-fill"
-      />
-      <div className="relative z-10 flex min-h-[520px] flex-col justify-center px-8 py-16 text-[#f5f5f5] sm:px-14 lg:min-h-[inherit] lg:px-[108px]">
-        <p className="mb-7 rotate-[1deg] text-[22px] text-white lg:text-[26px]">
+    <article
+      className={`relative w-full max-w-[1130px] rounded-[32px] sm:rounded-[40px] bg-[#181a1b] p-8 sm:p-12 lg:px-16 lg:py-14 text-[#d1d5db] shadow-2xl transition-transform duration-300 hover:scale-[1.01] ${rotation}`}
+    >
+      {/* Handcrafted Number Badge */}
+      <div className="mb-4 flex items-center gap-2">
+        <span className="text-[32px] sm:text-[38px] font-black italic tracking-tighter text-white font-mono opacity-90">
           {number}
-        </p>
-        <h3 className={`${melodrama.className} mb-8 text-[30px] font-bold leading-[1.25] tracking-[0.4px] text-white lg:text-[44px] lg:leading-[1.45] lg:tracking-[0.2px]`}>          {title}
-        </h3>
-        <div
-          className={`${exo.className} space-y-5 whitespace-pre-wrap lg:space-y-6 text-[17px] leading-[1.65] lg:text-[20px] lg:leading-[1.65]`}
-        >
-          {children}
-        </div>
+        </span>
+      </div>
+
+      {/* Card Title */}
+      <h3
+        className={`${melodrama.className} mb-6 text-[26px] font-bold leading-[1.25] tracking-[0.2px] text-white sm:text-[32px] lg:text-[40px] lg:leading-[1.3]`}
+      >
+        {title}
+      </h3>
+
+      {/* Card Body */}
+      <div
+        className={`${exo.className} space-y-4 whitespace-pre-wrap text-[16px] leading-[1.65] text-[#d1d5db] sm:text-[18px] lg:text-[20px] lg:leading-[1.65]`}
+      >
+        {children}
       </div>
     </article>
   );

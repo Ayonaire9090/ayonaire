@@ -75,7 +75,25 @@ export default function HighestPaidSection() {
           </div>
         </div>
 
-        <div className="relative aspect-[1240/560] w-full max-w-[1240px] overflow-hidden">
+        <div className="flex w-full max-w-[351px] flex-col gap-3 sm:hidden">
+          {["fr1.png", "fr2.png", "fr3.png"].map((imageName, index) => (
+            <div
+              key={imageName}
+              className="relative aspect-[351/430] w-full overflow-hidden"
+            >
+              <Image
+                src={`/assets/images/${imageName}`}
+                alt={`AI engineering salary example ${index + 1}`}
+                width={351}
+                height={744}
+                className="absolute left-0 top-0 h-auto w-full max-w-none"
+                sizes="100vw"
+              />
+            </div>
+          ))}
+        </div>
+
+        <div className="relative hidden aspect-[1240/560] w-full max-w-[1240px] overflow-hidden sm:block">
           <Image
             src="/assets/images/ai-fullstack-engineering/highest-paid-jobs.png"
             alt="AI engineering job salary examples"

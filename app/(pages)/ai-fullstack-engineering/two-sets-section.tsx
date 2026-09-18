@@ -50,14 +50,16 @@ export default function TwoSetsSection() {
             I don&apos;t want you to be like:
           </h2>
 
-          <div className="grid w-full max-w-[1040px] grid-cols-1 items-center gap-5 md:grid-cols-1">
-            <Image
-              src="/assets/images/black.png"
-              alt=""
-              width={1040}
-              height={1040}
-              sizes="(min-width: 768px) 50vw, 100vw"
-              className="h-auto w-full object-contain"
+          <div className="grid w-full max-w-[1040px] grid-cols-1 items-stretch gap-6 text-left md:grid-cols-2 lg:gap-8">
+            <BlackWarningCard
+              number="01"
+              text="Those who see these many AI related job opportunities and only wish a zillion times that they could land one. They never get past wishing (if only wishes were horses ??)"
+              className="md:-rotate-3"
+            />
+            <BlackWarningCard
+              number="02"
+              text="Those learning AI the wrong way, who then pitifully end up unable to land these highly paid jobs."
+              className="md:rotate-3"
             />
           </div>
 
@@ -208,36 +210,27 @@ export default function TwoSetsSection() {
 }
 
 function BlackWarningCard({
-  asset,
-  label,
+  number,
   text,
   className = "",
 }: {
-  asset: string;
-  label: string;
+  number: string;
   text: string;
   className?: string;
 }) {
   return (
-    <div className={`relative min-h-[270px] overflow-hidden ${className}`}>
-      <Image
-        src={asset}
-        alt=""
-        fill
-        sizes="(min-width: 768px) 510px, 100vw"
-        className="object-fill"
-      />
-      <div className="relative z-10 flex h-full min-h-[270px] flex-col justify-center px-10 py-8 text-left text-[#f5f5f5]">
-        <p className="mb-6 rotate-[-2deg] text-[19px] text-white lg:text-[22px]">
-          {label}
-        </p>
-        <p
-          className={`${exo.className} text-[17px] leading-[1.45] lg:text-[20px] lg:leading-[1.55]`}
-        >
-          {text}
-        </p>
-      </div>
-    </div>
+    <article
+      className={`relative flex min-h-[238px] flex-col justify-center rounded-[18px] bg-[#191919] px-7 py-8 text-[#f5f5f5] shadow-[0px_14px_24px_rgba(0,0,0,0.18)] sm:px-9 lg:min-h-[282px] lg:px-10 ${className}`}
+    >
+      <h3 className="mb-4 rotate-[-2deg] text-[24px] font-bold uppercase leading-none tracking-[0.6px] text-white lg:text-[30px]">
+        {number} Sets of People
+      </h3>
+      <p
+        className={`${exo.className} max-w-[430px] text-[17px] font-medium leading-[1.55] tracking-[0.2px] text-[#f2f2f2] lg:text-[20px] lg:leading-[1.5]`}
+      >
+        {text}
+      </p>
+    </article>
   );
 }
 
