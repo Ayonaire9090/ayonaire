@@ -50,7 +50,7 @@ export default function TwoSetsSection() {
             I don&apos;t want you to be like:
           </h2>
 
-          <div className="grid w-full max-w-[1040px] grid-cols-1 items-center gap-5 md:grid-cols-2">
+          <div className="grid w-full max-w-[1040px] grid-cols-1 items-center gap-5 md:grid-cols-1">
             <Image
               src="/assets/images/black.png"
               alt=""

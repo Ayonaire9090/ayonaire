@@ -1,4 +1,4 @@
-﻿import Image from "next/image";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { melodrama, salt } from "@/app/fonts";
 
@@ -7,13 +7,17 @@ export default function Hero() {
     <section
       className="
         relative
-        min-h-[680px]
-        overflow-hidden
+        min-h-[620px]
+        overflow-visible
         bg-black
-        sm:min-h-[780px]
-        md:min-h-[850px]
-        lg:min-h-[920px]
-        xl:min-h-[982px]
+        mb-[52px]
+        sm:min-h-[700px]
+        sm:mb-[60px]
+        md:min-h-[760px]
+        md:mb-[68px]
+        lg:min-h-[790px]
+        lg:mb-[78px]
+        xl:min-h-[820px]
       "
       aria-label="AI Fullstack Engineering"
     >
@@ -45,16 +49,16 @@ export default function Hero() {
           items-center
           px-4
           pt-8
-          pb-[180px]
+          pb-[150px]
           text-center
           text-white
           sm:px-6
           sm:pt-10
-          sm:pb-[200px]
+          sm:pb-[160px]
           md:px-8
           md:pt-12
           lg:pt-[53px]
-          lg:pb-[220px]
+          lg:pb-[180px]
         "
       >
         {/* LOGO */}
@@ -203,11 +207,14 @@ export default function Hero() {
         className="
           absolute
           inset-x-0
-          bottom-0
+          bottom-[-52px]
           z-20
           h-[115px]
+          sm:bottom-[-60px]
           sm:h-[135px]
+          md:bottom-[-68px]
           md:h-[150px]
+          lg:bottom-[-78px]
           lg:h-[175px]
         "
       >
