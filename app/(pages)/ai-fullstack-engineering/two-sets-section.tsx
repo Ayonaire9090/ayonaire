@@ -51,25 +51,20 @@ export default function TwoSetsSection() {
           </h2>
 
           <div className="grid w-full max-w-[1040px] grid-cols-1 items-center gap-5 md:grid-cols-2">
-            <BlackWarningCard
-              asset="/assets/images/ai-fullstack-engineering/two-sets-card-left.svg"
-              label="01 sets of people"
-              text="Those who see these many AI related job opportunities and only wish a zillion times that they could land one. They never get past wishing (if only wishes were horses)"
-              className="md:min-h-[333px]"
-            />
-            <BlackWarningCard
-              asset="/assets/images/ai-fullstack-engineering/two-sets-card-right.svg"
-              label="02 sets of people"
-              text="Those learning AI the wrong way, who then pitifully end up unable to land these highly paid jobs."
-              className="md:min-h-[257px]"
+            <Image
+              src="/assets/images/black.png"
+              alt=""
+              width={1040}
+              height={1040}
+              sizes="(min-width: 768px) 50vw, 100vw"
+              className="h-auto w-full object-contain"
             />
           </div>
 
           <p
             className={`${melodrama.className} w-full text-left text-[30px] font-bold leading-tight tracking-[-0.9px] text-black sm:text-[36px] lg:text-[44px] lg:leading-[1.16] lg:tracking-[-0.6px]`}
           >
-            I want you to be{" "}
-            <span className="text-[#f25e25]">that person</span>
+            I want you to be <span className="text-[#f25e25]">that person</span>
           </p>
 
           <div className="relative w-full max-w-[1077px] overflow-hidden rounded-[14px] bg-[#fe6700] px-6 py-10 shadow-[0px_1px_12px_0px_rgba(0,0,0,0.12)] sm:px-10 lg:min-h-[673px] lg:px-[72px] lg:py-[84px]">
@@ -236,7 +231,9 @@ function BlackWarningCard({
         <p className="mb-6 rotate-[-2deg] text-[19px] text-white lg:text-[22px]">
           {label}
         </p>
-        <p className={`${exo.className} text-[17px] leading-[1.45] lg:text-[20px] lg:leading-[1.55]`}>
+        <p
+          className={`${exo.className} text-[17px] leading-[1.45] lg:text-[20px] lg:leading-[1.55]`}
+        >
           {text}
         </p>
       </div>
@@ -284,7 +281,11 @@ function QuestionCard({
         height={115}
         className="mb-10 size-[115px] object-cover"
       />
-      <h3 className={`${melodrama.className} mb-8 text-[30px] font-bold leading-[1.25] tracking-[0.4px] text-black lg:text-[44px] lg:leading-[1.4]`}>        {title}
+      <h3
+        className={`${melodrama.className} mb-8 text-[30px] font-bold leading-[1.25] tracking-[0.4px] text-black lg:text-[44px] lg:leading-[1.4]`}
+      >
+        {" "}
+        {title}
       </h3>
       <p
         className={`${exo.className} text-justify text-[17px] leading-[1.5] tracking-[-0.319px] text-black lg:text-[20px] lg:leading-[1.45]`}

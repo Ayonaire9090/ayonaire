@@ -181,3 +181,9 @@ export const exo = localFont({
   src:"./fonts/exo/Exo-Bold.ttf",
   variable:"--font-exo"
 })
+
+
+export const salt = localFont({
+  src:"./fonts/salt/RockSalt-Regular.ttf",
+  variable:"--font-salt"
+})
