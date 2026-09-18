@@ -1,4 +1,4 @@
-import { exo, melodrama } from "@/app/fonts";
+import { exo, exoMedium, melodrama, salt } from "@/app/fonts";
 
 const rejectionReasons = [
   "You're looking for shortcuts without doing the work.",
@@ -19,7 +19,7 @@ export default function AcceptanceFilterSection() {
         </div>
 
         <div className="flex flex-col gap-8 lg:gap-10">
-          <p className={`${exo.className} text-[18px] font-semibold uppercase tracking-[0.08em] text-[#ff6b00] lg:text-[24px]`}>
+          <p className={`${salt.className} text-[18px] font-semibold uppercase tracking-[0.08em] text-[#ff6b00] lg:text-[24px]`}>
             You if:
           </p>
           <div className="flex flex-col gap-8 lg:gap-10">
@@ -32,7 +32,7 @@ export default function AcceptanceFilterSection() {
                 <span className="flex size-10 items-center justify-center rounded-full border-2 border-[#ff9b77] text-[#ff8b62] sm:size-12">
                   <span className="block h-3 w-5 rotate-[-45deg] border-b-2 border-l-2 border-current" />
                 </span>
-                <p className={`${exo.className} text-[16px] font-bold leading-[1.55] tracking-[0.2px] text-[#181c23] sm:text-[18px] lg:text-[24px] lg:leading-[1.78]`}>
+                <p className={`${exoMedium.className} text-[12px] font-bold leading-[1.55] tracking-[0.2px] text-[#181c23] sm:text-[14px] lg:text-[18px] lg:leading-[1.78]`}>
                   {reason}
                 </p>
               </article>

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { exo, melodrama } from "@/app/fonts";
+import { exo, exoMedium, melodrama } from "@/app/fonts";
 
 const audienceCards = [
   {
@@ -52,6 +52,7 @@ export default function AudienceFitSection() {
   return (
     <section className="bg-[linear-gradient(180deg,#fff_0%,rgba(255,220,196,0.28)_18%,rgba(248,100,50,0)_47%,#fff_67%,rgba(255,220,196,0.04)_89%,rgba(248,100,50,0.25)_100%)] px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
       <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-14 lg:gap-20">
+        {/* HEADER */}
         <div className="flex flex-col items-center gap-8 text-center">
           <Image
             src="/assets/images/ai-fullstack-engineering/question-card-skills.png"
@@ -60,52 +61,210 @@ export default function AudienceFitSection() {
             height={96}
             className="size-20 object-contain lg:size-[112px]"
           />
-          <h2 className={`${melodrama.className} max-w-[1003px] text-[32px] font-bold uppercase leading-[1.12] tracking-[-0.8px] text-[#181c23] sm:text-[40px] lg:text-[56px] lg:leading-[1.08]`}>
-            And this is <span className="text-[#f25e25]">certainly for you</span> if you are a:
+
+          <h2
+            className={`${melodrama.className} max-w-[1003px] text-[32px] font-bold uppercase leading-[1.12] tracking-[-0.8px] text-[#181c23] sm:text-[40px] lg:text-[56px] lg:leading-[1.08]`}
+          >
+            And this is{" "}
+            <span className="text-[#f25e25]">
+              certainly for you
+            </span>{" "}
+            if you are a:
           </h2>
         </div>
 
+        {/* TIMELINE */}
         <div className="relative w-full">
-          <div className="absolute left-6 top-0 hidden h-full w-px bg-[#ff6b00]/35 lg:left-1/2 lg:block" />
-          <div className="grid gap-8 lg:gap-10">
-            {audienceCards.map((card, index) => (
-              <article
-                key={card.title}
-                className={`relative grid lg:grid-cols-2 ${index % 2 === 0 ? "lg:pr-[calc(50%+40px)]" : "lg:pl-[calc(50%+40px)]"}`}
-              >
-                <span className={`absolute top-1/2 hidden size-3 -translate-y-1/2 rounded-full bg-[#ff6b00] lg:block ${index % 2 === 0 ? "left-[calc(50%-6px)]" : "left-[calc(50%-6px)]"}`} />
-                <div className="rounded-[24px] bg-white p-6 shadow-[0_1px_12px_rgba(0,0,0,0.12)] sm:p-8 lg:min-h-[240px] lg:rounded-[40px] lg:p-10">
-                  <div className="grid gap-5 sm:grid-cols-[80px_1fr] sm:items-center">
-                    <Image
-                      src="/assets/images/ai-fullstack-engineering/career-system-portfolio.png"
-                      alt=""
-                      width={80}
-                      height={80}
-                      className="size-16 object-contain lg:size-20"
-                    />
-                    <div className="space-y-3">
-                      <h3 className={`${exo.className} text-[20px] font-bold tracking-[0.5px] text-[#181c23] lg:text-[28px]`}>
-                        {card.title}
-                      </h3>
-                      <p className={`${exo.className} text-[16px] font-normal leading-[1.55] tracking-[0.2px] text-[#5a4136] sm:text-[18px] lg:text-[24px] lg:leading-[1.5]`}>
-                        {card.body}
-                      </p>
+          {/*
+            ONE CENTER LINE
+
+            MOBILE:
+            Line stays directly in the middle of every card.
+
+            DESKTOP:
+            Same line stays in the middle while cards alternate
+            left and right.
+          */}
+          <div
+            className="
+              absolute
+              bottom-0
+              left-1/2
+              top-0
+              z-0
+              w-[2px]
+              -translate-x-1/2
+              bg-[#ff6b00]
+            "
+          />
+
+          <div className="flex flex-col gap-10 lg:gap-12">
+            {audienceCards.map((card, index) => {
+              const isLeft = index % 2 === 0;
+
+              return (
+                <article
+                  key={card.title}
+                  className={`
+                    relative
+                    flex
+                    w-full
+                    justify-center
+
+                    lg:justify-normal
+
+                    ${
+                      isLeft
+                        ? "lg:pr-[calc(50%+32px)]"
+                        : "lg:pl-[calc(50%+32px)]"
+                    }
+                  `}
+                >
+                  {/* TIMELINE DOT */}
+                  <span
+                    className="
+                      absolute
+                      left-1/2
+                      top-1/2
+                      z-[2]
+
+                      size-[10px]
+
+                      -translate-x-1/2
+                      -translate-y-1/2
+
+                      rounded-full
+                      bg-[#ff6b00]
+
+                      lg:z-20
+                    "
+                  />
+
+                  {/* CARD */}
+                  <div
+                    className="
+                      relative
+                      z-10
+
+                      w-[92%]
+                      max-w-[560px]
+
+                      rounded-[18px]
+                      border
+                      border-[#eee6e2]
+                      bg-white
+
+                      px-5
+                      py-6
+
+                      shadow-[0_3px_10px_rgba(0,0,0,0.10)]
+
+                      sm:w-[88%]
+                      sm:px-7
+                      sm:py-7
+
+                      lg:w-full
+                      lg:max-w-none
+                      lg:min-h-[205px]
+                      lg:rounded-[20px]
+                      lg:px-7
+                      lg:py-8
+                    "
+                  >
+                    <div className="flex items-start gap-4 lg:gap-5">
+                      {/* ICON */}
+                      <Image
+                        src="/assets/images/ai-fullstack-engineering/career-system-portfolio.png"
+                        alt=""
+                        width={64}
+                        height={64}
+                        className="
+                          mt-1
+                          size-[42px]
+                          shrink-0
+                          object-contain
+
+                          sm:size-[48px]
+
+                          lg:size-[60px]
+                        "
+                      />
+
+                      {/* TEXT */}
+                      <div className="min-w-0 flex-1">
+                        <h3
+                          className={`
+                            ${exo.className}
+
+                            text-[13px]
+                            font-bold
+                            leading-[1.3]
+                            tracking-[0.2px]
+                            text-[#181c23]
+
+                            sm:text-[15px]
+
+                            lg:text-[17px]
+                          `}
+                        >
+                          {card.title}
+                        </h3>
+
+                        <p
+                          className={`
+                            ${exoMedium.className}
+
+                            mt-2
+
+                            text-[11px]
+                            font-normal
+                            leading-[1.55]
+                            tracking-[0.1px]
+                            text-[#5a4136]
+
+                            sm:text-[13px]
+
+                            lg:text-[15px]
+                            lg:leading-[1.55]
+                          `}
+                        >
+                          {card.body}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </article>
-            ))}
+                </article>
+              );
+            })}
           </div>
         </div>
 
-        <div className={`${exo.className} max-w-[1035px] space-y-8 text-justify text-[18px] font-normal leading-[1.65] tracking-[0.3px] text-[#181c23] sm:text-[22px] lg:text-[28px] lg:leading-[1.45]`}>
+        {/* BOTTOM COPY */}
+        <div
+          className={`${exoMedium.className} max-w-[1035px] space-y-8 text-justify text-[18px] font-normal leading-[1.65] tracking-[0.3px] text-[#181c23] sm:text-[22px] lg:text-[28px] lg:leading-[1.45]`}
+        >
           <p>
-            And if you are returning to work after a career break, that does not disqualify you either. The bigger requirement is simple:
+            And if you are returning to work after a career break, that does
+            not disqualify you either. The bigger requirement is simple:
           </p>
-          <p className="text-center font-bold">You only need to be willing to keep learning.</p>
-          <p className="text-center text-[28px] font-bold lg:text-[48px]">As promised</p>
+
+          <p className="text-center font-bold">
+            You only need to be willing to keep learning.
+          </p>
+
+          <p className="text-center text-[28px] font-bold lg:text-[48px]">
+            As promised
+          </p>
+
           <p>
-            <strong>We&apos;ll be giving you the exact systems, and career support to actually</strong> move from learning AI to actually <strong>become Job Ready &amp; Globally Employable.</strong>
+            <strong>
+              We&apos;ll be giving you the exact systems, and career support to
+              actually
+            </strong>{" "}
+            move from learning AI to actually{" "}
+            <strong>
+              become Job Ready &amp; Globally Employable.
+            </strong>
           </p>
         </div>
       </div>

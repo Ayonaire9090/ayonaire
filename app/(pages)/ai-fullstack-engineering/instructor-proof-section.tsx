@@ -1,5 +1,5 @@
-﻿import Image from "next/image";
-import { exo, melodrama } from "@/app/fonts";
+import Image from "next/image";
+import { exo, exoMedium, melodrama } from "@/app/fonts";
 
 export default function InstructorProofSection() {
   return (
@@ -17,7 +17,7 @@ export default function InstructorProofSection() {
           Learn from people <span className="text-[#f25e25]">who have actually done</span> the work.
         </h2>
 
-        <div className={`${exo.className} max-w-[1153px] space-y-7 text-[20px] font-medium leading-[1.6] tracking-[0.3px] text-[#181c23] sm:text-[24px] lg:space-y-10 lg:text-[32px] lg:leading-[48px] lg:tracking-[0.6px]`}>
+        <div className={`${exoMedium.className} max-w-[1153px] space-y-7 text-[18px] font-medium leading-[1.6] tracking-[0.3px] text-[#181c23] sm:text-[22px] lg:space-y-10 lg:text-[28px] lg:leading-[42px] lg:tracking-[0.6px]`}>
           <p>
             You will learn from <strong>hiring managers, AI practitioners and engineering leaders</strong> who have built, deployed and shipped AI systems for real businesses and production environments.
           </p>
@@ -26,7 +26,7 @@ export default function InstructorProofSection() {
           </p>
         </div>
 
-        <a href="#enroll" className={`${exo.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-8 py-4 text-[13px] font-bold uppercase leading-[1.45] text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:px-10 sm:py-5 lg:text-[18px]`}>
+        <a href="#enroll" className={`${exoMedium.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-8 py-4 text-[13px] font-bold uppercase leading-[1.45] text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:px-10 sm:py-5 lg:text-[16px]`}>
           I am ready for this
           <Image
             src="/assets/images/ai-fullstack-engineering/instructor-proof-button-arrow.svg"

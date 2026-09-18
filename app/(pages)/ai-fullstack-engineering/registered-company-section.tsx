@@ -1,5 +1,5 @@
-﻿import Image from "next/image";
-import { exo, melodrama } from "@/app/fonts";
+import Image from "next/image";
+import { exo, exoMedium, melodrama } from "@/app/fonts";
 
 const proofCards = [
   { text: "I'm still trying to figure out what to learn.", muted: true },
@@ -21,7 +21,7 @@ export default function RegisteredCompanySection() {
             Ayonaire Academy <span className="text-[#f25e25]">is a registered company.</span>
           </h2>
 
-          <div className={`${exo.className} space-y-6 text-[18px] font-normal leading-[1.75] tracking-[0.3px] text-[#181c23] sm:text-[22px] lg:text-[28px] lg:leading-[63px] lg:tracking-[0.6px]`}>
+          <div className={`${exoMedium.className} space-y-6 text-[17px] font-normal leading-[1.75] tracking-[0.3px] text-[#181c23] sm:text-[20px] lg:text-[24px] lg:leading-[42px] lg:tracking-[0.6px]`}>
             <p>Ayonaire Academy is operated by a duly registered Nigerian company.</p>
             <p className="font-semibold uppercase">Company Registration No. 9266377</p>
             <p>We want you knowing exactly who you are learning with, because trust should not disappear the moment payment is made.</p>
@@ -30,7 +30,7 @@ export default function RegisteredCompanySection() {
         </div>
 
         <div className="flex flex-col items-center gap-8 lg:gap-10">
-          <p className={`${exo.className} w-full text-center text-[16px] font-bold uppercase leading-[1.5] tracking-[0.6px] text-[#ff6b00] sm:text-[20px] lg:text-left lg:text-[22px]`}>
+          <p className={`${exoMedium.className} w-full text-center text-[15px] font-bold uppercase leading-[1.5] tracking-[0.6px] text-[#ff6b00] sm:text-[18px] lg:text-left lg:text-[20px]`}>
             Ten months from now, you could say:
           </p>
 
@@ -43,17 +43,17 @@ export default function RegisteredCompanySection() {
       </div>
 
       <div className="mx-auto mt-16 flex w-full max-w-[1030px] flex-col items-center gap-7 text-center lg:mt-24 lg:gap-9">
-        <p className={`${exo.className} text-[20px] font-medium leading-[1.55] tracking-[0.3px] text-[#181c23] sm:text-[24px] lg:text-[32px] lg:leading-[57px] lg:tracking-[0.6px]`}>
+        <p className={`${exoMedium.className} text-[18px] font-medium leading-[1.55] tracking-[0.3px] text-[#181c23] sm:text-[22px] lg:text-[28px] lg:leading-[44px] lg:tracking-[0.6px]`}>
           The time will pass either way.
         </p>
-        <p className={`${exo.className} text-[20px] font-bold leading-[1.55] tracking-[0.3px] text-[#181c23] sm:text-[24px] lg:text-[32px] lg:leading-[57px] lg:tracking-[0.6px]`}>
+        <p className={`${exoMedium.className} text-[18px] font-bold leading-[1.55] tracking-[0.3px] text-[#181c23] sm:text-[22px] lg:text-[28px] lg:leading-[44px] lg:tracking-[0.6px]`}>
           The only question is what you will do with it.
         </p>
-        <p className={`${exo.className} text-[22px] font-bold uppercase leading-[1.55] tracking-[0.3px] text-[#181c23] sm:text-[26px] lg:text-[32px] lg:leading-[57px] lg:tracking-[0.6px]`}>
+        <p className={`${exoMedium.className} text-[20px] font-bold uppercase leading-[1.55] tracking-[0.3px] text-[#181c23] sm:text-[24px] lg:text-[28px] lg:leading-[44px] lg:tracking-[0.6px]`}>
           The next 10 months can <span className="text-[#f25e25]">change the next 10 years</span> of your career.
         </p>
 
-        <a href="#enroll" className={`${exo.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-8 py-4 text-center text-[13px] font-bold uppercase leading-[1.45] text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:px-10 sm:py-5 lg:text-[18px]`}>
+        <a href="#enroll" className={`${exoMedium.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-8 py-4 text-center text-[13px] font-bold uppercase leading-[1.45] text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:px-10 sm:py-5 lg:text-[16px]`}>
           Start my AI career transition
           <Image
             src="/assets/images/ai-fullstack-engineering/registered-company-button-arrow.svg"
@@ -85,7 +85,7 @@ function ProofCard({ text, muted = false, index }: { text: string; muted?: boole
         height={88}
         className={`absolute left-[7.5%] top-1/2 h-[48px] w-[50px] -translate-y-1/2 object-cover object-center sm:h-[68px] sm:w-[70px] lg:h-[88px] lg:w-[92px] ${muted ? "" : "opacity-50"}`}
       />
-      <p className={`${exo.className} absolute left-[33%] top-1/2 w-[61%] -translate-y-1/2 rotate-[2deg] text-[16px] font-bold leading-[1.45] tracking-[0.6px] text-[#181c23] sm:text-[22px] lg:text-[28px] lg:leading-[52px] lg:tracking-[1.76px]`}>
+      <p className={`${exoMedium.className} absolute left-[33%] top-1/2 w-[61%] -translate-y-1/2 rotate-[2deg] text-[15px] font-bold leading-[1.45] tracking-[0.6px] text-[#181c23] sm:text-[20px] lg:text-[24px] lg:leading-[40px] lg:tracking-[1.2px]`}>
         &quot;{text}&quot;
       </p>
     </div>

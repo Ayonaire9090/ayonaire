@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { exo, melodrama } from "@/app/fonts";
+import { exo, exoMedium, melodrama } from "@/app/fonts";
 
 const reviewParagraphs = [
   "My experience with Ayonaire Academy has been really great so far.",
@@ -33,7 +33,7 @@ export default function StudentReviewSection() {
           </div>
 
           <p
-            className={`${exo.className} mt-4 max-w-[760px] text-[14px] font-semibold leading-[1.55] text-[#2d3036] sm:text-[16px] lg:text-[18px]`}
+            className={`${exoMedium.className} mt-4 max-w-[760px] text-[13px] font-semibold leading-[1.55] text-[#2d3036] sm:text-[15px] lg:text-[16px]`}
           >
             Don&apos;t just take our word for what the Ayonaire experience is like. Hear directly from the people who have gone through it.
           </p>
@@ -59,9 +59,9 @@ export default function StudentReviewSection() {
             </div>
 
             <div
-              className={`${exo.className} relative z-10 max-h-[270px] overflow-y-auto pr-4 text-justify text-[15px] font-medium leading-[1.7] text-[#2d3036] [scrollbar-color:#ff8a4d_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-[#ff8a4d] sm:text-[16px] lg:max-h-[304px]`}
+              className={`${exoMedium.className} relative z-10 max-h-[270px] overflow-y-auto pr-4 text-justify text-[14px] font-medium leading-[1.7] text-[#2d3036] [scrollbar-color:#ff8a4d_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-[#ff8a4d] sm:text-[15px] lg:max-h-[304px]`}
             >
-              <p className="mb-7 text-left text-[16px] font-black leading-[1.55] text-[#252830] sm:text-[18px]">
+              <p className="mb-7 text-left text-[15px] font-black leading-[1.55] text-[#252830] sm:text-[16px]">
                 &quot;The Program Has Really Improved My Confidence and Technical Skills.&quot;
               </p>
 
@@ -72,8 +72,8 @@ export default function StudentReviewSection() {
               ))}
 
               <div className="mt-7 text-left">
-                <p className="text-[17px] font-black text-[#252830]">-Ezeh Faith</p>
-                <p className="mt-1 text-[13px] font-medium text-[#2d3036]">AI Engineering Student, Ayonaire Academy</p>
+                <p className="text-[16px] font-black text-[#252830]">-Ezeh Faith</p>
+                <p className="mt-1 text-[12px] font-medium text-[#2d3036]">AI Engineering Student, Ayonaire Academy</p>
               </div>
             </div>
           </div>

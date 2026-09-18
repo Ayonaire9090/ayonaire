@@ -69,24 +69,24 @@ export default function AiFullstackEngineeringPage() {
       <WhatYouWillLearnSection />
       <ProgramActsSection />
       <CurriculumSection />    
-      <ActualBuildSection /> {/** stop */}
+      <ActualBuildSection /> 
       <ProjectJourneySection />
-      <CareerPathwaysSection />
-      <ProgramDifferenceSection />
+      <CareerPathwaysSection /> 
+      <ProgramDifferenceSection /> 
       <RightFitSection />
       <IntentionalFitSection />
-      <AcceptanceFilterSection />
+      <AcceptanceFilterSection /> 
       <BeginnerStartSection />
-      <AudienceFitSection />
+      <AudienceFitSection /> 
       <CareerEcosystemSection />
-      <BiggerIdeaSection />
+      <BiggerIdeaSection />  
       <InvestmentSection />
-      <TrainingCostSection />
-      <ProgrammeOfferSection />
+      <TrainingCostSection /> 
+      <ProgrammeOfferSection /> 
       <PaymentPlansSection />
-      <TeachingApproachSection />
-      <GuaranteeSection />
-      <WeeklyScheduleSection />
+      <TeachingApproachSection /> 
+      <GuaranteeSection />   
+      <WeeklyScheduleSection />{/** stop */}
       <CredentialSection />
       <WhatICanDoSection />
       <BuildProofSection />

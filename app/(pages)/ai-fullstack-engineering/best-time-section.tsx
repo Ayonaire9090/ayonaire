@@ -1,5 +1,5 @@
-﻿import Image from "next/image";
-import { exo, melodrama } from "@/app/fonts";
+import Image from "next/image";
+import { exo, exoMedium, melodrama } from "@/app/fonts";
 
 const outcomeStatements = [
   "I finally started.",
@@ -26,7 +26,7 @@ export default function BestTimeSection() {
           />
         </div>
 
-        <div className={`${exo.className} w-full max-w-[1279px] space-y-7 text-justify text-[20px] font-normal leading-[1.75] tracking-[0.4px] text-[#5a4136] sm:text-[24px] lg:space-y-8 lg:text-[32px] lg:leading-[59px] lg:tracking-[1px]`}>
+        <div className={`${exoMedium.className} w-full max-w-[1279px] space-y-7 text-justify text-[18px] font-normal leading-[1.75] tracking-[0.4px] text-[#5a4136] sm:text-[22px] lg:space-y-8 lg:text-[28px] lg:leading-[46px] lg:tracking-[0.8px]`}>
           <p>You cannot go back and start six months ago.</p>
           <p>But you can decide what happens from today.</p>
           <p>Because every day you postpone the decision is another day someone else is learning, practising, building and positioning themselves for the opportunities you also want.</p>
@@ -37,14 +37,14 @@ export default function BestTimeSection() {
 
         <ul className="grid w-full max-w-[1279px] gap-5 lg:gap-6">
           {outcomeStatements.map((statement) => (
-            <li key={statement} className={`${exo.className} grid grid-cols-[30px_1fr] items-start gap-3 text-justify text-[20px] font-medium leading-[1.55] tracking-[0.4px] text-[#5a4136] sm:text-[24px] lg:text-[32px] lg:leading-[59px] lg:tracking-[1px]`}>
+            <li key={statement} className={`${exoMedium.className} grid grid-cols-[30px_1fr] items-start gap-3 text-justify text-[18px] font-medium leading-[1.55] tracking-[0.4px] text-[#5a4136] sm:text-[22px] lg:text-[28px] lg:leading-[46px] lg:tracking-[0.8px]`}>
               <BulletPair />
               <span>&quot;{statement}&quot;</span>
             </li>
           ))}
         </ul>
 
-        <div className={`${exo.className} w-full max-w-[1279px] space-y-7 text-justify text-[20px] font-medium leading-[1.75] tracking-[0.4px] text-[#5a4136] sm:text-[24px] lg:space-y-8 lg:text-[32px] lg:leading-[59px] lg:tracking-[1px]`}>
+        <div className={`${exoMedium.className} w-full max-w-[1279px] space-y-7 text-justify text-[18px] font-medium leading-[1.75] tracking-[0.4px] text-[#5a4136] sm:text-[22px] lg:space-y-8 lg:text-[28px] lg:leading-[46px] lg:tracking-[0.8px]`}>
           <p>Nobody can promise you exactly what your career or income will look like ten months from today.</p>
           <p>But you can decide what skills, experience and capabilities you will have when those ten months are over.</p>
           <p>So if AI/ML Engineering is genuinely a direction you have been considering, <strong>take action.</strong></p>

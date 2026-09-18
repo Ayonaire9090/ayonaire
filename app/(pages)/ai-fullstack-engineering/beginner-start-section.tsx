@@ -1,4 +1,4 @@
-import { exo, melodrama } from "@/app/fonts";
+import { exo, exoMedium, melodrama } from "@/app/fonts";
 
 const beginnerPoints = [
   "You don't need a Computer Science degree.",
@@ -21,7 +21,7 @@ export default function BeginnerStartSection() {
           </p>
         </div>
 
-        <div className={`${exo.className} space-y-7 text-justify text-[18px] font-medium leading-[1.65] tracking-[0.6px] text-[#5a4136] sm:text-[22px] lg:text-[32px] lg:leading-[1.45] lg:tracking-[1px]`}>
+        <div className={`${exoMedium.className} space-y-7 text-justify text-[18px] font-medium leading-[1.65] tracking-[0.6px] text-[#5a4136] sm:text-[12px] lg:text-[22px] lg:leading-[1.45] lg:tracking-[1px]`}>
           <p className="font-extrabold">
             And we're not saying that because it sounds good in an advert.
           </p>
@@ -32,7 +32,7 @@ export default function BeginnerStartSection() {
 
         <ul className="grid gap-6 lg:gap-8">
           {beginnerPoints.map((point) => (
-            <li key={point} className={`${exo.className} grid grid-cols-[30px_1fr] items-start gap-4 text-[18px] font-bold leading-[1.45] tracking-[0.2px] text-[#181c23] sm:text-[22px] lg:text-[32px] lg:leading-[1.45]`}>
+            <li key={point} className={`${exoMedium.className} grid grid-cols-[30px_1fr] items-start gap-4 text-[12px] font-bold leading-[1.45] tracking-[0.2px] text-[#181c23] sm:text-[24px] lg:text-[20px] lg:leading-[1.45]`}>
               <BulletPair />
               <span>{point}</span>
             </li>

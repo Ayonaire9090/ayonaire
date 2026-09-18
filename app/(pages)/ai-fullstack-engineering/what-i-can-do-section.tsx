@@ -1,5 +1,5 @@
-﻿import Image from "next/image";
-import { exo, melodrama } from "@/app/fonts";
+import Image from "next/image";
+import { exo, exoMedium, melodrama } from "@/app/fonts";
 
 const proofStatements = [
   "Here is what I can build.",
@@ -45,7 +45,7 @@ export default function WhatICanDoSection() {
         <div className="w-full rounded-[16px] bg-white px-5 py-8 shadow-[0_1px_6px_rgba(0,0,0,0.16)] sm:px-8 sm:py-10 lg:px-[60px]">
           <ul className="grid gap-4 sm:gap-5 lg:gap-[19px]">
             {proofStatements.map((statement) => (
-              <li key={statement} className={`${exo.className} grid grid-cols-[30px_1fr] items-start gap-4 text-[18px] font-bold leading-[1.65] tracking-[0.3px] text-[#263238] sm:text-[22px] lg:text-[32px] lg:leading-[1.7] lg:tracking-[0.6px]`}>
+              <li key={statement} className={`${exoMedium.className} grid grid-cols-[30px_1fr] items-start gap-4 text-[17px] font-bold leading-[1.65] tracking-[0.3px] text-[#263238] sm:text-[20px] lg:text-[28px] lg:leading-[1.7] lg:tracking-[0.6px]`}>
                 <BulletPair />
                 <span>{statement}</span>
               </li>

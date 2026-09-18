@@ -1,5 +1,5 @@
-﻿import Image from "next/image";
-import { exo, melodrama } from "@/app/fonts";
+import Image from "next/image";
+import { exo, exoMedium, melodrama } from "@/app/fonts";
 
 const proofOutcomes = [
   { number: "01", label: "45+ practical projects" },
@@ -29,7 +29,7 @@ export default function BuildProofSection() {
           />
         </div>
 
-        <div className={`${exo.className} flex flex-col gap-8 text-[20px] leading-[1.55] tracking-[0.6px] text-[#181c23] sm:text-[24px] lg:gap-14 lg:text-[28px] lg:leading-[38px] lg:tracking-[1.6px]`}>
+        <div className={`${exoMedium.className} flex flex-col gap-8 text-[18px] leading-[1.55] tracking-[0.6px] text-[#181c23] sm:text-[22px] lg:gap-14 lg:text-[24px] lg:leading-[34px] lg:tracking-[1.2px]`}>
           <p className="font-medium">
             Through <strong>hands-on projects, capstones and job simulations</strong> designed to give you practical, work-style exposure.
           </p>
@@ -41,7 +41,7 @@ export default function BuildProofSection() {
         <div className="grid items-end gap-12 lg:grid-cols-[minmax(0,598px)_minmax(420px,575px)] lg:gap-[67px]">
           <ul className="flex flex-col gap-5 sm:gap-6 lg:gap-[27px]">
             {proofOutcomes.map((outcome) => (
-              <li key={outcome.number} className={`${exo.className} grid grid-cols-[48px_1fr] items-center gap-4 text-[20px] font-bold leading-[1.3] tracking-[0.3px] text-[#181c23] sm:grid-cols-[56px_1fr] sm:text-[24px] lg:text-[32px] lg:tracking-[0.6px]`}>
+              <li key={outcome.number} className={`${exoMedium.className} grid grid-cols-[48px_1fr] items-center gap-4 text-[18px] font-bold leading-[1.3] tracking-[0.3px] text-[#181c23] sm:grid-cols-[56px_1fr] sm:text-[22px] lg:text-[28px] lg:tracking-[0.6px]`}>
                 <NumberTag number={outcome.number} />
                 <span>{outcome.label}</span>
               </li>
@@ -58,7 +58,7 @@ export default function BuildProofSection() {
           />
         </div>
 
-        <p className={`${exo.className} text-center text-[20px] font-semibold italic leading-[1.55] tracking-[-0.2px] text-[#181c23] sm:text-[24px] lg:text-[28px] lg:leading-[60px] lg:tracking-[-0.4px]`}>
+        <p className={`${exoMedium.className} text-center text-[18px] font-semibold italic leading-[1.55] tracking-[-0.2px] text-[#181c23] sm:text-[22px] lg:text-[24px] lg:leading-[42px] lg:tracking-[-0.4px]`}>
           And that&apos;s exactly why we&apos;re intentional about the structure of our training...
         </p>
       </div>

@@ -1,4 +1,4 @@
-﻿import { exo } from "@/app/fonts";
+import { exo, exoMedium } from "@/app/fonts";
 
 export default function TenMonthsInvestmentSection() {
   return (
@@ -9,7 +9,7 @@ export default function TenMonthsInvestmentSection() {
             Invest in the <span className="text-[#f25e25]">next 10 months of your life</span> and change the trajectory of your career.
           </h2>
 
-          <div className={`${exo.className} space-y-7 text-center text-[20px] font-normal leading-[1.65] tracking-[0.5px] text-[#181c23] sm:text-[26px] lg:text-[32px] lg:leading-[57px] lg:tracking-[1.76px]`}>
+          <div className={`${exoMedium.className} space-y-7 text-center text-[18px] font-normal leading-[1.65] tracking-[0.5px] text-[#181c23] sm:text-[24px] lg:text-[28px] lg:leading-[44px] lg:tracking-[1.2px]`}>
             <p>Ten months from now will come whether you enrol or not.</p>
             <p>The real question is:</p>
             <p className="font-bold">Will you spend those months only consuming content?</p>

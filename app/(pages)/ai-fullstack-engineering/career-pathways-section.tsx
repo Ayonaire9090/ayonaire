@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { exo, melodrama } from "@/app/fonts";
+import { adineue, exo, exoMedium, melodrama, salt } from "@/app/fonts";
 
 const roles = [
   "AI Engineer",
@@ -88,7 +88,7 @@ export default function CareerPathwaysSection() {
             <h2 className={`${melodrama.className} max-w-[960px] text-[32px] font-bold uppercase leading-[1.12] tracking-[-0.8px] text-black sm:text-[40px] lg:text-[56px] lg:leading-[1.2]`}>
               And <span className="text-[#ff6b00]">&quot;AI Engineer&quot;</span> is not the only role you can build toward.
             </h2>
-            <p className={`${exo.className} max-w-[1240px] text-left text-[18px] font-medium leading-[1.65] tracking-[0.3px] text-[#263238] lg:text-[28px] lg:leading-[1.5]`}>
+            <p className={`${adineue.className} max-w-[1240px] text-left text-[18px] font-medium leading-[1.65] tracking-[0.3px] text-[#263238] lg:text-[28px] lg:leading-[1.5]`}>
               As you grow, you can choose to specialise in different areas of AI/ML Engineering and build toward roles such as:
             </p>
           </div>
@@ -96,7 +96,7 @@ export default function CareerPathwaysSection() {
           <div className="grid w-full items-center gap-10 lg:grid-cols-[minmax(0,420px)_minmax(420px,683px)] lg:justify-between lg:gap-20">
             <ol className="grid gap-4">
               {roles.map((role, index) => (
-                <li key={role} className={`${exo.className} grid grid-cols-[56px_1fr] items-center gap-5 text-[17px] font-medium leading-[1.35] text-[#263238] sm:text-[18px] lg:text-[22px]`}>
+                <li key={role} className={`${adineue.className} grid grid-cols-[56px_1fr] items-center gap-5 text-[17px] font-medium leading-[1.35] text-[#263238] sm:text-[18px] lg:text-[22px]`}>
                   <span className="flex h-10 w-14 items-center justify-center rounded-[3px] bg-[#ff6b00] text-[15px] font-bold text-black">
                     {String(index + 1).padStart(2, "0")}
                   </span>
@@ -136,14 +136,14 @@ export default function CareerPathwaysSection() {
                     <Image src={system.image} alt="" width={115} height={115} className="size-20 object-contain lg:size-[115px]" />
                     <div className="space-y-4">
                       <h3 className={`${exo.className} text-[24px] font-bold uppercase tracking-[0.06em] text-black lg:text-[32px]`}>{system.title}</h3>
-                      <p className={`${exo.className} max-w-[390px] text-[17px] font-medium leading-[1.55] tracking-[0.2px] text-black lg:text-[24px]`}>{system.body}</p>
+                      <p className={`${adineue.className} max-w-[390px] text-[17px] font-medium leading-[1.55] tracking-[0.2px] text-black lg:text-[24px]`}>{system.body}</p>
                     </div>
                   </div>
                 </article>
               ))}
             </div>
 
-            <p className={`${exo.className} max-w-[1120px] text-center text-[18px] font-medium leading-[1.6] tracking-[0.2px] text-[#181c23] lg:text-[28px]`}>
+            <p className={`${exoMedium.className} max-w-[1120px] text-center text-[18px] font-medium leading-[1.6] tracking-[0.2px] text-[#181c23] lg:text-[28px]`}>
               Together, these four systems help you move from learning AI/ML Engineering to building proof, positioning yourself properly, finding opportunities and preparing to win them.
             </p>
           </div>
@@ -156,7 +156,7 @@ export default function CareerPathwaysSection() {
               <h2 className={`${melodrama.className} text-[32px] font-bold uppercase leading-[1.12] tracking-[0.4px] text-[#181c23] sm:text-[40px] lg:text-[56px] lg:leading-[1.2]`}>
                 Your AI Career Doesn&apos;t Have To Follow Just One Career Path.
               </h2>
-              <p className={`${exo.className} text-justify text-[18px] font-medium leading-[1.65] tracking-[0.3px] text-[#181c23] lg:text-[28px] lg:leading-[1.6]`}>
+              <p className={`${exoMedium.className} text-justify text-[18px] font-medium leading-[1.65] tracking-[0.3px] text-[#181c23] lg:text-[28px] lg:leading-[1.6]`}>
                 You can earn globally in different ways whether by working with international companies or helping them solve problems as a consultant or agency.
               </p>
             </div>
@@ -164,10 +164,10 @@ export default function CareerPathwaysSection() {
             <div className="flex w-full flex-col gap-12 lg:gap-20">
               {paths.map((path) => (
                 <article key={path.label} className="grid gap-6 lg:grid-cols-[243px_1fr] lg:gap-11">
-                  <p className={`${exo.className} text-[28px] font-bold uppercase tracking-[0.08em] text-[#f25e25] lg:text-[44px]`}>{path.label}</p>
+                  <p className={`${salt.className} text-[28px] font-bold uppercase tracking-[0.08em] text-[#f25e25] lg:text-[44px]`}>{path.label}</p>
                   <div className="space-y-5 text-[#5a4136] lg:space-y-8">
-                    <h3 className={`${exo.className} text-[26px] font-bold uppercase tracking-[0.06em] lg:text-[40px]`}>{path.title}</h3>
-                    <p className={`${exo.className} text-justify text-[18px] font-medium leading-[1.65] tracking-[0.3px] lg:text-[28px] lg:leading-[1.45]`}>{path.body}</p>
+                    <h3 className={`${adineue.className} text-[26px] font-bold uppercase tracking-[0.06em] lg:text-[40px]`}>{path.title}</h3>
+                    <p className={`${adineue.className} text-justify text-[18px] font-medium leading-[1.65] tracking-[0.3px] lg:text-[28px] lg:leading-[1.45]`}>{path.body}</p>
                   </div>
                 </article>
               ))}

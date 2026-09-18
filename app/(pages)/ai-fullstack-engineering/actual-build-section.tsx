@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { exo, melodrama } from "@/app/fonts";
+import { exo, exoMedium, melodrama } from "@/app/fonts";
 
 const projects = [
   {
@@ -32,7 +32,7 @@ export default function ActualBuildSection() {
           <h2 className={`${melodrama.className} text-[32px] font-bold uppercase leading-[1.12] tracking-[0.2px] text-[#181c23] sm:text-[40px] lg:text-[56px] lg:leading-[1.25]`}>
             Now let&apos;s talk about <span className="text-[#f25e25]">what you will actually build.</span>
           </h2>
-          <p className={`${exo.className} mt-5 text-[18px] font-medium leading-[1.5] text-[#181c23] sm:text-[22px] lg:text-[28px]`}>
+          <p className={`${exoMedium.className} mt-5 text-[18px] font-medium leading-[1.5] text-[#181c23] sm:text-[22px] lg:text-[28px]`}>
             You&apos;ll build projects across different industries:
           </p>
         </div>
@@ -45,14 +45,14 @@ export default function ActualBuildSection() {
                 <div className="relative z-10 flex h-full flex-col">
                   <p className={`${exo.className} text-[15px] font-medium uppercase tracking-[0.08em] text-white/60 lg:text-[20px]`}>{project.number}</p>
                   <h3 className={`${exo.className} mt-10 text-[28px] font-semibold uppercase leading-[1.28] tracking-[0.09em] text-[#f25e25] lg:text-[40px]`}>{project.title}</h3>
-                  <p className={`${exo.className} mt-auto text-[17px] leading-[1.45] tracking-[0.05em] text-white/80 lg:text-[24px] lg:leading-[1.35]`}>{project.body}</p>
+                  <p className={`${exoMedium.className} mt-auto text-[17px] leading-[1.45] tracking-[0.05em] text-white/80 lg:text-[24px] lg:leading-[1.35]`}>{project.body}</p>
                 </div>
               </article>
             ))}
           </div>
         </div>
 
-        <p className={`${exo.className} max-w-[1035px] text-center text-[18px] font-medium leading-[1.75] tracking-[0.2px] text-[#181c23] sm:text-[22px] lg:text-[28px] lg:leading-[2.2]`}>
+        <p className={`${exoMedium.className} max-w-[1035px] text-center text-[18px] font-medium leading-[1.75] tracking-[0.2px] text-[#181c23] sm:text-[22px] lg:text-[28px] lg:leading-[2.2]`}>
           You will build a <strong>Multi-Agent System for Research Analysis and Generation Automation</strong>, where specialised Agents collaborate across a larger workflow. By this point, the question changes from: &quot;What is Agentic AI?&quot; to: <strong>&quot;HOW SHOULD I DESIGN THIS SYSTEM?&quot;</strong>
         </p>
       </div>

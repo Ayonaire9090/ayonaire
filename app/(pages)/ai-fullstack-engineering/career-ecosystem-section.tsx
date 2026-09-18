@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { exo, melodrama } from "@/app/fonts";
+import { exo, exoMedium, melodrama } from "@/app/fonts";
 
 const ecosystemItems = [
   {
@@ -40,10 +40,10 @@ export default function CareerEcosystemSection() {
                 <Image src="/assets/images/ai-fullstack-engineering/career-framework-card-bg.png" alt="" fill sizes="472px" className="pointer-events-none object-cover opacity-95" />
                 <div className="relative z-10 flex h-full flex-col">
                   <p className={`${exo.className} text-[16px] font-medium tracking-[0.08em] text-white/60 lg:text-[20px]`}>({item.number})</p>
-                  <h3 className={`${exo.className} mt-10 text-[28px] font-semibold uppercase leading-[1.28] tracking-[0.09em] text-[#f25e25] lg:text-[40px]`}>
+                  <h3 className={`${exo.className} mt-10 text-[18px] font-semibold uppercase leading-[1.28] tracking-[0.09em] text-[#f25e25] lg:text-[24px]`}>
                     {item.title}
                   </h3>
-                  <p className={`${exo.className} mt-auto text-[17px] font-bold leading-[1.45] tracking-[0.05em] text-white/80 lg:text-[24px] lg:leading-[1.35]`}>
+                  <p className={`${exoMedium.className} mt-auto text-[12px]  leading-[1.45] tracking-[0.05em] text-white/80 lg:text-[18px] lg:leading-[1.35]`}>
                     {item.body}
                   </p>
                 </div>

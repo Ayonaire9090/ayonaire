@@ -102,7 +102,18 @@ export default function AiEngineeringExplainedSection() {
 
         {/* TIMELINE */}
         <div className="relative mt-24 w-full">
-          {/* DESKTOP CENTER LINE */}
+          {/*
+            ONE CENTER LINE FOR MOBILE + DESKTOP
+
+            On mobile:
+            - line stays at 50%
+            - cards sit on top of the line
+            - white card background hides the line inside the card
+
+            On desktop:
+            - cards alternate left/right
+            - line remains at 50%
+          */}
           <div
             className="
               absolute
@@ -110,25 +121,9 @@ export default function AiEngineeringExplainedSection() {
               left-1/2
               top-0
               z-0
-              hidden
               w-[2px]
               -translate-x-1/2
               bg-[#ff6b00]
-              lg:block
-            "
-          />
-
-          {/* MOBILE LINE */}
-          <div
-            className="
-              absolute
-              bottom-0
-              left-[7px]
-              top-0
-              z-0
-              w-[2px]
-              bg-[#ff6b00]
-              lg:hidden
             "
           />
 
@@ -175,33 +170,39 @@ function TimelineCard({
     <div
       className="
         relative
+        flex
         w-full
-        pl-8
+        justify-center
 
         lg:grid
         lg:grid-cols-[minmax(0,1fr)_40px_minmax(0,1fr)]
         lg:items-center
-        lg:pl-0
       "
     >
       {/* TIMELINE NODE */}
       <div
         className="
           absolute
-          left-[0px]
+          left-1/2
           top-1/2
-          z-40
-          h-[16px]
-          w-[16px]
+          z-[2]
+
+          h-[14px]
+          w-[14px]
+
+          -translate-x-1/2
           -translate-y-1/2
+
           rounded-full
           border-[3px]
           border-white
           bg-[#ff6b00]
+
           shadow-[0_0_0_1px_rgba(255,107,0,0.12)]
 
-          lg:left-1/2
-          lg:-translate-x-1/2
+          lg:z-40
+          lg:h-[16px]
+          lg:w-[16px]
         "
       />
 
@@ -210,19 +211,25 @@ function TimelineCard({
         className={`
           relative
           z-10
-          w-full
+
+          w-[92%]
           max-w-[500px]
+
           rounded-[24px]
           bg-white
+
           px-5
           pb-7
           pt-12
+
           shadow-[0px_2px_10px_rgba(0,0,0,0.10)]
 
+          sm:w-[88%]
           sm:px-7
           sm:pb-8
           sm:pt-14
 
+          lg:w-full
           lg:min-h-[250px]
           lg:px-10
           lg:pb-8
@@ -242,21 +249,25 @@ function TimelineCard({
             -top-[25px]
             left-6
             z-30
+
             flex
             h-[64px]
             w-[64px]
             rotate-[3deg]
             items-center
             justify-center
+
             rounded-[4px]
             border
             border-[#ff6b00]
             bg-white
+
             text-[16px]
             font-bold
             leading-none
             tracking-[0.5px]
             text-black
+
             shadow-[0_0_6px_rgba(248,100,50,0.18)]
 
             sm:left-7
@@ -298,12 +309,16 @@ function TimelineCard({
           <h4
             className={`
               ${exo.className}
+
               mb-2
-              text-[30px]
+
+              text-[26px]
               font-bold
               leading-[1.2]
               tracking-[0.4px]
               text-[#181c23]
+
+              sm:text-[30px]
 
               lg:text-[44px]
               lg:tracking-[0.5px]
@@ -315,12 +330,15 @@ function TimelineCard({
           <p
             className={`
               ${exoMedium.className}
+
               text-left
-              text-[17px]
+              text-[16px]
               font-normal
               leading-[1.55]
               tracking-[0.2px]
               text-[#5a4136]
+
+              sm:text-[17px]
 
               lg:text-[20px]
               lg:leading-[28px]

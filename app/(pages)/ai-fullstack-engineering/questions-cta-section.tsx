@@ -1,5 +1,5 @@
-﻿import Image from "next/image";
-import { exo } from "@/app/fonts";
+import Image from "next/image";
+import { exo, exoMedium } from "@/app/fonts";
 
 export default function QuestionsCtaSection() {
   return (
@@ -19,7 +19,7 @@ export default function QuestionsCtaSection() {
             />
           </div>
 
-          <p className={`${exo.className} text-[18px] font-bold leading-[1.55] text-[#5a4136] sm:text-[22px] lg:text-[28px] lg:leading-[38px]`}>
+          <p className={`${exoMedium.className} text-[16px] font-bold leading-[1.55] text-[#5a4136] sm:text-[20px] lg:text-[24px] lg:leading-[34px]`}>
             Your next 10 months are coming either way.
           </p>
         </div>
@@ -34,11 +34,11 @@ export default function QuestionsCtaSection() {
         />
 
         <div className="flex flex-col items-center gap-8 lg:gap-10">
-          <p className={`${exo.className} text-[20px] font-bold leading-[1.55] tracking-[0.3px] text-[#f25e25] sm:text-[24px] lg:text-[28px] lg:leading-[48px] lg:tracking-[0.6px]`}>
+          <p className={`${exoMedium.className} text-[18px] font-bold leading-[1.55] tracking-[0.3px] text-[#f25e25] sm:text-[22px] lg:text-[24px] lg:leading-[38px] lg:tracking-[0.6px]`}>
             The question is: what will you have to show for them?
           </p>
 
-          <a href="#enroll" className={`${exo.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-8 py-4 text-center text-[13px] font-bold uppercase leading-[1.45] text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:px-10 sm:py-5 lg:text-[18px]`}>
+          <a href="#enroll" className={`${exoMedium.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-8 py-4 text-center text-[13px] font-bold uppercase leading-[1.45] text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:px-10 sm:py-5 lg:text-[16px]`}>
             See the programme &amp; start my transition
             <Image
               src="/assets/images/ai-fullstack-engineering/questions-cta-button-arrow.svg"
