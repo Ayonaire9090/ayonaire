@@ -182,8 +182,23 @@ export const exo = localFont({
   variable:"--font-exo"
 })
 
+export const exoMedium = localFont({
+  src:"./fonts/exo/Exo-Medium.ttf", 
+  variable:"--font-exo-medium"
+})
+
 
 export const salt = localFont({
   src:"./fonts/salt/RockSalt-Regular.ttf",
   variable:"--font-salt"
+})
+
+export const space = localFont({
+  src:"./fonts/space/SpaceGrotesk-VariableFont_wght.ttf",
+   variable:"--font-space"
+})
+
+export const rope = localFont({
+  src:"./fonts/rope/Manrope-VariableFont_wght.ttf",
+  variable:"--font-rope"
 })

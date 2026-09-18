@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { exo, melodrama } from "@/app/fonts";
+import { exo, exoMedium, melodrama, space } from "@/app/fonts";
 
 const roles = [
   { number: "01", label: "AI Engineer." },
@@ -32,7 +32,7 @@ export default function LinkedInSearchSection() {
         </h2>
 
         <div className="grid items-end gap-10 lg:grid-cols-[1fr_683px] lg:gap-20">
-          <ol className={`${exo.className} flex flex-col gap-7 text-[17px]`}>
+          <ol className={`${exoMedium.className} flex flex-col gap-7 text-[17px]`}>
             {roles.map((role) => (
               <li key={role.number} className="flex items-center gap-7">
                 <NumberPill value={role.number} />
@@ -54,7 +54,7 @@ export default function LinkedInSearchSection() {
         </div>
 
         <div className="flex flex-col gap-10 text-[#181c23]">
-          <div className={`${exo.className} space-y-2 text-[17px] font-medium leading-[1.4] tracking-[0.4px] lg:text-[20px] lg:leading-[1.6] lg:tracking-[0.2px]`}>
+          <div className={`${exoMedium.className} space-y-2 text-[17px] font-medium leading-[1.4] tracking-[0.4px] lg:text-[20px] lg:leading-[1.6] lg:tracking-[0.2px]`}>
             {[
               "Look at the companies hiring.",
               "Look at what they expect applicants to know.",
@@ -67,12 +67,12 @@ export default function LinkedInSearchSection() {
             ))}
           </div>
 
-          <p className="text-[17px] font-bold leading-[1.5] tracking-[-0.4px] lg:text-[20px] lg:leading-[1.55]">
+          <p className={`${space.className} text-[17px] font-bold leading-[1.5] tracking-[-0.4px] lg:text-[20px] lg:leading-[1.55]`}>
             Then ask yourself the next question:
           </p>
 
           <div className={`${exo.className} space-y-5 whitespace-pre-wrap lg:space-y-6 text-[17px] leading-[1.7] tracking-[-0.4px] text-[#181c23] lg:text-[20px] lg:leading-[1.65]`}>
-            <p>
+            <p  className={`${exoMedium.className}`}>
               How can I start to learn these skills following the right sequence
               abd getting as much hands on experience along the way...
             </p>
@@ -122,7 +122,7 @@ export default function LinkedInSearchSection() {
             from where you are now to:..
           </h2>
 
-          <div className={`${exo.className} mt-16 w-full max-w-[652px] self-start space-y-5 text-[17px] leading-[1.55] tracking-[-0.8px] lg:mt-24 lg:text-[20px] lg:leading-[1.65] lg:tracking-[-0.6px]`}>
+          <div className={`${exoMedium.className} mt-16 w-full max-w-[652px] self-start space-y-5 text-[17px] leading-[1.55] tracking-[-0.8px] lg:mt-24 lg:text-[20px] lg:leading-[1.65] lg:tracking-[-0.6px]`}>
             {[
               "getting into this crazy million dollar industry,",
               "develop the right skills, and of course,",
@@ -136,7 +136,7 @@ export default function LinkedInSearchSection() {
           </div>
 
           <div className={`${exo.className} mt-14 max-w-[1187px] text-center text-[17px] leading-[1.45] tracking-[-0.8px] lg:mt-20 lg:text-[20px] lg:leading-[1.4] lg:tracking-[-0.6px]`}>
-            <p>Even if you have no experience whatsoever.</p>
+            <p className={`${exoMedium.className}`}>Even if you have no experience whatsoever.</p>
             <p className="font-semibold italic underline">
               And no, you don&apos;t need to have any technical knowledge to get
               started.

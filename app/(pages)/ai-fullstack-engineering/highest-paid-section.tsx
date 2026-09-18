@@ -1,9 +1,9 @@
 import Image from "next/image";
-import { exo, melodrama } from "@/app/fonts";
+import { exo, melodrama, space } from "@/app/fonts";
 
 export default function HighestPaidSection() {
   return (
-    <section className="bg-[#f8f5f1] px-5 py-14 sm:px-8 lg:px-12 xl:px-16 sm:py-18 lg:py-20 mt-16">
+    <section className=" px-5 py-14 sm:px-8 lg:px-12 xl:px-16 sm:py-18 lg:py-20 mt-16">
       <div className="mx-auto flex w-full flex-col items-center gap-[56px] sm:gap-[68px] lg:gap-[76px]">
         <div className="flex w-full max-w-[1120px] flex-col gap-12 sm:gap-16 lg:gap-20">
           <h2
@@ -26,7 +26,7 @@ export default function HighestPaidSection() {
           </h2>
 
           <div
-            className={`${exo.className} space-y-5 lg:space-y-6 text-justify text-[17px] font-medium leading-[1.48] tracking-[0.2px] text-[#5a4136] sm:text-[18px] sm:leading-[1.55] lg:text-[20px] lg:leading-[1.45] lg:tracking-[0.4px]`}
+            className={`${space.className} space-y-5 lg:space-y-6 text-justify text-[17px] font-medium leading-[1.48] tracking-[0.2px] text-[#5a4136] sm:text-[18px] sm:leading-[1.55] lg:text-[20px] lg:leading-[1.45] lg:tracking-[0.4px]`}
           >
             <p>I know you&apos;ve recently seen social media posts about AI Engineering.</p>
 

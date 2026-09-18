@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { exo, melodrama } from "@/app/fonts";
+import { exo, exoMedium, melodrama } from "@/app/fonts";
 
 const examples = [
   {
@@ -93,7 +93,7 @@ export default function AiEngineeringExplainedSection() {
           </h3>
 
           <p
-            className={`${exo.className} text-justify text-[17px] font-normal leading-[1.55] tracking-[0.4px] text-[#181c23] lg:text-[20px] lg:leading-[1.65] lg:tracking-[0.2px]`}
+            className={`${exoMedium.className} text-justify text-[17px] font-normal leading-[1.55] tracking-[0.4px] text-[#181c23] lg:text-[20px] lg:leading-[1.65] lg:tracking-[0.2px]`}
           >
             You probably interact with AI Engineering much more often than you
             realise.
@@ -147,7 +147,7 @@ export default function AiEngineeringExplainedSection() {
 
         {/* BOTTOM TEXT */}
         <p
-          className={`${exo.className} mt-16 max-w-[1120px] text-justify text-[17px] leading-[1.55] tracking-[0.4px] text-[#181c23] lg:mt-24 lg:text-[20px] lg:leading-[1.65] lg:tracking-[0.2px]`}
+          className={`${exoMedium.className} mt-16 max-w-[1120px] text-justify text-[17px] leading-[1.55] tracking-[0.4px] text-[#181c23] lg:mt-24 lg:text-[20px] lg:leading-[1.65] lg:tracking-[0.2px]`}
         >
           They work across models, data, APIs, applications, deployment and
           production to turn AI capability into something people can actually
@@ -297,7 +297,7 @@ function TimelineCard({
         <div className="sm:pl-[68px] lg:pl-[72px]">
           <h4
             className={`
-              ${melodrama.className}
+              ${exo.className}
               mb-2
               text-[30px]
               font-bold
@@ -314,7 +314,7 @@ function TimelineCard({
 
           <p
             className={`
-              ${exo.className}
+              ${exoMedium.className}
               text-left
               text-[17px]
               font-normal

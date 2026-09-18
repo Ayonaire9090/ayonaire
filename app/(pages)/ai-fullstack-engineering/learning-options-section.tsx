@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { exo, melodrama } from "@/app/fonts";
+import { exo, exoMedium, melodrama, salt } from "@/app/fonts";
 
 const options = [
   {
@@ -50,30 +50,33 @@ export default function LearningOptionsSection() {
 
         <div className="flex w-full flex-col gap-12 lg:gap-16">
           {options.map((option, index) => (
-            <div
-              key={option.number}
-              className="grid items-center gap-8 lg:grid-cols-[180px_1fr] lg:gap-11"
-            >
-              <p
-                className={`${exo.className} text-center text-[64px] font-bold leading-none tracking-[1.6px] ${
-                  index === 0 ? "text-[#f25e25]" : "text-[#ff6b00]"
-                } lg:text-[96px]`}
-              >
-                {option.number}
-              </p>
-              <p
-                className={`${exo.className} text-justify text-[18px] font-medium leading-[1.65] tracking-[0.6px] text-[#5a4136] lg:text-[28px] lg:leading-[1.65] lg:tracking-[1px]`}
-              >
-                {option.body}
-              </p>
+            <div key={option.number} className="contents">
+              <div className="grid items-center gap-8 lg:grid-cols-[180px_1fr] lg:gap-11">
+                <p
+                  className={`${salt.className} text-center text-[64px] font-bold leading-none tracking-[1.6px] ${
+                    index === 0 ? "text-[#f25e25]" : "text-[#ff6b00]"
+                  } lg:text-[96px]`}
+                >
+                  {option.number}
+                </p>
+
+                <p
+                  className={`${exoMedium.className} text-justify text-[18px] font-medium leading-[1.65] tracking-[0.6px] text-[#5a4136] lg:text-[28px] lg:leading-[1.65] lg:tracking-[1px]`}
+                >
+                  {option.body}
+                </p>
+              </div>
+
+              {/* OR BETWEEN OPTION 01 AND OPTION 02 */}
+              {index === 0 && (
+                <p
+                  className={`${salt.className} text-center text-[48px] font-bold leading-none tracking-[1px] text-[#181c23] lg:text-[64px]`}
+                >
+                  or
+                </p>
+              )}
             </div>
           ))}
-
-          <p
-            className={`${melodrama.className} text-center text-[48px] font-bold leading-none tracking-[1px] text-[#181c23] lg:text-[64px]`}
-          >
-            or
-          </p>
         </div>
       </div>
     </section>

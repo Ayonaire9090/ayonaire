@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { exo, melodrama } from "@/app/fonts";
+import { exo, exoMedium, melodrama, space } from "@/app/fonts";
 
 const proofItems = [
   "Your GitHub.",
@@ -34,7 +34,7 @@ export default function ProofOfWorkSection() {
           </h2>
 
           <div
-            className={`${exo.className} w-full space-y-10 text-justify text-[17px] font-medium leading-[1.65] tracking-[0.3px] text-[#5a4136] lg:text-[20px] lg:leading-[1.75] lg:tracking-[0.4px]`}
+            className={`${space.className} w-full space-y-10 text-justify text-[17px] font-medium leading-[1.65] tracking-[0.3px] text-[#5a4136] lg:text-[20px] lg:leading-[1.75] lg:tracking-[0.4px]`}
           >
             <p>
               If you want to compete for AI Engineering roles in the{" "}
@@ -47,12 +47,12 @@ export default function ProofOfWorkSection() {
               {proofItems.map((item) => (
                 <li key={item} className="flex items-center gap-5">
                   <BulletPair />
-                  <span>{item}</span>
+                  <span className={`${exoMedium.className}`}>{item}</span>
                 </li>
               ))}
             </ul>
 
-            <div className="space-y-5">
+            <div className={`${exoMedium} space-y-5`}>
               <p>
                 Because knowing Python, ML, AWS, Docker or AI Agents is one
                 thing.
@@ -60,7 +60,7 @@ export default function ProofOfWorkSection() {
               <p>Being able to say:</p>
               <p className="italic">&quot;Here is what I built with them.&quot;</p>
               <p>is another.</p>
-              <p className="font-bold">
+              <p className={`${exo.className} `}>
                 And the interesting part of this is, these skills are learnable.
               </p>
               <p>And the proof of work can be built too.</p>

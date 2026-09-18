@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { exo, melodrama } from "@/app/fonts";
+import { exo, exoMedium, melodrama, rope, space } from "@/app/fonts";
 
 const routes = [
   {
@@ -109,7 +109,7 @@ export default function LearningPathSection() {
       <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-16 lg:gap-20">
         <div className="flex w-full max-w-[1091px] flex-col items-center gap-8 text-center lg:gap-10">
           <p
-            className={`${exo.className} text-[17px] font-medium leading-[1.45] tracking-[0.4px] text-[#5a4136] sm:text-[20px] lg:text-[28px]`}
+            className={`${exoMedium.className} text-[17px] font-medium leading-[1.45] tracking-[0.4px] text-[#5a4136] sm:text-[20px] lg:text-[28px]`}
           >
             Right at the top, it says proficiency in Python right???
           </p>
@@ -148,7 +148,7 @@ export default function LearningPathSection() {
           className={`${exo.className} max-w-[900px] space-y-5 text-center text-[17px] leading-[1.55] tracking-[0.2px] text-[#181c23] lg:text-[20px]`}
         >
           <p className="font-bold">And through all of this,</p>
-          <p>you're not learning just to memorise syntax, or theory</p>
+          <p className={`${exoMedium.className }`}>you're not learning just to memorise syntax, or theory</p>
           <p className="font-bold underline">
             You're learning how to use these skills to solve real-world
             problems, build working AI systems and create projects you can
@@ -184,7 +184,7 @@ export default function LearningPathSection() {
                     {card.title}
                   </h4>
                   <p
-                    className={`${exo.className} text-justify text-[16px] font-medium leading-[1.55] tracking-[0.2px] text-[#5a4136] lg:text-[20px] lg:leading-[1.6]`}
+                    className={`${exoMedium.className} text-justify text-[16px] font-medium leading-[1.55] tracking-[0.2px] text-[#5a4136] lg:text-[20px] lg:leading-[1.6]`}
                   >
                     {card.body}
                   </p>
@@ -195,7 +195,7 @@ export default function LearningPathSection() {
         </div>
 
         <div
-          className={`${exo.className} w-full bg-white py-12 text-justify text-[#5a4136] lg:py-[120px]`}
+          className={`${space.className} w-full bg-white py-12 text-justify text-[#5a4136] lg:py-[120px]`}
         >
           <div className="mx-auto max-w-[1040px] space-y-6 px-0 text-[18px] leading-[1.65] tracking-[0.5px] lg:text-[28px] lg:leading-[1.65] lg:tracking-[1px]">
             <p className="text-[22px] font-bold lg:text-[32px]">
@@ -221,7 +221,7 @@ export default function LearningPathSection() {
         <div className="w-full space-y-16 pt-4 lg:pt-0">
           <div className="rounded-[24px] bg-[#fdd8cc] p-6 sm:p-10 lg:rounded-[40px]">
             <p
-              className={`${exo.className} mb-8 text-[20px] font-bold leading-[1.4] tracking-[0.6px] text-[#5a4136] underline lg:text-[28px]`}
+              className={`${exoMedium.className} mb-8 text-[20px] font-bold leading-[1.4] tracking-[0.6px] text-[#5a4136] underline lg:text-[28px]`}
             >
               The real challenge is knowing:
             </p>
@@ -251,7 +251,7 @@ export default function LearningPathSection() {
             </ol>
 
             <div
-              className={`${exo.className} space-y-6 text-justify text-[17px] font-medium leading-[1.65] tracking-[0.3px] text-[#5a4136] lg:text-[28px] lg:leading-[1.55] lg:tracking-[1px]`}
+              className={`${exoMedium.className} space-y-6 text-justify text-[17px] font-medium leading-[1.65] tracking-[0.3px] text-[#5a4136] lg:text-[28px] lg:leading-[1.55] lg:tracking-[1px]`}
             >
               <p>
                 And no clear idea of <strong>what to do next.</strong> Because
@@ -265,7 +265,7 @@ export default function LearningPathSection() {
             </div>
 
             <p
-              className={`${exo.className} text-center text-[20px] font-medium leading-[1.4] tracking-[0.4px] text-[#5a4136] lg:text-[32px]`}
+              className={`${exoMedium.className} text-center text-[20px] font-medium leading-[1.4] tracking-[0.4px] text-[#5a4136] lg:text-[32px]`}
             >
               Which brings us to this:
             </p>
@@ -307,7 +307,7 @@ function RouteCard({ route }: { route: (typeof routes)[number] }) {
           >
             <BulletPair />
             <span
-              className={`${exo.className} text-[16px] font-medium leading-[1.35] tracking-[0.3px] text-[#5a4136] lg:text-[20px]`}
+              className={`${rope.className} text-[16px] font-medium leading-[1.35] tracking-[0.3px] text-[#5a4136] lg:text-[20px]`}
             >
               {item}
             </span>
@@ -316,10 +316,10 @@ function RouteCard({ route }: { route: (typeof routes)[number] }) {
       </ul>
 
       <div className="mt-auto w-full rounded-[8px] border border-[#ffdcc4] bg-[#f8f3ef] p-3 text-[#5a4136]">
-        <p className={`${exo.className} text-[16px] font-bold leading-[1.4] lg:text-[20px]`}>
+        <p className={`${rope.className} text-[16px] font-bold leading-[1.4] lg:text-[20px]`}>
           Recommended for:
         </p>
-        <p className={`${exo.className} mt-2 text-[15px] font-medium leading-[1.45] lg:text-[18px]`}>
+        <p className={`${exoMedium.className} mt-2 text-[15px] font-medium leading-[1.45] lg:text-[18px]`}>
           {route.recommended}
         </p>
       </div>
@@ -357,7 +357,7 @@ function NumberedItem({
         <span className="relative z-10">{String(index).padStart(2, "0")}</span>
       </span>
       <span
-        className={`${exo.className} text-[17px] font-medium leading-[1.55] tracking-[0.2px] text-[#181c23] ${
+        className={`${exoMedium.className} text-[17px] font-medium leading-[1.55] tracking-[0.2px] text-[#181c23] ${
           compact ? "lg:text-[24px]" : "lg:text-[28px] lg:leading-[1.65]"
         }`}
       >

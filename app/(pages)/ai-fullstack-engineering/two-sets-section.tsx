@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { exo, melodrama } from "@/app/fonts";
+import { exo, salt , melodrama, exoMedium } from "@/app/fonts";
 
 const skills = [
   "Python",
@@ -53,7 +53,7 @@ export default function TwoSetsSection() {
           <div className="grid w-full max-w-[1040px] grid-cols-1 items-stretch gap-6 text-left md:grid-cols-2 lg:gap-8">
             <BlackWarningCard
               number="01"
-              text="Those who see these many AI related job opportunities and only wish a zillion times that they could land one. They never get past wishing (if only wishes were horses ??)"
+              text="Those who see these many AI related job opportunities and only wish a zillion times that they could land one. They never get past wishing (if only wishes were hors 😜)"
               className="md:-rotate-3"
             />
             <BlackWarningCard
@@ -78,39 +78,46 @@ export default function TwoSetsSection() {
               className="pointer-events-none absolute -bottom-10 -right-12 h-[287px] w-[295px] rotate-[-92deg] opacity-80"
             />
 
-            <ol
-              className={`${exo.className} relative z-10 space-y-6 text-left text-[17px] font-medium leading-[1.45] text-[#f5f5f5] sm:text-[18px] lg:max-w-[700px] lg:text-[20px] lg:leading-[1.7]`}
-            >
-              {[
-                "That desires,",
-                "Take action to learn",
-                "Learns AI engineering the right way",
-                "And ends up landing job faster than others.",
-              ].map((item, index) => (
-                <li key={item} className="flex gap-4">
-                  <NumberPill value={String(index + 1).padStart(2, "0")} />
-                  <span className={index === 2 ? "font-bold" : undefined}>
-                    {item}
-                  </span>
-                </li>
-              ))}
-            </ol>
+          <ol
+  className={`${exoMedium.className} relative z-10 space-y-6 text-left text-[17px] font-medium leading-[1.45] text-[#f5f5f5] sm:text-[18px] lg:max-w-[700px] lg:text-[20px] lg:leading-[1.7]`}
+>
+  {[
+    "That desires,",
+    "Take action to learn",
+    "Learns AI engineering the right way",
+    "And ends up landing job faster than others.",
+  ].map((item, index) => (
+    <li key={item} className="flex gap-4">
+      <NumberPill value={String(index + 1).padStart(2, "0")} />
+
+      <span
+        className={
+          index === 2
+            ? `${exo.className} font-bold`
+            : undefined
+        }
+      >
+        {item}
+      </span>
+    </li>
+  ))}
+</ol>
 
             <div
               className={`${exo.className} relative z-10 mt-12 max-w-[945px] space-y-5 whitespace-pre-wrap lg:space-y-6 text-left text-[17px] font-normal leading-[1.45] text-[#f5f5f5] sm:text-[18px] lg:mt-20 lg:text-[20px] lg:leading-[1.6]`}
             >
-              <p>Now, Ask yourself this question,</p>
-              <p className="my-6 font-bold lowercase text-white">
+              <p className={`${exoMedium.className}`}>Now, Ask yourself this question,</p>
+              <p className={` my-6 font-bold lowercase text-white`}>
                 WHAT COULD HAPPEN IF I SPENT THE NEXT 10 MONTHS DELIBERATELY
                 BUILDING THE SKILLS BEHIND THESE ROLES?
               </p>
-              <p>The answer seems obvious</p>
+              <p className={`${exoMedium.className}`}>The answer seems obvious</p>
             </div>
           </div>
 
           <a
             href="#ai-engineering-path"
-            className={`${exo.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-10 py-5 text-[15px] text-white sm:text-[16px] shadow-[0px_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01]`}
+            className={`${exoMedium.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-10 py-5 text-[15px] text-white sm:text-[16px] shadow-[0px_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01]`}
           >
             SHOW ME THE AI ENGINEERING PATH
             <Image
@@ -124,7 +131,7 @@ export default function TwoSetsSection() {
         </div>
 
         <div className="flex items-center justify-center">
-          <p className="rotate-[-5deg] text-center text-[20px] tracking-[0.2px] text-[#181c23] lg:text-[24px]">
+          <p className={`${salt.className} rotate-[-5deg] text-center text-[20px] tracking-[0.2px] text-[#181c23] lg:text-[24px]`}>
             BUT WAIT?..
           </p>
           <Image
@@ -140,11 +147,11 @@ export default function TwoSetsSection() {
       <div className="bg-gradient-to-b from-white to-[rgba(248,100,50,0)] px-4 pb-20 pt-10 sm:px-8 lg:px-12 xl:px-16 lg:pb-[120px]">
         <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-14 lg:gap-[120px]">
           <p
-            className={`${exo.className} max-w-[1163px] text-center text-[17px] font-normal leading-[1.55] tracking-[0.2px] text-[#181c23] lg:text-[20px] lg:leading-[1.6]`}
+            className={`${exoMedium.className} max-w-[1163px] text-center text-[18px] font-normal leading-[1.55] tracking-[0.2px] text-[#181c23] lg:text-[22px] lg:leading-[1.6]`}
           >
             Because that births another question that you must answer before you
             start your journey{" "}
-            <strong className="text-[19px] font-bold italic lg:text-[22px]">
+            <strong className={`${exo.className} text-[18px] font-bold italic lg:text-[22px]`}>
               so you don&apos;t end up miserable and unemployable like others.
             </strong>
           </p>
@@ -220,16 +227,80 @@ function BlackWarningCard({
 }) {
   return (
     <article
-      className={`relative flex min-h-[238px] flex-col justify-center rounded-[18px] bg-[#191919] px-7 py-8 text-[#f5f5f5] shadow-[0px_14px_24px_rgba(0,0,0,0.18)] sm:px-9 lg:min-h-[282px] lg:px-10 ${className}`}
+      className={`relative w-full aspect-[1.53/1] overflow-visible ${className}`}
     >
-      <h3 className="mb-4 rotate-[-2deg] text-[24px] font-bold uppercase leading-none tracking-[0.6px] text-white lg:text-[30px]">
-        {number} Sets of People
-      </h3>
-      <p
-        className={`${exo.className} max-w-[430px] text-[17px] font-medium leading-[1.55] tracking-[0.2px] text-[#f2f2f2] lg:text-[20px] lg:leading-[1.5]`}
+      {/* CUSTOM CARD SHAPE */}
+      <svg
+        className="absolute inset-0 h-full w-full"
+        viewBox="0 0 540 350"
+        preserveAspectRatio="none"
+        aria-hidden="true"
       >
-        {text}
-      </p>
+        <path
+          d="
+            M 50 8
+            C 28 6, 17 18, 14 42
+
+            L 1 302
+            C 0 323, 11 332, 34 333
+
+            L 500 342
+            C 520 343, 530 331, 531 310
+
+            L 540 68
+            C 541 48, 531 39, 510 37
+
+            L 50 8
+            Z
+          "
+          fill="#191919"
+        />
+      </svg>
+
+      {/* CONTENT */}
+      <div
+        className="
+          absolute
+          left-[7.5%]
+          right-[7%]
+          top-[18%]
+        "
+      >
+        <h3
+          className={`
+            ${salt.className}
+            mb-[30px]
+            text-[21px]
+            font-normal
+            uppercase
+            leading-none
+            tracking-[0.2px]
+            text-white
+
+            sm:text-[24px]
+            lg:text-[28px]
+          `}
+        >
+          {number} Sets of People
+        </h3>
+
+        <p
+          className={`
+            ${exoMedium.className}
+            max-w-[430px]
+            text-[13px]
+            font-normal
+            leading-[1.48]
+            tracking-[-0.1px]
+            text-[#f4f4f4]
+
+            sm:text-[15px]
+            lg:text-[17px]
+          `}
+        >
+          {text}
+        </p>
+      </div>
     </article>
   );
 }
@@ -263,28 +334,30 @@ function QuestionCard({
   body: string;
 }) {
   return (
-    <article className="relative min-h-[520px] rounded-[14px] bg-white px-8 pb-10 pt-24 shadow-[0px_1px_6px_rgba(0,0,0,0.12)] lg:min-h-[606px] lg:px-11">
-      <div className="absolute -top-12 left-11 flex size-[100px] items-center justify-center rounded border border-[#ff6b00] bg-white text-[36px] font-bold tracking-[0.2px] text-black shadow-[0px_0px_6px_0px_rgba(248,100,50,0.25)]">
-        {number}
-      </div>
-      <Image
-        src={image}
-        alt=""
-        width={115}
-        height={115}
-        className="mb-10 size-[115px] object-cover"
-      />
-      <h3
-        className={`${melodrama.className} mb-8 text-[30px] font-bold leading-[1.25] tracking-[0.4px] text-black lg:text-[44px] lg:leading-[1.4]`}
-      >
-        {" "}
-        {title}
-      </h3>
-      <p
-        className={`${exo.className} text-justify text-[17px] leading-[1.5] tracking-[-0.319px] text-black lg:text-[20px] lg:leading-[1.45]`}
-      >
-        {body}
-      </p>
-    </article>
+   <article className="relative min-h-[520px] rounded-[14px] bg-white px-8 pb-10 pt-24 shadow-[0px_1px_6px_rgba(0,0,0,0.12)] lg:min-h-[606px] lg:px-11">
+  <div className="absolute -top-12 left-11 flex size-[100px] items-center justify-center rounded border border-[#ff6b00] bg-white text-[36px] font-bold tracking-[0.2px] text-black shadow-[0px_0px_6px_0px_rgba(248,100,50,0.25)]">
+    {number}
+  </div>
+
+  <Image
+    src={image}
+    alt=""
+    width={115}
+    height={115}
+    className="mb-10 size-[115px] object-cover"
+  />
+
+  <h3
+    className={`${exo.className} mb-7 text-[30px] font-bold leading-[1.35] tracking-[0.2px] text-black lg:text-[34px] lg:leading-[1.35]`}
+  >
+    {title}
+  </h3>
+
+  <p
+    className={`${exoMedium.className} text-left text-[15px] font-medium leading-[1.8] tracking-[0.1px] text-black lg:text-[16px] lg:leading-[1.85]`}
+  >
+    {body}
+  </p>
+</article>
   );
 }

@@ -1,4 +1,4 @@
-import { exo, melodrama } from "@/app/fonts";
+import { exo, exoMedium, melodrama, salt, space } from "@/app/fonts";
 
 export default function AiBoomSideSection() {
   return (
@@ -12,7 +12,7 @@ export default function AiBoomSideSection() {
         </h2>
 
         <div
-          className={`${exo.className} w-full space-y-5 whitespace-pre-wrap lg:space-y-6 text-justify text-[17px] font-normal leading-[1.55] tracking-[-0.3px] text-[#181c23] lg:text-[20px] lg:leading-[1.65] lg:tracking-[-0.4px]`}
+          className={`${space.className} w-full space-y-5 whitespace-pre-wrap lg:space-y-6 text-justify text-[17px] font-normal leading-[1.55] tracking-[-0.3px] text-[#181c23] lg:text-[20px] lg:leading-[1.65] lg:tracking-[-0.4px]`}
         >
           <p>I know, to some extent, you must already be thinking:</p>
           <p className="font-bold">&quot;Almost every job role is changing...&quot;</p>
@@ -60,7 +60,7 @@ export default function AiBoomSideSection() {
           </PathCard>
 
           {/* Divider text between cards */}
-          <div className="text-center font-bold text-2xl tracking-widest text-[#181c23]/80 italic my-[-10px] z-10">
+          <div className={`${salt.className} text-center font-bold text-2xl tracking-widest text-[#181c23]/80 italic my-[-10px] z-10`}>
             OR
           </div>
 
@@ -86,7 +86,7 @@ export default function AiBoomSideSection() {
         </div>
 
         <div
-          className={`${exo.className} max-w-[981px] space-y-5 whitespace-pre-wrap lg:space-y-6 text-[17px] leading-[1.65] tracking-[0.4px] text-[#181c23] lg:text-[20px] lg:leading-[1.65] lg:tracking-[0.2px]`}
+          className={`${space.className} max-w-[981px] space-y-5 whitespace-pre-wrap lg:space-y-6 text-[17px] leading-[1.65] tracking-[0.4px] text-[#181c23] lg:text-[20px] lg:leading-[1.65] lg:tracking-[0.2px]`}
         >
           <p className="font-medium">
             And I think you already know which path creates the bigger technical
@@ -135,27 +135,134 @@ function PathCard({
 }) {
   return (
     <article
-      className={`relative w-full max-w-[1130px] rounded-[32px] sm:rounded-[40px] bg-[#181a1b] p-8 sm:p-12 lg:px-16 lg:py-14 text-[#d1d5db] shadow-2xl transition-transform duration-300 hover:scale-[1.01] ${rotation}`}
+      className={`
+        relative
+        w-full
+        max-w-[780px]
+        min-h-[340px]
+        sm:min-h-[390px]
+        lg:min-h-[420px]
+        ${rotation}
+      `}
     >
-      {/* Handcrafted Number Badge */}
-      <div className="mb-4 flex items-center gap-2">
-        <span className="text-[32px] sm:text-[38px] font-black italic tracking-tighter text-white font-mono opacity-90">
-          {number}
-        </span>
-      </div>
-
-      {/* Card Title */}
-      <h3
-        className={`${melodrama.className} mb-6 text-[26px] font-bold leading-[1.25] tracking-[0.2px] text-white sm:text-[32px] lg:text-[40px] lg:leading-[1.3]`}
+      {/* Irregular card background */}
+      <svg
+        viewBox="0 0 900 560"
+        preserveAspectRatio="none"
+        className="absolute inset-0 h-full w-full"
+        aria-hidden="true"
       >
-        {title}
-      </h3>
+        <path
+          d="
+            M 72 8
 
-      {/* Card Body */}
+            C 43 6,
+              25 22,
+              23 54
+
+            L 2 494
+
+            C 1 524,
+              18 542,
+              52 543
+
+            L 816 556
+
+            C 850 557,
+              870 539,
+              873 505
+
+            L 899 78
+
+            C 901 47,
+              883 30,
+              852 28
+
+            L 72 8
+
+            Z
+          "
+          fill="#1B1B1B"
+        />
+      </svg>
+
+      {/* Content */}
       <div
-        className={`${exo.className} space-y-4 whitespace-pre-wrap text-[16px] leading-[1.65] text-[#d1d5db] sm:text-[18px] lg:text-[20px] lg:leading-[1.65]`}
+        className="
+          relative
+          z-10
+          px-9
+          pb-10
+          pt-7
+
+          sm:px-12
+          sm:pb-12
+          sm:pt-9
+
+          lg:px-14
+          lg:pb-14
+          lg:pt-10
+        "
       >
-        {children}
+        {/* Number */}
+        <div className="mb-2">
+          <span
+            className={`
+              ${salt.className}
+              inline-block
+              text-[27px]
+              font-normal
+              leading-none
+              text-white
+
+              sm:text-[31px]
+              lg:text-[34px]
+            `}
+          >
+            {number}
+          </span>
+        </div>
+
+        {/* Title */}
+        <h3
+          className={`
+            ${exo.className}
+            mb-8
+            text-[20px]
+            font-bold
+            leading-[1.25]
+            tracking-[0.1px]
+            text-white
+
+            sm:text-[23px]
+            lg:text-[25px]
+          `}
+        >
+          {title}
+        </h3>
+
+        {/* Body */}
+        <div
+          className={`
+            ${space.className}
+            max-w-[650px]
+            space-y-1
+            whitespace-pre-wrap
+            text-[15px]
+            font-normal
+            leading-[1.65]
+            tracking-[0.1px]
+            text-[#f2f2f2]
+
+            sm:text-[16px]
+            sm:leading-[1.7]
+
+            lg:text-[17px]
+            lg:leading-[1.7]
+          `}
+        >
+          {children}
+        </div>
       </div>
     </article>
   );

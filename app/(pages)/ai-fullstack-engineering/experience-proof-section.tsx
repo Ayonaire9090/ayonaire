@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { exo, melodrama } from "@/app/fonts";
+import { adineue, exo, exoMedium, melodrama, space } from "@/app/fonts";
 
 const leftSkills = [
   "Python, Machine Learning,",
@@ -35,7 +35,7 @@ export default function ExperienceProofSection() {
           </h2>
 
           <p
-            className={`${exo.className} text-justify text-[17px] font-medium leading-[1.6] tracking-[0.3px] text-[#5a4136] lg:text-[20px] lg:leading-[1.65] lg:tracking-[0.4px]`}
+            className={`${exoMedium.className} text-justify text-[17px] font-medium leading-[1.6] tracking-[0.3px] text-[#5a4136] lg:text-[20px] lg:leading-[1.65] lg:tracking-[0.4px]`}
           >
             Let me show you something.
           </p>
@@ -51,7 +51,7 @@ export default function ExperienceProofSection() {
         />
 
         <div
-          className={`${exo.className} w-full space-y-5 whitespace-pre-wrap lg:space-y-6 text-justify text-[17px] font-medium leading-[1.65] tracking-[0.3px] text-[#5a4136] lg:text-[20px] lg:leading-[1.65] lg:tracking-[0.4px]`}
+          className={`${space.className} w-full space-y-5 whitespace-pre-wrap lg:space-y-6 text-justify text-[17px] font-medium leading-[1.65] tracking-[0.3px] text-[#5a4136] lg:text-[20px] lg:leading-[1.65] lg:tracking-[0.4px]`}
         >
           <p>
             This job opening was posted a few weeks ago on LinkedIn, and I want you
@@ -80,7 +80,7 @@ export default function ExperienceProofSection() {
           </div>
 
           <p
-            className={`${exo.className} text-center text-[17px] leading-[1.35] tracking-[0.3px] text-[#5a4136] lg:text-[20px] lg:leading-[1.45] lg:tracking-[0.4px]`}
+            className={`${adineue.className} text-center text-[17px] leading-[1.35] tracking-[0.3px] text-[#5a4136] lg:text-[20px] lg:leading-[1.45] lg:tracking-[0.4px]`}
           >
             But having the skill is actually not enough. Because the real
             question is not only:
@@ -93,7 +93,7 @@ export default function ExperienceProofSection() {
 
 function SkillList({ skills }: { skills: string[] }) {
   return (
-    <ul className={`${exo.className} space-y-6 text-[17px] font-medium leading-[1.4] tracking-[-0.8px] text-[#181c23] lg:text-[20px] lg:leading-[1.65] lg:tracking-[-0.6px]`}>
+    <ul className={`${exoMedium.className} space-y-6 text-[17px] font-medium leading-[1.4] tracking-[-0.8px] text-[#181c23] lg:text-[20px] lg:leading-[1.65] lg:tracking-[-0.6px]`}>
       {skills.map((skill) => (
         <li key={skill} className="flex items-center gap-6">
           <Image

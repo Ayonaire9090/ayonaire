@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { exo, melodrama } from "@/app/fonts";
+import { exo, exoMedium, melodrama } from "@/app/fonts";
 
 const lessons = [
   ["Python for AI & Data", "Learn Python from the ground up and progress into OOP, reusable code, Git, GitHub and the programming foundations needed to build AI applications."],
@@ -34,7 +34,7 @@ export default function WhatYouWillLearnSection() {
           </h2>
         </div>
 
-        <p className={`${exo.className} text-[22px] font-bold uppercase leading-[1.3] tracking-[0.5px] text-[#181c23] lg:text-[32px]`}>
+        <p className={`${exo.className} text-[22px] font-bold uppercase leading-[1.3] tracking-[0.5px] text-[#181c23] lg:text-[22px]`}>
           What you will learn
         </p>
 
@@ -46,10 +46,10 @@ export default function WhatYouWillLearnSection() {
               </span>
               <Image src="/assets/images/ai-fullstack-engineering/learning-path-icon.png" alt="" width={80} height={80} className="mb-5 size-14 object-cover lg:absolute lg:left-5 lg:top-[112px] lg:size-20" />
               <div className="lg:pl-[118px]">
-                <h3 className={`${exo.className} mb-4 text-[20px] font-bold leading-[1.25] tracking-[0.4px] text-[#181c23] lg:text-[28px]`}>
+                <h3 className={`${exo.className} mb-4 text-[15px] font-bold leading-[1.25] tracking-[0.4px] text-[#181c23] lg:text-[20px]`}>
                   {title}
                 </h3>
-                <p className={`${exo.className} text-[16px] leading-[1.6] tracking-[0.2px] text-black lg:text-[20px] lg:leading-[1.6]`}>
+                <p className={`${exoMedium.className} text-[16px] leading-[1.6] tracking-[0.2px] text-black lg:text-[20px] lg:leading-[1.6]`}>
                   {body}
                 </p>
               </div>
@@ -58,7 +58,7 @@ export default function WhatYouWillLearnSection() {
         </div>
 
         <div className="text-center">
-          <p className={`${exo.className} text-[20px] font-medium leading-[1.5] tracking-[0.3px] text-[#5a4136] lg:text-[32px]`}>
+          <p className={`${exoMedium.className} text-[20px] font-medium leading-[1.5] tracking-[0.3px] text-[#5a4136] lg:text-[32px]`}>
             The journey is designed to move you from:
           </p>
           <p className={`${melodrama.className} mt-6 text-[24px] font-semibold leading-[1.3] text-black lg:text-[32px]`}>
