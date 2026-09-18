@@ -1,4 +1,4 @@
-﻿import Image from "next/image";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { melodrama, salt } from "@/app/fonts";
 

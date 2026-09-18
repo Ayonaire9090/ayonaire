@@ -59,7 +59,7 @@ export default function StudentReviewSection() {
             </div>
 
             <div
-              className={`${exo.className} relative z-10 max-h-[270px] overflow-y-auto pr-4 text-justify text-[15px] font-medium leading-[1.7] text-[#2d3036] scrollbar-thin scrollbar-thumb-[#ff8a4d] scrollbar-track-transparent sm:text-[16px] lg:max-h-[304px]`}
+              className={`${exo.className} relative z-10 max-h-[270px] overflow-y-auto pr-4 text-justify text-[15px] font-medium leading-[1.7] text-[#2d3036] [scrollbar-color:#ff8a4d_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-[#ff8a4d] sm:text-[16px] lg:max-h-[304px]`}
             >
               <p className="mb-7 text-left text-[16px] font-black leading-[1.55] text-[#252830] sm:text-[18px]">
                 &quot;The Program Has Really Improved My Confidence and Technical Skills.&quot;
