@@ -7,7 +7,7 @@ import ChatbotWidget from "@/components/chatbot";
 export default function ChatbotWrapper() {
   const pathname = usePathname();
 
-  if (pathname === "/ai-engineering-masterclass" || pathname === "/ai-engineering-thank-you") return null;
+  if (pathname === "/ai-engineering-masterclass" || pathname === "/ai-engineering-thank-you" || "/ai-fullstack-engineering") return null;
 
   return <ChatbotWidget />;
 }
