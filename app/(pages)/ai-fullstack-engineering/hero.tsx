@@ -1,4 +1,4 @@
-import Image from "next/image";
+﻿import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { melodrama, salt } from "@/app/fonts";
 
@@ -10,13 +10,13 @@ export default function Hero() {
         min-h-[620px]
         overflow-visible
         bg-black
-        mb-[52px]
+        mb-[62px]
         sm:min-h-[700px]
         sm:mb-[60px]
         md:min-h-[760px]
-        md:mb-[68px]
+        md:mb-[88px]
         lg:min-h-[790px]
-        lg:mb-[78px]
+        lg:mb-[98px]
         xl:min-h-[820px]
       "
       aria-label="AI Fullstack Engineering"
