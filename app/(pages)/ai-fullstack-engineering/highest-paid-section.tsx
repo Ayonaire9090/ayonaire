@@ -3,7 +3,7 @@ import { exo, melodrama } from "@/app/fonts";
 
 export default function HighestPaidSection() {
   return (
-    <section className="bg-[#f8f5f1] px-5 py-14 sm:px-8 lg:px-12 xl:px-16 sm:py-18 lg:py-20">
+    <section className="bg-[#f8f5f1] px-5 py-14 sm:px-8 lg:px-12 xl:px-16 sm:py-18 lg:py-20 mt-12">
       <div className="mx-auto flex w-full flex-col items-center gap-[56px] sm:gap-[68px] lg:gap-[76px]">
         <div className="flex w-full max-w-[1120px] flex-col gap-12 sm:gap-16 lg:gap-20">
           <h2

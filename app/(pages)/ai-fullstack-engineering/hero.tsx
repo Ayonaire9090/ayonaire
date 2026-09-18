@@ -1,4 +1,4 @@
-import Image from "next/image";
+﻿import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { melodrama, salt } from "@/app/fonts";
 
@@ -207,14 +207,14 @@ export default function Hero() {
         className="
           absolute
           inset-x-0
-          bottom-[-52px]
+          bottom-[-63px]
           z-20
           h-[115px]
-          sm:bottom-[-60px]
+          sm:bottom-[-64px]
           sm:h-[135px]
-          md:bottom-[-68px]
+          md:bottom-[-86px]
           md:h-[150px]
-          lg:bottom-[-78px]
+          lg:bottom-[-96px]
           lg:h-[175px]
         "
       >

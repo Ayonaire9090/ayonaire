@@ -1,4 +1,5 @@
-﻿import Image from "next/image";
+import Image from "next/image";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { exo, melodrama } from "@/app/fonts";
 
 const reviewParagraphs = [
@@ -13,95 +14,108 @@ const reviewParagraphs = [
 
 export default function StudentReviewSection() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-white/65 to-[rgba(255,107,0,0)] px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
-      <div className="relative z-10 mx-auto flex w-full max-w-[1133px] flex-col items-center gap-12 lg:gap-20">
-        <div className="flex w-full flex-col items-center gap-8 text-center lg:gap-10">
-          <div className="relative w-full max-w-[780px]">
-            <h2 className={`${melodrama.className} relative z-10 text-[34px] font-bold leading-[1.08] tracking-[-0.8px] text-[#181c23] sm:text-[44px] lg:text-[56px] lg:tracking-[-1.4px]`}>
+    <section className="relative overflow-hidden bg-[#fff0e4] px-5 py-14 sm:px-8 lg:px-12 lg:py-[96px]">
+      <div className="relative z-10 mx-auto flex w-full max-w-[980px] flex-col items-center">
+        <div className="flex w-full flex-col items-center text-center">
+          <div className="relative w-full max-w-[560px]">
+            <h2
+              className={`${melodrama.className} relative z-10 text-[28px] font-bold leading-[1.05] text-[#181c23] sm:text-[34px] lg:text-[40px]`}
+            >
               Don&apos;t just take <span className="text-[#f25e25]">our word for it.</span>
             </h2>
             <Image
               src="/assets/images/ai-fullstack-engineering/student-review-heading-highlight.svg"
               alt=""
-              width={380}
-              height={58}
-              className="pointer-events-none absolute -bottom-2 right-0 z-0 hidden h-[58px] w-[380px] max-w-[52%] lg:block"
+              width={250}
+              height={38}
+              className="pointer-events-none absolute -bottom-1 right-[72px] z-0 hidden h-[38px] w-[250px] max-w-[48%] select-none sm:block"
             />
           </div>
 
-          <p className={`${exo.className} max-w-[960px] text-[18px] font-medium leading-[1.6] tracking-[-0.2px] text-[#181c23] sm:text-[22px] lg:text-[28px] lg:leading-[46px] lg:tracking-[-0.4px]`}>
+          <p
+            className={`${exo.className} mt-4 max-w-[760px] text-[14px] font-semibold leading-[1.55] text-[#2d3036] sm:text-[16px] lg:text-[18px]`}
+          >
             Don&apos;t just take our word for what the Ayonaire experience is like. Hear directly from the people who have gone through it.
           </p>
 
-          <ReviewDivider />
+          <ReviewDivider className="mt-5" />
         </div>
 
-        <article className="grid w-full gap-10 lg:h-[439px] lg:grid-cols-[375px_1fr_8px] lg:gap-5 lg:overflow-hidden">
-          <Image
-            src="/assets/images/ai-fullstack-engineering/student-review-avatar.png"
-            alt="Illustrated portrait representing Ezeh Faith"
-            width={375}
-            height={304}
-            className="mx-auto h-auto w-full max-w-[260px] object-contain sm:max-w-[320px] lg:max-w-none"
-            sizes="(min-width: 1024px) 375px, 320px"
-          />
+        <article className="relative mt-8 grid w-full items-start gap-8 lg:grid-cols-[210px_minmax(0,1fr)_6px] lg:gap-12">
+          <div className="flex justify-center lg:pt-20">
+            <Image
+              src="/assets/images/ai-fullstack-engineering/student-review-avatar.png"
+              alt="Illustrated portrait representing Ezeh Faith"
+              width={210}
+              height={170}
+              className="h-auto w-full max-w-[170px] object-contain sm:max-w-[200px] lg:max-w-[210px]"
+              sizes="(min-width: 1024px) 210px, 200px"
+            />
+          </div>
 
-          <div className={`${exo.className} flex min-w-0 flex-col gap-8 pr-0 text-justify text-[18px] leading-[1.65] tracking-[-0.2px] text-[#181c23] sm:text-[22px] lg:max-h-[439px] lg:gap-10 lg:overflow-y-auto lg:pr-10 lg:text-[28px] lg:leading-[46px] lg:tracking-[-0.4px]`}>
-            <div>
-              <p className="mb-8 font-bold">
-                &quot;The Program Has Really Improved My Confidence and Technical Skills.&quot;
-              </p>
-              {reviewParagraphs.map((paragraph) => (
-                <p key={paragraph} className="mb-6 last:mb-0">{paragraph}</p>
-              ))}
+          <div className="relative min-w-0 overflow-hidden pr-0 lg:pr-8">
+            <div className="pointer-events-none absolute -right-2 -top-12 hidden select-none text-[180px] font-black leading-none text-white/35 lg:block">
+              &rdquo;
             </div>
 
-            <div className="flex flex-col gap-4 text-left">
-              <p className="text-[20px] font-bold sm:text-[24px] lg:text-[28px]">-Ezeh Faith</p>
-              <p className="text-[15px] font-normal sm:text-[16px] lg:text-[18px]">AI Engineering Student, Ayonaire Academy</p>
+            <div
+              className={`${exo.className} relative z-10 max-h-[270px] overflow-y-auto pr-4 text-justify text-[15px] font-medium leading-[1.7] text-[#2d3036] scrollbar-thin scrollbar-thumb-[#ff8a4d] scrollbar-track-transparent sm:text-[16px] lg:max-h-[304px]`}
+            >
+              <p className="mb-7 text-left text-[16px] font-black leading-[1.55] text-[#252830] sm:text-[18px]">
+                &quot;The Program Has Really Improved My Confidence and Technical Skills.&quot;
+              </p>
+
+              {reviewParagraphs.map((paragraph) => (
+                <p key={paragraph} className="mb-5 last:mb-0">
+                  {paragraph}
+                </p>
+              ))}
+
+              <div className="mt-7 text-left">
+                <p className="text-[17px] font-black text-[#252830]">-Ezeh Faith</p>
+                <p className="mt-1 text-[13px] font-medium text-[#2d3036]">AI Engineering Student, Ayonaire Academy</p>
+              </div>
             </div>
           </div>
 
-          <div className="hidden h-[111px] w-2 rounded-[4px] bg-[rgba(242,94,37,0.38)] lg:block" />
+          <div className="hidden h-[102px] w-[4px] rounded-full bg-[#ff8a4d]/70 lg:mt-20 lg:block" />
         </article>
 
-        <div className="flex w-full items-center justify-center gap-3 sm:gap-0">
+        <div className="mt-8 flex w-full items-center justify-between gap-5 sm:mt-10">
           <ReviewDivider compact />
+
+          <div className="flex shrink-0 items-center gap-2 text-[#ff6b00]">
+            <button
+              type="button"
+              aria-label="Previous student review"
+              className="flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:bg-white/55 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ff6b00]"
+            >
+              <ChevronLeft aria-hidden="true" className="h-5 w-5" strokeWidth={2.5} />
+            </button>
+            <button
+              type="button"
+              aria-label="Next student review"
+              className="flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:bg-white/55 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ff6b00]"
+            >
+              <ChevronRight aria-hidden="true" className="h-5 w-5" strokeWidth={2.5} />
+            </button>
+          </div>
         </div>
       </div>
-
-      <Image
-        src="/assets/images/ai-fullstack-engineering/student-review-decoration.png"
-        alt=""
-        width={72}
-        height={130}
-        className="pointer-events-none absolute bottom-16 right-5 hidden h-[130px] w-[72px] object-cover object-left lg:block xl:right-[120px]"
-      />
     </section>
   );
 }
 
-function ReviewDivider({ compact = false }: { compact?: boolean }) {
+function ReviewDivider({ compact = false, className = "" }: { compact?: boolean; className?: string }) {
   return (
-    <div className={`flex w-full items-center justify-center ${compact ? "max-w-[640px]" : "max-w-[552px]"}`}>
-      <Image
-        src="/assets/images/ai-fullstack-engineering/student-review-divider.svg"
-        alt=""
-        width={204}
-        height={1}
-        className="hidden h-px min-w-0 flex-1 object-fill sm:block"
-      />
-      <div className={`${exo.className} shrink-0 border border-[#f25e25] px-4 py-3 text-center text-[14px] font-bold tracking-[-0.2px] text-[#181c23] sm:px-5 sm:text-[18px] lg:text-[20px] lg:tracking-[-0.4px]`}>
+    <div className={`flex w-full items-center justify-center ${compact ? "max-w-[440px]" : "max-w-[430px]"} ${className}`}>
+      <div className="h-px min-w-0 flex-1 bg-[#ff8a4d]" />
+      <div
+        className={`${exo.className} shrink-0 border border-[#ff8a4d] bg-[#fff0e4] px-4 py-2 text-center text-[10px] font-black uppercase text-[#252830] sm:text-[11px]`}
+      >
         STUDENT REVIEW
       </div>
-      <Image
-        src="/assets/images/ai-fullstack-engineering/student-review-divider.svg"
-        alt=""
-        width={204}
-        height={1}
-        className="hidden h-px min-w-0 flex-1 object-fill sm:block"
-      />
+      <div className="h-px min-w-0 flex-1 bg-[#ff8a4d]" />
     </div>
   );
 }
-
