@@ -3,7 +3,7 @@ import { exo, exoMedium } from "@/app/fonts";
 
 export default function QuestionsCtaSection() {
   return (
-    <section className="bg-[linear-gradient(117deg,rgba(255,107,0,0.68)_3%,rgba(255,220,196,0.92)_29%,#fff5ee_58%,#fdfbf9_100%)] px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
+    <section className="mt-20 bg-[linear-gradient(117deg,rgba(255,107,0,0.68)_3%,rgba(255,220,196,0.92)_29%,#fff5ee_58%,#fdfbf9_100%)] px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
       <div className="mx-auto flex w-full max-w-[777px] flex-col items-center justify-center gap-12 text-center lg:gap-20">
         <div className="flex w-full flex-col items-center gap-8">
           <div className="relative w-full max-w-[713px]">

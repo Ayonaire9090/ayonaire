@@ -47,6 +47,8 @@ import CohortActionSection from "./cohort-action-section";
 import FinalQuestionSection from "./final-question-section";
 import QuestionsCtaSection from "./questions-cta-section";
 import IntroducingA  from "./intoducing-ai-engineering"
+import FaqSection from "./FaqSection";
+import Next10MonthsSection from "./Next10Months";
 export default function AiFullstackEngineeringPage() {
   return (
     <main className={exo.className}>
@@ -93,10 +95,12 @@ export default function AiFullstackEngineeringPage() {
       <StudentReviewSection />
       <InstructorProofSection />
       <RegisteredCompanySection />
-      <BestTimeSection />
+      <Next10MonthsSection/> {/** c */}
+      <BestTimeSection /> 
       <TenMonthsInvestmentSection />
       <CohortActionSection />
       <FinalQuestionSection />
+      <FaqSection/>
       <QuestionsCtaSection />
       <Footer />
     </main>

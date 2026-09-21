@@ -202,3 +202,12 @@ export const rope = localFont({
   src:"./fonts/rope/Manrope-VariableFont_wght.ttf",
   variable:"--font-rope"
 })
+
+export const barlowBold  = localFont({
+  src:"./fonts/barlow/Barlow-Bold.ttf", 
+  variable:"--font-barlow"
+})
+export const barlowNormal = localFont({
+  src:"./fonts/barlow/Barlow-Regular.ttf", 
+  variable:"--font-barlow-normal"
+})

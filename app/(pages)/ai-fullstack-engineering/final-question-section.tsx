@@ -1,9 +1,9 @@
 import Image from "next/image";
-import { exo, exoMedium } from "@/app/fonts";
+import { exo, exoMedium,rope , salt} from "@/app/fonts";
 
 export default function FinalQuestionSection() {
   return (
-    <section className="bg-[linear-gradient(106deg,rgba(255,107,0,0.68)_3%,rgba(255,220,196,0.92)_29%,#fff5ee_58%,#fdfbf9_100%)] px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
+    <section className=" mt-20 bg-[linear-gradient(106deg,rgba(255,107,0,0.68)_3%,rgba(255,220,196,0.92)_29%,#fff5ee_58%,#fdfbf9_100%)] px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
       <div className="mx-auto flex w-full max-w-[799px] flex-col items-center gap-12 text-center lg:gap-20">
         <Image
           src="/assets/images/ai-fullstack-engineering/final-question-icon.png"
@@ -16,7 +16,7 @@ export default function FinalQuestionSection() {
 
         <div className="flex w-full flex-col items-center gap-8">
           <div className="relative w-full max-w-[713px]">
-            <h2 className={`${exo.className} relative z-10 text-[34px] font-bold leading-[1.08] tracking-[-0.8px] text-[#181c23] sm:text-[44px] lg:text-[56px] lg:leading-[60.48px] lg:tracking-[-1.4px]`}>
+            <h2 className={`${rope.className} relative z-10 text-[34px] font-bold leading-[1.08] tracking-[-0.8px] text-[#181c23] sm:text-[44px] lg:text-[56px] lg:leading-[60.48px] lg:tracking-[-1.4px]`}>
               <span className="text-[#f25e25]">One last question</span> before you leave.
             </h2>
             <Image
@@ -33,7 +33,7 @@ export default function FinalQuestionSection() {
           </p>
         </div>
 
-        <p className={`${exo.className} text-[48px] font-bold leading-none tracking-[0.6px] text-[#ff6b00] sm:text-[56px] lg:text-[64px]`}>
+        <p className={`${salt.className} text-[48px] font-bold leading-none tracking-[0.6px] text-[#ff6b00] sm:text-[56px] lg:text-[64px]`}>
           Or
         </p>
 

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { exo, exoMedium, melodrama } from "@/app/fonts";
+import { exo, exoMedium, melodrama, space } from "@/app/fonts";
 
 const outcomeStatements = [
   "I finally started.",
@@ -26,7 +26,7 @@ export default function BestTimeSection() {
           />
         </div>
 
-        <div className={`${exoMedium.className} w-full max-w-[1279px] space-y-7 text-justify text-[18px] font-normal leading-[1.75] tracking-[0.4px] text-[#5a4136] sm:text-[22px] lg:space-y-8 lg:text-[28px] lg:leading-[46px] lg:tracking-[0.8px]`}>
+        <div className={`${space .className} w-full max-w-[1279px] space-y-7 text-justify text-[18px] font-normal leading-[1.75] tracking-[0.4px] text-[#5a4136] sm:text-[22px] lg:space-y-8 lg:text-[28px] lg:leading-[46px] lg:tracking-[0.8px]`}>
           <p>You cannot go back and start six months ago.</p>
           <p>But you can decide what happens from today.</p>
           <p>Because every day you postpone the decision is another day someone else is learning, practising, building and positioning themselves for the opportunities you also want.</p>
