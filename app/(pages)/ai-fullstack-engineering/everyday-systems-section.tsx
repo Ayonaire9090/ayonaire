@@ -5,23 +5,23 @@ export default function EverydaySystemsSection() {
   return (
     <section className="bg-[#fefaf8] px-5 py-16 sm:px-8 lg:px-12 xl:px-16 lg:py-[120px]">
       <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-10">
-        <h2
-          className={`${melodrama.className} max-w-[1240px] text-center text-[30px] font-bold leading-[1.12] tracking-[-0.95px] text-[#181c23] sm:text-[36px] lg:text-[44px] lg:leading-[1.16] lg:tracking-[-0.6px]`}
-        >
-          Now you see that the terms only seem technical, but they are{" "}
-          <span className="underline">actually</span>{" "}
-          <span className="relative inline-block text-[#f25e25] underline">
-            systems you interact
-            <Image
-              src="/assets/images/ai-fullstack-engineering/everyday-systems-highlight.svg"
-              alt=""
-              width={496}
-              height={62}
-              className="pointer-events-none absolute left-1/2 top-[2px] h-[62px] w-[min(496px,108%)] -translate-x-1/2 select-none object-fill"
-            />
-          </span>{" "}
-          <span className="underline">with everyday</span>
-        </h2>
+       <h2
+  className={`${melodrama.className} max-w-[1240px] text-center text-[30px] font-bold leading-[1.12] tracking-[-0.95px] text-[#181c23] sm:text-[36px] lg:text-[44px] lg:leading-[1.16] lg:tracking-[-0.6px]`}
+>
+  Now you see that the terms only seem technical, but they are{" "}
+  <span className="underline whitespace-nowrap">actually</span>{" "}
+  <span className="relative inline-block text-[#f25e25] underline whitespace-nowrap">
+    systems you interact
+    <Image
+      src="/assets/images/ai-fullstack-engineering/everyday-systems-highlight.svg"
+      alt=""
+      width={496}
+      height={62}
+      className="pointer-events-none absolute left-1/2 top-[2px] h-[62px] w-[min(496px,108%)] -translate-x-1/2 select-none object-fill"
+    />
+  </span>{" "}
+  <span className="underline whitespace-nowrap">with everyday</span>
+</h2>
 
         <div
           className={`${space.className} max-w-[1120px] space-y-5 whitespace-pre-wrap lg:space-y-6 text-justify text-[17px] font-normal leading-[1.6] tracking-[0.4px] text-[#181c23] lg:text-[20px] lg:leading-[1.65] lg:tracking-[0.2px]`}

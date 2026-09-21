@@ -340,7 +340,7 @@ export default function CurriculumSection() {
       <div className="relative z-10 mx-auto flex w-full max-w-[1240px] flex-col items-center gap-12 lg:gap-20">
         {/* Heading */}
         <h2
-          className={`${melodrama.className} text-center text-[30px] font-bold uppercase leading-[1.12] tracking-[-0.8px] text-white sm:text-[36px] lg:text-[44px] lg:leading-[1.16]`}
+          className={`${melodrama.className} pt-14 text-center text-[30px] font-bold uppercase leading-[1.12] tracking-[-0.8px] text-white sm:text-[36px] lg:text-[44px] lg:leading-[1.16]`}
         >
           Now, take a look at the{" "}
           <span className="relative inline-block text-[#ff6b00]">

@@ -5,22 +5,22 @@ export default function CompaniesPaySection() {
   return (
     <section className="bg-[#fdfbf9] px-5 py-16 sm:px-8 lg:px-12 xl:px-16 lg:py-20">
       <div className="mx-auto flex w-full max-w-[1120px] flex-col items-center gap-8">
-        <h2
-          className={`${melodrama.className} text-center text-[30px] font-bold leading-[1.12] tracking-[0.4px] text-[#181c23] sm:text-[36px] lg:text-[44px] lg:leading-[1.16] lg:tracking-[0.2px]`}
-        >
-          Companies Pay People Who Build AI Systems{" "}
-          <span className="relative inline-block text-[#f25e25]">
-            Because It Saves Them Millions
-            <Image
-              src="/assets/images/ai-fullstack-engineering/companies-pay-highlight.svg"
-              alt=""
-              width={510}
-              height={62}
-              className="pointer-events-none absolute left-1/2 top-[4px] h-[62px] w-[510px] max-w-[104%] -translate-x-1/2 select-none object-fill"
-            />
-          </span>{" "}
-          <span className="text-[#f25e25]">Of $$$</span>
-        </h2>
+      <h2
+  className={`${melodrama.className} text-center text-[30px] font-bold leading-[1.12] tracking-[0.4px] text-[#181c23] sm:text-[36px] lg:text-[44px] lg:leading-[1.16] lg:tracking-[0.2px]`}
+>
+  Companies Pay People Who Build AI Systems{" "}
+  <span className="relative inline-block text-[#f25e25]">
+    <span className="whitespace-nowrap">Because It Saves Them</span>{" "}
+    <span className="whitespace-nowrap">Millions Of $$$</span>
+    <Image
+      src="/assets/images/ai-fullstack-engineering/companies-pay-highlight.svg"
+      alt=""
+      width={510}
+      height={62}
+      className="pointer-events-none absolute left-1/2 top-[4px] h-[62px] w-[510px] max-w-[104%] -translate-x-1/2 select-none object-fill"
+    />
+  </span>
+</h2>
 
         <div
           className={`${exoMedium.className} w-full max-w-[1120px] space-y-5 whitespace-pre-wrap lg:space-y-6 text-justify text-[17px]  leading-[1.65] text-[#5a4136] sm:text-[18px] lg:text-[20px] lg:leading-[1.65]`}

@@ -21,7 +21,7 @@ export default function Hero() {
       "
       aria-label="AI Fullstack Engineering"
     >
-      {/* HERO BACKGROUND */}
+      {/* HERO BACKGROUND - DESKTOP/TABLET */}
       <Image
         src="/assets/images/ai-fullstack-engineering/hero-background.png"
         alt=""
@@ -33,6 +33,25 @@ export default function Hero() {
           select-none
           object-cover
           object-center
+          hidden
+          sm:block
+        "
+      />
+
+      {/* HERO BACKGROUND - MOBILE */}
+      <Image
+        src="/assets/images/ai-fullstack-engineering/herom.png"
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        className="
+          pointer-events-none
+          select-none
+          object-cover
+          object-center
+          block
+          sm:hidden
         "
       />
 
@@ -196,14 +215,13 @@ export default function Hero() {
       </div>
 
       {/* ====================================================== */}
-      {/* BOTTOM IMAGE + BUTTON - PINNED DIRECTLY TO THE BOTTOM   */}
+      {/* BOTTOM IMAGE + BUTTON - PINNED DIRECTLY TO THE BOTTOM  */}
       {/* ====================================================== */}
 
       <div
         className="
           absolute
           inset-x-0
-        
           z-20
           h-[115px]
           bottom-[-88px]
@@ -211,9 +229,7 @@ export default function Hero() {
           md:bottom-[-136px]
           lg:bottom-[-136px]
           sm:h-[135px]
-        
           md:h-[150px]
-         
           lg:h-[175px]
         "
       >
@@ -309,3 +325,4 @@ export default function Hero() {
     </section>
   );
 }
+

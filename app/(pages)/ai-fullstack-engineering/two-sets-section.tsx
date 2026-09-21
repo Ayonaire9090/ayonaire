@@ -348,7 +348,7 @@ function QuestionCard({
   />
 
   <h3
-    className={`${exo.className} mb-7 text-[30px] font-bold leading-[1.35] tracking-[0.2px] text-black lg:text-[34px] lg:leading-[1.35]`}
+    className={`${exo.className} mb-7 text-[22px] font-bold leading-[1.35] tracking-[0.2px] text-black lg:text-[34px] lg:leading-[1.35]`}
   >
     {title}
   </h3>

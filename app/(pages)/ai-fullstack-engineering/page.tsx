@@ -51,6 +51,7 @@ import FaqSection from "./FaqSection";
 import Next10MonthsSection from "./Next10Months";
 import ExcellenceStandardSection from "./excellence-standard-section";
 import CredentialProofSection from "./CredentialsProofSection";
+import ClarificationSection from "./ClarificationSection";
 export default function AiFullstackEngineeringPage() {
   return (
     <main className={exo.className}>
@@ -60,6 +61,7 @@ export default function AiFullstackEngineeringPage() {
       <CompaniesPaySection />
       <TwoSetsSection />
       <LinkedInSearchSection />
+      <ClarificationSection/>
       <AiBoomSideSection />
       <AiEngineeringExplainedSection />
       <EverydaySystemsSection />

@@ -35,21 +35,23 @@ export default function ExplainedCtaSection() {
 
       <div className="relative z-10 mx-auto flex w-full max-w-[1187px] flex-col items-center text-center text-white">
         <h2
-          className={`${melodrama.className} text-[30px] font-bold uppercase leading-[1.18] tracking-[0.4px] sm:text-[36px] lg:text-[44px] lg:leading-[1.2] lg:tracking-[0.2px]`}
+          className={`${melodrama.className} text-[24px] font-bold uppercase leading-[1.18] tracking-[0.4px] sm:text-[36px] lg:text-[44px] lg:leading-[1.2] lg:tracking-[0.2px]`}
         >
-          So... I just explained what 10s of Youtube videos fail to help many
-          understand (of course many of them want to{" "}
-          <span className="relative inline-block text-[#f25e25]">
-            sound technical and professional
-            <Image
-              src="/assets/images/ai-fullstack-engineering/explained-cta-highlight.svg"
-              alt=""
-              width={757}
-              height={53}
-              className="pointer-events-none absolute left-1/2 top-1/2 h-[53px] w-[min(757px,106%)] -translate-x-1/2 -translate-y-1/2 select-none object-fill"
-            />
+          So... I just explained what 10s of Youtube videos fail to help many{" "}
+          <span className="inline-block">
+            understand (of course many of them want to{" "}
+            <span className="relative inline-block text-[#f25e25]">
+              sound technical and
+              <Image
+                src="/assets/images/ai-fullstack-engineering/explained-cta-highlight.svg"
+                alt=""
+                width={757}
+                height={53}
+                className="pointer-events-none absolute left-1/2 top-1/2 h-[53px] w-[min(757px,106%)] -translate-x-1/2 -translate-y-1/2 select-none object-fill"
+              />
+            </span>
+            <span className="whitespace-nowrap"> professional)</span>
           </span>
-          )
         </h2>
 
         <Image

@@ -31,27 +31,29 @@ export default function LinkedInSearchSection() {
           </span>
         </h2>
 
-        <div className="grid items-end gap-10 lg:grid-cols-[1fr_683px] lg:gap-20">
-          <ol className={`${exoMedium.className} flex flex-col gap-7 text-[17px]`}>
-            {roles.map((role) => (
-              <li key={role.number} className="flex items-center gap-7">
-                <NumberPill value={role.number} />
-                <span className="text-[17px] font-normal tracking-[0.2px] sm:text-[18px] lg:text-[20px]">
-                  {role.label}
-                </span>
-              </li>
-            ))}
-          </ol>
+        <div className="flex flex-col-reverse lg:grid lg:grid-cols-[1fr_683px] items-center lg:items-end gap-10 lg:gap-20">
+  {/* LIST CONTENT - Appears at bottom on mobile, left column on desktop */}
+  <ol className={`${exoMedium.className} flex flex-col gap-7 text-[17px] w-full`}>
+    {roles.map((role) => (
+      <li key={role.number} className="flex items-center gap-7">
+        <NumberPill value={role.number} />
+        <span className="text-[17px] font-normal tracking-[0.2px] sm:text-[18px] lg:text-[20px]">
+          {role.label}
+        </span>
+      </li>
+    ))}
+  </ol>
 
-          <Image
-            src="/assets/images/ai-fullstack-engineering/linkedin-search-illustration.png"
-            alt="AI career roadmap illustration"
-            width={683}
-            height={854}
-            className="mx-auto h-auto w-full max-w-[683px] object-cover"
-            sizes="(min-width: 1024px) 683px, 100vw"
-          />
-        </div>
+  {/* IMAGE - Appears at top on mobile, right column on desktop */}
+  <Image
+    src="/assets/images/ai-fullstack-engineering/linkedin-search-illustration.png"
+    alt="AI career roadmap illustration"
+    width={683}
+    height={854}
+    className="mx-auto h-auto w-full max-w-[683px] object-cover"
+    sizes="(min-width: 1024px) 683px, 100vw"
+  />
+</div>
 
         <div className="flex flex-col gap-10 text-[#181c23]">
           <div className={`${exoMedium.className} space-y-2 text-[17px] font-medium leading-[1.4] tracking-[0.4px] lg:text-[20px] lg:leading-[1.6] lg:tracking-[0.2px]`}>
