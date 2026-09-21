@@ -46,9 +46,11 @@ import TenMonthsInvestmentSection from "./ten-months-investment-section";
 import CohortActionSection from "./cohort-action-section";
 import FinalQuestionSection from "./final-question-section";
 import QuestionsCtaSection from "./questions-cta-section";
-import IntroducingA  from "./intoducing-ai-engineering"
+import IntroducingA from "./intoducing-ai-engineering"
 import FaqSection from "./FaqSection";
 import Next10MonthsSection from "./Next10Months";
+import ExcellenceStandardSection from "./excellence-standard-section";
+import CredentialProofSection from "./CredentialsProofSection";
 export default function AiFullstackEngineeringPage() {
   return (
     <main className={exo.className}>
@@ -65,42 +67,44 @@ export default function AiFullstackEngineeringPage() {
       <ExperienceProofSection />
       <ProofOfWorkSection />
       <LearningPathSection />
-      <LearningOptionsSection /> 
-      <IntroducingA/>
+      <LearningOptionsSection />
+      <IntroducingA />
       {/** stop */}
       <WhatYouWillLearnSection />
       <ProgramActsSection />
-      <CurriculumSection />    
-      <ActualBuildSection /> 
+      <CurriculumSection />   {/** stop */}
+      <ActualBuildSection />
       <ProjectJourneySection />
       <CareerPathwaysSection /> 
       <ProgramDifferenceSection /> 
       <RightFitSection />
-      <IntentionalFitSection />
-      <AcceptanceFilterSection /> 
+      <IntentionalFitSection />  
+      <AcceptanceFilterSection />
       <BeginnerStartSection />
-      <AudienceFitSection /> 
+      <AudienceFitSection />  
       <CareerEcosystemSection />
-      <BiggerIdeaSection />  
+      <BiggerIdeaSection /> 
       <InvestmentSection />
-      <TrainingCostSection /> 
-      <ProgrammeOfferSection /> 
+      <TrainingCostSection />
+      <ProgrammeOfferSection />
       <PaymentPlansSection />
-      <TeachingApproachSection /> 
-      <GuaranteeSection />   
-      <WeeklyScheduleSection />{/** stop */}
+      <TeachingApproachSection />
+      <GuaranteeSection /> 
+      <WeeklyScheduleSection />
       <CredentialSection />
+      {/* <CredentialProofSection /> */}
       <WhatICanDoSection />
       <BuildProofSection />
+      <ExcellenceStandardSection />  
       <StudentReviewSection />
       <InstructorProofSection />
       <RegisteredCompanySection />
-      <Next10MonthsSection/> {/** c */}
-      <BestTimeSection /> 
+      <Next10MonthsSection />
+      <BestTimeSection />
       <TenMonthsInvestmentSection />
       <CohortActionSection />
       <FinalQuestionSection />
-      <FaqSection/>
+      <FaqSection />
       <QuestionsCtaSection />
       <Footer />
     </main>

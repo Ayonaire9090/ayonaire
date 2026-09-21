@@ -50,12 +50,23 @@ const audienceCards = [
 
 export default function AudienceFitSection() {
   return (
-    <section className="bg-[linear-gradient(180deg,#fff_0%,rgba(255,220,196,0.28)_18%,rgba(248,100,50,0)_47%,#fff_67%,rgba(255,220,196,0.04)_89%,rgba(248,100,50,0.25)_100%)] px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
+    <section
+      className="
+        bg-[linear-gradient(180deg,#fff_0%,rgba(255,220,196,0.28)_18%,rgba(248,100,50,0)_47%,#fff_67%,rgba(255,220,196,0.04)_89%,rgba(248,100,50,0.25)_100%)]
+        px-5
+        py-16
+        sm:px-8
+        lg:px-12
+        lg:py-[120px]
+        xl:px-16
+      "
+    >
+   
       <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-14 lg:gap-20">
         {/* HEADER */}
         <div className="flex flex-col items-center gap-8 text-center">
           <Image
-            src="/assets/images/ai-fullstack-engineering/question-card-skills.png"
+            src="/assets/images/ai-fullstack-engineering/final-question-icon.png"
             alt=""
             width={96}
             height={96}
@@ -63,42 +74,46 @@ export default function AudienceFitSection() {
           />
 
           <h2
-            className={`${melodrama.className} max-w-[1003px] text-[32px] font-bold uppercase leading-[1.12] tracking-[-0.8px] text-[#181c23] sm:text-[40px] lg:text-[56px] lg:leading-[1.08]`}
+            className={`
+              ${melodrama.className}
+              max-w-[1003px]
+              text-[32px]
+              font-bold
+              uppercase
+              leading-[1.12]
+              tracking-[-0.8px]
+              text-[#181c23]
+
+              sm:text-[40px]
+
+              lg:text-[56px]
+              lg:leading-[1.08]
+            `}
           >
             And this is{" "}
-            <span className="text-[#f25e25]">
-              certainly for you
-            </span>{" "}
+            <span className="text-[#f25e25]">certainly for you</span>{" "}
             if you are a:
           </h2>
         </div>
 
         {/* TIMELINE */}
         <div className="relative w-full">
-          {/*
-            ONE CENTER LINE
+          {/* CENTER TIMELINE */}
+    <div
+  className="
+    absolute
+    bottom-0
+    top-0
+    left-1/2
+    z-0
+    w-[3px]
+    sm:w-[2px]
+    -translate-x-1/2
+    bg-[#ff6b00]
+  "
+/>
 
-            MOBILE:
-            Line stays directly in the middle of every card.
-
-            DESKTOP:
-            Same line stays in the middle while cards alternate
-            left and right.
-          */}
-          <div
-            className="
-              absolute
-              bottom-0
-              left-1/2
-              top-0
-              z-0
-              w-[2px]
-              -translate-x-1/2
-              bg-[#ff6b00]
-            "
-          />
-
-          <div className="flex flex-col gap-10 lg:gap-12">
+          <div className="flex flex-col gap-20 sm:gap-18 lg:gap-20">
             {audienceCards.map((card, index) => {
               const isLeft = index % 2 === 0;
 
@@ -180,51 +195,54 @@ export default function AudienceFitSection() {
                         height={64}
                         className="
                           mt-1
-                          size-[42px]
+                          size-[46px]
                           shrink-0
                           object-contain
 
-                          sm:size-[48px]
+                          sm:size-[52px]
 
-                          lg:size-[60px]
+                          lg:size-[64px]
                         "
                       />
 
                       {/* TEXT */}
                       <div className="min-w-0 flex-1">
+                        {/* TITLE */}
                         <h3
                           className={`
                             ${exo.className}
 
-                            text-[13px]
+                            text-[16px]
                             font-bold
                             leading-[1.3]
                             tracking-[0.2px]
                             text-[#181c23]
 
-                            sm:text-[15px]
+                            sm:text-[18px]
 
-                            lg:text-[17px]
+                            lg:text-[20px]
                           `}
                         >
                           {card.title}
                         </h3>
 
+                        {/* BODY */}
                         <p
                           className={`
                             ${exoMedium.className}
 
                             mt-2
 
-                            text-[11px]
+                            text-[14px]
                             font-normal
-                            leading-[1.55]
+                            leading-[1.6]
                             tracking-[0.1px]
                             text-[#5a4136]
 
-                            sm:text-[13px]
+                            sm:text-[15px]
+                            sm:leading-[1.6]
 
-                            lg:text-[15px]
+                            lg:text-[17px]
                             lg:leading-[1.55]
                           `}
                         >
@@ -241,7 +259,22 @@ export default function AudienceFitSection() {
 
         {/* BOTTOM COPY */}
         <div
-          className={`${exoMedium.className} max-w-[1035px] space-y-8 text-justify text-[18px] font-normal leading-[1.65] tracking-[0.3px] text-[#181c23] sm:text-[22px] lg:text-[28px] lg:leading-[1.45]`}
+          className={`
+            ${exoMedium.className}
+            max-w-[1035px]
+            space-y-8
+            text-justify
+            text-[18px]
+            font-normal
+            leading-[1.65]
+            tracking-[0.3px]
+            text-[#181c23]
+
+            sm:text-[22px]
+
+            lg:text-[28px]
+            lg:leading-[1.45]
+          `}
         >
           <p>
             And if you are returning to work after a career break, that does

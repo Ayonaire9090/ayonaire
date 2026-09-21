@@ -49,9 +49,9 @@ export default function PaymentPlansSection() {
                 lg:leading-[1.2]
               `}
             >
-              And no... you do not have to pay{" "}
+              And no... you do not have to pay{" "}<br/>
               <span className="text-[#f25e25]">
-                ?500,000 at once.
+                500,000 at once.
               </span>
             </h2>
 

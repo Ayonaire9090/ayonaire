@@ -13,12 +13,32 @@ export default function IntentionalFitSection() {
   return (
     <section className="bg-[#fefefe] px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
       <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-12 lg:gap-20">
-        <div className="relative max-w-[655px]">
-          <h2 className={`${melodrama.className} text-[26px] font-bold leading-[1.08] tracking-[-0.8px] text-[#181c23] sm:text-[32px] lg:text-[36px]`}>
-            <span className="text-[#f25e25]">As exciting as all</span> of this sounds
-          </h2>
-          <span className="pointer-events-none absolute -left-1 top-0 h-[58px] w-[min(384px,70%)] border-2 border-[#f25e25]/45" />
-        </div>
+        <div className="relative w-fit max-w-full">
+      <h2
+        className={`
+          ${melodrama.className}
+          relative
+          z-10
+          text-[26px]
+          font-bold
+          leading-[1.08]
+          tracking-[-0.8px]
+          text-[#181c23]
+          sm:text-[32px]
+          lg:text-[36px]
+        `}
+      >
+        <span className="text-[#f25e25]">As exciting as all</span> of this sounds
+      </h2>
+      
+      <Image
+        src="/assets/images/ai-fullstack-engineering/build-proof-heading-highlight.svg"
+        alt=""
+        width={454}
+        height={58}
+        className="pointer-events-none absolute -left-2 top-1/2 z-0 -translate-y-1/2 h-[58px] w-auto max-w-[70%]"
+      />
+    </div>
 
         <div className={`${exoMedium.className} space-y-9 text-[12px] font-medium leading-[1.7] tracking-[0.2px] text-[#181c23] sm:text-[16px] lg:text-[20px] lg:leading-[2.1]`}>
           <p>
@@ -38,10 +58,56 @@ export default function IntentionalFitSection() {
         <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,620px)_395px] lg:gap-[132px]">
           <ol className="grid gap-5">
             {readinessTraits.map((trait, index) => (
-              <li key={trait} className={`${exoMedium.className} grid grid-cols-[56px_1fr] items-center gap-5 text-[22px] font-medium leading-[1.35] tracking-[0.2px] text-[#181c23] sm:text-[26px] lg:text-[32px]`}>
-                <span className="flex h-10 w-14 items-center justify-center rounded-[3px] bg-[#ff6b00] text-[12px] font-bold text-white lg:text-[18px]">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
+              <li
+                key={trait}
+                className={`
+        ${exoMedium.className}
+        grid
+        grid-cols-[40px_1fr]
+        items-center
+        gap-5
+        text-[22px]
+        font-medium
+        leading-[1.35]
+        tracking-[0.2px]
+        text-[#181c23]
+
+        sm:grid-cols-[48px_1fr]
+        sm:text-[26px]
+
+        lg:grid-cols-[56px_1fr]
+        lg:text-[32px]
+      `}
+              >
+                {/* NUMBER TAG */}
+                <svg
+                  viewBox="0 0 56 40"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-10 w-14"
+                  aria-hidden="true"
+                >
+                  {/* Orange tag */}
+                  <path
+                    d="M0 0H43L56 20L43 40H0V0Z"
+                    fill="#FF6B00"
+                  />
+
+                  {/* Number */}
+                  <text
+                    x="21"
+                    y="20"
+                    fill="white"
+                    fontSize="14"
+                    fontWeight="700"
+                    textAnchor="middle"
+                    dominantBaseline="middle"
+                    fontFamily="Arial, sans-serif"
+                  >
+                    {String(index + 1).padStart(2, "0")}
+                  </text>
+                </svg>
+
                 <span>{trait}</span>
               </li>
             ))}

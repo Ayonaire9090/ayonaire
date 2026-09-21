@@ -1,11 +1,11 @@
 "use client"
 import Image from "next/image";
-import { exo, exoMedium } from "@/app/fonts";
+import { exo, exoMedium, salt  } from "@/app/fonts";
 
 const schedule = [
-  { number: "01", day: "Monday", time: "7 PM � 10 PM" },
-  { number: "02", day: "Wednesday", time: "7 PM � 10 PM" },
-  { number: "03", day: "Saturday", time: "6 PM � 10 PM" },
+  { number: "01", day: "Monday", time: "7 PM - 10 PM" },
+  { number: "02", day: "Wednesday", time: "7 PM - 10 PM" },
+  { number: "03", day: "Saturday", time: "6 PM - 10 PM" },
 ];
 
 export default function WeeklyScheduleSection() {
@@ -25,7 +25,7 @@ export default function WeeklyScheduleSection() {
           <div className="grid w-full gap-10 lg:gap-14">
             {schedule.map((item) => (
               <div key={item.number} className="grid grid-cols-[72px_1fr] items-center gap-5 sm:grid-cols-[100px_1fr]">
-                <span className={`${exo.className} text-[40px] font-bold italic leading-none tracking-[0.05em] text-[#f25e25] lg:text-[56px]`}>
+                <span className={`${salt.className} text-[40px] font-bold italic leading-none tracking-[0.05em] text-[#f25e25] lg:text-[56px]`}>
                   {item.number}
                 </span>
                 <div className={`${exoMedium.className} space-y-3 text-[#181c23]`}>

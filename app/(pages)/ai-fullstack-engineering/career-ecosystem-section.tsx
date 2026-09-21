@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { exo, exoMedium, melodrama } from "@/app/fonts";
+import { exo, exoMedium, melodrama, space } from "@/app/fonts";
 
 const ecosystemItems = [
   {
@@ -43,7 +43,7 @@ export default function CareerEcosystemSection() {
                   <h3 className={`${exo.className} mt-10 text-[18px] font-semibold uppercase leading-[1.28] tracking-[0.09em] text-[#f25e25] lg:text-[24px]`}>
                     {item.title}
                   </h3>
-                  <p className={`${exoMedium.className} mt-auto text-[12px]  leading-[1.45] tracking-[0.05em] text-white/80 lg:text-[18px] lg:leading-[1.35]`}>
+                  <p className={`${space.className} mt-auto text-[12px] font-bold  leading-[1.45] tracking-[0.05em] text-white/80 lg:text-[18px] lg:leading-[1.35]`}>
                     {item.body}
                   </p>
                 </div>

@@ -1,16 +1,16 @@
-import { exo, melodrama } from "@/app/fonts";
+import { exo, exoMedium, melodrama, salt } from "@/app/fonts";
 
 const programmeExamples = [
   {
     name: "TECH365",
-    price: "?4.5 Million",
+    price: "₦4.5 Million",
     duration: "5 Months",
     note: "For example:",
     featured: true,
   },
   {
     name: "AI TECH",
-    price: "?6.75 Million",
+    price: "₦6.75 Million",
     duration: "10 Months",
   },
   {
@@ -20,12 +20,12 @@ const programmeExamples = [
   },
   {
     name: "SQI.EDU",
-    price: "?1.5 Million",
+    price: "₦1.5 Million",
     duration: "8 Months",
   },
   {
     name: "Digital Regenesys",
-    price: "?2.4 Million",
+    price: "₦2.4 Million",
     duration: "6 Months",
   },
 ];
@@ -60,7 +60,7 @@ export default function TrainingCostSection() {
 
           <p
             className={`
-              ${exo.className}
+              ${exoMedium.className}
               max-w-[799px]
               text-justify
               text-[16px]
@@ -81,73 +81,141 @@ export default function TrainingCostSection() {
         </div>
 
         {/* PROGRAMME CARDS */}
-        <div className="grid w-full gap-8 lg:grid-cols-2 lg:gap-10">
-          {programmeExamples.map((programme, index) => (
-            <article
-              key={programme.name}
-              className={`
-                rounded-[22px]
-                bg-[#ffdccf]
-                p-7
-                text-center
-                shadow-[0_8px_16px_rgba(24,28,35,0.14)]
+        <div className="grid w-full grid-cols-2 gap-5 sm:gap-7 lg:gap-9">
+          {programmeExamples.map((programme, index) => {
+            return (
+              <article
+                key={programme.name}
+                className={`
+                  relative
+                  flex
+                  min-h-[150px]
+                  items-center
+                  justify-center
+                  bg-[#ffdccf]
+                  px-4
+                  py-6
+                  text-center
+                  shadow-[0_3px_5px_rgba(24,28,35,0.16)]
 
-                sm:p-8
+                  sm:min-h-[175px]
+                  sm:px-6
+                  sm:py-7
 
-                lg:min-h-[260px]
-                lg:p-10
+                  lg:min-h-[220px]
+                  lg:px-8
+                  lg:py-8
 
-                ${
-                  programme.featured
-                    ? "lg:col-span-2 lg:mx-auto lg:w-[636px]"
-                    : ""
-                }
-              `}
-              style={{
-                transform: `rotate(${index % 2 === 0 ? -2 : 2}deg)`,
-              }}
-            >
-              <div className="flex h-full flex-col items-center justify-center gap-4 text-black">
-                {programme.note ? (
-                  <p
-                    className={`${exo.className} w-full text-left text-[14px] font-bold uppercase tracking-[0.04em] lg:text-[17px]`}
+                  ${
+                    programme.featured
+                      ? "col-span-2 mx-auto w-[70%] sm:w-[55%] lg:w-[52%]"
+                      : ""
+                  }
+                `}
+                style={{
+                  borderRadius:
+                    index === 0
+                      ? "14px 7px 10px 8px"
+                      : index === 1
+                        ? "12px 8px 9px 10px"
+                        : index === 2
+                          ? "10px 14px 8px 12px"
+                          : index === 3
+                            ? "12px 7px 10px 9px"
+                            : "10px 13px 9px 12px",
+
+                  transform: `rotate(${
+                    [-1.5, -1.2, 1.2, -1.2, 1.5][index]
+                  }deg)`,
+                }}
+              >
+                <div className="flex flex-col items-center justify-center gap-1.5 text-black sm:gap-2">
+                  {programme.note && (
+                    <p
+                      className={`
+                        ${salt.className}
+                        absolute
+                        left-4
+                        top-4
+                        text-left
+                        text-[10px]
+                        font-normal
+                        tracking-[0.03em]
+
+                        sm:left-6
+                        sm:top-5
+                        sm:text-[12px]
+
+                        lg:left-7
+                        lg:top-6
+                        lg:text-[14px]
+                      `}
+                    >
+                      {programme.note}
+                    </p>
+                  )}
+
+                  <h3
+                    className={`
+                      ${exoMedium.className}
+                      text-[11px]
+                      font-bold
+
+                      sm:text-[13px]
+                      lg:text-[16px]
+                    `}
                   >
-                    {programme.note}
+                    {programme.name}
+                  </h3>
+
+                  <p
+                    className={`
+                      ${exoMedium.className}
+                      text-[9px]
+                      font-normal
+
+                      sm:text-[11px]
+                      lg:text-[14px]
+                    `}
+                  >
+                    AI Engineering Programme
                   </p>
-                ) : null}
 
-                <h3
-                  className={`${exo.className} text-[18px] font-bold lg:text-[21px]`}
-                >
-                  {programme.name}
-                </h3>
+                  <p
+                    className={`
+                      text-[9px]
+                      font-normal
 
-                <p
-                  className={`${exo.className} text-[16px] font-normal lg:text-[20px]`}
-                >
-                  AI Engineering Programme
-                </p>
+                      sm:text-[11px]
+                      lg:text-[14px]
+                    `}
+                  >
+                    <span className={exoMedium.className}>Approx.</span>{" "}
+                    <strong className={exo.className}>{programme.price}</strong>
+                  </p>
 
-                <p
-                  className={`${exo.className} text-[16px] font-normal lg:text-[20px]`}
-                >
-                  Approx. <strong>{programme.price}</strong>
-                </p>
+                  <p
+                    className={`
+                      text-[9px]
+                      font-normal
 
-                <p
-                  className={`${exo.className} text-[16px] font-normal lg:text-[20px]`}
-                >
-                  Duration: <strong>{programme.duration}</strong>
-                </p>
-              </div>
-            </article>
-          ))}
+                      sm:text-[11px]
+                      lg:text-[14px]
+                    `}
+                  >
+                    <span className={exoMedium.className}>Duration:</span>{" "}
+                    <strong className={exo.className}>{programme.duration}</strong>
+                  </p>
+                </div>
+              </article>
+            );
+          })}
         </div>
 
         {/* BOTTOM COPY */}
         <div
           className={`
-            ${exo.className}
+            ${exoMedium.className}
             w-full
             space-y-6
             text-justify

@@ -28,7 +28,7 @@ export default function RightFitSection() {
           <h2 className={`${melodrama.className} max-w-[543px] text-[24px] font-bold leading-[1.12] tracking-[0.2px] text-[#181c23] sm:text-[32px] lg:text-[46px] lg:leading-[1.25]`}>
             But... this is not for everyone
           </h2>
-          <p className={`${exo.className} mt-8 max-w-[542px] text-[22px] font-semibold uppercase leading-[1.5] tracking-[0.4px] text-[#181c23] lg:text-[32px] lg:leading-[1.78]`}>
+          <p className={`${exo.className} mt-8 max-w-[542px] text-[22px] font-semibold  leading-[1.5] tracking-[0.4px] text-[#181c23] lg:text-[32px] lg:leading-[1.78]`}>
             Is AI Engineering 2.0 <span className="text-[#ff6b00]">right for you?</span>
           </p>
         </div>

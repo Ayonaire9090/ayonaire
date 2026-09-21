@@ -120,34 +120,165 @@ export default function CareerPathwaysSection() {
           </a>
         </div>
 
-        <div className="w-screen bg-gradient-to-b from-white to-[rgba(248,100,50,0.08)] px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
-          <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-14 lg:gap-20">
-            <h2 className={`${melodrama.className} max-w-[846px] text-center text-[32px] font-bold uppercase leading-[1.12] tracking-[0.2px] text-[#181c23] sm:text-[40px] lg:text-[56px] lg:leading-[1.13]`}>
-              The Ayonaire Four-Part Career <span className="text-[#ff6b00]">Transition System</span>
-            </h2>
+       <div className="w-screen bg-gradient-to-b from-white to-[rgba(248,100,50,0.08)] px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
+  <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-14 lg:gap-20">
 
-            <div className="grid w-full gap-8 md:grid-cols-2">
-              {systems.map((system) => (
-                <article key={system.number} className="relative min-h-[300px] rounded-[14px] bg-white p-6 shadow-[0_1px_16px_rgba(0,0,0,0.12)] sm:p-8 lg:min-h-[360px] lg:p-10">
-                  <span className={`${exo.className} absolute -top-6 left-8 flex size-20 rotate-[3deg] items-center justify-center rounded-[8px] border border-[#ff6b00] bg-white text-[34px] font-bold text-black shadow-[0_0_6px_rgba(248,100,50,0.25)] lg:size-[100px] lg:text-[48px]`}>
-                    {system.number}
-                  </span>
-                  <div className="flex h-full flex-col justify-center gap-6 pl-0 pt-12 sm:pl-28 sm:pt-0">
-                    <Image src={system.image} alt="" width={115} height={115} className="size-20 object-contain lg:size-[115px]" />
-                    <div className="space-y-4">
-                      <h3 className={`${exo.className} text-[24px] font-bold uppercase tracking-[0.06em] text-black lg:text-[32px]`}>{system.title}</h3>
-                      <p className={`${adineue.className} max-w-[390px] text-[17px] font-medium leading-[1.55] tracking-[0.2px] text-black lg:text-[24px]`}>{system.body}</p>
-                    </div>
+    {/* Heading */}
+    <h2
+      className={`${melodrama.className} max-w-[846px] text-center text-[32px] font-bold uppercase leading-[1.12] tracking-[0.2px] text-[#181c23] sm:text-[40px] lg:text-[56px] lg:leading-[1.13]`}
+    >
+      The Ayonaire Four-Part Career{" "}
+      <span className="text-[#ff6b00]">Transition System</span>
+    </h2>
+
+    {/* Timeline */}
+    <div className="relative w-full">
+
+      {/* Center line - desktop only */}
+      <div
+        className="
+          absolute
+          bottom-0
+          left-1/2
+          top-0
+          z-0
+          hidden
+          w-[3px]
+          -translate-x-1/2
+          bg-[#ff6b00]
+          lg:block
+        "
+      />
+
+      {/* Cards */}
+      <div className="flex flex-col gap-12 lg:gap-[88px]">
+        {systems.map((system, index) => {
+          const isLeft = index % 2 === 0;
+
+          return (
+            <article
+              key={system.number}
+              className={`relative flex w-full ${
+                isLeft
+                  ? "justify-start lg:pr-[calc(50%+32px)]"
+                  : "justify-start lg:justify-end lg:pl-[calc(50%+32px)]"
+              }`}
+            >
+              {/* Timeline dot - desktop only */}
+              <span
+                className="
+                  absolute
+                  left-1/2
+                  top-1/2
+                  z-20
+                  hidden
+                  size-[9px]
+                  -translate-x-1/2
+                  -translate-y-1/2
+                  rounded-full
+                  bg-[#ff6b00]
+                  lg:block
+                "
+              />
+
+              {/* Card */}
+              <div
+                className="
+                  relative
+                  z-10
+                  w-full
+                  max-w-[560px]
+                  rounded-[18px]
+                  border
+                  border-[#eee6e2]
+                  bg-white
+                  px-5
+                  py-7
+                  shadow-[0_3px_10px_rgba(0,0,0,0.10)]
+                  sm:px-7
+                  sm:py-8
+                  lg:w-full
+                  lg:max-w-none
+                  lg:min-h-[260px]
+                  lg:rounded-[20px]
+                  lg:px-8
+                  lg:py-9
+                "
+              >
+                {/* Number */}
+                <span
+                  className={`
+                    ${exo.className}
+                    absolute
+                    -top-6
+                    left-5
+                    z-30
+                    flex
+                    h-[52px]
+                    w-[50px]
+                    rotate-[3deg]
+                    items-center
+                    justify-center
+                    rounded-[3px]
+                    border
+                    border-[#ff6b00]
+                    bg-white
+                    text-[20px]
+                    font-bold
+                    text-[#181c23]
+                    shadow-[0_1px_3px_rgba(0,0,0,0.05)]
+                    sm:left-6
+                  `}
+                >
+                  {system.number}
+                </span>
+
+                {/* Card content */}
+                <div className="flex h-full items-start gap-5 sm:gap-6 lg:items-center lg:gap-7">
+
+                  {/* Image */}
+                  <Image
+                    src={system.image}
+                    alt=""
+                    width={115}
+                    height={115}
+                    className="size-20 shrink-0 object-contain lg:size-[115px]"
+                  />
+
+                  {/* Content */}
+                  <div className="min-w-0 flex-1">
+                    <h3
+                      className={`${exo.className} text-[22px] font-bold uppercase tracking-[0.06em] text-black sm:text-[26px] lg:text-[32px]`}
+                    >
+                      {system.title}
+                    </h3>
+
+                    <p
+                      className={`${adineue.className} mt-3 max-w-[390px] text-[17px] font-medium leading-[1.55] tracking-[0.2px] text-black sm:text-[19px] lg:text-[24px]`}
+                    >
+                      {system.body}
+                    </p>
                   </div>
-                </article>
-              ))}
-            </div>
 
-            <p className={`${exoMedium.className} max-w-[1120px] text-center text-[18px] font-medium leading-[1.6] tracking-[0.2px] text-[#181c23] lg:text-[28px]`}>
-              Together, these four systems help you move from learning AI/ML Engineering to building proof, positioning yourself properly, finding opportunities and preparing to win them.
-            </p>
-          </div>
-        </div>
+                </div>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+
+    {/* Bottom description */}
+    <p
+      className={`${exoMedium.className} max-w-[1120px] text-center text-[18px] font-medium leading-[1.6] tracking-[0.2px] text-[#181c23] lg:text-[28px]`}
+    >
+      Together, these four systems help you move from learning AI/ML
+      Engineering to building proof, positioning yourself properly, finding
+      opportunities and preparing to win them.
+    </p>
+
+  </div>
+</div>
 
         <div className="w-screen bg-gradient-to-b from-white to-[rgba(242,94,37,0.09)] px-5 pb-16 sm:px-8 lg:px-12 lg:pb-[120px] xl:px-16">
           <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-14 lg:gap-20">

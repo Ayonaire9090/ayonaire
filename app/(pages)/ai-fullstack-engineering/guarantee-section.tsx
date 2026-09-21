@@ -1,15 +1,15 @@
 import Image from "next/image";
-import { exo, melodrama } from "@/app/fonts";
+import { exo, melodrama, space } from "@/app/fonts";
 
 export default function GuaranteeSection() {
   return (
-    <section className="bg-[#fefaf8] px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
+    <section className="bg-[#FEFAF8] px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
       <div className="mx-auto flex w-full max-w-[1051px] flex-col items-center gap-10">
         <h2 className={`${melodrama.className} w-full text-center text-[32px] font-bold uppercase leading-[1.12] tracking-[-0.8px] text-[#181c23] sm:text-[40px] lg:text-[56px] lg:leading-[1.08]`}>
           And yes... 30-day <span className="bg-[#ffdcc4] text-[#f25e25]">100% money-back guarantee</span>
         </h2>
 
-        <div className={`${exo.className} w-full space-y-7 text-justify text-[18px] font-medium leading-[1.65] tracking-[0.3px] text-[#181c23] sm:text-[22px] lg:text-[28px] lg:leading-[1.45]`}>
+        <div className={`${space.className} w-full space-y-7 text-justify text-[18px] font-medium leading-[1.65] tracking-[0.3px] text-[#181c23] sm:text-[22px] lg:text-[28px] lg:leading-[1.45]`}>
           <p>You have read a lot on this page. And perhaps a question is still sitting in your mind:</p>
           <p>&quot;What if everything sounds good here, but I join and the actual experience isn&apos;t what was promised?&quot;</p>
           <p>That is fair.</p>
@@ -25,11 +25,11 @@ export default function GuaranteeSection() {
         <p className={`${exo.className} w-full text-center text-[28px] font-bold leading-[1.2] tracking-[0.3px] text-[#181c23] lg:text-[40px]`}>
           NO QUESTIONS ASKED.
         </p>
-        <p className={`${exo.className} w-full text-justify text-[20px] font-bold leading-[1.5] tracking-[0.3px] text-[#181c23] lg:text-[28px]`}>
+        <p className={`${space.className} w-full text-justify text-[20px] font-bold leading-[1.5] tracking-[0.3px] text-[#181c23] lg:text-[28px]`}>
           We take the quality of the programme seriously enough to let you experience it before making your final judgement.
         </p>
 
-        <a href="#enroll" className={`${exo.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-8 py-4 text-[13px] font-bold uppercase tracking-[0.04em] text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:px-10 sm:py-5 lg:text-[18px]`}>
+        <a href="#enroll" className={`${space.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-8 py-4 text-[13px] font-bold uppercase tracking-[0.04em] text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:px-10 sm:py-5 lg:text-[18px]`}>
           I want to experience AI Engineering 2.0
           <Image src="/assets/images/ai-fullstack-engineering/curriculum-button-arrow.svg" alt="" width={16} height={16} className="size-4" />
         </a>

@@ -1,4 +1,5 @@
-"use client"
+"use client";
+
 import { adineue, exo, exoMedium, melodrama } from "@/app/fonts";
 
 const technicalCapability = [
@@ -50,22 +51,59 @@ export default function ProgramDifferenceSection() {
   return (
     <section className="bg-gradient-to-b from-[#fefefe] to-[rgba(248,100,50,0.08)] px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
       <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-14 lg:gap-20">
+        {/* HEADER */}
         <div className="flex flex-col items-center gap-8 text-center lg:gap-10">
-          <h2 className={`${melodrama.className} max-w-[960px] text-[32px] font-bold uppercase leading-[1.12] tracking-[-0.8px] text-black sm:text-[40px] lg:text-[56px] lg:leading-[1.34]`}>
-            What makes this <span className="text-[#ff6b00]">program different?</span>
+          <h2
+            className={`
+              ${melodrama.className}
+              max-w-[960px]
+              text-[32px]
+              font-bold
+              uppercase
+              leading-[1.12]
+              tracking-[-0.8px]
+              text-black
+
+              sm:text-[40px]
+
+              lg:text-[56px]
+              lg:leading-[1.34]
+            `}
+          >
+            What makes this{" "}
+            <span className="text-[#ff6b00]">program different?</span>
           </h2>
-          <p className={`${exoMedium.className} w-full text-left text-[18px] font-medium leading-[1.65] tracking-[0.3px] text-[#263238] lg:text-[28px] lg:leading-[1.5]`}>
-            Most programs teach you AI tools. We train you to think and work like an <strong>AI/ML Engineer</strong> across <strong>two critical areas:</strong>
+
+          <p
+            className={`
+              ${exoMedium.className}
+              w-full
+              text-left
+              text-[18px]
+              font-medium
+              leading-[1.65]
+              tracking-[0.3px]
+              text-[#263238]
+
+              lg:text-[28px]
+              lg:leading-[1.5]
+            `}
+          >
+            Most programs teach you AI tools. We train you to think and work
+            like an <strong>AI/ML Engineer</strong> across{" "}
+            <strong>two critical areas:</strong>
           </p>
         </div>
 
+        {/* TECHNICAL CAPABILITY */}
         <CapabilityBlock
-          title="01 � Technical Engineering Capability"
+          title="01 Technical Engineering Capability"
           columns={technicalCapability}
         />
 
+        {/* PROFESSIONAL CAPABILITY */}
         <CapabilityBlock
-          title="02 � Professional & Business Capability"
+          title="02 Professional & Business Capability"
           columns={professionalCapability}
         />
       </div>
@@ -73,12 +111,33 @@ export default function ProgramDifferenceSection() {
   );
 }
 
-function CapabilityBlock({ title, columns }: { title: string; columns: string[][] }) {
+function CapabilityBlock({
+  title,
+  columns,
+}: {
+  title: string;
+  columns: string[][];
+}) {
   return (
     <div className="flex flex-col gap-8 lg:gap-12">
-      <h3 className={`${exo.className} text-[16px] font-semibold uppercase leading-[1.25] tracking-[-0.4px] text-black sm:text-[22px] lg:text-[28px]`}>
+      <h3
+        className={`
+          ${exo.className}
+          text-[16px]
+          font-semibold
+          uppercase
+          leading-[1.25]
+          tracking-[-0.4px]
+          text-black
+
+          sm:text-[22px]
+
+          lg:text-[28px]
+        `}
+      >
         {title}
       </h3>
+
       <div className="grid gap-6 lg:grid-cols-2 lg:gap-10">
         {columns.map((items, index) => (
           <CapabilityCard key={`${title}-${index}`} items={items} />
@@ -90,11 +149,47 @@ function CapabilityBlock({ title, columns }: { title: string; columns: string[][
 
 function CapabilityCard({ items }: { items: string[] }) {
   return (
-    <article className="rounded-[16px] bg-white px-6 py-8 shadow-[0_1px_10px_rgba(0,0,0,0.16)] sm:px-10 lg:px-[60px] lg:py-10">
-      <ul className="grid gap-5 lg:gap-6">
+    <article
+      className="
+        rounded-[16px]
+        bg-white
+        px-6
+        py-8
+        shadow-[0_1px_10px_rgba(0,0,0,0.16)]
+
+        sm:px-10
+        sm:py-9
+
+        lg:px-[60px]
+        lg:py-10
+      "
+    >
+      <ul className="grid gap-6 lg:gap-7">
         {items.map((item) => (
-          <li key={item} className={`${adineue.className} grid grid-cols-[30px_1fr] items-start gap-4 text-[9px] font-bold leading-[1.45] tracking-[0.2px] text-[#263238] sm:text-[10px] lg:text-[18px] lg:leading-[1.55]`}>
+          <li
+            key={item}
+            className={`
+              ${exo.className}
+              grid
+              grid-cols-[30px_1fr]
+              items-start
+              gap-4
+
+              text-[18px]
+              font-bold
+              leading-[1.5]
+              tracking-[0.2px]
+              text-[#263238]
+
+              sm:text-[20px]
+              sm:leading-[1.5]
+
+              lg:text-[22px]
+              lg:leading-[1.5]
+            `}
+          >
             <BulletPair />
+
             <span>{item}</span>
           </li>
         ))}

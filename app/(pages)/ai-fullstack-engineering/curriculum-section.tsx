@@ -10,426 +10,304 @@ const modules = [
     lessons: [
       "Overview of Python and comparison with other programming languages",
       "Python objects: Numbers, Booleans, and Strings",
-      "Container objects and mutability",
-      "Operators: Arithmetic, Bitwise, Comparison, and Assignment",
-      "Operator precedence",
-      "Conditional statements",
-      "Loops, break and continue statements",
-      "Range function",
+      "Container objects and mutability, Operators: Arithmetic, Bitwise, Comparison, and Assignment, Operator precedence",
+      "Conditional statements (if, if-elif-else), Loops (for, while), Break and continue statements, Range function",
+      "String basics, inbuilt methods, splitting and joining, formatting, Basic data structures in Python: Lists, Tuples, Sets, and Dictionaries, List and Dictionary comprehensions, Dictionary view objects",
+      "Function basics and parameter passing, Iterators and generator functions, Lambda functions, Map function and functional style programming",
     ],
   },
 
   {
     title: "Advanced Python Programming",
     lessons: [
-      "Functions and advanced function concepts",
-      "Object-Oriented Programming",
-      "Classes, objects, inheritance and polymorphism",
-      "Exception handling",
-      "Working with files and directories",
-      "Modules and packages",
-      "Virtual environments and dependency management",
-      "Writing clean and reusable Python code",
+      "OOP concepts and class creation, Inheritance, Polymorphism, Encapsulation, and Abstraction, Decorators, class methods, and static methods, Special (Magic/Dunder) methods",
+      "Reading and writing files, Buffered read and write operations, Other file handling methods",
+      "Importing and managing modules, Using try-except blocks, Custom exceptions and best practices for error handling",
     ],
   },
 
   {
     title: "Numerical Computing with NumPy",
     lessons: [
-      "Introduction to NumPy",
-      "Creating and manipulating NumPy arrays",
-      "Indexing, slicing and reshaping",
-      "Vectorized operations",
-      "Broadcasting",
-      "Mathematical and statistical operations",
-      "Working with multidimensional arrays",
+      "Understanding NdArray objects, Data types and array attributes",
+      "Creating arrays from existing data and numerical ranges, Indexing and slicing arrays",
+      "Broadcasting and iterating over arrays, Array manipulation techniques, Arithmetic and mathematical operations",
+      "Statistical functions, sorting, searching, and counting operations, Binary and string functions",
+      "Matrix library overview, Copy vs view behavior in NumPy arrays",
     ],
   },
 
   {
     title: "Data Analysis with Pandas",
     lessons: [
-      "Introduction to Pandas",
-      "Series and DataFrames",
-      "Loading and inspecting datasets",
-      "Cleaning and transforming data",
-      "Handling missing values",
-      "Filtering, sorting and grouping",
-      "Merging and joining datasets",
-      "Working with dates and time series data",
+      "Series, DataFrame, and Panel structures, Basic functionality and reindexing",
+      "Iteration, sorting, indexing, and selecting data",
+      "Working with text data, Date and time functionality, Timedelta and categorical data",
+      "Descriptive statistics and built-in statistical functions, Basic visualization with Pandas",
     ],
   },
 
   {
     title: "Data Visualization with Matplotlib & Seaborn",
     lessons: [
-      "Introduction to data visualization",
-      "Building charts with Matplotlib",
-      "Bar charts, line charts and scatter plots",
-      "Histograms and distribution plots",
-      "Advanced visualizations with Seaborn",
-      "Customizing plots",
-      "Choosing the right visualization for your data",
+      "Introduction to Matplotlib, Creating and customizing plots, charts, and figures",
+      "Introduction to Seaborn, Statistical visualizations such as histograms, pair plots, and heatmaps, Styling and aesthetics for better data communication",
     ],
   },
 
   {
     title: "Working with Databases - SQL & NoSQL",
     lessons: [
-      "Introduction to relational databases",
-      "Writing SQL queries",
-      "Filtering, grouping and aggregation",
-      "Joins and subqueries",
-      "Database design fundamentals",
-      "Introduction to NoSQL databases",
-      "Working with document databases",
-      "Connecting Python applications to databases",
+      "Understanding SQL queries, Primary and foreign keys, Joins and unions, Setting up Supabase with PostgreSQL, Connecting and executing SQL queries",
+      "Getting started with MongoDB, Creating databases and collections, Insert, find, query, and sort operations, Updating and deleting records, Dropping collections",
     ],
   },
 
   {
     title: "Building Interactive Data Apps with Streamlit",
     lessons: [
-      "Introduction to Streamlit",
-      "Building your first data application",
-      "Working with forms and user inputs",
-      "Displaying dataframes and charts",
-      "Managing application state",
-      "Building interactive dashboards",
-      "Deploying Streamlit applications",
+      "Introduction to Streamlit and its core features, Creating interactive widgets",
+      "Using session state for dynamic data handling, Implementing async and await for responsive apps",
     ],
   },
 
   {
     title: "Foundations of Statistics",
     lessons: [
-      "Descriptive statistics",
-      "Measures of central tendency",
-      "Measures of dispersion",
-      "Probability fundamentals",
-      "Probability distributions",
-      "Sampling and populations",
-      "Confidence intervals",
-      "Hypothesis testing fundamentals",
+      "Basic statistical terms, Types of statistics: Descriptive and Inferential, Types of data and levels of measurement",
+      "Mean, median, and mode, Range, variance, and standard deviation",
+      "Skewness and kurtosis, Covariance and correlation, Random variables and sets",
+      "Probability basics, Probability density and mass functions, Cumulative distribution function (CDF)",
+      "Binomial, Poisson, Normal (Gaussian), Bernoulli, and Uniform distributions, Understanding Z-statistics and the Central Limit Theorem, Examples of real-world normal distributions",
+      "Concept of population and sample estimation, Confidence intervals",
     ],
   },
 
   {
     title: "Advanced Statistical Analysis",
     lessons: [
-      "Advanced hypothesis testing",
-      "Correlation analysis",
-      "Regression analysis",
-      "Statistical significance",
-      "ANOVA",
-      "A/B testing",
-      "Experimental design",
-      "Interpreting statistical results",
+      "Steps and mechanism of hypothesis testing, P-values and statistical significance, Confidence levels and decision rules",
+      "Bayes theorem and its applications",
+      "Chi-square distribution, Goodness-of-fit test, Performing Chi-square using Python",
     ],
   },
 
   {
     title: "Feature Engineering for Machine Learning",
     lessons: [
-      "Understanding machine learning features",
-      "Handling missing data",
-      "Encoding categorical variables",
-      "Feature scaling and normalization",
-      "Feature transformation",
-      "Feature selection",
-      "Creating new features",
-      "Building reusable preprocessing pipelines",
+      "Handling missing data, Managing imbalanced datasets, Detecting and treating outliers",
+      "Feature scaling: normalization and standardization, Encoding categorical variables",
+      "Backward and forward elimination, Correlation and covariance for feature relationships",
     ],
   },
 
   {
     title: "Exploratory Data Analysis",
     lessons: [
-      "Understanding datasets before modelling",
-      "Univariate analysis",
-      "Bivariate analysis",
-      "Multivariate analysis",
-      "Detecting outliers",
-      "Finding relationships between variables",
-      "Identifying patterns and anomalies",
-      "Communicating EDA findings",
+      "Purpose and process of exploratory analysis, Visualizing data patterns and relationships",
+      "Sentiment analysis of movie reviews, Analyzing wine quality and types, Forecasting stock and commodity prices",
     ],
   },
 
   {
     title: "Machine Learning Fundamentals",
     lessons: [
-      "Introduction to machine learning",
-      "Supervised and unsupervised learning",
-      "Training, validation and test datasets",
-      "Regression models",
-      "Classification models",
-      "Clustering",
-      "Model evaluation",
-      "Building end-to-end machine learning workflows",
+      "Difference between AI, ML, DL, and Data Science, Types of learning: Supervised, Unsupervised, Semi-supervised, Reinforcement",
+      "Simple and Multiple Linear Regression with implementation, Evaluation metrics: MSE, MAE, RMSE, R2, Linear Regression with Gradient Descent, Regularization methods: Ridge and Lasso",
+      "Logistic Regression with implementation, Performance metrics: Confusion Matrix, Accuracy, Precision, Recall, F1 score",
+      "Concept and kernel functions, SVM classifier and regressor implementation",
+      "Naive Bayes classifier, K-Nearest Neighbors (KNN) classifier and regressor, Decision Tree classifier and regressor implementations",
     ],
   },
 
   {
     title: "Ensemble & Advanced ML Techniques",
     lessons: [
-      "Decision trees",
-      "Random Forest",
-      "Gradient Boosting",
-      "XGBoost",
-      "Bagging and boosting",
-      "Hyperparameter tuning",
-      "Cross-validation",
-      "Advanced model evaluation",
+      "Bagging and Boosting methods, Random Forest classifier and regressor with implementation, Out-of-Bag evaluation",
+      "Gradient Boosting classifier and regressor, XGBoost classifier and regressor with implementation",
+      "Introduction to clustering, K-Means clustering algorithm",
     ],
   },
 
   {
     title: "Building Production APIs with FastAPI",
     lessons: [
-      "Introduction to APIs",
-      "REST API fundamentals",
-      "Building APIs with FastAPI",
-      "Request and response models",
-      "API validation",
-      "Serving machine learning models",
-      "Error handling",
-      "Preparing APIs for deployment",
+      "What is FastAPI and why use it, Setting up a project structure, Hello World API, Understanding HTTP operations (GET, POST, PUT, DELETE)",
+      "Using Pydantic for request and response validation, Defining data models for your API, Handling validation errors gracefully",
+      "Adding error handling and appropriate status codes, Introduction to environment variables and configuration management, Simplifying API documentation with OpenAPI/Swagger UI",
     ],
   },
 
   {
     title: "MLflow",
     lessons: [
-      "Introduction to MLflow",
-      "Experiment tracking",
-      "Logging parameters and metrics",
-      "Model tracking",
-      "Model registry",
-      "Versioning machine learning models",
-      "Managing the model lifecycle",
+      "Core Components, Installation & Setup",
+      "Logging Essentials, Artifact Management, Autologging, Analysis & Visualization",
+      "Model Registry, Model Packaging, Lifecycle Stages, Stage Transitions",
+      "Real-time Serving, Local Deployment, Containerization, Cloud & Orchestration",
     ],
   },
 
   {
     title: "NLP for Machine Learning",
     lessons: [
-      "Introduction to Natural Language Processing",
-      "Text preprocessing",
-      "Tokenization",
-      "Bag of Words and TF-IDF",
-      "Text classification",
-      "Sentiment analysis",
-      "Evaluating NLP models",
+      "Overview of NLP and its real-world use cases, Key terminology and learning roadmap",
+      "Tokenization, Stemming, lemmatization, and stopword removal, Parts of Speech tagging using NLTK, Named Entity Recognition",
+      "One-hot encoding and N-grams (Bag of Words), TF-IDF intuition and implementation",
+      "Concept of word vectors, Introduction to Word2Vec and word embeddings for contextual understanding",
     ],
   },
 
   {
     title: "Big Data Processing with PySpark",
     lessons: [
-      "Introduction to big data",
-      "Apache Spark fundamentals",
-      "Working with PySpark DataFrames",
-      "Transformations and actions",
-      "Cleaning large datasets",
-      "Aggregations",
-      "Building scalable data processing workflows",
+      "Why single-machine processing fails, Introduction to distributed computing and Apache Spark, Understanding the Spark architecture (Driver, Executors, Cluster Manager)",
+      "Transitioning from Pandas to PySpark DataFrames, Performing data transformations (filtering, aggregations, joins), Querying data using Spark SQL, Handling complex data types",
+      "Understanding transformations (lazy evaluation) vs. actions, A brief look at the Spark UI to visualize distributed execution, Using Spot Instances for cost-effective training jobs",
     ],
   },
 
   {
     title: "Deep Learning Foundations",
     lessons: [
-      "Introduction to neural networks",
-      "Neurons and activation functions",
-      "Forward propagation",
-      "Loss functions",
-      "Backpropagation",
-      "Optimizers",
-      "Building neural networks",
-      "Training and evaluating deep learning models",
+      "Overview and evolution of deep learning, Why deep learning has become popular",
+      "Understanding perceptron intuition, Working of artificial neural networks, Forward and backward propagation, Chain rule of derivatives in neural networks",
+      "Vanishing and exploding gradient problems, Different activation functions and their roles, Types of loss functions and optimization algorithms",
+      "Weight initialization methods, Dropout layers, Batch normalization",
+      "Introduction to Keras and PyTorch fundamentals, Visualizing neural network architecture and performance",
     ],
   },
 
   {
     title: "Advanced Deep Learning for NLP",
     lessons: [
-      "Word embeddings",
-      "Sequence modelling",
-      "Recurrent neural networks",
-      "LSTM and GRU networks",
-      "Attention mechanisms",
-      "Transformer architecture",
-      "Modern NLP workflows",
+      "Recurrent Neural Networks (RNNs), Understanding sequence modeling and context preservation",
+      "Long Short-Term Memory (LSTM) networks, Gated Recurrent Units (GRU) and their efficiency improvements",
+      "Concept of attention in neural networks, Encoders and decoders in sequence-to-sequence models, Self-attention and attention neural networks",
+      "Introduction to transformers, Understanding BERT and GPT model architectures and applications",
     ],
   },
 
   {
     title: "Introduction to Generative AI",
     lessons: [
-      "What Generative AI is",
-      "Foundation models",
-      "Large Language Models",
-      "Tokens and context windows",
-      "Prompting fundamentals",
-      "Using LLM APIs",
-      "Building Generative AI applications",
+      "What is Generative AI?, Why generative models are important, Understanding how generative models work",
+      "Conceptual differences and use cases, Examples of generative vs discriminative tasks",
+      "Latest research trends and breakthroughs, Key applications across industries, End-to-end generative AI project lifecycle",
     ],
   },
 
   {
     title: "Vector Databases for AI Applications",
     lessons: [
-      "Understanding embeddings",
-      "Vector representations",
-      "Semantic search",
-      "Vector database fundamentals",
-      "Similarity search",
-      "Storing and retrieving embeddings",
-      "Building vector search applications",
+      "Understanding vector embeddings and similarity search, Comparison with SQL and NoSQL databases",
+      "Data storage mechanisms and indexing, Types of vector databases: In-memory, on-disk, and cloud-based",
+      "Chroma DB, Faiss, Quadrant, Pinecone, LanceDB",
+      "Vector search with NoSQL databases (MongoDB, Cassandra), Embedding-based retrieval for AI pipelines",
     ],
   },
 
   {
     title: "Comprehensive Guide to LangChain",
     lessons: [
-      "Introduction to LangChain",
-      "Prompt templates",
-      "Chains",
-      "Models",
-      "Tools",
-      "Memory",
-      "Document loaders",
-      "Building complete LLM applications",
+      "Introduction to LangChain, Data connectors and API integrations",
+      "Chat models, tools, and toolkits, Prompt templating for context-aware LLMs",
+      "LangChain Chains, LCEL, and Runnables, Synthetic data generation and memory management",
+      "LangChain AI Agents, LangSmith for model monitoring, LangServe for model deployment",
     ],
   },
 
   {
     title: "Retrieval-Augmented Generation",
     lessons: [
-      "Introduction to RAG",
-      "Document ingestion",
-      "Chunking strategies",
-      "Creating embeddings",
-      "Retrieval techniques",
-      "Building RAG pipelines",
-      "Evaluating RAG systems",
-      "Advanced RAG patterns",
+      "Understanding Retrieval-Augmented Generation and its role in LLMs, The RAG pipeline overview",
+      "Using LangChain, vector databases, and LLMs, Hybrid search and reranking techniques, Different retrieval methods for RAG",
+      "Memory integration in RAG systems, Multimodal retrieval-augmented generation",
     ],
   },
 
   {
     title: "Enterprise LLM Systems & Infrastructure",
     lessons: [
-      "Designing production LLM systems",
-      "LLM application architecture",
-      "Model selection",
-      "Cost and latency optimization",
-      "Caching strategies",
-      "Evaluation",
-      "Observability",
-      "Scaling LLM applications",
+      "RAG Triad Metrics, LLM-as-a-Judge, Turn-Based Evaluation",
+      "Traces and Spans, Intermediate Output Access, Aggregated Analytics, Feedback & Annotation Loops, Prompt Optimisation Pipelines, Low-Code Agent Tracing",
+      "Limitations of Traditional Vector RAG, Chunk-Free Segmentation, The Document Tree Model, The Iterative Search Loop, Deterministic Page Referencing",
+      "OpenAI-Compatible Routing, Drop-In SDK Replacement, Automated Structured Fallbacks",
     ],
   },
 
   {
     title: "Introduction to Agentic AI",
     lessons: [
-      "What AI agents are",
-      "Agents vs traditional LLM applications",
-      "Reasoning and planning",
-      "Tools and tool calling",
-      "Agent memory",
-      "Building your first AI agent",
-      "Agent architecture patterns",
+      "What are AI Agents?, Agentic AI vs traditional AI agents",
+      "Agentic AI vs Generative AI, Understanding multi-agent systems and collaboration",
+      "Overview of Agentic AI frameworks, Applications and trends in multi-agent AI",
     ],
   },
 
   {
     title: "LangGraph Fundamentals",
     lessons: [
-      "Introduction to LangGraph",
-      "Graph-based AI workflows",
-      "Nodes and edges",
-      "Creating agent states",
-      "Conditional routing",
-      "Building reliable agent workflows",
+      "Introduction to LangGraph, Understanding Simple Graphs and Node Connections, LangGraph Studio Overview",
+      "Chains and Routers in LangGraph, Creating and Managing Agents, Implementing Agents with Memory",
+      "Introduction to Deployment and Execution in LangGraph",
     ],
   },
 
   {
     title: "State Management & Memory in LangGraph",
     lessons: [
-      "Understanding stateful AI systems",
-      "Short-term memory",
-      "Long-term memory",
-      "Conversation persistence",
-      "State checkpoints",
-      "Managing complex agent workflows",
+      "Introduction to LangGraph State System, Understanding State Schemas and Data Flow",
+      "Creating and Managing State Reducers, Working with Multiple Schemas",
+      "Trimming and Filtering Messages to Maintain Efficient Context",
     ],
   },
 
   {
     title: "UX & Human-in-the-Loop Systems",
     lessons: [
-      "Human-in-the-loop AI",
-      "Approval workflows",
-      "Escalation mechanisms",
-      "Designing AI interactions",
-      "Feedback loops",
-      "Building safer AI workflows",
+      "Implementing Streaming for Real-Time Updates, Understanding and Managing Breakpoints",
+      "Editing State with Human Inputs, Dynamic Breakpoints and Controlled Execution",
+      "Time Travel in LangGraph for Workflow Rewind and Testing",
     ],
   },
 
   {
     title: "Agentic RAG Systems",
     lessons: [
-      "Combining agents with RAG",
-      "Agent-driven retrieval",
-      "Query routing",
-      "Tool-based retrieval",
-      "Multi-step research workflows",
-      "Building production Agentic RAG systems",
+      "Understanding Adaptive RAG and its Variants, Implementing Adaptive RAG with Cohere, Running Adaptive RAG Locally",
+      "Integrating Agents with RAG Pipelines, C-RAG (Contextual RAG) Concepts and Implementation",
+      "Building Self-RAG Models, Integrating Self-RAG with Vector Databases, Deploying Self-RAG Locally",
     ],
   },
 
   {
-    title: "Model Context Protocol - MCP",
+    title: "Model Context Protocol (MCP)",
     lessons: [
-      "Introduction to MCP",
-      "MCP architecture",
-      "Connecting AI systems to external tools",
-      "Resources and tools",
-      "Building MCP servers",
-      "Integrating MCP with AI agents",
+      "Introduction to Model Context Protocol, Core Components and Architecture",
+      "Data Flow and Communication between MCP Components, Integration with Tools like Claude Desktop and Cursor IDE",
+      "Exploring Open MCP Repositories (e.g., Smithery.ai), Building MCP Servers with LangChain, Using Docker MCP Catalog and Toolkit",
     ],
   },
 
   {
     title: "Multi-Agent Systems for Research Automation",
     lessons: [
-      "Introduction to multi-agent systems",
-      "Agent roles and responsibilities",
-      "Agent collaboration",
-      "Task delegation",
-      "Research agents",
-      "Planning and execution",
-      "Building complete multi-agent workflows",
+      "Introduction to Agentic AI and Multi-Agent Architectures, Designing Specialized Agents: Search, Reader, Analyst, Generator, Coordinator",
+      "Managing Memory and Communication State, Prompt Engineering for Multi-Turn Collaboration, Integrating Human Feedback Checkpoints",
+      "Connecting APIs like Arxiv, Search, and Paper Parsers, LangGraph-Structured Agent Workflows, Adding RAG for External Knowledge Integration",
+      "FastAPI Backend for Multi-Agent Systems, UI for Logs, Graphs, and Reports, CI/CD Automation with GitHub Actions, Docker and AWS EC2 Deployment Pipeline",
     ],
   },
 
   {
     title: "End-to-End AI & Data Projects",
     lessons: [
-      "Planning production AI projects",
-      "Data ingestion",
-      "Model development",
-      "AI application development",
-      "API integration",
-      "Evaluation and testing",
-      "Deployment",
-      "Monitoring and maintenance",
-      "Building portfolio-ready AI systems",
+      "End-to-End Review Scraper Project, Supabase and Streamlit Database Application",
+      "Network Intrusion Detection System (ML Project)",
+      "Text Summarization, Machine Translation, Question Answering",
+      "RAG Q&A System with CI/CD Integration",
+      "Multi-Agent System for Research Analysis and Generation Automation",
     ],
   },
 ];
@@ -443,7 +321,7 @@ export default function CurriculumSection() {
   const handleModuleClick = (index: number) => {
     setActiveModule(index);
 
-    // On smaller screens, take the user to the module outline.
+    // On smaller screens, take the user smoothly to the module outline box.
     if (typeof window !== "undefined" && window.innerWidth < 1024) {
       setTimeout(() => {
         outlineRef.current?.scrollIntoView({
@@ -494,9 +372,43 @@ export default function CurriculumSection() {
         </h3>
 
         {/* Curriculum Area */}
-        <div className="grid w-full gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(420px,1.1fr)] lg:gap-20">
-          {/* MODULE LIST */}
-          <div className="max-h-[855px] overflow-y-auto pr-2">
+        <div className="flex w-full flex-col gap-8 lg:grid lg:grid-cols-[minmax(0,0.9fr)_minmax(420px,1.1fr)] lg:gap-20">
+          
+          {/* MOBILE/TABLET HORIZONTAL NAV BUTTONS (Hidden on desktop) */}
+          <div className="flex w-full overflow-x-auto pb-2 scrollbar-none lg:hidden">
+            <div className="flex flex-row gap-3">
+              {modules.map((module, index) => {
+                const isActive = activeModule === index;
+
+                return (
+                  <button
+                    key={`mob-mod-${index}`}
+                    type="button"
+                    onClick={() => handleModuleClick(index)}
+                    className={`
+                      shrink-0
+                      rounded-[8px]
+                      px-4
+                      py-2.5
+                      text-[14px]
+                      font-bold
+                      transition-all
+                      ${
+                        isActive
+                          ? "bg-[#ff6b00] text-white shadow-[0_4px_12px_rgba(255,107,0,0.3)]"
+                          : "bg-white/10 text-white hover:bg-white/20"
+                      }
+                    `}
+                  >
+                    Module {index + 1}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* DESKTOP MODULE LIST (Hidden on mobile/tablet) */}
+          <div className="hidden max-h-[855px] overflow-y-auto pr-2 lg:block">
             <ol className="space-y-4">
               {modules.map((module, index) => {
                 const isActive = activeModule === index;
@@ -574,7 +486,7 @@ export default function CurriculumSection() {
             </ol>
           </div>
 
-          {/* SELECTED MODULE OUTLINE */}
+          {/* SELECTED MODULE OUTLINE CONTAINER */}
           <article
             ref={outlineRef}
             className="
