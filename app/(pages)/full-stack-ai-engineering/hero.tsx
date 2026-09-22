@@ -252,7 +252,7 @@ export default function Hero() {
 
         {/* HERO BOTTOM DECORATIVE IMAGE - MOBILE */}
         <Image
-          src="/assets/images/HeroDown2.png"
+          src="/assets/images/heroDown2.png"
           alt=""
           fill
           priority
@@ -284,7 +284,7 @@ export default function Hero() {
         >
           <div className="flex justify-center">
             <a
-              href="#payment-plans"
+              href="tel:+2349067835701"
               className="
                 inline-flex
                 min-h-[44px]

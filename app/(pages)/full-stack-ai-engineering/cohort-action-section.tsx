@@ -36,7 +36,7 @@ export default function CohortActionSection() {
           </div>
         </div>
 
-        <a href="#enroll" className={`${rope.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-8 py-4 text-center text-[9px] font-bold uppercase leading-[1.45] text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:px-10 sm:py-5 lg:text-[12px]`}>
+        <a href="tel:+2349067835701" className={`${rope.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-8 py-4 text-center text-[9px] font-bold uppercase leading-[1.45] text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:px-10 sm:py-5 lg:text-[12px]`}>
           I&apos;m ready to take action
           <Image
             src="/assets/images/ai-fullstack-engineering/cohort-action-button-arrow.svg"

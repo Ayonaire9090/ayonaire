@@ -107,7 +107,7 @@ export default function ProgrammeOfferSection() {
             </p>
           </div>
 
-          <Cta href="#enroll">
+          <Cta href="tel:+2349067835701">
             Start my AI career transition now
           </Cta>
         </div>
@@ -260,7 +260,7 @@ export default function ProgrammeOfferSection() {
             to me over the course of my career?&quot;
           </p>
 
-          <Cta href="#enroll">
+          <Cta href="tel:+2349067835701">
             I want to join the September cohort
           </Cta>
         </div>

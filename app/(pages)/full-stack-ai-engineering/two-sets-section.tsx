@@ -116,7 +116,7 @@ export default function TwoSetsSection() {
           </div>
 
           <a
-            href="#ai-engineering-path"
+            href="tel:+2349067835701"
             className={`${exoMedium.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-10 py-5 text-[15px] text-white sm:text-[16px] shadow-[0px_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01]`}
           >
             SHOW ME THE AI ENGINEERING PATH
@@ -338,7 +338,13 @@ function QuestionCard({
   <div className="absolute -top-8 sm:-top-12 left-11 flex size-[50px] sm:size-[100px] items-center justify-center rounded border border-[#ff6b00] bg-white text-[18px] sm:text-[36px] font-bold tracking-[0.2px] text-black shadow-[0px_0px_6px_0px_rgba(248,100,50,0.25)]">
     {number}
   </div>
-
+<Image
+    src={image}
+    alt=""
+    width={115}
+    height={115}
+    className="mb-10 size-[115px] object-cover"
+  />
   
 
   <h3

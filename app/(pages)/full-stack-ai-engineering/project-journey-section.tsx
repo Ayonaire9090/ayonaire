@@ -38,7 +38,7 @@ export default function ProjectJourneySection() {
           <p className="font-semibold uppercase">Ready to make the transition?</p>
         </div>
 
-        <a href="#enroll" className={`${exo.className} mx-auto inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-8 py-4 text-[14px] font-bold uppercase text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:px-10 sm:py-5 lg:text-[18px]`}>
+        <a href="tel:+2349067835701" className={`${exo.className} mx-auto inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-8 py-4 text-[14px] font-bold uppercase text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:px-10 sm:py-5 lg:text-[18px]`}>
           Start my AI career transition
           <Image src="/assets/images/ai-fullstack-engineering/curriculum-button-arrow.svg" alt="" width={16} height={16} className="size-4" />
         </a>

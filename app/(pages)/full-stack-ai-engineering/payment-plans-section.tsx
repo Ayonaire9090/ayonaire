@@ -223,7 +223,7 @@ export default function PaymentPlansSection() {
 
         {/* CTA */}
         <a
-          href="#enroll"
+          href="tel:+2349067835701"
           className={`
             ${exo.className}
             inline-flex

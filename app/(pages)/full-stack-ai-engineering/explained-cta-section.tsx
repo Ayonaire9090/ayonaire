@@ -72,7 +72,7 @@ export default function ExplainedCtaSection() {
         </div>
 
         <a
-          href="#ai-engineering-path"
+          href="tel:+2349067835701"
           className={`${exo.className} mt-12 inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-8 py-4 text-[15px] uppercase text-white sm:text-[16px] shadow-[0px_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:text-[16px]`}
         >
           I want to build systems like these

@@ -312,7 +312,7 @@ function TimelineCard({
 
               mb-2
 
-              text-[26px]
+              text-[18px]
               font-bold
               leading-[1.2]
               tracking-[0.4px]
