@@ -194,7 +194,7 @@ function ProofCard({
           w-[63%]
           -translate-y-1/2
 
-          text-[14px]
+          text-[12px]
           font-bold
           leading-[1.4]
           tracking-[0.2px]

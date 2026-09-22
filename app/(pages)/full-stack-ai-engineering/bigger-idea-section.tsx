@@ -43,7 +43,7 @@ export default function BiggerIdeaSection() {
             ask, &quot;What do I do now?&quot;
           </p>
 
-          <p className="text-[16px] font-medium leading-[1.65] tracking-[-0.2px] sm:text-[17px] lg:text-[20px]">
+          <p className="text-[16px]  leading-[1.65] tracking-[-0.2px] sm:text-[17px] lg:text-[20px]">
             We want you building the skill, proving what you can do,
             positioning yourself properly, preparing for opportunities and
             becoming more ready to take your capability to the market.

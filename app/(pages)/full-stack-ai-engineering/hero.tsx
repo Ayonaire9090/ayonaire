@@ -233,7 +233,7 @@ export default function Hero() {
           lg:h-[175px]
         "
       >
-        {/* HERO BOTTOM DECORATIVE IMAGE */}
+        {/* HERO BOTTOM DECORATIVE IMAGE - DESKTOP/TABLET */}
         <Image
           src="/assets/images/HeroDown.png"
           alt=""
@@ -245,6 +245,25 @@ export default function Hero() {
             select-none
             object-cover
             object-bottom
+            hidden
+            sm:block
+          "
+        />
+
+        {/* HERO BOTTOM DECORATIVE IMAGE - MOBILE */}
+        <Image
+          src="/assets/images/HeroDown2.png"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="
+            pointer-events-none
+            select-none
+            object-cover
+            object-bottom
+            block
+            sm:hidden
           "
         />
 
@@ -325,4 +344,3 @@ export default function Hero() {
     </section>
   );
 }
-

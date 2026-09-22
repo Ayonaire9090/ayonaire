@@ -127,7 +127,7 @@ export default function AiEngineeringExplainedSection() {
             "
           />
 
-          <div className="flex flex-col gap-24 lg:gap-[54px]">
+          <div className="flex flex-col gap-38 lg:gap-[54px]">
             {examples.map((example, index) => (
               <TimelineCard
                 key={example.title}

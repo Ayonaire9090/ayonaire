@@ -113,7 +113,7 @@ export default function AudienceFitSection() {
   "
 />
 
-          <div className="flex flex-col gap-20 sm:gap-18 lg:gap-20">
+          <div className="flex flex-col gap-26 sm:gap-18 lg:gap-20">
             {audienceCards.map((card, index) => {
               const isLeft = index % 2 === 0;
 

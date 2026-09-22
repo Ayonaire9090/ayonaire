@@ -95,7 +95,7 @@ export default function ProgrammeOfferSection() {
           >
             <p>
               <span className="font-medium">Promo Price:</span>{" "}
-              <strong>3,500,000</strong>
+              <strong>350,000</strong>
             </p>
 
             <p className="font-medium">

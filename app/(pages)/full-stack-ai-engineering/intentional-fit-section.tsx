@@ -40,7 +40,7 @@ export default function IntentionalFitSection() {
       />
     </div>
 
-        <div className={`${exoMedium.className} space-y-9 text-[12px] font-medium leading-[1.7] tracking-[0.2px] text-[#181c23] sm:text-[16px] lg:text-[20px] lg:leading-[2.1]`}>
+        <div className={`${exoMedium.className} space-y-9 text-[16px] font-medium leading-[1.7] tracking-[0.2px] text-[#181c23] sm:text-[16px] lg:text-[20px] lg:leading-[2.1]`}>
           <p>
             Our Full Stack <strong>Career Transition Job Ready AI Engineering</strong> isn&apos;t for everyone.<br />
             And that&apos;s <strong>INTENTIONAL.</strong>
@@ -66,7 +66,7 @@ export default function IntentionalFitSection() {
         grid-cols-[40px_1fr]
         items-center
         gap-5
-        text-[22px]
+        text-[16px]
         font-medium
         leading-[1.35]
         tracking-[0.2px]

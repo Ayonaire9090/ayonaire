@@ -156,7 +156,7 @@ export default function TwoSetsSection() {
             </strong>
           </p>
 
-          <div className="grid w-full grid-cols-1 gap-10 lg:grid-cols-2">
+          <div className="grid w-full grid-cols-1 gap-16 sm:gap-10 lg:grid-cols-2 mt-6">
             <QuestionCard
               number="01"
               image="/assets/images/ai-fullstack-engineering/question-card-people.png"
@@ -335,17 +335,11 @@ function QuestionCard({
 }) {
   return (
    <article className="relative min-h-[520px] rounded-[14px] bg-white px-8 pb-10 pt-24 shadow-[0px_1px_6px_rgba(0,0,0,0.12)] lg:min-h-[606px] lg:px-11">
-  <div className="absolute -top-12 left-11 flex size-[100px] items-center justify-center rounded border border-[#ff6b00] bg-white text-[36px] font-bold tracking-[0.2px] text-black shadow-[0px_0px_6px_0px_rgba(248,100,50,0.25)]">
+  <div className="absolute -top-8 sm:-top-12 left-11 flex size-[50px] sm:size-[100px] items-center justify-center rounded border border-[#ff6b00] bg-white text-[18px] sm:text-[36px] font-bold tracking-[0.2px] text-black shadow-[0px_0px_6px_0px_rgba(248,100,50,0.25)]">
     {number}
   </div>
 
-  <Image
-    src={image}
-    alt=""
-    width={115}
-    height={115}
-    className="mb-10 size-[115px] object-cover"
-  />
+  
 
   <h3
     className={`${exo.className} mb-7 text-[22px] font-bold leading-[1.35] tracking-[0.2px] text-black lg:text-[34px] lg:leading-[1.35]`}
