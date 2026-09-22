@@ -235,7 +235,7 @@ export default function PaymentPlansSection() {
             px-8
             py-4
             text-center
-            text-[13px]
+            text-[11px]
             font-bold
             uppercase
             tracking-[0.04em]

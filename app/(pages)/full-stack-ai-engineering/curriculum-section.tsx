@@ -540,7 +540,7 @@ export default function CurriculumSection() {
         {/* CTA */}
         <a
           href="#enroll"
-          className={`${exoMedium.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-10 py-5 text-center text-[15px] font-bold uppercase text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] lg:text-[18px]`}
+          className={`${exoMedium.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-10 py-5 text-center text-[12px] font-bold uppercase text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] lg:text-[18px]`}
         >
           I want to become an AI/ML engineer
 
