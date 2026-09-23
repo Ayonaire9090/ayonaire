@@ -126,7 +126,7 @@ function ChecklistGroup({
 
               {/* Text */}
               <p
-                className={`${exoMedium.className} w-[60%] text-[15px] leading-[1.45] tracking-[0.2px] text-[#181c23] sm:text-[17px] lg:text-[20px] lg:leading-[1.5]`}
+                className={`${exo.className} w-[60%] text-[12px] leading-[1.45] tracking-[0.2px] text-[#181c23] sm:text-[17px] lg:text-[20px] lg:leading-[1.5]`}
               >
                 {item}
               </p>

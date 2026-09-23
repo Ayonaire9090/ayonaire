@@ -9,7 +9,7 @@ export default function GuaranteeSection() {
           And yes... 30-day <span className="bg-[#ffdcc4] text-[#f25e25]">100% money-back guarantee</span>
         </h2>
 
-        <div className={`${space.className} w-full space-y-7 text-justify text-[18px] font-medium leading-[1.65] tracking-[0.3px] text-[#181c23] sm:text-[22px] lg:text-[28px] lg:leading-[1.45]`}>
+        <div className={`${space.className} w-full space-y-7  text-left  text-[18px] font-medium leading-[1.65] tracking-[0.3px] text-[#181c23] sm:text-[22px] lg:text-[28px] lg:leading-[1.45]`}>
           <p>You have read a lot on this page. And perhaps a question is still sitting in your mind:</p>
           <p>&quot;What if everything sounds good here, but I join and the actual experience isn&apos;t what was promised?&quot;</p>
           <p>That is fair.</p>

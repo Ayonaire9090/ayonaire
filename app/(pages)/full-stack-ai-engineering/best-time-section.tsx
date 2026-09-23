@@ -26,7 +26,7 @@ export default function BestTimeSection() {
           />
         </div>
 
-        <div className={`${space .className} w-full max-w-[1279px] space-y-7 text-justify text-[18px] font-normal leading-[1.75] tracking-[0.4px] text-[#5a4136] sm:text-[22px] lg:space-y-8 lg:text-[28px] lg:leading-[46px] lg:tracking-[0.8px]`}>
+        <div className={`${space .className} w-full max-w-[1279px] space-y-7 text-left text-[18px] font-normal leading-[1.75] tracking-[0.4px] text-[#5a4136] sm:text-[22px] lg:space-y-8 lg:text-[28px] lg:leading-[46px] lg:tracking-[0.8px]`}>
           <p>You cannot go back and start six months ago.</p>
           <p>But you can decide what happens from today.</p>
           <p>Because every day you postpone the decision is another day someone else is learning, practising, building and positioning themselves for the opportunities you also want.</p>
@@ -44,7 +44,7 @@ export default function BestTimeSection() {
           ))}
         </ul>
 
-        <div className={`${exoMedium.className} w-full max-w-[1279px] space-y-7 text-justify text-[18px] font-medium leading-[1.75] tracking-[0.4px] text-[#5a4136] sm:text-[22px] lg:space-y-8 lg:text-[28px] lg:leading-[46px] lg:tracking-[0.8px]`}>
+        <div className={`${exoMedium.className} w-full max-w-[1279px] space-y-7 text-left text-[18px] font-medium leading-[1.75] tracking-[0.4px] text-[#5a4136] sm:text-[22px] lg:space-y-8 lg:text-[28px] lg:leading-[46px] lg:tracking-[0.8px]`}>
           <p>Nobody can promise you exactly what your career or income will look like ten months from today.</p>
           <p>But you can decide what skills, experience and capabilities you will have when those ten months are over.</p>
           <p>So if AI/ML Engineering is genuinely a direction you have been considering, <strong>take action.</strong></p>

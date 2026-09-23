@@ -286,8 +286,8 @@ function BlackWarningCard({
             tracking-[0.2px]
             text-white
 
-            sm:text-[24px]
-            lg:text-[28px]
+            sm:text-[20px]
+            lg:text-[25px]
           `}
         >
           {number} Sets of People

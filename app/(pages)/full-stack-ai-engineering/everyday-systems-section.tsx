@@ -24,7 +24,7 @@ export default function EverydaySystemsSection() {
 </h2>
 
         <div
-          className={`${space.className} max-w-[1120px] space-y-5 whitespace-pre-wrap lg:space-y-6 text-justify text-[17px] font-normal leading-[1.6] tracking-[0.4px] text-[#181c23] lg:text-[20px] lg:leading-[1.65] lg:tracking-[0.2px]`}
+          className={`${space.className} max-w-[1120px] space-y-5 whitespace-pre-wrap lg:space-y-6 text-left text-[17px] font-normal leading-[1.6] tracking-[0.4px] text-[#181c23] lg:text-[20px] lg:leading-[1.65] lg:tracking-[0.2px]`}
         >
           <p>Let me make it even more real. Imagine you order something on Amazon.</p>
 
