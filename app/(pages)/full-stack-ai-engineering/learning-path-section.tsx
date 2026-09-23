@@ -31,8 +31,9 @@ const routes = [
       "Start with Generative AI",
       "Python knowledge required",
       "Machine Learning knowledge required",
-      "RAG",
-      "AI Automation",
+      "NLP knowledge required",
+      "Deep Learning knowledge required",
+      "Generative AI",
       "LLM Applications",
       "RAG",
       "Vector Databases",
@@ -65,7 +66,6 @@ const routes = [
       "Experienced AI professionals, technical specialists and leaders who can learn several areas together",
   },
 ];
-
 const explanationCards = [
   {
     number: "1",
