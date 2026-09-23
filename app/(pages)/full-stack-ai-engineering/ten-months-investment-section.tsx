@@ -9,7 +9,7 @@ export default function TenMonthsInvestmentSection() {
             Invest in the <span className="text-[#f25e25]">next 10 months of your life</span> and change the trajectory of your career.
           </h2>
 
-          <div className={`${exoMedium.className} space-y-7 text-center text-[18px] font-normal leading-[1.65] tracking-[0.5px] text-[#181c23] sm:text-[24px] lg:text-[28px] lg:leading-[44px] lg:tracking-[1.2px]`}>
+          <div className={`${exoMedium.className} space-y-7 text-left text-[18px] font-normal leading-[1.65] tracking-[0.5px] text-[#181c23] sm:text-center sm:text-[24px] lg:text-[28px] lg:leading-[44px] lg:tracking-[1.2px]`}>
             <p>Ten months from now will come whether you enrol or not.</p>
             <p>The real question is:</p>
             <p className="font-bold">Will you spend those months only consuming content?</p>

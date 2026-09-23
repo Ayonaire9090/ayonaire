@@ -1,4 +1,4 @@
-import Image from "next/image";
+﻿import Image from "next/image";
 import { exo, exoMedium, melodrama, salt, space } from "@/app/fonts";
 
 const plans = [
@@ -28,9 +28,7 @@ export default function PaymentPlansSection() {
   return (
     <section className="bg-gradient-to-b from-[rgba(255,255,255,0.28)] to-[rgba(248,100,50,0.28)] px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
       <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-14 lg:gap-20">
-        
         <div className="grid w-full gap-12 lg:grid-cols-[544px_1fr] lg:gap-[45px]">
-          
           {/* LEFT CONTENT */}
           <div className="flex flex-col gap-7 lg:gap-9">
             <h2
@@ -49,15 +47,15 @@ export default function PaymentPlansSection() {
                 lg:leading-[1.2]
               `}
             >
-              And no... you do not have to pay{" "}<br/>
-              <span className="text-[#f25e25]">
-                ₦500,000 at once.
-              </span>
+              And no... you do not have to pay{" "}
+              <br />
+              <span className="text-[#f25e25]">500,000 at once.</span>
             </h2>
 
             <p
               className={`
                 ${space.className}
+                text-left
                 text-[16px]
                 font-medium
                 leading-[1.65]
@@ -77,6 +75,7 @@ export default function PaymentPlansSection() {
             <p
               className={`
                 ${space.className}
+                text-left
                 text-[15px]
                 font-medium
                 leading-[1.65]
@@ -114,8 +113,9 @@ export default function PaymentPlansSection() {
               {plans.map((plan) => (
                 <article
                   key={plan.title}
-                  className="relative flex aspect-[702/336] w-full items-center lg:max-w-[655px]"
+                  className="group relative flex aspect-[702/336] w-full items-center lg:max-w-[655px]"
                 >
+                  {/* CARD BACKGROUND */}
                   <Image
                     src="/assets/images/ai-fullstack-engineering/right-fit-card.svg"
                     alt=""
@@ -123,14 +123,31 @@ export default function PaymentPlansSection() {
                     sizes="(min-width: 1024px) 655px, 100vw"
                     className="pointer-events-none object-contain"
                   />
+
                   <div
                     className="relative z-10 flex w-full items-center gap-7 px-6 py-5 sm:gap-9 sm:px-8 sm:py-6 lg:gap-11 lg:px-10 lg:py-6"
                     style={{ transform: "rotate(5deg)" }}
                   >
                     {/* CHECK ICON */}
-                    <span className="flex size-10 shrink-0 items-center justify-center rounded-full border-2 border-[#ff9b77] text-[#ff8b62] sm:size-12">
-                      <span className="block h-3 w-5 rotate-[-45deg] border-b-2 border-l-2 border-current" />
-                    </span>
+                    <div className="relative size-10 shrink-0 sm:size-12">
+                      {/* DEFAULT / INACTIVE */}
+                      <Image
+                        src="/assets/images/ai-fullstack-engineering/check2.png"
+                        alt=""
+                        fill
+                        sizes="48px"
+                        className="object-contain transition-opacity duration-200 group-hover:opacity-0"
+                      />
+
+                      {/* HOVER / ACTIVE */}
+                      <Image
+                        src="/assets/images/ai-fullstack-engineering/check1.png"
+                        alt=""
+                        fill
+                        sizes="48px"
+                        className="object-contain opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+                      />
+                    </div>
 
                     {/* PLAN CONTENT */}
                     <div className="w-[60%] space-y-1.5 text-[#181c23] sm:space-y-2 lg:space-y-2.5">
@@ -193,13 +210,14 @@ export default function PaymentPlansSection() {
         <p
           className={`
             ${exoMedium.className}
-            text-center
+            text-left
             text-[16px]
             font-normal
             leading-[1.6]
             tracking-[0.2px]
             text-[#5a4136]
 
+            sm:text-center
             sm:text-[18px]
 
             lg:text-[21px]
@@ -210,7 +228,7 @@ export default function PaymentPlansSection() {
 
         {/* CTA */}
         <a
-          href="https://wa.me/2349067835701"
+          href="https://wa.link/f1iadg"
           target="_blank"
           rel="noopener noreferrer"
           className={`

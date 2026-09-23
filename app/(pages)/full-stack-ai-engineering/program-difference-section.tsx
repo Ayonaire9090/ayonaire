@@ -1,56 +1,91 @@
 "use client";
 
-import { adineue, exo, exoMedium, melodrama } from "@/app/fonts";
+import { exo, exoMedium, melodrama } from "@/app/fonts";
 
 const technicalCapability = [
   [
     "Engineering Thinking",
-    "Architecture & System Design Thinking",
-    "Software Engineering Skills",
+    "Architecture & System",
+    "Design Thinking",
+    "Software Engineering",
+    "Skills",
     "Debugging Mindset",
-    "Systematic Problem-Solving",
-    "Testing & Quality Assurance",
+    "Problem Solving",
+    "Skills",
+    "Testing & Quality",
+    "Assurance",
     "Documentation Culture",
     "Production Mindset",
     "Deployment Thinking",
   ],
   [
     "Reliability Thinking",
-    "AI Evaluation & Monitoring",
-    "Security, Guardrails & Governance Thinking",
-    "Real Software Engineering Practices",
-    "API & Systems Integration Thinking",
-    "Data & Model Pipeline Thinking",
-    "Performance & Scalability Thinking",
+    "AI Evaluation &",
+    "Monitoring",
+    "Security, Guardrails &",
+    "Governance Thinking",
+    "Real Software",
+    "Engineering Practices",
+    "API & Systems",
+    "Integration Thinking",
+    "Data & Model Pipeline",
+    "Thinking",
+    "Performance &",
+    "Scalability Thinking",
   ],
 ];
 
 const professionalCapability = [
   [
-    "Business Problem Understanding",
+    "Business Problem",
+    "Understanding",
     "Requirements gathering",
     "Stakeholder Management",
     "Communication Skills",
-    "Technical & Business Communication",
+    "Technical & Business",
+    "Communication",
     "Product Thinking",
-    "Teamwork & Collaboration",
+    "Teamwork &",
+    "Collaboration",
     "Leadership Skills",
   ],
   [
     "Problem-Solving Skills",
     "Critical Thinking",
-    "Decision-Making Presentation Skills",
+    "Decision-Making",
+    "Presentation Skills",
     "Project Management",
     "Time Management",
-    "Ownership & Accountability",
-    "Adaptability & Continuous Learning",
+    "Ownership &",
+    "Accountability",
+    "Adaptability &",
+    "Continuous Learning",
   ],
 ];
 
 export default function ProgramDifferenceSection() {
   return (
-    <section className="bg-gradient-to-b from-[#fefefe] to-[rgba(248,100,50,0.08)] px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
-      <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-14 lg:gap-20">
+    <section className="relative overflow-hidden bg-[#FFDDD2] px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
+      {/* TOP FADE */}
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[180px]"
+        style={{
+          background:
+            "linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,248,242,0.8) 35%, rgba(255,240,228,0) 100%)",
+        }}
+      />
+
+      {/* BOTTOM FADE */}
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-[180px]"
+        style={{
+          background:
+            "linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255,248,242,0.8) 35%, rgba(255,240,228,0) 100%)",
+        }}
+      />
+
+      {/* CONTENT */}
+      <div className="relative z-10 mx-auto flex w-full max-w-[1240px] flex-col gap-14 lg:gap-20">
         {/* HEADER */}
         <div className="flex flex-col items-center gap-8 text-center lg:gap-10">
           <h2
@@ -165,9 +200,9 @@ function CapabilityCard({ items }: { items: string[] }) {
       "
     >
       <ul className="grid gap-6 lg:gap-7">
-        {items.map((item) => (
+        {items.map((item, index) => (
           <li
-            key={item}
+            key={`${item}-${index}`}
             className={`
               ${exo.className}
               grid

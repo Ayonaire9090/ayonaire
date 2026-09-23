@@ -52,7 +52,7 @@ export default function ActualBuildSection() {
           </div>
         </div>
 
-        <p className={`${exoMedium.className} max-w-[1035px] text-center text-[18px] font-medium leading-[1.75] tracking-[0.2px] text-[#181c23] sm:text-[22px] lg:text-[28px] lg:leading-[2.2]`}>
+        <p className={`${exoMedium.className} max-w-[1035px] text-left text-[18px] font-medium leading-[1.75] tracking-[0.2px] text-[#181c23] sm:text-center sm:text-[22px] lg:text-[28px] lg:leading-[2.2]`}>
           You will build a <strong>Multi-Agent System for Research Analysis and Generation Automation</strong>, where specialised Agents collaborate across a larger workflow. By this point, the question changes from: &quot;What is Agentic AI?&quot; to: <strong>&quot;HOW SHOULD I DESIGN THIS SYSTEM?&quot;</strong>
         </p>
       </div>

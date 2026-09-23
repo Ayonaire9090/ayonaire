@@ -37,12 +37,12 @@ export default function FinalQuestionSection() {
           Or
         </p>
 
-        <div className={`${exoMedium.className} flex w-full flex-col items-center gap-8 text-center text-[16px] font-medium leading-[1.6] tracking-[0.3px] text-[#181c23] sm:text-[20px] lg:gap-10 lg:text-[24px] lg:leading-[38px] lg:tracking-[0.6px]`}>
-          <p>Do you want to have spent those months developing the skills to build, integrate, evaluate, secure, deploy and improve AI systems?</p>
-          <p className="font-bold uppercase text-[#f25e25]">Your decision comes with a 30-day safety net.</p>
-          <p>If, after your first month, you decide Ayonaire isn&apos;t right for you, <strong>you can request a <span className="text-[#f25e25]">100% refund.</span></strong></p>
-          <p className="font-bold text-black">No questions asked</p>
-          <p className="text-[15px] sm:text-[18px] lg:text-[20px]">So you can either make the full investment upfront, or spread it across the period you&apos;re building the skill.</p>
+        <div className={`${exoMedium.className} flex w-full flex-col items-center gap-8 text-left text-[16px] font-medium leading-[1.6] tracking-[0.3px] text-[#181c23] sm:text-center sm:text-[20px] lg:gap-10 lg:text-[24px] lg:leading-[38px] lg:tracking-[0.6px]`}>
+          <p className="text-left sm:text-center">Do you want to have spent those months developing the skills to build, integrate, evaluate, secure, deploy and improve AI systems?</p>
+          <p className="text-left font-bold uppercase text-[#f25e25] sm:text-center">Your decision comes with a 30-day safety net.</p>
+          <p className="text-left sm:text-center">If, after your first month, you decide Ayonaire isn&apos;t right for you, <strong>you can request a <span className="text-[#f25e25]">100% refund.</span></strong></p>
+          <p className="text-left font-bold text-black sm:text-center">No questions asked</p>
+          <p className="text-left text-[15px] sm:text-center sm:text-[18px] lg:text-[20px]">So you can either make the full investment upfront, or spread it across the period you&apos;re building the skill.</p>
         </div>
       </div>
     </section>

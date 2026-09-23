@@ -34,26 +34,26 @@ export default function BiggerIdeaSection() {
         <div
           className={`${exoMedium.className} flex max-w-[1080px] flex-col gap-6 text-white`}
         >
-          <p className="text-[17px] font-medium leading-[1.6] tracking-[-0.2px] sm:text-[18px] lg:text-[23px]">
+          <p className="text-left text-[17px] font-medium leading-[1.6] tracking-[-0.2px] sm:text-center sm:text-[18px] lg:text-[23px]">
             All of these systems exist for one reason:
           </p>
 
-          <p className="text-[13px] font-bold leading-[1.5] tracking-[-0.2px] underline underline-offset-4 sm:text-[15px] lg:text-[18px]">
+          <p className="text-left text-[13px] font-bold leading-[1.5] tracking-[-0.2px] underline underline-offset-4 sm:text-center sm:text-[15px] lg:text-[18px]">
             We do not want you to finish learning AI/ML Engineering and then
             ask, &quot;What do I do now?&quot;
           </p>
 
-          <p className="text-[16px]  leading-[1.65] tracking-[-0.2px] sm:text-[17px] lg:text-[20px]">
+          <p className="text-left text-[16px] leading-[1.65] tracking-[-0.2px] sm:text-center sm:text-[17px] lg:text-[20px]">
             We want you building the skill, proving what you can do,
             positioning yourself properly, preparing for opportunities and
             becoming more ready to take your capability to the market.
           </p>
 
-          <p className="text-[18px] font-bold leading-[1.45] tracking-[-0.3px] sm:text-[20px] lg:text-[24px]">
+          <p className="text-left text-[18px] font-bold leading-[1.45] tracking-[-0.3px] sm:text-center sm:text-[20px] lg:text-[24px]">
             That&apos;s what makes Our program is more than a course.
           </p>
 
-          <p className="text-left text-[16px] font-medium leading-[1.6] tracking-[-0.2px] sm:text-[18px] lg:text-[22px]">
+          <p className="text-left text-[16px] font-medium leading-[1.6] tracking-[-0.2px] sm:text-center sm:text-[18px] lg:text-[22px]">
             It&apos;s a system designed to help you move through the entire
             career transition:
           </p>
@@ -74,7 +74,7 @@ export default function BiggerIdeaSection() {
 
         {/* CLOSING TEXT */}
         <p
-          className={`${exoMedium.className} mt-4 max-w-[1080px] text-center text-[16px] font-medium italic leading-[1.6] tracking-[-0.2px] sm:text-[18px] lg:text-[22px]`}
+          className={`${exoMedium.className} mt-4 max-w-[1080px] text-left text-[16px] font-medium italic leading-[1.6] tracking-[-0.2px] sm:text-center sm:text-[18px] lg:text-[22px]`}
         >
           It&apos;s a system designed to help you move through the entire
           career transition:

@@ -109,13 +109,13 @@ export default function AiEngineeringExplainedSection() {
               left-1/2
               top-0
               z-0
-              w-[2px]
+              w-px
               -translate-x-1/2
-              bg-[#ff6b00]
+              bg-[#e97048]
             "
           />
 
-          <div className="flex flex-col gap-10 sm:gap-14 lg:gap-16">
+          <div className="flex flex-col gap-25 sm:gap-14 lg:gap-16">
             {examples.map((example, index) => (
               <TimelineCard
                 key={example.title}

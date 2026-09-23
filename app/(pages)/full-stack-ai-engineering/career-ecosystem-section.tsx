@@ -18,9 +18,94 @@ const ecosystemItems = [
   },
   {
     number: "04",
-    title: "Build Your Proof Of Work",
-    body: "Create GitHub repositories, deployed applications, project documentation, capstones and a professional portfolio that show what you can do.",
+    title: "Talent Marketplace",
+    body: "Instead of always being the one searching for employers, our Talent Marketplace is designed to also help employers discover you. Your profile can showcase your skills, projects, GitHub, portfolio,",
   },
+  {
+    number: "05",
+    title: "Portfolio Development",
+    body: "Your projects should not just sit in a folder on your laptop. We help you turn your strongest work into a professional portfolio that shows employers and clients",
+  },
+  {
+    number: "06",
+    title: "ATS Resume Support",
+    body: "Your resume should reflect the AI/ML Engineer you are becoming. We help you structure your resume around your skills, projects, practical experience and target roles so that your career",
+  },
+  {
+    number: "07",
+    title: "LinkedIn Positioning",
+    body: "Your LinkedIn profile should do more than list your previous jobs. We help you position your headline, About section, skills, projects and experience so",
+  },
+  {
+    number: "08",
+    title: "Skill Gap Analysis",
+    body: "You should not have to keep guessing what you are missing. The Skill Gap Analyzer helps you compare where you are today with the AI/ML role you want, so",
+  },
+  {
+    number: "09",
+    title: "Career Roadmap",
+    body: "Once you understand your target role and current gaps, we help you turn that into a clearer roadmap. You can see what to learn, what projects to build,",
+  },
+  {
+    number: "10",
+    title: "Building in Public",
+    body: "You won't wait until the end of the programme before people start seeing what you can do. You will learn how to share your projects, lessons, technical opinions, GitHub work and progress publicly, while also learning how to find and",
+  },
+  {
+    number: "11",
+    title: "Professional Branding",
+    body: "Being technically capable is important, but the market also needs to understand what you do. We help you build a clearer professional identity around your",
+  },
+  {
+    number: "12",
+    title: "Recruiter Outreach",
+    body: "Instead of sending generic messages and hoping somebody responds, you will learn how to approach recruiters and hiring managers more intentionally, communicate your value clearly",
+  },
+  {
+    number: "13",
+    title: "Interview Preparation",
+    body: "Getting invited to an interview is only useful if you are prepared when it happens. We help you prepare for technical, behavioural and project-based questions so you can communicate your thinking, explain your experience and discuss your work with more confidence.",
+  },
+  {
+    number: "14",
+    title: "Mock & Virtual Interviews",
+    body: "You should not wait until the real interview to discover what you struggle with. Through Mock Interviews and Virtual Interview Practice, you get opportunities to answer questions, explain your projects, receive feedback and improve before the actual opportunity arrives.",
+  },
+  {
+    number: "15",
+    title: "Project Defence",
+    body: "Building a project is one thing: explaining why you built that way is another. You will practise discussing your architecture, technical decisions, challenges, results, failures, trade-offs and improvements so you can confidently defend the work in your portfolio.",
+  },
+  {
+    number: "16",
+    title: "Job Readiness",
+    body: "Job Readiness focuses on helping you become better prepared to compete for opportunities through your resume, LinkedIn, GitHub, portfolio, role targeting, applications, interview preparation, recruiter communication and professional positioning.",
+  },
+  {
+    number: "17",
+    title: "Work Readiness",
+    body: "Work Readiness prepares you for what happens after you get the opportunity. You will develop stronger communication, teamwork, problem-solving, stakeholder management, documentation, presentation, time management, professionalism and workplace collaboration skills.",
+  },
+  {
+    number: "18",
+    title: "Career Mentorship",
+    body: "Throughout the journey, Career Mentorship helps you make better decisions around your target roles, projects, portfolio, positioning, interview preparation and next career moves so you are not left trying to figure everything out alone.",
+  },
+  {
+    number: "19",
+    title: "Career Readiness Dashboard",
+    body: "Your Career Readiness Dashboard brings the journey together by helping you see your progress across your resume, LinkedIn, portfolio, GitHub, skill gaps, interview preparation and overall readiness for the market.",
+  },
+  {
+    number: "20",
+    title: "Job Simulation & Practical Experience",
+    body: "Through Job Simulation and practical experience, you will work through professional-style scenarios that require you to understand a problem, make decisions, build, present your work, receive feedback and improve, giving you exposure before your first real AI/ML role.",
+  },
+  {
+    number: "21",
+    title: "Talent Opportunities",
+    body: "Where available, we also create opportunities for learners to become visible to recruiters, employers and industry professionals through talent sessions, job fairs and our wider Career Accelerator ecosystem.",
+  }
 ];
 
 export default function CareerEcosystemSection() {

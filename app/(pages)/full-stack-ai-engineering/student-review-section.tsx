@@ -42,7 +42,8 @@ const reviews: Review[] = [
   {
     name: "Kingsley Nwaginineme",
     role: "AI Engineering Student, Ayonaire Academy",
-    title: "I Joined With Almost Zero Knowledge of Python or AI Engineering. Now I Can Code From Scratch.",
+    title:
+      "I Joined With Almost Zero Knowledge of Python or AI Engineering. Now I Can Code From Scratch.",
     paragraphs: [
       "My experience with Ayonaire Academy has honestly been a really great one so far.",
       "Before joining the AI Engineering 1.0 program, I had virtually zero knowledge of Python or AI Engineering.",
@@ -57,7 +58,8 @@ const reviews: Review[] = [
   {
     name: "ALABI Alexander",
     role: "AI Engineering Student, Ayonaire Academy",
-    title: "Your Brain Will Scream a Bit — But That’s the Beginning of the Stretch.",
+    title:
+      "Your Brain Will Scream a Bit — But That’s the Beginning of the Stretch.",
     paragraphs: [
       "Hello guys, I’m part of the participants in AI Engineering 1.0, and with 2.0 about to start, I would honestly advise anyone who is serious enough to have clicked the advert and made it this far to take the opportunity seriously.",
       "Personally, one thing I can say about Ayonaire is that the program is quite affordable compared to what similar institutions charge, and the instructors are very knowledgeable in what they teach.",
@@ -75,25 +77,60 @@ export default function StudentReviewSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handlePrev = () => {
-    setCurrentIndex((prev) => (prev === 0 ? reviews.length - 1 : prev - 1));
+    setCurrentIndex((prev) =>
+      prev === 0 ? reviews.length - 1 : prev - 1,
+    );
   };
 
   const handleNext = () => {
-    setCurrentIndex((prev) => (prev === reviews.length - 1 ? 0 : prev + 1));
+    setCurrentIndex((prev) =>
+      prev === reviews.length - 1 ? 0 : prev + 1,
+    );
   };
 
   const currentReview = reviews[currentIndex];
 
   return (
-    <section className="relative overflow-hidden bg-[#fff0e4] px-5 py-14 sm:px-8 lg:px-12 lg:py-[96px]">
+    <section className="relative overflow-hidden bg-[#fae4d5] px-5 pt-8 pb-8 sm:px-8 sm:pt-10 sm:pb-10 lg:px-12 lg:pt-[52px] lg:pb-[64px]">
+      {/* TOP FADE */}
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[150px]"
+        style={{
+          background:
+            "linear-gradient(to bottom, rgba(255,255,255,0.95) 0%, rgba(255,245,238,0.65) 45%, rgba(255,240,228,0) 100%)",
+        }}
+      />
+
+      {/* BOTTOM FADE */}
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-[150px]"
+        style={{
+          background:
+            "linear-gradient(to top, rgba(255,255,255,0.95) 0%, rgba(255,245,238,0.65) 45%, rgba(255,240,228,0) 100%)",
+        }}
+      />
+
+      {/* EARPIECE / QUOTE BACKGROUND */}
+      <Image
+        src="/assets/images/ai-fullstack-engineering/earpiece.png"
+        alt=""
+        width={200}
+        height={200}
+        className="pointer-events-none absolute right-[12%] top-[70px] z-0 h-[200px] w-[200px] select-none object-contain opacity-30 sm:right-[15%] sm:h-[260px] sm:w-[260px] lg:right-[25%] lg:top-[80px] lg:h-[230px] lg:w-[230px]"
+      />
+
+      {/* CONTENT */}
       <div className="relative z-10 mx-auto flex w-full max-w-[980px] flex-col items-center">
+        {/* HEADER */}
         <div className="flex w-full flex-col items-center text-center">
           <div className="relative w-full max-w-[560px]">
             <h2
               className={`${melodrama.className} relative z-10 text-[28px] font-bold leading-[1.05] text-[#181c23] sm:text-[34px] lg:text-[40px]`}
             >
-              Don&apos;t just take <span className="text-[#f25e25]">our word for it.</span>
+              Don&apos;t just take{" "}
+              <span className="text-[#f25e25]">our word for it.</span>
             </h2>
+
             <Image
               src="/assets/images/ai-fullstack-engineering/student-review-heading-highlight.svg"
               alt=""
@@ -106,14 +143,17 @@ export default function StudentReviewSection() {
           <p
             className={`${exoMedium.className} mt-4 max-w-[760px] text-[13px] font-semibold leading-[1.55] text-[#2d3036] sm:text-[15px] lg:text-[16px]`}
           >
-            Don&apos;t just take our word for what the Ayonaire experience is like. Hear directly from the people who have gone through it.
+            Don&apos;t just take our word for what the Ayonaire experience is
+            like. Hear directly from the people who have gone through it.
           </p>
 
           <ReviewDivider className="mt-5" />
         </div>
 
-        <article className="relative mt-8 grid w-full items-start gap-8 lg:grid-cols-[210px_minmax(0,1fr)_6px] lg:gap-12">
-          <div className="flex justify-center lg:pt-20">
+        {/* REVIEW */}
+        <article className="relative mt-7 grid w-full items-start gap-7 lg:grid-cols-[210px_minmax(0,1fr)_6px] lg:gap-12">
+          {/* AVATAR */}
+          <div className="flex justify-center lg:pt-16">
             <Image
               src="/assets/images/ai-fullstack-engineering/student-review-avatar.png"
               alt={`Illustrated portrait representing ${currentReview.name}`}
@@ -124,7 +164,9 @@ export default function StudentReviewSection() {
             />
           </div>
 
+          {/* REVIEW TEXT */}
           <div className="relative min-w-0 overflow-hidden pr-0 lg:pr-8">
+            {/* Decorative quote */}
             <div className="pointer-events-none absolute -right-2 -top-12 hidden select-none text-[180px] font-black leading-none text-white/35 lg:block">
               &rdquo;
             </div>
@@ -144,50 +186,65 @@ export default function StudentReviewSection() {
               ))}
 
               <div className="mt-7 text-left">
-                <p className="text-[16px] font-black text-[#252830]">- {currentReview.name}</p>
-                <p className="mt-1 text-[12px] font-medium text-[#2d3036]">{currentReview.role}</p>
+                <p className="text-[16px] font-black text-[#252830]">
+                  - {currentReview.name}
+                </p>
+
+                <p className="mt-1 text-[12px] font-medium text-[#2d3036]">
+                  {currentReview.role}
+                </p>
               </div>
             </div>
           </div>
-
-
         </article>
 
-        <div className="mt-8 flex w-full items-center justify-between gap-5 sm:mt-10">
+        {/* BOTTOM DIVIDER + ARROWS */}
+        <div className="mt-7 flex w-full items-center justify-between gap-5 sm:mt-8">
           <ReviewDivider compact />
 
-          <div className="flex shrink-0 items-center gap-2 text-[#ff6b00]">
-            <button
-              type="button"
-              onClick={handlePrev}
-              aria-label="Previous student review"
-              className="flex items-center justify-center transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ff6b00] cursor-pointer"
-            >
-              <Image
-                src="/assets/images/ai-fullstack-engineering/had.png"
-                alt="Previous"
-                width={64}
-                height={64}
-                className="h-8 w-16 object-contain"
-              />
-            </button>
-          
-          </div>
+         <div className="flex shrink-0 items-center gap-1 text-[#ff6b00]">
+  <button
+    type="button"
+    onClick={handlePrev}
+    aria-label="Previous student review"
+    className="flex cursor-pointer items-center justify-center transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ff6b00]"
+  >
+    <Image
+      src="/assets/images/ai-fullstack-engineering/had.png"
+      alt="Previous"
+      width={64}
+      height={64}
+      className="h-20 w-20 object-contain"
+    />
+  </button>
+</div>
         </div>
       </div>
     </section>
   );
 }
 
-function ReviewDivider({ compact = false, className = "" }: { compact?: boolean; className?: string }) {
+function ReviewDivider({
+  compact = false,
+  className = "",
+}: {
+  compact?: boolean;
+  className?: string;
+}) {
   return (
-    <div className={`flex w-full items-center justify-center ${compact ? "max-w-[440px]" : "max-w-[430px]"} ${className}`}>
+    <div
+      className={`flex w-full items-center justify-center ${
+        compact ? "max-w-[440px]" : "max-w-[430px]"
+      } ${className}`}
+    >
       <div className="h-px min-w-0 flex-1 bg-[#ff8a4d]" />
+
       <div
         className={`${exo.className} shrink-0 border border-[#ff8a4d] bg-[#fff0e4] px-4 py-2 text-center text-[10px] font-black uppercase text-[#252830] sm:text-[11px]`}
       >
         STUDENT REVIEW
       </div>
+
       <div className="h-px min-w-0 flex-1 bg-[#ff8a4d]" />
     </div>
   );

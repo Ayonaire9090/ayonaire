@@ -111,7 +111,7 @@ export default function LearningPathSection() {
         <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-16 lg:gap-20">
           <div className="flex w-full max-w-[1091px] flex-col items-center gap-8 text-center lg:gap-10">
             <p
-              className={`${exoMedium.className} text-[17px] font-medium leading-[1.45] tracking-[0.4px] text-[#5a4136] sm:text-[20px] lg:text-[28px]`}
+              className={`${exoMedium.className} text-left text-[17px] font-medium leading-[1.45] tracking-[0.4px] text-[#5a4136] sm:text-center sm:text-[20px] lg:text-[28px]`}
             >
               Right at the top, it says proficiency in Python right???
             </p>
@@ -147,7 +147,7 @@ export default function LearningPathSection() {
           </div>
 
           <div
-            className={`${exo.className} max-w-[900px] space-y-5 text-center text-[17px] leading-[1.55] tracking-[0.2px] text-[#181c23] lg:text-[20px]`}
+            className={`${exo.className} max-w-[900px] space-y-5 text-left text-[17px] leading-[1.55] tracking-[0.2px] text-[#181c23] sm:text-center lg:text-[20px]`}
           >
             <p className="font-bold">And through all of this,</p>
             <p className={`${exoMedium.className}`}>
@@ -258,7 +258,7 @@ export default function LearningPathSection() {
                 ))}
               </ol>
               <p
-                className={`${exo.className} mt-8 text-center text-[20px] leading-[1.45] tracking-[0.5px] text-[#181c23] lg:text-[32px]`}
+                className={`${exo.className} mt-8 text-left text-[20px] leading-[1.45] tracking-[0.5px] text-[#181c23] sm:text-center lg:text-[32px]`}
               >
                 That is where <strong>STRUCTURE Matters</strong>.
               </p>
@@ -299,7 +299,7 @@ export default function LearningPathSection() {
               </div>
 
               <p
-                className={`${exoMedium.className} text-center text-[20px] font-medium leading-[1.4] tracking-[0.4px] text-[#5a4136] lg:text-[32px]`}
+                className={`${exoMedium.className} text-left text-[20px] font-medium leading-[1.4] tracking-[0.4px] text-[#5a4136] sm:text-center lg:text-[32px]`}
               >
                 Which brings us to this:
               </p>

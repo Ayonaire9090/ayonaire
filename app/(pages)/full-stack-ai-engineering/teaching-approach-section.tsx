@@ -1,4 +1,4 @@
-import Image from "next/image";
+﻿import Image from "next/image";
 import { exo, exoMedium, melodrama } from "@/app/fonts";
 
 const steps = [
@@ -104,8 +104,8 @@ export default function TeachingApproachSection() {
           <p>Our learning cycle is:</p>
 
           <p className="font-bold uppercase">
-            Explain → Demonstrate → Code Together → Practise → Build → Present →
-            Feedback → Improve
+            Explain â†’ Demonstrate â†’ Code Together â†’ Practise â†’ Build â†’ Present â†’
+            Feedback â†’ Improve
           </p>
         </div>
 
@@ -134,7 +134,7 @@ export default function TeachingApproachSection() {
 
         {/* CTA */}
         <a
-          href="https://wa.me/2349067835701"
+          href="https://wa.link/f1iadg"
           target="_blank"
           rel="noopener noreferrer"
           className={`

@@ -1,4 +1,4 @@
-import Image from "next/image";
+﻿import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { melodrama, salt } from "@/app/fonts";
 
@@ -245,7 +245,7 @@ export default function Hero() {
       >
         <div className="flex justify-center">
           <a
-            href="https://wa.me/2349067835701"
+            href="https://wa.link/f1iadg"
             target="_blank"
             rel="noopener noreferrer"
             className="

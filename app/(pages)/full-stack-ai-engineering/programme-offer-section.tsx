@@ -1,4 +1,4 @@
-import Image from "next/image";
+﻿import Image from "next/image";
 import { exo, exoMedium, melodrama } from "@/app/fonts";
 
 export default function ProgrammeOfferSection() {
@@ -95,7 +95,7 @@ export default function ProgrammeOfferSection() {
           >
             <p>
               <span className="font-medium">Promo Price:</span>{" "}
-              <strong className="text-[#f25e25]">₦350,000</strong>
+              <strong className="text-[#f25e25]">â‚¦350,000</strong>
             </p>
 
             <p className="font-medium">
@@ -103,11 +103,11 @@ export default function ProgrammeOfferSection() {
             </p>
 
             <p className="font-bold text-gray-500 line-through">
-              ₦500,000
+              â‚¦500,000
             </p>
           </div>
 
-          <Cta href="https://wa.me/2349067835701">
+          <Cta href="https://wa.link/f1iadg">
             Start my AI career transition now
           </Cta>
         </div>
@@ -134,7 +134,7 @@ export default function ProgrammeOfferSection() {
           <p>And perhaps your first reaction is:</p>
 
           <p>
-            &quot;<strong>₦500,000</strong> is still a lot of money for
+            &quot;<strong>â‚¦500,000</strong> is still a lot of money for
             training.&quot;
           </p>
 
@@ -260,7 +260,7 @@ export default function ProgrammeOfferSection() {
             to me over the course of my career?&quot;
           </p>
 
-          <Cta href="https://wa.me/2349067835701">
+          <Cta href="https://wa.link/f1iadg">
             I want to join the September cohort
           </Cta>
         </div>

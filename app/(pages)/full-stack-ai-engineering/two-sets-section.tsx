@@ -1,4 +1,4 @@
-import Image from "next/image";
+﻿import Image from "next/image";
 import { exo, salt , melodrama, exoMedium } from "@/app/fonts";
 
 const skills = [
@@ -53,7 +53,7 @@ export default function TwoSetsSection() {
           <div className="grid w-full max-w-[1040px] grid-cols-1 items-start gap-6 text-left md:grid-cols-2 lg:gap-8">
             <BlackWarningCard
               number="01"
-              text="Those who see these many AI related job opportunities and only wish a zillion times that they could land one. They never get past wishing (if only wishes were horses 😜)"
+              text="Those who see these many AI related job opportunities and only wish a zillion times that they could land one. They never get past wishing (if only wishes were horses ðŸ˜œ)"
             />
             <BlackWarningCard
               number="02"
@@ -116,7 +116,7 @@ export default function TwoSetsSection() {
           </div>
 
           <a
-            href="https://wa.me/2349067835701"
+            href="https://wa.link/f1iadg"
             target="_blank"
             rel="noopener noreferrer"
             className={`${exoMedium.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-10 py-5 text-[15px] text-white sm:text-[16px] shadow-[0px_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01]`}
@@ -150,7 +150,7 @@ export default function TwoSetsSection() {
           </div>
 
           <p
-            className={`${exoMedium.className} max-w-[1163px] text-center text-[18px] font-normal leading-[1.55] tracking-[0.2px] text-[#181c23] lg:text-[22px] lg:leading-[1.6]`}
+            className={`${exoMedium.className} max-w-[1163px] text-left text-[18px] font-normal leading-[1.55] tracking-[0.2px] text-[#181c23] sm:text-center lg:text-[22px] lg:leading-[1.6]`}
           >
             Because that births another question that you must answer before you
             start your journey{" "}
@@ -379,3 +379,4 @@ function QuestionCard({
     </article>
   );
 }
+
