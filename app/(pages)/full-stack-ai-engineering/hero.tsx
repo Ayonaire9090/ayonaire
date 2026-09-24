@@ -254,6 +254,7 @@ export default function Hero() {
               min-h-[44px]
               items-center
               justify-center
+              text-center
               gap-2
               rounded-[5px]
               bg-[#ff6b00]
@@ -289,7 +290,7 @@ export default function Hero() {
               lg:text-[13px]
             "
           >
-            <span>I Want Become An AI/ML Engineer</span>
+            <span className="text-center">I Want Become An AI/ML Engineer</span>
 
             <ArrowRight
               aria-hidden="true"

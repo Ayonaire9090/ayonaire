@@ -96,15 +96,15 @@ export default function StudentReviewSection() {
             href="https://wa.link/f1iadg"
             target="_blank"
             rel="noopener noreferrer"
-            className={`${exoMedium.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-7 py-3.5 text-[13px] font-bold uppercase leading-[1.45] text-white shadow-[0_12px_24px_rgba(255,107,0,0.35)] transition-transform hover:scale-[1.01] sm:px-9 sm:py-4 lg:text-[15px]`}
+            className={`${exoMedium.className} inline-flex items-center justify-center text-center gap-2 rounded-[8px] bg-[#ff6b00] px-7 py-3.5 text-[13px] font-bold uppercase leading-[1.45] text-white shadow-[0_12px_24px_rgba(255,107,0,0.35)] transition-transform hover:scale-[1.01] sm:px-9 sm:py-4 lg:text-[15px]`}
           >
-            <span>I Want To Build My AI Career</span>
+            <span className="text-center">I Want To Build My AI Career</span>
             <Image
               src="/assets/images/ai-fullstack-engineering/instructor-proof-button-arrow.svg"
               alt=""
               width={16}
               height={16}
-              className="size-4"
+              className="size-4 shrink-0"
             />
           </a>
         </div>

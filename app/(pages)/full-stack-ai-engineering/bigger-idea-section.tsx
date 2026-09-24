@@ -16,11 +16,10 @@ const transitionSteps = [
 export default function BiggerIdeaSection() {
   return (
     <section className="relative overflow-hidden bg-[#171717] px-5 py-16 text-white sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28">
-      {/* Decorative circles */}
-      <div className="pointer-events-none absolute -left-28 top-1/3 size-64 rounded-full border-[3px] border-[#ff6b00] opacity-70" />
+            {/* Decorative circles */}
+      <div className="pointer-events-none absolute -left-40 sm:-left-28 top-1/3 size-44 sm:size-64 rounded-full border-2 sm:border-[3px] border-[#ff6b00] opacity-40 sm:opacity-70" />
 
-      <div className="pointer-events-none absolute -right-28 bottom-1/4 size-64 rounded-full border-[3px] border-[#ff6b00] opacity-70" />
-
+      <div className="pointer-events-none absolute -right-36 sm:-right-28 bottom-1/4 size-44 sm:size-64 rounded-full border-2 sm:border-[3px] border-[#ff6b00] opacity-40 sm:opacity-70" />
       <div className="relative z-10 mx-auto flex w-full max-w-[1240px] flex-col items-center gap-10 text-center lg:gap-12">
         
         {/* HEADING */}

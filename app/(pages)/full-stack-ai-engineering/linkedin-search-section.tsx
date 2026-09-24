@@ -150,15 +150,15 @@ export default function LinkedInSearchSection() {
             href="https://wa.link/f1iadg"
             target="_blank"
             rel="noopener noreferrer"
-            className={`${exo.className} mt-10 xs:mt-12 inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-6 py-3.5 text-[14px] uppercase text-white sm:px-10 sm:py-5 sm:text-[16px] shadow-[0px_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01]`}
+            className={`${exo.className} mt-10 xs:mt-12 inline-flex items-center justify-center text-center gap-2 rounded-[8px] bg-[#ff6b00] px-6 py-3.5 text-[14px] uppercase text-white sm:px-10 sm:py-5 sm:text-[16px] shadow-[0px_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01]`}
           >
-            let&apos;s get into it
+            <span className="text-center">let&apos;s get into it</span>
             <Image
               src="/assets/images/ai-fullstack-engineering/linkedin-cta-arrow.svg"
               alt=""
               width={16}
               height={16}
-              className="size-4"
+              className="size-4 shrink-0"
             />
           </a>
         </div>

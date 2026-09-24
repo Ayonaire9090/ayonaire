@@ -152,9 +152,9 @@ export default function CareerPathwaysSection() {
             />
           </div>
 
-            <a href="https://wa.link/f1iadg" target="_blank" rel="noopener noreferrer" className={`${exo.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-5 py-3.5 text-[13px] font-bold uppercase tracking-[0.04em] text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:px-10 sm:py-5 sm:text-[16px] lg:text-[18px]`}>
-            Yes! I can see my path in AI
-            <Image src="/assets/images/ai-fullstack-engineering/curriculum-button-arrow.svg" alt="" width={16} height={16} className="size-4" />
+          <a href="https://wa.link/f1iadg" target="_blank" rel="noopener noreferrer" className={`${exo.className} inline-flex items-center justify-center text-center gap-2 rounded-[8px] bg-[#ff6b00] px-5 py-3.5 text-[13px] font-bold uppercase tracking-[0.04em] text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:px-10 sm:py-5 sm:text-[16px] lg:text-[18px]`}>
+            <span className="text-center">Yes! I can see my path in AI</span>
+            <Image src="/assets/images/ai-fullstack-engineering/curriculum-button-arrow.svg" alt="" width={16} height={16} className="size-4 shrink-0" />
           </a>
         </div>
 
@@ -342,8 +342,8 @@ export default function CareerPathwaysSection() {
               ))}
             </div>
 
-            <a href="https://wa.link/f1iadg" target="_blank" rel="noopener noreferrer" className={`${exo.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-4 py-3.5 text-[12px] xs:text-[14px] font-bold uppercase tracking-[0.04em] text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:px-10 sm:py-5 sm:text-[16px] lg:text-[18px]`}>
-              Wow! I can already see the possibilities
+            <a href="https://wa.link/f1iadg" target="_blank" rel="noopener noreferrer" className={`${exo.className} inline-flex items-center justify-center text-center gap-2 rounded-[8px] bg-[#ff6b00] px-4 py-3.5 text-[12px] xs:text-[14px] font-bold uppercase tracking-[0.04em] text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:px-10 sm:py-5 sm:text-[16px] lg:text-[18px]`}>
+              <span className="text-center">Wow! I can already see the possibilities</span>
               <Image src="/assets/images/ai-fullstack-engineering/curriculum-button-arrow.svg" alt="" width={16} height={16} className="size-4 shrink-0" />
             </a>
           </div>

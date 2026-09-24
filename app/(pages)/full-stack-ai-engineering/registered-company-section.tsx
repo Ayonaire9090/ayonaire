@@ -104,14 +104,14 @@ export default function RegisteredCompanySection() {
           rel="noopener noreferrer"
           className={`${exoMedium.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-5 py-3.5 text-center text-[13px] font-bold uppercase leading-[1.45] text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:px-10 sm:py-5 lg:text-[16px]`}
         >
-          Start my AI career transition
+          <span className="text-center">Start my AI career transition</span>
 
           <Image
             src="/assets/images/ai-fullstack-engineering/registered-company-button-arrow.svg"
             alt=""
             width={16}
             height={16}
-            className="size-4"
+            className="size-4 shrink-0"
           />
         </a>
       </div>

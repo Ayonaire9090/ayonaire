@@ -40,9 +40,9 @@ export default function WeeklyScheduleSection() {
             Beyond the live classes, expect assignments, practice, project work, monthly end-to-end builds, presentations, mentorship and capstone work.
           </p>
 
-          <a href="https://wa.link/f1iadg" target="_blank" rel="noopener noreferrer" className={`${exoMedium.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-5 py-3.5 text-[13px] font-bold uppercase tracking-[0.04em] text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:px-10 sm:py-5 lg:text-[16px]`}>
-            I want to reserve my place
-            <Image src="/assets/images/ai-fullstack-engineering/curriculum-button-arrow.svg" alt="" width={16} height={16} className="size-4" />
+          <a href="https://wa.link/f1iadg" target="_blank" rel="noopener noreferrer" className={`${exoMedium.className} inline-flex items-center justify-center text-center gap-2 rounded-[8px] bg-[#ff6b00] px-5 py-3.5 text-[13px] font-bold uppercase tracking-[0.04em] text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:px-10 sm:py-5 lg:text-[16px]`}>
+            <span className="text-center">I want to reserve my place</span>
+            <Image src="/assets/images/ai-fullstack-engineering/curriculum-button-arrow.svg" alt="" width={16} height={16} className="size-4 shrink-0" />
           </a>
         </div>
       </div>

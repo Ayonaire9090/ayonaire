@@ -286,10 +286,11 @@ function Cta({
         inline-flex
         items-center
         justify-center
+        text-center
         gap-2
         rounded-[8px]
         bg-[#ff6b00]
-        px-8
+        px-6
         py-4
         text-[13px]
         font-bold
@@ -307,14 +308,14 @@ function Cta({
         lg:text-[16px]
       `}
     >
-      {children}
+      <span className="text-center">{children}</span>
 
       <Image
         src="/assets/images/ai-fullstack-engineering/curriculum-button-arrow.svg"
         alt=""
         width={16}
         height={16}
-        className="size-4"
+        className="size-4 shrink-0"
       />
     </a>
   );

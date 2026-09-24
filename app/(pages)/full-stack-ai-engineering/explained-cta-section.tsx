@@ -77,9 +77,9 @@ export default function ExplainedCtaSection() {
           href="https://wa.link/f1iadg"
           target="_blank"
           rel="noopener noreferrer"
-          className={`${exoMedium.className} mt-8 xs:mt-10 inline-flex items-center justify-center gap-2.5 rounded-[8px] bg-[#ff6b00] px-5 py-3.5 text-[13px] font-bold uppercase tracking-[0.3px] text-white sm:mt-12 sm:px-10 sm:py-5 sm:text-[16px] shadow-[0px_12px_20px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01]`}
+          className={`${exoMedium.className} mt-8 xs:mt-10 inline-flex items-center justify-center text-center gap-2.5 rounded-[8px] bg-[#ff6b00] px-5 py-3.5 text-[13px] font-bold uppercase tracking-[0.3px] text-white sm:mt-12 sm:px-10 sm:py-5 sm:text-[16px] shadow-[0px_12px_20px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01]`}
         >
-          I Want To Build Systems Like These
+          <span className="text-center">I Want To Build Systems Like These</span>
           <Image
             src="/assets/images/ai-fullstack-engineering/explained-cta-button-arrow.svg"
             alt=""
