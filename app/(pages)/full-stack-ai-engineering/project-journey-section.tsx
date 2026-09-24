@@ -1,8 +1,29 @@
-﻿import Image from "next/image";
+import Image from "next/image";
 import { adineue, exo, exoMedium, melodrama, space } from "@/app/fonts";
 
 const portfolioItems = [
-  "Fraud Detection Systems", "Credit Risk Models", "Customer Churn Prediction", "Recommendation Engines", "Forecasting Systems", "Sentiment Analysis", "Document Intelligence", "Text Summarisation", "Question Answering", "Object Detection", "Image Classification", "Computer Vision Defect Detection", "Enterprise Knowledge Assistants", "Private Document Q&A", "Semantic Search", "RAG Systems", "Research Agents", "Tool-Using Agents", "Agentic RAG", "Multi-Agent Workflows", "Production APIs", "Cloud-Deployed AI Applications",
+  { code: "01", title: "Fraud Detection Systems" },
+  { code: "02", title: "Credit Risk Models" },
+  { code: "03", title: "Customer Churn Prediction" },
+  { code: "06", title: "Recommendation Engines" },
+  { code: "07", title: "Forecasting Systems" },
+  { code: "08", title: "Sentiment Analysis" },
+  { code: "10", title: "Document Intelligence" },
+  { code: "11", title: "Text Summarisation" },
+  { code: "12", title: "Question Answering" },
+  { code: "13", title: "Object Detection" },
+  { code: "14", title: "Image Classification" },
+  { code: "15", title: "Computer Vision Defect Detection" },
+  { code: "09", title: "Enterprise Knowledge Assistants" },
+  { code: "10", title: "Private Document Q&A" },
+  { code: "11", title: "Semantic Search" },
+  { code: "12", title: "RAG Systems" },
+  { code: "13", title: "Research Agents" },
+  { code: "14", title: "Tool-Using Agents" },
+  { code: "15", title: "Agentic RAG" },
+  { code: "16", title: "Multi-Agent Workflows" },
+  { code: "17", title: "Production APIs" },
+  { code: "18", title: "Cloud-Deployed AI Applications" },
 ];
 
 export default function ProjectJourneySection() {
@@ -31,15 +52,35 @@ export default function ProjectJourneySection() {
         </div>
 
         <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(420px,683px)] lg:gap-20">
-          <ol className="grid gap-4">
-            {portfolioItems.map((item, index) => (
-              <li key={item} className={`${adineue.className} grid grid-cols-[56px_1fr] items-center gap-5 text-[17px] font-medium leading-[1.35] text-[#263238] sm:text-[18px] lg:text-[22px]`}>
-                <span className="flex h-10 w-14 items-center justify-center rounded-[3px] bg-[#ff6b00] text-[15px] font-bold text-black">{String((index % 15) + 1).padStart(2, "0")}</span>
-                <span>{item}</span>
-              </li>
-            ))}
-          </ol>
-          <Image src="/assets/images/ai-fullstack-engineering/career-roles-board.png" alt="AI career transition roadmap board" width={683} height={854} className="mx-auto h-auto w-full max-w-[683px] object-contain" sizes="(min-width: 1024px) 683px, 100vw" />
+          <div>
+            <ol className="flex flex-col gap-3.5 sm:gap-4">
+              {portfolioItems.map((item, index) => (
+                <li
+                  key={`${item.code}-${item.title}-${index}`}
+                  className={`${adineue.className} flex items-center gap-3.5 text-[17px] font-medium leading-[1.35] text-[#263238] sm:gap-4.5 sm:text-[18px] lg:text-[21px]`}
+                >
+                  <span
+                    className="flex h-[26px] w-[46px] shrink-0 items-center justify-center pr-[7px] text-[14px] font-bold text-white shadow-xs select-none"
+                    style={{
+                      backgroundColor: "#ff5500",
+                      clipPath: "polygon(0 0, calc(100% - 9px) 0, 100% 50%, calc(100% - 9px) 100%, 0 100%)",
+                    }}
+                  >
+                    {item.code}
+                  </span>
+                  <span>{item.title}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+          <Image
+            src="/assets/images/ai-fullstack-engineering/career-roles-board.png"
+            alt="AI career transition roadmap board"
+            width={683}
+            height={854}
+            className="mx-auto h-auto w-full max-w-[683px] object-contain"
+            sizes="(min-width: 1024px) 683px, 100vw"
+          />
         </div>
 
         <div className={`${exoMedium.className} space-y-7 text-[18px] font-medium leading-[1.65] tracking-[0.3px] text-[#263238] lg:text-[28px] lg:leading-[1.5]`}>

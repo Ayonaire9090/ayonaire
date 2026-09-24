@@ -1,4 +1,4 @@
-﻿import Image from "next/image";
+import Image from "next/image";
 import { exo, exoMedium, melodrama, space } from "@/app/fonts";
 
 const roles = [
@@ -36,7 +36,7 @@ export default function LinkedInSearchSection() {
   {/* LIST CONTENT - Appears at bottom on mobile, left column on desktop */}
   <ol className={`${exoMedium.className} flex flex-col gap-7 text-[17px] w-full`}>
     {roles.map((role) => (
-      <li key={role.number} className="flex items-center gap-7">
+      <li key={role.number} className="flex items-center gap-6">
         <NumberPill value={role.number} />
         <span className="text-[17px] font-normal tracking-[0.2px] sm:text-[18px] lg:text-[20px]">
           {role.label}
@@ -177,7 +177,7 @@ function NumberPill({ value }: { value: string }) {
         sizes="56px"
         className="object-fill"
       />
-      <span className="relative text-[16px] font-bold text-white">
+      <span className="relative z-10 pr-2 text-[15px] font-bold text-black sm:text-[16px]">
         {value}
       </span>
     </span>

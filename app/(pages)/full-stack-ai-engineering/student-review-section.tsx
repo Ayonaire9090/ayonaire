@@ -85,51 +85,54 @@ export default function StudentReviewSection() {
   const currentReview = reviews[currentIndex];
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-[#FFF6EE] via-[#FFF0E4] to-[#FFE8D6] px-5 pt-12 pb-16 sm:px-8 sm:pt-16 sm:pb-20 lg:px-12 lg:pt-20 lg:pb-24">
-      {/* Bottom angled background shape matching design */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-[70px] sm:h-[110px] lg:h-[150px] overflow-hidden">
-        <svg
-          viewBox="0 0 1440 150"
-          preserveAspectRatio="none"
-          className="h-full w-full"
-          fill="none"
-        >
-          <polygon points="0,150 1440,150 1440,0 0,95" fill="#FFD8BD" />
-        </svg>
-      </div>
-
+    <section
+      style={{ background: "linear-gradient(180deg, #FFFFFF 0%, #FFF2E8 30%, #FFE5D4 60%, #FFFFFF 100%)" }}
+      className="relative overflow-hidden px-5 pt-12 pb-16 sm:px-8 sm:pt-16 sm:pb-20 lg:px-12 lg:pt-20 lg:pb-24"
+    >
       <div className="relative z-10 mx-auto flex w-full max-w-[980px] flex-col items-center">
+        {/* Top Call to Action Button matching Image 1 */}
+        <div className="mb-10 flex w-full justify-center lg:mb-12">
+          <a
+            href="https://wa.link/f1iadg"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`${exoMedium.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-7 py-3.5 text-[13px] font-bold uppercase leading-[1.45] text-white shadow-[0_12px_24px_rgba(255,107,0,0.35)] transition-transform hover:scale-[1.01] sm:px-9 sm:py-4 lg:text-[15px]`}
+          >
+            <span>I Want To Build My AI Career</span>
+            <Image
+              src="/assets/images/ai-fullstack-engineering/instructor-proof-button-arrow.svg"
+              alt=""
+              width={16}
+              height={16}
+              className="size-4"
+            />
+          </a>
+        </div>
+
         {/* Header */}
         <div className="flex w-full flex-col items-center text-center">
-          <div className="relative inline-block max-w-[560px]">
-            <h2
-              className={`${melodrama.className} relative z-10 text-[28px] font-bold leading-[1.1] text-[#181c23] sm:text-[34px] lg:text-[40px]`}
-            >
-              Don&apos;t just take{" "}
-              <span className="relative inline-block rounded-[4px] bg-[#FFE2D1] px-2 py-0.5 text-[#f25e25]">
-                our word for it.
-              </span>
-            </h2>
-          </div>
+          <h2
+            className={`${melodrama.className} text-[30px] font-bold leading-[1.12] text-[#181c23] sm:text-[38px] lg:text-[44px]`}
+          >
+            Don&apos;t just take{" "}
+            <span className="text-[#f25e25]">
+              our word for it.
+            </span>
+          </h2>
 
           <p
-            className={`${exoMedium.className} mt-4 max-w-[760px] text-[13px] font-semibold leading-[1.55] text-[#2d3036] sm:text-[15px] lg:text-[16px]`}
+            className={`${exoMedium.className} mt-4 max-w-[620px] text-[14px] font-medium leading-[1.55] text-[#181c23] sm:text-[16px] lg:text-[17px]`}
           >
             Don&apos;t just take our word for what the Ayonaire experience is like. Hear directly from the people who have gone through it.
           </p>
 
-          <ReviewDivider className="mt-5" />
+          <ReviewDivider className="mt-6 sm:mt-8" />
         </div>
 
         {/* Review Content */}
         <article className="relative mt-8 grid w-full items-start gap-4 sm:gap-6 lg:grid-cols-[210px_minmax(0,1fr)] lg:gap-10">
-          {/* Avatar Container with Background Quotes */}
+          {/* Avatar Container */}
           <div className="relative flex flex-col items-center justify-center lg:pt-14">
-            {/* Background Quote Marks behind/above avatar */}
-            <div className="pointer-events-none absolute right-4 top-0 select-none text-[110px] font-black leading-none text-white/45 sm:right-10 sm:text-[140px] lg:hidden">
-              &rdquo;&rdquo;
-            </div>
-
             <Image
               src="/assets/images/ai-fullstack-engineering/student-review-avatar.png"
               alt={`Illustrated portrait representing ${currentReview.name}`}
@@ -183,16 +186,16 @@ export default function StudentReviewSection() {
 
           {/* Quote & Text */}
           <div className="relative min-w-0 pr-0 sm:pr-2 lg:pr-4">
-            {/* Desktop Background Quote Marks */}
-            <div className="pointer-events-none absolute right-2 -top-10 hidden select-none text-[170px] font-black leading-none text-white/45 lg:block">
+            {/* Background Quote Marks matching Image 1 & 2 */}
+            <div className="pointer-events-none absolute -bottom-6 right-0 select-none text-[150px] font-black leading-none text-white/50 sm:-bottom-8 sm:text-[200px] lg:-bottom-10 lg:text-[240px]">
               &rdquo;&rdquo;
             </div>
 
             <div
               key={currentIndex}
-              className={`${exoMedium.className} relative z-10 max-h-[290px] overflow-y-auto pr-3 text-left text-[14px] font-medium leading-[1.7] text-[#2d3036] [scrollbar-color:#ff8a4d_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-[#ff8a4d] sm:text-[15px] lg:max-h-[304px]`}
+              className={`${exoMedium.className} relative z-10 max-h-[320px] overflow-y-auto pr-3 text-left text-[14px] font-medium leading-[1.7] text-[#181c23] [scrollbar-color:#ff8a4d_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-[#ff8a4d] sm:text-[15px] lg:max-h-[340px]`}
             >
-              <p className="mb-5 text-left text-[16px] font-black leading-[1.5] text-[#252830] sm:mb-7 sm:text-[17px]">
+              <p className="mb-5 text-left text-[16px] font-bold leading-[1.5] text-[#181c23] sm:mb-7 sm:text-[17px]">
                 &quot;{currentReview.title}&quot;
               </p>
 
@@ -202,11 +205,11 @@ export default function StudentReviewSection() {
                 </p>
               ))}
 
-              <div className="mt-7 text-left sm:mt-8">
-                <p className={`${exo.className} text-[22px] font-black text-[#181c23] sm:text-[26px]`}>
+              <div className="mt-8 text-left sm:mt-10">
+                <p className={`${exo.className} text-[26px] font-bold text-[#181c23] sm:text-[30px] lg:text-[34px]`}>
                   -{currentReview.name}
                 </p>
-                <p className="mt-1 text-[13px] font-normal text-[#2d3036] sm:text-[14px]">
+                <p className={`${exoMedium.className} mt-1.5 text-[15px] font-medium text-[#181c23] sm:text-[16px] lg:text-[18px]`}>
                   {currentReview.role}
                 </p>
               </div>
@@ -214,13 +217,11 @@ export default function StudentReviewSection() {
           </div>
         </article>
 
-        {/* Bottom divider and controls */}
-        {/* Mobile: Centered divider */}
-        <div className="mt-8 flex w-full justify-center lg:hidden">
+        {/* Bottom divider and desktop controls */}
+        <div className="mt-10 flex w-full justify-center sm:mt-12 lg:hidden">
           <ReviewDivider />
         </div>
 
-        {/* Desktop: Compact divider with Right-aligned buttons */}
         <div className="mt-10 hidden w-full items-center justify-between gap-5 lg:flex">
           <ReviewDivider compact />
 
@@ -274,7 +275,7 @@ function ReviewDivider({ compact = false, className = "" }: { compact?: boolean;
     <div className={`flex w-full items-center justify-center ${compact ? "max-w-[320px] sm:max-w-[440px]" : "max-w-[430px]"} ${className}`}>
       <div className="h-px min-w-0 flex-1 bg-[#ff8a4d]" />
       <div
-        className={`${exo.className} shrink-0 border border-[#ff8a4d] bg-[#fff0e4] px-3 py-1.5 text-center text-[11px] font-black uppercase text-[#252830] sm:px-4 sm:py-2 sm:text-xs`}
+        className={`${exo.className} shrink-0 border border-[#ff8a4d] bg-[#fff0e4] px-4 py-1.5 text-center text-[11px] font-bold uppercase tracking-wider text-[#181c23] sm:text-xs`}
       >
         STUDENT REVIEW
       </div>

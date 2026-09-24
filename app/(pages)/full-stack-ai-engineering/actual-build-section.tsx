@@ -34,6 +34,11 @@ const projects = [
     title: "Generative AI & LLM Engineering",
     body: "Understand how modern Generative AI systems work and learn to build applications around Large Language Models rather than only using tools such as ChatGPT.",
   },
+  {
+    number: "Project (05)",
+    title: "Agentic AI Projects",
+    body: "Design a Multi-Agent System for Research Analysis and Generation Automation, culminating your journey into autonomous systems.",
+  },
 ];
 
 export default function ActualBuildSection() {

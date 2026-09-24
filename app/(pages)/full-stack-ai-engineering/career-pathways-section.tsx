@@ -123,11 +123,20 @@ export default function CareerPathwaysSection() {
           </div>
 
           <div className="grid w-full items-center gap-10 lg:grid-cols-[minmax(0,420px)_minmax(420px,683px)] lg:justify-between lg:gap-20">
-            <ol className="grid gap-4">
+            <ol className="flex flex-col gap-3.5 sm:gap-4 lg:gap-4.5">
               {roles.map((role, index) => (
-                <li key={role} className={`${adineue.className} grid grid-cols-[56px_1fr] items-center gap-5 text-[17px] font-medium leading-[1.35] text-[#263238] sm:text-[18px] lg:text-[22px]`}>
-                  <span className="flex h-10 w-14 items-center justify-center rounded-[3px] bg-[#ff6b00] text-[15px] font-bold text-black">
-                    {String(index + 1).padStart(2, "0")}
+                <li key={role} className={`${adineue.className} flex items-center gap-4 text-[17px] font-medium leading-[1.35] text-[#263238] sm:text-[18px] lg:text-[22px]`}>
+                  <span className="relative flex h-9 w-[52px] shrink-0 items-center justify-center sm:h-10 sm:w-[56px]">
+                    <Image
+                      src="/assets/images/ai-fullstack-engineering/linkedin-pill.svg"
+                      alt=""
+                      fill
+                      sizes="56px"
+                      className="object-fill"
+                    />
+                    <span className="relative z-10 pr-2 text-[14px] font-bold text-black sm:text-[15px]">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
                   </span>
                   <span>{role}</span>
                 </li>

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React from "react";
 import Image from "next/image";
@@ -95,25 +95,6 @@ export default function ExcellenceStandardSection() {
           className={`${exoMedium.className} mt-8 flex w-full max-w-[1153px] text-left text-[18px] font-medium leading-[1.6] tracking-[0.3px] text-[#181c23] sm:text-[22px] lg:mt-10 lg:text-[28px] lg:leading-[42px] lg:tracking-[0.6px]`}
         >
           <p>Our ambition is global.</p>
-        </div>
-
-        {/* Call to Action Button */}
-        <div className="mt-12 flex w-full justify-center lg:mt-16">
-          <a
-            href="https://wa.link/f1iadg"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`${exoMedium.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-8 py-4 text-[13px] font-bold uppercase leading-[1.45] text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:px-10 sm:py-5 lg:text-[16px]`}
-          >
-            <span>I Want To Build My AI Career</span>
-            <Image
-              src="/assets/images/ai-fullstack-engineering/instructor-proof-button-arrow.svg"
-              alt=""
-              width={16}
-              height={16}
-              className="size-4"
-            />
-          </a>
         </div>
 
       </div>
