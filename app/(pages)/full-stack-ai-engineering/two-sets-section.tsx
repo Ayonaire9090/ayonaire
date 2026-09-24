@@ -53,7 +53,7 @@ export default function TwoSetsSection() {
           <div className="grid w-full max-w-[1040px] grid-cols-1 items-start gap-6 text-left md:grid-cols-2 lg:gap-8">
             <BlackWarningCard
               number="01"
-              text="Those who see these many AI related job opportunities and only wish a zillion times that they could land one. They never get past wishing (if only wishes were horses ðŸ˜œ)"
+              text="Those who see these many AI related job opportunities and only wish a zillion times that they could land one. They never get past wishing (if only wishes were horses 😜)"
             />
             <BlackWarningCard
               number="02"
@@ -190,7 +190,7 @@ export default function TwoSetsSection() {
       >
         <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-14 lg:gap-20">
           <h2
-            className={`${melodrama.className} relative text-[24px] xs:text-[28px] font-bold leading-tight tracking-[-0.5px] text-[#181c23] sm:text-[36px] lg:text-[44px] lg:leading-[1.16] lg:tracking-[-0.6px]`}
+            className={`${melodrama.className} relative text-[20px] xs:text-[26px] font-bold leading-snug xs:leading-tight tracking-[-0.5px] text-[#181c23] sm:text-[36px] lg:text-[44px] lg:leading-[1.16] lg:tracking-[-0.6px]`}
           >
             AI Engineering{" "}
             <span className="relative inline-block text-[#f25e25]">
@@ -200,7 +200,7 @@ export default function TwoSetsSection() {
                 alt=""
                 width={357}
                 height={62}
-                className="pointer-events-none absolute left-1/2 top-0.5 sm:top-0 h-7 sm:h-10 md:h-12 lg:h-[62px] w-[357px] max-w-[112%] -translate-x-1/2 select-none object-fill"
+                className="pointer-events-none absolute left-1/2 top-0.5 sm:top-0 h-6 xs:h-7 sm:h-10 md:h-12 lg:h-[62px] w-full max-w-[112%] -translate-x-1/2 select-none object-fill"
               />
             </span>{" "}
             such as:
@@ -283,18 +283,20 @@ function BlackWarningCard({
         <h3
           className={`
             ${salt.className}
-            mb-6
+            mb-4
+            min-[370px]:mb-6
             sm:mb-7
             lg:mb-8
-            text-[21px]
-            font-normal
-            uppercase
-            leading-none
-            tracking-[0.2px]
-            text-white
-
+            text-[15px]
+            min-[370px]:text-[18px]
             sm:text-[20px]
             lg:text-[25px]
+            font-normal
+            uppercase
+            leading-tight
+            tracking-[0.1px]
+            min-[370px]:tracking-[0.2px]
+            text-white
           `}
         >
           {number} Sets of People

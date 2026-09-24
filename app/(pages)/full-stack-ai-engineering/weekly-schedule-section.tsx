@@ -24,8 +24,8 @@ export default function WeeklyScheduleSection() {
 
           <div className="grid w-full gap-8 xs:gap-10 lg:gap-14">
             {schedule.map((item) => (
-              <div key={item.number} className="grid grid-cols-[56px_1fr] xs:grid-cols-[72px_1fr] items-center gap-4 xs:gap-5 sm:grid-cols-[100px_1fr]">
-                <span className={`${salt.className} text-[32px] xs:text-[40px] font-bold italic leading-none tracking-[0.05em] text-[#f25e25] lg:text-[56px]`}>
+              <div key={item.number} className="grid grid-cols-[64px_1fr] xs:grid-cols-[72px_1fr] items-center gap-4 xs:gap-5 sm:grid-cols-[100px_1fr]">
+                <span className={`${salt.className} text-[28px] xs:text-[40px] font-bold italic leading-none tracking-[0.05em] text-[#f25e25] lg:text-[56px]`}>
                   {item.number}
                 </span>
                 <div className={`${exoMedium.className} space-y-1.5 xs:space-y-3 text-[#181c23]`}>

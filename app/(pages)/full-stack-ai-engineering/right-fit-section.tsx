@@ -57,7 +57,7 @@ function ChecklistGroup({ eyebrow, items }: { eyebrow: string; items: string[] }
         {items.map((item) => (
           <article
             key={item}
-            className="relative flex min-h-[140px] xs:min-h-[130px] sm:min-h-0 sm:aspect-[702/336] w-full max-w-[655px] items-center"
+            className="relative flex min-h-[140px] xs:min-h-[130px] sm:min-h-0 sm:aspect-[702/336] w-full max-w-[655px] items-center overflow-hidden"
           >
             <Image
               src="/assets/images/ai-fullstack-engineering/right-fit-card.svg"
@@ -67,7 +67,7 @@ function ChecklistGroup({ eyebrow, items }: { eyebrow: string; items: string[] }
               className="pointer-events-none object-contain"
             />
             <div
-              className="relative z-10 flex w-full items-center gap-3.5 pl-5 pr-3 sm:gap-6 sm:pl-8 sm:pr-6 lg:gap-8 lg:pl-10 lg:pr-8"
+              className="relative z-10 mx-auto flex w-[96%] sm:w-full items-center gap-3.5 pl-5 pr-3 sm:gap-6 sm:pl-8 sm:pr-6 lg:gap-8 lg:pl-10 lg:pr-8"
               style={{ transform: "rotate(4.38deg)" }}
             >
               <Image

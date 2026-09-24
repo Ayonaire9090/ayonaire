@@ -272,7 +272,7 @@ export default function CareerPathwaysSection() {
                 </span>
 
                 {/* Card content */}
-                <div className="flex h-full items-start gap-5 sm:gap-6 lg:items-center lg:gap-7">
+                <div className="flex h-full items-start gap-3.5 xs:gap-5 sm:gap-6 lg:items-center lg:gap-7">
 
                   {/* Image */}
                   <Image
@@ -280,19 +280,19 @@ export default function CareerPathwaysSection() {
                     alt=""
                     width={115}
                     height={115}
-                    className="size-20 shrink-0 object-contain lg:size-[115px]"
+                    className="size-14 xs:size-16 sm:size-20 shrink-0 object-contain lg:size-[115px]"
                   />
 
                   {/* Content */}
                   <div className="min-w-0 flex-1">
                     <h3
-                      className={`${exo.className} text-[22px] font-bold uppercase tracking-[0.06em] text-black sm:text-[26px] lg:text-[32px]`}
+                      className={`${exo.className} text-[17px] xs:text-[20px] sm:text-[26px] font-bold uppercase tracking-[0.04em] xs:tracking-[0.06em] text-black lg:text-[32px]`}
                     >
                       {system.title}
                     </h3>
 
                     <p
-                      className={`${adineue.className} mt-3 max-w-[390px] text-[17px] font-medium leading-[1.55] tracking-[0.2px] text-black sm:text-[19px] lg:text-[24px]`}
+                      className={`${adineue.className} mt-2 xs:mt-3 max-w-[390px] text-[14px] xs:text-[16px] sm:text-[19px] font-medium leading-[1.5] xs:leading-[1.55] tracking-[0.2px] text-black lg:text-[24px]`}
                     >
                       {system.body}
                     </p>

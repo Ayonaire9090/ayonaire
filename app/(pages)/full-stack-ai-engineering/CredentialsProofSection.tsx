@@ -23,7 +23,7 @@ export default function CredentialProofSection() {
         
         {/* Header with Melodrama font and orange SVG highlight overlay on "Your Strongest Credential" */}
         <h2
-          className={`${melodrama.className} max-w-[1171px] text-[30px] font-bold leading-[1.15] tracking-[0.3px] text-[#181c23] sm:text-[40px] lg:text-[50px] lg:leading-[60px] lg:tracking-[0.6px]`}
+          className={`${melodrama.className} max-w-[1171px] text-[22px] xs:text-[26px] sm:text-[36px] font-bold leading-[1.15] tracking-[0.3px] text-[#181c23] lg:text-[50px] lg:leading-[60px] lg:tracking-[0.6px]`}
         >
           Now Listen, <span className="text-[#f25e25]">Your</span>{" "}
           <span className="relative inline-block text-[#f25e25]">
@@ -42,7 +42,7 @@ export default function CredentialProofSection() {
 
         {/* Intro Paragraph */}
         <div
-          className={`${exoMedium.className} mt-8 flex w-full max-w-[1153px] text-left text-[18px] font-medium leading-[1.6] tracking-[0.3px] text-[#181c23] sm:text-[22px] lg:mt-10 lg:text-[28px] lg:leading-[42px] lg:tracking-[0.6px]`}
+          className={`${exoMedium.className} mt-6 xs:mt-8 flex w-full max-w-[1153px] text-left text-[16px] xs:text-[18px] font-medium leading-[1.6] tracking-[0.3px] text-[#181c23] sm:text-[22px] lg:mt-10 lg:text-[28px] lg:leading-[42px] lg:tracking-[0.6px]`}
         >
           <p>
             A certificate says you completed a programme. But what really helps you stand out is being able to show:
@@ -50,12 +50,12 @@ export default function CredentialProofSection() {
         </div>
 
         {/* Credentials List */}
-        <ul className="mt-8 flex w-full max-w-[1153px] flex-col items-start gap-4 text-left lg:mt-10 lg:gap-5">
+        <ul className="mt-6 xs:mt-8 flex w-full max-w-[1153px] flex-col items-start gap-3.5 xs:gap-4 text-left lg:mt-10 lg:gap-5">
           {credentialsList.map((item, index) => (
-            <li key={index} className="flex items-center gap-4">
+            <li key={index} className="flex items-center gap-3.5 xs:gap-4">
               <span className="flex h-2.5 w-4 shrink-0 rounded-sm bg-[#f25e25]" />
               <span
-                className={`${exo.className} text-[18px] font-bold text-[#181c23] sm:text-[22px] lg:text-[26px]`}
+                className={`${exo.className} text-[16px] xs:text-[18px] font-bold text-[#181c23] sm:text-[22px] lg:text-[26px]`}
               >
                 {item.title}
               </span>
@@ -65,18 +65,18 @@ export default function CredentialProofSection() {
 
         {/* Conclusion Paragraph */}
         <div
-          className={`${exoMedium.className} mt-8 flex w-full max-w-[1153px] text-left text-[18px] font-medium leading-[1.6] tracking-[0.3px] text-[#181c23] sm:text-[22px] lg:mt-10 lg:text-[28px] lg:leading-[42px] lg:tracking-[0.6px]`}
+          className={`${exoMedium.className} mt-6 xs:mt-8 flex w-full max-w-[1153px] text-left text-[16px] xs:text-[18px] font-medium leading-[1.6] tracking-[0.3px] text-[#181c23] sm:text-[22px] lg:mt-10 lg:text-[28px] lg:leading-[42px] lg:tracking-[0.6px]`}
         >
           <p>but ultimately, we want you to be able to say:</p>
         </div>
 
         {/* Call to Action Button */}
-        <div className="mt-12 flex w-full justify-center lg:mt-16">
+        <div className="mt-10 xs:mt-12 flex w-full justify-center lg:mt-16">
           <a
             href="https://wa.link/f1iadg"
             target="_blank"
             rel="noopener noreferrer"
-            className={`${exoMedium.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-8 py-4 text-[13px] font-bold uppercase leading-[1.45] text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:px-10 sm:py-5 lg:text-[16px]`}
+            className={`${exoMedium.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-5 py-3.5 text-[13px] font-bold uppercase leading-[1.45] text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:px-10 sm:py-5 lg:text-[16px]`}
           >
             <span>I Want To Build My AI Career</span>
             <Image

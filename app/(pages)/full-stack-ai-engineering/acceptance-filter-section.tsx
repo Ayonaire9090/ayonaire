@@ -27,7 +27,7 @@ export default function AcceptanceFilterSection() {
             {rejectionReasons.map((reason) => (
               <article
                 key={reason}
-                className="relative flex min-h-[135px] sm:min-h-0 sm:aspect-[702/336] w-full max-w-[655px] items-center py-4 sm:py-0"
+                className="relative flex min-h-[135px] sm:min-h-0 sm:aspect-[702/336] w-full max-w-[655px] items-center py-4 sm:py-0 overflow-hidden"
               >
                 <Image
                   src="/assets/images/ai-fullstack-engineering/right-fit-card.svg"
@@ -37,7 +37,7 @@ export default function AcceptanceFilterSection() {
                   className="pointer-events-none object-contain"
                 />
                 <div
-                  className="relative z-10 flex w-full items-center gap-3.5 pl-6 pr-4 sm:gap-6 sm:pl-8 sm:pr-6 lg:gap-8 lg:pl-10 lg:pr-8"
+                  className="relative z-10 mx-auto flex w-[96%] sm:w-full items-center gap-3.5 pl-6 pr-4 sm:gap-6 sm:pl-8 sm:pr-6 lg:gap-8 lg:pl-10 lg:pr-8"
                   style={{ transform: "rotate(4.38deg)" }}
                 >
                   <Image
