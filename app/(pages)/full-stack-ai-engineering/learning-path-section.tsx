@@ -188,7 +188,7 @@ export default function LearningPathSection() {
                       {card.title}
                     </h4>
                     <p
-                      className={`${exoMedium.className} text-justify text-[16px] font-medium leading-[1.55] tracking-[0.2px] text-[#5a4136] lg:text-[20px] lg:leading-[1.6]`}
+                      className={`${exoMedium.className} text-left text-[16px] font-medium leading-[1.55] tracking-[0.2px] text-[#5a4136] lg:text-[20px] lg:leading-[1.6]`}
                     >
                       {card.body}
                     </p>
@@ -283,7 +283,7 @@ export default function LearningPathSection() {
               </ol>
 
               <div
-                className={`${exoMedium.className} space-y-6 text-justify text-[17px] font-medium leading-[1.65] tracking-[0.3px] text-[#5a4136] lg:text-[28px] lg:leading-[1.55] lg:tracking-[1px]`}
+                className={`${exoMedium.className} space-y-6 text-left text-[17px] font-medium leading-[1.65] tracking-[0.3px] text-[#5a4136] lg:text-[28px] lg:leading-[1.55] lg:tracking-[1px]`}
               >
                 <p>
                   And no clear idea of <strong>what to do next.</strong> Because

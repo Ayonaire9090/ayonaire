@@ -263,7 +263,7 @@ export default function AudienceFitSection() {
             ${exoMedium.className}
             max-w-[1035px]
             space-y-8
-            text-justify
+            text-left
             text-[18px]
             font-normal
             leading-[1.65]

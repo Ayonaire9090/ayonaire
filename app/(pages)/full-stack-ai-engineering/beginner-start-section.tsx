@@ -21,7 +21,7 @@ export default function BeginnerStartSection() {
           </p>
         </div>
 
-        <div className={`${exoMedium.className} space-y-7 text-justify text-[16px] font-medium leading-[1.65] tracking-[0.6px] text-[#5a4136] sm:text-[18px] lg:text-[22px] lg:leading-[1.45] lg:tracking-[1px]`}>
+        <div className={`${exoMedium.className} space-y-7 text-left text-[16px] font-medium leading-[1.65] tracking-[0.6px] text-[#5a4136] sm:text-[18px] lg:text-[22px] lg:leading-[1.45] lg:tracking-[1px]`}>
           <p className="font-extrabold">
             And we&apos;re not saying that because it sounds good in an advert.
           </p>

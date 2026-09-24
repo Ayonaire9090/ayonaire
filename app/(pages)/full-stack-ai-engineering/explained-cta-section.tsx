@@ -38,19 +38,19 @@ export default function ExplainedCtaSection() {
 
       <div className="relative z-20 mx-auto flex w-full max-w-[1187px] flex-col items-center text-center text-white">
         <h2
-          className={`${melodrama.className} max-w-[1100px] text-[26px] font-bold leading-[1.2] tracking-[0.2px] sm:text-[36px] lg:text-[44px] lg:leading-[1.22]`}
+          className={`${melodrama.className} max-w-[1100px] text-[21px] font-bold leading-[1.25] tracking-[0.2px] sm:text-[36px] lg:text-[44px] lg:leading-[1.22]`}
         >
           SO... I JUST EXPLAINED WHAT 10s of YOUTUBE VIDEOS FAIL TO HELP MANY UNDERSTAND{" "}
           <span className="inline font-normal">
             (of course many of them want to{" "}
-            <span className="relative inline-block text-[#f25e25] font-bold">
+            <span className="relative mt-1.5 inline-block text-[#f25e25] font-bold sm:mt-0">
               sound technical and professional)
               <Image
                 src="/assets/images/ai-fullstack-engineering/explained-cta-highlight.svg"
                 alt=""
                 width={757}
                 height={53}
-                className="pointer-events-none absolute left-1/2 top-1/2 h-6 sm:h-9 md:h-11 lg:h-[53px] w-[108%] -translate-x-1/2 -translate-y-1/2 select-none object-fill"
+                className="pointer-events-none absolute left-1/2 top-1/2 h-[120%] w-[108%] -translate-x-1/2 -translate-y-1/2 select-none object-fill"
               />
             </span>
           </span>

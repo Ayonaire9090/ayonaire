@@ -42,8 +42,7 @@ const reviews: Review[] = [
   {
     name: "Kingsley Nwaginineme",
     role: "AI Engineering Student, Ayonaire Academy",
-    title:
-      "I Joined With Almost Zero Knowledge of Python or AI Engineering. Now I Can Code From Scratch.",
+    title: "I Joined With Almost Zero Knowledge of Python or AI Engineering. Now I Can Code From Scratch.",
     paragraphs: [
       "My experience with Ayonaire Academy has honestly been a really great one so far.",
       "Before joining the AI Engineering 1.0 program, I had virtually zero knowledge of Python or AI Engineering.",
@@ -58,8 +57,7 @@ const reviews: Review[] = [
   {
     name: "ALABI Alexander",
     role: "AI Engineering Student, Ayonaire Academy",
-    title:
-      "Your Brain Will Scream a Bit — But That’s the Beginning of the Stretch.",
+    title: "Your Brain Will Scream a Bit — But That’s the Beginning of the Stretch.",
     paragraphs: [
       "Hello guys, I’m part of the participants in AI Engineering 1.0, and with 2.0 about to start, I would honestly advise anyone who is serious enough to have clicked the advert and made it this far to take the opportunity seriously.",
       "Personally, one thing I can say about Ayonaire is that the program is quite affordable compared to what similar institutions charge, and the instructors are very knowledgeable in what they teach.",
@@ -77,120 +75,138 @@ export default function StudentReviewSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handlePrev = () => {
-    setCurrentIndex((prev) =>
-      prev === 0 ? reviews.length - 1 : prev - 1,
-    );
+    setCurrentIndex((prev) => (prev === 0 ? reviews.length - 1 : prev - 1));
   };
 
   const handleNext = () => {
-    setCurrentIndex((prev) =>
-      prev === reviews.length - 1 ? 0 : prev + 1,
-    );
+    setCurrentIndex((prev) => (prev === reviews.length - 1 ? 0 : prev + 1));
   };
 
   const currentReview = reviews[currentIndex];
 
   return (
-    <section className="relative overflow-hidden bg-[#fae4d5] px-5 pt-8 pb-8 sm:px-8 sm:pt-10 sm:pb-10 lg:px-12 lg:pt-[52px] lg:pb-[64px]">
-      {/* TOP FADE */}
-      <div
-        className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[150px]"
-        style={{
-          background:
-            "linear-gradient(to bottom, rgba(255,255,255,0.95) 0%, rgba(255,245,238,0.65) 45%, rgba(255,240,228,0) 100%)",
-        }}
-      />
+    <section className="relative overflow-hidden bg-gradient-to-b from-[#FFF6EE] via-[#FFF0E4] to-[#FFE8D6] px-5 pt-12 pb-16 sm:px-8 sm:pt-16 sm:pb-20 lg:px-12 lg:pt-20 lg:pb-24">
+      {/* Bottom angled background shape matching design */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-[70px] sm:h-[110px] lg:h-[150px] overflow-hidden">
+        <svg
+          viewBox="0 0 1440 150"
+          preserveAspectRatio="none"
+          className="h-full w-full"
+          fill="none"
+        >
+          <polygon points="0,150 1440,150 1440,0 0,95" fill="#FFD8BD" />
+        </svg>
+      </div>
 
-      {/* BOTTOM FADE */}
-      <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-[150px]"
-        style={{
-          background:
-            "linear-gradient(to top, rgba(255,255,255,0.95) 0%, rgba(255,245,238,0.65) 45%, rgba(255,240,228,0) 100%)",
-        }}
-      />
-
-      {/* EARPIECE / QUOTE BACKGROUND */}
-      <Image
-        src="/assets/images/ai-fullstack-engineering/earpiece.png"
-        alt=""
-        width={200}
-        height={200}
-        className="pointer-events-none absolute right-[12%] top-[70px] z-0 h-[200px] w-[200px] select-none object-contain opacity-30 sm:right-[15%] sm:h-[260px] sm:w-[260px] lg:right-[25%] lg:top-[80px] lg:h-[230px] lg:w-[230px]"
-      />
-
-      {/* CONTENT */}
       <div className="relative z-10 mx-auto flex w-full max-w-[980px] flex-col items-center">
-        {/* HEADER */}
+        {/* Header */}
         <div className="flex w-full flex-col items-center text-center">
-          <div className="relative w-full max-w-[560px]">
+          <div className="relative inline-block max-w-[560px]">
             <h2
-              className={`${melodrama.className} relative z-10 text-[28px] font-bold leading-[1.05] text-[#181c23] sm:text-[34px] lg:text-[40px]`}
+              className={`${melodrama.className} relative z-10 text-[28px] font-bold leading-[1.1] text-[#181c23] sm:text-[34px] lg:text-[40px]`}
             >
               Don&apos;t just take{" "}
-              <span className="text-[#f25e25]">our word for it.</span>
+              <span className="relative inline-block rounded-[4px] bg-[#FFE2D1] px-2 py-0.5 text-[#f25e25]">
+                our word for it.
+              </span>
             </h2>
-
-            <Image
-              src="/assets/images/ai-fullstack-engineering/student-review-heading-highlight.svg"
-              alt=""
-              width={250}
-              height={38}
-              className="pointer-events-none absolute -bottom-1 right-[72px] z-0 hidden h-[38px] w-[250px] max-w-[48%] select-none sm:block"
-            />
           </div>
 
           <p
             className={`${exoMedium.className} mt-4 max-w-[760px] text-[13px] font-semibold leading-[1.55] text-[#2d3036] sm:text-[15px] lg:text-[16px]`}
           >
-            Don&apos;t just take our word for what the Ayonaire experience is
-            like. Hear directly from the people who have gone through it.
+            Don&apos;t just take our word for what the Ayonaire experience is like. Hear directly from the people who have gone through it.
           </p>
 
           <ReviewDivider className="mt-5" />
         </div>
 
-        {/* REVIEW */}
-        <article className="relative mt-7 grid w-full items-start gap-7 lg:grid-cols-[210px_minmax(0,1fr)_6px] lg:gap-12">
-          {/* AVATAR */}
-          <div className="flex justify-center lg:pt-16">
+        {/* Review Content */}
+        <article className="relative mt-8 grid w-full items-start gap-4 sm:gap-6 lg:grid-cols-[210px_minmax(0,1fr)] lg:gap-10">
+          {/* Avatar Container with Background Quotes */}
+          <div className="relative flex flex-col items-center justify-center lg:pt-14">
+            {/* Background Quote Marks behind/above avatar */}
+            <div className="pointer-events-none absolute right-4 top-0 select-none text-[110px] font-black leading-none text-white/45 sm:right-10 sm:text-[140px] lg:hidden">
+              &rdquo;&rdquo;
+            </div>
+
             <Image
               src="/assets/images/ai-fullstack-engineering/student-review-avatar.png"
               alt={`Illustrated portrait representing ${currentReview.name}`}
               width={210}
               height={170}
-              className="h-auto w-full max-w-[170px] object-contain sm:max-w-[200px] lg:max-w-[210px]"
+              className="relative z-10 h-auto w-full max-w-[190px] object-contain sm:max-w-[210px]"
               sizes="(min-width: 1024px) 210px, 200px"
             />
+
+            {/* Mobile Navigation Buttons: Right-aligned directly beneath avatar */}
+            <div className="relative z-20 mt-2 flex w-full justify-end gap-1.5 pr-2 lg:hidden">
+              <button
+                type="button"
+                onClick={handlePrev}
+                aria-label="Previous student review"
+                className="flex h-10 w-10 items-center justify-center rounded-lg text-[#f25e25] transition-all hover:opacity-75 active:scale-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f25e25] cursor-pointer"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="3.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="h-7 w-7"
+                >
+                  <polyline points="15 19 8 12 15 5" />
+                </svg>
+              </button>
+
+              <button
+                type="button"
+                onClick={handleNext}
+                aria-label="Next student review"
+                className="flex h-10 w-10 items-center justify-center rounded-lg text-[#f25e25] transition-all hover:opacity-75 active:scale-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f25e25] cursor-pointer"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="3.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="h-7 w-7"
+                >
+                  <polyline points="9 19 16 12 9 5" />
+                </svg>
+              </button>
+            </div>
           </div>
 
-          {/* REVIEW TEXT */}
-          <div className="relative min-w-0 overflow-hidden pr-0 lg:pr-8">
-            {/* Decorative quote */}
-            <div className="pointer-events-none absolute -right-2 -top-12 hidden select-none text-[180px] font-black leading-none text-white/35 lg:block">
-              &rdquo;
+          {/* Quote & Text */}
+          <div className="relative min-w-0 pr-0 sm:pr-2 lg:pr-4">
+            {/* Desktop Background Quote Marks */}
+            <div className="pointer-events-none absolute right-2 -top-10 hidden select-none text-[170px] font-black leading-none text-white/45 lg:block">
+              &rdquo;&rdquo;
             </div>
 
             <div
               key={currentIndex}
-              className={`${exoMedium.className} relative z-10 max-h-[270px] overflow-y-auto pr-4 text-justify text-[14px] font-medium leading-[1.7] text-[#2d3036] [scrollbar-color:#ff8a4d_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-[#ff8a4d] sm:text-[15px] lg:max-h-[304px]`}
+              className={`${exoMedium.className} relative z-10 max-h-[290px] overflow-y-auto pr-3 text-left text-[14px] font-medium leading-[1.7] text-[#2d3036] [scrollbar-color:#ff8a4d_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-[#ff8a4d] sm:text-[15px] lg:max-h-[304px]`}
             >
-              <p className="mb-7 text-left text-[15px] font-black leading-[1.55] text-[#252830] sm:text-[16px]">
+              <p className="mb-5 text-left text-[16px] font-black leading-[1.5] text-[#252830] sm:mb-7 sm:text-[17px]">
                 &quot;{currentReview.title}&quot;
               </p>
 
               {currentReview.paragraphs.map((paragraph, index) => (
-                <p key={index} className="mb-5 last:mb-0">
+                <p key={index} className="mb-4 last:mb-0 sm:mb-5">
                   {paragraph}
                 </p>
               ))}
 
-              <div className="mt-7 text-left">
-                <p className="text-[16px] font-black text-[#252830]">
-                  - {currentReview.name}
+              <div className="mt-7 text-left sm:mt-8">
+                <p className={`${exo.className} text-[22px] font-black text-[#181c23] sm:text-[26px]`}>
+                  -{currentReview.name}
                 </p>
-
-                <p className="mt-1 text-[12px] font-medium text-[#2d3036]">
+                <p className="mt-1 text-[13px] font-normal text-[#2d3036] sm:text-[14px]">
                   {currentReview.role}
                 </p>
               </div>
@@ -198,53 +214,70 @@ export default function StudentReviewSection() {
           </div>
         </article>
 
-        {/* BOTTOM DIVIDER + ARROWS */}
-        <div className="mt-7 flex w-full items-center justify-between gap-5 sm:mt-8">
+        {/* Bottom divider and controls */}
+        {/* Mobile: Centered divider */}
+        <div className="mt-8 flex w-full justify-center lg:hidden">
+          <ReviewDivider />
+        </div>
+
+        {/* Desktop: Compact divider with Right-aligned buttons */}
+        <div className="mt-10 hidden w-full items-center justify-between gap-5 lg:flex">
           <ReviewDivider compact />
 
-         <div className="flex shrink-0 items-center gap-1 text-[#ff6b00]">
-  <button
-    type="button"
-    onClick={handlePrev}
-    aria-label="Previous student review"
-    className="flex cursor-pointer items-center justify-center transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ff6b00]"
-  >
-    <Image
-      src="/assets/images/ai-fullstack-engineering/had.png"
-      alt="Previous"
-      width={64}
-      height={64}
-      className="h-20 w-20 object-contain"
-    />
-  </button>
-</div>
+          <div className="flex shrink-0 items-center gap-2">
+            <button
+              type="button"
+              onClick={handlePrev}
+              aria-label="Previous student review"
+              className="flex h-9 w-9 items-center justify-center rounded-lg text-[#f25e25] transition-all hover:opacity-75 active:scale-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f25e25] cursor-pointer"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="3.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-5 w-5"
+              >
+                <polyline points="15 19 8 12 15 5" />
+              </svg>
+            </button>
+
+            <button
+              type="button"
+              onClick={handleNext}
+              aria-label="Next student review"
+              className="flex h-9 w-9 items-center justify-center rounded-lg text-[#f25e25] transition-all hover:opacity-75 active:scale-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f25e25] cursor-pointer"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="3.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-5 w-5"
+              >
+                <polyline points="9 19 16 12 9 5" />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-function ReviewDivider({
-  compact = false,
-  className = "",
-}: {
-  compact?: boolean;
-  className?: string;
-}) {
+function ReviewDivider({ compact = false, className = "" }: { compact?: boolean; className?: string }) {
   return (
-    <div
-      className={`flex w-full items-center justify-center ${
-        compact ? "max-w-[440px]" : "max-w-[430px]"
-      } ${className}`}
-    >
+    <div className={`flex w-full items-center justify-center ${compact ? "max-w-[320px] sm:max-w-[440px]" : "max-w-[430px]"} ${className}`}>
       <div className="h-px min-w-0 flex-1 bg-[#ff8a4d]" />
-
       <div
-        className={`${exo.className} shrink-0 border border-[#ff8a4d] bg-[#fff0e4] px-4 py-2 text-center text-[10px] font-black uppercase text-[#252830] sm:text-[11px]`}
+        className={`${exo.className} shrink-0 border border-[#ff8a4d] bg-[#fff0e4] px-3 py-1.5 text-center text-[11px] font-black uppercase text-[#252830] sm:px-4 sm:py-2 sm:text-xs`}
       >
         STUDENT REVIEW
       </div>
-
       <div className="h-px min-w-0 flex-1 bg-[#ff8a4d]" />
     </div>
   );

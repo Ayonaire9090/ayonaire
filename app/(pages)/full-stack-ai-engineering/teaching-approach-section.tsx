@@ -148,7 +148,7 @@ export default function TeachingApproachSection() {
             px-8
             py-4
             text-center
-            text-[11px]
+            text-xs
             font-bold
             uppercase
             tracking-[0.04em]

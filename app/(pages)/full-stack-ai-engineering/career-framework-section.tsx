@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { exo, melodrama } from "@/app/fonts";
+import { exo, melodrama, space } from "@/app/fonts";
 
 const pillars = [
   {
@@ -44,7 +44,7 @@ export default function CareerFrameworkSection() {
               complete system.
             </h2>
             <div
-              className={`${exo.className} space-y-5 text-justify text-[17px] leading-[1.65] tracking-[0.2px] text-[#5a4136] sm:text-[18px] lg:text-[20px]`}
+              className={`${exo.className} space-y-5 text-left text-[17px] leading-[1.65] tracking-[0.2px] text-[#5a4136] sm:text-[18px] lg:text-[20px]`}
             >
               <p>
                 The people who win do not stop at learning tools. They build proof,
@@ -112,7 +112,7 @@ export default function CareerFrameworkSection() {
                     {pillar.title}
                   </h3>
                   <p
-                    className={`${exo.className} text-[16px] leading-[1.65] tracking-[0.2px] text-[#f5f5f5] lg:text-[18px]`}
+                    className={`${space.className} text-[16px] font-normal leading-[1.65] tracking-[0.2px] text-[#f5f5f5] lg:text-[18px]`}
                   >
                     {pillar.body}
                   </p>

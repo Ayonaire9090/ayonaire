@@ -79,7 +79,7 @@ export default function AiEngineeringExplainedSection() {
                 alt=""
                 width={726}
                 height={62}
-                className="pointer-events-none absolute left-1/2 top-1 sm:top-[4px] h-7 sm:h-10 md:h-12 lg:h-[58px] w-[726px] max-w-[108%] -translate-x-1/2 select-none object-fill"
+                className="pointer-events-none absolute left-1/2 top-1/2 h-[120%] w-[108%] -translate-x-1/2 -translate-y-1/2 select-none object-fill"
               />
             </span>
           </h2>

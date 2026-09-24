@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 import Image from "next/image";
 import { adineue, exo, exoMedium, rope, barlowBold } from "@/app/fonts";
 
@@ -19,7 +19,7 @@ export default function CohortActionSection() {
         </div>
 
         <div className="flex w-full flex-col gap-12 text-left lg:gap-[100px]">
-          <div className={`${adineue.className} flex flex-col gap-8 text-justify text-[18px] leading-[1.6] tracking-[0.8px] text-[#5a4136] sm:text-[24px] lg:gap-11 lg:text-[28px] lg:leading-[40px] lg:tracking-[1.2px]`}>
+          <div className={`${adineue.className} flex flex-col gap-8 text-left text-[18px] leading-[1.6] tracking-[0.8px] text-[#5a4136] sm:text-[24px] lg:gap-11 lg:text-[28px] lg:leading-[40px] lg:tracking-[1.2px]`}>
             <p>But because ten months of focused learning, disciplined practice and intentional action can put you far ahead of ten months spent only thinking about starting.</p>
             <p className="text-[22px] font-bold uppercase sm:text-[28px] lg:text-[34px]">September 2026 Cohort</p>
           </div>
@@ -36,7 +36,7 @@ export default function CohortActionSection() {
           </div>
         </div>
 
-        <a href="https://wa.link/f1iadg" target="_blank" rel="noopener noreferrer" className={`${rope.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-8 py-4 text-center text-[9px] font-bold uppercase leading-[1.45] text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:px-10 sm:py-5 lg:text-[12px]`}>
+        <a href="https://wa.link/f1iadg" target="_blank" rel="noopener noreferrer" className={`${exo.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-8 py-4 text-center text-[14px] font-bold uppercase leading-[1.45] text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:px-10 sm:py-5 sm:text-[16px] lg:text-[18px]`}>
           I&apos;m ready to take action
           <Image
             src="/assets/images/ai-fullstack-engineering/cohort-action-button-arrow.svg"
@@ -50,4 +50,3 @@ export default function CohortActionSection() {
     </section>
   );
 }
-

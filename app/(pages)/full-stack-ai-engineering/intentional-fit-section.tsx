@@ -45,7 +45,7 @@ export default function IntentionalFitSection() {
             Our Full Stack <strong>Career Transition Job Ready AI Engineering</strong> isn&apos;t for everyone.<br />
             And that&apos;s <strong>INTENTIONAL.</strong>
           </p>
-          <div className="space-y-5 text-justify">
+          <div className="space-y-5 text-left">
             <p><strong>And that&apos;s INTENTIONAL.</strong></p>
             <p>
               We built this programme for serious-minded people who want to change the trajectory of their lives and destiny, break into tech intentionally and build a real career in AI/ML Engineering.
@@ -123,7 +123,7 @@ export default function IntentionalFitSection() {
           />
         </div>
 
-        <div className={`${exoMedium.className} space-y-4 text-justify text-[14px] font-medium leading-[1.7] tracking-[0.2px] text-[#181c23] sm:text-[18px] lg:text-[24px] lg:leading-[2.1]`}>
+        <div className={`${exoMedium.className} space-y-4 text-left text-[14px] font-medium leading-[1.7] tracking-[0.2px] text-[#181c23] sm:text-[18px] lg:text-[24px] lg:leading-[2.1]`}>
           <p>This is not for people looking for shortcuts or another certificate to collect.</p>
           <p>It is for people who are ready to learn, and take their lives and destiny seriously, and take their career transition seriously.</p>
         </div>

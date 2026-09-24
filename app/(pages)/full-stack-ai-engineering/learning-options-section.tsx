@@ -36,7 +36,7 @@ export default function LearningOptionsSection() {
                 alt=""
                 width={586}
                 height={68}
-                className="pointer-events-none absolute left-1/2 top-1/2 h-7 sm:h-11 md:h-14 lg:h-[68px] w-[min(586px,110%)] -translate-x-1/2 -translate-y-1/2 object-fill"
+                className="pointer-events-none absolute left-1/2 top-1/2 h-[120%] w-[108%] -translate-x-1/2 -translate-y-1/2 object-fill"
               />
             </span>
           </h2>
@@ -61,7 +61,7 @@ export default function LearningOptionsSection() {
                 </p>
 
                 <p
-                  className={`${exoMedium.className} text-justify text-[18px] font-medium leading-[1.65] tracking-[0.6px] text-[#5a4136] lg:text-[28px] lg:leading-[1.65] lg:tracking-[1px]`}
+                  className={`${exoMedium.className} text-left text-[18px] font-medium leading-[1.65] tracking-[0.6px] text-[#5a4136] lg:text-[28px] lg:leading-[1.65] lg:tracking-[1px]`}
                 >
                   {option.body}
                 </p>

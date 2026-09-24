@@ -69,7 +69,7 @@ export default function TwoSetsSection() {
             I want you to be <span className="text-[#f25e25]">that person</span>
           </p>
 
-          <div className="relative w-full max-w-[1077px] overflow-hidden rounded-[14px] bg-[#fe6700] px-6 py-10 shadow-[0px_1px_12px_0px_rgba(0,0,0,0.12)] sm:px-10 lg:min-h-[673px] lg:px-[72px] lg:py-[84px]">
+          <div className="relative box-border flex-none order-2 flex-grow-0 w-full max-w-[1077px] lg:w-[1077px] lg:h-[673px] overflow-hidden rounded-[14.1571px] bg-[#FE6700] px-6 py-10 shadow-[0px_1px_12px_rgba(0,0,0,0.12)] sm:px-10 lg:px-[72px] lg:py-[64px] flex flex-col justify-between">
             <Image
               src="/assets/images/ai-fullstack-engineering/two-sets-orbit.svg"
               alt=""
@@ -78,40 +78,44 @@ export default function TwoSetsSection() {
               className="pointer-events-none absolute -bottom-10 -right-12 h-[287px] w-[295px] rotate-[-92deg] opacity-80"
             />
 
-          <ol
-  className={`${exoMedium.className} relative z-10 space-y-6 text-left text-[17px] font-medium leading-[1.45] text-[#f5f5f5] sm:text-[18px] lg:max-w-[700px] lg:text-[20px] lg:leading-[1.7]`}
->
-  {[
-    "That desires,",
-    "Take action to learn",
-    "Learns AI engineering the right way",
-    "And ends up landing job faster than others.",
-  ].map((item, index) => (
-    <li key={item} className="flex gap-4">
-      <NumberPill value={String(index + 1).padStart(2, "0")} />
+            <ol
+              className={`${exoMedium.className} relative z-10 space-y-5 text-left text-[18px] font-medium leading-[1.4] text-white sm:text-[20px] lg:space-y-6 lg:max-w-[750px] lg:text-[22px] lg:leading-[1.5]`}
+            >
+              {[
+                "That desires,",
+                "Take action to learn",
+                "Learns AI engineering the right way",
+                "And ends up landing job faster than others.",
+              ].map((item, index) => (
+                <li key={item} className="flex items-center gap-4 sm:gap-5">
+                  <NumberPill value={String(index + 1).padStart(2, "0")} />
 
-      <span
-        className={
-          index === 2
-            ? `${exo.className} font-bold`
-            : undefined
-        }
-      >
-        {item}
-      </span>
-    </li>
-  ))}
-</ol>
+                  <span
+                    className={
+                      index === 2
+                        ? `${exo.className} font-bold text-white`
+                        : "text-white/95"
+                    }
+                  >
+                    {item}
+                  </span>
+                </li>
+              ))}
+            </ol>
 
             <div
-              className={`${exo.className} relative z-10 mt-12 max-w-[945px] space-y-5 whitespace-pre-wrap lg:space-y-6 text-left text-[17px] font-normal leading-[1.45] text-[#f5f5f5] sm:text-[18px] lg:mt-20 lg:text-[20px] lg:leading-[1.6]`}
+              className={`${exo.className} relative z-10 max-w-[945px] space-y-4 text-left text-[17px] font-normal leading-[1.45] text-white sm:text-[18px] lg:text-[20px] lg:leading-[1.6]`}
             >
-              <p className={`${exoMedium.className}`}>Now, Ask yourself this question,</p>
-              <p className={` my-6 font-bold lowercase text-white`}>
+              <p className={`${exoMedium.className} text-white/90`}>
+                Now, Ask yourself this question,
+              </p>
+              <p className="my-4 font-bold text-white uppercase tracking-wide">
                 WHAT COULD HAPPEN IF I SPENT THE NEXT 10 MONTHS DELIBERATELY
                 BUILDING THE SKILLS BEHIND THESE ROLES?
               </p>
-              <p className={`${exoMedium.className}`}>The answer seems obvious</p>
+              <p className={`${exoMedium.className} text-white/90`}>
+                The answer seems obvious
+              </p>
             </div>
           </div>
 
@@ -316,15 +320,15 @@ function BlackWarningCard({
 
 function NumberPill({ value }: { value: string }) {
   return (
-    <span className="relative mt-2 flex h-10 w-14 shrink-0 items-center justify-center">
+    <span className="relative flex h-11 w-[60px] shrink-0 items-center justify-center sm:h-12 sm:w-[66px]">
       <Image
         src="/assets/images/ai-fullstack-engineering/two-sets-pill.svg"
         alt=""
         fill
-        sizes="56px"
+        sizes="66px"
         className="object-fill"
       />
-      <span className="relative text-[16px] font-bold text-[#f25e25]">
+      <span className="relative pr-2.5 text-[17px] font-bold text-[#fe6700] sm:text-[19px]">
         {value}
       </span>
     </span>

@@ -15,27 +15,53 @@ export default function ExperienceProofSection() {
       <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-[76px]">
         <div className="flex w-full flex-col items-start gap-11">
           <h2
-            className={`${melodrama.className} relative w-full text-center text-[30px] font-bold leading-[1.12] tracking-[0.4px] text-[#181c23] sm:text-[36px] lg:text-[44px] lg:leading-[1.16] lg:tracking-[0.2px]`}
+            className={`${melodrama.className} relative w-full text-center text-[28px] font-bold leading-[1.2] tracking-[0.4px] text-[#181c23] sm:text-[36px] lg:text-[44px] lg:leading-[1.16] lg:tracking-[0.2px]`}
           >
-            <span className="block text-[20px] lg:text-[24px]">
+            <span className="block text-[18px] sm:text-[20px] lg:text-[24px] mb-1 sm:mb-0">
               It&apos;s equally worthy of note that
             </span>
-            this is{" "}
-            <span className="relative inline-block text-[#f25e25]">
-              NOT a field where you need 10 years
-              <Image
-                src="/assets/images/ai-fullstack-engineering/experience-proof-highlight.svg"
-                alt=""
-                width={967}
-                height={53}
-                className="pointer-events-none absolute left-1/2 top-1/2 h-6 sm:h-9 md:h-11 lg:h-[53px] w-[min(967px,108%)] -translate-x-1/2 -translate-y-1/2 select-none object-fill"
-              />
-            </span>{" "}
-            of experience before you&apos;re taken seriously...
+            <span className="hidden md:inline">
+              this is{" "}
+              <span className="relative inline-block text-[#f25e25] px-1">
+                NOT a field where you need 10 years
+                <Image
+                  src="/assets/images/ai-fullstack-engineering/experience-proof-highlight.svg"
+                  alt=""
+                  width={967}
+                  height={53}
+                  className="pointer-events-none absolute left-1/2 top-1/2 h-[120%] w-[108%] -translate-x-1/2 -translate-y-1/2 select-none object-fill"
+                />
+              </span>{" "}
+              of experience before you&apos;re taken seriously...
+            </span>
+            <span className="inline md:hidden">
+              this is{" "}
+              <span className="relative inline-block text-[#f25e25] px-1 my-0.5">
+                NOT a field where you
+                <Image
+                  src="/assets/images/ai-fullstack-engineering/experience-proof-highlight.svg"
+                  alt=""
+                  width={967}
+                  height={53}
+                  className="pointer-events-none absolute left-1/2 top-1/2 h-[120%] w-[108%] -translate-x-1/2 -translate-y-1/2 select-none object-fill"
+                />
+              </span>{" "}
+              <span className="relative inline-block text-[#f25e25] px-1 my-0.5">
+                need 10 years
+                <Image
+                  src="/assets/images/ai-fullstack-engineering/experience-proof-highlight.svg"
+                  alt=""
+                  width={967}
+                  height={53}
+                  className="pointer-events-none absolute left-1/2 top-1/2 h-[120%] w-[108%] -translate-x-1/2 -translate-y-1/2 select-none object-fill"
+                />
+              </span>{" "}
+              of experience before you&apos;re taken seriously...
+            </span>
           </h2>
 
           <p
-            className={`${exoMedium.className} text-justify text-[17px] font-medium leading-[1.6] tracking-[0.3px] text-[#5a4136] lg:text-[20px] lg:leading-[1.65] lg:tracking-[0.4px]`}
+            className={`${exoMedium.className} text-left text-[17px] font-medium leading-[1.6] tracking-[0.3px] text-[#5a4136] lg:text-[20px] lg:leading-[1.65] lg:tracking-[0.4px]`}
           >
             Let me show you something.
           </p>
@@ -51,7 +77,7 @@ export default function ExperienceProofSection() {
         />
 
         <div
-          className={`${space.className} w-full space-y-5 whitespace-pre-wrap lg:space-y-6 text-justify text-[17px] font-medium leading-[1.65] tracking-[0.3px] text-[#5a4136] lg:text-[20px] lg:leading-[1.65] lg:tracking-[0.4px]`}
+          className={`${space.className} w-full space-y-5 whitespace-pre-wrap lg:space-y-6 text-left text-[17px] font-medium leading-[1.65] tracking-[0.3px] text-[#5a4136] lg:text-[20px] lg:leading-[1.65] lg:tracking-[0.4px]`}
         >
           <p>
             This job opening was posted a few weeks ago on LinkedIn, and I want you

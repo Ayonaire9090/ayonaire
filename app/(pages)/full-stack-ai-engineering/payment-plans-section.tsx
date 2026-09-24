@@ -1,4 +1,4 @@
-﻿import Image from "next/image";
+import Image from "next/image";
 import { exo, exoMedium, melodrama, salt, space } from "@/app/fonts";
 
 const plans = [
@@ -28,7 +28,9 @@ export default function PaymentPlansSection() {
   return (
     <section className="bg-gradient-to-b from-[rgba(255,255,255,0.28)] to-[rgba(248,100,50,0.28)] px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
       <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-14 lg:gap-20">
+        
         <div className="grid w-full gap-12 lg:grid-cols-[544px_1fr] lg:gap-[45px]">
+          
           {/* LEFT CONTENT */}
           <div className="flex flex-col gap-7 lg:gap-9">
             <h2
@@ -47,15 +49,15 @@ export default function PaymentPlansSection() {
                 lg:leading-[1.2]
               `}
             >
-              And no... you do not have to pay{" "}
-              <br />
-              <span className="text-[#f25e25]">500,000 at once.</span>
+              And no... you do not have to pay{" "}<br/>
+              <span className="text-[#f25e25]">
+                ₦500,000 at once.
+              </span>
             </h2>
 
             <p
               className={`
                 ${space.className}
-                text-left
                 text-[16px]
                 font-medium
                 leading-[1.65]
@@ -75,7 +77,6 @@ export default function PaymentPlansSection() {
             <p
               className={`
                 ${space.className}
-                text-left
                 text-[15px]
                 font-medium
                 leading-[1.65]
@@ -113,9 +114,8 @@ export default function PaymentPlansSection() {
               {plans.map((plan) => (
                 <article
                   key={plan.title}
-                  className="group relative flex aspect-[702/336] w-full items-center lg:max-w-[655px]"
+                  className="relative flex aspect-[702/336] w-full items-center lg:max-w-[655px]"
                 >
-                  {/* CARD BACKGROUND */}
                   <Image
                     src="/assets/images/ai-fullstack-engineering/right-fit-card.svg"
                     alt=""
@@ -123,43 +123,30 @@ export default function PaymentPlansSection() {
                     sizes="(min-width: 1024px) 655px, 100vw"
                     className="pointer-events-none object-contain"
                   />
-
                   <div
-                    className="relative z-10 flex w-full items-center gap-7 px-6 py-5 sm:gap-9 sm:px-8 sm:py-6 lg:gap-11 lg:px-10 lg:py-6"
-                    style={{ transform: "rotate(5deg)" }}
+                    className="relative z-10 flex w-full items-center gap-3.5 pl-6 pr-4 sm:gap-6 sm:pl-8 sm:pr-6 lg:gap-8 lg:pl-10 lg:pr-8"
+                    style={{ transform: "rotate(4.38deg)" }}
                   >
                     {/* CHECK ICON */}
-                    <div className="relative size-10 shrink-0 sm:size-12">
-                      {/* DEFAULT / INACTIVE */}
-                      <Image
-                        src="/assets/images/ai-fullstack-engineering/check2.png"
-                        alt=""
-                        fill
-                        sizes="48px"
-                        className="object-contain transition-opacity duration-200 group-hover:opacity-0"
-                      />
-
-                      {/* HOVER / ACTIVE */}
-                      <Image
-                        src="/assets/images/ai-fullstack-engineering/check1.png"
-                        alt=""
-                        fill
-                        sizes="48px"
-                        className="object-contain opacity-0 transition-opacity duration-200 group-hover:opacity-100"
-                      />
-                    </div>
+                    <Image
+                      src="/assets/images/ai-fullstack-engineering/mark.svg"
+                      alt=""
+                      width={46}
+                      height={44}
+                      className="size-[36px] shrink-0 object-contain sm:size-[46px] lg:size-[58px]"
+                    />
 
                     {/* PLAN CONTENT */}
-                    <div className="w-[60%] space-y-1.5 text-[#181c23] sm:space-y-2 lg:space-y-2.5">
+                    <div className="w-[68%] space-y-1.5 text-[#181c23] sm:space-y-2 lg:space-y-2.5">
                       <h3
                         className={`
                           ${exo.className}
-                          text-[16px]
+                          text-[14px]
                           font-bold
                           uppercase
                           tracking-[0.06em]
 
-                          sm:text-[19px]
+                          sm:text-[18px]
 
                           lg:text-[22px]
                         `}
@@ -170,8 +157,8 @@ export default function PaymentPlansSection() {
                       <p
                         className={`
                           ${exoMedium.className}
-                          text-[13px]
-                          font-medium
+                          text-[12px]
+                          font-semibold
                           tracking-[0.1px]
                           text-[#5a4136]
 
@@ -186,8 +173,8 @@ export default function PaymentPlansSection() {
                       <p
                         className={`
                           ${exoMedium.className}
-                          text-[13px]
-                          font-semibold
+                          text-[12px]
+                          font-bold
                           tracking-[0.1px]
                           text-black
 
@@ -210,14 +197,13 @@ export default function PaymentPlansSection() {
         <p
           className={`
             ${exoMedium.className}
-            text-left
+            text-center
             text-[16px]
             font-normal
             leading-[1.6]
             tracking-[0.2px]
             text-[#5a4136]
 
-            sm:text-center
             sm:text-[18px]
 
             lg:text-[21px]
@@ -242,7 +228,7 @@ export default function PaymentPlansSection() {
             px-8
             py-4
             text-center
-            text-[11px]
+            text-xs
             font-bold
             uppercase
             tracking-[0.04em]

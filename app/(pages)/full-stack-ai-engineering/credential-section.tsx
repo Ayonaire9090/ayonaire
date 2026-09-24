@@ -17,7 +17,7 @@ export default function CredentialSection() {
           Now Listen, Your <span className="bg-[#ffdcc4] text-[#f25e25]">Strongest Credential</span> Is Not Your CERTIFICATE.
         </h2>
 
-        <p className={`${exoMedium.className} w-full text-justify text-[18px] font-normal leading-[1.75] tracking-[0.5px] text-[#5a4136] sm:text-[22px] lg:text-[28px] lg:leading-[1.84]`}>
+        <p className={`${exoMedium.className} w-full text-left text-[18px] font-normal leading-[1.75] tracking-[0.5px] text-[#5a4136] sm:text-[22px] lg:text-[28px] lg:leading-[1.84]`}>
           A certificate says you completed a programme. But what really helps you stand out is being able to show:
         </p>
 
@@ -30,7 +30,7 @@ export default function CredentialSection() {
           ))}
         </ul>
 
-        <p className={`${exoMedium.className} w-full text-justify text-[18px] font-medium leading-[1.75] tracking-[0.5px] text-[#5a4136] sm:text-[22px] lg:text-[28px] lg:leading-[1.84]`}>
+        <p className={`${exoMedium.className} w-full text-left text-[18px] font-medium leading-[1.75] tracking-[0.5px] text-[#5a4136] sm:text-[22px] lg:text-[28px] lg:leading-[1.84]`}>
           but ultimately, we want you to be able to say:
         </p>
 

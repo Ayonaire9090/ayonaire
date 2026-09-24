@@ -34,7 +34,7 @@ export default function ProofOfWorkSection() {
           </h2>
 
           <div
-            className={`${space.className} w-full space-y-10 text-justify text-[17px] font-medium leading-[1.65] tracking-[0.3px] text-[#5a4136] lg:text-[20px] lg:leading-[1.75] lg:tracking-[0.4px]`}
+            className={`${space.className} w-full space-y-10 text-left text-[17px] font-medium leading-[1.65] tracking-[0.3px] text-[#5a4136] lg:text-[20px] lg:leading-[1.75] lg:tracking-[0.4px]`}
           >
             <p>
               If you want to compete for AI Engineering roles in the{" "}

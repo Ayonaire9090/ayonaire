@@ -37,7 +37,7 @@ export default function BestTimeSection() {
 
         <ul className="grid w-full max-w-[1279px] gap-5 lg:gap-6">
           {outcomeStatements.map((statement) => (
-            <li key={statement} className={`${exoMedium.className} grid grid-cols-[30px_1fr] items-start gap-3 text-justify text-[18px] font-medium leading-[1.55] tracking-[0.4px] text-[#5a4136] sm:text-[22px] lg:text-[28px] lg:leading-[46px] lg:tracking-[0.8px]`}>
+            <li key={statement} className={`${exoMedium.className} grid grid-cols-[30px_1fr] items-start gap-3 text-left text-[18px] font-medium leading-[1.55] tracking-[0.4px] text-[#5a4136] sm:text-[22px] lg:text-[28px] lg:leading-[46px] lg:tracking-[0.8px]`}>
               <BulletPair />
               <span>&quot;{statement}&quot;</span>
             </li>

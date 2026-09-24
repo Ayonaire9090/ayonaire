@@ -46,3 +46,5 @@ test-api.js
 
 # Antigravity IDE & agents
 .agents/
+*.zip
+*-structure.json

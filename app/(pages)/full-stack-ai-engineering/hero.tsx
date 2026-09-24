@@ -258,7 +258,7 @@ export default function Hero() {
               bg-[#ff6b00]
               px-8
               py-4
-              text-[11px]
+              text-xs
               font-black
               uppercase
               tracking-normal

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { exoMedium, melodrama, salt } from "@/app/fonts";
+import { exoMedium, melodrama, rope, salt } from "@/app/fonts";
 
 const proofCards = [
   { text: "I'm still trying to figure out what to learn.", muted: true },
@@ -144,18 +144,18 @@ function ProofCard({
         className="pointer-events-none object-contain"
       />
 
-      {/* Content with 5deg rotation */}
+      {/* Content with 4.38deg rotation */}
       <div
-        className="relative z-10 flex w-full items-center gap-7 px-6 py-5 sm:gap-9 sm:px-8 sm:py-6 lg:gap-11 lg:px-10 lg:py-6"
-        style={{ transform: "rotate(5deg)" }}
+        className="relative z-10 flex w-full items-center gap-3.5 pl-6 pr-4 sm:gap-6 sm:pl-8 sm:pr-6 lg:gap-8 lg:pl-10 lg:pr-8"
+        style={{ transform: "rotate(4.38deg)" }}
       >
         {/* Check Icon */}
         <Image
-          src="/assets/images/ai-fullstack-engineering/registered-company-check.png"
+          src="/assets/images/ai-fullstack-engineering/mark.svg"
           alt=""
-          width={64}
-          height={64}
-          className={`size-[40px] shrink-0 object-contain sm:size-[48px] lg:size-[56px] ${
+          width={46}
+          height={44}
+          className={`size-[36px] shrink-0 object-contain sm:size-[46px] lg:size-[58px] ${
             muted ? "opacity-50" : ""
           }`}
         />
@@ -163,18 +163,20 @@ function ProofCard({
         {/* Text */}
         <p
           className={`
-            ${exoMedium.className}
-            w-[60%]
-            text-[14px]
+            ${rope.className}
+            w-[68%]
+            text-[12px]
             font-bold
-            leading-[1.45]
-            tracking-[0.2px]
+            leading-[1.65]
+            tracking-[0.3px]
             text-[#181c23]
 
-            sm:text-[17px]
+            sm:text-[15px]
+            sm:leading-[1.5]
 
-            lg:text-[20px]
+            lg:text-[19px]
             lg:leading-[1.5]
+            xl:text-[20px]
           `}
         >
           &quot;{text}&quot;

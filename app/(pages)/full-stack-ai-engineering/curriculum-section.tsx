@@ -366,7 +366,7 @@ export default function CurriculumSection() {
 
         {/* Intro */}
         <p
-          className={`${exoMedium.className} text-justify text-[18px] font-medium leading-[1.55] tracking-[0.5px] text-white lg:text-[28px] lg:leading-[1.5]`}
+          className={`${exoMedium.className} text-left text-[18px] font-medium leading-[1.55] tracking-[0.5px] text-white lg:text-[28px] lg:leading-[1.5]`}
         >
           The curriculum is designed to take you from{" "}
           <strong>writing your first lines of Python</strong> to{" "}
@@ -550,7 +550,7 @@ export default function CurriculumSection() {
           href="https://wa.link/f1iadg"
           target="_blank"
           rel="noopener noreferrer"
-          className={`${exoMedium.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-10 py-5 text-center text-[12px] font-bold uppercase text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] lg:text-[18px]`}
+          className={`${exoMedium.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-8 py-4 text-center text-[14px] font-bold uppercase text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:px-10 sm:py-5 sm:text-[16px] lg:text-[18px]`}
         >
           I want to become an AI/ML engineer
 

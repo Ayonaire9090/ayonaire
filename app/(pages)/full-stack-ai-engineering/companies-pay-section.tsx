@@ -24,7 +24,7 @@ export default function CompaniesPaySection() {
 </h2>
 
         <div
-          className={`${exoMedium.className} w-full max-w-[1120px] space-y-5 whitespace-pre-wrap lg:space-y-6 text-justify text-[17px]  leading-[1.65] text-[#5a4136] sm:text-[18px] lg:text-[20px] lg:leading-[1.65]`}
+          className={`${exoMedium.className} w-full max-w-[1120px] space-y-5 whitespace-pre-wrap lg:space-y-6 text-left text-[17px]  leading-[1.65] text-[#5a4136] sm:text-[18px] lg:text-[20px] lg:leading-[1.65]`}
         >
           <p>Of course,</p>
           <p>

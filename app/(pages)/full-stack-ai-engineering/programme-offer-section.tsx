@@ -1,4 +1,4 @@
-﻿import Image from "next/image";
+import Image from "next/image";
 import { exo, exoMedium, melodrama } from "@/app/fonts";
 
 export default function ProgrammeOfferSection() {
@@ -93,17 +93,17 @@ export default function ProgrammeOfferSection() {
               lg:text-[24px]
             `}
           >
-            <p>
-              <span className="font-medium">Promo Price:</span>{" "}
-              <strong className="text-[#f25e25]">â‚¦350,000</strong>
+            <p className="font-medium text-gray-500 line-through">
+              Actual Price: ₦3,500,000
             </p>
 
             <p className="font-medium">
               Payment plans available.
             </p>
 
-            <p className="font-bold text-gray-500 line-through">
-              â‚¦500,000
+            <p>
+              <span className="font-medium">Today’s Offer:</span>{" "}
+              <strong className="text-[#f25e25]">₦500,000</strong>
             </p>
           </div>
 
@@ -134,7 +134,7 @@ export default function ProgrammeOfferSection() {
           <p>And perhaps your first reaction is:</p>
 
           <p>
-            &quot;<strong>â‚¦500,000</strong> is still a lot of money for
+            &quot;<strong>₦500,000</strong> is still a lot of money for
             training.&quot;
           </p>
 

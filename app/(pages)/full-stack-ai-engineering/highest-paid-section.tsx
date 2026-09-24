@@ -3,16 +3,17 @@ import { exo, melodrama, space } from "@/app/fonts";
 
 export default function HighestPaidSection() {
   return (
-    <section className="relative z-0 bg-[#FFFDF7] px-5 pb-14 pt-28 sm:px-8 sm:pb-18 sm:pt-36 md:pt-40 lg:px-12 lg:pb-20 lg:pt-48 xl:px-16 -mt-[65px]">
-      <div className="mx-auto flex w-full flex-col items-center gap-[56px] sm:gap-[68px] lg:gap-[76px]">
-        <div className="flex w-full max-w-[860px] mx-auto flex-col gap-10 sm:gap-12 lg:gap-14 text-left">
+    <section className="relative z-0 bg-[#FEFBF6] px-[24.15px] pt-[120px] pb-0 sm:px-8 sm:pb-18 sm:pt-36 md:pt-40 lg:px-12 lg:pb-20 lg:pt-48 xl:px-16 -mt-[65px]">
+      <div className="mx-auto flex w-full flex-col items-center gap-[44px] sm:gap-[68px] lg:gap-[76px]">
+        {/* Frame 2147231158 */}
+        <div className="flex w-full max-w-[326.7px] lg:max-w-[853px] mx-auto flex-col gap-[81.5px] lg:gap-[81px] items-start p-0">
           <h2
-            className={`${melodrama.className} relative w-full text-left text-[30px] font-bold leading-[1.1] tracking-[1.1px] text-[#181c23] sm:text-[36px] lg:text-[44px] lg:leading-[1.15] lg:tracking-[0.2px]`}
+            className={`${melodrama.className} relative w-full text-center lg:text-left text-[24.15px] font-bold leading-[24px] tracking-[1.77px] text-[#181C23] lg:text-[56px] lg:leading-[67px] lg:tracking-[1.76px] lg:max-w-[860px]`}
           >
-            AI/ML Engineers Are{" "}
-            <span className="text-[#f25e25]">One Of The</span>{" "}
+            AI/ML ENGINEERS ARE{" "}
+            <span className="text-[#f25e25]">ONE OF THE</span>{" "}
             <span className="relative inline-block text-[#f25e25]">
-              Highest Paid Employees
+              HIGHEST PAID EMPLOYEES
               <Image
                 src="/assets/images/ai-fullstack-engineering/highest-paid-highlight.svg"
                 alt=""
@@ -21,11 +22,11 @@ export default function HighestPaidSection() {
                 className="pointer-events-none absolute -bottom-1 sm:-bottom-[7px] left-0 h-7 sm:h-10 md:h-12 lg:h-[62px] w-full select-none object-fill"
               />
             </span>{" "}
-            <span className="text-[#f25e25]">Today!!</span>
+            <span className="text-[#f25e25]">TODAY!!</span>
           </h2>
 
           <div
-            className={`${space.className} w-full space-y-5 lg:space-y-6 text-left text-[17px] font-medium leading-[1.48] tracking-[0.2px] text-[#5a4136] sm:text-[18px] sm:leading-[1.55] lg:text-[20px] lg:leading-[1.45] lg:tracking-[0.4px]`}
+            className={`${space.className} w-full text-left lg:text-justify text-[16.1px] font-medium leading-[24px] tracking-[1.01px] text-[#5A4136] lg:text-[24px] lg:leading-[35px] lg:tracking-[1px] space-y-5 lg:space-y-6 lg:max-w-[853px]`}
           >
             <p>I know you&apos;ve recently seen social media posts about AI Engineering.</p>
 
@@ -39,7 +40,7 @@ export default function HighestPaidSection() {
 
             <p>And many thoughts raced through your mind, you thought:</p>
 
-            <div className="space-y-3 leading-[1.65] lg:leading-[1.65]">
+            <div className="space-y-3 leading-[24px] lg:leading-[35px]">
               <p>&quot;Wait... people are actually being paid this much to work in AI?&quot;</p>
               <p>&quot;If I earned that much, I&apos;ll sure have a better life&quot;</p>
               <p>&quot;I wish I could land a job that pays that much&quot;</p>
@@ -70,7 +71,7 @@ export default function HighestPaidSection() {
               for you to believe and imagine is possible.
             </p>
 
-            <p>See for yourself</p>
+            <p>See for yourself:</p>
           </div>
         </div>
 

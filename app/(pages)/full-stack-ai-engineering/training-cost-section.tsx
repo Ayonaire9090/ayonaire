@@ -129,7 +129,7 @@ export default function TrainingCostSection() {
                         left-[8%]
                         top-[8%]
                         text-left
-                        text-[10px]
+                        text-xs
                         font-normal
                         tracking-[0.03em]
 
@@ -162,7 +162,7 @@ export default function TrainingCostSection() {
                   <p
                     className={`
                       ${exoMedium.className}
-                      text-[10px]
+                      text-xs
                       font-normal
 
                       sm:text-[13px]
@@ -174,7 +174,7 @@ export default function TrainingCostSection() {
 
                   <p
                     className={`
-                      text-[10px]
+                      text-xs
                       font-normal
 
                       sm:text-[13px]
@@ -187,7 +187,7 @@ export default function TrainingCostSection() {
 
                   <p
                     className={`
-                      text-[10px]
+                      text-xs
                       font-normal
 
                       sm:text-[13px]
@@ -209,7 +209,7 @@ export default function TrainingCostSection() {
             ${exoMedium.className}
             w-full
             space-y-6
-            text-justify
+            text-left
             text-[16px]
             font-medium
             leading-[1.7]

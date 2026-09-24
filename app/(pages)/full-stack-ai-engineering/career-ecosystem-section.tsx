@@ -1,4 +1,16 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { exo, exoMedium, melodrama, space } from "@/app/fonts";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  type CarouselApi,
+} from "@/components/ui/carousel";
+import { AppPreviousButton } from "@/components/app-previous-button";
+import { AppNextButton } from "@/components/app-next-button";
+import Autoplay from "embla-carousel-autoplay";
 
 const ecosystemItems = [
   {
@@ -109,6 +121,23 @@ const ecosystemItems = [
 ];
 
 export default function CareerEcosystemSection() {
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    setCount(api.scrollSnapList().length);
+    setCurrent(api.selectedScrollSnap() + 1);
+
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap() + 1);
+    });
+  }, [api]);
+
   return (
     <section className="relative overflow-hidden bg-white px-5 pb-16 pt-24 sm:px-8 sm:pt-28 lg:px-12 lg:pb-[120px] lg:pt-36 xl:px-16">
       <div className="pointer-events-none absolute left-1/2 top-0 h-[12.59375rem] sm:h-[25.1875rem] w-screen max-w-none -translate-x-1/2 overflow-hidden">
@@ -121,22 +150,67 @@ export default function CareerEcosystemSection() {
           This is your <span className="text-[#f25e25]">Complete Career</span> Transition Ecosystem.
         </h2>
 
-        <div className="w-full overflow-x-auto pb-4">
-          <div className="flex min-w-max gap-6 lg:gap-10">
-            {ecosystemItems.map((item) => (
-              <article key={item.number} className="relative h-[560px] w-[330px] shrink-0 overflow-hidden rounded-[28px] border-[3px] border-[#4d4c4d] bg-[#020000] bg-[url('/assets/images/ai-fullstack-engineering/career-framework-pattern.png')] bg-cover p-6 text-white sm:w-[390px] lg:h-[633px] lg:w-[472px] lg:p-8">
-                <div className="relative z-10 flex h-full flex-col">
-                  <p className={`${exo.className} text-[16px] font-medium tracking-[0.08em] text-white/60 lg:text-[20px]`}>({item.number})</p>
-                  <h3 className={`${exo.className} mt-10 text-[18px] font-semibold uppercase leading-[1.28] tracking-[0.09em] text-[#f25e25] lg:text-[24px]`}>
-                    {item.title}
-                  </h3>
-                  <p className={`${space.className} mt-auto text-[12px] font-bold  leading-[1.45] tracking-[0.05em] text-white/80 lg:text-[18px] lg:leading-[1.35]`}>
-                    {item.body}
-                  </p>
-                </div>
-              </article>
-            ))}
-          </div>
+        <div className="w-full">
+          <Carousel
+            setApi={setApi}
+            plugins={[
+              Autoplay({
+                delay: 4000,
+                stopOnInteraction: true,
+                stopOnFocusIn: true,
+                stopOnMouseEnter: true,
+              }),
+            ]}
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-6 lg:-ml-10">
+              {ecosystemItems.map((item) => (
+                <CarouselItem
+                  key={item.number}
+                  className="pl-6 lg:pl-10 basis-auto shrink-0"
+                >
+                  <article className="relative h-[560px] w-[300px] xs:w-[330px] overflow-hidden rounded-[28px] border-[3px] border-[#4d4c4d] bg-[#020000] bg-[url('/assets/images/ai-fullstack-engineering/career-framework-pattern.png')] bg-cover p-6 text-white sm:w-[390px] lg:h-[633px] lg:w-[472px] lg:p-8">
+                    <div className="relative z-10 flex h-full flex-col">
+                      <p className={`${exo.className} text-[16px] font-medium tracking-[0.08em] text-white/60 lg:text-[20px]`}>({item.number})</p>
+                      <h3 className={`${exo.className} mt-10 text-[18px] font-semibold uppercase leading-[1.28] tracking-[0.09em] text-[#f25e25] lg:text-[24px]`}>
+                        {item.title}
+                      </h3>
+                      <p className={`${space.className} mt-auto text-[12px] font-normal leading-[1.45] tracking-[0.05em] text-white/80 lg:text-[18px] lg:leading-[1.35]`}>
+                        {item.body}
+                      </p>
+                    </div>
+                  </article>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+
+            {/* Controls with Progress Bar */}
+            <div className="flex justify-center items-center w-full max-w-[80%] mx-auto gap-4 mt-8 lg:mt-10">
+              {/* Rounded on mobile */}
+              <AppPreviousButton buttonType="rounded" className="lg:hidden" />
+              {/* Arrow on desktop */}
+              <AppPreviousButton buttonType="default" className="hidden lg:flex" />
+
+              {/* Progress Bar Track */}
+              <div className="h-2 w-32 lg:w-48 bg-gray-300 rounded-[2px] overflow-hidden">
+                <div
+                  className="h-full bg-[#f25e25] transition-all duration-300 ease-out rounded-[2px]"
+                  style={{
+                    width: `${count > 0 ? (current / count) * 100 : 0}%`,
+                  }}
+                />
+              </div>
+
+              {/* Rounded on mobile */}
+              <AppNextButton buttonType="rounded" className="lg:hidden" />
+              {/* Arrow on desktop */}
+              <AppNextButton buttonType="default" className="hidden lg:flex" />
+            </div>
+          </Carousel>
         </div>
       </div>
     </section>
