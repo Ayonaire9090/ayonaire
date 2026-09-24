@@ -36,7 +36,8 @@ export default function PaymentPlansSection() {
             <h2
               className={`
                 ${melodrama.className}
-                text-[30px]
+                text-[24px]
+                xs:text-[28px]
                 font-bold
                 uppercase
                 leading-[1.18]
@@ -114,7 +115,7 @@ export default function PaymentPlansSection() {
               {plans.map((plan) => (
                 <article
                   key={plan.title}
-                  className="relative flex aspect-[702/336] w-full items-center lg:max-w-[655px]"
+                  className="relative flex min-h-[145px] sm:min-h-0 sm:aspect-[702/336] w-full items-center lg:max-w-[655px]"
                 >
                   <Image
                     src="/assets/images/ai-fullstack-engineering/right-fit-card.svg"
@@ -124,7 +125,7 @@ export default function PaymentPlansSection() {
                     className="pointer-events-none object-contain"
                   />
                   <div
-                    className="relative z-10 flex w-full items-center gap-3.5 pl-6 pr-4 sm:gap-6 sm:pl-8 sm:pr-6 lg:gap-8 lg:pl-10 lg:pr-8"
+                    className="relative z-10 flex w-full items-center gap-3.5 pl-5 pr-3 sm:gap-6 sm:pl-8 sm:pr-6 lg:gap-8 lg:pl-10 lg:pr-8"
                     style={{ transform: "rotate(4.38deg)" }}
                   >
                     {/* CHECK ICON */}
@@ -133,11 +134,11 @@ export default function PaymentPlansSection() {
                       alt=""
                       width={46}
                       height={44}
-                      className="size-[36px] shrink-0 object-contain sm:size-[46px] lg:size-[58px]"
+                      className="size-[32px] xs:size-[36px] shrink-0 object-contain sm:size-[46px] lg:size-[58px]"
                     />
 
                     {/* PLAN CONTENT */}
-                    <div className="w-[68%] space-y-1.5 text-[#181c23] sm:space-y-2 lg:space-y-2.5">
+                    <div className="w-[76%] sm:w-[68%] space-y-1.5 text-[#181c23] sm:space-y-2 lg:space-y-2.5">
                       <h3
                         className={`
                           ${exo.className}

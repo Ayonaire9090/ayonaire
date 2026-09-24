@@ -38,14 +38,14 @@ export default function WhatICanDoSection() {
           sizes="(min-width: 1024px) 250px, 190px"
         />
 
-        <h2 className={`${melodrama.className} text-center text-[34px] font-bold uppercase leading-[1.16] tracking-[-0.8px] text-[#f25e25] sm:text-[44px] lg:text-[56px] lg:tracking-[-1.4px]`}>
+        <h2 className={`${melodrama.className} text-center text-[26px] xs:text-[30px] font-bold uppercase leading-[1.16] tracking-[-0.8px] text-[#f25e25] sm:text-[44px] lg:text-[56px] lg:tracking-[-1.4px]`}>
           &quot;Here is what I can do.&quot;
         </h2>
 
-        <div className="w-full rounded-[16px] bg-white px-5 py-8 shadow-[0_1px_6px_rgba(0,0,0,0.16)] sm:px-8 sm:py-10 lg:px-12 lg:py-12 xl:px-16">
-          <ul className="grid gap-4 sm:gap-5 lg:gap-5">
+        <div className="w-full rounded-[16px] bg-white px-4 py-6 xs:px-5 sm:px-8 sm:py-10 shadow-[0_1px_6px_rgba(0,0,0,0.16)] lg:px-12 lg:py-12 xl:px-16">
+          <ul className="grid gap-3.5 xs:gap-4 sm:gap-5 lg:gap-5">
             {proofStatements.map((statement) => (
-              <li key={statement} className={`${exoMedium.className} grid grid-cols-[30px_1fr] items-start gap-4 text-[17px] font-bold leading-[1.65] tracking-[0.3px] text-[#263238] sm:text-[20px] lg:text-[28px] lg:leading-[1.7] lg:tracking-[0.6px]`}>
+              <li key={statement} className={`${exoMedium.className} grid grid-cols-[28px_1fr] xs:grid-cols-[30px_1fr] items-start gap-3 xs:gap-4 text-[15px] xs:text-[17px] font-bold leading-[1.55] tracking-[0.2px] text-[#263238] sm:text-[20px] lg:text-[28px] lg:leading-[1.7] lg:tracking-[0.6px]`}>
                 <BulletPair />
                 <span>{statement}</span>
               </li>

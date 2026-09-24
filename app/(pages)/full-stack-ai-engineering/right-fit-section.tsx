@@ -57,7 +57,7 @@ function ChecklistGroup({ eyebrow, items }: { eyebrow: string; items: string[] }
         {items.map((item) => (
           <article
             key={item}
-            className="relative flex aspect-[702/336] w-full max-w-[655px] items-center"
+            className="relative flex min-h-[140px] xs:min-h-[130px] sm:min-h-0 sm:aspect-[702/336] w-full max-w-[655px] items-center"
           >
             <Image
               src="/assets/images/ai-fullstack-engineering/right-fit-card.svg"
@@ -67,7 +67,7 @@ function ChecklistGroup({ eyebrow, items }: { eyebrow: string; items: string[] }
               className="pointer-events-none object-contain"
             />
             <div
-              className="relative z-10 flex w-full items-center gap-3.5 pl-6 pr-4 sm:gap-6 sm:pl-8 sm:pr-6 lg:gap-8 lg:pl-10 lg:pr-8"
+              className="relative z-10 flex w-full items-center gap-3.5 pl-5 pr-3 sm:gap-6 sm:pl-8 sm:pr-6 lg:gap-8 lg:pl-10 lg:pr-8"
               style={{ transform: "rotate(4.38deg)" }}
             >
               <Image
@@ -75,9 +75,9 @@ function ChecklistGroup({ eyebrow, items }: { eyebrow: string; items: string[] }
                 alt=""
                 width={46}
                 height={44}
-                className="size-[36px] shrink-0 object-contain sm:size-[46px] lg:size-[58px]"
+                className="size-[32px] xs:size-[36px] shrink-0 object-contain sm:size-[46px] lg:size-[58px]"
               />
-              <p className={`${rope.className} w-[68%] text-[12px] font-bold leading-[1.65] tracking-[0.3px] text-[#181c23] sm:text-[15px] sm:leading-[1.5] lg:text-[19px] lg:leading-[1.5] xl:text-[20px]`}>
+              <p className={`${rope.className} w-[76%] sm:w-[68%] text-[12px] font-bold leading-[1.6] tracking-[0.3px] text-[#181c23] sm:text-[15px] sm:leading-[1.5] lg:text-[19px] lg:leading-[1.5] xl:text-[20px]`}>
                 {item}
               </p>
             </div>

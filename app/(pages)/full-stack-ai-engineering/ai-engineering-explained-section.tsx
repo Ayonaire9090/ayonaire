@@ -69,7 +69,7 @@ export default function AiEngineeringExplainedSection() {
         {/* HEADER */}
         <div className="flex w-full max-w-[1120px] flex-col items-center gap-8 text-center sm:gap-10 lg:gap-12">
           <h2
-            className={`${melodrama.className} relative max-w-[1003px] text-[30px] font-bold leading-[1.15] tracking-[-0.5px] text-[#181c23] sm:text-[38px] lg:text-[46px] lg:leading-[1.18]`}
+            className={`${melodrama.className} relative max-w-[1003px] text-[22px] xs:text-[26px] font-bold leading-[1.18] tracking-[-0.5px] text-[#181c23] sm:text-[38px] lg:text-[46px] lg:leading-[1.18]`}
           >
             Which one do you think creates the{" "}
             <span className="relative inline-block text-[#f25e25]">
@@ -85,7 +85,7 @@ export default function AiEngineeringExplainedSection() {
           </h2>
 
           <h3
-            className={`${melodrama.className} text-[28px] font-bold leading-tight tracking-[0.2px] text-[#181c23] sm:text-[34px] lg:text-[40px]`}
+            className={`${melodrama.className} text-[20px] xs:text-[24px] font-bold leading-tight tracking-[0.2px] text-[#181c23] sm:text-[34px] lg:text-[40px]`}
           >
             So what exactly is{" "}
             <span className="text-[#f25e25]">AI Engineering?</span>
@@ -193,16 +193,17 @@ function TimelineCard({
         className={`
           relative
           z-10
-          w-[92%]
+          w-full
           max-w-[520px]
           rounded-[20px]
           bg-white
-          px-6
-          pb-7
-          pt-10
+          px-4
+          pb-6
+          pt-9
           shadow-[0px_4px_20px_rgba(0,0,0,0.06)]
           border
           border-black/5
+          xs:px-6
           sm:w-[88%]
           sm:px-8
           sm:pb-8

@@ -51,9 +51,10 @@ export default function TrainingCostSection() {
             className={`
               ${melodrama.className}
               max-w-[940px]
-              text-[28px]
+              text-[24px]
+              xs:text-[28px]
               font-bold
-              leading-[1.12]
+              leading-[1.15]
               tracking-[0.1px]
               text-[#181c23]
 
@@ -91,7 +92,7 @@ export default function TrainingCostSection() {
         </div>
 
         {/* PROGRAMME CARDS */}
-        <div className="grid w-full grid-cols-2 gap-5 sm:gap-7 lg:gap-9">
+        <div className="grid w-full grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-7 lg:gap-9 max-w-[440px] sm:max-w-none">
           {programmeExamples.map((programme) => {
             return (
               <article
@@ -101,8 +102,8 @@ export default function TrainingCostSection() {
                   w-full
                   ${
                     programme.featured
-                      ? "col-span-2 mx-auto w-[85%] sm:w-[65%] lg:w-[52%]"
-                      : ""
+                      ? "col-span-1 sm:col-span-2 mx-auto w-full sm:w-[65%] lg:w-[52%]"
+                      : "w-full max-w-[440px] sm:max-w-none mx-auto"
                   }
                 `}
                 style={{

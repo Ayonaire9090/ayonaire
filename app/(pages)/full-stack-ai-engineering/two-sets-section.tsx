@@ -34,7 +34,7 @@ export default function TwoSetsSection() {
       <div className="mx-auto flex w-full max-w-[1288px] flex-col items-center gap-16 px-5 py-16 sm:px-8 lg:px-12 xl:px-16 lg:gap-20 lg:py-20">
         <div className="relative flex w-full max-w-[1120px] flex-col items-center gap-12 text-center lg:gap-14">
           <h2
-            className={`${melodrama.className} relative text-[30px] font-bold leading-[1.12] tracking-[-0.95px] text-[#181c23] sm:text-[36px] lg:text-[44px] lg:leading-[1.16] lg:tracking-[-0.6px]`}
+            className={`${melodrama.className} relative text-[24px] xs:text-[28px] font-bold leading-[1.15] tracking-[-0.5px] text-[#181c23] sm:text-[36px] lg:text-[44px] lg:leading-[1.16] lg:tracking-[-0.6px]`}
           >
             There are{" "}
             <span className="relative inline-block text-[#f25e25]">
@@ -64,7 +64,7 @@ export default function TwoSetsSection() {
           </div>
 
           <p
-            className={`${melodrama.className} w-full text-left text-[30px] font-bold leading-tight tracking-[-0.9px] text-black sm:text-[36px] lg:text-[44px] lg:leading-[1.16] lg:tracking-[-0.6px]`}
+            className={`${melodrama.className} w-full text-left text-[24px] xs:text-[28px] font-bold leading-tight tracking-[-0.5px] text-black sm:text-[36px] lg:text-[44px] lg:leading-[1.16] lg:tracking-[-0.6px]`}
           >
             I want you to be <span className="text-[#f25e25]">that person</span>
           </p>
@@ -123,7 +123,7 @@ export default function TwoSetsSection() {
             href="https://wa.link/f1iadg"
             target="_blank"
             rel="noopener noreferrer"
-            className={`${exoMedium.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-10 py-5 text-[15px] text-white sm:text-[16px] shadow-[0px_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01]`}
+            className={`${exoMedium.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-5 py-3.5 text-[13px] text-white text-center sm:px-10 sm:py-5 sm:text-[16px] shadow-[0px_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01]`}
           >
             SHOW ME THE AI ENGINEERING PATH
             <Image
@@ -131,7 +131,7 @@ export default function TwoSetsSection() {
               alt=""
               width={16}
               height={16}
-              className="size-4"
+              className="size-4 shrink-0"
             />
           </a>
         </div>
@@ -190,7 +190,7 @@ export default function TwoSetsSection() {
       >
         <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-14 lg:gap-20">
           <h2
-            className={`${melodrama.className} relative text-[30px] font-bold leading-tight tracking-[-0.95px] text-[#181c23] sm:text-[36px] lg:text-[44px] lg:leading-[1.16] lg:tracking-[-0.6px]`}
+            className={`${melodrama.className} relative text-[24px] xs:text-[28px] font-bold leading-tight tracking-[-0.5px] text-[#181c23] sm:text-[36px] lg:text-[44px] lg:leading-[1.16] lg:tracking-[-0.6px]`}
           >
             AI Engineering{" "}
             <span className="relative inline-block text-[#f25e25]">
@@ -210,12 +210,12 @@ export default function TwoSetsSection() {
             {skills.map((skill, index) => (
               <div
                 key={skill}
-                className="relative flex min-h-[96px] items-center overflow-hidden rounded-[14px] bg-white px-6 py-5 shadow-[0px_1px_6px_rgba(0,0,0,0.12)] lg:min-h-[122px]"
+                className="relative flex min-h-[76px] sm:min-h-[96px] items-center overflow-hidden rounded-[14px] bg-white px-4 py-3.5 sm:px-6 sm:py-5 shadow-[0px_1px_6px_rgba(0,0,0,0.12)] lg:min-h-[122px]"
               >
-                <span className="absolute left-6 top-1/2 -translate-y-1/2 text-[44px] font-bold leading-none tracking-[-0.166px] text-[#f25e25] opacity-20 lg:text-[72px]">
+                <span className="absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 text-[32px] sm:text-[44px] font-bold leading-none tracking-[-0.166px] text-[#f25e25] opacity-20 lg:text-[72px]">
                   {String(index + 1).padStart(2, "0")}
                 </span>
-                <span className="relative ml-[96px] text-[18px] font-bold tracking-[-0.319px] text-black lg:ml-[120px] lg:text-[22px]">
+                <span className="relative ml-[52px] sm:ml-[80px] text-[15px] sm:text-[18px] font-bold tracking-[-0.319px] text-black lg:ml-[120px] lg:text-[22px]">
                   {skill}
                 </span>
               </div>
@@ -240,7 +240,7 @@ function BlackWarningCard({
 }) {
   return (
     <article
-      className={`relative w-full aspect-[1.53/1] overflow-visible ${className}`}
+      className={`relative w-full min-h-[220px] xs:min-h-[200px] sm:min-h-0 sm:aspect-[1.53/1] overflow-visible ${className}`}
     >
       {/* CUSTOM CARD SHAPE */}
       <svg
@@ -276,7 +276,8 @@ function BlackWarningCard({
           absolute
           left-[7.5%]
           right-[7%]
-          top-[18%]
+          top-[14%]
+          sm:top-[18%]
         "
       >
         <h3

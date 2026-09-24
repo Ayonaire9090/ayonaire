@@ -24,7 +24,7 @@ export default function RegisteredCompanySection() {
         {/* Left */}
         <div className="flex flex-col gap-8 lg:gap-10">
           <h2
-            className={`${melodrama.className} text-[34px] font-bold uppercase leading-[1.15] tracking-[0.3px] text-[#181c23] sm:text-[44px] lg:text-[56px] lg:leading-[70px] lg:tracking-[0.6px]`}
+            className={`${melodrama.className} text-[26px] xs:text-[30px] sm:text-[44px] font-bold uppercase leading-[1.15] tracking-[0.3px] text-[#181c23] lg:text-[56px] lg:leading-[70px] lg:tracking-[0.6px]`}
           >
             Ayonaire Academy{" "}
             <span className="text-[#f25e25]">
@@ -102,7 +102,7 @@ export default function RegisteredCompanySection() {
           href="https://wa.link/f1iadg"
           target="_blank"
           rel="noopener noreferrer"
-          className={`${exoMedium.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-8 py-4 text-center text-[13px] font-bold uppercase leading-[1.45] text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:px-10 sm:py-5 lg:text-[16px]`}
+          className={`${exoMedium.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-5 py-3.5 text-center text-[13px] font-bold uppercase leading-[1.45] text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:px-10 sm:py-5 lg:text-[16px]`}
         >
           Start my AI career transition
 
@@ -133,7 +133,7 @@ function ProofCard({
   return (
     <article
       onMouseEnter={onHover}
-      className="relative flex aspect-[702/336] w-full items-center cursor-pointer lg:max-w-[655px]"
+      className="relative flex min-h-[125px] sm:min-h-0 sm:aspect-[702/336] w-full items-center cursor-pointer lg:max-w-[655px] py-4 sm:py-0"
     >
       {/* Vector1 Card Background */}
       <Image
@@ -164,7 +164,7 @@ function ProofCard({
         <p
           className={`
             ${rope.className}
-            w-[68%]
+            w-[76%] sm:w-[68%]
             text-[12px]
             font-bold
             leading-[1.65]

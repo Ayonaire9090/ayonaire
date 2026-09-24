@@ -16,7 +16,7 @@ export default function FinalQuestionSection() {
 
         <div className="flex w-full flex-col items-center gap-8">
           <div className="relative w-full max-w-[713px]">
-            <h2 className={`${rope.className} relative z-10 text-[34px] font-bold leading-[1.08] tracking-[-0.8px] text-[#181c23] sm:text-[44px] lg:text-[56px] lg:leading-[60.48px] lg:tracking-[-1.4px]`}>
+            <h2 className={`${rope.className} relative z-10 text-[24px] xs:text-[28px] font-bold leading-[1.08] tracking-[-0.8px] text-[#181c23] sm:text-[44px] lg:text-[56px] lg:leading-[60.48px] lg:tracking-[-1.4px]`}>
               <span className="text-[#f25e25]">One last question</span> before you leave.
             </h2>
             <Image

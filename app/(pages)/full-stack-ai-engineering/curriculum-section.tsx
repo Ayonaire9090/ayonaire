@@ -348,7 +348,7 @@ export default function CurriculumSection() {
       <div className="relative z-10 mx-auto flex w-full max-w-[1240px] flex-col items-center gap-12 lg:gap-20">
         {/* Heading */}
         <h2
-          className={`${melodrama.className} pt-16 sm:pt-20 lg:pt-24 text-center text-[30px] font-bold uppercase leading-[1.12] tracking-[-0.8px] text-white sm:text-[36px] lg:text-[44px] lg:leading-[1.16]`}
+          className={`${melodrama.className} pt-16 sm:pt-20 lg:pt-24 text-center text-[24px] xs:text-[28px] font-bold uppercase leading-[1.12] tracking-[-0.8px] text-white sm:text-[36px] lg:text-[44px] lg:leading-[1.16]`}
         >
           Now, take a look at the{" "}
           <span className="relative inline-block text-[#ff6b00]">
@@ -366,7 +366,7 @@ export default function CurriculumSection() {
 
         {/* Intro */}
         <p
-          className={`${exoMedium.className} text-left text-[18px] font-medium leading-[1.55] tracking-[0.5px] text-white lg:text-[28px] lg:leading-[1.5]`}
+          className={`${exoMedium.className} text-left text-[16px] xs:text-[18px] font-medium leading-[1.55] tracking-[0.5px] text-white lg:text-[28px] lg:leading-[1.5]`}
         >
           The curriculum is designed to take you from{" "}
           <strong>writing your first lines of Python</strong> to{" "}
@@ -374,7 +374,7 @@ export default function CurriculumSection() {
         </p>
 
         <h3
-          className={`${melodrama.className} text-center text-[30px] font-bold uppercase leading-[1.12] tracking-[-0.8px] text-white lg:text-[44px]`}
+          className={`${melodrama.className} text-center text-[22px] xs:text-[26px] sm:text-[30px] font-bold uppercase leading-[1.12] tracking-[-0.8px] text-white lg:text-[44px]`}
         >
           Course Curriculum.
         </h3>
@@ -504,7 +504,9 @@ export default function CurriculumSection() {
               overflow-y-auto
               rounded-[12px]
               bg-[rgba(255,255,255,0.1)]
-              p-6
+              p-4
+              xs:p-6
+              sm:p-8
               lg:sticky
               lg:top-8
               lg:p-12
@@ -512,31 +514,31 @@ export default function CurriculumSection() {
           >
             {/* Module Number */}
             <p
-              className={`${exo.className} text-[22px] font-bold leading-[1.4] tracking-[-0.4px] text-[#ff6b00] lg:text-[32px]`}
+              className={`${exo.className} text-[18px] xs:text-[22px] font-bold leading-[1.4] tracking-[-0.4px] text-[#ff6b00] lg:text-[32px]`}
             >
               Module {activeModule + 1}
             </p>
 
             {/* Module Title */}
             <h4
-              className={`${exo.className} mt-4 text-[18px] font-bold leading-[1.3] tracking-[-0.6px] text-white lg:mt-6 lg:text-[30px]`}
+              className={`${exo.className} mt-3 xs:mt-4 text-[17px] xs:text-[18px] font-bold leading-[1.3] tracking-[-0.6px] text-white sm:text-[22px] lg:mt-6 lg:text-[30px]`}
             >
               {selectedModule.title}
             </h4>
 
             {/* Module lessons */}
-            <ol className="mt-8 space-y-6 lg:space-y-8">
+            <ol className="mt-6 xs:mt-8 space-y-5 xs:space-y-6 lg:space-y-8">
               {selectedModule.lessons.map((lesson, index) => (
                 <li
                   key={`${selectedModule.title}-${lesson}`}
-                  className="grid grid-cols-[48px_1fr] items-start gap-5"
+                  className="grid grid-cols-[38px_1fr] xs:grid-cols-[48px_1fr] items-start gap-3 xs:gap-5"
                 >
-                  <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-[rgba(248,100,50,0.37)] text-[20px] font-medium text-white">
+                  <span className="flex size-9 xs:size-12 shrink-0 items-center justify-center rounded-full bg-[rgba(248,100,50,0.37)] text-[15px] xs:text-[20px] font-medium text-white">
                     {index + 1}
                   </span>
 
                   <span
-                    className={`${adineue.className} pt-1 text-[18px] leading-[1.55] tracking-[0.4px] text-white lg:text-[24px]`}
+                    className={`${adineue.className} pt-1 text-[15px] xs:text-[18px] leading-[1.55] tracking-[0.4px] text-white lg:text-[24px]`}
                   >
                     {lesson}
                   </span>
@@ -551,7 +553,7 @@ export default function CurriculumSection() {
           href="https://wa.link/f1iadg"
           target="_blank"
           rel="noopener noreferrer"
-          className={`${exoMedium.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-8 py-4 text-center text-[14px] font-bold uppercase text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:px-10 sm:py-5 sm:text-[16px] lg:text-[18px]`}
+          className={`${exoMedium.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-5 py-3.5 text-center text-[12px] xs:text-[14px] font-bold uppercase text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:px-10 sm:py-5 sm:text-[16px] lg:text-[18px]`}
         >
           I want to become an AI/ML engineer
 

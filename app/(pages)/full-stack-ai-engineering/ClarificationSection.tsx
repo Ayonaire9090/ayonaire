@@ -11,11 +11,12 @@ export default function ClarificationSection() {
           mx-auto
           max-w-[900px]
           text-center
-          text-[30px]
+          text-[24px]
+          xs:text-[28px]
           font-bold
           uppercase
-          leading-[1.12]
-          tracking-[-0.95px]
+          leading-[1.15]
+          tracking-[-0.5px]
           text-[#181c23]
           sm:text-[38px]
           md:text-[46px]
@@ -25,11 +26,11 @@ export default function ClarificationSection() {
         `}
       >
         First,{" "}
-        <span className="text-[#f25e25] whitespace-nowrap">let&apos;s clear</span>{" "}
+        <span className="text-[#f25e25]">let&apos;s clear</span>{" "}
         something{" "}
-        <span className="whitespace-nowrap">
+        <span>
           out{" "}
-          <span className="text-[#f25e25] whitespace-nowrap">real quick...</span>
+          <span className="text-[#f25e25]">real quick...</span>
         </span>
       </h2>
 

@@ -63,10 +63,10 @@ export default function ActualBuildSection() {
     <section className="overflow-hidden bg-[linear-gradient(150deg,#ffffff_3%,rgba(255,220,196,0.28)_21%,rgba(255,255,255,0.7)_67%,#ffdcc4_99%)] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28">
       <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-12 lg:gap-20">
         <div className="max-w-[1035px] text-center">
-          <h2 className={`${melodrama.className} text-[32px] font-bold uppercase leading-[1.12] tracking-[0.2px] text-[#181c23] sm:text-[40px] lg:text-[56px] lg:leading-[1.25]`}>
+          <h2 className={`${melodrama.className} text-[24px] xs:text-[28px] font-bold uppercase leading-[1.12] tracking-[0.2px] text-[#181c23] sm:text-[40px] lg:text-[56px] lg:leading-[1.25]`}>
             Now let&apos;s talk about <span className="text-[#f25e25]">what you will actually build.</span>
           </h2>
-          <p className={`${exoMedium.className} mt-5 text-[18px] font-medium leading-[1.5] text-[#181c23] sm:text-[22px] lg:text-[28px]`}>
+          <p className={`${exoMedium.className} mt-4 xs:mt-5 text-[16px] xs:text-[18px] font-medium leading-[1.5] text-[#181c23] sm:text-[22px] lg:text-[28px]`}>
             You&apos;ll build projects across different industries:
           </p>
         </div>
@@ -94,22 +94,22 @@ export default function ActualBuildSection() {
                   key={project.title}
                   className="pl-6 lg:pl-10 basis-auto shrink-0"
                 >
-                  <article className="relative min-h-[500px] sm:min-h-[540px] lg:min-h-[600px] w-[300px] xs:w-[330px] overflow-hidden rounded-[28px] border-[3px] border-[#4d4c4d] bg-[#020000] p-6 text-white sm:w-[390px] lg:w-[472px] lg:p-8">
+                  <article className="relative min-h-[460px] xs:min-h-[500px] sm:min-h-[540px] lg:min-h-[600px] w-[260px] xs:w-[300px] sm:w-[390px] lg:w-[472px] overflow-hidden rounded-[24px] xs:rounded-[28px] border-[3px] border-[#4d4c4d] bg-[#020000] p-5 xs:p-6 text-white lg:p-8">
                     <Image
                       src="/assets/images/ai-fullstack-engineering/career-framework-card-bg.png"
                       alt=""
                       fill
-                      sizes="(min-width: 1024px) 472px, (min-width: 640px) 390px, 330px"
+                      sizes="(min-width: 1024px) 472px, (min-width: 640px) 390px, 300px"
                       className="pointer-events-none object-cover opacity-95"
                     />
                     <div className="relative z-10 flex h-full flex-col">
-                      <p className={`${exo.className} text-[15px] font-medium uppercase tracking-[0.08em] text-white/60 lg:text-[20px]`}>
+                      <p className={`${exo.className} text-[14px] xs:text-[15px] font-medium uppercase tracking-[0.08em] text-white/60 lg:text-[20px]`}>
                         {project.number}
                       </p>
-                      <h3 className={`${exo.className} mt-10 text-[28px] font-semibold uppercase leading-[1.28] tracking-[0.09em] text-[#f25e25] lg:text-[40px]`}>
+                      <h3 className={`${exo.className} mt-8 xs:mt-10 text-[22px] xs:text-[26px] font-semibold uppercase leading-[1.28] tracking-[0.09em] text-[#f25e25] sm:text-[28px] lg:text-[40px]`}>
                         {project.title}
                       </h3>
-                      <p className={`${space.className} mt-auto text-[14px] font-normal leading-[1.45] tracking-[0.05em] text-white/80 sm:text-[16px] lg:text-[20px] lg:leading-[1.35]`}>
+                      <p className={`${space.className} mt-auto text-[13px] xs:text-[14px] font-normal leading-[1.45] tracking-[0.05em] text-white/80 sm:text-[16px] lg:text-[20px] lg:leading-[1.35]`}>
                         {project.body}
                       </p>
                     </div>

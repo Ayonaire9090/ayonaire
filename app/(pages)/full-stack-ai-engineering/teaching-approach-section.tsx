@@ -25,12 +25,13 @@ export default function TeachingApproachSection() {
             ${melodrama.className}
             max-w-[960px]
             text-center
-            text-[30px]
+            text-[24px]
             font-bold
             uppercase
             leading-[1.12]
             tracking-[-0.7px]
 
+            xs:text-[28px]
             sm:text-[36px]
 
             lg:text-[46px]
@@ -104,8 +105,8 @@ export default function TeachingApproachSection() {
           <p>Our learning cycle is:</p>
 
           <p className="font-bold uppercase">
-            Explain â†’ Demonstrate â†’ Code Together â†’ Practise â†’ Build â†’ Present â†’
-            Feedback â†’ Improve
+            Explain &rarr; Demonstrate &rarr; Code Together &rarr; Practise &rarr; Build &rarr; Present &rarr;
+            Feedback &rarr; Improve
           </p>
         </div>
 
@@ -145,8 +146,8 @@ export default function TeachingApproachSection() {
             gap-2
             rounded-[8px]
             bg-[#ff6b00]
-            px-8
-            py-4
+            px-5
+            py-3.5
             text-center
             text-xs
             font-bold

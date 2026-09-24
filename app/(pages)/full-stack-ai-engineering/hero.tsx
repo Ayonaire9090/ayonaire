@@ -1,4 +1,4 @@
-﻿import Image from "next/image";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { melodrama, salt } from "@/app/fonts";
 
@@ -9,7 +9,7 @@ export default function Hero() {
         relative
         z-20
         w-full
-        overflow-visible
+        overflow-x-clip
         bg-transparent
         pb-[30px]
         sm:pb-[35px]
@@ -19,7 +19,7 @@ export default function Hero() {
     >
       {/* 1. CLIPPED BLACK BACKGROUND CONTAINER */}
       <div
-        className="absolute inset-0 bg-black"
+        className="absolute inset-0 overflow-hidden bg-black"
         style={{
           clipPath: "polygon(0 0, 100% 0, 100% calc(100% - 60px), 0 100%)",
         }}
@@ -44,7 +44,7 @@ export default function Hero() {
         {/* HERO CORNER LIGHTS - MOBILE */}
         <div className="pointer-events-none relative h-full w-full select-none sm:hidden">
           {/* TOP-LEFT CORNER LIGHT */}
-          <div className="absolute -left-1 -top-1 h-[220px] w-[220px] xs:h-[250px] xs:w-[250px]">
+          <div className="absolute left-0 top-0 h-[220px] w-[220px] xs:h-[250px] xs:w-[250px]">
             <Image
               src="/assets/images/ai-fullstack-engineering/hero-corner-top-left.png"
               alt=""
@@ -56,7 +56,7 @@ export default function Hero() {
           </div>
 
           {/* BOTTOM-RIGHT CORNER LIGHT */}
-          <div className="absolute -right-1 -bottom-1 h-[250px] w-[250px] xs:h-[280px] xs:w-[280px]">
+          <div className="absolute right-0 bottom-0 h-[250px] w-[250px] xs:h-[280px] xs:w-[280px]">
             <Image
               src="/assets/images/ai-fullstack-engineering/hero-corner-bottom-right.png"
               alt=""
@@ -125,12 +125,13 @@ export default function Hero() {
               ${melodrama.className}
               mx-auto
               max-w-[1120px]
-              text-[clamp(2.6rem,7vw,5.35rem)]
+              text-[clamp(1.75rem,6.8vw,5.35rem)]
               font-bold
-              leading-[0.96]
+              leading-[1.05]
               tracking-[-0.015em]
               text-white
               drop-shadow-[0_8px_22px_rgba(0,0,0,0.55)]
+              sm:leading-[0.96]
             `}
           >
             <span className="block">Entry-Level AI/ML Engineers</span>
@@ -256,8 +257,8 @@ export default function Hero() {
               gap-2
               rounded-[5px]
               bg-[#ff6b00]
-              px-8
-              py-4
+              px-5
+              py-3.5
               text-xs
               font-black
               uppercase
@@ -276,6 +277,7 @@ export default function Hero() {
 
               sm:min-h-[48px]
               sm:px-9
+              sm:py-4
               sm:text-[12px]
 
               md:min-h-[52px]

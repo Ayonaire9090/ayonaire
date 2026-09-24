@@ -8,7 +8,7 @@ const Next10MonthsSection = () => {
       <div className=' max-w-[1279px] w-full mx-auto flex flex-col gap-6'>
         
         {/* Header with Melodrama font and highlighted text */}
-        <h2 className={`${melodrama.className} font-bold text-3xl sm:text-4xl lg:text-5xl text-[#111111] leading-[1.2] relative z-10 mb-4 text-center`}>
+        <h2 className={`${melodrama.className} font-bold text-2xl xs:text-3xl sm:text-4xl lg:text-5xl text-[#111111] leading-[1.2] relative z-10 mb-4 text-center`}>
           The{' '}
           <span className="relative inline-block text-[#F4672B]">
             next 10 months
@@ -25,7 +25,7 @@ const Next10MonthsSection = () => {
         </h2>
 
         {/* Body content with Space font and left alignment */}
-     <div className={`${space.className} text-[#333333] text-xl sm:text-2xl leading-relaxed flex flex-col gap-6 text-left`}>
+     <div className={`${space.className} text-[#333333] text-[16px] sm:text-xl lg:text-2xl leading-relaxed flex flex-col gap-6 text-left`}>
          
           <p>Think about that for a moment.</p>
 
