@@ -35,7 +35,7 @@ export default function ExperienceProofSection() {
               of experience before you&apos;re taken seriously...
             </span>
             <span className="inline md:hidden">
-              this is{" "}
+              <span className="block">this is</span>
               <span className="relative inline-block text-[#f25e25] px-1 my-0.5">
                 NOT a field where you
                 <Image
@@ -56,7 +56,9 @@ export default function ExperienceProofSection() {
                   className="pointer-events-none absolute left-1/2 top-1/2 h-[120%] w-[108%] -translate-x-1/2 -translate-y-1/2 select-none object-fill"
                 />
               </span>{" "}
-              of experience before you&apos;re taken seriously...
+              <span className="block mt-0.5">
+                of experience before you&apos;re taken seriously...
+              </span>
             </span>
           </h2>
 
