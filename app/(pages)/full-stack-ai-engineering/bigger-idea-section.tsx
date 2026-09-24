@@ -15,7 +15,7 @@ const transitionSteps = [
 
 export default function BiggerIdeaSection() {
   return (
-    <section className="relative overflow-hidden bg-[#171717] px-5 py-16 text-white sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
+    <section className="relative overflow-hidden bg-[#171717] px-5 py-16 text-white sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28">
       {/* Decorative circles */}
       <div className="pointer-events-none absolute -left-28 top-1/3 size-64 rounded-full border-[3px] border-[#ff6b00] opacity-70" />
 

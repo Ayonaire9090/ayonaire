@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 import Image from "next/image";
 import { exo, exoMedium, salt  } from "@/app/fonts";
 
@@ -10,8 +10,8 @@ const schedule = [
 
 export default function WeeklyScheduleSection() {
   return (
-    <section className="bg-white px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
-      <div className="mx-auto max-w-[1240px] rounded-[40px] bg-[#fdd8cc] px-6 py-12 sm:px-10 lg:px-20 lg:py-20">
+    <section className="bg-white px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28">
+      <div className="mx-auto max-w-[1240px] rounded-[32px] sm:rounded-[40px] bg-[#fdd8cc] px-6 py-10 sm:px-10 sm:py-14 lg:px-16 lg:py-16 xl:px-20 xl:py-20">
         <div className="flex flex-col items-center gap-10 lg:gap-11">
           <div className="w-full space-y-8">
             <p className={`${exoMedium.className} text-[18px] font-bold uppercase leading-[1.6] tracking-[0.08em] text-[#5a4136] underline underline-offset-4 lg:text-[24px]`}>

@@ -107,7 +107,7 @@ export default function LearningPathSection() {
   return (
     <>
       {/* SECTION 1: TOP ROUTES & EXPLANATION CARDS */}
-      <section className="bg-[#fff5ee] px-5 py-16 sm:px-8 lg:px-12 xl:px-16 lg:py-[120px]">
+      <section className="bg-[#fff5ee] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28">
         <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-16 lg:gap-20">
           <div className="flex w-full max-w-[1091px] flex-col items-center gap-8 text-center lg:gap-10">
             <p
@@ -171,7 +171,7 @@ export default function LearningPathSection() {
               {explanationCards.map((card) => (
                 <article
                   key={card.number}
-                  className="relative min-h-[260px] rounded-[24px] bg-white px-6 pb-8 pt-14 shadow-[0_1px_12px_rgba(0,0,0,0.12)] sm:px-8 lg:min-h-[350px] lg:rounded-[40px] lg:px-10 lg:pb-10 lg:pt-20"
+                  className="relative min-h-[220px] rounded-[24px] bg-white px-6 pb-8 pt-14 shadow-[0_1px_12px_rgba(0,0,0,0.12)] sm:min-h-[260px] sm:px-8 lg:min-h-[320px] xl:min-h-[350px] lg:rounded-[40px] lg:px-10 lg:pb-10 lg:pt-20"
                 >
                   <NumberBadge value={card.number} />
                   <Image
@@ -201,7 +201,7 @@ export default function LearningPathSection() {
       </section>
 
       {/* SECTION 2: FULL BLEED WHITE SECTION (Match Screenshot 1) */}
-      <section className="w-full bg-white px-5 py-14 sm:px-8 lg:px-12 lg:py-20 xl:px-16">
+      <section className="w-full bg-white px-5 py-14 sm:px-8 sm:py-16 lg:px-12 lg:py-20 xl:px-16 xl:py-24">
         <div className="mx-auto max-w-[1040px] space-y-6 text-left text-[17px] leading-[1.6] tracking-[0.2px] text-[#5a4136] sm:text-[19px] lg:text-[22px] lg:leading-[1.65]">
           <p
             className={`${exo.className} text-[20px] font-bold text-[#181c23] sm:text-[24px] lg:text-[28px]`}
@@ -243,7 +243,7 @@ export default function LearningPathSection() {
       </section>
 
       {/* SECTION 3: BOTTOM CHALLENGE & STUCK ITEMS */}
-      <section className="bg-[#fff5ee] px-5 py-16 sm:px-8 lg:px-12 xl:px-16 lg:py-[120px]">
+      <section className="bg-[#fff5ee] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28">
         <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-16 lg:gap-20">
           <div className="w-full space-y-16">
             <div className="rounded-[24px] bg-[#fdd8cc] p-6 sm:p-10 lg:rounded-[40px]">
@@ -368,7 +368,7 @@ function RouteCard({ route }: { route: (typeof routes)[number] }) {
 
 function NumberBadge({ value }: { value: string }) {
   return (
-    <span className="absolute left-6 top-[-22px] flex size-[72px] rotate-[3deg] items-center justify-center rounded-[4px] border border-[#ff6b00] bg-white text-[34px] font-bold tracking-[1px] text-black shadow-[0_0_6px_rgba(248,100,50,0.25)] lg:size-[100px] lg:text-[48px]">
+    <span className="absolute left-6 top-[-22px] flex size-16 rotate-[3deg] items-center justify-center rounded-[4px] border border-[#ff6b00] bg-white text-[28px] font-bold tracking-[1px] text-black shadow-[0_0_6px_rgba(248,100,50,0.25)] sm:size-[76px] sm:text-[34px] lg:size-[96px] lg:text-[48px]">
       {value}
     </span>
   );

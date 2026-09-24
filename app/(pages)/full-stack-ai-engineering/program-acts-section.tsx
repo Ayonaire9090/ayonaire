@@ -3,7 +3,7 @@ import { melodrama, space } from "@/app/fonts";
 
 export default function ProgramActsSection() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-[rgba(255,255,255,0.09)] to-[rgba(242,94,37,0.09)] px-5 pt-24 pb-16 sm:px-8 lg:px-12 lg:pt-[180px] lg:pb-[120px] xl:px-16">
+    <section className="relative overflow-hidden bg-gradient-to-b from-[rgba(255,255,255,0.09)] to-[rgba(242,94,37,0.09)] px-5 pt-20 pb-16 sm:px-8 sm:pt-24 sm:pb-20 lg:px-12 lg:pt-32 lg:pb-24 xl:px-16 xl:pt-36 xl:pb-28">
       {/* Top Decorative Background Shape (Rectangle 34624591) */}
       <div className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 w-[100vw] max-w-none select-none z-0">
         <Image
@@ -31,7 +31,7 @@ export default function ProgramActsSection() {
                 alt=""
                 width={344}
                 height={68}
-                className="pointer-events-none absolute left-1/2 top-1/2 h-[68px] w-full -translate-x-1/2 -translate-y-1/2 object-fill"
+                className="pointer-events-none absolute left-1/2 top-1/2 h-7 sm:h-11 md:h-14 lg:h-[68px] w-full -translate-x-1/2 -translate-y-1/2 object-fill"
               />
             </span>
           </h2>

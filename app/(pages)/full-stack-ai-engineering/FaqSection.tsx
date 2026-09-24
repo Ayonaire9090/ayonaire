@@ -119,7 +119,7 @@ const FaqSection = () => {
           </div>
 
           {/* FAQ Illustration / Image */}
-          <div className='w-full max-w-[375px] h-[304px] relative self-start'>
+          <div className='relative w-full max-w-[375px] aspect-[375/304] self-start'>
             <Image 
               src={faq} 
               alt="Frequently Asked Questions Illustration" 

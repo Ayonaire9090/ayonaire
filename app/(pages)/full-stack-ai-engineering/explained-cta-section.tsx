@@ -1,9 +1,9 @@
-﻿import Image from "next/image";
+import Image from "next/image";
 import { exo, exoMedium, melodrama } from "@/app/fonts";
 
 export default function ExplainedCtaSection() {
   return (
-    <section className="relative z-10 overflow-x-clip overflow-y-visible bg-[#171717] px-5 py-20 sm:px-8 lg:px-12 xl:px-16 lg:min-h-[720px] lg:py-[120px]">
+    <section className="relative z-10 overflow-x-clip overflow-y-visible bg-[#171717] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 xl:px-16 min-h-[500px] sm:min-h-[600px] lg:min-h-[680px] lg:py-24 xl:py-28">
       {/* TOP DECORATIVE SHAPE (Rectangle 34624590) */}
       <Image
         src="/assets/images/ai-fullstack-engineering/explained-cta-top-shape.svg"

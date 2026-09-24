@@ -3,7 +3,7 @@ import { exo, melodrama, space } from "@/app/fonts";
 
 export default function EverydaySystemsSection() {
   return (
-    <section className="bg-[#fefaf8] px-5 pt-16 pb-32 sm:px-8 sm:pt-20 sm:pb-44 lg:px-12 lg:pt-[120px] lg:pb-[220px] xl:px-16">
+    <section className="bg-[#fefaf8] px-5 pt-16 pb-24 sm:px-8 sm:pt-20 sm:pb-32 lg:px-12 lg:pt-24 lg:pb-36 xl:px-16 xl:pt-28 xl:pb-40">
       <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-10">
        <h2
   className={`${melodrama.className} max-w-[1240px] text-center text-[30px] font-bold leading-[1.12] tracking-[-0.95px] text-[#181c23] sm:text-[36px] lg:text-[44px] lg:leading-[1.16] lg:tracking-[-0.6px]`}

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Image from "next/image";
 import { useState } from "react";
@@ -19,7 +19,7 @@ export default function RegisteredCompanySection() {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <section className="bg-[rgba(255,220,196,0.28)] px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
+    <section className="bg-[rgba(255,220,196,0.28)] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28">
       <div className="mx-auto grid w-full max-w-[1240px] gap-14 lg:grid-cols-[minmax(0,557px)_minmax(0,658px)] lg:gap-10">
         {/* Left */}
         <div className="flex flex-col gap-8 lg:gap-10">

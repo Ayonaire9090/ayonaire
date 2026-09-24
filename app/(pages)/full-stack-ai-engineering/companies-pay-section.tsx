@@ -3,7 +3,7 @@ import { exo, exoMedium, melodrama } from "@/app/fonts";
 
 export default function CompaniesPaySection() {
   return (
-    <section className="bg-[#fdfbf9] px-5 py-16 sm:px-8 lg:px-12 xl:px-16 lg:py-20">
+    <section className="bg-[#fdfbf9] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28">
       <div className="mx-auto flex w-full max-w-[1120px] flex-col items-center gap-8">
       <h2
   className={`${melodrama.className} text-center text-[30px] font-bold leading-[1.12] tracking-[0.4px] text-[#181c23] sm:text-[36px] lg:text-[44px] lg:leading-[1.16] lg:tracking-[0.2px]`}

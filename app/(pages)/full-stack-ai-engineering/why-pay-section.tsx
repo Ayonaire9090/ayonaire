@@ -4,25 +4,25 @@ import { exo, exoMedium, melodrama } from "@/app/fonts";
 export default function WhyPaySection() {
   return (
     <section
-      className="px-5 py-20 sm:px-8 lg:px-12 xl:px-16 lg:py-[120px]"
+      className="px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28"
       style={{
         background:
           "linear-gradient(112.805deg, rgba(255, 107, 0, 0.68) 2.7537%, rgba(255, 220, 196, 0.92) 28.776%, #fff5ee 58.126%, #fdfbf9 100.01%)",
       }}
     >
-      <div className="mx-auto flex w-full max-w-[799px] flex-col items-center justify-center gap-14 text-center sm:gap-16 lg:gap-20">
+      <div className="mx-auto flex w-full max-w-[799px] flex-col items-center justify-center gap-12 text-center sm:gap-16 lg:gap-20">
         <p
           className={`${exoMedium.className} max-w-[799px] text-[17px] font-medium leading-[1.45] tracking-[0.4px] text-[#181c23] sm:text-[18px] lg:text-[20px] lg:leading-[1.16] lg:tracking-[0.2px]`}
         >
           These are real jobs that you can search for and see on Job boards.
         </p>
 
-        <div className="relative h-[149px] w-[179px]">
+        <div className="relative aspect-[179/149] w-[130px] sm:w-[155px] lg:w-[179px]">
           <Image
             src="/assets/images/ai-fullstack-engineering/why-pay-icon.png"
             alt=""
             fill
-            sizes="179px"
+            sizes="(min-width: 1024px) 179px, 140px"
             className="object-cover"
           />
         </div>

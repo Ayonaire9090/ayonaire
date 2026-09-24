@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Image from "next/image";
 import { useRef, useState } from "react";
@@ -333,7 +333,7 @@ export default function CurriculumSection() {
   };
 
   return (
-    <section className="relative overflow-hidden bg-[#1c1c1c] px-5 pt-24 pb-16 text-white sm:px-8 lg:px-12 lg:pt-[180px] lg:pb-[120px] xl:px-16">
+    <section className="relative overflow-hidden bg-[#1c1c1c] px-5 pt-20 pb-16 text-white sm:px-8 sm:pt-24 sm:pb-20 lg:px-12 lg:pt-32 lg:pb-24 xl:px-16 xl:pt-36 xl:pb-28">
       {/* Top Decorative Background Shape */}
       <div className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 w-[100vw] max-w-none select-none z-0">
         <Image
@@ -380,7 +380,7 @@ export default function CurriculumSection() {
         </h3>
 
         {/* Curriculum Area */}
-        <div className="flex w-full flex-col gap-8 lg:grid lg:grid-cols-[minmax(0,0.9fr)_minmax(420px,1.1fr)] lg:gap-20">
+        <div className="flex w-full flex-col gap-8 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] xl:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-12 xl:gap-20">
           
           {/* MOBILE/TABLET HORIZONTAL NAV BUTTONS (Hidden on desktop) */}
           <div className="flex w-full overflow-x-auto pb-2 scrollbar-none lg:hidden">
@@ -416,7 +416,7 @@ export default function CurriculumSection() {
           </div>
 
           {/* DESKTOP MODULE LIST (Hidden on mobile/tablet) */}
-          <div className="hidden max-h-[855px] overflow-y-auto pr-2 lg:block">
+          <div className="hidden max-h-[75vh] lg:max-h-[80vh] overflow-y-auto pr-2 lg:block">
             <ol className="space-y-4">
               {modules.map((module, index) => {
                 const isActive = activeModule === index;
@@ -498,7 +498,8 @@ export default function CurriculumSection() {
           <article
             ref={outlineRef}
             className="
-              max-h-[855px]
+              max-h-[75vh]
+              lg:max-h-[80vh]
               scroll-mt-8
               overflow-y-auto
               rounded-[12px]

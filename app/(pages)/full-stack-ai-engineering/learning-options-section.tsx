@@ -22,7 +22,7 @@ const options = [
 
 export default function LearningOptionsSection() {
   return (
-    <section className="bg-gradient-to-b from-[rgba(255,255,255,0.09)] to-[rgba(242,94,37,0.09)] px-5 py-16 sm:px-8 lg:px-12 xl:px-16 lg:py-[120px]">
+    <section className="bg-gradient-to-b from-[rgba(255,255,255,0.09)] to-[rgba(242,94,37,0.09)] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 xl:px-16 lg:py-24 xl:py-28">
       <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-16 lg:gap-20">
         <div className="relative flex w-full max-w-[1091px] flex-col items-center gap-8 text-center lg:gap-10">
           <h2
@@ -51,7 +51,7 @@ export default function LearningOptionsSection() {
         <div className="flex w-full flex-col gap-12 lg:gap-16">
           {options.map((option, index) => (
             <div key={option.number} className="contents">
-              <div className="grid items-center gap-8 lg:grid-cols-[180px_1fr] lg:gap-11">
+              <div className="grid items-center gap-8 lg:grid-cols-[minmax(140px,180px)_minmax(0,1fr)] lg:gap-11">
                 <p
                   className={`${salt.className} text-center text-[64px] font-bold leading-none tracking-[1.6px] ${
                     index === 0 ? "text-[#f25e25]" : "text-[#ff6b00]"

@@ -60,7 +60,7 @@ export default function ActualBuildSection() {
   }, [api]);
 
   return (
-    <section className="overflow-hidden bg-[linear-gradient(150deg,#ffffff_3%,rgba(255,220,196,0.28)_21%,rgba(255,255,255,0.7)_67%,#ffdcc4_99%)] px-5 py-16 sm:px-8 lg:px-12 xl:px-16 lg:py-[120px]">
+    <section className="overflow-hidden bg-[linear-gradient(150deg,#ffffff_3%,rgba(255,220,196,0.28)_21%,rgba(255,255,255,0.7)_67%,#ffdcc4_99%)] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28">
       <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-12 lg:gap-20">
         <div className="max-w-[1035px] text-center">
           <h2 className={`${melodrama.className} text-[32px] font-bold uppercase leading-[1.12] tracking-[0.2px] text-[#181c23] sm:text-[40px] lg:text-[56px] lg:leading-[1.25]`}>
@@ -94,7 +94,7 @@ export default function ActualBuildSection() {
                   key={project.title}
                   className="pl-6 lg:pl-10 basis-auto shrink-0"
                 >
-                  <article className="relative h-[560px] w-[300px] xs:w-[330px] overflow-hidden rounded-[28px] border-[3px] border-[#4d4c4d] bg-[#020000] p-6 text-white sm:w-[390px] lg:h-[633px] lg:w-[472px] lg:p-8">
+                  <article className="relative min-h-[500px] sm:min-h-[540px] lg:min-h-[600px] w-[300px] xs:w-[330px] overflow-hidden rounded-[28px] border-[3px] border-[#4d4c4d] bg-[#020000] p-6 text-white sm:w-[390px] lg:w-[472px] lg:p-8">
                     <Image
                       src="/assets/images/ai-fullstack-engineering/career-framework-card-bg.png"
                       alt=""

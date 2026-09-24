@@ -28,7 +28,7 @@ const portfolioItems = [
 
 export default function ProjectJourneySection() {
   return (
-    <section className="bg-[#fefefe] px-5 py-16 sm:px-8 lg:px-12 xl:px-16 lg:py-[120px]">
+    <section className="bg-[#fefefe] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28">
       <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-12 lg:gap-20">
         <div className="flex flex-col items-center gap-8 text-center lg:gap-14">
           <h2 className={`${melodrama.className} max-w-[960px] text-[32px] font-bold uppercase leading-[1.12] tracking-[-0.8px] text-black sm:text-[40px] lg:text-[56px] lg:leading-[1.25]`}>
@@ -51,7 +51,7 @@ export default function ProjectJourneySection() {
           <p className={`${exo.className} w-full text-left text-[20px] font-bold leading-[1.4] tracking-[0.4px] text-[#263238] lg:text-[32px]`}>Your portfolio would span acrosss:</p>
         </div>
 
-        <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(420px,683px)] lg:gap-20">
+        <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)] xl:grid-cols-[minmax(0,1fr)_minmax(0,683px)] lg:gap-12 xl:gap-20">
           <div>
             <ol className="flex flex-col gap-3.5 sm:gap-4">
               {portfolioItems.map((item, index) => (

@@ -50,7 +50,7 @@ const professionalCapability = [
 
 export default function ProgramDifferenceSection() {
   return (
-    <section className="relative overflow-hidden bg-[linear-gradient(180deg,#FFF9F5_0%,#FFEEDB_32%,#FFE5D4_70%,#FFDAC7_100%)] px-5 py-16 sm:px-8 lg:px-12 lg:py-[100px] xl:px-16">
+    <section className="relative overflow-hidden bg-[linear-gradient(180deg,#FFF9F5_0%,#FFEEDB_32%,#FFE5D4_70%,#FFDAC7_100%)] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28">
       <div className="mx-auto flex w-full max-w-[1100px] flex-col gap-10 sm:gap-12 lg:gap-14">
         {/* HEADER */}
         <div className="flex flex-col items-center gap-6 text-center sm:gap-8">
@@ -162,7 +162,7 @@ function CapabilityCard({ items }: { items: string[] }) {
         lg:py-8
       "
     >
-      <ul className="flex flex-col gap-[18px] sm:gap-5">
+      <ul className="flex flex-col gap-4 sm:gap-5">
         {items.map((item) => (
           <li
             key={item}

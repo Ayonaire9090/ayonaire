@@ -3,7 +3,7 @@ import { melodrama } from "@/app/fonts";
 
 export default function ClarificationSection() {
   return (
-    <section className="mx-auto max-w-[1240px] px-4 py-12 sm:px-6 md:py-16 lg:py-20">
+    <section className="mx-auto max-w-[1240px] px-5 py-14 sm:px-8 sm:py-18 lg:px-12 lg:py-24 xl:px-16 xl:py-28">
       {/* HEADER */}
       <h2
         className={`

@@ -4,7 +4,7 @@ import { adineue, exo, exoMedium, rope, barlowBold } from "@/app/fonts";
 
 export default function CohortActionSection() {
   return (
-    <section className="mt-20 bg-gradient-to-b from-[rgba(255,255,255,0.09)] to-[rgba(242,94,37,0.09)] px-5 pb-16 sm:px-8 lg:px-12 lg:pb-[120px] xl:px-16">
+    <section className="mt-20 bg-gradient-to-b from-[rgba(255,255,255,0.09)] to-[rgba(242,94,37,0.09)] px-5 pb-16 sm:px-8 sm:pb-20 lg:px-12 lg:pb-24 xl:px-16 xl:pb-28">
       <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-12 text-center lg:gap-20">
         <div className="flex w-full max-w-[1091px] flex-col items-center gap-8 lg:gap-10">
           <p className={`${exoMedium.className} text-[18px] font-semibold italic leading-[1.6] tracking-[0.3px] text-[#ff6b00] sm:text-[24px] lg:text-[28px] lg:leading-[44px] lg:tracking-[0.6px]`}>
@@ -18,7 +18,7 @@ export default function CohortActionSection() {
           </p>
         </div>
 
-        <div className="flex w-full flex-col gap-12 text-left lg:gap-[100px]">
+        <div className="flex w-full flex-col gap-10 text-left sm:gap-14 lg:gap-20 xl:gap-24">
           <div className={`${adineue.className} flex flex-col gap-8 text-left text-[18px] leading-[1.6] tracking-[0.8px] text-[#5a4136] sm:text-[24px] lg:gap-11 lg:text-[28px] lg:leading-[40px] lg:tracking-[1.2px]`}>
             <p>But because ten months of focused learning, disciplined practice and intentional action can put you far ahead of ten months spent only thinking about starting.</p>
             <p className="text-[22px] font-bold uppercase sm:text-[28px] lg:text-[34px]">September 2026 Cohort</p>

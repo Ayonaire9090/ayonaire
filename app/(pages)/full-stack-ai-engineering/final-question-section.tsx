@@ -3,7 +3,7 @@ import { exo, exoMedium,rope , salt} from "@/app/fonts";
 
 export default function FinalQuestionSection() {
   return (
-    <section className=" mt-20 bg-[linear-gradient(106deg,rgba(255,107,0,0.68)_3%,rgba(255,220,196,0.92)_29%,#fff5ee_58%,#fdfbf9_100%)] px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
+    <section className="mt-20 bg-[linear-gradient(106deg,rgba(255,107,0,0.68)_3%,rgba(255,220,196,0.92)_29%,#fff5ee_58%,#fdfbf9_100%)] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28">
       <div className="mx-auto flex w-full max-w-[799px] flex-col items-center gap-12 text-center lg:gap-20">
         <Image
           src="/assets/images/ai-fullstack-engineering/final-question-icon.png"

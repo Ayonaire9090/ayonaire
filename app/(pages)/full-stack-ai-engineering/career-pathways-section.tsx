@@ -110,7 +110,7 @@ export default function CareerPathwaysSection() {
   }, [frameworkApi]);
 
   return (
-    <section className="overflow-hidden bg-[#fefefe] px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
+    <section className="overflow-hidden bg-[#fefefe] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28">
       <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-16 lg:gap-24">
         <div className="flex w-full flex-col items-center gap-12 lg:gap-20">
           <div className="flex flex-col items-center gap-7 text-center lg:gap-10">
@@ -122,7 +122,7 @@ export default function CareerPathwaysSection() {
             </p>
           </div>
 
-          <div className="grid w-full items-center gap-10 lg:grid-cols-[minmax(0,420px)_minmax(420px,683px)] lg:justify-between lg:gap-20">
+          <div className="grid w-full items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)] xl:grid-cols-[minmax(0,420px)_minmax(0,683px)] lg:justify-between lg:gap-12 xl:gap-20">
             <ol className="flex flex-col gap-3.5 sm:gap-4 lg:gap-4.5">
               {roles.map((role, index) => (
                 <li key={role} className={`${adineue.className} flex items-center gap-4 text-[17px] font-medium leading-[1.35] text-[#263238] sm:text-[18px] lg:text-[22px]`}>
@@ -158,7 +158,7 @@ export default function CareerPathwaysSection() {
           </a>
         </div>
 
-       <div className="w-screen bg-[linear-gradient(180deg,#fefefe_0%,rgba(255,220,196,0.45)_120px,rgba(255,220,196,0.45)_calc(100%-120px),#fefefe_100%)] px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
+       <div className="w-screen bg-[linear-gradient(180deg,#fefefe_0%,rgba(255,220,196,0.45)_120px,rgba(255,220,196,0.45)_calc(100%-120px),#fefefe_100%)] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28">
   <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-14 lg:gap-20">
 
     {/* Heading */}
@@ -318,7 +318,7 @@ export default function CareerPathwaysSection() {
   </div>
 </div>
 
-        <div className="w-screen bg-[linear-gradient(180deg,#fefefe_0%,rgba(242,94,37,0.09)_100%)] px-5 pb-16 sm:px-8 lg:px-12 lg:pb-[120px] xl:px-16">
+        <div className="w-screen bg-[linear-gradient(180deg,#fefefe_0%,rgba(242,94,37,0.09)_100%)] px-5 pb-16 sm:px-8 sm:pb-20 lg:px-12 lg:pb-24 xl:px-16 xl:pb-28">
           <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-14 lg:gap-20">
             <div className="flex max-w-[1091px] flex-col items-center gap-8 text-center lg:gap-10">
               <p className={`${exo.className} text-[22px] font-semibold italic tracking-[0.4px] text-[#ff6b00] lg:text-[32px]`}>But here&apos;s something important:</p>
@@ -332,7 +332,7 @@ export default function CareerPathwaysSection() {
 
             <div className="flex w-full flex-col gap-12 lg:gap-20">
               {paths.map((path) => (
-                <article key={path.label} className="grid gap-6 lg:grid-cols-[243px_1fr] lg:gap-11">
+                <article key={path.label} className="grid gap-6 lg:grid-cols-[minmax(200px,243px)_minmax(0,1fr)] lg:gap-10">
                   <p className={`${salt.className} text-[28px] font-bold uppercase tracking-[0.08em] text-[#f25e25] lg:text-[44px]`}>{path.label}</p>
                   <div className="space-y-5 text-[#5a4136] lg:space-y-8">
                     <h3 className={`${adineue.className} text-[26px] font-bold uppercase tracking-[0.06em] lg:text-[40px]`}>{path.title}</h3>
@@ -385,7 +385,7 @@ export default function CareerPathwaysSection() {
                     key={card.title}
                     className="pl-6 lg:pl-10 basis-auto shrink-0"
                   >
-                    <article className="relative h-[560px] w-[300px] xs:w-[330px] overflow-hidden rounded-[28px] border-[3px] border-[#4d4c4d] bg-[#020000] p-6 text-white sm:w-[390px] lg:h-[633px] lg:w-[472px] lg:p-8">
+                    <article className="relative min-h-[500px] sm:min-h-[540px] lg:min-h-[600px] w-[300px] xs:w-[330px] overflow-hidden rounded-[28px] border-[3px] border-[#4d4c4d] bg-[#020000] p-6 text-white sm:w-[390px] lg:w-[472px] lg:p-8">
                       <Image
                         src="/assets/images/ai-fullstack-engineering/career-framework-card-bg.png"
                         alt=""

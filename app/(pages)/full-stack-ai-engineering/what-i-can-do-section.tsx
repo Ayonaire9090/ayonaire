@@ -27,7 +27,7 @@ const proofStatements = [
 
 export default function WhatICanDoSection() {
   return (
-    <section className="bg-gradient-to-b from-[#fefefe] via-[#fff1eb] to-[rgba(248,100,50,0)] px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
+    <section className="bg-gradient-to-b from-[#fefefe] via-[#fff1eb] to-[rgba(248,100,50,0)] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28">
       <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-12 lg:gap-20">
         <Image
           src="/assets/images/ai-fullstack-engineering/what-i-can-do-question.png"
@@ -42,8 +42,8 @@ export default function WhatICanDoSection() {
           &quot;Here is what I can do.&quot;
         </h2>
 
-        <div className="w-full rounded-[16px] bg-white px-5 py-8 shadow-[0_1px_6px_rgba(0,0,0,0.16)] sm:px-8 sm:py-10 lg:px-[60px]">
-          <ul className="grid gap-4 sm:gap-5 lg:gap-[19px]">
+        <div className="w-full rounded-[16px] bg-white px-5 py-8 shadow-[0_1px_6px_rgba(0,0,0,0.16)] sm:px-8 sm:py-10 lg:px-12 lg:py-12 xl:px-16">
+          <ul className="grid gap-4 sm:gap-5 lg:gap-5">
             {proofStatements.map((statement) => (
               <li key={statement} className={`${exoMedium.className} grid grid-cols-[30px_1fr] items-start gap-4 text-[17px] font-bold leading-[1.65] tracking-[0.3px] text-[#263238] sm:text-[20px] lg:text-[28px] lg:leading-[1.7] lg:tracking-[0.6px]`}>
                 <BulletPair />

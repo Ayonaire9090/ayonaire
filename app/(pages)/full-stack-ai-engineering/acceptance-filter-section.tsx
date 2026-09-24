@@ -11,7 +11,7 @@ const rejectionReasons = [
 
 export default function AcceptanceFilterSection() {
   return (
-    <section className="bg-gradient-to-b from-[rgba(255,255,255,0.28)] to-[rgba(248,100,50,0.28)] px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
+    <section className="bg-gradient-to-b from-[rgba(255,255,255,0.28)] to-[rgba(248,100,50,0.28)] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28">
       <div className="mx-auto grid w-full max-w-[1240px] gap-12 lg:grid-cols-[minmax(300px,542px)_minmax(0,1fr)] lg:gap-10">
         <div className="lg:sticky lg:top-8 lg:self-start">
           <h2 className={`${melodrama.className} max-w-[543px] text-[36px] font-bold uppercase leading-[1.18] tracking-[0.2px] text-[#181c23] sm:text-[44px] lg:text-[56px] lg:leading-[1.25]`}>

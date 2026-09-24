@@ -1,9 +1,9 @@
-﻿import Image from "next/image";
+import Image from "next/image";
 import { exo, melodrama } from "@/app/fonts";
 
 export default function CareerCtaSection() {
   return (
-    <section className="relative overflow-hidden bg-[#171717] px-5 py-16 text-white sm:px-8 lg:px-12 lg:py-[110px] xl:px-16">
+    <section className="relative overflow-hidden bg-[#171717] px-5 py-16 text-white sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28">
       <Image
         src="/assets/images/ai-fullstack-engineering/career-system-line.svg"
         alt=""

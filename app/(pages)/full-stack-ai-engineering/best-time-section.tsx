@@ -11,7 +11,7 @@ const outcomeStatements = [
 
 export default function BestTimeSection() {
   return (
-    <section className="bg-[#fefaf8] px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
+    <section className="bg-[#fefaf8] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28">
       <div className="mx-auto flex w-full max-w-[1279px] flex-col items-center gap-10 lg:gap-11">
         <div className="relative w-full max-w-[1240px] text-center">
           <h2 className={`${melodrama.className} relative z-10 text-[34px] font-bold leading-[1.1] tracking-[-0.8px] text-[#181c23] sm:text-[44px] lg:text-[56px] lg:leading-[60.48px] lg:tracking-[-1.4px]`}>

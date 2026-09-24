@@ -59,7 +59,7 @@ const examples = [
 export default function AiEngineeringExplainedSection() {
   return (
     <section
-      className="relative overflow-hidden px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16"
+      className="relative overflow-hidden px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28"
       style={{
         background:
           "linear-gradient(180deg, #ffffff 0%, rgba(255, 220, 196, 0.35) 10%, rgba(255, 255, 255, 0) 32%, rgba(255, 255, 255, 0) 58%, rgba(255, 218, 194, 0.5) 82%, rgba(248, 100, 50, 0.32) 100%)",

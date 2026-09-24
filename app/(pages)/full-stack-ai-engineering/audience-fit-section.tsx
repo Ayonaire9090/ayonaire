@@ -56,9 +56,11 @@ export default function AudienceFitSection() {
         px-5
         py-16
         sm:px-8
+        sm:py-20
         lg:px-12
-        lg:py-[120px]
+        lg:py-24
         xl:px-16
+        xl:py-28
       "
     >
    
@@ -180,7 +182,9 @@ export default function AudienceFitSection() {
 
                       lg:w-full
                       lg:max-w-none
-                      lg:min-h-[205px]
+                      min-h-[160px]
+                      sm:min-h-[180px]
+                      lg:min-h-[195px]
                       lg:rounded-[20px]
                       lg:px-7
                       lg:py-8

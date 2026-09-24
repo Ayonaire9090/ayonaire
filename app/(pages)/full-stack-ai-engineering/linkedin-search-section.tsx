@@ -32,7 +32,7 @@ export default function LinkedInSearchSection() {
           <span className="text-[#f25e25]">and search:</span>
         </h2>
 
-        <div className="flex flex-col-reverse lg:grid lg:grid-cols-[1fr_683px] items-center lg:items-end gap-10 lg:gap-20">
+        <div className="flex flex-col-reverse lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)] xl:grid-cols-[minmax(0,1fr)_minmax(0,683px)] items-center lg:items-end gap-10 lg:gap-14 xl:gap-20">
   {/* LIST CONTENT - Appears at bottom on mobile, left column on desktop */}
   <ol className={`${exoMedium.className} flex flex-col gap-7 text-[17px] w-full`}>
     {roles.map((role) => (
@@ -89,7 +89,7 @@ export default function LinkedInSearchSection() {
         </div>
       </div>
 
-      <div className="relative overflow-hidden bg-[#171717] px-5 py-20 sm:px-8 lg:px-12 xl:px-16 lg:min-h-[921px] lg:py-[120px]">
+      <div className="relative overflow-hidden bg-[#171717] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 xl:px-16 min-h-[600px] lg:min-h-[720px] xl:min-h-[820px] lg:py-24 xl:py-28">
         <Image
           src="/assets/images/ai-fullstack-engineering/linkedin-dark-ellipse-top.svg"
           alt=""

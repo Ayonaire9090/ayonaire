@@ -10,7 +10,7 @@ export default function ProgrammeOfferSection() {
       }}
     >
       {/* Irregular top background shape from InstructorProofSection */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[220px] overflow-visible lg:h-[300px]">
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[180px] overflow-visible sm:h-[240px] lg:h-[300px]">
         <Image
           src="/assets/images/ai-fullstack-engineering/top6.svg"
           alt=""

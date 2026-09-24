@@ -3,7 +3,7 @@ import { exo, exoMedium, melodrama } from "@/app/fonts";
 
 export default function IntroducingAIEngineeringSection() {
   return (
-    <section className="bg-white px-5 py-16 sm:px-8 lg:px-12 lg:py-[90px]">
+    <section className="bg-white px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28">
       <div className="mx-auto w-full max-w-[980px]">
         {/* TOP HEADINGS */}
         <div className="text-center">

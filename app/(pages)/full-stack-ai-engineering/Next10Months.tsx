@@ -4,7 +4,7 @@ import { space, melodrama } from '@/app/fonts';
 
 const Next10MonthsSection = () => {
   return (
-    <section className='bg-[#FEF1EB] py-16 px-4 md:px-12 lg:px-20 w-full flex flex-col'>
+    <section className='bg-[#FEF1EB] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28 w-full flex flex-col'>
       <div className=' max-w-[1279px] w-full mx-auto flex flex-col gap-6'>
         
         {/* Header with Melodrama font and highlighted text */}

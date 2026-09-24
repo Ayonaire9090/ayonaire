@@ -87,7 +87,7 @@ export default function StudentReviewSection() {
   return (
     <section
       style={{ background: "linear-gradient(180deg, #FFFFFF 0%, #FFF2E8 30%, #FFE5D4 60%, #FFFFFF 100%)" }}
-      className="relative overflow-hidden px-5 pt-12 pb-16 sm:px-8 sm:pt-16 sm:pb-20 lg:px-12 lg:pt-20 lg:pb-24"
+      className="relative overflow-hidden px-5 py-14 sm:px-8 sm:py-18 lg:px-12 lg:py-24 xl:px-16 xl:py-28"
     >
       <div className="relative z-10 mx-auto flex w-full max-w-[980px] flex-col items-center">
         {/* Top Call to Action Button matching Image 1 */}
@@ -130,7 +130,7 @@ export default function StudentReviewSection() {
         </div>
 
         {/* Review Content */}
-        <article className="relative mt-8 grid w-full items-start gap-4 sm:gap-6 lg:grid-cols-[210px_minmax(0,1fr)] lg:gap-10">
+        <article className="relative mt-8 grid w-full items-start gap-4 sm:gap-6 lg:grid-cols-[minmax(180px,220px)_minmax(0,1fr)] lg:gap-10">
           {/* Avatar Container */}
           <div className="relative flex flex-col items-center justify-center lg:pt-14">
             <Image

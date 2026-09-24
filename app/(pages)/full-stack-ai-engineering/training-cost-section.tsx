@@ -43,7 +43,7 @@ const programmeExamples = [
 
 export default function TrainingCostSection() {
   return (
-    <section className="bg-white px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
+    <section className="bg-white px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28">
       <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-12 lg:gap-16">
         {/* HEADER */}
         <div className="flex flex-col items-center gap-7 text-center lg:gap-9">

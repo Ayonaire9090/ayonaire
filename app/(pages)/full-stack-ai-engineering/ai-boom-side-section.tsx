@@ -2,7 +2,7 @@ import { exo, melodrama, salt, space } from "@/app/fonts";
 
 export default function AiBoomSideSection() {
   return (
-    <section className="bg-[#fff6ef] px-5 py-14 sm:px-8 lg:px-12 xl:px-16 lg:py-24">
+    <section className="bg-[#fff6ef] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28">
       <div className="mx-auto flex w-full max-w-[880px] flex-col items-center gap-8 lg:gap-10">
         {/* Title */}
         <h2

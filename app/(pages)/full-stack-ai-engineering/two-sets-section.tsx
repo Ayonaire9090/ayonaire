@@ -1,4 +1,4 @@
-﻿import Image from "next/image";
+import Image from "next/image";
 import { exo, salt , melodrama, exoMedium } from "@/app/fonts";
 
 const skills = [
@@ -69,7 +69,7 @@ export default function TwoSetsSection() {
             I want you to be <span className="text-[#f25e25]">that person</span>
           </p>
 
-          <div className="relative box-border flex-none order-2 flex-grow-0 w-full max-w-[1077px] lg:w-[1077px] lg:h-[673px] overflow-hidden rounded-[14.1571px] bg-[#FE6700] px-6 py-10 shadow-[0px_1px_12px_rgba(0,0,0,0.12)] sm:px-10 lg:px-[72px] lg:py-[64px] flex flex-col justify-between">
+          <div className="relative box-border flex-none order-2 flex-grow-0 w-full max-w-[1077px] min-h-[480px] lg:min-h-[580px] overflow-hidden rounded-[14px] bg-[#FE6700] px-6 py-8 shadow-[0px_1px_12px_rgba(0,0,0,0.12)] sm:px-10 sm:py-10 lg:px-14 lg:py-12 flex flex-col justify-between">
             <Image
               src="/assets/images/ai-fullstack-engineering/two-sets-orbit.svg"
               alt=""
@@ -138,7 +138,7 @@ export default function TwoSetsSection() {
 
       </div>
 
-      <div className="relative w-full bg-[linear-gradient(180deg,_#fdfbf9_0%,_#ffd9c7_12%,_#ffd9c7_88%,_#fff5ee_100%)] px-4 pb-20 pt-12 sm:px-8 sm:pt-16 lg:px-12 xl:px-16 lg:pb-[120px]">
+      <div className="relative w-full bg-[linear-gradient(180deg,_#fdfbf9_0%,_#ffd9c7_12%,_#ffd9c7_88%,_#fff5ee_100%)] px-4 pb-20 pt-12 sm:px-8 sm:pt-16 lg:px-12 xl:px-16 lg:pb-24 xl:pb-28">
         <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-12 lg:gap-16">
           <div className="flex items-center justify-center">
             <p className={`${salt.className} rotate-[-5deg] text-center text-[20px] tracking-[0.2px] text-[#181c23] lg:text-[24px]`}>
@@ -186,7 +186,7 @@ export default function TwoSetsSection() {
 
       <div
         id="ai-engineering-path"
-        className="bg-[#fff5ee] px-5 py-16 sm:px-8 lg:px-12 xl:px-16 lg:py-[120px]"
+        className="bg-[#fff5ee] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28"
       >
         <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-14 lg:gap-20">
           <h2
@@ -282,7 +282,9 @@ function BlackWarningCard({
         <h3
           className={`
             ${salt.className}
-            mb-[30px]
+            mb-6
+            sm:mb-7
+            lg:mb-8
             text-[21px]
             font-normal
             uppercase

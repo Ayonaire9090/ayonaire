@@ -26,10 +26,10 @@ const plans = [
 
 export default function PaymentPlansSection() {
   return (
-    <section className="bg-gradient-to-b from-[rgba(255,255,255,0.28)] to-[rgba(248,100,50,0.28)] px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
+    <section className="bg-gradient-to-b from-[rgba(255,255,255,0.28)] to-[rgba(248,100,50,0.28)] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28">
       <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-14 lg:gap-20">
         
-        <div className="grid w-full gap-12 lg:grid-cols-[544px_1fr] lg:gap-[45px]">
+        <div className="grid w-full gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] xl:grid-cols-[544px_1fr] lg:gap-8 xl:gap-[45px]">
           
           {/* LEFT CONTENT */}
           <div className="flex flex-col gap-7 lg:gap-9">

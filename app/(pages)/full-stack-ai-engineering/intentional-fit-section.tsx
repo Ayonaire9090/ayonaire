@@ -11,7 +11,7 @@ const readinessTraits = [
 
 export default function IntentionalFitSection() {
   return (
-    <section className="bg-[#fefefe] px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
+    <section className="bg-[#fefefe] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28">
       <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-12 lg:gap-20">
         <h2
           className={`
@@ -55,7 +55,7 @@ export default function IntentionalFitSection() {
           <p className="font-bold">But you do need to bring the:</p>
         </div>
 
-        <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,620px)_395px] lg:gap-[132px]">
+        <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] xl:grid-cols-[minmax(0,620px)_395px] lg:gap-14 xl:gap-[132px]">
           <ol className="grid gap-5">
             {readinessTraits.map((trait, index) => (
               <li
