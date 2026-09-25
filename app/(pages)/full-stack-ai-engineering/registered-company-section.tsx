@@ -133,7 +133,7 @@ function ProofCard({
   return (
     <article
       onMouseEnter={onHover}
-      className="relative flex min-h-[125px] sm:min-h-0 sm:aspect-[702/336] w-full items-center cursor-pointer lg:max-w-[655px] py-4 sm:py-0 overflow-hidden"
+      className="relative flex aspect-[702/336] w-full items-center cursor-pointer lg:max-w-[655px] overflow-hidden"
     >
       {/* Vector1 Card Background */}
       <Image
@@ -146,7 +146,7 @@ function ProofCard({
 
       {/* Content with 4.38deg rotation */}
       <div
-        className="relative z-10 mx-auto flex w-[96%] sm:w-full items-center gap-3.5 pl-6 pr-4 sm:gap-6 sm:pl-8 sm:pr-6 lg:gap-8 lg:pl-10 lg:pr-8"
+        className="relative z-10 flex w-full items-center gap-3 pl-[6%] pr-[11%] sm:gap-6 sm:pl-8 sm:pr-6 lg:gap-8 lg:pl-10 lg:pr-8"
         style={{ transform: "rotate(4.38deg)" }}
       >
         {/* Check Icon */}
@@ -164,7 +164,7 @@ function ProofCard({
         <p
           className={`
             ${rope.className}
-            w-[76%] sm:w-[68%]
+            min-w-0 flex-1 sm:flex-none sm:w-[68%]
             text-[12px]
             font-bold
             leading-[1.65]

@@ -12,8 +12,8 @@ const rejectionReasons = [
 export default function AcceptanceFilterSection() {
   return (
     <section className="bg-gradient-to-b from-[rgba(255,255,255,0.28)] to-[rgba(248,100,50,0.28)] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28">
-      <div className="mx-auto grid w-full max-w-[1240px] gap-12 lg:grid-cols-[minmax(300px,542px)_minmax(0,1fr)] lg:gap-10">
-        <div className="lg:sticky lg:top-8 lg:self-start">
+      <div className="mx-auto grid w-full max-w-[1240px] gap-12 xl:grid-cols-[minmax(300px,542px)_minmax(0,1fr)] xl:gap-10">
+        <div className="xl:sticky xl:top-8 xl:self-start">
           <h2 className={`${melodrama.className} max-w-[543px] text-[26px] xs:text-[30px] sm:text-[44px] font-bold uppercase leading-[1.18] tracking-[0.2px] text-[#181c23] lg:text-[56px] lg:leading-[1.25]`}>
             <span className="text-[#f25e25]">We won&apos;t accept</span> you if:
           </h2>
@@ -27,7 +27,7 @@ export default function AcceptanceFilterSection() {
             {rejectionReasons.map((reason) => (
               <article
                 key={reason}
-                className="relative flex min-h-[135px] sm:min-h-0 sm:aspect-[702/336] w-full max-w-[655px] items-center py-4 sm:py-0 overflow-hidden"
+                className="relative flex aspect-[702/336] w-full max-w-[655px] items-center overflow-hidden"
               >
                 <Image
                   src="/assets/images/ai-fullstack-engineering/right-fit-card.svg"
@@ -37,7 +37,7 @@ export default function AcceptanceFilterSection() {
                   className="pointer-events-none object-contain"
                 />
                 <div
-                  className="relative z-10 mx-auto flex w-[96%] sm:w-full items-center gap-3.5 pl-6 pr-4 sm:gap-6 sm:pl-8 sm:pr-6 lg:gap-8 lg:pl-10 lg:pr-8"
+                  className="relative z-10 flex w-full items-center gap-3 pl-[6%] pr-[11%] sm:gap-6 sm:pl-8 sm:pr-6 lg:gap-8 lg:pl-10 lg:pr-8"
                   style={{ transform: "rotate(4.38deg)" }}
                 >
                   <Image
@@ -47,7 +47,7 @@ export default function AcceptanceFilterSection() {
                     height={44}
                     className="size-[36px] shrink-0 object-contain sm:size-[46px] lg:size-[58px]"
                   />
-                  <p className={`${rope.className} w-[76%] sm:w-[68%] text-[12px] font-bold leading-[1.65] tracking-[0.3px] text-[#181c23] sm:text-[15px] sm:leading-[1.5] lg:text-[19px] lg:leading-[1.5] xl:text-[20px]`}>
+                  <p className={`${rope.className} min-w-0 flex-1 sm:flex-none sm:w-[68%] text-[12px] font-bold leading-[1.65] tracking-[0.3px] text-[#181c23] sm:text-[15px] sm:leading-[1.5] lg:text-[19px] lg:leading-[1.5] xl:text-[20px]`}>
                     {reason}
                   </p>
                 </div>
