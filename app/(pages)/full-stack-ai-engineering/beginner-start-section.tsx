@@ -10,7 +10,7 @@ const beginnerPoints = [
 
 export default function BeginnerStartSection() {
   return (
-    <section className="bg-[#fefefe] px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
+    <section className="bg-[#fefefe] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28">
       <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-10 lg:gap-11">
         <div className="flex flex-col items-center gap-8 text-center">
           <h2 className={`${melodrama.className} text-[28px] font-bold leading-[1.25] tracking-[0.6px] text-[#181c23] sm:text-[32px] lg:text-[40px]`}>

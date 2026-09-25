@@ -20,7 +20,7 @@ const pillars = [
 
 export default function CareerFrameworkSection() {
   return (
-    <section className="relative overflow-hidden bg-[#fff5ee] px-5 py-16 sm:px-8 lg:px-12 lg:py-[110px] xl:px-16">
+    <section className="relative overflow-hidden bg-[#fff5ee] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28">
       <Image
         src="/assets/images/ai-fullstack-engineering/career-framework-pattern.png"
         alt=""
@@ -30,7 +30,7 @@ export default function CareerFrameworkSection() {
       />
 
       <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-14 lg:gap-20">
-        <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(420px,1.05fr)] lg:gap-16">
+        <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] xl:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-12 xl:gap-16">
           <div className="flex flex-col gap-6">
             <p
               className={`${exo.className} text-[15px] font-bold uppercase tracking-[0.16em] text-[#f25e25]`}
@@ -75,7 +75,7 @@ export default function CareerFrameworkSection() {
           {pillars.map((pillar) => (
             <article
               key={pillar.number}
-              className="relative overflow-hidden rounded-[14px] bg-[#171717] p-6 text-white shadow-[0_14px_36px_rgba(24,28,35,0.12)] sm:p-8 lg:min-h-[360px] lg:p-10"
+              className="relative overflow-hidden rounded-[14px] bg-[#171717] p-6 text-white shadow-[0_14px_36px_rgba(24,28,35,0.12)] sm:p-8 min-h-[300px] sm:min-h-[320px] lg:min-h-[350px] lg:p-10"
             >
               <Image
                 src="/assets/images/ai-fullstack-engineering/career-framework-card-bg.png"

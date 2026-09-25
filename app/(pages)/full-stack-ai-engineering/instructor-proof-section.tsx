@@ -1,11 +1,11 @@
-﻿import Image from "next/image";
+import Image from "next/image";
 import { exoMedium, melodrama } from "@/app/fonts";
 
 export default function InstructorProofSection() {
   return (
     <section className="mt-24 relative overflow-x-clip bg-gradient-to-b from-[#FFDCC4] to-white px-5 pt-24 pb-16 sm:px-8 sm:pt-28 lg:px-12 lg:pt-36 lg:pb-20 xl:px-16">
       {/* Irregular top shape */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[220px] overflow-visible lg:h-[300px]">
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[180px] overflow-visible sm:h-[240px] lg:h-[300px]">
         <Image
           src="/assets/images/ai-fullstack-engineering/top6.svg"
           alt=""
@@ -64,16 +64,16 @@ export default function InstructorProofSection() {
           href="https://chat.whatsapp.com/HltOtTd5VrHJONFYDVb9VT?mode=gi_t"
           target="_blank"
           rel="noopener noreferrer"
-          className={`${exoMedium.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-8 py-4 text-[13px] font-bold uppercase leading-[1.45] text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:px-10 sm:py-5 lg:text-[16px]`}
+          className={`${exoMedium.className} inline-flex items-center justify-center text-center gap-2 rounded-[8px] bg-[#ff6b00] px-8 py-4 text-[13px] font-bold uppercase leading-[1.45] text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:px-10 sm:py-5 lg:text-[16px]`}
         >
-          I am ready for this
+          <span className="text-center">I am ready for this</span>
 
           <Image
             src="/assets/images/ai-fullstack-engineering/instructor-proof-button-arrow.svg"
             alt=""
             width={16}
             height={16}
-            className="size-4"
+            className="size-4 shrink-0"
           />
         </a>
       </div>

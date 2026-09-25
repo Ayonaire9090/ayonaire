@@ -11,18 +11,19 @@ const readinessTraits = [
 
 export default function IntentionalFitSection() {
   return (
-    <section className="bg-[#fefefe] px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
+    <section className="bg-[#fefefe] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28">
       <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-12 lg:gap-20">
         <h2
           className={`
             ${melodrama.className}
             relative
             z-10
-            text-[26px]
+            text-[24px]
             font-bold
             leading-[1.08]
             tracking-[-0.8px]
             text-[#181c23]
+            xs:text-[28px]
             sm:text-[32px]
             lg:text-[36px]
           `}
@@ -40,13 +41,12 @@ export default function IntentionalFitSection() {
           of this sounds
         </h2>
 
-        <div className={`${exoMedium.className} space-y-9 text-[16px] font-medium leading-[1.7] tracking-[0.2px] text-[#181c23] sm:text-[16px] lg:text-[20px] lg:leading-[2.1]`}>
+        <div className={`${exoMedium.className} space-y-7 text-[16px] font-medium leading-[1.7] tracking-[0.2px] text-[#181c23] lg:text-[20px] lg:leading-[2.1]`}>
           <p>
             Our Full Stack <strong>Career Transition Job Ready AI Engineering</strong> isn&apos;t for everyone.<br />
             And that&apos;s <strong>INTENTIONAL.</strong>
           </p>
-          <div className="space-y-5 text-left">
-            <p><strong>And that&apos;s INTENTIONAL.</strong></p>
+          <div className="space-y-4 text-left">
             <p>
               We built this programme for serious-minded people who want to change the trajectory of their lives and destiny, break into tech intentionally and build a real career in AI/ML Engineering.
             </p>
@@ -55,7 +55,7 @@ export default function IntentionalFitSection() {
           <p className="font-bold">But you do need to bring the:</p>
         </div>
 
-        <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,620px)_395px] lg:gap-[132px]">
+        <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] xl:grid-cols-[minmax(0,620px)_395px] lg:gap-14 xl:gap-[132px]">
           <ol className="grid gap-5">
             {readinessTraits.map((trait, index) => (
               <li
@@ -63,19 +63,19 @@ export default function IntentionalFitSection() {
                 className={`
         ${exoMedium.className}
         grid
-        grid-cols-[40px_1fr]
+        grid-cols-[48px_1fr]
         items-center
-        gap-5
+        gap-4
         text-[16px]
         font-medium
         leading-[1.35]
         tracking-[0.2px]
         text-[#181c23]
 
-        sm:grid-cols-[48px_1fr]
+        xs:gap-5
+        sm:grid-cols-[56px_1fr]
         sm:text-[26px]
 
-        lg:grid-cols-[56px_1fr]
         lg:text-[32px]
       `}
               >
@@ -84,7 +84,7 @@ export default function IntentionalFitSection() {
                   viewBox="0 0 56 40"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-10 w-14"
+                  className="h-9 w-12 sm:h-10 sm:w-14 shrink-0"
                   aria-hidden="true"
                 >
                   {/* Orange tag */}

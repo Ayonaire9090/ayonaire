@@ -16,7 +16,7 @@ export default function LinkedInSearchSection() {
     <section className="bg-[#fdfbf9]">
       <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-14 px-5 py-16 sm:px-8 lg:px-12 xl:px-16 lg:gap-20 lg:py-20">
         <h2
-          className={`${melodrama.className} max-w-[655px] space-y-5 whitespace-pre-wrap lg:space-y-6 text-[30px] font-bold leading-[1.12] tracking-[-0.95px] text-[#181c23] sm:text-[36px] lg:text-[44px] lg:leading-[1.16] lg:tracking-[-0.6px]`}
+          className={`${melodrama.className} max-w-[655px] space-y-4 whitespace-pre-wrap lg:space-y-6 text-[22px] xs:text-[26px] font-bold leading-[1.15] tracking-[-0.6px] text-[#181c23] sm:text-[36px] lg:text-[44px] lg:leading-[1.16]`}
         >
           Don&apos;t take our word for it.{"\n"}
           <span className="relative inline-block text-[#f25e25]">
@@ -32,7 +32,7 @@ export default function LinkedInSearchSection() {
           <span className="text-[#f25e25]">and search:</span>
         </h2>
 
-        <div className="flex flex-col-reverse lg:grid lg:grid-cols-[1fr_683px] items-center lg:items-end gap-10 lg:gap-20">
+        <div className="flex flex-col-reverse lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)] xl:grid-cols-[minmax(0,1fr)_minmax(0,683px)] items-center lg:items-end gap-10 lg:gap-14 xl:gap-20">
   {/* LIST CONTENT - Appears at bottom on mobile, left column on desktop */}
   <ol className={`${exoMedium.className} flex flex-col gap-7 text-[17px] w-full`}>
     {roles.map((role) => (
@@ -74,10 +74,10 @@ export default function LinkedInSearchSection() {
             Then ask yourself the next question:
           </p>
 
-          <div className={`${exo.className} space-y-5 whitespace-pre-wrap lg:space-y-6 text-[17px] leading-[1.7] tracking-[-0.4px] text-[#181c23] lg:text-[20px] lg:leading-[1.65]`}>
+          <div className={`${exo.className} space-y-4 whitespace-pre-wrap lg:space-y-6 text-[15px] xs:text-[17px] leading-[1.65] tracking-[-0.3px] text-[#181c23] lg:text-[20px] lg:leading-[1.65]`}>
             <p  className={`${exoMedium.className}`}>
               How can I start to learn these skills following the right sequence
-              abd getting as much hands on experience along the way...
+              and getting as much hands on experience along the way...
             </p>
             <p className="font-bold text-black">
               At Ayonaire Academy, we&apos;ve seen how
@@ -89,7 +89,7 @@ export default function LinkedInSearchSection() {
         </div>
       </div>
 
-      <div className="relative overflow-hidden bg-[#171717] px-5 py-20 sm:px-8 lg:px-12 xl:px-16 lg:min-h-[921px] lg:py-[120px]">
+      <div className="relative overflow-hidden bg-[#171717] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 xl:px-16 min-h-[600px] lg:min-h-[720px] xl:min-h-[820px] lg:py-24 xl:py-28">
         <Image
           src="/assets/images/ai-fullstack-engineering/linkedin-dark-ellipse-top.svg"
           alt=""
@@ -114,7 +114,7 @@ export default function LinkedInSearchSection() {
 
         <div className="relative z-10 mx-auto flex w-full max-w-[1187px] flex-col items-center text-white">
           <h2
-            className={`${melodrama.className} relative text-center text-[30px] font-bold leading-[1.1] tracking-[-0.95px] sm:text-[36px] lg:text-[44px] lg:leading-[1.16] lg:tracking-[-0.6px]`}
+            className={`${melodrama.className} relative text-center text-[22px] xs:text-[26px] font-bold leading-[1.12] tracking-[-0.6px] sm:text-[36px] lg:text-[44px] lg:leading-[1.16]`}
           >
             And really, it&apos;s absolutely unnecessary...so today, we&apos;ll
             show you the{" "}
@@ -150,15 +150,15 @@ export default function LinkedInSearchSection() {
             href="https://chat.whatsapp.com/HltOtTd5VrHJONFYDVb9VT?mode=gi_t"
             target="_blank"
             rel="noopener noreferrer"
-            className={`${exo.className} mt-12 inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-10 py-5 text-[15px] uppercase text-white sm:text-[16px] shadow-[0px_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01]`}
+            className={`${exo.className} mt-10 xs:mt-12 inline-flex items-center justify-center text-center gap-2 rounded-[8px] bg-[#ff6b00] px-6 py-3.5 text-[14px] uppercase text-white sm:px-10 sm:py-5 sm:text-[16px] shadow-[0px_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01]`}
           >
-            let&apos;s get into it
+            <span className="text-center">let&apos;s get into it</span>
             <Image
               src="/assets/images/ai-fullstack-engineering/linkedin-cta-arrow.svg"
               alt=""
               width={16}
               height={16}
-              className="size-4"
+              className="size-4 shrink-0"
             />
           </a>
         </div>

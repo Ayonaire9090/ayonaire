@@ -11,8 +11,8 @@ const rightSkills = ["Agentic AI,", "Cloud, APIs,", "deployment"];
 
 export default function ExperienceProofSection() {
   return (
-    <section className="bg-[#fdfbf9] px-5 py-16 sm:px-8 lg:px-12 xl:px-16 lg:py-[120px]">
-      <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-[76px]">
+    <section className="bg-[#fdfbf9] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28">
+      <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-12 sm:gap-14 lg:gap-16 xl:gap-[76px]">
         <div className="flex w-full flex-col items-start gap-11">
           <h2
             className={`${melodrama.className} relative w-full text-center text-[28px] font-bold leading-[1.2] tracking-[0.4px] text-[#181c23] sm:text-[36px] lg:text-[44px] lg:leading-[1.16] lg:tracking-[0.2px]`}
@@ -129,7 +129,7 @@ function SkillList({ skills }: { skills: string[] }) {
             alt=""
             width={55}
             height={40}
-            className="h-10 w-[55px] shrink-0"
+            className="h-auto w-10 sm:w-12 lg:w-[55px] shrink-0 object-contain"
           />
           <span>{skill}</span>
         </li>

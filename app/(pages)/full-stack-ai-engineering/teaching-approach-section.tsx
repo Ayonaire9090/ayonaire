@@ -1,4 +1,4 @@
-﻿import Image from "next/image";
+import Image from "next/image";
 import { exo, exoMedium, melodrama } from "@/app/fonts";
 
 const steps = [
@@ -15,7 +15,7 @@ const steps = [
 
 export default function TeachingApproachSection() {
   return (
-    <section className="relative overflow-hidden bg-[#1c1c1c] px-5 py-16 text-white sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
+    <section className="relative overflow-hidden bg-[#1c1c1c] px-5 py-16 text-white sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-[6.875rem] sm:h-[13.75rem] bg-gradient-to-r from-[#1c1c1c] via-[#9d3d00] to-[#ff6b00] [clip-path:polygon(0_0,100%_0,100%_28%,64%_45%,40%_30%,20%_48%,0_78%)]" />
 
       <div className="relative z-10 mx-auto flex w-full max-w-[1240px] flex-col items-center gap-12 lg:gap-20">
@@ -25,12 +25,13 @@ export default function TeachingApproachSection() {
             ${melodrama.className}
             max-w-[960px]
             text-center
-            text-[30px]
+            text-[24px]
             font-bold
             uppercase
             leading-[1.12]
             tracking-[-0.7px]
 
+            xs:text-[28px]
             sm:text-[36px]
 
             lg:text-[46px]
@@ -104,8 +105,8 @@ export default function TeachingApproachSection() {
           <p>Our learning cycle is:</p>
 
           <p className="font-bold uppercase">
-            Explain â†’ Demonstrate â†’ Code Together â†’ Practise â†’ Build â†’ Present â†’
-            Feedback â†’ Improve
+            Explain &rarr; Demonstrate &rarr; Code Together &rarr; Practise &rarr; Build &rarr; Present &rarr;
+            Feedback &rarr; Improve
           </p>
         </div>
 
@@ -145,8 +146,8 @@ export default function TeachingApproachSection() {
             gap-2
             rounded-[8px]
             bg-[#ff6b00]
-            px-8
-            py-4
+            px-5
+            py-3.5
             text-center
             text-xs
             font-bold

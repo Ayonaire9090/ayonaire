@@ -56,9 +56,11 @@ export default function AudienceFitSection() {
         px-5
         py-16
         sm:px-8
+        sm:py-20
         lg:px-12
-        lg:py-[120px]
+        lg:py-24
         xl:px-16
+        xl:py-28
       "
     >
    
@@ -77,13 +79,14 @@ export default function AudienceFitSection() {
             className={`
               ${melodrama.className}
               max-w-[1003px]
-              text-[32px]
+              text-[24px]
               font-bold
               uppercase
               leading-[1.12]
               tracking-[-0.8px]
               text-[#181c23]
 
+              xs:text-[28px]
               sm:text-[40px]
 
               lg:text-[56px]
@@ -161,7 +164,7 @@ export default function AudienceFitSection() {
                       relative
                       z-10
 
-                      w-[92%]
+                      w-full
                       max-w-[560px]
 
                       rounded-[18px]
@@ -169,24 +172,27 @@ export default function AudienceFitSection() {
                       border-[#eee6e2]
                       bg-white
 
-                      px-5
-                      py-6
+                      px-4
+                      py-5
 
                       shadow-[0_3px_10px_rgba(0,0,0,0.10)]
 
+                      xs:px-5
                       sm:w-[88%]
                       sm:px-7
                       sm:py-7
 
                       lg:w-full
                       lg:max-w-none
-                      lg:min-h-[205px]
+                      min-h-[160px]
+                      sm:min-h-[180px]
+                      lg:min-h-[195px]
                       lg:rounded-[20px]
                       lg:px-7
                       lg:py-8
                     "
                   >
-                    <div className="flex items-start gap-4 lg:gap-5">
+                    <div className="flex items-start gap-3 xs:gap-4 lg:gap-5">
                       {/* ICON */}
                       <Image
                         src="/assets/images/ai-fullstack-engineering/career-system-portfolio.png"
@@ -195,10 +201,11 @@ export default function AudienceFitSection() {
                         height={64}
                         className="
                           mt-1
-                          size-[46px]
+                          size-[38px]
                           shrink-0
                           object-contain
 
+                          xs:size-[46px]
                           sm:size-[52px]
 
                           lg:size-[64px]
@@ -212,12 +219,13 @@ export default function AudienceFitSection() {
                           className={`
                             ${exo.className}
 
-                            text-[16px]
+                            text-[15px]
                             font-bold
                             leading-[1.3]
                             tracking-[0.2px]
                             text-[#181c23]
 
+                            xs:text-[16px]
                             sm:text-[18px]
 
                             lg:text-[20px]
@@ -231,14 +239,16 @@ export default function AudienceFitSection() {
                           className={`
                             ${exoMedium.className}
 
-                            mt-2
+                            mt-1.5
+                            xs:mt-2
 
-                            text-[14px]
+                            text-[13px]
                             font-normal
-                            leading-[1.6]
+                            leading-[1.55]
                             tracking-[0.1px]
                             text-[#5a4136]
 
+                            xs:text-[14px]
                             sm:text-[15px]
                             sm:leading-[1.6]
 

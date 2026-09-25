@@ -43,7 +43,7 @@ const programmeExamples = [
 
 export default function TrainingCostSection() {
   return (
-    <section className="bg-white px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
+    <section className="bg-white px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28">
       <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-12 lg:gap-16">
         {/* HEADER */}
         <div className="flex flex-col items-center gap-7 text-center lg:gap-9">
@@ -51,9 +51,10 @@ export default function TrainingCostSection() {
             className={`
               ${melodrama.className}
               max-w-[940px]
-              text-[28px]
+              text-[24px]
+              xs:text-[28px]
               font-bold
-              leading-[1.12]
+              leading-[1.15]
               tracking-[0.1px]
               text-[#181c23]
 
@@ -91,7 +92,7 @@ export default function TrainingCostSection() {
         </div>
 
         {/* PROGRAMME CARDS */}
-        <div className="grid w-full grid-cols-2 gap-5 sm:gap-7 lg:gap-9">
+        <div className="grid w-full grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-7 lg:gap-9 max-w-[440px] sm:max-w-none">
           {programmeExamples.map((programme) => {
             return (
               <article
@@ -101,8 +102,8 @@ export default function TrainingCostSection() {
                   w-full
                   ${
                     programme.featured
-                      ? "col-span-2 mx-auto w-[85%] sm:w-[65%] lg:w-[52%]"
-                      : ""
+                      ? "col-span-1 sm:col-span-2 mx-auto w-full sm:w-[65%] lg:w-[52%]"
+                      : "w-full max-w-[440px] sm:max-w-none mx-auto"
                   }
                 `}
                 style={{

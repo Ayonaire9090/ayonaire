@@ -87,7 +87,7 @@ export default function StudentReviewSection() {
   return (
     <section
       style={{ background: "linear-gradient(180deg, #FFFFFF 0%, #FFF2E8 30%, #FFE5D4 60%, #FFFFFF 100%)" }}
-      className="relative overflow-hidden px-5 pt-12 pb-16 sm:px-8 sm:pt-16 sm:pb-20 lg:px-12 lg:pt-20 lg:pb-24"
+      className="relative overflow-hidden px-5 py-14 sm:px-8 sm:py-18 lg:px-12 lg:py-24 xl:px-16 xl:py-28"
     >
       <div className="relative z-10 mx-auto flex w-full max-w-[980px] flex-col items-center">
         {/* Top Call to Action Button matching Image 1 */}
@@ -96,15 +96,15 @@ export default function StudentReviewSection() {
             href="https://chat.whatsapp.com/HltOtTd5VrHJONFYDVb9VT?mode=gi_t"
             target="_blank"
             rel="noopener noreferrer"
-            className={`${exoMedium.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-7 py-3.5 text-[13px] font-bold uppercase leading-[1.45] text-white shadow-[0_12px_24px_rgba(255,107,0,0.35)] transition-transform hover:scale-[1.01] sm:px-9 sm:py-4 lg:text-[15px]`}
+            className={`${exoMedium.className} inline-flex items-center justify-center text-center gap-2 rounded-[8px] bg-[#ff6b00] px-7 py-3.5 text-[13px] font-bold uppercase leading-[1.45] text-white shadow-[0_12px_24px_rgba(255,107,0,0.35)] transition-transform hover:scale-[1.01] sm:px-9 sm:py-4 lg:text-[15px]`}
           >
-            <span>I Want To Build My AI Career</span>
+            <span className="text-center">I Want To Build My AI Career</span>
             <Image
               src="/assets/images/ai-fullstack-engineering/instructor-proof-button-arrow.svg"
               alt=""
               width={16}
               height={16}
-              className="size-4"
+              className="size-4 shrink-0"
             />
           </a>
         </div>
@@ -130,7 +130,7 @@ export default function StudentReviewSection() {
         </div>
 
         {/* Review Content */}
-        <article className="relative mt-8 grid w-full items-start gap-4 sm:gap-6 lg:grid-cols-[210px_minmax(0,1fr)] lg:gap-10">
+        <article className="relative mt-8 grid w-full items-start gap-4 sm:gap-6 lg:grid-cols-[minmax(180px,220px)_minmax(0,1fr)] lg:gap-10">
           {/* Avatar Container */}
           <div className="relative flex flex-col items-center justify-center lg:pt-14">
             <Image

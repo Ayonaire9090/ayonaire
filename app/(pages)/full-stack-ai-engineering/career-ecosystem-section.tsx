@@ -139,14 +139,14 @@ export default function CareerEcosystemSection() {
   }, [api]);
 
   return (
-    <section className="relative overflow-hidden bg-white px-5 pb-16 pt-24 sm:px-8 sm:pt-28 lg:px-12 lg:pb-[120px] lg:pt-36 xl:px-16">
+    <section className="relative overflow-hidden bg-white px-5 pb-16 pt-24 sm:px-8 sm:pt-28 lg:px-12 lg:pb-24 lg:pt-36 xl:px-16 xl:pb-28">
       <div className="pointer-events-none absolute left-1/2 top-0 h-[12.59375rem] sm:h-[25.1875rem] w-screen max-w-none -translate-x-1/2 overflow-hidden">
         <svg viewBox="0 0 1440 403" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-full w-full" preserveAspectRatio="none">
           <path d="M-4.27734 0H1456.05L1468.72 120.9H1157L853.5 23.2188L459.5 120.9L198 23.2188L-4.27734 403V0Z" fill="#FDDDD2" />
         </svg>
       </div>
       <div className="relative z-10 mx-auto flex w-full max-w-[1240px] flex-col items-center gap-12 lg:gap-20">
-        <h2 className={`${melodrama.className} max-w-[846px] text-center text-[32px] font-bold leading-[1.12] tracking-[0.2px] text-[#181c23] sm:text-[40px] lg:text-[56px] lg:leading-[1.13]`}>
+        <h2 className={`${melodrama.className} max-w-[846px] text-center text-[24px] xs:text-[28px] font-bold leading-[1.12] tracking-[0.2px] text-[#181c23] sm:text-[40px] lg:text-[56px] lg:leading-[1.13]`}>
           This is your <span className="text-[#f25e25]">Complete Career</span> Transition Ecosystem.
         </h2>
 
@@ -173,13 +173,13 @@ export default function CareerEcosystemSection() {
                   key={item.number}
                   className="pl-6 lg:pl-10 basis-auto shrink-0"
                 >
-                  <article className="relative h-[560px] w-[300px] xs:w-[330px] overflow-hidden rounded-[28px] border-[3px] border-[#4d4c4d] bg-[#020000] bg-[url('/assets/images/ai-fullstack-engineering/career-framework-pattern.png')] bg-cover p-6 text-white sm:w-[390px] lg:h-[633px] lg:w-[472px] lg:p-8">
+                  <article className="relative min-h-[460px] xs:min-h-[500px] sm:min-h-[540px] lg:min-h-[600px] w-[260px] xs:w-[300px] sm:w-[390px] lg:w-[472px] overflow-hidden rounded-[24px] xs:rounded-[28px] border-[3px] border-[#4d4c4d] bg-[#020000] bg-[url('/assets/images/ai-fullstack-engineering/career-framework-pattern.png')] bg-cover p-5 xs:p-6 text-white lg:p-8">
                     <div className="relative z-10 flex h-full flex-col">
-                      <p className={`${exo.className} text-[16px] font-medium tracking-[0.08em] text-white/60 lg:text-[20px]`}>({item.number})</p>
-                      <h3 className={`${exo.className} mt-10 text-[18px] font-semibold uppercase leading-[1.28] tracking-[0.09em] text-[#f25e25] lg:text-[24px]`}>
+                      <p className={`${exo.className} text-[14px] xs:text-[16px] font-medium tracking-[0.08em] text-white/60 lg:text-[20px]`}>({item.number})</p>
+                      <h3 className={`${exo.className} mt-8 xs:mt-10 text-[17px] xs:text-[18px] font-semibold uppercase leading-[1.28] tracking-[0.09em] text-[#f25e25] lg:text-[24px]`}>
                         {item.title}
                       </h3>
-                      <p className={`${space.className} mt-auto text-[12px] font-normal leading-[1.45] tracking-[0.05em] text-white/80 lg:text-[18px] lg:leading-[1.35]`}>
+                      <p className={`${space.className} mt-auto text-[12px] xs:text-[13px] font-normal leading-[1.45] tracking-[0.05em] text-white/80 lg:text-[18px] lg:leading-[1.35]`}>
                         {item.body}
                       </p>
                     </div>

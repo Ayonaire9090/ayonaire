@@ -96,13 +96,13 @@ const FaqSection = () => {
   };
 
   return (
-    <section className='mt-20 bg-[#FEF1EB] py-16 px-4 md:px-12 lg:px-20 w-full'>
-      <div className='max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-start'>
+    <section className='mt-20 bg-[#FEF1EB] py-16 px-4 sm:px-8 md:px-12 lg:px-20 w-full'>
+      <div className='max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start'>
         
         {/* Left Column: Heading & Image (Takes full width on mobile) */}
-        <div className='lg:col-span-5 flex flex-col gap-8 lg:sticky lg:top-8 w-full'>
+        <div className='lg:col-span-5 flex flex-col gap-6 xs:gap-8 lg:sticky lg:top-8 w-full'>
           <div className='relative w-full'>
-            <h2 className={`${melodrama.className} font-bold relative z-10 text-4xl sm:text-5xl lg:text-6xl text-[#111111] leading-[1.1] w-full`}>
+            <h2 className={`${melodrama.className} font-bold relative z-10 text-[28px] xs:text-[34px] sm:text-5xl lg:text-6xl text-[#111111] leading-[1.1] w-full`}>
               <span className="relative inline-block text-[#F4672B]">
                 Frequently
                 {/* SVG Highlight behind 'Frequently' */}
@@ -119,7 +119,7 @@ const FaqSection = () => {
           </div>
 
           {/* FAQ Illustration / Image */}
-          <div className='w-full max-w-[375px] h-[304px] relative self-start'>
+          <div className='relative w-full max-w-[375px] aspect-[375/304] self-start'>
             <Image 
               src={faq} 
               alt="Frequently Asked Questions Illustration" 
@@ -131,7 +131,7 @@ const FaqSection = () => {
         </div>
 
         {/* Right Column: Collapsible Cards List */}
-        <div className='lg:col-span-7 flex flex-col gap-4 w-full'>
+        <div className='lg:col-span-7 flex flex-col gap-3.5 xs:gap-4 w-full'>
           {faqs.map((faqItem, index) => {
             const isOpen = openIndex === index;
             return (
@@ -141,9 +141,9 @@ const FaqSection = () => {
               >
                 <button
                   onClick={() => toggleFaq(index)}
-                  className='w-full py-5 px-6 flex items-center justify-between text-left focus:outline-none cursor-pointer'
+                  className='w-full py-4 px-4 xs:px-6 flex items-center justify-between text-left focus:outline-none cursor-pointer gap-3'
                 >
-                  <span className={`${barlowBold.className} text-lg sm:text-xl text-[#111111]`}>
+                  <span className={`${barlowBold.className} text-[15px] xs:text-lg sm:text-xl text-[#111111]`}>
                     {faqItem.question}
                   </span>
                   <span className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}>
@@ -155,8 +155,8 @@ const FaqSection = () => {
                 </button>
 
                 {isOpen && (
-                  <div className='px-6 pb-6 pt-0 border-t border-gray-100 mt-1'>
-                    <p className={`${space.className} text-[#4A4A4A] text-base leading-relaxed pt-3`}>
+                  <div className='px-4 xs:px-6 pb-5 pt-0 border-t border-gray-100 mt-1'>
+                    <p className={`${space.className} text-[#4A4A4A] text-sm xs:text-base leading-relaxed pt-3`}>
                       {faqItem.answer}
                     </p>
                   </div>

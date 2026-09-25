@@ -14,7 +14,7 @@ const proofOutcomes = [
 
 export default function BuildProofSection() {
   return (
-    <section className="bg-white px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
+    <section className="bg-white px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28">
       <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-12 lg:gap-20">
         <div className="relative w-fit max-w-full">
           <h2 className={`${melodrama.className} relative z-10 text-[34px] font-bold uppercase leading-[1.08] tracking-[-0.8px] text-[#181c23] sm:text-[44px] lg:text-[56px] lg:tracking-[-1.4px]`}>
@@ -38,7 +38,7 @@ export default function BuildProofSection() {
           </p>
         </div>
 
-        <div className="grid items-end gap-12 lg:grid-cols-[minmax(0,598px)_minmax(420px,575px)] lg:gap-[67px]">
+        <div className="grid items-end gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] xl:grid-cols-[minmax(0,598px)_minmax(0,575px)] lg:gap-10 xl:gap-[67px]">
           <ul className="flex flex-col gap-5 sm:gap-6 lg:gap-[27px]">
             {proofOutcomes.map((outcome) => (
               <li key={outcome.number} className={`${exoMedium.className} grid grid-cols-[48px_1fr] items-center gap-4 text-[18px] font-bold leading-[1.3] tracking-[0.3px] text-[#181c23] sm:grid-cols-[56px_1fr] sm:text-[22px] lg:text-[28px] lg:tracking-[0.6px]`}>

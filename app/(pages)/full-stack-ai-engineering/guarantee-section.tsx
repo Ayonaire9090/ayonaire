@@ -3,7 +3,7 @@ import { exo, melodrama, space } from "@/app/fonts";
 
 export default function GuaranteeSection() {
   return (
-    <section className="bg-[#FEFAF8] px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
+    <section className="bg-[#FEFAF8] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28">
       <div className="mx-auto flex w-full max-w-[1051px] flex-col items-center gap-10">
         <h2 className={`${melodrama.className} w-full text-center text-[32px] font-bold uppercase leading-[1.12] tracking-[-0.8px] text-[#181c23] sm:text-[40px] lg:text-[56px] lg:leading-[1.08]`}>
           And yes... 30-day <span className="bg-[#ffdcc4] text-[#f25e25]">100% money-back guarantee</span>

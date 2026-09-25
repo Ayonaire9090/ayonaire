@@ -2,7 +2,7 @@ import { exo, melodrama, salt, space } from "@/app/fonts";
 
 export default function AiBoomSideSection() {
   return (
-    <section className="bg-[#fff6ef] px-5 py-14 sm:px-8 lg:px-12 xl:px-16 lg:py-24">
+    <section className="bg-[#fff6ef] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28">
       <div className="mx-auto flex w-full max-w-[880px] flex-col items-center gap-8 lg:gap-10">
         {/* Title */}
         <h2
@@ -165,7 +165,7 @@ function PathCard({
 }) {
   return (
     <article
-      className="relative w-full max-w-[800px] transition-transform duration-300 hover:scale-[1.008]"
+      className="relative h-[260px] xs:h-[280px] w-full max-w-[800px] transition-transform duration-300 hover:scale-[1.008] sm:h-auto"
     >
       {/* Irregular card background silhouette matching Frame 2147231153 */}
       <svg
@@ -193,59 +193,79 @@ function PathCard({
         />
       </svg>
 
-      {/* Content - level horizontal text (0° rotation) */}
+      {/* Content container */}
       <div
-        className={`relative z-10 w-full ${
+        className={`relative z-10 flex h-full w-full flex-col ${
           rotate180
-            ? "px-8 pt-8 pb-10 sm:px-12 sm:pt-9 sm:pb-12 lg:px-14 lg:pt-10 lg:pb-14"
-            : "px-8 pt-9 pb-8 sm:px-12 sm:pt-11 sm:pb-10 lg:px-14 lg:pt-12 lg:pb-11"
+            ? "px-6 pt-5 pb-6 xs:px-7 xs:pt-6 xs:pb-7 sm:px-12 sm:pt-9 sm:pb-12 lg:px-14 lg:pt-10 lg:pb-14"
+            : "px-6 pt-6 pb-5 xs:px-7 xs:pt-7 xs:pb-6 sm:px-12 sm:pt-11 sm:pb-10 lg:px-14 lg:pt-12 lg:pb-11"
         }`}
       >
-        {/* Number Badge */}
-        <div className="mb-2">
-          <span
+        {/* Header (pinned at top) */}
+        <div className="shrink-0 mb-1.5 sm:mb-4">
+          {/* Number Badge */}
+          <div className="mb-0.5 sm:mb-2">
+            <span
+              className={`
+                ${salt.className}
+                inline-block
+                text-[22px]
+                font-normal
+                leading-none
+                text-white/95
+                select-none
+                xs:text-[24px]
+                sm:text-[34px]
+              `}
+            >
+              {number}
+            </span>
+          </div>
+
+          {/* Title */}
+          <h3
             className={`
-              ${salt.className}
-              inline-block
-              text-[28px]
-              font-normal
-              leading-none
-              text-white/95
-              select-none
-              sm:text-[34px]
+              ${exo.className}
+              text-[16px]
+              font-bold
+              leading-[1.25]
+              tracking-[-0.3px]
+              text-white
+              xs:text-[18px]
+              sm:text-[23px]
+              lg:text-[25px]
             `}
           >
-            {number}
-          </span>
+            {title}
+          </h3>
         </div>
 
-        {/* Title */}
-        <h3
-          className={`
-            ${exo.className}
-            mb-4
-            text-[20px]
-            font-bold
-            leading-[1.25]
-            tracking-[-0.3px]
-            text-white
-            sm:text-[23px]
-            lg:text-[25px]
-          `}
-        >
-          {title}
-        </h3>
-
-        {/* Content */}
+        {/* Scrollable Content on mobile, normal auto flow on sm+ */}
         <div
           className={`
             ${space.className}
+            relative
+            flex-1
+            min-h-0
             w-full
-            space-y-2
-            text-[15px]
+            overflow-y-auto
+            pr-1.5
+            text-[13px]
             font-normal
-            leading-[1.65]
+            leading-[1.6]
             text-[#e2e4e8]
+            space-y-2
+            [scrollbar-color:#f25e25_transparent]
+            [scrollbar-width:thin]
+            [&::-webkit-scrollbar]:w-1
+            [&::-webkit-scrollbar-track]:bg-transparent
+            [&::-webkit-scrollbar-thumb]:rounded-full
+            [&::-webkit-scrollbar-thumb]:bg-[#f25e25]/60
+            hover:[&::-webkit-scrollbar-thumb]:bg-[#f25e25]
+            xs:pr-2
+            xs:text-[14px]
+            sm:overflow-y-visible
+            sm:pr-0
             sm:text-[16px]
             lg:text-[17px]
           `}

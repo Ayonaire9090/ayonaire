@@ -54,7 +54,7 @@ import CredentialProofSection from "./CredentialsProofSection";
 import ClarificationSection from "./ClarificationSection";
 export default function AiFullstackEngineeringPage() {
   return (
-    <main className={exo.className}>
+    <main className={`${exo.className} w-full overflow-x-clip`}>
       <Hero />
       <HighestPaidSection />
       <WhyPaySection />

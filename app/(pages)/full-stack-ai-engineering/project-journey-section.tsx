@@ -28,7 +28,7 @@ const portfolioItems = [
 
 export default function ProjectJourneySection() {
   return (
-    <section className="bg-[#fefefe] px-5 py-16 sm:px-8 lg:px-12 xl:px-16 lg:py-[120px]">
+    <section className="bg-[#fefefe] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28">
       <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-12 lg:gap-20">
         <div className="flex flex-col items-center gap-8 text-center lg:gap-14">
           <h2 className={`${melodrama.className} max-w-[960px] text-[32px] font-bold uppercase leading-[1.12] tracking-[-0.8px] text-black sm:text-[40px] lg:text-[56px] lg:leading-[1.25]`}>
@@ -51,7 +51,7 @@ export default function ProjectJourneySection() {
           <p className={`${exo.className} w-full text-left text-[20px] font-bold leading-[1.4] tracking-[0.4px] text-[#263238] lg:text-[32px]`}>Your portfolio would span acrosss:</p>
         </div>
 
-        <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(420px,683px)] lg:gap-20">
+        <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)] xl:grid-cols-[minmax(0,1fr)_minmax(0,683px)] lg:gap-12 xl:gap-20">
           <div>
             <ol className="flex flex-col gap-3.5 sm:gap-4">
               {portfolioItems.map((item, index) => (
@@ -90,9 +90,14 @@ export default function ProjectJourneySection() {
           <p className="font-semibold uppercase">Ready to make the transition?</p>
         </div>
 
-        <a href="https://chat.whatsapp.com/HltOtTd5VrHJONFYDVb9VT?mode=gi_t" target="_blank" rel="noopener noreferrer" className={`${exo.className} mx-auto inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-8 py-4 text-[14px] font-bold uppercase text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:px-10 sm:py-5 lg:text-[18px]`}>
-          Start my AI career transition
-          <Image src="/assets/images/ai-fullstack-engineering/curriculum-button-arrow.svg" alt="" width={16} height={16} className="size-4" />
+        <a
+          href="https://chat.whatsapp.com/HltOtTd5VrHJONFYDVb9VT?mode=gi_t"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`${exo.className} mx-auto inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-5 py-3.5 text-center text-[13px] font-bold uppercase text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] xs:px-8 xs:py-4 xs:text-[14px] sm:px-10 sm:py-5 lg:text-[18px]`}
+        >
+          <span className="text-center">Start my AI career transition</span>
+          <Image src="/assets/images/ai-fullstack-engineering/curriculum-button-arrow.svg" alt="" width={16} height={16} className="size-4 shrink-0" />
         </a>
       </div>
     </section>

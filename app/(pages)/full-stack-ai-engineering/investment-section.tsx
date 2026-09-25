@@ -43,7 +43,7 @@ const investmentItems = [
 
 export default function InvestmentSection() {
   return (
-    <section className="bg-[linear-gradient(180deg,#FEFEFE_0%,rgba(248,100,50,0.22)_100%)] px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
+    <section className="bg-[linear-gradient(180deg,#FEFEFE_0%,rgba(248,100,50,0.22)_100%)] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28">
       <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-10 lg:gap-14">
         {/* HEADER */}
         <div className="flex flex-col items-center gap-6 text-center lg:gap-8">

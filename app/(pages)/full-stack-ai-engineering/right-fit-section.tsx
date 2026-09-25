@@ -23,7 +23,7 @@ const notForYouItems = [
 
 export default function RightFitSection() {
   return (
-    <section className="bg-[rgba(255,220,196,0.28)] px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
+    <section className="bg-[rgba(255,220,196,0.28)] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28">
       <div className="mx-auto grid w-full max-w-[1240px] gap-12 lg:grid-cols-[minmax(300px,542px)_minmax(0,1fr)] lg:gap-10">
         <div className="lg:sticky lg:top-8 lg:self-start">
           <h2 className={`${melodrama.className} max-w-[543px] text-[24px] font-bold leading-[1.12] tracking-[0.2px] text-[#181c23] sm:text-[32px] lg:text-[46px] lg:leading-[1.25]`}>
@@ -57,7 +57,7 @@ function ChecklistGroup({ eyebrow, items }: { eyebrow: string; items: string[] }
         {items.map((item) => (
           <article
             key={item}
-            className="relative flex aspect-[702/336] w-full max-w-[655px] items-center"
+            className="relative flex min-h-[140px] xs:min-h-[130px] sm:min-h-0 sm:aspect-[702/336] w-full max-w-[655px] items-center overflow-hidden"
           >
             <Image
               src="/assets/images/ai-fullstack-engineering/right-fit-card.svg"
@@ -67,7 +67,7 @@ function ChecklistGroup({ eyebrow, items }: { eyebrow: string; items: string[] }
               className="pointer-events-none object-contain"
             />
             <div
-              className="relative z-10 flex w-full items-center gap-3.5 pl-6 pr-4 sm:gap-6 sm:pl-8 sm:pr-6 lg:gap-8 lg:pl-10 lg:pr-8"
+              className="relative z-10 mx-auto flex w-[96%] sm:w-full items-center gap-3.5 pl-5 pr-3 sm:gap-6 sm:pl-8 sm:pr-6 lg:gap-8 lg:pl-10 lg:pr-8"
               style={{ transform: "rotate(4.38deg)" }}
             >
               <Image
@@ -75,9 +75,9 @@ function ChecklistGroup({ eyebrow, items }: { eyebrow: string; items: string[] }
                 alt=""
                 width={46}
                 height={44}
-                className="size-[36px] shrink-0 object-contain sm:size-[46px] lg:size-[58px]"
+                className="size-[32px] xs:size-[36px] shrink-0 object-contain sm:size-[46px] lg:size-[58px]"
               />
-              <p className={`${rope.className} w-[68%] text-[12px] font-bold leading-[1.65] tracking-[0.3px] text-[#181c23] sm:text-[15px] sm:leading-[1.5] lg:text-[19px] lg:leading-[1.5] xl:text-[20px]`}>
+              <p className={`${rope.className} w-[76%] sm:w-[68%] text-[12px] font-bold leading-[1.6] tracking-[0.3px] text-[#181c23] sm:text-[15px] sm:leading-[1.5] lg:text-[19px] lg:leading-[1.5] xl:text-[20px]`}>
                 {item}
               </p>
             </div>

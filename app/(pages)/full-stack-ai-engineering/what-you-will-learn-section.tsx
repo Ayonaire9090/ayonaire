@@ -23,7 +23,7 @@ const lessons = [
 
 export default function WhatYouWillLearnSection() {
   return (
-    <section className="px-5 py-16 sm:px-8 lg:px-12 xl:px-16 lg:py-[120px]" style={{ backgroundImage: "linear-gradient(119deg, #fff 3%, rgba(255,220,196,0.28) 21%, rgba(255,255,255,0.7) 67%, #ffdcc4 99%)" }}>
+    <section className="px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28" style={{ backgroundImage: "linear-gradient(119deg, #fff 3%, rgba(255,220,196,0.28) 21%, rgba(255,255,255,0.7) 67%, #ffdcc4 99%)" }}>
       <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-14 lg:gap-20">
         <div className="text-center">
           <p className={`${melodrama.className} text-[22px] font-bold leading-[1.2] tracking-[0.3px] text-[#181c23] lg:text-[32px]`}>
@@ -40,7 +40,7 @@ export default function WhatYouWillLearnSection() {
 
         <div className="grid gap-x-5 gap-y-10 md:grid-cols-2">
           {lessons.map(([title, body], index) => (
-            <article key={title} className="relative rounded-[28px] bg-white px-6 pb-8 pt-14 shadow-[0_1px_6px_rgba(0,0,0,0.12)] lg:min-h-[350px] lg:rounded-[40px] lg:px-9 lg:pb-10 lg:pt-20">
+            <article key={title} className="relative rounded-[28px] bg-white px-6 pb-8 pt-14 shadow-[0_1px_6px_rgba(0,0,0,0.12)] min-h-[280px] sm:min-h-[300px] lg:min-h-[330px] lg:rounded-[40px] lg:px-9 lg:pb-10 lg:pt-20">
               <span className="absolute left-6 top-[-22px] flex h-[58px] w-[68px] rotate-[3deg] items-center justify-center rounded-[4px] border border-[#ff6b00] bg-white text-[22px] font-bold tracking-[0.8px] text-black shadow-[0_0_6px_rgba(248,100,50,0.25)] lg:size-[100px] lg:text-[48px]">
                 {String(index + 1).padStart(2, "0")}
               </span>

@@ -1,9 +1,9 @@
-﻿import Image from "next/image";
+import Image from "next/image";
 import { exo, melodrama } from "@/app/fonts";
 
 export default function CareerCtaSection() {
   return (
-    <section className="relative overflow-hidden bg-[#171717] px-5 py-16 text-white sm:px-8 lg:px-12 lg:py-[110px] xl:px-16">
+    <section className="relative overflow-hidden bg-[#171717] px-5 py-16 text-white sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28">
       <Image
         src="/assets/images/ai-fullstack-engineering/career-system-line.svg"
         alt=""
@@ -35,15 +35,15 @@ export default function CareerCtaSection() {
           href="https://chat.whatsapp.com/HltOtTd5VrHJONFYDVb9VT?mode=gi_t"
           target="_blank"
           rel="noopener noreferrer"
-          className={`${exo.className} mt-4 inline-flex items-center justify-center gap-3 rounded-[8px] bg-[#ff6b00] px-7 py-4 text-[15px] font-bold uppercase tracking-[0.08em] text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:text-[16px]`}
+          className={`${exo.className} mt-4 inline-flex items-center justify-center text-center gap-3 rounded-[8px] bg-[#ff6b00] px-7 py-4 text-[15px] font-bold uppercase tracking-[0.08em] text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:text-[16px]`}
         >
-          Show me the roadmap
+          <span className="text-center">Show me the roadmap</span>
           <Image
             src="/assets/images/ai-fullstack-engineering/career-cta-arrow.svg"
             alt=""
             width={16}
             height={16}
-            className="size-4"
+            className="size-4 shrink-0"
           />
         </a>
       </div>

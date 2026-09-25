@@ -4,11 +4,11 @@ import { space, melodrama } from '@/app/fonts';
 
 const Next10MonthsSection = () => {
   return (
-    <section className='bg-[#FEF1EB] py-16 px-4 md:px-12 lg:px-20 w-full flex flex-col'>
+    <section className='bg-[#FEF1EB] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28 w-full flex flex-col'>
       <div className=' max-w-[1279px] w-full mx-auto flex flex-col gap-6'>
         
         {/* Header with Melodrama font and highlighted text */}
-        <h2 className={`${melodrama.className} font-bold text-3xl sm:text-4xl lg:text-5xl text-[#111111] leading-[1.2] relative z-10 mb-4 text-center`}>
+        <h2 className={`${melodrama.className} font-bold text-2xl xs:text-3xl sm:text-4xl lg:text-5xl text-[#111111] leading-[1.2] relative z-10 mb-4 text-center`}>
           The{' '}
           <span className="relative inline-block text-[#F4672B]">
             next 10 months
@@ -25,7 +25,7 @@ const Next10MonthsSection = () => {
         </h2>
 
         {/* Body content with Space font and left alignment */}
-     <div className={`${space.className} text-[#333333] text-xl sm:text-2xl leading-relaxed flex flex-col gap-6 text-left`}>
+     <div className={`${space.className} text-[#333333] text-[16px] sm:text-xl lg:text-2xl leading-relaxed flex flex-col gap-6 text-left`}>
          
           <p>Think about that for a moment.</p>
 

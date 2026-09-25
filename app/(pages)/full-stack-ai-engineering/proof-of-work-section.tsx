@@ -11,8 +11,8 @@ const proofItems = [
 
 export default function ProofOfWorkSection() {
   return (
-    <section className="bg-[#fdfbf9] px-5 py-16 sm:px-8 lg:px-12 xl:px-16 lg:py-[120px]">
-      <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-[76px]">
+    <section className="bg-[#fdfbf9] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28">
+      <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-12 sm:gap-14 lg:gap-16 xl:gap-[76px]">
         <div className="flex w-full flex-col items-start gap-11">
           <h2
             className={`${melodrama.className} relative w-full text-center text-[30px] font-bold leading-[1.12] tracking-[-0.8px] text-[#181c23] sm:text-[36px] lg:text-[44px] lg:leading-[1.16] lg:tracking-[-0.6px]`}

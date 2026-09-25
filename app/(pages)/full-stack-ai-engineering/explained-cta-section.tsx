@@ -1,9 +1,9 @@
-﻿import Image from "next/image";
+import Image from "next/image";
 import { exo, exoMedium, melodrama } from "@/app/fonts";
 
 export default function ExplainedCtaSection() {
   return (
-    <section className="relative z-10 overflow-x-clip overflow-y-visible bg-[#171717] px-5 py-20 sm:px-8 lg:px-12 xl:px-16 lg:min-h-[720px] lg:py-[120px]">
+    <section className="relative z-10 overflow-x-clip overflow-y-visible bg-[#171717] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 xl:px-16 min-h-[500px] sm:min-h-[600px] lg:min-h-[680px] lg:py-24 xl:py-28">
       {/* TOP DECORATIVE SHAPE (Rectangle 34624590) */}
       <Image
         src="/assets/images/ai-fullstack-engineering/explained-cta-top-shape.svg"
@@ -77,9 +77,9 @@ export default function ExplainedCtaSection() {
           href="https://chat.whatsapp.com/HltOtTd5VrHJONFYDVb9VT?mode=gi_t"
           target="_blank"
           rel="noopener noreferrer"
-          className={`${exoMedium.className} mt-10 inline-flex items-center justify-center gap-2.5 rounded-[8px] bg-[#ff6b00] px-8 py-4.5 text-[15px] font-bold uppercase tracking-[0.3px] text-white sm:mt-12 sm:px-10 sm:py-5 sm:text-[16px] shadow-[0px_12px_20px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01]`}
+          className={`${exoMedium.className} mt-8 xs:mt-10 inline-flex items-center justify-center text-center gap-2.5 rounded-[8px] bg-[#ff6b00] px-5 py-3.5 text-[13px] font-bold uppercase tracking-[0.3px] text-white sm:mt-12 sm:px-10 sm:py-5 sm:text-[16px] shadow-[0px_12px_20px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01]`}
         >
-          I Want To Build Systems Like These
+          <span className="text-center">I Want To Build Systems Like These</span>
           <Image
             src="/assets/images/ai-fullstack-engineering/explained-cta-button-arrow.svg"
             alt=""

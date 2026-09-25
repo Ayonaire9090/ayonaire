@@ -3,12 +3,12 @@ import { exo, melodrama, space } from "@/app/fonts";
 
 export default function HighestPaidSection() {
   return (
-    <section className="relative z-0 bg-[#FEFBF6] px-[24.15px] pt-[120px] pb-0 sm:px-8 sm:pb-18 sm:pt-36 md:pt-40 lg:px-12 lg:pb-20 lg:pt-48 xl:px-16 -mt-[65px]">
-      <div className="mx-auto flex w-full flex-col items-center gap-[44px] sm:gap-[68px] lg:gap-[76px]">
+    <section className="relative z-0 overflow-x-clip bg-[#FEFBF6] px-4 pt-24 pb-0 xs:px-6 sm:px-8 sm:pb-16 sm:pt-36 md:pt-40 lg:px-12 lg:pb-20 lg:pt-48 xl:px-16 -mt-16">
+      <div className="mx-auto flex w-full flex-col items-center gap-10 sm:gap-14 lg:gap-16">
         {/* Frame 2147231158 */}
-        <div className="flex w-full max-w-[326.7px] lg:max-w-[853px] mx-auto flex-col gap-[81.5px] lg:gap-[81px] items-start p-0">
+        <div className="flex w-full max-w-md sm:max-w-xl lg:max-w-[853px] mx-auto flex-col gap-10 sm:gap-16 lg:gap-20 items-start p-0">
           <h2
-            className={`${melodrama.className} relative w-full text-center lg:text-left text-[24.15px] font-bold leading-[24px] tracking-[1.77px] text-[#181C23] lg:text-[56px] lg:leading-[67px] lg:tracking-[1.76px] lg:max-w-[860px]`}
+            className={`${melodrama.className} relative w-full text-center lg:text-left text-[22px] xs:text-[24px] font-bold leading-tight tracking-[0.5px] xs:tracking-[1px] text-[#181C23] sm:text-[36px] lg:text-[56px] lg:leading-[67px] lg:tracking-[1.76px] lg:max-w-[860px]`}
           >
             AI/ML ENGINEERS ARE{" "}
             <span className="text-[#f25e25]">ONE OF THE</span>{" "}
@@ -26,7 +26,7 @@ export default function HighestPaidSection() {
           </h2>
 
           <div
-            className={`${space.className} w-full text-left lg:text-justify text-[16.1px] font-medium leading-[24px] tracking-[1.01px] text-[#5A4136] lg:text-[24px] lg:leading-[35px] lg:tracking-[1px] space-y-5 lg:space-y-6 lg:max-w-[853px]`}
+            className={`${space.className} w-full text-left lg:text-justify text-[15px] xs:text-[16px] font-medium leading-[1.6] tracking-[0.3px] text-[#5A4136] sm:text-[18px] lg:text-[24px] lg:leading-[35px] lg:tracking-[1px] space-y-5 lg:space-y-6 lg:max-w-[853px]`}
           >
             <p>I know you&apos;ve recently seen social media posts about AI Engineering.</p>
 
