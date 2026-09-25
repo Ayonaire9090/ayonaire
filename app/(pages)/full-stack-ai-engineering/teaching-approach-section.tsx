@@ -135,7 +135,7 @@ export default function TeachingApproachSection() {
 
         {/* CTA */}
         <a
-          href="https://wa.link/f1iadg"
+          href="https://chat.whatsapp.com/HltOtTd5VrHJONFYDVb9VT?mode=gi_t"
           target="_blank"
           rel="noopener noreferrer"
           className={`

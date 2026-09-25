@@ -93,7 +93,7 @@ export default function StudentReviewSection() {
         {/* Top Call to Action Button matching Image 1 */}
         <div className="mb-10 flex w-full justify-center lg:mb-12">
           <a
-            href="https://wa.link/f1iadg"
+            href="https://chat.whatsapp.com/HltOtTd5VrHJONFYDVb9VT?mode=gi_t"
             target="_blank"
             rel="noopener noreferrer"
             className={`${exoMedium.className} inline-flex items-center justify-center text-center gap-2 rounded-[8px] bg-[#ff6b00] px-7 py-3.5 text-[13px] font-bold uppercase leading-[1.45] text-white shadow-[0_12px_24px_rgba(255,107,0,0.35)] transition-transform hover:scale-[1.01] sm:px-9 sm:py-4 lg:text-[15px]`}
