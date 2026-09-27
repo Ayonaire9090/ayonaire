@@ -104,14 +104,14 @@ const FaqSection = () => {
           <div className='relative w-full'>
             <h2 className={`${melodrama.className} font-bold relative z-10 text-[28px] xs:text-[34px] sm:text-5xl lg:text-6xl text-[#111111] leading-[1.1] w-full`}>
               <span className="relative inline-block text-[#F4672B]">
-                Frequently
+                <span className="relative z-10">Frequently</span>
                 {/* SVG Highlight behind 'Frequently' */}
                 <Image
                   src="/assets/images/ai-fullstack-engineering/questions-cta-heading-highlight.svg"
                   alt=""
                   width={312}
                   height={58}
-                  className="pointer-events-none absolute -left-2 -top-1 z-[-1] h-full w-full max-w-none object-contain"
+                  className="pointer-events-none absolute -left-2 -top-1 z-0 h-full w-full max-w-none object-contain"
                 />
               </span> Asked <br className="hidden sm:block" />
               Questions

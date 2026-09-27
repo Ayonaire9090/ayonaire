@@ -38,7 +38,7 @@ export default function TwoSetsSection() {
           >
             There are{" "}
             <span className="relative inline-block text-[#f25e25]">
-              two sets of people
+              <span className="relative z-10">two sets of people</span>
               <Image
                 src="/assets/images/ai-fullstack-engineering/two-sets-highlight.svg"
                 alt=""
@@ -90,15 +90,7 @@ export default function TwoSetsSection() {
                 <li key={item} className="flex items-center gap-4 sm:gap-5">
                   <NumberPill value={String(index + 1).padStart(2, "0")} />
 
-                  <span
-                    className={
-                      index === 2
-                        ? `${exo.className} font-bold text-white`
-                        : "text-white/95"
-                    }
-                  >
-                    {item}
-                  </span>
+                  <span className="text-white/95">{item}</span>
                 </li>
               ))}
             </ol>

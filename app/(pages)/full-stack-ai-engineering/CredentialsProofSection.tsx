@@ -27,13 +27,13 @@ export default function CredentialProofSection() {
         >
           Now Listen, <span className="text-[#f25e25]">Your</span>{" "}
           <span className="relative inline-block text-[#f25e25]">
-            Strongest Credential
+            <span className="relative z-10">Strongest Credential</span>
             <Image
               src="/assets/images/ai-fullstack-engineering/questions-cta-heading-highlight.svg"
               alt=""
               width={312}
               height={58}
-              className="pointer-events-none absolute -left-1 -top-1 z-[-1] h-[115%] w-[105%] max-w-none object-fill"
+              className="pointer-events-none absolute -left-1 -top-1 z-0 h-[115%] w-[105%] max-w-none object-fill select-none"
             />
           </span>{" "}
           Is Not Your <br className="hidden sm:inline" />

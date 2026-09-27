@@ -11,14 +11,14 @@ const Next10MonthsSection = () => {
         <h2 className={`${melodrama.className} font-bold text-2xl xs:text-3xl sm:text-4xl lg:text-5xl text-[#111111] leading-[1.2] relative z-10 mb-4 text-center`}>
           The{' '}
           <span className="relative inline-block text-[#F4672B]">
-            next 10 months
+            <span className="relative z-10">next 10 months</span>
             {/* SVG Highlight behind 'next 10 months' */}
             <Image
               src="/assets/images/ai-fullstack-engineering/questions-cta-heading-highlight.svg"
               alt=""
               width={312}
               height={58}
-              className="pointer-events-none absolute -left-2 -top-1 z-[-1] h-full w-full max-w-none object-contain"
+              className="pointer-events-none absolute -left-2 -top-1 z-0 h-full w-full max-w-none object-contain"
             />
           </span>{' '}
           will pass anyway.

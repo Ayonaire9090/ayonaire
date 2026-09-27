@@ -5,8 +5,18 @@ export default function GuaranteeSection() {
   return (
     <section className="bg-[#FEFAF8] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28">
       <div className="mx-auto flex w-full max-w-[1051px] flex-col items-center gap-10">
-        <h2 className={`${melodrama.className} w-full text-center text-[32px] font-bold uppercase leading-[1.12] tracking-[-0.8px] text-[#181c23] sm:text-[40px] lg:text-[56px] lg:leading-[1.08]`}>
-          And yes... 30-day <span className="bg-[#ffdcc4] text-[#f25e25]">100% money-back guarantee</span>
+        <h2 className={`${melodrama.className} w-full text-center text-[28px] font-bold uppercase leading-[1.12] tracking-[-0.8px] text-[#181c23] sm:text-[40px] lg:text-[56px] lg:leading-[1.08]`}>
+          AND YES… 30-DAY{" "}
+          <span className="relative inline-block text-[#f25e25]">
+            100% MONEY-BACK GUARANTEE
+            <Image
+              src="/assets/images/ai-fullstack-engineering/companies-pay-highlight.svg"
+              alt=""
+              width={420}
+              height={62}
+              className="pointer-events-none absolute -bottom-1 sm:-bottom-[6px] left-0 h-7 sm:h-10 md:h-12 lg:h-[62px] w-full select-none object-fill"
+            />
+          </span>
         </h2>
 
         <div className={`${space.className} w-full space-y-7 text-left text-[18px] font-medium leading-[1.65] tracking-[0.3px] text-[#181c23] sm:text-[22px] lg:text-[28px] lg:leading-[1.45]`}>

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { exo, exoMedium, melodrama, space } from "@/app/fonts";
 import {
@@ -173,13 +174,22 @@ export default function CareerEcosystemSection() {
                   key={item.number}
                   className="pl-6 lg:pl-10 basis-auto shrink-0"
                 >
-                  <article className="relative min-h-[460px] xs:min-h-[500px] sm:min-h-[540px] lg:min-h-[600px] w-[260px] xs:w-[300px] sm:w-[390px] lg:w-[472px] overflow-hidden rounded-[24px] xs:rounded-[28px] border-[3px] border-[#4d4c4d] bg-[#020000] bg-[url('/assets/images/ai-fullstack-engineering/career-framework-pattern.png')] bg-cover p-5 xs:p-6 text-white lg:p-8">
-                    <div className="relative z-10 flex h-full flex-col">
-                      <p className={`${exo.className} text-[14px] xs:text-[16px] font-medium tracking-[0.08em] text-white/60 lg:text-[20px]`}>({item.number})</p>
-                      <h3 className={`${exo.className} mt-8 xs:mt-10 text-[17px] xs:text-[18px] font-semibold uppercase leading-[1.28] tracking-[0.09em] text-[#f25e25] lg:text-[24px]`}>
-                        {item.title}
-                      </h3>
-                      <p className={`${space.className} mt-auto text-[12px] xs:text-[13px] font-normal leading-[1.45] tracking-[0.05em] text-white/80 lg:text-[18px] lg:leading-[1.35]`}>
+                  <article className="relative flex flex-col justify-between h-[420px] xs:h-[460px] sm:h-[520px] lg:h-[633px] w-[260px] xs:w-[300px] sm:w-[390px] lg:w-[472px] overflow-hidden rounded-[24px] xs:rounded-[28px] lg:rounded-[32px] border-[3px] border-[#4d4c4d] bg-[#020000] p-5 xs:p-6 text-white sm:p-7 lg:p-8">
+                    <Image
+                      src="/assets/images/ai-fullstack-engineering/career-framework-card-bg.png"
+                      alt=""
+                      fill
+                      sizes="(min-width: 1024px) 472px, (min-width: 640px) 390px, 300px"
+                      className="pointer-events-none object-cover opacity-95"
+                    />
+                    <div className="relative z-10 flex flex-1 flex-col justify-between">
+                      <div>
+                        <p className={`${exo.className} text-[14px] xs:text-[16px] font-medium tracking-[0.08em] text-white/60 lg:text-[20px]`}>({item.number})</p>
+                        <h3 className={`${exo.className} mt-3 xs:mt-4 sm:mt-5 lg:mt-6 text-[22px] xs:text-[26px] font-semibold uppercase leading-[1.18] tracking-[0.05em] text-[#f25e25] sm:text-[28px] lg:text-[40px]`}>
+                          {item.title}
+                        </h3>
+                      </div>
+                      <p className={`${space.className} text-[13px] xs:text-[14px] font-normal leading-[1.45] tracking-[0.03em] text-white/80 sm:text-[16px] lg:text-[19px] lg:leading-[1.4]`}>
                         {item.body}
                       </p>
                     </div>

@@ -48,7 +48,7 @@ export default function ProjectJourneySection() {
           <p className={`${space.className} max-w-[1240px] text-left text-[18px] font-medium leading-[1.65] tracking-[0.3px] text-[#263238] lg:text-[28px] lg:leading-[1.5]`}>
             Across the 10 months, you will work through <strong>45+ practical projects and builds</strong> touching Python, Data Engineering, Machine Learning, Deep Learning, NLP, Computer Vision, Generative AI, RAG, Agentic AI, Multi-Agent Systems, Deployment and MLOps/LLMOps.
           </p>
-          <p className={`${exo.className} w-full text-left text-[20px] font-bold leading-[1.4] tracking-[0.4px] text-[#263238] lg:text-[32px]`}>Your portfolio would span acrosss:</p>
+          <p className={`${exo.className} w-full text-left text-[20px] font-bold leading-[1.4] tracking-[0.4px] text-[#263238] lg:text-[32px]`}>Your portfolio would span across:</p>
         </div>
 
         <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)] xl:grid-cols-[minmax(0,1fr)_minmax(0,683px)] lg:gap-12 xl:gap-20">

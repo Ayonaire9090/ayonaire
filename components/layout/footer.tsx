@@ -173,9 +173,9 @@ export const Footer = () => {
 
       <div className="relative z-10 px-[19px] py-[32px] lg:px-[80px] lg:py-[80px]">
         {/* Main Footer Content */}
-        <div className="flex flex-col lg:flex-row gap-10 lg:gap-8">
+        <div className="flex flex-col xl:flex-row gap-10 xl:gap-8">
           {/* Logo & Description Section */}
-          <div className="flex flex-col gap-6 lg:w-[264px] shrink-0">
+          <div className="flex flex-col gap-6 xl:w-[264px] shrink-0">
             <Link href="/" className="w-[158px] h-[39px] relative">
               <Image
                 src="/assets/logos/full-logo-light.png"
@@ -202,7 +202,7 @@ export const Footer = () => {
           </div>
 
           {/* Navigation Links Grid */}
-          <div className="flex-1 grid grid-cols-2 gap-8 lg:grid-cols-5 lg:gap-6">
+          <div className="flex-1 grid grid-cols-2 gap-8 lg:grid-cols-[repeat(4,minmax(0,1fr))_auto] lg:gap-6">
             <FooterLinkSection
               title={topCourses.title}
               links={topCourses.links}

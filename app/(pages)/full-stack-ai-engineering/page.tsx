@@ -35,7 +35,6 @@ import PaymentPlansSection from "./payment-plans-section";
 import TeachingApproachSection from "./teaching-approach-section";
 import GuaranteeSection from "./guarantee-section";
 import WeeklyScheduleSection from "./weekly-schedule-section";
-import CredentialSection from "./credential-section";
 import WhatICanDoSection from "./what-i-can-do-section";
 import BuildProofSection from "./build-proof-section";
 import StudentReviewSection from "./student-review-section";
@@ -104,8 +103,8 @@ export default function AiFullstackEngineeringPage() {
       <TenMonthsInvestmentSection />
       <CohortActionSection />
       <FinalQuestionSection />
-      <QuestionsCtaSection />
       <FaqSection />
+      <QuestionsCtaSection />
       <Footer />
     </main>
   );

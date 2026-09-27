@@ -5,23 +5,25 @@ export default function CompaniesPaySection() {
   return (
     <section className="bg-[#fdfbf9] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28">
       <div className="mx-auto flex w-full max-w-[1120px] flex-col items-center gap-8">
-      <h2
-  className={`${melodrama.className} text-center text-[30px] font-bold leading-[1.12] tracking-[0.4px] text-[#181c23] sm:text-[36px] lg:text-[44px] lg:leading-[1.16] lg:tracking-[0.2px]`}
->
-  Companies Pay People Who Build AI Systems{" "}
-  <span className="text-[#f25e25]">Because It</span>{" "}
-  <span className="relative inline-block text-[#f25e25]">
-    Saves Them Millions
-    <Image
-      src="/assets/images/ai-fullstack-engineering/companies-pay-highlight.svg"
-      alt=""
-      width={420}
-      height={62}
-      className="pointer-events-none absolute -bottom-1 sm:-bottom-[6px] left-0 h-7 sm:h-10 md:h-12 lg:h-[62px] w-full select-none object-fill"
-    />
-  </span>{" "}
-  <span className="text-[#f25e25]">Of $$$</span>
-</h2>
+        <h2
+          className={`${melodrama.className} text-center text-[30px] font-bold uppercase leading-[1.12] tracking-[0.4px] text-[#181c23] sm:text-[36px] lg:text-[44px] lg:leading-[1.16] lg:tracking-[0.2px]`}
+        >
+          COMPANIES PAY PEOPLE WHO BUILD AI SYSTEMS{" "}
+          <span className="text-[#f25e25]">
+            BECAUSE IT{" "}
+            <span className="relative inline-block">
+              SAVES THEM MILLIONS
+              <Image
+                src="/assets/images/ai-fullstack-engineering/companies-pay-highlight.svg"
+                alt=""
+                width={420}
+                height={62}
+                className="pointer-events-none absolute -bottom-1 sm:-bottom-[6px] left-0 h-7 sm:h-10 md:h-12 lg:h-[62px] w-full select-none object-fill"
+              />
+            </span>{" "}
+            OF $$$
+          </span>
+        </h2>
 
         <div
           className={`${exoMedium.className} w-full max-w-[1120px] space-y-5 whitespace-pre-wrap lg:space-y-6 text-left text-[17px]  leading-[1.65] text-[#5a4136] sm:text-[18px] lg:text-[20px] lg:leading-[1.65]`}

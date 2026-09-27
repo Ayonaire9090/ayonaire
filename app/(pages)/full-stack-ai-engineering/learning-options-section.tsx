@@ -70,7 +70,7 @@ export default function LearningOptionsSection() {
               {/* OR BETWEEN OPTION 01 AND OPTION 02 */}
               {index === 0 && (
                 <p
-                  className={`${salt.className} text-center text-[48px] font-bold leading-none tracking-[1px] text-[#181c23] lg:text-[64px]`}
+                  className={`${salt.className} text-center text-[32px] font-bold leading-none tracking-[1px] text-[#181c23] sm:text-[48px] lg:text-[64px]`}
                 >
                   or
                 </p>

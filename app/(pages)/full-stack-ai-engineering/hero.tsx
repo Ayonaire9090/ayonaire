@@ -175,7 +175,7 @@ export default function Hero() {
           </h1>
 
           {/* DOWNWARD ARROW */}
-          <div className="mt-5 flex justify-center sm:mt-6">
+          <div className="mt-5 hidden sm:flex justify-center sm:mt-6">
             <Image
               src="/assets/images/Downward.png"
               alt=""

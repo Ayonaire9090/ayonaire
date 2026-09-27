@@ -22,7 +22,6 @@ const proofStatements = [
   "Here is my AI application deployed to the cloud.",
   "Here is my project, job-simulation and practical experience.",
   "Here is the architecture, business problem, technical decision and result behind my project.",
-  "Here is the AI/ML role I am positioning for.",
 ];
 
 export default function WhatICanDoSection() {

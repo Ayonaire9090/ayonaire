@@ -18,7 +18,7 @@ export default function WeeklyScheduleSection() {
               So, what does the week look like?
             </p>
             <p className={`${exoMedium.className} text-[18px] xs:text-[20px] font-bold leading-[1.5] tracking-[0.3px] text-[#181c23] sm:text-[24px] lg:text-[28px] lg:leading-[1.78]`}>
-              You&apos;ll have 3 live classes every week, alongside with doubting clearing sessions.
+              You&apos;ll have 3 live classes every week, alongside with doubt-clearing sessions.
             </p>
           </div>
 

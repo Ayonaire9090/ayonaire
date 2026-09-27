@@ -39,13 +39,13 @@ export default function ExcellenceStandardSection() {
         >
           Excellence is{" "}
           <span className="relative inline-block text-[#f25e25]">
-            Our standard.
+            <span className="relative z-10">Our standard.</span>
             <Image
               src="/assets/images/ai-fullstack-engineering/questions-cta-heading-highlight.svg"
               alt=""
               width={312}
               height={58}
-              className="pointer-events-none absolute -left-2 -top-1 z-[-1] h-full w-full max-w-none object-contain"
+              className="pointer-events-none absolute -left-2 -top-1 z-0 h-full w-full max-w-none object-contain"
             />
           </span>
         </h2>
