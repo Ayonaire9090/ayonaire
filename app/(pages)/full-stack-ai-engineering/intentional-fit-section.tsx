@@ -29,13 +29,13 @@ export default function IntentionalFitSection() {
           `}
         >
           <span className="relative inline-block text-[#f25e25]">
-            As exciting as all
+            <span className="relative z-10">As exciting as all</span>
             <Image
               src="/assets/images/ai-fullstack-engineering/build-proof-heading-highlight.svg"
               alt=""
               width={454}
               height={58}
-              className="pointer-events-none absolute left-0 top-1/2 z-[-1] h-[58px] w-full -translate-y-1/2 object-fill"
+              className="pointer-events-none absolute left-0 top-1/2 z-0 h-[58px] w-full -translate-y-1/2 object-fill"
             />
           </span>{" "}
           of this sounds

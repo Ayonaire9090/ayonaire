@@ -116,7 +116,7 @@ export default function AudienceFitSection() {
   "
 />
 
-          <div className="flex flex-col gap-26 sm:gap-18 lg:gap-20">
+          <div className="flex flex-col gap-10 sm:gap-12 lg:gap-14">
             {audienceCards.map((card, index) => {
               const isLeft = index % 2 === 0;
 
@@ -144,7 +144,10 @@ export default function AudienceFitSection() {
                       absolute
                       left-1/2
                       top-1/2
-                      z-[2]
+                      z-20
+
+                      hidden
+                      lg:block
 
                       size-[10px]
 
@@ -153,8 +156,6 @@ export default function AudienceFitSection() {
 
                       rounded-full
                       bg-[#ff6b00]
-
-                      lg:z-20
                     "
                   />
 

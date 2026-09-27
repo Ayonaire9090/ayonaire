@@ -38,7 +38,7 @@ export default function TwoSetsSection() {
           >
             There are{" "}
             <span className="relative inline-block text-[#f25e25]">
-              two sets of people
+              <span className="relative z-10">two sets of people</span>
               <Image
                 src="/assets/images/ai-fullstack-engineering/two-sets-highlight.svg"
                 alt=""

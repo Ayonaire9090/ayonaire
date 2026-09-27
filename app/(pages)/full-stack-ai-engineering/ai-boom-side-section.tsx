@@ -6,11 +6,11 @@ export default function AiBoomSideSection() {
       <div className="mx-auto flex w-full max-w-[880px] flex-col items-center gap-8 lg:gap-10">
         {/* Title */}
         <h2
-          className={`${melodrama.className} w-full text-center text-[28px] font-bold leading-[1.18] tracking-[-0.8px] text-[#181c23] sm:text-[36px] lg:text-[42px] lg:leading-[1.16] lg:tracking-[-0.6px]`}
+          className={`${melodrama.className} w-full text-center text-[28px] font-bold uppercase leading-[1.18] tracking-[-0.8px] text-[#181c23] sm:text-[36px] lg:text-[42px] lg:leading-[1.16] lg:tracking-[-0.6px]`}
         >
-          But here&apos;s the other side of the{" "}
-          <span className="relative inline-block px-2.5 py-0.5 border border-[#f25e25]/30 bg-[#f25e25]/10 text-[#f25e25] rounded-md">
-            AI Boom.
+          BUT HERE&apos;S THE OTHER SIDE OF THE{" "}
+          <span className="text-[#f25e25]">
+            AI BOOM.
           </span>
         </h2>
 

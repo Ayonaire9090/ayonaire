@@ -41,7 +41,7 @@ export default function AcceptanceFilterSection() {
                   style={{ transform: "rotate(4.38deg)" }}
                 >
                   <Image
-                    src="/assets/images/ai-fullstack-engineering/mark.svg"
+                    src="/assets/images/ai-fullstack-engineering/acceptance-mark.png"
                     alt=""
                     width={46}
                     height={44}

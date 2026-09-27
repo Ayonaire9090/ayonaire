@@ -71,7 +71,7 @@ const explanationCards = [
     number: "1",
     title: "Traditional Route",
     body:
-      "If you are starting from scratch, we recommend the Traditional Route. You first build the foundation across Python, Data, ML, DL, NLP, NLP, CV then progress into Gen AI, RAG, Agentic AI and Production AI Engineering.",
+      "If you are starting from scratch, we recommend the Traditional Route. You first build the foundation across Python, Data, ML, DL, NLP, CV then progress into Gen AI, RAG, Agentic AI and Production AI Engineering.",
   },
   {
     number: "2",
