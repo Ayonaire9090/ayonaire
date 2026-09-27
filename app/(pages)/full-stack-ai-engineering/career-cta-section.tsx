@@ -32,7 +32,9 @@ export default function CareerCtaSection() {
         </p>
 
         <a
-          href="tel:+2349067835701"
+          href="https://wa.me/2349067835701"
+          target="_blank"
+          rel="noopener noreferrer"
           className={`${exo.className} mt-4 inline-flex items-center justify-center gap-3 rounded-[8px] bg-[#ff6b00] px-7 py-4 text-[15px] font-bold uppercase tracking-[0.08em] text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:text-[16px]`}
         >
           Show me the roadmap

@@ -62,38 +62,37 @@ export default function AiEngineeringExplainedSection() {
       className="relative overflow-hidden px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16"
       style={{
         background:
-          "linear-gradient(180deg, #ffffff 0%, rgba(255,220,196,0.28) 18.376%, rgba(248,100,50,0) 47.172%, #ffffff 66.703%, rgba(255,220,196,0.04) 89.124%, rgba(248,100,50,0.25) 100%)",
+          "linear-gradient(180deg, #ffffff 0%, rgba(255, 220, 196, 0.35) 10%, rgba(255, 255, 255, 0) 32%, rgba(255, 255, 255, 0) 58%, rgba(255, 218, 194, 0.5) 82%, rgba(248, 100, 50, 0.32) 100%)",
       }}
     >
       <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center">
         {/* HEADER */}
-        <div className="flex w-full max-w-[1120px] flex-col items-center gap-[46px] text-center">
+        <div className="flex w-full max-w-[1120px] flex-col items-center gap-8 text-center sm:gap-10 lg:gap-12">
           <h2
-            className={`${melodrama.className} relative max-w-[1003px] text-[30px] font-bold uppercase leading-[1.12] tracking-[-0.95px] text-[#181c23] sm:text-[36px] lg:text-[44px] lg:leading-[1.16] lg:tracking-[-0.6px]`}
+            className={`${melodrama.className} relative max-w-[1003px] text-[30px] font-bold leading-[1.15] tracking-[-0.5px] text-[#181c23] sm:text-[38px] lg:text-[46px] lg:leading-[1.18]`}
           >
             Which one do you think creates the{" "}
             <span className="relative inline-block text-[#f25e25]">
               bigger career opportunity?
-
               <Image
                 src="/assets/images/ai-fullstack-engineering/ai-engineering-explained-highlight.svg"
                 alt=""
                 width={726}
                 height={62}
-                className="pointer-events-none absolute left-1/2 top-[2px] h-[62px] w-[726px] max-w-[108%] -translate-x-1/2 select-none object-fill"
+                className="pointer-events-none absolute left-1/2 top-1 sm:top-[4px] h-7 sm:h-10 md:h-12 lg:h-[58px] w-[726px] max-w-[108%] -translate-x-1/2 select-none object-fill"
               />
             </span>
           </h2>
 
           <h3
-            className={`${melodrama.className} text-[30px] font-bold leading-tight tracking-[0.4px] text-[#181c23] sm:text-[36px] lg:text-[44px] lg:leading-[1.2] lg:tracking-[0.2px]`}
+            className={`${melodrama.className} text-[28px] font-bold leading-tight tracking-[0.2px] text-[#181c23] sm:text-[34px] lg:text-[40px]`}
           >
             So what exactly is{" "}
             <span className="text-[#f25e25]">AI Engineering?</span>
           </h3>
 
           <p
-            className={`${exoMedium.className} text-justify text-[17px] font-normal leading-[1.55] tracking-[0.4px] text-[#181c23] lg:text-[20px] lg:leading-[1.65] lg:tracking-[0.2px]`}
+            className={`${exoMedium.className} max-w-[980px] text-center text-[17px] font-normal leading-[1.6] tracking-[0.2px] text-[#2d3748] sm:text-[18px] lg:text-[20px]`}
           >
             You probably interact with AI Engineering much more often than you
             realise.
@@ -101,19 +100,8 @@ export default function AiEngineeringExplainedSection() {
         </div>
 
         {/* TIMELINE */}
-        <div className="relative mt-24 w-full">
-          {/*
-            ONE CENTER LINE FOR MOBILE + DESKTOP
-
-            On mobile:
-            - line stays at 50%
-            - cards sit on top of the line
-            - white card background hides the line inside the card
-
-            On desktop:
-            - cards alternate left/right
-            - line remains at 50%
-          */}
+        <div className="relative mt-16 w-full sm:mt-20 lg:mt-24">
+          {/* CENTER TIMELINE LINE */}
           <div
             className="
               absolute
@@ -127,7 +115,7 @@ export default function AiEngineeringExplainedSection() {
             "
           />
 
-          <div className="flex flex-col gap-38 lg:gap-[54px]">
+          <div className="flex flex-col gap-10 sm:gap-14 lg:gap-16">
             {examples.map((example, index) => (
               <TimelineCard
                 key={example.title}
@@ -142,7 +130,7 @@ export default function AiEngineeringExplainedSection() {
 
         {/* BOTTOM TEXT */}
         <p
-          className={`${exoMedium.className} mt-16 max-w-[1120px] text-justify text-[17px] leading-[1.55] tracking-[0.4px] text-[#181c23] lg:mt-24 lg:text-[20px] lg:leading-[1.65] lg:tracking-[0.2px]`}
+          className={`${exoMedium.className} mt-16 max-w-[1120px] text-center text-[17px] leading-[1.6] tracking-[0.2px] text-[#181c23] sm:text-[18px] lg:mt-20 lg:text-[20px]`}
         >
           They work across models, data, APIs, applications, deployment and
           production to turn AI capability into something people can actually
@@ -173,7 +161,6 @@ function TimelineCard({
         flex
         w-full
         justify-center
-
         lg:grid
         lg:grid-cols-[minmax(0,1fr)_40px_minmax(0,1fr)]
         lg:items-center
@@ -186,20 +173,15 @@ function TimelineCard({
           left-1/2
           top-1/2
           z-[2]
-
           h-[14px]
           w-[14px]
-
           -translate-x-1/2
           -translate-y-1/2
-
           rounded-full
           border-[3px]
           border-white
           bg-[#ff6b00]
-
           shadow-[0_0_0_1px_rgba(255,107,0,0.12)]
-
           lg:z-40
           lg:h-[16px]
           lg:w-[16px]
@@ -211,30 +193,24 @@ function TimelineCard({
         className={`
           relative
           z-10
-
           w-[92%]
-          max-w-[500px]
-
-          rounded-[24px]
+          max-w-[520px]
+          rounded-[20px]
           bg-white
-
-          px-5
+          px-6
           pb-7
-          pt-12
-
-          shadow-[0px_2px_10px_rgba(0,0,0,0.10)]
-
+          pt-10
+          shadow-[0px_4px_20px_rgba(0,0,0,0.06)]
+          border
+          border-black/5
           sm:w-[88%]
-          sm:px-7
+          sm:px-8
           sm:pb-8
-          sm:pt-14
-
+          sm:pt-11
           lg:w-full
-          lg:min-h-[250px]
-          lg:px-10
+          lg:px-9
           lg:pb-8
-          lg:pt-14
-
+          lg:pt-11
           ${
             isLeft
               ? "lg:col-start-1 lg:justify-self-end"
@@ -246,103 +222,71 @@ function TimelineCard({
         <div
           className="
             absolute
-            -top-[25px]
+            -top-[22px]
             left-6
             z-30
-
             flex
-            h-[64px]
-            w-[64px]
+            h-[48px]
+            w-[56px]
             rotate-[3deg]
             items-center
             justify-center
-
-            rounded-[4px]
-            border
+            rounded-[8px]
+            border-[1.5px]
             border-[#ff6b00]
             bg-white
-
-            text-[16px]
+            text-[18px]
             font-bold
             leading-none
-            tracking-[0.5px]
+            tracking-[0.2px]
             text-black
-
-            shadow-[0_0_6px_rgba(248,100,50,0.18)]
-
-            sm:left-7
-
-            lg:h-[68px]
-            lg:w-[68px]
-            lg:text-[16px]
+            shadow-[0_2px_8px_rgba(248,100,50,0.18)]
+            sm:left-8
+            sm:h-[52px]
+            sm:w-[62px]
+            sm:text-[20px]
           "
         >
           {number}
         </div>
 
-        {/* ICON */}
-        <Image
-          src="/assets/images/ai-fullstack-engineering/ai-engineering-card-icon.png"
-          alt=""
-          width={52}
-          height={52}
-          className="
-            mb-4
-            h-[48px]
-            w-[48px]
-            object-contain
-
-            sm:absolute
-            sm:left-5
-            sm:top-1/2
-            sm:mb-0
-            sm:h-[52px]
-            sm:w-[52px]
-            sm:-translate-y-1/2
-
-            lg:left-6
-          "
-        />
-
         {/* CONTENT */}
-        <div className="sm:pl-[68px] lg:pl-[72px]">
-          <h4
-            className={`
-              ${exo.className}
-
-              mb-2
-
-              text-[18px]
-              font-bold
-              leading-[1.2]
-              tracking-[0.4px]
-              text-[#181c23]
-
-              sm:text-[30px]
-
-              lg:text-[44px]
-              lg:tracking-[0.5px]
-            `}
-          >
-            {title}
-          </h4>
+        <div className="flex flex-col gap-3 pt-2 sm:pt-1">
+          <div className="flex items-center gap-3.5">
+            <Image
+              src="/assets/images/ai-fullstack-engineering/ai-engineering-card-icon.png"
+              alt=""
+              width={48}
+              height={48}
+              className="size-9 shrink-0 object-contain sm:size-11"
+            />
+            <h4
+              className={`
+                ${exo.className}
+                text-[20px]
+                font-bold
+                leading-[1.28]
+                tracking-[0.2px]
+                text-[#181c23]
+                sm:text-[22px]
+                lg:text-[24px]
+              `}
+            >
+              {title}
+            </h4>
+          </div>
 
           <p
             className={`
               ${exoMedium.className}
-
               text-left
-              text-[16px]
+              text-[14px]
               font-normal
-              leading-[1.55]
-              tracking-[0.2px]
-              text-[#5a4136]
-
-              sm:text-[17px]
-
-              lg:text-[20px]
-              lg:leading-[28px]
-              lg:tracking-[0.25px]
+              leading-[1.7]
+              tracking-[0.1px]
+              text-[#3a4454]
+              sm:text-[15px]
+              lg:text-[16px]
             `}
           >
             {body}

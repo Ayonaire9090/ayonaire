@@ -36,7 +36,7 @@ export default function LearningOptionsSection() {
                 alt=""
                 width={586}
                 height={68}
-                className="pointer-events-none absolute left-1/2 top-1/2 h-[68px] w-[min(586px,110%)] -translate-x-1/2 -translate-y-1/2 object-fill"
+                className="pointer-events-none absolute left-1/2 top-1/2 h-7 sm:h-11 md:h-14 lg:h-[68px] w-[min(586px,110%)] -translate-x-1/2 -translate-y-1/2 object-fill"
               />
             </span>
           </h2>

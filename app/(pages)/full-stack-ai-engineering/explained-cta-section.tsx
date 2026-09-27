@@ -1,56 +1,58 @@
 import Image from "next/image";
-import { exo, melodrama } from "@/app/fonts";
+import { exo, exoMedium, melodrama } from "@/app/fonts";
 
 export default function ExplainedCtaSection() {
   return (
-    <section className="relative overflow-hidden bg-[#171717] px-5 py-20 sm:px-8 lg:px-12 xl:px-16 lg:min-h-[735px] lg:py-[120px]">
+    <section className="relative z-10 overflow-x-clip overflow-y-visible bg-[#171717] px-5 py-20 sm:px-8 lg:px-12 xl:px-16 lg:min-h-[720px] lg:py-[120px]">
+      {/* TOP DECORATIVE SHAPE (Rectangle 34624590) */}
       <Image
         src="/assets/images/ai-fullstack-engineering/explained-cta-top-shape.svg"
         alt=""
         width={1490}
         height={403}
-        className="pointer-events-none absolute left-1/2 top-[-119px] h-[403px] w-[1490px] max-w-none -translate-x-1/2 object-fill"
+        style={{ width: "110vw", left: "-10%" }}
+        className="pointer-events-none absolute left-[-10%] top-0 -translate-y-[30%] z-10 h-[12.59375rem] sm:h-[25.1875rem] w-[110vw] max-w-none select-none object-fill"
       />
+      {/* DECORATIVE ELLIPSES & WATERMARK */}
       <Image
         src="/assets/images/ai-fullstack-engineering/explained-cta-ellipse-top.svg"
         alt=""
         width={295}
         height={287}
-        className="pointer-events-none absolute -right-24 -top-16 hidden h-[287px] w-[295px] rotate-[-92deg] lg:block"
+        className="pointer-events-none absolute -right-24 -top-16 hidden h-[287px] w-[295px] rotate-[-92deg] opacity-80 lg:block z-0"
       />
       <Image
         src="/assets/images/ai-fullstack-engineering/explained-cta-ellipse-left.svg"
         alt=""
         width={319}
         height={372}
-        className="pointer-events-none absolute -left-48 top-[331px] hidden h-[372px] w-[319px] rotate-[-9deg] lg:block"
+        className="pointer-events-none absolute -left-48 top-[331px] hidden h-[372px] w-[319px] rotate-[-9deg] opacity-80 lg:block z-0"
       />
       <Image
         src="/assets/images/ai-fullstack-engineering/explained-cta-watermark.png"
         alt=""
         width={269}
         height={333}
-        className="pointer-events-none absolute -left-36 top-[335px] hidden h-[333px] w-[269px] rotate-[7deg] object-cover opacity-[0.04] lg:block"
+        className="pointer-events-none absolute -left-36 top-[335px] hidden h-[333px] w-[269px] rotate-[7deg] object-cover opacity-[0.05] lg:block z-0"
       />
 
-      <div className="relative z-10 mx-auto flex w-full max-w-[1187px] flex-col items-center text-center text-white">
+      <div className="relative z-20 mx-auto flex w-full max-w-[1187px] flex-col items-center text-center text-white">
         <h2
-          className={`${melodrama.className} text-[24px] font-bold uppercase leading-[1.18] tracking-[0.4px] sm:text-[36px] lg:text-[44px] lg:leading-[1.2] lg:tracking-[0.2px]`}
+          className={`${melodrama.className} max-w-[1100px] text-[26px] font-bold leading-[1.2] tracking-[0.2px] sm:text-[36px] lg:text-[44px] lg:leading-[1.22]`}
         >
-          So... I just explained what 10s of Youtube videos fail to help many{" "}
-          <span className="inline-block">
-            understand (of course many of them want to{" "}
-            <span className="relative inline-block text-[#f25e25]">
-              sound technical and
+          SO... I JUST EXPLAINED WHAT 10s of YOUTUBE VIDEOS FAIL TO HELP MANY UNDERSTAND{" "}
+          <span className="inline font-normal">
+            (of course many of them want to{" "}
+            <span className="relative inline-block text-[#f25e25] font-bold">
+              sound technical and professional)
               <Image
                 src="/assets/images/ai-fullstack-engineering/explained-cta-highlight.svg"
                 alt=""
                 width={757}
                 height={53}
-                className="pointer-events-none absolute left-1/2 top-1/2 h-[53px] w-[min(757px,106%)] -translate-x-1/2 -translate-y-1/2 select-none object-fill"
+                className="pointer-events-none absolute left-1/2 top-1/2 h-6 sm:h-9 md:h-11 lg:h-[53px] w-[108%] -translate-x-1/2 -translate-y-1/2 select-none object-fill"
               />
             </span>
-            <span className="whitespace-nowrap"> professional)</span>
           </span>
         </h2>
 
@@ -59,29 +61,31 @@ export default function ExplainedCtaSection() {
           alt=""
           width={44}
           height={68}
-          className="mt-10 h-[68px] w-11"
+          className="mt-8 h-[60px] w-10 sm:mt-10 sm:h-[68px] sm:w-11 object-contain"
         />
 
         <div
-          className={`${exo.className} mt-8 text-[17px] font-semibold leading-[1.35] tracking-[0.5px] sm:text-[18px] lg:text-[20px] lg:leading-[1.4]`}
+          className={`${exoMedium.className} mt-6 max-w-[800px] text-[17px] font-medium leading-[1.4] tracking-[0.3px] sm:mt-8 sm:text-[18px] lg:text-[20px]`}
         >
-          <p>But who cares</p>
-          <p className="text-[#f25e25]">
-            Now you know what an AI/ML engineer actually looks like.
+          <p className="text-[#f5f5f5]">But who cares</p>
+          <p className={`${exo.className} font-bold text-[#f25e25]`}>
+            Now you know what an ai/ml engineer actually looks like?
           </p>
         </div>
 
         <a
-          href="tel:+2349067835701"
-          className={`${exo.className} mt-12 inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-8 py-4 text-[15px] uppercase text-white sm:text-[16px] shadow-[0px_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:text-[16px]`}
+          href="https://wa.me/2349067835701"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`${exoMedium.className} mt-10 inline-flex items-center justify-center gap-2.5 rounded-[8px] bg-[#ff6b00] px-8 py-4.5 text-[15px] font-bold uppercase tracking-[0.3px] text-white sm:mt-12 sm:px-10 sm:py-5 sm:text-[16px] shadow-[0px_12px_20px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01]`}
         >
-          I want to build systems like these
+          I Want To Build Systems Like These
           <Image
             src="/assets/images/ai-fullstack-engineering/explained-cta-button-arrow.svg"
             alt=""
             width={16}
             height={16}
-            className="size-4"
+            className="size-4 shrink-0"
           />
         </a>
       </div>

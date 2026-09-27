@@ -28,7 +28,7 @@ export default function ProofOfWorkSection() {
                 alt=""
                 width={562}
                 height={52}
-                className="pointer-events-none absolute left-1/2 top-1/2 h-[52px] w-[min(562px,108%)] -translate-x-1/2 -translate-y-1/2 select-none object-fill"
+                className="pointer-events-none absolute left-1/2 top-1/2 h-6 sm:h-9 md:h-11 lg:h-[52px] w-[min(562px,108%)] -translate-x-1/2 -translate-y-1/2 select-none object-fill"
               />
             </span>
           </h2>

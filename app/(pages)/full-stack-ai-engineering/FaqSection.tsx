@@ -79,7 +79,7 @@ const faqs: FaqItem[] = [
     answer: "We have standard onboarding terms and a refund policy outlined in our terms of service."
   },
   {
-    question: "Is N500,000 the only payment option?",
+    question: "Is ₦500,000 the only payment option?",
     answer: "Check our enrollment page for alternative payment plans and installment options where available."
   },
   {

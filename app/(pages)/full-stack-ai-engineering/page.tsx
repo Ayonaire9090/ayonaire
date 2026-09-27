@@ -1,4 +1,4 @@
-﻿import { exo } from "@/app/fonts";
+import { exo } from "@/app/fonts";
 import { Footer } from "@/components/layout/footer";
 import Hero from "./hero";
 import HighestPaidSection from "./highest-paid-section";
@@ -71,10 +71,9 @@ export default function AiFullstackEngineeringPage() {
       <LearningPathSection />
       <LearningOptionsSection />
       <IntroducingA />
-      {/** stop */}
       <WhatYouWillLearnSection />
       <ProgramActsSection />
-      <CurriculumSection />   {/** stop */}
+      <CurriculumSection />
       <ActualBuildSection />
       <ProjectJourneySection />
       <CareerPathwaysSection /> 
@@ -93,8 +92,7 @@ export default function AiFullstackEngineeringPage() {
       <TeachingApproachSection />
       <GuaranteeSection /> 
       <WeeklyScheduleSection />
-      <CredentialSection />
-      {/* <CredentialProofSection /> */}
+      <CredentialProofSection />
       <WhatICanDoSection />
       <BuildProofSection />
       <ExcellenceStandardSection />  
@@ -106,8 +104,8 @@ export default function AiFullstackEngineeringPage() {
       <TenMonthsInvestmentSection />
       <CohortActionSection />
       <FinalQuestionSection />
-      <FaqSection />
       <QuestionsCtaSection />
+      <FaqSection />
       <Footer />
     </main>
   );

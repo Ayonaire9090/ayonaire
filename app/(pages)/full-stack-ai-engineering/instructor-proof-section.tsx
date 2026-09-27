@@ -3,24 +3,24 @@ import { exoMedium, melodrama } from "@/app/fonts";
 
 export default function InstructorProofSection() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-[#FFDCC4] to-white px-5 pt-24 pb-16 sm:px-8 sm:pt-28 lg:px-12 lg:pt-36 lg:pb-20 xl:px-16">
+    <section className="relative overflow-x-clip bg-gradient-to-b from-[#FFDCC4] to-white px-5 pt-24 pb-16 sm:px-8 sm:pt-28 lg:px-12 lg:pt-36 lg:pb-20 xl:px-16">
       {/* Irregular top shape */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[220px] overflow-hidden lg:h-[300px]">
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[220px] overflow-visible lg:h-[300px]">
         <Image
-          src="/assets/images/ai-fullstack-engineering/instructor-proof-bg.svg"
+          src="/assets/images/ai-fullstack-engineering/top6.svg"
           alt=""
-          width={1463}
-          height={551}
+          width={1440}
+          height={601}
           priority
           className="
             absolute
             left-1/2
-            top-[-120px]
-            h-[551px]
-            w-[1463px]
+            top-0
+            h-auto
+            w-[100vw]
             max-w-none
             -translate-x-1/2
-            rotate-[-1.95deg]
+            -translate-y-[25%]
           "
         />
       </div>
@@ -61,7 +61,9 @@ export default function InstructorProofSection() {
         </div>
 
         <a
-          href="tel:+2349067835701"
+          href="https://wa.me/2349067835701"
+          target="_blank"
+          rel="noopener noreferrer"
           className={`${exoMedium.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-8 py-4 text-[13px] font-bold uppercase leading-[1.45] text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:px-10 sm:py-5 lg:text-[16px]`}
         >
           I am ready for this

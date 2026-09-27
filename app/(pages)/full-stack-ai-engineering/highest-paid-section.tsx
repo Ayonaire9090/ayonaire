@@ -3,30 +3,29 @@ import { exo, melodrama, space } from "@/app/fonts";
 
 export default function HighestPaidSection() {
   return (
-    <section className=" px-5 py-14 sm:px-8 lg:px-12 xl:px-16 sm:py-18 lg:py-20 mt-16">
+    <section className="relative z-0 bg-[#FFFDF7] px-5 pb-14 pt-28 sm:px-8 sm:pb-18 sm:pt-36 md:pt-40 lg:px-12 lg:pb-20 lg:pt-48 xl:px-16 -mt-[65px]">
       <div className="mx-auto flex w-full flex-col items-center gap-[56px] sm:gap-[68px] lg:gap-[76px]">
-        <div className="flex w-full max-w-[1120px] flex-col gap-12 sm:gap-16 lg:gap-20">
+        <div className="flex w-full max-w-[860px] mx-auto flex-col gap-10 sm:gap-12 lg:gap-14 text-left">
           <h2
-            className={`${melodrama.className} relative max-w-[860px] text-[30px] font-bold leading-[1.1] tracking-[1.1px] text-[#181c23] sm:text-[36px] lg:text-[44px] lg:leading-[1.15] lg:tracking-[0.2px]`}
+            className={`${melodrama.className} relative w-full text-left text-[30px] font-bold leading-[1.1] tracking-[1.1px] text-[#181c23] sm:text-[36px] lg:text-[44px] lg:leading-[1.15] lg:tracking-[0.2px]`}
           >
             AI/ML Engineers Are{" "}
+            <span className="text-[#f25e25]">One Of The</span>{" "}
             <span className="relative inline-block text-[#f25e25]">
-              One Of The{" "}
-              <span className="relative inline-block">
-                Highest Paid Employees Today!!
-                <Image
-                  src="/assets/images/ai-fullstack-engineering/highest-paid-highlight.svg"
-                  alt=""
-                  width={635}
-                  height={62}
-                  className="pointer-events-none absolute -bottom-[7px] left-0 h-[62px] w-[635px] max-w-[105%] select-none object-fill"
-                />
-              </span>
-            </span>
+              Highest Paid Employees
+              <Image
+                src="/assets/images/ai-fullstack-engineering/highest-paid-highlight.svg"
+                alt=""
+                width={480}
+                height={62}
+                className="pointer-events-none absolute -bottom-1 sm:-bottom-[7px] left-0 h-7 sm:h-10 md:h-12 lg:h-[62px] w-full select-none object-fill"
+              />
+            </span>{" "}
+            <span className="text-[#f25e25]">Today!!</span>
           </h2>
 
           <div
-            className={`${space.className} space-y-5 lg:space-y-6 text-justify text-[17px] font-medium leading-[1.48] tracking-[0.2px] text-[#5a4136] sm:text-[18px] sm:leading-[1.55] lg:text-[20px] lg:leading-[1.45] lg:tracking-[0.4px]`}
+            className={`${space.className} w-full space-y-5 lg:space-y-6 text-left text-[17px] font-medium leading-[1.48] tracking-[0.2px] text-[#5a4136] sm:text-[18px] sm:leading-[1.55] lg:text-[20px] lg:leading-[1.45] lg:tracking-[0.4px]`}
           >
             <p>I know you&apos;ve recently seen social media posts about AI Engineering.</p>
 

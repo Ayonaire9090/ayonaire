@@ -44,3 +44,5 @@ next-env.d.ts
 /api-schemas
 test-api.js
 
+# Antigravity IDE & agents
+.agents/

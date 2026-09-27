@@ -16,7 +16,7 @@ const steps = [
 export default function TeachingApproachSection() {
   return (
     <section className="relative overflow-hidden bg-[#1c1c1c] px-5 py-16 text-white sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-[220px] bg-gradient-to-r from-[#1c1c1c] via-[#9d3d00] to-[#ff6b00] [clip-path:polygon(0_0,100%_0,100%_28%,64%_45%,40%_30%,20%_48%,0_78%)]" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[6.875rem] sm:h-[13.75rem] bg-gradient-to-r from-[#1c1c1c] via-[#9d3d00] to-[#ff6b00] [clip-path:polygon(0_0,100%_0,100%_28%,64%_45%,40%_30%,20%_48%,0_78%)]" />
 
       <div className="relative z-10 mx-auto flex w-full max-w-[1240px] flex-col items-center gap-12 lg:gap-20">
         {/* HEADING */}
@@ -134,7 +134,9 @@ export default function TeachingApproachSection() {
 
         {/* CTA */}
         <a
-          href="tel:+2349067835701"
+          href="https://wa.me/2349067835701"
+          target="_blank"
+          rel="noopener noreferrer"
           className={`
             ${exo.className}
             inline-flex

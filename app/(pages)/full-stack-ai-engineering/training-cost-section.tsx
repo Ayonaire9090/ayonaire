@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { exo, exoMedium, melodrama, salt } from "@/app/fonts";
 
 const programmeExamples = [
@@ -7,26 +8,36 @@ const programmeExamples = [
     duration: "5 Months",
     note: "For example:",
     featured: true,
+    svg: "/assets/images/ai-fullstack-engineering/rec1.svg",
+    aspectRatio: "639 / 443",
   },
   {
     name: "AI TECH",
     price: "₦6.75 Million",
     duration: "10 Months",
+    svg: "/assets/images/ai-fullstack-engineering/rec2.svg",
+    aspectRatio: "639 / 443",
   },
   {
     name: "DataMites",
     price: "$2,500",
     duration: "8 Months",
+    svg: "/assets/images/ai-fullstack-engineering/rec3.svg",
+    aspectRatio: "658 / 467",
   },
   {
     name: "SQI.EDU",
     price: "₦1.5 Million",
     duration: "8 Months",
+    svg: "/assets/images/ai-fullstack-engineering/rec4.svg",
+    aspectRatio: "639 / 443",
   },
   {
     name: "Digital Regenesys",
     price: "₦2.4 Million",
     duration: "6 Months",
+    svg: "/assets/images/ai-fullstack-engineering/rec5.svg",
+    aspectRatio: "658 / 467",
   },
 ];
 
@@ -42,7 +53,6 @@ export default function TrainingCostSection() {
               max-w-[940px]
               text-[28px]
               font-bold
-              uppercase
               leading-[1.12]
               tracking-[0.1px]
               text-[#181c23]
@@ -53,16 +63,16 @@ export default function TrainingCostSection() {
               lg:leading-[1.1]
             `}
           >
-            Let&apos;s look at what{" "}
+            Let&apos;s look at What{" "}
             <span className="text-[#f25e25]">AI/ML Training</span>{" "}
-            already costs.
+            Already Costs.
           </h2>
 
           <p
             className={`
               ${exoMedium.className}
               max-w-[799px]
-              text-justify
+              text-center
               text-[16px]
               font-medium
               leading-[1.65]
@@ -82,73 +92,54 @@ export default function TrainingCostSection() {
 
         {/* PROGRAMME CARDS */}
         <div className="grid w-full grid-cols-2 gap-5 sm:gap-7 lg:gap-9">
-          {programmeExamples.map((programme, index) => {
+          {programmeExamples.map((programme) => {
             return (
               <article
                 key={programme.name}
                 className={`
                   relative
-                  flex
-                  min-h-[150px]
-                  items-center
-                  justify-center
-                  bg-[#ffdccf]
-                  px-4
-                  py-6
-                  text-center
-                  shadow-[0_3px_5px_rgba(24,28,35,0.16)]
-
-                  sm:min-h-[175px]
-                  sm:px-6
-                  sm:py-7
-
-                  lg:min-h-[220px]
-                  lg:px-8
-                  lg:py-8
-
+                  w-full
                   ${
                     programme.featured
-                      ? "col-span-2 mx-auto w-[70%] sm:w-[55%] lg:w-[52%]"
+                      ? "col-span-2 mx-auto w-[85%] sm:w-[65%] lg:w-[52%]"
                       : ""
                   }
                 `}
                 style={{
-                  borderRadius:
-                    index === 0
-                      ? "14px 7px 10px 8px"
-                      : index === 1
-                        ? "12px 8px 9px 10px"
-                        : index === 2
-                          ? "10px 14px 8px 12px"
-                          : index === 3
-                            ? "12px 7px 10px 9px"
-                            : "10px 13px 9px 12px",
-
-                  transform: `rotate(${
-                    [-1.5, -1.2, 1.2, -1.2, 1.5][index]
-                  }deg)`,
+                  aspectRatio: programme.aspectRatio,
                 }}
               >
-                <div className="flex flex-col items-center justify-center gap-1.5 text-black sm:gap-2">
+                {/* SVG Background shape */}
+                <Image
+                  src={programme.svg}
+                  alt=""
+                  fill
+                  sizes="(min-width: 1024px) 639px, 100vw"
+                  className="pointer-events-none select-none object-fill"
+                  priority
+                />
+
+                {/* Content Overlay */}
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-1 p-4 text-center text-black sm:gap-2 sm:p-6 lg:gap-2.5 lg:p-8">
                   {programme.note && (
                     <p
                       className={`
                         ${salt.className}
                         absolute
-                        left-4
-                        top-4
+                        left-[8%]
+                        top-[8%]
                         text-left
                         text-[10px]
                         font-normal
                         tracking-[0.03em]
 
-                        sm:left-6
-                        sm:top-5
-                        sm:text-[12px]
+                        sm:left-[9%]
+                        sm:top-[9%]
+                        sm:text-[13px]
 
-                        lg:left-7
-                        lg:top-6
-                        lg:text-[14px]
+                        lg:left-[10%]
+                        lg:top-[10%]
+                        lg:text-[16px]
                       `}
                     >
                       {programme.note}
@@ -158,11 +149,11 @@ export default function TrainingCostSection() {
                   <h3
                     className={`
                       ${exoMedium.className}
-                      text-[11px]
+                      text-[12px]
                       font-bold
 
-                      sm:text-[13px]
-                      lg:text-[16px]
+                      sm:text-[16px]
+                      lg:text-[20px]
                     `}
                   >
                     {programme.name}
@@ -171,11 +162,11 @@ export default function TrainingCostSection() {
                   <p
                     className={`
                       ${exoMedium.className}
-                      text-[9px]
+                      text-[10px]
                       font-normal
 
-                      sm:text-[11px]
-                      lg:text-[14px]
+                      sm:text-[13px]
+                      lg:text-[16px]
                     `}
                   >
                     AI Engineering Programme
@@ -183,11 +174,11 @@ export default function TrainingCostSection() {
 
                   <p
                     className={`
-                      text-[9px]
+                      text-[10px]
                       font-normal
 
-                      sm:text-[11px]
-                      lg:text-[14px]
+                      sm:text-[13px]
+                      lg:text-[16px]
                     `}
                   >
                     <span className={exoMedium.className}>Approx.</span>{" "}
@@ -196,11 +187,11 @@ export default function TrainingCostSection() {
 
                   <p
                     className={`
-                      text-[9px]
+                      text-[10px]
                       font-normal
 
-                      sm:text-[11px]
-                      lg:text-[14px]
+                      sm:text-[13px]
+                      lg:text-[16px]
                     `}
                   >
                     <span className={exoMedium.className}>Duration:</span>{" "}

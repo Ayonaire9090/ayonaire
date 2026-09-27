@@ -3,7 +3,7 @@ import { exo, melodrama, space } from "@/app/fonts";
 
 export default function EverydaySystemsSection() {
   return (
-    <section className="bg-[#fefaf8] px-5 py-16 sm:px-8 lg:px-12 xl:px-16 lg:py-[120px]">
+    <section className="bg-[#fefaf8] px-5 pt-16 pb-32 sm:px-8 sm:pt-20 sm:pb-44 lg:px-12 lg:pt-[120px] lg:pb-[220px] xl:px-16">
       <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-10">
        <h2
   className={`${melodrama.className} max-w-[1240px] text-center text-[30px] font-bold leading-[1.12] tracking-[-0.95px] text-[#181c23] sm:text-[36px] lg:text-[44px] lg:leading-[1.16] lg:tracking-[-0.6px]`}
@@ -17,7 +17,7 @@ export default function EverydaySystemsSection() {
       alt=""
       width={496}
       height={62}
-      className="pointer-events-none absolute left-1/2 top-[2px] h-[62px] w-[min(496px,108%)] -translate-x-1/2 select-none object-fill"
+      className="pointer-events-none absolute left-1/2 top-0.5 sm:top-[2px] h-7 sm:h-10 md:h-12 lg:h-[62px] w-[min(496px,108%)] -translate-x-1/2 select-none object-fill"
     />
   </span>{" "}
   <span className="underline whitespace-nowrap">with everyday</span>

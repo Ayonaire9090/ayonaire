@@ -20,15 +20,16 @@ export default function LinkedInSearchSection() {
         >
           Don&apos;t take our word for it.{"\n"}
           <span className="relative inline-block text-[#f25e25]">
-            Go to LinkedIn yourself and search:
+            Go to LinkedIn yourself
             <Image
               src="/assets/images/ai-fullstack-engineering/linkedin-search-highlight.svg"
               alt=""
               width={588}
               height={62}
-              className="pointer-events-none absolute left-0 top-[2px] h-[62px] w-[588px] max-w-[105%] select-none object-fill"
+              className="pointer-events-none absolute left-0 top-[2px] h-7 sm:h-10 md:h-12 lg:h-[62px] w-full select-none object-fill"
             />
-          </span>
+          </span>{" "}
+          <span className="text-[#f25e25]">and search:</span>
         </h2>
 
         <div className="flex flex-col-reverse lg:grid lg:grid-cols-[1fr_683px] items-center lg:items-end gap-10 lg:gap-20">
@@ -146,7 +147,9 @@ export default function LinkedInSearchSection() {
           </div>
 
           <a
-            href="tel:+2349067835701"
+            href="https://wa.me/2349067835701"
+            target="_blank"
+            rel="noopener noreferrer"
             className={`${exo.className} mt-12 inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-10 py-5 text-[15px] uppercase text-white sm:text-[16px] shadow-[0px_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01]`}
           >
             let&apos;s get into it

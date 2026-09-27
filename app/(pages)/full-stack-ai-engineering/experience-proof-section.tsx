@@ -28,7 +28,7 @@ export default function ExperienceProofSection() {
                 alt=""
                 width={967}
                 height={53}
-                className="pointer-events-none absolute left-1/2 top-1/2 h-[53px] w-[min(967px,108%)] -translate-x-1/2 -translate-y-1/2 select-none object-fill"
+                className="pointer-events-none absolute left-1/2 top-1/2 h-6 sm:h-9 md:h-11 lg:h-[53px] w-[min(967px,108%)] -translate-x-1/2 -translate-y-1/2 select-none object-fill"
               />
             </span>{" "}
             of experience before you&apos;re taken seriously...

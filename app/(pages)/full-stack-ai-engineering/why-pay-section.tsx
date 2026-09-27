@@ -33,7 +33,7 @@ export default function WhyPaySection() {
               alt=""
               width={651}
               height={62}
-              className="pointer-events-none absolute left-1/2 top-[6px] h-[62px] w-[651px] max-w-[92vw] -translate-x-1/2 select-none object-fill"
+              className="pointer-events-none absolute left-1/2 top-1 sm:top-[6px] h-7 sm:h-10 md:h-12 lg:h-[62px] w-[651px] max-w-[92vw] -translate-x-1/2 select-none object-fill"
             />
             <span className="relative">Why would any company pay?</span>
           </h2>

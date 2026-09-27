@@ -13,32 +13,32 @@ export default function IntentionalFitSection() {
   return (
     <section className="bg-[#fefefe] px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
       <div className="mx-auto flex w-full max-w-[1240px] flex-col gap-12 lg:gap-20">
-        <div className="relative w-fit max-w-full">
-      <h2
-        className={`
-          ${melodrama.className}
-          relative
-          z-10
-          text-[26px]
-          font-bold
-          leading-[1.08]
-          tracking-[-0.8px]
-          text-[#181c23]
-          sm:text-[32px]
-          lg:text-[36px]
-        `}
-      >
-        <span className="text-[#f25e25]">As exciting as all</span> of this sounds
-      </h2>
-      
-      <Image
-        src="/assets/images/ai-fullstack-engineering/build-proof-heading-highlight.svg"
-        alt=""
-        width={454}
-        height={58}
-        className="pointer-events-none absolute -left-2 top-1/2 z-0 -translate-y-1/2 h-[58px] w-auto max-w-[70%]"
-      />
-    </div>
+        <h2
+          className={`
+            ${melodrama.className}
+            relative
+            z-10
+            text-[26px]
+            font-bold
+            leading-[1.08]
+            tracking-[-0.8px]
+            text-[#181c23]
+            sm:text-[32px]
+            lg:text-[36px]
+          `}
+        >
+          <span className="relative inline-block text-[#f25e25]">
+            As exciting as all
+            <Image
+              src="/assets/images/ai-fullstack-engineering/build-proof-heading-highlight.svg"
+              alt=""
+              width={454}
+              height={58}
+              className="pointer-events-none absolute left-0 top-1/2 z-[-1] h-[58px] w-full -translate-y-1/2 object-fill"
+            />
+          </span>{" "}
+          of this sounds
+        </h2>
 
         <div className={`${exoMedium.className} space-y-9 text-[16px] font-medium leading-[1.7] tracking-[0.2px] text-[#181c23] sm:text-[16px] lg:text-[20px] lg:leading-[2.1]`}>
           <p>

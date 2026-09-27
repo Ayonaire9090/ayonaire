@@ -29,7 +29,7 @@ export default function IntroducingAIEngineeringSection() {
                   alt=""
                   width={586}
                   height={68}
-                  className="pointer-events-none absolute left-1/2 top-1/2 h-[58px] w-[108%] -translate-x-1/2 -translate-y-1/2 object-fill"
+                  className="pointer-events-none absolute left-1/2 top-1/2 h-6 sm:h-9 md:h-12 lg:h-[58px] w-[108%] -translate-x-1/2 -translate-y-1/2 object-fill"
                 />
               </span>
             </p>

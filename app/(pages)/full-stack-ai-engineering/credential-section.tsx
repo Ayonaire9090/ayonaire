@@ -14,7 +14,7 @@ export default function CredentialSection() {
     <section className="bg-white px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
       <div className="mx-auto flex w-full max-w-[1279px] flex-col items-center gap-10 lg:gap-11">
         <h2 className={`${melodrama.className} text-center text-[34px] font-bold leading-[1.08] tracking-[-0.8px] text-[#181c23] sm:text-[44px] lg:text-[56px]`}>
-          Now Listen, <span className="bg-[#ffdcc4] text-[#f25e25]">Your Strongest Credential</span> Is Not Your CERTIFICATE.
+          Now Listen, Your <span className="bg-[#ffdcc4] text-[#f25e25]">Strongest Credential</span> Is Not Your CERTIFICATE.
         </h2>
 
         <p className={`${exoMedium.className} w-full text-justify text-[18px] font-normal leading-[1.75] tracking-[0.5px] text-[#5a4136] sm:text-[22px] lg:text-[28px] lg:leading-[1.84]`}>

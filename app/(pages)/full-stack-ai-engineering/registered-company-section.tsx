@@ -99,7 +99,9 @@ export default function RegisteredCompanySection() {
         </p>
 
         <a
-          href="tel:+2349067835701"
+          href="https://wa.me/2349067835701"
+          target="_blank"
+          rel="noopener noreferrer"
           className={`${exoMedium.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-8 py-4 text-center text-[13px] font-bold uppercase leading-[1.45] text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:px-10 sm:py-5 lg:text-[16px]`}
         >
           Start my AI career transition
@@ -120,8 +122,6 @@ export default function RegisteredCompanySection() {
 function ProofCard({
   text,
   muted = false,
-  index,
-  activeIndex,
   onHover,
 }: {
   text: string;
@@ -130,92 +130,56 @@ function ProofCard({
   activeIndex: number;
   onHover: () => void;
 }) {
-  const isEven = index % 2 === 0;
-  const isActive = activeIndex === index;
-
   return (
-    <div
+    <article
       onMouseEnter={onHover}
-      className={`
-        relative
-        h-[158px] w-full max-w-[430px]
-        cursor-pointer
-        sm:h-[218px] sm:max-w-[540px]
-        lg:h-[292px] lg:max-w-[658px]
-        ${isEven ? "rotate-[2deg]" : "-rotate-[2deg]"}
-      `}
+      className="relative flex aspect-[702/336] w-full items-center cursor-pointer lg:max-w-[655px]"
     >
-      {/* Card */}
+      {/* Vector1 Card Background */}
       <Image
-        src={
-          isActive
-             
-            ? "/assets/images/ai-fullstack-engineering/registered-company-card-muted.svg"
-
-            : "/assets/images/ai-fullstack-engineering/registered-company-card.svg"
-        }
+        src="/assets/images/ai-fullstack-engineering/right-fit-card.svg"
         alt=""
         fill
-        sizes="(min-width: 1024px) 658px, 100vw"
-        className="object-fill"
+        sizes="(min-width: 1024px) 655px, 100vw"
+        className="pointer-events-none object-contain"
       />
 
-      {/* Check */}
-      <Image
-        src="/assets/images/ai-fullstack-engineering/registered-company-check.png"
-        alt=""
-        width={92}
-        height={88}
-        className={`
-          absolute
-          left-[7.5%]
-          top-1/2
-          h-[48px] w-[50px]
-          -translate-y-1/2
-          object-contain
-
-          sm:h-[68px]
-          sm:w-[70px]
-
-          lg:h-[88px]
-          lg:w-[92px]
-
-          ${muted ? "opacity-50" : ""}
-        `}
-      />
-
-      {/* Text */}
-      <p
-        className={`
-          ${exoMedium.className}
-          absolute
-          left-[31%]
-          top-1/2
-          w-[63%]
-          -translate-y-1/2
-
-          text-[12px]
-          font-bold
-          leading-[1.4]
-          tracking-[0.2px]
-          text-[#181c23]
-
-          sm:text-[18px]
-          sm:leading-[1.4]
-          sm:tracking-[0.4px]
-
-          lg:text-[21px]
-          lg:leading-[1.45]
-          lg:tracking-[0.6px]
-
-          ${isEven ? "-rotate-[2deg]" : "rotate-[2deg]"}
-
-          transition-all
-          duration-300
-        `}
+      {/* Content with 5deg rotation */}
+      <div
+        className="relative z-10 flex w-full items-center gap-7 px-6 py-5 sm:gap-9 sm:px-8 sm:py-6 lg:gap-11 lg:px-10 lg:py-6"
+        style={{ transform: "rotate(5deg)" }}
       >
-        &quot;{text}&quot;
-      </p>
-    </div>
+        {/* Check Icon */}
+        <Image
+          src="/assets/images/ai-fullstack-engineering/registered-company-check.png"
+          alt=""
+          width={64}
+          height={64}
+          className={`size-[40px] shrink-0 object-contain sm:size-[48px] lg:size-[56px] ${
+            muted ? "opacity-50" : ""
+          }`}
+        />
+
+        {/* Text */}
+        <p
+          className={`
+            ${exoMedium.className}
+            w-[60%]
+            text-[14px]
+            font-bold
+            leading-[1.45]
+            tracking-[0.2px]
+            text-[#181c23]
+
+            sm:text-[17px]
+
+            lg:text-[20px]
+            lg:leading-[1.5]
+          `}
+        >
+          &quot;{text}&quot;
+        </p>
+      </div>
+    </article>
   );
 }

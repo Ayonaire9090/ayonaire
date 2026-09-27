@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { exo, exoMedium, melodrama, space } from "@/app/fonts";
 
 const ecosystemItems = [
@@ -26,8 +25,12 @@ const ecosystemItems = [
 
 export default function CareerEcosystemSection() {
   return (
-    <section className="relative overflow-hidden bg-[#f8d8c9] px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
-      <div className="pointer-events-none absolute left-1/2 top-0 h-[220px] w-[1600px] max-w-none -translate-x-1/2 bg-white [clip-path:polygon(8%_0,28%_42%,55%_0,76%_42%,100%_42%,100%_100%,0_100%,0_100%)]" />
+    <section className="relative overflow-hidden bg-white px-5 pb-16 pt-24 sm:px-8 sm:pt-28 lg:px-12 lg:pb-[120px] lg:pt-36 xl:px-16">
+      <div className="pointer-events-none absolute left-1/2 top-0 h-[12.59375rem] sm:h-[25.1875rem] w-screen max-w-none -translate-x-1/2 overflow-hidden">
+        <svg viewBox="0 0 1440 403" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-full w-full" preserveAspectRatio="none">
+          <path d="M-4.27734 0H1456.05L1468.72 120.9H1157L853.5 23.2188L459.5 120.9L198 23.2188L-4.27734 403V0Z" fill="#FDDDD2" />
+        </svg>
+      </div>
       <div className="relative z-10 mx-auto flex w-full max-w-[1240px] flex-col items-center gap-12 lg:gap-20">
         <h2 className={`${melodrama.className} max-w-[846px] text-center text-[32px] font-bold leading-[1.12] tracking-[0.2px] text-[#181c23] sm:text-[40px] lg:text-[56px] lg:leading-[1.13]`}>
           This is your <span className="text-[#f25e25]">Complete Career</span> Transition Ecosystem.
@@ -36,8 +39,7 @@ export default function CareerEcosystemSection() {
         <div className="w-full overflow-x-auto pb-4">
           <div className="flex min-w-max gap-6 lg:gap-10">
             {ecosystemItems.map((item) => (
-              <article key={item.number} className="relative h-[560px] w-[330px] shrink-0 overflow-hidden rounded-[28px] border-[3px] border-[#4d4c4d] bg-[#020000] p-6 text-white sm:w-[390px] lg:h-[633px] lg:w-[472px] lg:p-8">
-                <Image src="/assets/images/ai-fullstack-engineering/career-framework-card-bg.png" alt="" fill sizes="472px" className="pointer-events-none object-cover opacity-95" />
+              <article key={item.number} className="relative h-[560px] w-[330px] shrink-0 overflow-hidden rounded-[28px] border-[3px] border-[#4d4c4d] bg-[#020000] bg-[url('/assets/images/ai-fullstack-engineering/career-framework-pattern.png')] bg-cover p-6 text-white sm:w-[390px] lg:h-[633px] lg:w-[472px] lg:p-8">
                 <div className="relative z-10 flex h-full flex-col">
                   <p className={`${exo.className} text-[16px] font-medium tracking-[0.08em] text-white/60 lg:text-[20px]`}>({item.number})</p>
                   <h3 className={`${exo.className} mt-10 text-[18px] font-semibold uppercase leading-[1.28] tracking-[0.09em] text-[#f25e25] lg:text-[24px]`}>

@@ -1,4 +1,5 @@
-import { exo, exoMedium, melodrama, salt } from "@/app/fonts";
+import Image from "next/image";
+import { exoMedium, melodrama, salt } from "@/app/fonts";
 
 const rejectionReasons = [
   "You're looking for shortcuts without doing the work.",
@@ -22,19 +23,30 @@ export default function AcceptanceFilterSection() {
           <p className={`${salt.className} text-[18px] font-semibold uppercase tracking-[0.08em] text-[#ff6b00] lg:text-[24px]`}>
             You if:
           </p>
-          <div className="flex flex-col gap-8 lg:gap-10">
-            {rejectionReasons.map((reason, index) => (
+          <div className="flex flex-col gap-6 lg:gap-8">
+            {rejectionReasons.map((reason) => (
               <article
                 key={reason}
-                className="grid min-h-[132px] grid-cols-[56px_1fr] items-center gap-5 rounded-[10px] border border-[#ff9b77]/50 bg-white px-5 py-6 shadow-[0_12px_28px_rgba(90,65,54,0.09)] sm:grid-cols-[76px_1fr] sm:px-8 lg:min-h-[170px] lg:max-w-[655px] lg:px-10"
-                style={{ transform: `rotate(${index % 2 === 0 ? 2 : -1.5}deg)` }}
+                className="relative flex aspect-[702/336] w-full max-w-[655px] items-center"
               >
-                <span className="flex size-10 items-center justify-center rounded-full border-2 border-[#ff9b77] text-[#ff8b62] sm:size-12">
-                  <span className="block h-3 w-5 rotate-[-45deg] border-b-2 border-l-2 border-current" />
-                </span>
-                <p className={`${exoMedium.className} text-[12px] font-bold leading-[1.55] tracking-[0.2px] text-[#181c23] sm:text-[14px] lg:text-[18px] lg:leading-[1.78]`}>
-                  {reason}
-                </p>
+                <Image
+                  src="/assets/images/ai-fullstack-engineering/right-fit-card.svg"
+                  alt=""
+                  fill
+                  sizes="(min-width: 1024px) 655px, 100vw"
+                  className="pointer-events-none object-contain"
+                />
+                <div
+                  className="relative z-10 flex w-full items-center gap-7 px-6 py-5 sm:gap-9 sm:px-8 sm:py-6 lg:gap-11 lg:px-10 lg:py-6"
+                  style={{ transform: "rotate(5deg)" }}
+                >
+                  <span className="flex size-10 shrink-0 items-center justify-center rounded-full border-2 border-[#ff8b62] text-[#ff6b00] sm:size-12">
+                    <span className="block h-3 w-5 rotate-[-45deg] border-b-2 border-l-2 border-current" />
+                  </span>
+                  <p className={`${exoMedium.className} w-[60%] text-[15px] leading-[1.45] tracking-[0.2px] text-[#181c23] sm:text-[17px] lg:text-[20px] lg:leading-[1.5]`}>
+                    {reason}
+                  </p>
+                </div>
               </article>
             ))}
           </div>

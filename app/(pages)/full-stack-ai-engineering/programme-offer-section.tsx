@@ -4,28 +4,28 @@ import { exo, exoMedium, melodrama } from "@/app/fonts";
 export default function ProgrammeOfferSection() {
   return (
     <section 
-      className="relative overflow-hidden px-5 pt-24 pb-16 sm:px-8 sm:pt-28 lg:px-12 lg:pt-36 lg:pb-20 xl:px-16"
+      className="relative overflow-x-clip px-5 pt-24 pb-16 sm:px-8 sm:pt-28 lg:px-12 lg:pt-36 lg:pb-20 xl:px-16"
       style={{
-        background: "linear-gradient(180deg, #FFDCC4 0%, #FFFFFF 47%)"
+        background: "linear-gradient(180deg, #FFDCC4 0%, #FFDCC4 22%, #FFFFFF 28%, #FFFFFF 100%)"
       }}
     >
       {/* Irregular top background shape from InstructorProofSection */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[220px] overflow-hidden lg:h-[300px]">
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[220px] overflow-visible lg:h-[300px]">
         <Image
-          src="/assets/images/ai-fullstack-engineering/instructor-proof-bg.svg"
+          src="/assets/images/ai-fullstack-engineering/top6.svg"
           alt=""
-          width={1463}
-          height={551}
+          width={1440}
+          height={601}
           priority
           className="
             absolute
             left-1/2
-            top-[-120px]
-            h-[551px]
-            w-[1463px]
+            top-0
+            h-auto
+            w-[100vw]
             max-w-none
             -translate-x-1/2
-            rotate-[-1.95deg]
+            -translate-y-[25%]
           "
         />
       </div>
@@ -95,19 +95,19 @@ export default function ProgrammeOfferSection() {
           >
             <p>
               <span className="font-medium">Promo Price:</span>{" "}
-              <strong>350,000</strong>
+              <strong className="text-[#f25e25]">₦350,000</strong>
             </p>
 
             <p className="font-medium">
               Payment plans available.
             </p>
 
-            <p className="font-bold">
-              500,000
+            <p className="font-bold text-gray-500 line-through">
+              ₦500,000
             </p>
           </div>
 
-          <Cta href="tel:+2349067835701">
+          <Cta href="https://wa.me/2349067835701">
             Start my AI career transition now
           </Cta>
         </div>
@@ -134,7 +134,7 @@ export default function ProgrammeOfferSection() {
           <p>And perhaps your first reaction is:</p>
 
           <p>
-            &quot;<strong>500,000</strong> is still a lot of money for
+            &quot;<strong>₦500,000</strong> is still a lot of money for
             training.&quot;
           </p>
 
@@ -160,7 +160,7 @@ export default function ProgrammeOfferSection() {
           alt="Examples of high paying AI and machine learning job compensation"
           width={1240}
           height={650}
-          className="h-auto w-full rounded-[24px] object-cover shadow-[0_1px_18px_rgba(248,100,50,0.18)]"
+          className="h-auto w-full rounded-[24px] object-cover"
           sizes="(min-width: 1280px) 1240px, 100vw"
         />
 
@@ -260,7 +260,7 @@ export default function ProgrammeOfferSection() {
             to me over the course of my career?&quot;
           </p>
 
-          <Cta href="tel:+2349067835701">
+          <Cta href="https://wa.me/2349067835701">
             I want to join the September cohort
           </Cta>
         </div>
@@ -279,6 +279,8 @@ function Cta({
   return (
     <a
       href={href}
+      target="_blank"
+      rel="noopener noreferrer"
       className={`
         ${exo.className}
         inline-flex

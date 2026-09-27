@@ -333,14 +333,22 @@ export default function CurriculumSection() {
   };
 
   return (
-    <section className="relative overflow-hidden bg-[#1c1c1c] px-5 py-16 text-white sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
-      {/* Background accent */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-[280px] bg-[linear-gradient(165deg,#302018_0%,#ff6b00_52%,#1c1c1c_53%)] opacity-90" />
+    <section className="relative overflow-hidden bg-[#1c1c1c] px-5 pt-24 pb-16 text-white sm:px-8 lg:px-12 lg:pt-[180px] lg:pb-[120px] xl:px-16">
+      {/* Top Decorative Background Shape */}
+      <div className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 w-[100vw] max-w-none select-none z-0">
+        <Image
+          src="/assets/images/ai-fullstack-engineering/curriculum-top-shape.svg"
+          alt=""
+          width={1440}
+          height={403}
+          className="w-[100vw] max-w-none h-auto object-cover object-top opacity-100"
+        />
+      </div>
 
       <div className="relative z-10 mx-auto flex w-full max-w-[1240px] flex-col items-center gap-12 lg:gap-20">
         {/* Heading */}
         <h2
-          className={`${melodrama.className} pt-14 text-center text-[30px] font-bold uppercase leading-[1.12] tracking-[-0.8px] text-white sm:text-[36px] lg:text-[44px] lg:leading-[1.16]`}
+          className={`${melodrama.className} pt-16 sm:pt-20 lg:pt-24 text-center text-[30px] font-bold uppercase leading-[1.12] tracking-[-0.8px] text-white sm:text-[36px] lg:text-[44px] lg:leading-[1.16]`}
         >
           Now, take a look at the{" "}
           <span className="relative inline-block text-[#ff6b00]">
@@ -539,7 +547,9 @@ export default function CurriculumSection() {
 
         {/* CTA */}
         <a
-          href="tel:+2349067835701"
+          href="https://wa.me/2349067835701"
+          target="_blank"
+          rel="noopener noreferrer"
           className={`${exoMedium.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-10 py-5 text-center text-[12px] font-bold uppercase text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] lg:text-[18px]`}
         >
           I want to become an AI/ML engineer

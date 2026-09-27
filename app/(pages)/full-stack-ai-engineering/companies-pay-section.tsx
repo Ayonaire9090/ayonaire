@@ -9,17 +9,18 @@ export default function CompaniesPaySection() {
   className={`${melodrama.className} text-center text-[30px] font-bold leading-[1.12] tracking-[0.4px] text-[#181c23] sm:text-[36px] lg:text-[44px] lg:leading-[1.16] lg:tracking-[0.2px]`}
 >
   Companies Pay People Who Build AI Systems{" "}
+  <span className="text-[#f25e25]">Because It</span>{" "}
   <span className="relative inline-block text-[#f25e25]">
-    <span className="whitespace-nowrap">Because It Saves Them</span>{" "}
-    <span className="whitespace-nowrap">Millions Of $$$</span>
+    Saves Them Millions
     <Image
       src="/assets/images/ai-fullstack-engineering/companies-pay-highlight.svg"
       alt=""
-      width={510}
+      width={420}
       height={62}
-      className="pointer-events-none absolute left-1/2 top-[4px] h-[62px] w-[510px] max-w-[104%] -translate-x-1/2 select-none object-fill"
+      className="pointer-events-none absolute -bottom-1 sm:-bottom-[6px] left-0 h-7 sm:h-10 md:h-12 lg:h-[62px] w-full select-none object-fill"
     />
-  </span>
+  </span>{" "}
+  <span className="text-[#f25e25]">Of $$$</span>
 </h2>
 
         <div

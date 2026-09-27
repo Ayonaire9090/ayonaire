@@ -42,24 +42,24 @@ export default function TwoSetsSection() {
               <Image
                 src="/assets/images/ai-fullstack-engineering/two-sets-highlight.svg"
                 alt=""
-                width={480}
+                width={380}
                 height={62}
-                className="pointer-events-none absolute left-1/2 top-0 h-[62px] w-[480px] max-w-[110%] -translate-x-1/2 select-none object-fill"
+                className="pointer-events-none absolute left-0 -bottom-1 sm:-bottom-[6px] h-7 sm:h-10 md:h-12 lg:h-[62px] w-full select-none object-fill"
               />
             </span>{" "}
             I don&apos;t want you to be like:
           </h2>
 
-          <div className="grid w-full max-w-[1040px] grid-cols-1 items-stretch gap-6 text-left md:grid-cols-2 lg:gap-8">
+          <div className="grid w-full max-w-[1040px] grid-cols-1 items-start gap-6 text-left md:grid-cols-2 lg:gap-8">
             <BlackWarningCard
               number="01"
-              text="Those who see these many AI related job opportunities and only wish a zillion times that they could land one. They never get past wishing (if only wishes were hors 😜)"
-              className="md:-rotate-3"
+              text="Those who see these many AI related job opportunities and only wish a zillion times that they could land one. They never get past wishing (if only wishes were horses 😜)"
             />
             <BlackWarningCard
               number="02"
               text="Those learning AI the wrong way, who then pitifully end up unable to land these highly paid jobs."
-              className="md:rotate-3"
+              className="md:translate-y-[38px]"
+              rotate180
             />
           </div>
 
@@ -116,7 +116,9 @@ export default function TwoSetsSection() {
           </div>
 
           <a
-            href="tel:+2349067835701"
+            href="https://wa.me/2349067835701"
+            target="_blank"
+            rel="noopener noreferrer"
             className={`${exoMedium.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-10 py-5 text-[15px] text-white sm:text-[16px] shadow-[0px_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01]`}
           >
             SHOW ME THE AI ENGINEERING PATH
@@ -130,22 +132,23 @@ export default function TwoSetsSection() {
           </a>
         </div>
 
-        <div className="flex items-center justify-center">
-          <p className={`${salt.className} rotate-[-5deg] text-center text-[20px] tracking-[0.2px] text-[#181c23] lg:text-[24px]`}>
-            BUT WAIT?..
-          </p>
-          <Image
-            src="/assets/images/ai-fullstack-engineering/but-wait-hand.png"
-            alt=""
-            width={154}
-            height={154}
-            className="size-[120px] object-cover lg:size-[154px]"
-          />
-        </div>
       </div>
 
-      <div className="bg-gradient-to-b from-white to-[rgba(248,100,50,0)] px-4 pb-20 pt-10 sm:px-8 lg:px-12 xl:px-16 lg:pb-[120px]">
-        <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-14 lg:gap-[120px]">
+      <div className="relative w-full bg-[linear-gradient(180deg,_#fdfbf9_0%,_#ffd9c7_12%,_#ffd9c7_88%,_#fff5ee_100%)] px-4 pb-20 pt-12 sm:px-8 sm:pt-16 lg:px-12 xl:px-16 lg:pb-[120px]">
+        <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-12 lg:gap-16">
+          <div className="flex items-center justify-center">
+            <p className={`${salt.className} rotate-[-5deg] text-center text-[20px] tracking-[0.2px] text-[#181c23] lg:text-[24px]`}>
+              BUT WAIT?..
+            </p>
+            <Image
+              src="/assets/images/ai-fullstack-engineering/but-wait-hand.png"
+              alt=""
+              width={154}
+              height={154}
+              className="size-[120px] object-cover lg:size-[154px]"
+            />
+          </div>
+
           <p
             className={`${exoMedium.className} max-w-[1163px] text-center text-[18px] font-normal leading-[1.55] tracking-[0.2px] text-[#181c23] lg:text-[22px] lg:leading-[1.6]`}
           >
@@ -156,18 +159,22 @@ export default function TwoSetsSection() {
             </strong>
           </p>
 
-          <div className="grid w-full grid-cols-1 gap-16 sm:gap-10 lg:grid-cols-2 mt-6">
+          <div className="grid w-full grid-cols-1 gap-16 sm:gap-10 lg:grid-cols-2 mt-2">
             <QuestionCard
               number="01"
               image="/assets/images/ai-fullstack-engineering/question-card-people.png"
               title="Who are the people getting these high paying AI jobs?"
               body="Humans with 1 head, strong determination, right systems and right mentorship."
+              badgeRotation="rotate-0"
+              cardClassName="border border-white/80"
             />
             <QuestionCard
               number="02"
               image="/assets/images/ai-fullstack-engineering/question-card-skills.png"
               title="What skills do they have that actually gets them hired?"
               body="This is the first best question anyone who would succeed must answer and use as a map. You see, Hiring Managers are looking for those with the right skills, right experience (doesn't have to be work experience) and right soft skills."
+              badgeRotation="rotate-[4deg]"
+              cardClassName="border border-[#ff6b00]/25 shadow-[0px_4px_24px_rgba(248,100,50,0.08)]"
             />
           </div>
         </div>
@@ -189,7 +196,7 @@ export default function TwoSetsSection() {
                 alt=""
                 width={357}
                 height={62}
-                className="pointer-events-none absolute left-1/2 top-0 h-[62px] w-[357px] max-w-[112%] -translate-x-1/2 select-none object-fill"
+                className="pointer-events-none absolute left-1/2 top-0.5 sm:top-0 h-7 sm:h-10 md:h-12 lg:h-[62px] w-[357px] max-w-[112%] -translate-x-1/2 select-none object-fill"
               />
             </span>{" "}
             such as:
@@ -220,10 +227,12 @@ function BlackWarningCard({
   number,
   text,
   className = "",
+  rotate180 = false,
 }: {
   number: string;
   text: string;
   className?: string;
+  rotate180?: boolean;
 }) {
   return (
     <article
@@ -231,7 +240,7 @@ function BlackWarningCard({
     >
       {/* CUSTOM CARD SHAPE */}
       <svg
-        className="absolute inset-0 h-full w-full"
+        className={`absolute inset-0 h-full w-full ${rotate180 ? "rotate-180" : ""}`}
         viewBox="0 0 540 350"
         preserveAspectRatio="none"
         aria-hidden="true"
@@ -327,37 +336,46 @@ function QuestionCard({
   image,
   title,
   body,
+  badgeRotation = "rotate-0",
+  badgeClassName = "",
+  cardClassName = "",
 }: {
   number: string;
   image: string;
   title: string;
   body: string;
+  badgeRotation?: string;
+  badgeClassName?: string;
+  cardClassName?: string;
 }) {
   return (
-   <article className="relative min-h-[520px] rounded-[14px] bg-white px-8 pb-10 pt-24 shadow-[0px_1px_6px_rgba(0,0,0,0.12)] lg:min-h-[606px] lg:px-11">
-  <div className="absolute -top-8 sm:-top-12 left-11 flex size-[50px] sm:size-[100px] items-center justify-center rounded border border-[#ff6b00] bg-white text-[18px] sm:text-[36px] font-bold tracking-[0.2px] text-black shadow-[0px_0px_6px_0px_rgba(248,100,50,0.25)]">
-    {number}
-  </div>
-<Image
-    src={image}
-    alt=""
-    width={115}
-    height={115}
-    className="mb-10 size-[115px] object-cover"
-  />
-  
+    <article
+      className={`relative min-h-[480px] rounded-[16px] bg-white px-7 pb-10 pt-20 shadow-[0px_4px_24px_rgba(0,0,0,0.06)] sm:px-9 sm:pt-24 lg:min-h-[580px] lg:rounded-[20px] lg:px-11 ${cardClassName}`}
+    >
+      <div
+        className={`absolute -top-7 left-8 flex h-[58px] w-[70px] items-center justify-center rounded-[10px] border-[1.5px] border-[#ff6b00] bg-white text-[22px] font-bold tracking-[0.2px] text-black shadow-[0px_2px_8px_0px_rgba(248,100,50,0.18)] sm:-top-10 sm:left-11 sm:h-[82px] sm:w-[96px] sm:rounded-[12px] sm:text-[32px] lg:h-[92px] lg:w-[106px] lg:text-[36px] transition-transform duration-200 ${badgeRotation} ${badgeClassName}`}
+      >
+        {number}
+      </div>
+      <Image
+        src={image}
+        alt=""
+        width={115}
+        height={115}
+        className="mb-8 size-[90px] object-contain sm:size-[105px] lg:mb-10 lg:size-[115px]"
+      />
 
-  <h3
-    className={`${exo.className} mb-7 text-[22px] font-bold leading-[1.35] tracking-[0.2px] text-black lg:text-[34px] lg:leading-[1.35]`}
-  >
-    {title}
-  </h3>
+      <h3
+        className={`${exo.className} mb-5 text-[20px] font-bold leading-[1.3] tracking-[0.2px] text-black sm:text-[25px] lg:mb-7 lg:text-[30px] lg:leading-[1.32]`}
+      >
+        {title}
+      </h3>
 
-  <p
-    className={`${exoMedium.className} text-left text-[15px] font-medium leading-[1.8] tracking-[0.1px] text-black lg:text-[16px] lg:leading-[1.85]`}
-  >
-    {body}
-  </p>
-</article>
+      <p
+        className={`${exoMedium.className} text-left text-[14px] font-normal leading-[1.75] tracking-[0.1px] text-[#2d3748] sm:text-[15px] lg:text-[16px] lg:leading-[1.85]`}
+      >
+        {body}
+      </p>
+    </article>
   );
 }

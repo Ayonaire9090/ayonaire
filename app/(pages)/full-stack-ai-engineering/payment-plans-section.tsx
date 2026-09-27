@@ -4,23 +4,23 @@ import { exo, exoMedium, melodrama, salt, space } from "@/app/fonts";
 const plans = [
   {
     title: "5-Month Plan",
-    schedule: "?100,000 × 5 Months",
-    total: "?500,000",
+    schedule: "₦100,000 × 5 Months",
+    total: "₦500,000",
   },
   {
     title: "3-Month Plan",
-    schedule: "?200,000 + ?200,000 + ?100,000",
-    total: "?500,000",
+    schedule: "₦200,000 + ₦200,000 + ₦100,000",
+    total: "₦500,000",
   },
   {
     title: "7-Month Plan",
-    schedule: "?80,000 × 7 Months",
-    total: "?560,000",
+    schedule: "₦80,000 × 7 Months",
+    total: "₦560,000",
   },
   {
     title: "10-Month Plan",
-    schedule: "?60,000 × 10 Months",
-    total: "?600,000",
+    schedule: "₦60,000 × 10 Months",
+    total: "₦600,000",
   },
 ];
 
@@ -51,7 +51,7 @@ export default function PaymentPlansSection() {
             >
               And no... you do not have to pay{" "}<br/>
               <span className="text-[#f25e25]">
-                500,000 at once.
+                ₦500,000 at once.
               </span>
             </h2>
 
@@ -110,91 +110,78 @@ export default function PaymentPlansSection() {
               Plans
             </p>
 
-            <div className="flex flex-col gap-7 lg:gap-9">
-              {plans.map((plan, index) => (
+            <div className="flex flex-col gap-6 lg:gap-8">
+              {plans.map((plan) => (
                 <article
                   key={plan.title}
-                  className="
-                    grid
-                    min-h-[140px]
-                    grid-cols-[56px_1fr]
-                    items-center
-                    gap-5
-                    rounded-[10px]
-                    border
-                    border-[#ff9b77]/50
-                    bg-white
-                    px-5
-                    py-6
-                    shadow-[0_12px_28px_rgba(90,65,54,0.09)]
-
-                    sm:grid-cols-[76px_1fr]
-                    sm:px-8
-
-                    lg:min-h-[175px]
-                    lg:max-w-[655px]
-                    lg:px-10
-                  "
-                  style={{
-                    transform: `rotate(${
-                      index % 2 === 0 ? 2 : -1.5
-                    }deg)`,
-                  }}
+                  className="relative flex aspect-[702/336] w-full items-center lg:max-w-[655px]"
                 >
-                  {/* CHECK ICON */}
-                  <span className="flex size-10 items-center justify-center rounded-full border-2 border-[#ff9b77] text-[#ff8b62] sm:size-12">
-                    <span className="block h-3 w-5 rotate-[-45deg] border-b-2 border-l-2 border-current" />
-                  </span>
+                  <Image
+                    src="/assets/images/ai-fullstack-engineering/right-fit-card.svg"
+                    alt=""
+                    fill
+                    sizes="(min-width: 1024px) 655px, 100vw"
+                    className="pointer-events-none object-contain"
+                  />
+                  <div
+                    className="relative z-10 flex w-full items-center gap-7 px-6 py-5 sm:gap-9 sm:px-8 sm:py-6 lg:gap-11 lg:px-10 lg:py-6"
+                    style={{ transform: "rotate(5deg)" }}
+                  >
+                    {/* CHECK ICON */}
+                    <span className="flex size-10 shrink-0 items-center justify-center rounded-full border-2 border-[#ff9b77] text-[#ff8b62] sm:size-12">
+                      <span className="block h-3 w-5 rotate-[-45deg] border-b-2 border-l-2 border-current" />
+                    </span>
 
-                  {/* PLAN CONTENT */}
-                  <div className="space-y-3 text-[#181c23]">
-                    <h3
-                      className={`
-                        ${exo.className}
-                        text-[18px]
-                        font-bold
-                        uppercase
-                        tracking-[0.06em]
+                    {/* PLAN CONTENT */}
+                    <div className="w-[60%] space-y-1.5 text-[#181c23] sm:space-y-2 lg:space-y-2.5">
+                      <h3
+                        className={`
+                          ${exo.className}
+                          text-[16px]
+                          font-bold
+                          uppercase
+                          tracking-[0.06em]
 
-                        sm:text-[20px]
+                          sm:text-[19px]
 
-                        lg:text-[23px]
-                      `}
-                    >
-                      {plan.title}
-                    </h3>
+                          lg:text-[22px]
+                        `}
+                      >
+                        {plan.title}
+                      </h3>
 
-                    <p
-                      className={`
-                        ${exoMedium.className}
-                        text-[14px]
-                        font-medium
-                        tracking-[0.1px]
-                        text-[#5a4136]
+                      <p
+                        className={`
+                          ${exoMedium.className}
+                          text-[13px]
+                          font-medium
+                          tracking-[0.1px]
+                          text-[#5a4136]
 
-                        sm:text-[16px]
+                          sm:text-[15px]
 
-                        lg:text-[19px]
-                      `}
-                    >
-                      {plan.schedule}
-                    </p>
+                          lg:text-[18px]
+                        `}
+                      >
+                        {plan.schedule}
+                      </p>
 
-                    <p
-                      className={`
-                        ${exoMedium.className}
-                        text-[14px]
-                        font-semibold
-                        tracking-[0.1px]
-                        text-black
+                      <p
+                        className={`
+                          ${exoMedium.className}
+                          text-[13px]
+                          font-semibold
+                          tracking-[0.1px]
+                          text-black
 
-                        sm:text-[16px]
+                          sm:text-[15px]
 
-                        lg:text-[19px]
-                      `}
-                    >
-                      Total: {plan.total}
-                    </p>
+                          lg:text-[18px]
+                        `}
+                      >
+                        Total: {plan.total}
+                      </p>
+                    </div>
                   </div>
                 </article>
               ))}
@@ -223,7 +210,9 @@ export default function PaymentPlansSection() {
 
         {/* CTA */}
         <a
-          href="tel:+2349067835701"
+          href="https://wa.me/2349067835701"
+          target="_blank"
+          rel="noopener noreferrer"
           className={`
             ${exo.className}
             inline-flex

@@ -114,13 +114,13 @@ export default function CareerPathwaysSection() {
             />
           </div>
 
-            <a href="tel:+2349067835701" className={`${exo.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-8 py-4 text-[13px] font-bold uppercase tracking-[0.04em] text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:px-10 sm:py-5 lg:text-[18px]`}>
+            <a href="https://wa.me/2349067835701" target="_blank" rel="noopener noreferrer" className={`${exo.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-8 py-4 text-[13px] font-bold uppercase tracking-[0.04em] text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:px-10 sm:py-5 lg:text-[18px]`}>
             Yes! I can see my path in AI
             <Image src="/assets/images/ai-fullstack-engineering/curriculum-button-arrow.svg" alt="" width={16} height={16} className="size-4" />
           </a>
         </div>
 
-       <div className="w-screen bg-gradient-to-b from-white to-[rgba(248,100,50,0.08)] px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
+       <div className="w-screen bg-[linear-gradient(180deg,#fefefe_0%,rgba(255,220,196,0.45)_120px,rgba(255,220,196,0.45)_calc(100%-120px),#fefefe_100%)] px-5 py-16 sm:px-8 lg:px-12 lg:py-[120px] xl:px-16">
   <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-14 lg:gap-20">
 
     {/* Heading */}
@@ -280,7 +280,7 @@ export default function CareerPathwaysSection() {
   </div>
 </div>
 
-        <div className="w-screen bg-gradient-to-b from-white to-[rgba(242,94,37,0.09)] px-5 pb-16 sm:px-8 lg:px-12 lg:pb-[120px] xl:px-16">
+        <div className="w-screen bg-[linear-gradient(180deg,#fefefe_0%,rgba(242,94,37,0.09)_100%)] px-5 pb-16 sm:px-8 lg:px-12 lg:pb-[120px] xl:px-16">
           <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-14 lg:gap-20">
             <div className="flex max-w-[1091px] flex-col items-center gap-8 text-center lg:gap-10">
               <p className={`${exo.className} text-[22px] font-semibold italic tracking-[0.4px] text-[#ff6b00] lg:text-[32px]`}>But here&apos;s something important:</p>
@@ -304,7 +304,7 @@ export default function CareerPathwaysSection() {
               ))}
             </div>
 
-            <a href="tel:+2349067835701" className={`${exo.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-8 py-4 text-[10px] font-bold uppercase tracking-[0.04em] text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:px-10 sm:py-5 lg:text-[18px]`}>
+            <a href="https://wa.me/2349067835701" target="_blank" rel="noopener noreferrer" className={`${exo.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-8 py-4 text-[10px] font-bold uppercase tracking-[0.04em] text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:px-10 sm:py-5 lg:text-[18px]`}>
               Wow! I can already see the possibilities
               <Image src="/assets/images/ai-fullstack-engineering/curriculum-button-arrow.svg" alt="" width={16} height={16} className="size-4" />
             </a>
@@ -314,10 +314,13 @@ export default function CareerPathwaysSection() {
         <div className="flex w-full flex-col items-center gap-12 lg:gap-20">
           <div className="flex max-w-[1241px] flex-col items-center gap-6 text-center">
             <h2 className={`${melodrama.className} max-w-[846px] text-[32px] font-bold uppercase leading-[1.12] tracking-[0.2px] text-[#181c23] sm:text-[40px] lg:text-[56px] lg:leading-[1.13]`}>
-              The Ayonaire Career <span className="text-[#ff6b00]">Transition Framework</span>
+              The Ayonaire Career <span className="text-[#ff6b00]">Transition</span>{" "}
+              <span className="relative inline-block rounded-[8px] bg-[#ffdcc4]/70 px-3 py-0.5 text-[#ff6b00]">
+                Framework
+              </span>
             </h2>
             <p className={`${exo.className} text-[18px] font-bold leading-[1.6] tracking-[0.2px] text-[#181c23] lg:text-[28px]`}>
-              We don&apos;t just teach you AI/ML Engineering. We make you globally competitive and Job Ready.
+              We don&apos;t just teach you AI/ML Engineering. We make you globally competitive and Job Ready..
             </p>
           </div>
 

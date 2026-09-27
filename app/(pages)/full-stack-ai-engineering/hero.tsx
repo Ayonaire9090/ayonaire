@@ -1,4 +1,4 @@
-﻿import Image from "next/image";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { melodrama, salt } from "@/app/fonts";
 
@@ -7,55 +7,69 @@ export default function Hero() {
     <section
       className="
         relative
-        min-h-[620px]
+        z-20
+        w-full
         overflow-visible
-        bg-black
-        mb-[82px]
-        sm:min-h-[700px]
-        sm:mb-[80px]
-        md:min-h-[760px]
-        md:mb-[128px]
-        lg:min-h-[790px]
-        lg:mb-[128px]
-        xl:min-h-[820px]
+        bg-transparent
+        pb-[30px]
+        sm:pb-[35px]
+        md:pb-[40px]
       "
       aria-label="AI Fullstack Engineering"
     >
-      {/* HERO BACKGROUND - DESKTOP/TABLET */}
-      <Image
-        src="/assets/images/ai-fullstack-engineering/hero-background.png"
-        alt=""
-        fill
-        priority
-        sizes="100vw"
-        className="
-          pointer-events-none
-          select-none
-          object-cover
-          object-center
-          hidden
-          sm:block
-        "
-      />
+      {/* 1. CLIPPED BLACK BACKGROUND CONTAINER */}
+      <div
+        className="absolute inset-0 bg-black"
+        style={{
+          clipPath: "polygon(0 0, 100% 0, 100% calc(100% - 60px), 0 100%)",
+        }}
+      >
+        {/* HERO BACKGROUND - DESKTOP/TABLET */}
+        <Image
+          src="/assets/images/ai-fullstack-engineering/hero-background.png"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="
+            pointer-events-none
+            select-none
+            object-cover
+            object-center
+            hidden
+            sm:block
+          "
+        />
 
-      {/* HERO BACKGROUND - MOBILE */}
-      <Image
-        src="/assets/images/ai-fullstack-engineering/herom.png"
-        alt=""
-        fill
-        priority
-        sizes="100vw"
-        className="
-          pointer-events-none
-          select-none
-          object-cover
-          object-center
-          block
-          sm:hidden
-        "
-      />
+        {/* HERO CORNER LIGHTS - MOBILE */}
+        <div className="pointer-events-none relative h-full w-full select-none sm:hidden">
+          {/* TOP-LEFT CORNER LIGHT */}
+          <div className="absolute -left-1 -top-1 h-[220px] w-[220px] xs:h-[250px] xs:w-[250px]">
+            <Image
+              src="/assets/images/ai-fullstack-engineering/hero-corner-top-left.png"
+              alt=""
+              fill
+              priority
+              sizes="(max-width: 640px) 250px, 100vw"
+              className="object-contain object-left-top"
+            />
+          </div>
 
-      {/* MAIN CONTENT */}
+          {/* BOTTOM-RIGHT CORNER LIGHT */}
+          <div className="absolute -right-1 -bottom-1 h-[250px] w-[250px] xs:h-[280px] xs:w-[280px]">
+            <Image
+              src="/assets/images/ai-fullstack-engineering/hero-corner-bottom-right.png"
+              alt=""
+              fill
+              priority
+              sizes="(max-width: 640px) 280px, 100vw"
+              className="object-contain object-right-bottom"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* 2. MAIN CONTENT (Logo, Headline, Arrow, Subtext, SKIP THE TALK) */}
       <div
         className="
           relative
@@ -68,16 +82,16 @@ export default function Hero() {
           items-center
           px-4
           pt-8
-          pb-[150px]
+          pb-20
           text-center
           text-white
           sm:px-6
           sm:pt-10
-          sm:pb-[160px]
+          sm:pb-24
           md:px-8
           md:pt-12
           lg:pt-[53px]
-          lg:pb-[180px]
+          lg:pb-28
         "
       >
         {/* LOGO */}
@@ -214,131 +228,79 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* ====================================================== */}
-      {/* BOTTOM IMAGE + BUTTON - PINNED DIRECTLY TO THE BOTTOM  */}
-      {/* ====================================================== */}
-
+      {/* 3. CTA BUTTON - UNCLIPPED & FLOATING ON TOP OF THE TRANSITION */}
       <div
         className="
           absolute
-          inset-x-0
-          z-20
-          h-[115px]
-          bottom-[-88px]
-          sm:bottom-[-104px]
-          md:bottom-[-136px]
-          lg:bottom-[-136px]
-          sm:h-[135px]
-          md:h-[150px]
-          lg:h-[175px]
+          bottom-[30px]
+          left-1/2
+          z-50
+          w-full
+          max-w-[92vw]
+          -translate-x-1/2
+          translate-y-1/2
+          px-4
+          sm:max-w-none
         "
       >
-        {/* HERO BOTTOM DECORATIVE IMAGE - DESKTOP/TABLET */}
-        <Image
-          src="/assets/images/HeroDown.png"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="
-            pointer-events-none
-            select-none
-            object-cover
-            object-bottom
-            hidden
-            sm:block
-          "
-        />
+        <div className="flex justify-center">
+          <a
+            href="https://wa.me/2349067835701"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="
+              inline-flex
+              min-h-[44px]
+              items-center
+              justify-center
+              gap-2
+              rounded-[5px]
+              bg-[#ff6b00]
+              px-8
+              py-4
+              text-[11px]
+              font-black
+              uppercase
+              tracking-normal
+              text-white
+              shadow-[0_8px_25px_rgba(255,107,0,0.45)]
+              transition-all
+              duration-300
+              hover:-translate-y-[2px]
+              hover:bg-[#F25E25]
+              hover:shadow-[0_12px_32px_rgba(255,107,0,0.6)]
+              focus-visible:outline
+              focus-visible:outline-2
+              focus-visible:outline-offset-4
+              focus-visible:outline-[#ff8a3d]
 
-        {/* HERO BOTTOM DECORATIVE IMAGE - MOBILE */}
-        <Image
-          src="/assets/images/heroDown2.png"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="
-            pointer-events-none
-            select-none
-            object-cover
-            object-bottom
-            block
-            sm:hidden
-          "
-        />
+              sm:min-h-[48px]
+              sm:px-9
+              sm:text-[12px]
 
-        {/* CTA SITTING ON / ATTACHED TO BOTTOM IMAGE */}
-        <div
-          className="
-            absolute
-            left-1/2
-            top-[18px]
-            z-30
-            w-full
-            -translate-x-1/2
-            px-4
-            sm:top-[20px]
-            md:top-[22px]
-            lg:top-[27px]
-          "
-        >
-          <div className="flex justify-center">
-            <a
-              href="tel:+2349067835701"
+              md:min-h-[52px]
+              md:px-10
+              md:text-xs
+
+              lg:min-h-[56px]
+              lg:px-12
+              lg:text-[13px]
+            "
+          >
+            <span>I Want Become An AI/ML Engineer</span>
+
+            <ArrowRight
+              aria-hidden="true"
               className="
-                inline-flex
-                min-h-[44px]
-                items-center
-                justify-center
-                gap-2
-                rounded-[5px]
-                bg-[#ff6b00]
-                px-10
-                py-5
-                text-[10px]
-                font-black
-                uppercase
-                tracking-normal
-                text-white
-                shadow-[0_5px_20px_rgba(255,107,0,0.30)]
-                transition-all
-                duration-300
-                hover:-translate-y-[1px]
-                hover:bg-[#F25E25]
-                hover:shadow-[0_7px_28px_rgba(255,107,0,0.45)]
-                focus-visible:outline
-                focus-visible:outline-2
-                focus-visible:outline-offset-4
-                focus-visible:outline-[#ff8a3d]
-
-                sm:min-h-[48px]
-                sm:px-7
-                sm:text-[11px]
-
-                md:min-h-[52px]
-                md:px-8
-                md:text-xs
-
-                lg:min-h-[56px]
-                lg:px-10
-                lg:text-[13px]
+                h-4
+                w-4
+                shrink-0
+                sm:h-[18px]
+                sm:w-[18px]
               "
-            >
-              <span>I want to become an AI/ML engineer</span>
-
-              <ArrowRight
-                aria-hidden="true"
-                className="
-                  h-4
-                  w-4
-                  shrink-0
-                  sm:h-[18px]
-                  sm:w-[18px]
-                "
-                strokeWidth={3}
-              />
-            </a>
-          </div>
+              strokeWidth={3}
+            />
+          </a>
         </div>
       </div>
     </section>
