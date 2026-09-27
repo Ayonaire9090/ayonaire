@@ -44,7 +44,7 @@ const systems = [
   {
     number: "03",
     title: "Job Search",
-    body: "Career opportunity and discovery, application tracking and job assistance.",
+    body: "Career Accelerator, job discovery, application tracking and Job Assistance.",
     image: "/assets/images/ai-fullstack-engineering/career-system-portfolio.png",
   },
   {
@@ -170,7 +170,7 @@ export default function CareerPathwaysSection() {
         <div className="mx-auto flex w-full max-w-[1240px] flex-col items-center gap-14 lg:gap-20">
           {/* Heading */}
           <h2
-            className={`${melodrama.className} max-w-[846px] text-center text-[24px] xs:text-[28px] font-bold uppercase leading-[1.12] tracking-[0.2px] text-[#181c23] sm:text-[40px] lg:text-[56px] lg:leading-[1.13]`}
+            className={`${melodrama.className} max-w-[846px] text-center text-[24px] xs:text-[28px] font-bold leading-[1.12] tracking-[0.2px] text-[#181c23] sm:text-[40px] lg:text-[56px] lg:leading-[1.13]`}
           >
             The Ayonaire Four-Part Career{" "}
             <span className="text-[#ff6b00]">Transition System</span>
@@ -182,9 +182,9 @@ export default function CareerPathwaysSection() {
             <div
               className="
                 absolute
-                bottom-0
+                bottom-8
                 left-1/2
-                top-0
+                top-8
                 z-0
                 hidden
                 w-[3px]
@@ -204,8 +204,8 @@ export default function CareerPathwaysSection() {
                     key={system.number}
                     className={`relative flex w-full ${
                       isLeft
-                        ? "justify-start lg:pr-[calc(50%+32px)]"
-                        : "justify-start lg:justify-end lg:pl-[calc(50%+32px)]"
+                        ? "justify-start lg:pr-[calc(50%+20px)]"
+                        : "justify-start lg:justify-end lg:pl-[calc(50%+20px)]"
                     }`}
                   >
                     {/* Timeline dot - desktop only */}
@@ -216,7 +216,7 @@ export default function CareerPathwaysSection() {
                         top-1/2
                         z-20
                         hidden
-                        size-[9px]
+                        size-[16px]
                         -translate-x-1/2
                         -translate-y-1/2
                         rounded-full
@@ -232,72 +232,75 @@ export default function CareerPathwaysSection() {
                         z-10
                         w-full
                         max-w-[560px]
-                        rounded-[18px]
-                        border
-                        border-[#eee6e2]
+                        rounded-[14px]
                         bg-white
-                        px-5
-                        py-7
-                        shadow-[0_3px_10px_rgba(0,0,0,0.10)]
-                        sm:px-7
-                        sm:py-8
-                        lg:w-full
+                        p-6
+                        shadow-[0_4px_20px_rgba(0,0,0,0.08)]
+                        xs:p-7
+                        sm:p-8
+                        lg:w-[600px]
                         lg:max-w-none
                         lg:min-h-[260px]
-                        lg:rounded-[20px]
-                        lg:px-8
-                        lg:py-9
+                        lg:rounded-[16px]
+                        lg:p-10
                       "
                     >
-                      {/* Number */}
+                      {/* Number Badge */}
                       <span
                         className={`
-                          ${exo.className}
+                          ${adineue.className}
                           absolute
-                          -top-6
-                          left-5
+                          -top-5
+                          left-4
                           z-30
                           flex
-                          h-[52px]
-                          w-[50px]
-                          rotate-[3deg]
+                          size-11
+                          -rotate-3
                           items-center
                           justify-center
-                          rounded-[3px]
+                          rounded-[6px]
                           border
                           border-[#ff6b00]
                           bg-white
-                          text-[20px]
+                          text-[18px]
                           font-bold
-                          text-[#181c23]
-                          shadow-[0_1px_3px_rgba(0,0,0,0.05)]
+                          text-black
+                          shadow-[0_0_8px_rgba(255,107,0,0.25)]
+                          sm:-top-6
                           sm:left-6
+                          sm:size-14
+                          sm:text-[24px]
+                          lg:-top-10
+                          lg:left-8
+                          lg:size-[100px]
+                          lg:rounded-[12px]
+                          lg:text-[48px]
                         `}
                       >
                         {system.number}
                       </span>
 
                       {/* Card content */}
-                      <div className="flex h-full items-start gap-3.5 xs:gap-5 sm:gap-6 lg:items-center lg:gap-7">
+                      <div className="flex h-full items-start gap-4 xs:gap-5 sm:gap-6 lg:items-center lg:gap-8">
                         {/* Image */}
                         <Image
                           src={system.image}
                           alt=""
                           width={115}
                           height={115}
-                          className="size-14 xs:size-16 sm:size-20 shrink-0 object-contain lg:size-[115px]"
+                          className="size-12 xs:size-14 sm:size-20 shrink-0 object-contain lg:size-[115px]"
                         />
 
                         {/* Content */}
                         <div className="min-w-0 flex-1">
                           <h3
-                            className={`${exo.className} text-[17px] xs:text-[20px] sm:text-[26px] font-bold uppercase tracking-[0.04em] xs:tracking-[0.06em] text-black lg:text-[32px]`}
+                            className={`${exo.className} text-[18px] xs:text-[20px] sm:text-[24px] font-bold tracking-[0.02em] text-black lg:text-[32px]`}
                           >
                             {system.title}
                           </h3>
 
                           <p
-                            className={`${adineue.className} mt-2 xs:mt-3 max-w-[390px] text-[14px] xs:text-[16px] sm:text-[19px] font-medium leading-[1.5] xs:leading-[1.55] tracking-[0.2px] text-black lg:text-[24px]`}
+                            className={`${adineue.className} mt-2 xs:mt-3 max-w-[390px] text-[14px] xs:text-[15px] sm:text-[18px] font-medium leading-[1.5] tracking-[0.2px] text-black lg:text-[22px] lg:leading-[1.4]`}
                           >
                             {system.body}
                           </p>
@@ -308,29 +311,11 @@ export default function CareerPathwaysSection() {
                 );
               })}
             </div>
-
-            <div className="flex w-full flex-col gap-12 lg:gap-20">
-              {paths.map((path) => (
-                <article key={path.label} className="grid gap-6 lg:grid-cols-[243px_1fr] lg:gap-11">
-                  <p className={`${salt.className} text-[28px] font-bold uppercase tracking-[0.08em] text-[#f25e25] lg:text-[44px]`}>{path.label}</p>
-                  <div className="space-y-5 text-[#5a4136] lg:space-y-8">
-                    <h3 className={`${adineue.className} text-[26px] font-bold uppercase tracking-[0.06em] lg:text-[40px]`}>{path.title}</h3>
-                    <p className={`${adineue.className} text-left text-[18px] font-medium leading-[1.65] tracking-[0.3px] lg:text-[28px] lg:leading-[1.45]`}>{path.body}</p>
-                  </div>
-                </article>
-              ))}
-            </div>
-
-            <a href="https://chat.whatsapp.com/HltOtTd5VrHJONFYDVb9VT?mode=gi_t" target="_blank" rel="noopener noreferrer" className={`${exo.className} inline-flex items-center justify-center gap-2 rounded-[8px] bg-[#ff6b00] px-8 py-4 text-[14px] font-bold uppercase tracking-[0.04em] text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:px-10 sm:py-5 sm:text-[16px] lg:text-[18px]`}>
-              Wow! I can already see the possibilities
-              <Image src="/assets/images/ai-fullstack-engineering/curriculum-button-arrow.svg" alt="" width={16} height={16} className="size-4 shrink-0" />
-            </a>
-
           </div>
 
           {/* Bottom description */}
           <p
-            className={`${exoMedium.className} max-w-[1120px] text-center text-[18px] font-medium leading-[1.6] tracking-[0.2px] text-[#181c23] lg:text-[28px]`}
+            className={`${exoMedium.className} max-w-[1120px] text-center text-[16px] xs:text-[18px] sm:text-[22px] lg:text-[32px] font-medium leading-[1.6] tracking-[0.2px] text-[#181c23]`}
           >
             Together, these four systems help you move from learning AI/ML
             Engineering to building proof, positioning yourself properly, finding
