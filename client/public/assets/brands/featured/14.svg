@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="2.7in" height="3.6in" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 2.7 3.6"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .fil0 {fill:white}
+   ]]>
+  </style>
+   <clipPath id="id0">
+    <rect x="4.44488" y="0.0153661" width="0.596386" height="0.30174"/>
+   </clipPath>
+   <clipPath id="id1">
+    <rect x="-0.931626" y="1.89487" width="0.740969" height="0.25085"/>
+   </clipPath>
+   <clipPath id="id2">
+    <rect x="0.374102" y="1.05001" width="1.83884" height="1.83884"/>
+   </clipPath>
+   <clipPath id="id3">
+    <rect x="-0.732831" y="1.61476" width="0.614457" height="0.614457"/>
+   </clipPath>
+   <clipPath id="id4">
+    <rect x="-2.31416" y="3.26904" width="0.831323" height="0.238142"/>
+   </clipPath>
+   <clipPath id="id5">
+    <rect x="-2.42259" y="2.56355" width="0.560244" height="0.560244"/>
+   </clipPath>
+ </defs>
+ <g id="Layer_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <rect class="fil0" width="2.7" height="3.6"/>
+  <g style="clip-path:url(#id0)">
+   <image id="IMG_7200.JPG" transform="matrix(0.127797 0 0 0.127797 4.27235 0.087073)" x="1.35" y="-0.56111" width="4.66666" height="2.36111" xlink:href="14_Images\14_ImgID1.png"/>
+  </g>
+  <g style="clip-path:url(#id1)">
+   <image id="IMG_7181.PNG" transform="matrix(0.0926206 0 0 0.0926206 -1.05666 1.97901)" x="1.35" y="-0.908331" width="8" height="2.70833" xlink:href="14_Images\14_ImgID2.png"/>
+  </g>
+  <g style="clip-path:url(#id2)">
+   <image id="IMG_7179.JPG" transform="matrix(0.147107 0 0 0.147107 0.175505 2.62406)" x="1.35" y="-10.7" width="12.5" height="12.5" xlink:href="14_Images\14_ImgID3.png"/>
+  </g>
+  <g style="clip-path:url(#id3)">
+   <image id="IMG_7189.JPG" transform="matrix(0.0989729 0 0 0.0989729 -0.866444 2.05107)" x="1.35" y="-4.40833" width="6.20833" height="6.20833" xlink:href="14_Images\14_ImgID4.png"/>
+  </g>
+  <g style="clip-path:url(#id4)">
+   <image id="IMG_7180.PNG" transform="matrix(0.103915 0 0 0.103915 -2.45444 3.32013)" x="1.35" y="-0.491661" width="8" height="2.29166" xlink:href="14_Images\14_ImgID5.png"/>
+  </g>
+  <g style="clip-path:url(#id5)">
+   <image id="IMG_7191.JPG" transform="matrix(0.100843 0 0 0.100843 -2.55873 2.94228)" x="1.35" y="-3.75555" width="5.55555" height="5.55555" xlink:href="14_Images\14_ImgID6.png"/>
+  </g>
+ </g>
+</svg>

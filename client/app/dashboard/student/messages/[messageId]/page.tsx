@@ -1,0 +1,184 @@
+"use client";
+
+import { useParams } from "next/navigation";
+import { useMemo, useState } from "react";
+import { useGetRooms } from "@/hooks/api/use-rooms";
+import {
+  useDeleteMessageMutation,
+  useGetMessages,
+  useReactToMessageMutation,
+  useSendMessageMutation,
+} from "@/hooks/api/use-messages";
+import { useAuthStore } from "@/store/auth.store";
+import {
+  mapRoomToConversation,
+  mapMessageRecordToMessage,
+} from "../_data/message-data";
+import type { Message } from "../_data/mock-messages";
+import { StudentGroupMessagesHeader } from "../_components/student-group-messages-header";
+import { StudentMessageList } from "../_components/student-message-list";
+import {
+  StudentMessageComposer,
+  ComposerAttachment,
+} from "../_components/student-message-composer";
+import { SidebarInset, useSidebar } from "@/components/ui/sidebar";
+import { StudentMessagesSidebarContent } from "../_components/student-messages-sidebar-content";
+import { ChevronLeft } from "lucide-react";
+import { toast } from "sonner";
+
+
+export default function StudentMessageDetails() {
+  const params = useParams();
+  const roomId = params.messageId as string;
+  const user = useAuthStore((s) => s.user);
+  const { isMobile, setOpenMobile } = useSidebar();
+  const [replyTo, setReplyTo] = useState<Message | null>(null);
+
+  // Reopening the off-canvas conversation list is how mobile users get
+  // back to their inbox - there's no other visible entry point on this page.
+  const backToConversations = isMobile && (
+    <button
+      onClick={() => setOpenMobile(true)}
+      className="md:hidden flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-gray-700 bg-white border-b border-gray-100"
+    >
+      <ChevronLeft className="w-4 h-4" />
+      Conversations
+    </button>
+  );
+
+  const { data: roomsData, isLoading: isRoomsLoading } = useGetRooms();
+  const room = roomsData?.data?.find((r) => r.id === roomId);
+  const conversation = useMemo(
+    () => (room ? mapRoomToConversation(room, user?._id) : undefined),
+    [room, user?._id],
+  );
+
+  const { data: messagesData, isLoading: isMessagesLoading } = useGetMessages(roomId);
+  const messages = useMemo(
+    () =>
+      (messagesData?.data?.messages ?? [])
+        .slice()
+        .sort(
+          (a, b) =>
+            new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+        )
+        .map((m) =>
+          mapMessageRecordToMessage(m, user?._id),
+      ),
+    [messagesData, user?._id],
+  );
+
+  const { mutate: sendMessage } = useSendMessageMutation();
+  const reactToMessage = useReactToMessageMutation();
+  const deleteMessage = useDeleteMessageMutation();
+
+  const handleSend = (
+    text: string,
+    attachment?: ComposerAttachment,
+    selectedReply?: Message,
+  ) => {
+    const formData = new FormData();
+    formData.append("roomId", roomId);
+    formData.append("text", text);
+    if (selectedReply) formData.append("replyTo", selectedReply.id);
+    if (attachment) formData.append(attachment.kind, attachment.file);
+    sendMessage(formData);
+    setReplyTo(null);
+  };
+
+  const handleReact = (messageId: string, emoji: string) => {
+    reactToMessage.mutate({ messageId, emoji });
+  };
+  const handleDelete = (message: Message) => {
+    deleteMessage.mutate(message.id, {
+      onSuccess: () => toast.success("Message deleted"),
+      onError: (error) =>
+        toast.error(
+          error instanceof Error ? error.message : "Failed to delete message",
+        ),
+    });
+  };
+
+  if (isRoomsLoading) {
+    return (
+      <>
+        <StudentMessagesSidebarContent variant="sidebar" collapsible="icon" />
+        <SidebarInset className="bg-[#F6F6F6] pb-[72px] md:pb-0 flex flex-col h-dvh overflow-hidden">
+          {backToConversations}
+          <div className="flex-1 flex items-center justify-center">
+            <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+          </div>
+        </SidebarInset>
+      </>
+    );
+  }
+
+  if (!conversation) {
+    return (
+      <>
+        <StudentMessagesSidebarContent variant="sidebar" collapsible="icon" />
+        <SidebarInset className="bg-[#F6F6F6] pb-[72px] md:pb-0 flex flex-col h-dvh overflow-hidden">
+          {backToConversations}
+          <div className="flex-1 flex items-center justify-center">
+            <p className="text-gray-400">Conversation not found</p>
+          </div>
+        </SidebarInset>
+      </>
+    );
+  }
+
+  const isGroup = conversation.type === "group";
+
+  return (
+    <>
+      <StudentMessagesSidebarContent variant="sidebar" collapsible="icon" />
+      <SidebarInset className="bg-white pb-[72px] md:pb-0 flex flex-col h-dvh overflow-hidden">
+        {backToConversations}
+
+        {/* Chat header */}
+        <StudentGroupMessagesHeader
+          messageImage={conversation.avatar}
+          messageHeadingTitle={
+            isGroup
+              ? conversation.course || conversation.title
+              : conversation.title
+          }
+          messageHeadingDescription={
+            isGroup ? "Click here for more info" : undefined
+          }
+          type={conversation.type}
+          online={conversation.online}
+          lastSeen={conversation.lastSeen}
+          room={room}
+        />
+        {/* Chat content wrapper */}
+        <div className="flex-1 flex min-h-0 overflow-hidden relative bg-[#FAFAFA] bg-[url('/wt.jpg')] bg-repeat [background-size:420px_auto]">
+          {/* Main chat column */}
+          <div className="flex flex-col flex-1 min-h-0 overflow-hidden bg-white/75 backdrop-blur-[1px]">
+            {/* Messages list */}
+            {isMessagesLoading ? (
+              <div className="flex-1 flex items-center justify-center">
+                <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+              </div>
+            ) : (
+              <StudentMessageList
+                messages={messages}
+                isGroup={isGroup}
+                onReact={handleReact}
+                onReply={setReplyTo}
+                onDelete={handleDelete}
+              />
+            )}
+            {/* Message composer */}
+            <StudentMessageComposer
+              isGroup={isGroup}
+              onSend={handleSend}
+              replyTo={replyTo}
+              onCancelReply={() => setReplyTo(null)}
+            />
+          </div>
+        </div>
+      </SidebarInset>
+    </>
+  );
+}

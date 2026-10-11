@@ -1,0 +1,95 @@
+"use client";
+
+import React from "react";
+import Image from "next/image";
+import { exo, exoMedium, melodrama } from "@/app/fonts";
+
+interface CredentialItem {
+  title: string;
+}
+
+const credentialsList: CredentialItem[] = [
+  { title: "the projects you built," },
+  { title: "the practical experience you gained," },
+  { title: "your GitHub," },
+  { title: "your portfolio" },
+  { title: "and the problems you can solve." },
+];
+
+export default function CredentialProofSection() {
+  return (
+    <section className="relative overflow-hidden bg-[#fff0e4] px-5 py-14 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28">
+      <div className="relative z-10 mx-auto flex w-full max-w-[1171px] flex-col items-center text-center">
+        
+        {/* Header with Melodrama font and orange SVG highlight overlay on "Your Strongest Credential" */}
+        <h2
+          className={`${melodrama.className} max-w-[1171px] text-[22px] xs:text-[26px] sm:text-[36px] font-bold leading-[1.15] tracking-[0.3px] text-[#181c23] lg:text-[50px] lg:leading-[60px] lg:tracking-[0.6px]`}
+        >
+          Now Listen, <span className="text-[#f25e25]">Your</span>{" "}
+          <span className="relative inline-block text-[#f25e25]">
+            Strongest Credential
+            <Image
+              src="/assets/images/ai-fullstack-engineering/questions-cta-heading-highlight.svg"
+              alt=""
+              width={312}
+              height={58}
+              className="pointer-events-none absolute -left-1 -top-1 z-[-1] h-[115%] w-[105%] max-w-none object-fill"
+            />
+          </span>{" "}
+          Is Not Your <br className="hidden sm:inline" />
+          CERTIFICATE.
+        </h2>
+
+        {/* Intro Paragraph */}
+        <div
+          className={`${exoMedium.className} mt-6 xs:mt-8 flex w-full max-w-[1153px] text-left text-[16px] xs:text-[18px] font-medium leading-[1.6] tracking-[0.3px] text-[#181c23] sm:text-[22px] lg:mt-10 lg:text-[28px] lg:leading-[42px] lg:tracking-[0.6px]`}
+        >
+          <p>
+            A certificate says you completed a programme. But what really helps you stand out is being able to show:
+          </p>
+        </div>
+
+        {/* Credentials List */}
+        <ul className="mt-6 xs:mt-8 flex w-full max-w-[1153px] flex-col items-start gap-3.5 xs:gap-4 text-left lg:mt-10 lg:gap-5">
+          {credentialsList.map((item, index) => (
+            <li key={index} className="flex items-center gap-3.5 xs:gap-4">
+              <span className="flex h-2.5 w-4 shrink-0 rounded-sm bg-[#f25e25]" />
+              <span
+                className={`${exo.className} text-[16px] xs:text-[18px] font-bold text-[#181c23] sm:text-[22px] lg:text-[26px]`}
+              >
+                {item.title}
+              </span>
+            </li>
+          ))}
+        </ul>
+
+        {/* Conclusion Paragraph */}
+        <div
+          className={`${exoMedium.className} mt-6 xs:mt-8 flex w-full max-w-[1153px] text-left text-[16px] xs:text-[18px] font-medium leading-[1.6] tracking-[0.3px] text-[#181c23] sm:text-[22px] lg:mt-10 lg:text-[28px] lg:leading-[42px] lg:tracking-[0.6px]`}
+        >
+          <p>but ultimately, we want you to be able to say:</p>
+        </div>
+
+        {/* Call to Action Button */}
+        <div className="mt-10 xs:mt-12 flex w-full justify-center lg:mt-16">
+          <a
+            href="https://chat.whatsapp.com/HltOtTd5VrHJONFYDVb9VT?mode=gi_t"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`${exoMedium.className} inline-flex items-center justify-center text-center gap-2 rounded-[8px] bg-[#ff6b00] px-5 py-3.5 text-center text-[13px] font-bold uppercase leading-[1.45] text-white shadow-[0_12px_16px_rgba(255,107,0,0.3)] transition-transform hover:scale-[1.01] sm:px-10 sm:py-5 lg:text-[16px]`}
+          >
+            <span className="text-center">I Want To Build My AI Career</span>
+            <Image
+              src="/assets/images/ai-fullstack-engineering/instructor-proof-button-arrow.svg"
+              alt=""
+              width={16}
+              height={16}
+              className="size-4 shrink-0"
+            />
+          </a>
+        </div>
+
+      </div>
+    </section>
+  );
+}

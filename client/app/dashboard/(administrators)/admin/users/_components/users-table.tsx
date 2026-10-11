@@ -1,0 +1,167 @@
+"use client";
+
+import React from "react";
+import { DataTable, ColumnDef } from "@/components/ui/data-table";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { StatusBadge, UserActions, UserData } from "./users-data";
+
+interface UsersTableProps {
+  data: UserData[];
+  isInstructor: boolean;
+}
+
+export const UsersTable = ({ data, isInstructor }: UsersTableProps) => {
+  const studentColumns: ColumnDef<UserData>[] = [
+    {
+      key: "name",
+      header: "Name",
+      sortAccessor: (user) => user.name.toLowerCase(),
+      cell: (user) => (
+        <div className="flex items-center gap-3 min-w-[160px]">
+          <Avatar className="size-9 shrink-0">
+            <AvatarImage src={user.avatar} alt={user.name} />
+            <AvatarFallback className="text-xs font-medium bg-primary/10 text-primary">
+              {user.name.split(" ").map((n) => n[0]).join("")}
+            </AvatarFallback>
+          </Avatar>
+          <span className="font-medium text-gray-900 text-[14px] whitespace-nowrap">
+            {user.name}
+          </span>
+        </div>
+      ),
+    },
+    {
+      key: "uniqueId",
+      header: "ID",
+      sortAccessor: (user) => user.uniqueId,
+      cell: (user) => (
+        <span className="text-gray-500 text-[14px] whitespace-nowrap">
+          {user.uniqueId}
+        </span>
+      ),
+    },
+    {
+      key: "email",
+      header: "Email",
+      cell: (user) => (
+        <span className="text-gray-700 text-[14px] whitespace-nowrap">
+          {user.email}
+        </span>
+      ),
+    },
+    {
+      key: "status",
+      header: "Status",
+      sortAccessor: (user) => user.status,
+      cell: (user) => <StatusBadge status={user.status} userId={user.id} />,
+    },
+    {
+      key: "enrollments",
+      header: "Enrollments",
+      sortAccessor: (user) => user.enrollments,
+      cell: (user) => (
+        <span className="text-gray-700 font-medium text-[14px] pl-4 tabular-nums">
+          {user.enrollments}
+        </span>
+      ),
+    },
+    {
+      key: "action",
+      header: "Action",
+      headerClassName: "pr-6",
+      className: "pr-6",
+      cell: (user) => <UserActions userId={user.id} />,
+    },
+  ];
+
+  const instructorColumns: ColumnDef<UserData>[] = [
+    {
+      key: "name",
+      header: "Instructor",
+      sortAccessor: (user) => user.name.toLowerCase(),
+      cell: (user) => (
+        <div className="flex items-center gap-3 min-w-[160px]">
+          <Avatar className="size-9 shrink-0">
+            <AvatarImage src={user.avatar} alt={user.name} />
+            <AvatarFallback className="text-xs font-medium bg-primary/10 text-primary">
+              {user.name.split(" ").map((n) => n[0]).join("")}
+            </AvatarFallback>
+          </Avatar>
+          <span className="font-medium text-gray-900 text-[14px] whitespace-nowrap">
+            {user.name}
+          </span>
+        </div>
+      ),
+    },
+    {
+      key: "uniqueId",
+      header: "ID",
+      sortAccessor: (user) => user.uniqueId,
+      cell: (user) => (
+        <span className="text-gray-500 text-[14px] whitespace-nowrap">
+          {user.uniqueId}
+        </span>
+      ),
+    },
+    {
+      key: "status",
+      header: "Status",
+      sortAccessor: (user) => user.status,
+      cell: (user) => <StatusBadge status={user.status} userId={user.id} />,
+    },
+    {
+      key: "courses",
+      header: "Courses",
+      cell: (user) => (
+        <span className="text-gray-700 font-medium text-[14px] whitespace-nowrap">
+          {user.coursesCount || "-"}
+        </span>
+      ),
+    },
+    {
+      key: "batch",
+      header: "Batch",
+      cell: (user) => (
+        <span className="text-gray-700 text-[14px] whitespace-nowrap">
+          {user.batch || "-"}
+        </span>
+      ),
+    },
+    {
+      key: "joined",
+      header: "Joined",
+      cell: (user) => (
+        <span className="text-gray-700 text-[14px] whitespace-nowrap">
+          {user.joined || "-"}
+        </span>
+      ),
+    },
+    {
+      key: "lastActive",
+      header: "Last Active",
+      cell: (user) => (
+        <span className="text-gray-700 text-[14px] whitespace-nowrap">
+          {user.lastActive || "-"}
+        </span>
+      ),
+    },
+    {
+      key: "action",
+      header: "Actions",
+      headerClassName: "pr-6",
+      className: "pr-6",
+      cell: (user) => <UserActions userId={user.id} />,
+    },
+  ];
+
+  return (
+    <div className="hidden md:block w-full overflow-x-auto">
+      <DataTable
+        data={data}
+        columns={isInstructor ? instructorColumns : studentColumns}
+        keyExtractor={(user) => user.id}
+        selectable
+      />
+    </div>
+  );
+};

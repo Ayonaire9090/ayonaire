@@ -1,0 +1,332 @@
+"use client";
+
+import { useState, Suspense } from "react";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { BadgeCheck } from "lucide-react";
+import {
+  AuthHeader,
+  AuthFormField,
+  AuthPasswordField,
+  AuthPasswordStrength,
+  AuthSubmitButton,
+  AuthFormMessage,
+  AuthFormSkeleton,
+} from "@/components/auth";
+import { Button } from "@/components/ui/button";
+import {
+  ResetPasswordEmailSchema,
+  ResetPasswordSchema,
+} from "@/schemas/reset-password";
+import {
+  useForgotPasswordMutation,
+  useResetPasswordMutation,
+} from "@/hooks/api/use-auth";
+import { toast } from "sonner";
+
+type Step = "email" | "create-password" | "success";
+
+interface FormErrors {
+  email?: string;
+  newPassword?: string;
+  confirmPassword?: string;
+}
+
+function ResetPasswordContent() {
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token");
+
+  const [step, setStep] = useState<Step>(token ? "create-password" : "email");
+  const [email, setEmail] = useState("");
+  const [passwords, setPasswords] = useState({
+    newPassword: "",
+    confirmPassword: "",
+  });
+  const [errors, setErrors] = useState<FormErrors>({});
+
+  const { mutateAsync: forgotPassword, isPending: isForgotLoading } =
+    useForgotPasswordMutation();
+  const { mutateAsync: resetPassword, isPending: isResetLoading } =
+    useResetPasswordMutation();
+
+  const isLoading = isForgotLoading || isResetLoading;
+
+  // Clear error when user starts typing
+  const clearError = (field: keyof FormErrors) => {
+    if (errors[field]) {
+      setErrors((prev) => ({ ...prev, [field]: undefined }));
+    }
+  };
+
+  // Handle email submission
+  const handleEmailSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrors({});
+
+    // Validate email with Zod
+    const result = ResetPasswordEmailSchema.safeParse({ email });
+    if (!result.success) {
+      const fieldErrors = result.error.flatten().fieldErrors;
+      setErrors({
+        email: fieldErrors.email?.[0],
+      });
+      return;
+    }
+
+    try {
+      await forgotPassword({ email });
+      toast.success("Reset link sent!");
+      alert(
+        "If an account exists, a password reset email has been sent. Please check your inbox and click the link to continue.",
+      );
+    } catch (error: any) {
+      setErrors({ email: error?.message || "Failed to send reset link" });
+      toast.error(error?.message || "Failed to send reset link");
+    }
+  };
+
+  // Handle password update
+  const handlePasswordSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrors({});
+
+    // Validate passwords with Zod
+    const result = ResetPasswordSchema.safeParse(passwords);
+    if (!result.success) {
+      const fieldErrors = result.error.flatten().fieldErrors;
+      setErrors({
+        newPassword: fieldErrors.newPassword?.[0],
+        confirmPassword: fieldErrors.confirmPassword?.[0],
+      });
+      return;
+    }
+
+    if (!token) {
+      setErrors({
+        newPassword:
+          "Reset token is missing. Please use the link sent to your email.",
+      });
+      return;
+    }
+
+    try {
+      await resetPassword({ token, password: passwords.newPassword });
+      toast.success("Password reset successfully!");
+      setStep("success");
+    } catch (error: any) {
+      setErrors({
+        confirmPassword: error?.message || "Failed to reset password",
+      });
+      toast.error(error?.message || "Failed to reset password");
+    }
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    setPasswords((prev) => ({ ...prev, [id]: value }));
+    clearError(id as keyof FormErrors);
+  };
+
+  return (
+    <>
+      {step === "email" ? (
+        <>
+          {/* Header for Email Step */}
+          <AuthHeader
+            title="Reset Password"
+            description="Input your email address account to receive a reset link"
+            className="mb-7"
+          />
+
+          {/* Email Form */}
+          <form onSubmit={handleEmailSubmit} className="space-y-6">
+            <div className="space-y-2">
+              <AuthFormField
+                id="email"
+                label="Email Address"
+                type="email"
+                placeholder=""
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  clearError("email");
+                }}
+                required
+                labelClassName="font-bold! text-[14px]!"
+                className="
+                text-[#121315]!
+            bg-transparent!
+            font-semibold!
+            text-[14px]!
+            active:bg-[#FFFCC8]! 
+            focus:bg-[#FFFCC8]! 
+            active:outline-none!  
+            focus:outline-none!
+            focus:ring-0!
+            active:ring-0!
+            focus-visible:ring-0!
+            active-visible:ring-0!
+            border-0! border-b-[1.8px]! border-b-[#121315] rounded-none!
+            focus:border-b-[1.8px]! focus:border-b-primary!
+            focus-visible:border-b-[1.8px]! focus-visible:border-b-primary!
+            active:border-b-[1.8px]! active:border-b-primary!
+            active-visible:border-b-[1.8px]! active-visible:border-b-primary!
+            not-placeholder-shown:bg-[#FFFCC8]!
+            not-placeholder-shown:border-b-primary!
+            "
+              />
+              {errors.email && (
+                <AuthFormMessage type="error" message={errors.email} />
+              )}
+            </div>
+
+            <AuthSubmitButton isLoading={isLoading} className="mt-4">
+              Submit
+            </AuthSubmitButton>
+          </form>
+
+          {/* Back to Sign In */}
+          <p className="text-center text-sm text-muted-foreground mt-6">
+            Remember your password?{" "}
+            <Link
+              href="/auth"
+              className="font-semibold text-primary hover:underline"
+            >
+              Sign in
+            </Link>
+          </p>
+        </>
+      ) : step === "create-password" ? (
+        <>
+          {/* Header for Create Password Step */}
+          <AuthHeader
+            title="Create new password"
+            description="Let's create a new and more secure password"
+            className="mb-7"
+          />
+
+          {/* Password Form */}
+          <form onSubmit={handlePasswordSubmit} className="space-y-5">
+            <div className="space-y-2">
+              <AuthPasswordField
+                id="newPassword"
+                label="New Password"
+                placeholder="••••••••"
+                value={passwords.newPassword}
+                onChange={handlePasswordChange}
+                required
+                minLength={8}
+                labelClassName="font-bold! text-[14px]! pt-3!"
+                className="
+                text-[#121315]!
+            bg-transparent!
+            font-semibold!
+            active:bg-[#FFFCC8]! 
+            focus:bg-[#FFFCC8]! 
+            active:outline-none!  
+            focus:outline-none!
+            focus:ring-0!
+            active:ring-0!
+            focus-visible:ring-0!
+            active-visible:ring-0!
+            border-0! border-b-[1.8px]! border-b-[#121315] rounded-none!
+            focus:border-b-[1.8px]! focus:border-b-primary!
+            focus-visible:border-b-[1.8px]! focus-visible:border-b-primary!
+            active:border-b-[1.8px]! active:border-b-primary!
+            active-visible:border-b-[1.8px]! active-visible:border-b-primary!
+            not-placeholder-shown:bg-[#FFFCC8]!
+            not-placeholder-shown:border-b-primary!
+            "
+              />
+              {errors.newPassword && (
+                <AuthFormMessage type="error" message={errors.newPassword} />
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <AuthPasswordField
+                id="confirmPassword"
+                label="Repeat New Password"
+                placeholder=""
+                value={passwords.confirmPassword}
+                onChange={handlePasswordChange}
+                required
+                minLength={8}
+                labelClassName="font-bold! text-[14px]! pt-3!"
+                className="
+                text-[#121315]!
+            bg-transparent!
+            font-semibold!
+            active:bg-[#FFFCC8]! 
+            focus:bg-[#FFFCC8]! 
+            active:outline-none!  
+            focus:outline-none!
+            focus:ring-0!
+            active:ring-0!
+            focus-visible:ring-0!
+            active-visible:ring-0!
+            border-0! border-b-[1.8px]! border-b-[#121315] rounded-none!
+            focus:border-b-[1.8px]! focus:border-b-primary!
+            focus-visible:border-b-[1.8px]! focus-visible:border-b-primary!
+            active:border-b-[1.8px]! active:border-b-primary!
+            active-visible:border-b-[1.8px]! active-visible:border-b-primary!
+            not-placeholder-shown:bg-[#FFFCC8]!
+            not-placeholder-shown:border-b-primary!
+            "
+              />
+              {errors.confirmPassword && (
+                <AuthFormMessage
+                  type="error"
+                  message={errors.confirmPassword}
+                />
+              )}
+            </div>
+
+            {/* Password Strength Indicator */}
+            <AuthPasswordStrength password={passwords.newPassword} />
+
+            <AuthSubmitButton isLoading={isLoading} className="mt-4">
+              Update Password
+            </AuthSubmitButton>
+          </form>
+        </>
+      ) : (
+        <>
+          {/* Success Step */}
+          <div className="flex flex-col items-center text-center">
+            {/* Success Icon */}
+            <div className="w-20 h-20 rounded-full bg-primary flex items-center justify-center mb-6">
+              <BadgeCheck
+                fill="white"
+                className="w-14 h-14 text-primary"
+                strokeWidth={1.5}
+              />
+            </div>
+
+            {/* Success Header */}
+            <AuthHeader
+              title="Reset password successful"
+              description="Successfully changed password. You can enter the main page."
+              className="mb-8 text-xl!"
+            />
+
+            {/* Go to Main Page Button */}
+            <Link href="/" className="w-full">
+              <Button className="w-full h-12 cursor-pointer rounded-[8px] text-sm font-semibold bg-primary hover:bg-primary/90 text-white shadow-none transition-all duration-200">
+                Go to Main Page
+              </Button>
+            </Link>
+          </div>
+        </>
+      )}
+    </>
+  );
+}
+
+export default function ResetPasswordPage() {
+  return (
+    <Suspense fallback={<AuthFormSkeleton />}>
+      <ResetPasswordContent />
+    </Suspense>
+  );
+}

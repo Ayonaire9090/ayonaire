@@ -1,0 +1,66 @@
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\ABDULBASIT\Desktop\AyoinaireMain\client\.next\static\development\_buildManifest.js.tmp.hzfj2m9imyo'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\ABDULBASIT\\Desktop\\AyoinaireMain\\client\\.next\\static\\development\\_buildManifest.js.tmp.hzfj2m9imyo'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\ABDULBASIT\Desktop\AyoinaireMain\client\.next\static\development\_buildManifest.js.tmp.gzx4f8turr'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\ABDULBASIT\\Desktop\\AyoinaireMain\\client\\.next\\static\\development\\_buildManifest.js.tmp.gzx4f8turr'
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\ABDULBASIT\Desktop\AyoinaireMain\client\.next\static\development\_buildManifest.js.tmp.hzfj2m9imyo'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\ABDULBASIT\\Desktop\\AyoinaireMain\\client\\.next\\static\\development\\_buildManifest.js.tmp.hzfj2m9imyo'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\ABDULBASIT\Desktop\AyoinaireMain\client\.next\static\development\_buildManifest.js.tmp.v0vrwlgfrvg'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\ABDULBASIT\\Desktop\\AyoinaireMain\\client\\.next\\static\\development\\_buildManifest.js.tmp.v0vrwlgfrvg'
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\ABDULBASIT\Desktop\AyoinaireMain\client\.next\static\development\_buildManifest.js.tmp.socxh8gxnp'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\ABDULBASIT\\Desktop\\AyoinaireMain\\client\\.next\\static\\development\\_buildManifest.js.tmp.socxh8gxnp'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\ABDULBASIT\Desktop\AyoinaireMain\client\.next\server\app\(pages)\ai-fullstack-engineering\page\app-build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\ABDULBASIT\\Desktop\\AyoinaireMain\\client\\.next\\server\\app\\(pages)\\ai-fullstack-engineering\\page\\app-build-manifest.json'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\ABDULBASIT\Desktop\AyoinaireMain\client\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\ABDULBASIT\\Desktop\\AyoinaireMain\\client\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\ABDULBASIT\Desktop\AyoinaireMain\client\.next\server\app\(pages)\ai-fullstack-engineering\page\app-build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\ABDULBASIT\\Desktop\\AyoinaireMain\\client\\.next\\server\\app\\(pages)\\ai-fullstack-engineering\\page\\app-build-manifest.json'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\ABDULBASIT\Desktop\AyoinaireMain\client\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\ABDULBASIT\\Desktop\\AyoinaireMain\\client\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+[Error: ENOENT: no such file or directory, open 'C:\Users\ABDULBASIT\Desktop\AyoinaireMain\client\.next\server\pages\_app\build-manifest.json'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\ABDULBASIT\\Desktop\\AyoinaireMain\\client\\.next\\server\\pages\\_app\\build-manifest.json'
+}
+ ⨯ [Error: ENOENT: no such file or directory, open 'C:\Users\ABDULBASIT\Desktop\AyoinaireMain\client\.next\static\development\_buildManifest.js.tmp.mm3g7nj39q'] {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\ABDULBASIT\\Desktop\\AyoinaireMain\\client\\.next\\static\\development\\_buildManifest.js.tmp.mm3g7nj39q'
+}
