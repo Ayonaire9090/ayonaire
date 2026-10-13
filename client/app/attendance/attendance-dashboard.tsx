@@ -13,6 +13,7 @@ import {
   LockKeyhole,
 } from "lucide-react";
 import { FormEvent, useState } from "react";
+import { exo, melodrama } from "@/app/fonts";
 import { getSupabaseBrowserClient } from "@/lib/supabase-browser";
 import styles from "./attendance.module.css";
 
@@ -194,7 +195,7 @@ export default function AttendanceDashboard() {
   }
 
   return (
-    <main className={styles.page}>
+    <main className={`${styles.page} ${exo.className}`}>
       <div className={styles.shell}>
         <header className={styles.topbar}>
           <Link href="/" className={styles.brand} aria-label="Ayonaire home">
@@ -206,8 +207,9 @@ export default function AttendanceDashboard() {
               priority
             />
           </Link>
+          <span className={styles.pageLabel}>STUDENT ATTENDANCE</span>
           <Link href="/" className={styles.backLink}>
-            Ayonaire home <ArrowUpRight size={15} aria-hidden="true" />
+            Back to Ayonaire <ArrowUpRight size={15} aria-hidden="true" />
           </Link>
         </header>
 
@@ -215,29 +217,23 @@ export default function AttendanceDashboard() {
           <div className={styles.heroCopy}>
             <span className={styles.eyebrow}>
               <GraduationCap size={16} aria-hidden="true" />
-              YOUR LEARNING, ACKNOWLEDGED
+              A LITTLE CHECK-IN AFTER CLASS
             </span>
-            <h1 id="page-title">
-              Class is over.
+            <h1 id="page-title" className={melodrama.className}>
+              Nice work today.
               <br />
-              <span>Let&apos;s check you in.</span>
+              <span>Let&apos;s mark you present.</span>
             </h1>
             <p>
-              Just wrapped up your Google Meet class? Confirm your attendance
-              here so your learning journey stays up to date.
+              Just finished your Google Meet class? Confirm your attendance
+              below and keep your learning record up to date.
             </p>
           </div>
-          <div className={styles.heroNote}>
-            <span className={styles.noteIcon}>
-              <Check size={18} aria-hidden="true" />
+          <div className={styles.heroReminder}>
+            <span className={styles.reminderIcon}>
+              <Clock3 size={18} aria-hidden="true" />
             </span>
-            <div>
-              <strong>One last step</strong>
-              <span>Mark attendance when your class is finished.</span>
-            </div>
-            <div className={styles.noteDecoration} aria-hidden="true">
-              <CalendarDays size={42} />
-            </div>
+            <span>Take a moment to check in before you go.</span>
           </div>
         </section>
 
@@ -247,7 +243,7 @@ export default function AttendanceDashboard() {
               <div>
                 <span className={styles.sectionLabel}>QUICK CHECK-IN</span>
                 <h2>Mark your attendance</h2>
-                <p>Use the same details each time to keep your history together.</p>
+                <p>Enter your student ID and the code your instructor shared.</p>
               </div>
               <span className={styles.cardIcon}>
                 <CheckCircle2 size={21} aria-hidden="true" />
@@ -261,7 +257,7 @@ export default function AttendanceDashboard() {
                   autoComplete="email"
                   name="studentIdentifier"
                   onChange={(event) => handleIdentifierChange(event.target.value)}
-                  placeholder="e.g. you@example.com or AY-2048"
+                  placeholder="Your student email or ID"
                   required
                   value={studentIdentifier}
                 />
@@ -276,7 +272,7 @@ export default function AttendanceDashboard() {
                     setSessionIdentifier(event.target.value);
                     setNotice(null);
                   }}
-                  placeholder="Ask your instructor for the session code"
+                  placeholder="Class or session code"
                   required
                   value={sessionIdentifier}
                 />
@@ -329,7 +325,7 @@ export default function AttendanceDashboard() {
 
             <p className={styles.privacyHint}>
               <LockKeyhole size={15} aria-hidden="true" />
-              Your history is private to this browser and student ID.
+              Your attendance history stays private to this browser.
             </p>
           </div>
 
@@ -337,7 +333,7 @@ export default function AttendanceDashboard() {
             <div className={styles.overviewHeading}>
               <div>
                 <span className={styles.sectionLabel}>YOUR PROGRESS</span>
-                <h2 id="overview-title">Attendance overview</h2>
+                <h2 id="overview-title">Your attendance</h2>
               </div>
               <span className={styles.overviewIcon}>
                 <CalendarDays size={19} aria-hidden="true" />
@@ -346,7 +342,7 @@ export default function AttendanceDashboard() {
 
             <div className={styles.stats}>
               <div className={styles.stat}>
-                <span>Sessions marked</span>
+                <span>Classes attended</span>
                 <strong>
                   {isLoadingHistory ? (
                     <span className={styles.skeleton} aria-label="Loading" />
@@ -372,7 +368,7 @@ export default function AttendanceDashboard() {
             </div>
 
             <div className={styles.historyHeading}>
-              <h3>Recent attendance</h3>
+              <h3>Recent check-ins</h3>
               <button
                 className={styles.textButton}
                 disabled={!normalizedIdentifier || isLoadingHistory}
@@ -445,9 +441,9 @@ export default function AttendanceDashboard() {
             )}
 
             <div className={styles.identityNote}>
-              Without sign-in, your student ID labels the record but does not
-              verify your identity. Your private history key stays in this
-              browser.
+              Your student ID helps label your record. Since sign-in isn&apos;t
+              required, it doesn&apos;t verify identity; your private history key
+              stays in this browser.
             </div>
           </aside>
         </section>
