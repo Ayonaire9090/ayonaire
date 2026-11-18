@@ -158,7 +158,7 @@ export default function StudentFeedPage() {
 
       {/* Other Feed Page Content (Sidebar on mobile) */}
       <aside className="flex flex-col gap-4 rounded-xl h-fit xl:sticky xl:top-4">
-        <div className="rounded-2xl border border-[#ebe8e3] bg-[#25221f] p-5 text-white"><p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#ffac88]">A little progress goes a long way</p><h2 className="mt-3 text-lg font-semibold leading-snug">Keep showing up for your goals.</h2><p className="mt-2 text-sm leading-6 text-white/65">Pick up where you left off and make today count.</p><Link href="/dashboard/student/courses" className="mt-4 inline-flex rounded-lg bg-white px-3.5 py-2 text-xs font-semibold text-[#25221f] transition hover:bg-[#fff0e8]">Continue learning <span className="ml-2">↗</span></Link></div>
+        <div className="rounded-2xl border border-[#ebe8e3] bg-[#25221f] p-5 text-white"><p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#ffac88]">Your learning</p><h2 className="mt-3 text-lg font-semibold leading-snug">Ready for your next lesson?</h2><p className="mt-2 text-sm leading-6 text-white/65">Open your courses and continue where you left off.</p><Link href="/dashboard/student/courses" className="mt-4 inline-flex rounded-lg bg-white px-3.5 py-2 text-xs font-semibold text-[#25221f] transition hover:bg-[#fff0e8]">My courses <span className="ml-2">↗</span></Link></div>
         <FeedLivePost />
         <FeedWorkShop />
         <FeedUpcomingAnnouncements />
