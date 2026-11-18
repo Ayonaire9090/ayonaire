@@ -1,5 +1,6 @@
 "use client";
 
+import { StudentLoadingSkeleton } from "@/components/dashboard/student-loading-skeleton";
 import { useEffect, useState } from "react";
 import { Eye, Copy, Pencil, Trash2 } from "lucide-react";
 import { toast } from "sonner";
@@ -127,7 +128,7 @@ export default function StudentFeedIntroductionsPage() {
             {/* Posts */}
             {isLoading ? (
               <div className="flex items-center justify-center py-16">
-                <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+                <StudentLoadingSkeleton variant="feed" />
               </div>
             ) : isError ? (
               <div className="flex items-center justify-center py-16 text-[15px] text-red-500">

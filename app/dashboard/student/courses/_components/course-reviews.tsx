@@ -1,5 +1,6 @@
 "use client";
 
+import { StudentLoadingSkeleton } from "@/components/dashboard/student-loading-skeleton";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -55,7 +56,7 @@ export const CourseReviews = ({ courseId = "" }: CourseReviewsProps) => {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-16">
-        <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+        <StudentLoadingSkeleton variant="rows" />
       </div>
     );
   }
@@ -140,7 +141,7 @@ export const CourseReviews = ({ courseId = "" }: CourseReviewsProps) => {
               disabled={!content.trim() || createReview.isPending}
             >
               {createReview.isPending && (
-                <Loader2 className="mr-2 size-4 animate-spin" />
+                <span role="status" aria-label="Loading" className="inline-block h-2 w-8 animate-pulse rounded-full bg-[#f0d2c4] motion-reduce:animate-none" />
               )}
               Save Review
             </Button>

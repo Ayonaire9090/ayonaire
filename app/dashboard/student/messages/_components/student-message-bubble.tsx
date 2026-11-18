@@ -205,13 +205,14 @@ export const StudentMessageBubble = ({
     return (
       <div className="group ml-auto flex max-w-[88%] flex-col items-end gap-1 lg:max-w-[68%]">
         <div className="mb-1 flex items-center gap-1">
-          <button
+          {onReply && <button
             className="rounded-md p-1 text-gray-400 hover:bg-gray-100"
             aria-label="Reply"
             onClick={() => onReply?.(message)}
           >
             <Reply className="h-4 w-4" />
-          </button>
+          </button>}
+          {onReact && <EmojiPicker onSelect={(emoji) => onReact(message.id, emoji)} triggerClassName="rounded-md p-1 text-gray-400 hover:bg-gray-100 hover:text-[#e2633c]" />}
           <MessageActions message={message} onDelete={onDelete} />
         </div>
 
@@ -227,7 +228,8 @@ export const StudentMessageBubble = ({
               </Avatar>
             )}
           </div>
-          <p className="whitespace-pre-wrap text-sm leading-relaxed text-gray-700">
+          {message.replyTo && <div className="mb-2 rounded-lg border-l-2 border-[#e97248] bg-white/60 px-3 py-2 text-xs text-[#86766d]"><span className="font-semibold text-[#d45e38]">{message.replyTo.senderName}</span><p className="mt-1 line-clamp-2 break-words">{message.replyTo.content || "Attachment"}</p></div>}
+          <p className="whitespace-pre-wrap break-words text-sm leading-relaxed text-gray-700">
             {message.content}
           </p>
           <MessageAttachments message={message} />
@@ -265,7 +267,7 @@ export const StudentMessageBubble = ({
           </div>
         )}
 
-        <p className="whitespace-pre-wrap text-[13px] leading-relaxed text-gray-900">
+        <p className="whitespace-pre-wrap break-words text-sm leading-relaxed text-gray-900">
           {message.content}
         </p>
 
@@ -292,15 +294,15 @@ export const StudentMessageBubble = ({
         <ReactionChips message={message} onReact={onReact} />
       </div>
 
-      <div className="mt-2 flex shrink-0 items-center gap-2 text-gray-500 opacity-0 transition-opacity group-hover:opacity-100">
+      <div className="mt-2 flex shrink-0 items-center gap-2 text-gray-500 opacity-100 transition-opacity sm:opacity-0 sm:group-hover:opacity-100 sm:group-focus-within:opacity-100">
         <span className="text-[11px] font-semibold">{reactionTotal}</span>
-        <button
+        {onReply && <button
           className="rounded-md text-gray-700 hover:text-gray-950"
           aria-label="Reply"
           onClick={() => onReply?.(message)}
         >
           <Reply className="h-4 w-4" />
-        </button>
+        </button>}
         {onReact ? (
           <EmojiPicker
             onSelect={(emoji) => onReact(message.id, emoji)}

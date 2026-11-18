@@ -87,7 +87,7 @@ export const CourseAiAssistant = ({
 
             {assistantMutation.isPending && (
               <div className="flex items-center gap-3 text-[13px] text-gray-400">
-                <div className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+                <span className="h-2 w-10 animate-pulse rounded-full bg-[#f2ded3] motion-reduce:animate-none" aria-hidden="true" />
                 Thinking...
               </div>
             )}

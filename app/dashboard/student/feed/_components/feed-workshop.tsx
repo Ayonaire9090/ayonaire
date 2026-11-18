@@ -1,7 +1,8 @@
 "use client";
 
+import { StudentLoadingSkeleton } from "@/components/dashboard/student-loading-skeleton";
 import { useMemo } from "react";
-import { WorkshopCalendarCard } from "../../workshop/_components/workshop-calendar";
+import { ArrowUpRight, CalendarDays } from "lucide-react";
 import Link from "next/link";
 import { useGetWorkshops } from "@/hooks/api/use-workshops";
 import { mapWorkshopRecordToStudentWorkshop } from "../../workshop/_components/workshop-data";
@@ -24,10 +25,10 @@ export const FeedWorkShop = () => {
   }
 
   return (
-    <div className="w-full flex flex-col gap-4 bg-white p-2 lg:p-4 lg:rounded-2xl ">
+    <div className="w-full min-w-0 flex flex-col gap-4 rounded-2xl border border-[#ebe8e3] bg-white p-5">
       {/* Header */}
-      <div className="flex items-center justify-between px-4 lg:px-0">
-        <h2 className="text-lg lg:text-xl font-bold text-gray-900">
+      <div className="flex items-center justify-between gap-2">
+        <h2 className="text-base font-bold text-[#26211e]">
           Upcoming workshops
         </h2>
         <Link
@@ -39,25 +40,18 @@ export const FeedWorkShop = () => {
       </div>
 
       {/* Cards Scrollable Container */}
-      <div className="flex overflow-x-auto hide-scrollbar gap-4 px-4 lg:px-0 pb-2">
+      <div className="flex min-w-0 flex-col gap-2.5">
         {isLoading ? (
           <div className="flex items-center justify-center py-4 w-full">
-            <div className="w-6 h-6 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+            <StudentLoadingSkeleton variant="feed" />
           </div>
         ) : (
-          upcomingWorkshops.map((workshop) => (
-            <WorkshopCalendarCard
-              key={workshop.id}
-              month={workshop.month}
-              day={workshop.day}
-              label={workshop.label}
-              dateText={workshop.dateText}
-              time={workshop.time}
-              title={workshop.title}
-              author={workshop.author}
-              link={workshop.link}
-              className="min-w-[300px] sm:min-w-[380px] md:min-w-[420px] shrink-0"
-            />
+          upcomingWorkshops.slice(0, 3).map((workshop) => (
+            <div key={workshop.id} className="flex min-w-0 items-start gap-3 rounded-xl bg-[#faf8f5] p-3">
+              <div className="flex w-11 shrink-0 flex-col items-center rounded-lg bg-[#fff0e9] py-2 text-[#dc6038]"><span className="text-[10px] font-bold uppercase">{workshop.month}</span><span className="text-lg font-bold leading-5">{workshop.day}</span></div>
+              <div className="min-w-0 flex-1"><p className="break-words text-sm font-semibold leading-5 text-[#2c2723]">{workshop.title}</p><p className="mt-1 flex items-center gap-1 text-xs text-[#8b8178]"><CalendarDays className="size-3 shrink-0" /> <span className="break-words">{workshop.dateText} · {workshop.time}</span></p><p className="mt-1 truncate text-xs text-[#a09991]">{workshop.author}</p></div>
+              {workshop.link && <a href={workshop.link} target="_blank" rel="noopener noreferrer" aria-label={`Open ${workshop.title}`} className="rounded-lg p-1.5 text-[#de643c] hover:bg-[#fff0e9]"><ArrowUpRight className="size-4" /></a>}
+            </div>
           ))
         )}
       </div>

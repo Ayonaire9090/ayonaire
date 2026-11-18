@@ -1,5 +1,6 @@
 "use client";
 
+import { StudentLoadingSkeleton } from "@/components/dashboard/student-loading-skeleton";
 import { useState } from "react";
 import { toast } from "sonner";
 import ReactMarkdown from "react-markdown";
@@ -130,7 +131,7 @@ export function CareerAIToolCard({
 
       {isLoading && (
         <div className="flex items-center justify-center py-8">
-          <div className="w-6 h-6 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+          <StudentLoadingSkeleton variant="rows" />
         </div>
       )}
 

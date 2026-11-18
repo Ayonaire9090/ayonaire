@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { satoshi, spectralSC } from "./fonts";
 import { GoogleTagManager } from "@next/third-parties/google";
-import { Toaster } from "sonner";
+import { AyonaireToaster } from "@/components/ayonaire-toaster";
 import QueryProvider from "@/providers/query-provider";
 
 export const metadata: Metadata = {
@@ -97,7 +97,7 @@ export default function RootLayout({
           <QueryProvider>{children}</QueryProvider>
         </div>
         {/* Toast */}
-        <Toaster richColors position="bottom-right" />
+        <AyonaireToaster />
       </body>
       {process.env.NEXT_PUBLIC_VERCEL_ENV === "production" && (
         <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID!} />

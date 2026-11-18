@@ -1,13 +1,16 @@
 "use client";
 
 import * as React from "react";
-import { NavMain } from "@/components/dashboard/nav-main";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   Sidebar,
   SidebarContent,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuItem,
+  SidebarMenuButton,
+  SidebarGroup,
   useSidebar,
 } from "@/components/ui/sidebar";
 import Image from "next/image";
@@ -76,9 +79,10 @@ export function StudentHomeSidebarContent({
   const { state, toggleSidebar, open, isMobile } = useSidebar();
   const isCollapsed = state === "collapsed" && !isMobile;
   const isPinned = open;
+  const pathname = usePathname();
 
   return (
-    <Sidebar className="bg-white border-r border-gray-200" {...props}>
+    <Sidebar className="bg-[#fffefa] border-r border-[#eeeae4]" {...props}>
       <SidebarHeader className="bg-transparent">
         <SidebarMenu>
           <SidebarMenuItem>
@@ -87,7 +91,7 @@ export function StudentHomeSidebarContent({
                 "flex items-center",
                 isCollapsed
                   ? "flex-col justify-center gap-4 mt-2"
-                  : "justify-between p-1.5 bg-white/90 rounded-[10px]",
+                  : "justify-between px-2 pt-3 pb-5",
               )}
             >
               <a
@@ -128,13 +132,16 @@ export function StudentHomeSidebarContent({
           </SidebarMenuItem>
         </SidebarMenu>
         {!isCollapsed && (
-          <div className="px-3 pt-4 pb-2 text-base font-medium text-black">
-            Menu
+          <div className="px-3 pt-3 pb-2 text-[10px] font-bold uppercase tracking-[0.16em] text-[#aaa29a]">
+            Student dashboard
           </div>
         )}
       </SidebarHeader>
       <SidebarContent className="bg-transparent">
-        <NavMain items={studentHomeSidebarNav} />
+        <SidebarGroup><SidebarMenu className="gap-1">{studentHomeSidebarNav.filter((item) => item.title !== "Resources").map((item) => {
+          const active = pathname === item.url || pathname.startsWith(`${item.url}/`);
+          return <SidebarMenuItem key={item.title}><SidebarMenuButton asChild tooltip={item.title} className={cn("rounded-xl px-3 py-5 text-[#77716b] transition-colors hover:bg-[#f7f4ef] hover:text-[#29231f]", active && "bg-[#fff0e9] font-semibold text-[#df6038] hover:bg-[#fff0e9] hover:text-[#df6038]")}><Link href={item.url} onClick={() => { if (isMobile) toggleSidebar(); }}><item.icon className="size-5 shrink-0" />{!isCollapsed && <span className="text-sm">{item.title}</span>}</Link></SidebarMenuButton></SidebarMenuItem>;
+        })}</SidebarMenu></SidebarGroup>
       </SidebarContent>
     </Sidebar>
   );

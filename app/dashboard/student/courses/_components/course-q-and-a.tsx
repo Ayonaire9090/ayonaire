@@ -1,4 +1,5 @@
 "use client";
+import { StudentLoadingSkeleton } from "@/components/dashboard/student-loading-skeleton";
 
 import { useEffect, useMemo, useState } from "react";
 import { ArrowUp, MessageCircle, Search, Send } from "lucide-react";
@@ -181,7 +182,7 @@ export const CourseQAndA = ({ courseId, lessonId }: CourseQAndAProps) => {
       </div>
 
       {isLoading ? (
-        <div className="py-16 text-center text-gray-500">Loading questions...</div>
+        <StudentLoadingSkeleton />
       ) : isError ? (
         <div className="py-16 text-center text-red-500">Failed to load questions.</div>
       ) : visibleQuestions.length === 0 ? (

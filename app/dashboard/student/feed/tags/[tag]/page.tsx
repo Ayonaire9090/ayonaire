@@ -1,5 +1,6 @@
 "use client";
 
+import { StudentLoadingSkeleton } from "@/components/dashboard/student-loading-skeleton";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { Eye, Copy, Pencil, Trash2 } from "lucide-react";
@@ -122,7 +123,7 @@ export default function StudentFeedTagPage() {
           <div className="flex flex-col gap-6">
             {isLoading ? (
               <div className="flex items-center justify-center py-16">
-                <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+                <StudentLoadingSkeleton variant="feed" />
               </div>
             ) : isError ? (
               <div className="flex items-center justify-center py-16 text-[15px] text-red-500">

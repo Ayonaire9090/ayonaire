@@ -1,4 +1,5 @@
 "use client";
+import { StudentLoadingSkeleton } from "@/components/dashboard/student-loading-skeleton";
 
 import { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -359,7 +360,7 @@ export const CourseNotes = ({
       {legacyNotes.length > 0 && <div className="rounded-xl bg-orange-50 p-4 text-sm"><p>{legacyNotes.length} older notes were found in this browser. They were not associated with an account, so import them only if they belong to you.</p><Button className="mt-3" onClick={() => migrate.mutate(legacyNotes)} disabled={migrate.isPending}>{migrate.isPending ? "Importing..." : "Import notes to my account"}</Button></div>}
       {renderFilterBar()}
 
-      {isLoading ? <p>Loading notes...</p> : isError ? <p>Could not load notes.</p> : visibleNotes.length === 0 ? (
+      {isLoading ? <StudentLoadingSkeleton /> : isError ? <p>Could not load notes.</p> : visibleNotes.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-24 text-center px-4">
           <p className="text-gray-400 text-base md:text-lg">
             Click the &quot;Create a note&quot; box or the &quot;+&quot; button to make your

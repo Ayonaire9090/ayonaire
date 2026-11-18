@@ -79,18 +79,18 @@ export const StudentGroupMessagesHeader = ({
 
   // Group header
   return (
-    <div className="flex items-center justify-between px-5 py-2.5 bg-white border-b border-gray-100">
-      <div className="flex items-center gap-3">
+    <div className="flex items-center justify-between gap-3 px-4 sm:px-6 py-4 bg-white border-b border-[#eeeae5]">
+      <div className="flex min-w-0 items-center gap-3">
         <Avatar className="h-9 w-9 border-2 border-transparent bg-gray-200 rounded-lg">
           <AvatarImage src={messageImage} className="rounded-lg" />
-          <AvatarFallback className="rounded-lg">AY</AvatarFallback>
+          <AvatarFallback className="rounded-lg bg-[#fff0e9] text-[#dc6038]">AY</AvatarFallback>
         </Avatar>
-        <div className="flex flex-col">
-          <span className="font-semibold text-gray-900 text-[15px] leading-tight">
+        <div className="flex min-w-0 flex-col">
+          <span className="truncate font-semibold text-gray-900 text-[15px] leading-tight">
             {messageHeadingTitle}
           </span>
-          <span className="text-xs text-gray-500 leading-tight">
-            {messageHeadingDescription}
+          <span className="text-xs text-[#a29890] leading-tight mt-1">
+            {room ? "Community chatroom" : messageHeadingDescription}
           </span>
         </div>
       </div>
@@ -99,7 +99,7 @@ export const StudentGroupMessagesHeader = ({
 
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild>
-            <button className="p-2 text-black hover:bg-gray-100 rounded-full transition-colors ml-1 lg:hidden">
+            <button aria-label="View chatroom details" className="p-2 text-[#77716a] hover:bg-[#faf2ec] rounded-full transition-colors ml-1">
               <SlidersHorizontal className="w-5 h-5" />
             </button>
           </SheetTrigger>

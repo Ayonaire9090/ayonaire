@@ -1,5 +1,6 @@
 "use client";
 
+import { StudentLoadingSkeleton } from "@/components/dashboard/student-loading-skeleton";
 import { useParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import { useGetRooms } from "@/hooks/api/use-rooms";
@@ -53,7 +54,7 @@ export default function StudentMessageDetails() {
     [room, user?._id],
   );
 
-  const { data: messagesData, isLoading: isMessagesLoading } = useGetMessages(roomId);
+  const { data: messagesData, isLoading: isMessagesLoading, isError: isMessagesError, refetch: refetchMessages } = useGetMessages(roomId);
   const messages = useMemo(
     () =>
       (messagesData?.data?.messages ?? [])
@@ -68,11 +69,11 @@ export default function StudentMessageDetails() {
     [messagesData, user?._id],
   );
 
-  const { mutate: sendMessage } = useSendMessageMutation();
+  const { mutateAsync: sendMessage } = useSendMessageMutation();
   const reactToMessage = useReactToMessageMutation();
   const deleteMessage = useDeleteMessageMutation();
 
-  const handleSend = (
+  const handleSend = async (
     text: string,
     attachment?: ComposerAttachment,
     selectedReply?: Message,
@@ -82,12 +83,12 @@ export default function StudentMessageDetails() {
     formData.append("text", text);
     if (selectedReply) formData.append("replyTo", selectedReply.id);
     if (attachment) formData.append(attachment.kind, attachment.file);
-    sendMessage(formData);
+    await sendMessage(formData);
     setReplyTo(null);
   };
 
   const handleReact = (messageId: string, emoji: string) => {
-    reactToMessage.mutate({ messageId, emoji });
+    reactToMessage.mutate({ messageId, emoji }, { onError: () => toast.error("Could not update reaction") });
   };
   const handleDelete = (message: Message) => {
     deleteMessage.mutate(message.id, {
@@ -106,7 +107,7 @@ export default function StudentMessageDetails() {
         <SidebarInset className="bg-[#F6F6F6] pb-[72px] md:pb-0 flex flex-col h-dvh overflow-hidden">
           {backToConversations}
           <div className="flex-1 flex items-center justify-center">
-            <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+            <StudentLoadingSkeleton variant="messages" />
           </div>
         </SidebarInset>
       </>
@@ -138,11 +139,7 @@ export default function StudentMessageDetails() {
         {/* Chat header */}
         <StudentGroupMessagesHeader
           messageImage={conversation.avatar}
-          messageHeadingTitle={
-            isGroup
-              ? conversation.course || conversation.title
-              : conversation.title
-          }
+          messageHeadingTitle={conversation.title}
           messageHeadingDescription={
             isGroup ? "Click here for more info" : undefined
           }
@@ -152,16 +149,19 @@ export default function StudentMessageDetails() {
           room={room}
         />
         {/* Chat content wrapper */}
-        <div className="flex-1 flex min-h-0 overflow-hidden relative bg-[#FAFAFA] bg-[url('/wt.jpg')] bg-repeat [background-size:420px_auto]">
+        <div className="flex-1 flex min-h-0 overflow-hidden relative bg-[#f7f5f1]">
           {/* Main chat column */}
-          <div className="flex flex-col flex-1 min-h-0 overflow-hidden bg-white/75 backdrop-blur-[1px]">
+          <div className="flex flex-col flex-1 min-w-0 min-h-0 overflow-hidden">
             {/* Messages list */}
             {isMessagesLoading ? (
               <div className="flex-1 flex items-center justify-center">
-                <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+                <StudentLoadingSkeleton variant="messages" />
               </div>
+            ) : isMessagesError ? (
+              <div role="alert" className="flex flex-1 flex-col items-center justify-center gap-3 text-sm text-[#80766e]"><p>Could not load messages.</p><button onClick={() => refetchMessages()} className="font-semibold text-[#df6038] hover:underline">Try again</button></div>
             ) : (
               <StudentMessageList
+                key={roomId}
                 messages={messages}
                 isGroup={isGroup}
                 onReact={handleReact}
@@ -171,6 +171,7 @@ export default function StudentMessageDetails() {
             )}
             {/* Message composer */}
             <StudentMessageComposer
+              key={roomId}
               isGroup={isGroup}
               onSend={handleSend}
               replyTo={replyTo}

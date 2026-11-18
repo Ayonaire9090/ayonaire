@@ -394,7 +394,7 @@ export const LessonVideoPlayer = ({
         {/* Buffering Indicator */}
         {isBuffering && (
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none bg-black/20">
-            <div className="w-12 h-12 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+            <div role="status" aria-label="Buffering video" className="flex gap-1.5 rounded-xl bg-black/50 p-3"><span className="h-2 w-2 animate-pulse rounded-full bg-white motion-reduce:animate-none" /><span className="h-2 w-2 animate-pulse rounded-full bg-white/70 motion-reduce:animate-none" /><span className="h-2 w-2 animate-pulse rounded-full bg-white/40 motion-reduce:animate-none" /></div>
           </div>
         )}
 

@@ -69,7 +69,7 @@ export function NewMessagePopover() {
         </p>
         {isLoading ? (
           <div className="flex items-center justify-center py-6">
-            <Loader2 className="w-4 h-4 animate-spin text-gray-400" />
+            <span role="status" aria-label="Loading" className="inline-block h-2 w-8 animate-pulse rounded-full bg-[#f0d2c4] motion-reduce:animate-none" />
           </div>
         ) : enrollments.length === 0 ? (
           <p className="px-2 py-4 text-[13px] text-gray-400 text-center">
@@ -102,7 +102,7 @@ export function NewMessagePopover() {
                     </p>
                   </div>
                   {isRowLoading && (
-                    <Loader2 className="w-4 h-4 animate-spin text-gray-400 shrink-0" />
+                    <span role="status" aria-label="Loading" className="inline-block h-2 w-8 animate-pulse rounded-full bg-[#f0d2c4] motion-reduce:animate-none" />
                   )}
                 </button>
               );

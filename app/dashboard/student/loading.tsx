@@ -1,7 +1,8 @@
+import { StudentLoadingSkeleton } from "@/components/dashboard/student-loading-skeleton";
 export default function Loading() {
   return (
-    <div className="flex flex-1 items-center justify-center py-24">
-      <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+    <div className="mx-auto w-full max-w-6xl p-6">
+      <StudentLoadingSkeleton variant="cards" />
     </div>
   );
 }

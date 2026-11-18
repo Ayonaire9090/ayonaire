@@ -1,5 +1,6 @@
 "use client";
 
+import { StudentLoadingSkeleton } from "@/components/dashboard/student-loading-skeleton";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -24,7 +25,7 @@ export const FeedTopContributors = () => {
 
       {isLoading ? (
         <div className="flex items-center justify-center py-6">
-          <div className="w-6 h-6 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+          <StudentLoadingSkeleton variant="feed" />
         </div>
       ) : isError ? (
         <div className="py-6 text-center text-sm text-red-500">

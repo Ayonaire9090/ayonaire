@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { StudentLoadingSkeleton } from "@/components/dashboard/student-loading-skeleton";
 import { ChevronDown, ChevronUp, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useLessonTranscription } from "@/hooks/api/use-course-interactions";
@@ -44,7 +45,7 @@ export const CourseTranscription = ({
   }
 
   if (isLoading) {
-    return <div className="py-16 text-center text-gray-500">Loading transcription...</div>;
+    return <StudentLoadingSkeleton />;
   }
 
   if (isError) {

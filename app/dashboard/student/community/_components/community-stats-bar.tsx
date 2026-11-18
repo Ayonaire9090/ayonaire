@@ -24,10 +24,12 @@ export const CommunityStatsBar = ({
         isLoading ? (
           <div
             key={tile.label}
+            role="status"
+            aria-label={`Loading ${tile.label}`}
             className="bg-white border border-gray-100 rounded-[16px] px-4 py-4 flex flex-col gap-3"
           >
-            <div className="h-6 w-6 bg-gray-100 rounded-full animate-pulse" />
-            <div className="h-7 w-16 bg-gray-100 rounded animate-pulse" />
+            <div className="h-6 w-6 bg-[#f0ece7] rounded-full animate-pulse motion-reduce:animate-none" />
+            <div className="h-7 w-16 bg-[#f0ece7] rounded animate-pulse motion-reduce:animate-none" />
           </div>
         ) : (
           <StatCard

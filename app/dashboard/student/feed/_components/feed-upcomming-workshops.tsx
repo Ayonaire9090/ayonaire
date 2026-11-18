@@ -1,5 +1,6 @@
 "use client";
 
+import { StudentLoadingSkeleton } from "@/components/dashboard/student-loading-skeleton";
 import { useMemo } from "react";
 import { Calendar } from "lucide-react";
 import Link from "next/link";
@@ -32,7 +33,7 @@ export const FeedUpcomingWorkShops = () => {
       {/* List */}
       {isLoading ? (
         <div className="flex items-center justify-center py-4">
-          <div className="w-6 h-6 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+          <StudentLoadingSkeleton variant="feed" />
         </div>
       ) : upcomingWorkshops.length === 0 ? (
         <p className="text-gray-500 text-sm">No upcoming workshops.</p>

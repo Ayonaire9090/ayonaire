@@ -1,5 +1,6 @@
 "use client";
 
+import { StudentLoadingSkeleton } from "@/components/dashboard/student-loading-skeleton";
 import { SidebarInset } from "@/components/ui/sidebar";
 import { StudentFeedSidebarContent } from "../_components/student-feed-sidebar-content";
 import { StudentDashboardHeader } from "../_components/student-dashboard-header";
@@ -102,7 +103,7 @@ export default function StudentWorkshopPage() {
 
             {isLoading ? (
               <div className="flex items-center justify-center py-16">
-                <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+                <StudentLoadingSkeleton variant="cards" />
               </div>
             ) : isError ? (
               <div className="flex items-center justify-center py-16 text-[15px] text-red-500">

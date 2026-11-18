@@ -10,9 +10,10 @@ import { useGetProfile } from "@/hooks/api/use-auth";
 interface AuthGuardProps {
   children: React.ReactNode;
   allowedRoles?: string[];
+  loadingFallback?: React.ReactNode;
 }
 
-export function AuthGuard({ children, allowedRoles }: AuthGuardProps) {
+export function AuthGuard({ children, allowedRoles, loadingFallback }: AuthGuardProps) {
   const router = useRouter();
   const pathname = usePathname();
   const token = useAuthStore((state) => state.token);
@@ -54,21 +55,21 @@ export function AuthGuard({ children, allowedRoles }: AuthGuardProps) {
 
   // Show nothing or a loading spinner while checking auth
   if (!isHydrated) {
-    return <AppLoadingSpinner />;
+    return loadingFallback ?? <AppLoadingSpinner />;
   }
 
   // If we reach here, either we are still waiting for the useEffect to redirect,
   // or the user is fully authorized. We should only render children if authorized.
   const userRole = getDashboardRole(user?.role);
   if (token && user && !userRole && profileQuery.isFetching) {
-    return <AppLoadingSpinner />;
+    return loadingFallback ?? <AppLoadingSpinner />;
   }
 
   const isAuthorized =
     token && user && (!allowedRoles || (userRole && allowedRoles.includes(userRole)));
 
   if (!isAuthorized) {
-    return <AppLoadingSpinner />;
+    return loadingFallback ?? <AppLoadingSpinner />;
   }
 
   return <>{children}</>;

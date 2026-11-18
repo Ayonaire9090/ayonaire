@@ -1,5 +1,6 @@
 "use client";
 
+import { StudentLoadingSkeleton } from "@/components/dashboard/student-loading-skeleton";
 import { useMemo, useState } from "react";
 import { CircleHelp, CircleCheck, Clock, Plus } from "lucide-react";
 import { useGetAskForHelpQuestions } from "@/hooks/api/use-ask-for-help";
@@ -95,7 +96,7 @@ export const AskForHelpContent = () => {
       {/* Questions */}
       {isLoading ? (
         <div className="flex items-center justify-center py-16">
-          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+          <StudentLoadingSkeleton variant="feed" />
         </div>
       ) : isError ? (
         <div className="flex items-center justify-center py-16 text-[15px] text-red-500">

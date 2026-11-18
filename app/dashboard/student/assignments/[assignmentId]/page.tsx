@@ -1,4 +1,5 @@
 "use client";
+import { StudentLoadingSkeleton } from "@/components/dashboard/student-loading-skeleton";
 
 import { useMemo, useRef, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
@@ -64,7 +65,7 @@ export default function StudentAssignmentDetailPage() {
         <StudentHomeSidebarContent variant="sidebar" collapsible="icon" />
         <SidebarInset className="bg-[#F6F6F6]">
           <div className="flex flex-1 items-center justify-center p-10 text-gray-500">
-            Loading assignment...
+            <StudentLoadingSkeleton />
           </div>
         </SidebarInset>
       </>

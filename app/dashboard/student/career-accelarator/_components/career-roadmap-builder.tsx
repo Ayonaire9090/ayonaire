@@ -1117,7 +1117,7 @@ export function CareerRoadmapBuilder() {
                     >
                       {generateRoadmap.isPending ? (
                         <>
-                          <Loader2 className="size-5 animate-spin" />
+                          <span role="status" aria-label="Loading" className="inline-block h-2 w-8 animate-pulse rounded-full bg-[#f0d2c4] motion-reduce:animate-none" />
                           Creating
                         </>
                       ) : (

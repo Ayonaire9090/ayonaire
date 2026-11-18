@@ -1,4 +1,5 @@
 "use client";
+import { StudentLoadingSkeleton } from "@/components/dashboard/student-loading-skeleton";
 
 import { SidebarInset } from "@/components/ui/sidebar";
 import { ChevronRight, Star } from "lucide-react";
@@ -89,7 +90,7 @@ export default function StudentQuizDetailsPage() {
         <StudentHomeSidebarContent variant="sidebar" collapsible="icon" />
         <SidebarInset className="bg-[#F6F6F6]">
           <div className="flex flex-1 items-center justify-center p-10 text-gray-500">
-            Loading quiz...
+            <StudentLoadingSkeleton />
           </div>
         </SidebarInset>
       </>

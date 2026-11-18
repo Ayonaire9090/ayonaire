@@ -1,5 +1,6 @@
 "use client";
 
+import { StudentLoadingSkeleton } from "@/components/dashboard/student-loading-skeleton";
 import * as React from "react";
 import {
   Sidebar,
@@ -47,8 +48,8 @@ export function StudentMessagesSidebarContent({
     );
 
   return (
-    <Sidebar className="bg-white border-r border-gray-200" {...props}>
-      <SidebarHeader className="bg-white border-b border-gray-100 px-3 py-4">
+    <Sidebar className="bg-[#fffefa] border-r border-[#eeeae5]" {...props}>
+      <SidebarHeader className="bg-[#fffefa] border-b border-[#f0ece7] px-4 py-5">
         {isCollapsed ? (
           <div className="flex flex-col items-center gap-4">
             <Image
@@ -68,16 +69,14 @@ export function StudentMessagesSidebarContent({
           </div>
         ) : (
           <div className="space-y-3">
-            <div className="flex items-center gap-2">
-              <div className="flex h-10 items-center gap-2 rounded-full bg-[#F15D23] px-4 text-sm font-semibold text-white shadow-sm">
-                Chatrooms
-                <span className="flex size-5 items-center justify-center rounded-full bg-white text-[11px] font-bold text-[#F15D23]">
+            <div className="flex items-center justify-between gap-2">
+              <div><p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#e06a43]">Your community</p><h1 className="mt-1 text-xl font-bold tracking-tight text-[#29231f]">Chatrooms</h1></div>
+                <span className="flex size-7 items-center justify-center rounded-full bg-[#fff0e9] text-xs font-bold text-[#e06a43]">
                   {groupCount}
                 </span>
-              </div>
             </div>
 
-            <div className="flex items-center gap-2 rounded-full border border-gray-100 bg-gray-50 px-3 py-2.5">
+            <div className="flex items-center gap-2 rounded-xl border border-[#efeae4] bg-[#f9f7f4] px-3 py-2.5 focus-within:border-[#eaa689]">
               <Search className="w-4 h-4 text-gray-400 shrink-0" />
               <input
                 value={search}
@@ -90,11 +89,11 @@ export function StudentMessagesSidebarContent({
         )}
       </SidebarHeader>
 
-      <SidebarContent className="bg-[#FBFBFB] pt-2">
+      <SidebarContent className="bg-[#fffefa] pt-3">
         <div className="flex flex-col gap-2 px-2 pb-4">
           {isLoading ? (
             <div className="flex items-center justify-center py-8">
-              <div className="w-6 h-6 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+              <StudentLoadingSkeleton variant="messages" />
             </div>
           ) : conversations.length === 0 ? (
             !isCollapsed && (
@@ -117,8 +116,8 @@ export function StudentMessagesSidebarContent({
                   if (isMobile) setOpenMobile(false);
                 }}
                 className={cn(
-                  "flex items-start gap-3 rounded-lg p-3 transition-all",
-                  isActive ? "bg-[#F1F2F6] shadow-sm" : "bg-white hover:bg-gray-50",
+                  "flex items-start gap-3 rounded-xl p-3 transition-colors",
+                  isActive ? "bg-[#fff0e9]" : "bg-transparent hover:bg-[#f8f5f1]",
                   isCollapsed && "justify-center px-0",
                 )}
               >

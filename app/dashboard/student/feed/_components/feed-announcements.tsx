@@ -1,5 +1,6 @@
 "use client";
 
+import { StudentLoadingSkeleton } from "@/components/dashboard/student-loading-skeleton";
 import { Sparkles } from "lucide-react";
 import { useGetAnnouncements } from "@/hooks/api/use-announcements";
 import { Announcement } from "@/lib/api/endpoints/announcements";
@@ -33,7 +34,7 @@ export const FeedAnnouncements = () => {
 
       {isLoading ? (
         <div className="flex items-center justify-center py-16">
-          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+          <StudentLoadingSkeleton variant="feed" />
         </div>
       ) : isError ? (
         <div className="py-16 text-center text-[15px] text-red-500">

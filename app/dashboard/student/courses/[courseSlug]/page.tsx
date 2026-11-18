@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, use, useEffect, useMemo } from "react";
+import { StudentLoadingSkeleton } from "@/components/dashboard/student-loading-skeleton";
 import { useGetEnrolledCourseDetail } from "@/hooks/api/use-enrollment";
 import {
   useResumeLastLesson,
@@ -91,7 +92,7 @@ export default function StudentCourseLessonPage({
     setIsSheetOpen(false);
   };
 
-  if (courseLoading || isContentLoading) return <div className="p-10">Loading course...</div>;
+  if (courseLoading || isContentLoading) return <div className="w-full p-6"><StudentLoadingSkeleton variant="cards" /></div>;
   if (courseError || contentError || resumeError) return <div className="p-10" role="alert">Unable to load this course. Please refresh or check your enrollment.</div>;
 
   return (
