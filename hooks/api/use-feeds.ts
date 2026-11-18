@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { feedsApi, GetFeedsParams } from "@/lib/api/endpoints/feeds";
 import { queryKeys } from "@/lib/api/query-keys";
 
@@ -9,8 +9,10 @@ import { queryKeys } from "@/lib/api/query-keys";
 // mutations below only need to report success/failure back to their caller.
 
 export const useCreateFeedMutation = () => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (formData: FormData) => feedsApi.create(formData),
+    onSuccess: () => { queryClient.invalidateQueries({ queryKey: ["community"] }); },
   });
 };
 
@@ -28,8 +30,10 @@ export const useEditFeedMutation = () => {
 };
 
 export const useDeleteFeedMutation = () => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (feedId: string) => feedsApi.delete(feedId),
+    onSuccess: () => { queryClient.invalidateQueries({ queryKey: ["community"] }); },
   });
 };
 
@@ -40,15 +44,19 @@ export const useLikeFeedMutation = () => {
 };
 
 export const useCommentFeedMutation = () => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({ feedId, text }: { feedId: string; text: string }) => feedsApi.comment(feedId, text),
+    onSuccess: () => { queryClient.invalidateQueries({ queryKey: ["community"] }); },
   });
 };
 
 export const useDeleteCommentMutation = () => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({ feedId, commentId }: { feedId: string; commentId: string }) =>
       feedsApi.deleteComment(feedId, commentId),
+    onSuccess: () => { queryClient.invalidateQueries({ queryKey: ["community"] }); },
   });
 };
 

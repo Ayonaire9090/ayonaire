@@ -1,284 +1,40 @@
 "use client";
 
+import { useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
+import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { Trophy, ArrowUpRight, Sparkles } from "lucide-react";
+import Link from "next/link";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { StudentLoadingSkeleton } from "@/components/dashboard/student-loading-skeleton";
-import React, { useState } from "react";
-import Image from "next/image";
-import { DataTable, ColumnDef } from "@/components/ui/data-table";
-import { DataList } from "@/components/ui/data-list";
-import { Crown, Award as AwardIcon } from "lucide-react";
+import { useGetCommunityLeaderboard } from "@/hooks/api/use-community";
 import { useGetLeaderboard } from "@/hooks/api/use-leaderboard";
-import { LeaderboardEntry, LeaderboardPeriod } from "@/lib/api/endpoints/leaderboard";
+import type { CommunityPeriod } from "@/lib/api/endpoints/community";
+import { useAuthStore } from "@/store/auth.store";
 
-const TABS: { key: LeaderboardPeriod; label: string }[] = [
-  { key: "all-time", label: "All Time" },
-  { key: "month", label: "Month" },
-  { key: "week", label: "Week" },
-];
+const periods: { key: CommunityPeriod; label: string }[] = [{ key: "week", label: "Last 7 days" }, { key: "month", label: "Last 30 days" }, { key: "all-time", label: "All time" }];
 
-const DEFAULT_AVATAR = "/assets/icons/user-solid.svg";
+export function StudentFeedLeaderboard({ onPeriodChange }: { onPeriodChange?: (label: string) => void }) {
+  const [mode, setMode] = useState<"community" | "learning">("community");
+  const [period, setPeriod] = useState<CommunityPeriod>("all-time");
+  const community = useGetCommunityLeaderboard(period, 50);
+  const learning = useGetLeaderboard("all-time", 50);
+  const currentUser = useAuthStore((state) => state.user);
+  const reduceMotion = useReducedMotion();
+  const query = mode === "community" ? community : learning;
+  const entries = mode === "community" ? community.data?.data ?? [] : learning.data?.data ?? [];
+  const chartData = entries.slice(0, 8).map((entry) => ({ name: entry.user.name, points: entry.points }));
+  const current = entries.find((entry) => entry.user.id === currentUser?._id);
 
-interface TopUserProps {
-  entry: LeaderboardEntry;
-  position: 1 | 2 | 3;
-  className?: string;
+  return <div className="mx-auto w-full max-w-6xl space-y-5 px-4 pb-24 sm:px-6">
+    <div className="flex flex-wrap items-end justify-between gap-4"><div><p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#dd6740]">Ayonaire community</p><h1 className="mt-2 text-3xl font-bold tracking-[-0.04em] text-[#24201d] sm:text-4xl">Leaderboard<span className="text-[#ed7045]">.</span></h1><p className="mt-2 text-sm text-[#90877e]">Recognizing the people learning and contributing together.</p></div><Link href="/dashboard/student/community" className="inline-flex items-center gap-1 rounded-xl border border-[#e9e3dc] bg-white px-4 py-2.5 text-sm font-semibold text-[#55483e] hover:text-[#dc6038]">Community <ArrowUpRight className="size-4" /></Link></div>
+    <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#ede8e2] bg-white p-2"><div role="group" aria-label="Leaderboard type" className="flex rounded-xl bg-[#f7f4f0] p-1">{(["community", "learning"] as const).map((item) => <button key={item} type="button" aria-pressed={mode === item} onClick={() => { setMode(item); onPeriodChange?.(item === "learning" ? "All time" : periods.find((p) => p.key === period)!.label); }} className={`rounded-lg px-4 py-2 text-sm font-semibold capitalize transition ${mode === item ? "bg-white text-[#df6038] shadow-sm" : "text-[#92877d] hover:text-[#3d332b]"}`}>{item}</button>)}</div>{mode === "community" ? <div role="group" aria-label="Leaderboard period" className="flex flex-wrap gap-1">{periods.map((item) => <button key={item.key} type="button" aria-pressed={period === item.key} onClick={() => { setPeriod(item.key); onPeriodChange?.(item.label); }} className={`rounded-lg px-3 py-2 text-xs font-semibold transition ${period === item.key ? "bg-[#fff0e9] text-[#df6038]" : "text-[#92877d] hover:bg-[#f8f6f3]"}`}>{item.label}</button>)}</div> : <span className="px-3 text-xs text-[#9c9188]">All-time learning progress</span>}</div>
+    <div className="rounded-xl border border-[#f3dfd3] bg-[#fff8f3] px-4 py-3 text-xs leading-5 text-[#8b6755]">{mode === "community" ? "Community points: 5 per post, 2 per comment, and 3 per answer in Ask for Help. Periods are rolling 7 or 30 days; deleted contributions no longer count." : "Learning points combine course progress, completed lessons, and completed courses. This view is all-time because historical learning activity is not yet tracked."}</div>
+    {query.isLoading ? <StudentLoadingSkeleton variant="cards" /> : query.isError ? <div role="alert" className="rounded-2xl border border-[#eee6df] bg-white p-8 text-center text-sm text-[#a34d3c]">Could not load the leaderboard. <button onClick={() => query.refetch()} className="font-semibold underline">Try again</button></div> : entries.length === 0 ? <div className="rounded-2xl border border-[#eee6df] bg-white p-10 text-center"><Sparkles className="mx-auto size-7 text-[#e87a50]" /><p className="mt-3 font-semibold text-[#302923]">No activity for this view yet</p><p className="mt-1 text-sm text-[#9c9188]">{mode === "community" ? "Start a discussion or answer a question to join in." : "Course progress will appear here as students learn."}</p></div> : <>
+      <div className="grid gap-4 md:grid-cols-3">{entries.slice(0, 3).map((entry, index) => <motion.div key={entry.user.id} initial={reduceMotion ? false : { opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.05 }} className={`relative rounded-2xl border p-5 ${index === 0 ? "border-[#f2d5c4] bg-[#fff7f2]" : "border-[#ede8e2] bg-white"}`}><div className="flex items-center justify-between"><span className="text-xs font-bold uppercase tracking-wider text-[#a89587]">#{entry.rank} contributor</span>{index === 0 && <Trophy className="size-5 text-[#e47147]" />}</div><div className="mt-4 flex items-center gap-3"><Avatar className="size-12 border-2 border-white"><AvatarImage src={entry.user.profile?.url} alt="" /><AvatarFallback>{entry.user.name.slice(0, 2).toUpperCase()}</AvatarFallback></Avatar><div className="min-w-0"><p className="truncate text-sm font-bold text-[#302822]">{entry.user.name}{entry.user.id === currentUser?._id && " (you)"}</p><p className="mt-1 text-sm font-bold text-[#df6038]">{entry.points.toLocaleString()} pts</p></div></div></motion.div>)}</div>
+      <div className="grid gap-5 lg:grid-cols-[1.15fr_0.85fr]"><section className="min-w-0 rounded-2xl border border-[#ede8e2] bg-white p-5 sm:p-6"><div><h2 className="font-bold text-[#302822]">Points comparison</h2><p className="mt-1 text-xs text-[#a09389]">Top {chartData.length} {mode === "community" ? "community contributors" : "learners"}</p></div><div className="mt-5 h-[280px] w-full" role="img" aria-label={`Points comparison: ${chartData.map((item) => `${item.name} ${item.points}`).join(", ")}`}><ResponsiveContainer width="100%" height="100%"><BarChart data={chartData} layout="vertical" margin={{ top: 4, right: 15, bottom: 0, left: 2 }}><CartesianGrid horizontal={false} stroke="#f2eee9" /><XAxis type="number" allowDecimals={false} tickLine={false} axisLine={false} tick={{ fontSize: 11, fill: "#a2988f" }} /><YAxis type="category" dataKey="name" width={100} tickLine={false} axisLine={false} tick={{ fontSize: 11, fill: "#766d65" }} tickFormatter={(name: string) => name.length > 15 ? `${name.slice(0, 14)}…` : name} /><Tooltip cursor={{ fill: "#fbf7f4" }} contentStyle={{ borderRadius: 12, border: "1px solid #eee7df", fontSize: 12 }} /><Bar dataKey="points" name="Points" fill="#ec7045" radius={[0, 7, 7, 0]} maxBarSize={22} isAnimationActive={!reduceMotion} /></BarChart></ResponsiveContainer></div></section>
+      <section className="min-w-0 rounded-2xl border border-[#ede8e2] bg-white p-5 sm:p-6"><div className="flex items-center justify-between"><div><h2 className="font-bold text-[#302822]">Your standing</h2><p className="mt-1 text-xs text-[#a09389]">{mode === "community" ? "Based on your contributions" : "Based on course progress"}</p></div><span className="grid size-10 place-items-center rounded-xl bg-[#fff0e9]"><Trophy className="size-5 text-[#df6038]" /></span></div>{current ? <div className="mt-7"><p className="text-4xl font-bold text-[#302822]">#{current.rank}</p><p className="mt-1 text-sm text-[#a09389]">{current.points.toLocaleString()} points</p></div> : <p className="mt-7 text-sm leading-6 text-[#a09389]">You are not in the top {entries.length} for this view yet.</p>}<Link href={mode === "community" ? "/dashboard/student/feed/ask-for-help" : "/dashboard/student/courses"} className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#dc6038]">{mode === "community" ? "Help the community" : "Continue learning"}<ArrowUpRight className="size-4" /></Link></section></div>
+      <section className="overflow-hidden rounded-2xl border border-[#ede8e2] bg-white"><div className="border-b border-[#f1ede8] px-5 py-4"><h2 className="font-bold text-[#302822]">Full rankings</h2><p className="mt-1 text-xs text-[#a09389]">Showing up to 50 students</p></div><div className="divide-y divide-[#f5f1ed]">{entries.map((entry) => <div key={entry.user.id} className={`flex items-center gap-3 px-5 py-3 ${entry.user.id === currentUser?._id ? "bg-[#fff8f3]" : ""}`}><span className="w-8 shrink-0 text-sm font-bold text-[#a3988e]">{String(entry.rank).padStart(2, "0")}</span><Avatar className="size-9"><AvatarImage src={entry.user.profile?.url} alt="" /><AvatarFallback>{entry.user.name.slice(0, 2).toUpperCase()}</AvatarFallback></Avatar><span className="min-w-0 flex-1 truncate text-sm font-semibold text-[#3a312a]">{entry.user.name}{entry.user.id === currentUser?._id && " (you)"}</span><span className="shrink-0 rounded-full bg-[#fff1e9] px-3 py-1 text-xs font-bold text-[#d96239]">{entry.points.toLocaleString()} pts</span></div>)}</div></section>
+    </>}
+  </div>;
 }
-
-const TopCard = ({ entry, position, className }: TopUserProps) => {
-  const isCenter = position === 1;
-  return (
-    <div
-      className={`flex flex-col items-center bg-white rounded-[24px] shadow-sm snap-center shrink-0 ${isCenter ? "p-5 w-[350px]" : "p-4 w-[260px]"} ${className}`}
-    >
-      <div className="w-14 h-14 rounded-full flex items-center justify-center mb-4 bg-[#FFF0EC] text-[#F86432]">
-        {isCenter ? (
-          <Crown className="w-7 h-7" />
-        ) : (
-          <AwardIcon className="w-7 h-7" />
-        )}
-      </div>
-      <Image
-        src={entry.user.profile?.url || DEFAULT_AVATAR}
-        alt={entry.user.name}
-        width={isCenter ? 72 : 60}
-        height={isCenter ? 72 : 60}
-        className="rounded-full object-cover mb-4 bg-gray-100"
-      />
-      <h3
-        className={`font-semibold text-gray-900 mb-2 text-center ${isCenter ? "text-xl" : "text-lg"}`}
-      >
-        {entry.user.name}
-      </h3>
-      <div className="flex items-center justify-center gap-1.5 bg-[#FFF0EC] text-[#F86432] px-3.5 py-1.5 rounded-md text-sm font-semibold">
-        {entry.points} pts
-      </div>
-    </div>
-  );
-};
-
-const RankBadge = ({ rank }: { rank: number }) => (
-  <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-700 font-semibold text-sm">
-    {rank}
-  </div>
-);
-
-export const StudentFeedLeaderboard = ({
-  onPeriodChange,
-}: {
-  onPeriodChange?: (label: string) => void;
-}) => {
-  const [activeTab, setActiveTab] = useState<LeaderboardPeriod>("month");
-  const { data, isLoading, isError } = useGetLeaderboard(activeTab, 50);
-  const entries = data?.data ?? [];
-  const top3 = entries.slice(0, 3);
-  const rest = entries.slice(3);
-
-  const handleTabChange = (period: LeaderboardPeriod, label: string) => {
-    setActiveTab(period);
-    onPeriodChange?.(label);
-  };
-
-  const columns: ColumnDef<LeaderboardEntry>[] = [
-    {
-      key: "rank",
-      header: "Rank",
-      cell: (item) => <RankBadge rank={item.rank} />,
-      className: "w-20 pl-6",
-      headerClassName: "pl-6",
-    },
-    {
-      key: "user",
-      header: "User",
-      cell: (item) => (
-        <div className="flex items-center gap-3">
-          <Image
-            src={item.user.profile?.url || DEFAULT_AVATAR}
-            alt={item.user.name}
-            width={40}
-            height={40}
-            className="w-10 h-10 rounded-full object-cover bg-gray-100"
-          />
-          <span className="font-semibold text-gray-900 text-[15px]">
-            {item.user.name}
-          </span>
-        </div>
-      ),
-    },
-    {
-      key: "badge",
-      header: "Badge",
-      cell: (item) => (
-        <span className="text-gray-500 font-medium capitalize">
-          {item.badge ?? "-"}
-        </span>
-      ),
-    },
-    {
-      key: "points",
-      header: "Points",
-      cell: (item) => (
-        <div className="bg-[#EEF2FF] text-[#6366F1] px-3 py-1 rounded-full text-[13px] font-semibold w-max">
-          {item.points}
-        </div>
-      ),
-    },
-    {
-      key: "services",
-      header: "Courses",
-      cell: (item) => (
-        <span className="text-gray-500 text-[15px] truncate block max-w-[220px]">
-          {item.services.length > 0 ? item.services.join(", ") : "-"}
-        </span>
-      ),
-    },
-  ];
-
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center py-24">
-        <StudentLoadingSkeleton variant="feed" />
-      </div>
-    );
-  }
-
-  if (isError) {
-    return (
-      <div className="flex items-center justify-center py-24 text-[15px] text-red-500">
-        Failed to load leaderboard. Please try again.
-      </div>
-    );
-  }
-
-  return (
-    <div className="w-full">
-      {entries.length === 0 ? (
-        <div className="flex items-center justify-center py-24 text-[15px] text-gray-500">
-          No leaderboard activity for this period yet.
-        </div>
-      ) : (
-        <>
-          {/* Desktop Top Section */}
-          {top3.length > 0 && (
-            <div className="hidden md:block px-8 pb-12">
-              <div className="grid grid-cols-3 justify-items-center max-w-5xl mx-auto relative">
-                {top3[1] && <TopCard entry={top3[1]} position={2} />}
-                {top3[0] && (
-                  <TopCard className="-translate-y-8" entry={top3[0]} position={1} />
-                )}
-                {top3[2] && <TopCard entry={top3[2]} position={3} />}
-              </div>
-            </div>
-          )}
-
-          {/* Mobile Header Area */}
-          <div className="block md:hidden px-4 pt-4 mb-6">
-            <div className="mb-6">
-              <h2 className="text-[28px] font-bold flex items-center gap-2 text-gray-900 mb-1">
-                Leaderboard <span>👋</span>
-              </h2>
-              <p className="text-gray-500 text-[15px]">
-                Top contributors this {activeTab === "all-time" ? "period" : activeTab}
-              </p>
-            </div>
-
-            {top3.length > 0 && (
-              <div
-                className="flex gap-4 overflow-x-auto pb-4 snap-x items-end"
-                style={{ msOverflowStyle: "none", scrollbarWidth: "none" }}
-              >
-                <style
-                  dangerouslySetInnerHTML={{
-                    __html: `
-                .flex::-webkit-scrollbar { display: none; }
-              `,
-                  }}
-                />
-                {top3[1] && <TopCard entry={top3[1]} position={2} />}
-                {top3[0] && <TopCard entry={top3[0]} position={1} />}
-                {top3[2] && <TopCard entry={top3[2]} position={3} />}
-              </div>
-            )}
-          </div>
-
-          {/* Bottom Area (Table/List) */}
-          {rest.length > 0 && (
-            <>
-              <div className="bg-white md:rounded-3xl px-0 md:px-8 py-0 md:py-8 -mt-6 relative z-10 hidden md:block">
-                {/* Tabs */}
-                <div className="flex items-center gap-3 mb-12">
-                  {TABS.map((tab) => (
-                    <button
-                      key={tab.key}
-                      onClick={() => handleTabChange(tab.key, tab.label)}
-                      className={`px-6 py-2.5 rounded-[12px] text-[15px] font-medium transition-colors ${
-                        activeTab === tab.key
-                          ? "bg-[#F6F6F6] text-[#F86432]"
-                          : "bg-white text-gray-900 hover:bg-gray-50"
-                      }`}
-                    >
-                      {tab.label}
-                    </button>
-                  ))}
-                </div>
-                <DataTable
-                  data={rest}
-                  columns={columns}
-                  keyExtractor={(item) => item.user.id}
-                  className="w-full"
-                />
-              </div>
-
-              <div className="block md:hidden p-3 bg-white">
-                {/* Tabs */}
-                <div className="flex items-center gap-3 mb-12">
-                  {TABS.map((tab) => (
-                    <button
-                      key={tab.key}
-                      onClick={() => handleTabChange(tab.key, tab.label)}
-                      className={`px-6 py-2.5 rounded-[12px] text-[15px] font-medium transition-colors ${
-                        activeTab === tab.key
-                          ? "bg-[#F6F6F6] text-[#F86432]"
-                          : "bg-white text-gray-900 hover:bg-gray-50"
-                      }`}
-                    >
-                      {tab.label}
-                    </button>
-                  ))}
-                </div>
-                <DataList
-                  data={rest}
-                  keyExtractor={(item) => item.user.id}
-                  itemClassName="bg-[#F6F6F6] rounded-[20px] mb-4"
-                  renderItem={(item) => (
-                    <div className="w-full flex flex-col p-1">
-                      <div className="flex items-center justify-between mb-3">
-                        <div className="flex items-center gap-3">
-                          <Image
-                            src={item.user.profile?.url || DEFAULT_AVATAR}
-                            alt={item.user.name}
-                            width={44}
-                            height={44}
-                            className="w-11 h-11 rounded-full object-cover bg-gray-100"
-                          />
-                          <span className="font-bold text-lg text-gray-900">
-                            {item.user.name}
-                          </span>
-                        </div>
-                        <RankBadge rank={item.rank} />
-                      </div>
-                      <div className="bg-[#EEF2FF] text-[#6366F1] px-3.5 py-1.5 rounded-full text-sm font-semibold w-max mb-3">
-                        {item.points} pts
-                      </div>
-                      <div className="text-gray-500 text-[15px] truncate">
-                        {item.services.length > 0 ? item.services.join(", ") : "-"}
-                      </div>
-                    </div>
-                  )}
-                />
-              </div>
-            </>
-          )}
-        </>
-      )}
-    </div>
-  );
-};

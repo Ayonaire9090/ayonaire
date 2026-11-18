@@ -16,7 +16,6 @@ import { CourseContentAccordion } from "../_components/course-content-accordion"
 import { CourseAiAssistant } from "../_components/course-ai-assistant";
 import { CourseOverview } from "../_components/course-overview";
 import { SidebarInset } from "@/components/ui/sidebar";
-import { StudentHomeSidebarContent } from "../../_components/student-home-sidebar-content";
 import { CourseQAndA } from "../_components/course-q-and-a";
 import { CourseNotes } from "../_components/course-notes";
 import { CourseAnnouncements } from "../_components/course-announcements";
@@ -97,11 +96,10 @@ export default function StudentCourseLessonPage({
 
   return (
     <>
-      <StudentHomeSidebarContent variant="sidebar" collapsible="offcanvas" />
       <SidebarInset className="bg-transparent min-h-screen">
         <div
           className={cn(
-            "flex flex-col min-h-screen pb-24",
+            "flex flex-col min-h-screen",
             ["Course Content", "Ai Assistant", "Q&A"].includes(activeTab)
               ? "bg-white"
               : "bg-[#F6F6F6]",

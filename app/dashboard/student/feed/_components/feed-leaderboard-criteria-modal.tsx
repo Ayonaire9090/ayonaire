@@ -5,10 +5,10 @@ import { AppSimpleModal } from "@/components/modals/app-simple-modal";
 import { X } from "lucide-react";
 
 const CRITERIA_ITEMS = [
-  "Daily activity on the platform",
-  "10% course completion",
-  "50% course completion",
-  "100% course completion",
+  "Create a post: 5 points",
+  "Comment on a post: 2 points",
+  "Answer an Ask for Help question: 3 points",
+  "Weekly and monthly views cover the last 7 and 30 days.",
 ];
 
 interface FeedCriteriaModalProps {

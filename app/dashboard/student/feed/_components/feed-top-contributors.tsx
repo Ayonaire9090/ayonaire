@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
-import { useGetLeaderboard } from "@/hooks/api/use-leaderboard";
+import { useGetCommunityLeaderboard } from "@/hooks/api/use-community";
 
 function formatPoints(points: number): string {
   if (points >= 1000) return `${(points / 1000).toFixed(1)}k pts`;
@@ -13,7 +13,7 @@ function formatPoints(points: number): string {
 }
 
 export const FeedTopContributors = () => {
-  const { data, isLoading, isError } = useGetLeaderboard("all-time", 3);
+  const { data, isLoading, isError } = useGetCommunityLeaderboard("all-time", 3);
   const leaders = data?.data ?? [];
 
   return (

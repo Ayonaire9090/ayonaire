@@ -28,6 +28,8 @@ import {
   useGetEnrolledCourses,
 } from "@/hooks/api/use-enrollment";
 import { Enrollment } from "@/lib/api/endpoints/enrollment";
+import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { useReducedMotion } from "framer-motion";
 
 function deriveStatus(completed: boolean, progress: number): CourseStatus {
   if (completed) return "Completed";
@@ -49,6 +51,7 @@ function StudentCoursesContent() {
   const [selectedCourseIds, setSelectedCourseIds] = useState<string[]>([]);
   const [draftSelectedCourseIds, setDraftSelectedCourseIds] = useState<string[]>([]);
   const { state } = useSidebar();
+  const reducedMotion = useReducedMotion();
 
   // "Expired"/"Paid" have no backend equivalent (enrollments don't carry a
   // payment or expiry status), so those tabs are left non-functional rather
@@ -93,7 +96,6 @@ function StudentCoursesContent() {
     { label: "75–99%", count: allCourses.filter((course) => course.progress >= 75 && course.progress < 100 && course.status !== "Completed").length },
     { label: "100%", count: allCourses.filter((course) => course.progress >= 100 || course.status === "Completed").length },
   ];
-  const maxBucket = Math.max(1, ...progressBuckets.map((bucket) => bucket.count));
 
   const filteredServiceOptions = useMemo(() => {
     const query = serviceSearchQuery.trim().toLowerCase();
@@ -207,9 +209,7 @@ function StudentCoursesContent() {
 
         {!isLoading && !isCompletedLoading && !isError && !isCompletedError && allCourses.length > 0 && <section className="mx-4 mb-2 grid max-w-7xl gap-4 lg:mx-8 xl:grid-cols-[1fr_1.25fr] 2xl:mx-auto" aria-label="Course progress overview">
           <div className="rounded-2xl border border-[#ebe6df] bg-white p-5 sm:p-6"><p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#df6842]">Your learning at a glance</p><h2 className="mt-2 text-lg font-bold text-[#2a2420]">Keep your momentum</h2><div className="mt-5 grid grid-cols-3 gap-3"><div><p className="text-2xl font-bold text-[#2a2420]">{allCourses.length}</p><p className="mt-1 text-xs text-[#9a9087]">Enrolled</p></div><div><p className="text-2xl font-bold text-[#df6842]">{allCourses.filter((course) => course.status === "In Progress").length}</p><p className="mt-1 text-xs text-[#9a9087]">In progress</p></div><div><p className="text-2xl font-bold text-[#2a2420]">{allCourses.filter((course) => course.status === "Completed").length}</p><p className="mt-1 text-xs text-[#9a9087]">Completed</p></div></div></div>
-          <div className="rounded-2xl border border-[#ebe6df] bg-white p-5 sm:p-6"><div className="flex flex-wrap items-baseline justify-between gap-2"><div><h2 className="text-sm font-bold text-[#2a2420]">Course progress</h2><p className="mt-1 text-xs text-[#9a9087]">Number of your courses in each completion range</p></div><span className="text-xs text-[#a59a91]">All enrolled courses</span></div><div className="mt-4 grid h-28 grid-cols-6 items-end gap-2 sm:gap-4" role="img" aria-label={`Course progress distribution: ${progressBuckets.map((bucket) => `${bucket.label}: ${bucket.count}`).join(", ")}`}>
-            {progressBuckets.map((bucket) => <div key={bucket.label} className="flex h-full min-w-0 flex-col items-center justify-end gap-1"><span className="text-xs font-semibold text-[#7a6e65]">{bucket.count}</span><div className="flex h-[68px] w-full items-end rounded-md bg-[#faf7f3]"><div className="w-full rounded-md bg-[#ec7045] transition-[height]" style={{ height: `${bucket.count ? Math.max(8, bucket.count / maxBucket * 100) : 0}%` }} /></div><span className="whitespace-nowrap text-[9px] text-[#a49a91] sm:text-[10px]">{bucket.label}</span></div>)}
-          </div></div>
+          <div className="min-w-0 rounded-2xl border border-[#ebe6df] bg-white p-5 sm:p-6"><div className="flex flex-wrap items-baseline justify-between gap-2"><div><h2 className="text-sm font-bold text-[#2a2420]">Course progress</h2><p className="mt-1 text-xs text-[#9a9087]">Number of your courses in each completion range</p></div><span className="text-xs text-[#a59a91]">All enrolled courses</span></div><div className="mt-3 h-[170px] w-full" role="img" aria-label={`Course progress distribution: ${progressBuckets.map((bucket) => `${bucket.label}: ${bucket.count}`).join(", ")}`}><ResponsiveContainer width="100%" height="100%"><BarChart data={progressBuckets} margin={{ top: 10, right: 4, left: -25, bottom: 0 }}><CartesianGrid vertical={false} stroke="#f3eee9" /><XAxis dataKey="label" tickLine={false} axisLine={false} interval={0} tick={{ fontSize: 10, fill: "#9b8f85" }} /><YAxis allowDecimals={false} tickLine={false} axisLine={false} tick={{ fontSize: 10, fill: "#aaa096" }} /><Tooltip cursor={{ fill: "#faf6f2" }} contentStyle={{ borderRadius: 12, border: "1px solid #eee7df", fontSize: 12 }} /><Bar dataKey="count" name="Courses" fill="#ec7045" radius={[6, 6, 0, 0]} maxBarSize={38} isAnimationActive={!reducedMotion} /></BarChart></ResponsiveContainer></div></div>
         </section>}
 
         {/* Courses Grid */}
@@ -223,7 +223,7 @@ function StudentCoursesContent() {
               Failed to load courses. Please try again.
             </div>
           ) : filteredCourses.length > 0 ? (
-            <div className="grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-5">
+            <div className="grid w-full auto-rows-fr grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
               {filteredCourses.map((course) => (
                 <StudentCourseCard
                   key={course.id}

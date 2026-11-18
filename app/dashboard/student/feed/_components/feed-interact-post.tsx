@@ -53,7 +53,7 @@ export const FeedInteractPost = ({
 
     if (typeof navigator !== "undefined" && navigator.clipboard) {
       navigator.clipboard
-        .writeText(`${window.location.origin}${window.location.pathname}?post=${feedId}`)
+        .writeText(`${window.location.origin}/dashboard/student/feed?post=${feedId}`)
         .then(() => toast.success("Post link copied"))
         .catch(() => toast.error("Could not copy the post link"));
     }

@@ -5,8 +5,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Info } from "lucide-react";
 import Image from "next/image";
-import { useGetLeaderboard } from "@/hooks/api/use-leaderboard";
-import { LeaderboardPeriod } from "@/lib/api/endpoints/leaderboard";
+import { useGetCommunityLeaderboard } from "@/hooks/api/use-community";
 import { FeedCriteriaModal } from "./feed-leaderboard-criteria-modal";
 
 type LeaderTab = "all-time" | "month" | "week";
@@ -25,8 +24,8 @@ function formatPoints(points: number): string {
 export const FeedLeaderBoard = () => {
   const [activeTab, setActiveTab] = useState<LeaderTab>("all-time");
   const [isCriteriaOpen, setIsCriteriaOpen] = useState(false);
-  const { data, isLoading, isError } = useGetLeaderboard(
-    activeTab as LeaderboardPeriod,
+  const { data, isLoading, isError } = useGetCommunityLeaderboard(
+    activeTab,
     8,
   );
   const leaders = data?.data ?? [];
@@ -44,7 +43,7 @@ export const FeedLeaderBoard = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <h2 className="text-lg lg:text-xl font-bold text-gray-900 tracking-tight">
-          Leaderboard
+          Community leaderboard
         </h2>
         <Info
           onClick={() => setIsCriteriaOpen(true)}
