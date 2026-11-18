@@ -10,7 +10,7 @@ export default function StudentDashboardLayout({
 }) {
   return (
     <AuthGuard allowedRoles={["admin", "student"]}>
-      <SidebarProvider defaultOpen={false}>
+      <SidebarProvider defaultOpen={true}>
         {children}
         {/* Mobile bottom navigation */}
         <MobileDashboardFooter items={studentFooterNav} maxVisible={5} />

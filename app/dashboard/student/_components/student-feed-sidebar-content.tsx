@@ -18,7 +18,6 @@ import {
   ChevronDown,
   Megaphone,
   Users2,
-  MessageCircle,
   HelpCircle,
   Shield,
   Sparkles,
@@ -28,8 +27,6 @@ import {
   Pencil,
   Trophy,
   LayoutGrid,
-  Home,
-  BookOpen,
   MessagesSquare,
 } from "lucide-react";
 import { dashboardData } from "@/constants";
@@ -250,7 +247,7 @@ export function StudentFeedSidebarContent({
                             isActive && "bg-[#fff0e9] text-[#df6038] font-semibold hover:bg-[#fff0e9] hover:text-[#df6038]",
                           )}
                         >
-                          <Link href={item.url}>
+                          <Link href={item.url} onClick={() => { if (isMobile) toggleSidebar(); }}>
                             <item.icon
                               className={cn(
                                 "h-5 w-5",
@@ -299,7 +296,7 @@ export function StudentFeedSidebarContent({
                           isCollapsed && "justify-center",
                         )}
                       >
-                        <Link href={item.url} className={item.colorClass}>
+                        <Link href={item.url} className={item.colorClass} onClick={() => { if (isMobile) toggleSidebar(); }}>
                           <item.icon
                             className={cn(
                               "h-4 w-4",
