@@ -28,6 +28,9 @@ import {
   Pencil,
   Trophy,
   LayoutGrid,
+  Home,
+  BookOpen,
+  MessagesSquare,
 } from "lucide-react";
 import { dashboardData } from "@/constants";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -43,6 +46,7 @@ import {
 import { FeedCreatePostModal } from "../feed/_components/feed-create-post-modal";
 
 const spacesNav = [
+  { title: "Home feed", url: "/dashboard/student/feed", icon: Home },
   {
     title: "Community",
     url: "/dashboard/student/community",
@@ -117,7 +121,7 @@ export function StudentFeedSidebarContent({
       : "Service";
 
   return (
-    <Sidebar className="bg-white border-r border-gray-200" {...props}>
+    <Sidebar className="bg-[#fffefa] border-r border-[#eeeae4]" {...props}>
       <SidebarHeader className="bg-transparent">
         <SidebarMenu>
           <SidebarMenuItem>
@@ -126,7 +130,7 @@ export function StudentFeedSidebarContent({
                 "flex items-center",
                 isCollapsed
                   ? "flex-col justify-center gap-4 mt-2"
-                  : "justify-between p-1.5 bg-white/90 rounded-[10px]",
+                  : "justify-between px-2 pt-3 pb-5",
               )}
             >
               <a
@@ -167,7 +171,7 @@ export function StudentFeedSidebarContent({
 
             {!isCollapsed && (
               <>
-                <div className="flex items-center gap-3 mb-2">
+                <div className="flex items-center gap-3 mb-3 rounded-xl border border-[#f0ece7] bg-[#faf9f7] p-3">
                   <Avatar className="h-10 w-10 border border-gray-200">
                     <AvatarImage
                       src={user?.profile?.url ?? dashboardData.user.avatar}
@@ -189,9 +193,9 @@ export function StudentFeedSidebarContent({
 
                 <Button
                   onClick={() => setIsCreateModalOpen(true)}
-                  className="w-full bg-[#F15D34] hover:bg-[#F15D34]/90 text-white shadow-none font-medium h-10 rounded-md cursor-pointer"
+                  className="w-full bg-[#ec7045] hover:bg-[#d95d34] text-white shadow-none font-semibold h-11 rounded-xl cursor-pointer"
                 >
-                  Create
+                  <Pencil className="mr-2 size-4" /> Create a post
                 </Button>
               </>
             )}
@@ -200,6 +204,12 @@ export function StudentFeedSidebarContent({
       </SidebarHeader>
 
       <SidebarContent className="bg-transparent">
+        <SidebarGroup>
+          {!isCollapsed && <p className="px-3 pb-2 text-[10px] font-bold tracking-[0.16em] text-[#aaa29a]">YOUR LEARNING</p>}
+          <SidebarMenu className="gap-1">
+            {[{ title: "My courses", url: "/dashboard/student/courses", icon: BookOpen }, { title: "Messages", url: "/dashboard/student/messages", icon: MessagesSquare }].map((item) => <SidebarMenuItem key={item.title}><SidebarMenuButton asChild tooltip={item.title} className="rounded-xl px-3 py-5 text-[#77716b] hover:bg-[#f7f4ef] hover:text-[#29231f]"><Link href={item.url}><item.icon className="size-5" />{!isCollapsed && <span className="text-sm">{item.title}</span>}</Link></SidebarMenuButton></SidebarMenuItem>)}
+          </SidebarMenu>
+        </SidebarGroup>
         {/* SPACES */}
         <SidebarGroup
           className={cn(
@@ -215,7 +225,7 @@ export function StudentFeedSidebarContent({
                   strokeWidth={3}
                 />
                 <span className="font-semibold text-[15px] text-black">
-                  Spaces
+                  COMMUNITY
                 </span>
               </CollapsibleTrigger>
             )}
@@ -230,8 +240,8 @@ export function StudentFeedSidebarContent({
                           asChild
                           tooltip={item.title}
                           className={cn(
-                            "text-gray-500 py-5 px-3 rounded-lg hover:bg-gray-100 hover:text-gray-900 transition-colors",
-                            isActive && "bg-[#F15D34] text-white font-medium",
+                            "text-[#77716b] py-5 px-3 rounded-xl hover:bg-[#f7f4ef] hover:text-[#29231f] transition-colors",
+                            isActive && "bg-[#fff0e9] text-[#df6038] font-semibold hover:bg-[#fff0e9] hover:text-[#df6038]",
                           )}
                         >
                           <Link href={item.url}>
@@ -265,7 +275,7 @@ export function StudentFeedSidebarContent({
                   strokeWidth={3}
                 />
                 <span className="font-semibold text-[15px] text-black">
-                  Tags
+                  EXPLORE TOPICS
                 </span>
               </CollapsibleTrigger>
             )}

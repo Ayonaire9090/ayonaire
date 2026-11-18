@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import { toast } from "sonner";
-import { ChevronDown, Smile, Camera } from "lucide-react";
+import { Send } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
+import { queryKeys } from "@/lib/api/query-keys";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useCommentFeedMutation } from "@/hooks/api/use-feeds";
@@ -16,38 +18,31 @@ export const FeedWriteComment = ({ feedId }: FeedWriteCommentProps) => {
   const [text, setText] = useState("");
   const commentMutation = useCommentFeedMutation();
   const user = useAuthStore((s) => s.user);
+  const queryClient = useQueryClient();
 
   const handleSubmit = () => {
     const trimmed = text.trim();
     if (!feedId || !trimmed || commentMutation.isPending) return;
     commentMutation.mutate(
       { feedId, text: trimmed },
-      { onSuccess: () => setText("") },
+      { onSuccess: () => { setText(""); queryClient.invalidateQueries({ queryKey: queryKeys.feeds.all }); }, onError: () => toast.error("Could not post your comment. Please try again.") },
     );
   };
 
-  const notAvailable = (feature: string) =>
-    toast.info(`${feature} isn't available yet.`);
-
   return (
     <div className="flex items-start gap-2">
-      <button
-        onClick={() => notAvailable("Switching comment identity")}
-        className="relative shrink-0"
-      >
+      <div className="relative shrink-0">
         <Avatar className="w-9 h-9">
           <AvatarImage src={user?.profile?.url} alt={user?.name ?? "You"} />
           <AvatarFallback className="bg-gray-200 text-gray-500">
             {user?.name ? user.name.slice(0, 2).toUpperCase() : "U"}
           </AvatarFallback>
         </Avatar>
-        <span className="absolute -bottom-1 -right-1 flex items-center justify-center w-4 h-4 rounded-full bg-gray-900 border-2 border-white">
-          <ChevronDown className="w-2.5 h-2.5 text-white" strokeWidth={3} />
-        </span>
-      </button>
+      </div>
 
       <div className="flex-1 flex items-center bg-[#F6F6F6] rounded-full pl-4 pr-2 min-h-11">
         <Textarea
+          aria-label="Write a comment"
           value={text}
           onChange={(e) => setText(e.target.value)}
           onKeyDown={(e) => {
@@ -62,18 +57,12 @@ export const FeedWriteComment = ({ feedId }: FeedWriteCommentProps) => {
 
         <div className="flex items-center gap-0.5 shrink-0">
           <button
-            onClick={() => notAvailable("Emoji")}
-            title="Emoji"
-            className="flex items-center justify-center w-7 h-7 rounded-full hover:bg-gray-200 transition-colors text-gray-500"
+            onClick={handleSubmit}
+            disabled={!text.trim() || commentMutation.isPending}
+            aria-label="Post comment"
+            className="flex items-center justify-center w-8 h-8 rounded-full text-[#e65c32] hover:bg-orange-100 transition-colors disabled:opacity-40"
           >
-            <Smile className="w-[18px] h-[18px]" strokeWidth={1.75} />
-          </button>
-          <button
-            onClick={() => notAvailable("Photo attachments")}
-            title="Photo"
-            className="flex items-center justify-center w-7 h-7 rounded-full hover:bg-gray-200 transition-colors text-gray-500"
-          >
-            <Camera className="w-[18px] h-[18px]" strokeWidth={1.75} />
+            <Send className="w-[17px] h-[17px]" strokeWidth={1.75} />
           </button>
         </div>
       </div>

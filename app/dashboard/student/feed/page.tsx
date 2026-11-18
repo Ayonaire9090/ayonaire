@@ -18,6 +18,8 @@ import { useGetFeeds } from "@/hooks/api/use-feeds";
 import { useFeedRealtimeSync } from "@/hooks/socket/use-feed-realtime-sync";
 import { useAuthStore } from "@/store/auth.store";
 import { FeedPostData, mapFeedRecordToFeedPost } from "./_components/feed-data";
+import { motion, useReducedMotion } from "framer-motion";
+import Link from "next/link";
 
 const copyPostLink = (feedId: string) => {
   const url = `${window.location.origin}${window.location.pathname}?post=${feedId}`;
@@ -51,6 +53,7 @@ const viewPost = (feedId: string) => {
 
 export default function StudentFeedPage() {
   const user = useAuthStore((state) => state.user);
+  const reducedMotion = useReducedMotion();
   const [tagFilter, setTagFilter] = useState<string | undefined>(undefined);
   const [reportingFeedId, setReportingFeedId] = useState<string | null>(null);
   const [editingPost, setEditingPost] = useState<{ feedId: string; content: string } | null>(null);
@@ -101,13 +104,16 @@ export default function StudentFeedPage() {
   };
 
   return (
-    <div className="flex flex-1 flex-col lg:grid grid-cols-3 gap-4 p-0 lg:p-6 pb-24 md:pb-6">
-      <div className="@container/main flex flex-1 flex-col gap-6 lg:col-span-2">
+    <div className="mx-auto w-full max-w-[1500px] px-4 pb-28 pt-6 sm:px-6 lg:px-8 lg:pt-8">
+      <div className="mb-7 flex flex-wrap items-end justify-between gap-4">
+        <div><div className="mb-2 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] text-[#d85c36]"><span className="h-2 w-2 rounded-full bg-[#ed7045]" /> Ayonaire community</div><h1 className="text-[30px] font-bold tracking-[-0.04em] text-[#201d1a] sm:text-[38px]">Your space to grow<span className="text-[#ed7045]">.</span></h1><p className="mt-1 text-sm text-[#817a73]">Learn together, share your progress, and find your people.</p></div>
+        <Link href="/dashboard/student/courses" className="rounded-xl border border-[#e8e3dd] bg-white px-4 py-2.5 text-sm font-semibold text-[#3e3833] transition hover:border-[#ed7045] hover:text-[#d85c36]">My learning <span aria-hidden="true">↗</span></Link>
+      </div>
+      <div className="flex flex-col gap-7 xl:grid xl:grid-cols-[minmax(0,1fr)_310px] xl:items-start">
+      <div className="@container/main flex min-w-0 flex-col gap-5">
         <FeedNewPost />
-        <FeedLivePost />
-        <FeedWorkShop />
 
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-4">
           {/* Feed Filter */}
           <FeedFilter selectedTag={tagFilter} onApply={setTagFilter} />
 
@@ -126,7 +132,7 @@ export default function StudentFeedPage() {
             </div>
           ) : (
             posts.map((post) => (
-              <div key={post.id} id={`feed-post-${post.id}`} className="rounded-2xl transition-all">
+              <motion.div key={post.id} id={`feed-post-${post.id}`} initial={reducedMotion ? false : { opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.22 }} className="rounded-2xl transition-all">
                 <FeedPost
                   feedId={post.id}
                   authorName={post.authorName}
@@ -144,18 +150,21 @@ export default function StudentFeedPage() {
                   postOptions={buildPostOptions(post)}
                   onReportPost={() => setReportingFeedId(post.id)}
                 />
-              </div>
+              </motion.div>
             ))
           )}
         </div>
       </div>
 
       {/* Other Feed Page Content (Sidebar on mobile) */}
-      <div className="flex flex-col gap-3 lg:col-span-1 rounded-xl h-fit lg:sticky lg:top-2">
+      <aside className="flex flex-col gap-4 rounded-xl h-fit xl:sticky xl:top-4">
+        <div className="rounded-2xl border border-[#ebe8e3] bg-[#25221f] p-5 text-white"><p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#ffac88]">A little progress goes a long way</p><h2 className="mt-3 text-lg font-semibold leading-snug">Keep showing up for your goals.</h2><p className="mt-2 text-sm leading-6 text-white/65">Pick up where you left off and make today count.</p><Link href="/dashboard/student/courses" className="mt-4 inline-flex rounded-lg bg-white px-3.5 py-2 text-xs font-semibold text-[#25221f] transition hover:bg-[#fff0e8]">Continue learning <span className="ml-2">↗</span></Link></div>
+        <FeedLivePost />
+        <FeedWorkShop />
         <FeedUpcomingAnnouncements />
         <FeedUpcomingWorkShops />
         <FeedLeaderBoard />
-      </div>
+      </aside>
       <FeedReportModal
         feedId={reportingFeedId}
         onClose={() => setReportingFeedId(null)}
@@ -169,6 +178,7 @@ export default function StudentFeedPage() {
         feedId={deletingFeedId}
         onClose={() => setDeletingFeedId(null)}
       />
+      </div>
     </div>
   );
 }

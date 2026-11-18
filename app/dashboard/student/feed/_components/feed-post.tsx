@@ -1,3 +1,6 @@
+"use client";
+import { useRef, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { FeedPostHeader } from "./feed-post-header";
 import { FeedPostContent } from "./feed-post-content";
 import { FeedPostPoll } from "./feed-post-poll";
@@ -56,8 +59,16 @@ export const FeedPost = ({
   comments,
   currentUserId,
 }: FeedPostProps) => {
+  const [commentsOpen, setCommentsOpen] = useState(false);
+  const commentArea = useRef<HTMLDivElement>(null);
+  const reducedMotion = useReducedMotion();
+  const openComments = () => {
+    if (commentsOpen) { setCommentsOpen(false); return; }
+    setCommentsOpen(true);
+    requestAnimationFrame(() => commentArea.current?.querySelector("textarea")?.focus());
+  };
   return (
-    <div className="bg-white lg:rounded-2xl border border-gray-200/80 p-4 sm:p-6 flex flex-col w-full">
+    <article className="bg-white rounded-2xl border border-[#ebe8e3] p-4 sm:p-6 flex flex-col w-full shadow-[0_2px_10px_rgba(39,31,23,0.035)]">
       {/* Header */}
       <FeedPostHeader
         title={authorName}
@@ -92,24 +103,20 @@ export const FeedPost = ({
           comments={commentsCount}
           shares={sharesCount}
           isLikedByMe={isLikedByMe}
+          onComment={openComments}
+          commentsOpen={commentsOpen}
         />
       </div>
 
       {/* Comments */}
-      {comments && comments.length > 0 && (
-        <div className="mt-4">
-          <FeedCommentList
-            feedId={feedId}
-            comments={comments}
-            currentUserId={currentUserId}
-          />
-        </div>
-      )}
-
-      {/* Comment Input */}
-      <div className="mt-4">
-        <FeedWriteComment feedId={feedId} />
-      </div>
-    </div>
+      <AnimatePresence initial={false}>
+        {commentsOpen && <motion.div ref={commentArea} initial={reducedMotion ? false : { opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={reducedMotion ? undefined : { opacity: 0, height: 0 }} transition={{ duration: 0.18 }} className="overflow-hidden">
+          <div className="space-y-4 pt-4">
+            {comments && comments.length > 0 && <FeedCommentList feedId={feedId} comments={comments} currentUserId={currentUserId} />}
+            <FeedWriteComment feedId={feedId} />
+          </div>
+        </motion.div>}
+      </AnimatePresence>
+    </article>
   );
 };

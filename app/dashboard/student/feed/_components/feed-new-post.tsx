@@ -8,6 +8,10 @@ import Image from "next/image";
 import { X, Tag, ChevronDown } from "lucide-react";
 import { useCreateFeedMutation } from "@/hooks/api/use-feeds";
 import { FEED_TAG_OPTIONS } from "./feed-tags";
+import { useAuthStore } from "@/store/auth.store";
+import { toast } from "sonner";
+import { useQueryClient } from "@tanstack/react-query";
+import { queryKeys } from "@/lib/api/query-keys";
 
 interface FeedNewPostProps {
   channel?: string;
@@ -23,6 +27,8 @@ export const FeedNewPost = ({ channel }: FeedNewPostProps = {}) => {
   const [isTagDropdownOpen, setIsTagDropdownOpen] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const createFeedMutation = useCreateFeedMutation();
+  const user = useAuthStore((state) => state.user);
+  const queryClient = useQueryClient();
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -52,31 +58,35 @@ export const FeedNewPost = ({ channel }: FeedNewPostProps = {}) => {
         setText("");
         setSelectedTag(undefined);
         removeImage();
+        queryClient.invalidateQueries({ queryKey: queryKeys.feeds.all });
+        toast.success("Post shared with your community");
       },
+      onError: () => toast.error("Could not create your post. Please try again."),
     });
   };
 
   return (
     <>
-      <div className="flex flex-col p-4 bg-white lg:rounded-xl w-full space-y-3">
-        <h2 className="font-semibold text-xl">New Post</h2>
+      <div className="flex flex-col p-5 sm:p-6 bg-white rounded-2xl border border-[#ebe8e3] shadow-[0_2px_10px_rgba(39,31,23,0.035)] w-full space-y-4">
+        <div className="flex items-center justify-between"><div><h2 className="font-bold text-[17px] tracking-tight text-[#25211e]">Share with your community</h2><p className="mt-1 text-xs text-[#9a9189]">A question, an idea, or a little win.</p></div><span className="rounded-full bg-[#fff2ec] px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[#e5663c]">Your space</span></div>
         {/* User Image And Post Input */}
         <div className="flex gap-2">
           {/* User Image */}
           <Avatar className="h-10 w-10 border-2 border-transparent bg-gray-200">
             <AvatarImage
-              src="/assets/icons/user-solid.svg"
-              className="object-contain p-2"
+              src={user?.profile?.url}
+              alt={user?.name ?? "Your profile"}
             />
-            <AvatarFallback>AN</AvatarFallback>
+            <AvatarFallback>{user?.name?.slice(0, 2).toUpperCase() || "YO"}</AvatarFallback>
           </Avatar>
           {/* Post Input */}
           <div className="w-full ">
             <Textarea
               value={text}
               onChange={(e) => setText(e.target.value)}
-              className="h-[100px] border-none! focus:border-none! outline-0! focus:outline-0 focus:ring-2! bg-gray-100 rounded-xl "
-              placeholder="Share What is On Your Mind"
+              aria-label="Write a post"
+              className="min-h-[96px] border border-[#f0ece7]! focus-visible:ring-[#ed7045]/30 bg-[#f9f8f6] rounded-xl p-4 text-sm shadow-none"
+              placeholder="What's on your mind?"
             />
 
             {imagePreview && (
@@ -99,14 +109,6 @@ export const FeedNewPost = ({ channel }: FeedNewPostProps = {}) => {
             {/* Post Actions */}
             <div className="flex justify-between items-center flex-wrap py-2 pt-4">
               <div className="flex items-center gap-2">
-                <Image
-                  src="/assets/icons/link-1.svg"
-                  alt="Link"
-                  width={20}
-                  height={20}
-                  className="stroke-gray-900 w-5 h-5 lg:w-6 lg:h-6 cursor-pointer opacity-40"
-                />
-
                 <input
                   ref={fileInputRef}
                   type="file"
@@ -114,21 +116,13 @@ export const FeedNewPost = ({ channel }: FeedNewPostProps = {}) => {
                   className="hidden"
                   onChange={handleImageChange}
                 />
-                <Image
+                <button type="button" aria-label="Attach an image" onClick={() => fileInputRef.current?.click()} className="rounded-lg p-2 hover:bg-[#f6f3ef]"><Image
                   src="/assets/icons/gallery-icon.svg"
                   alt="Image"
                   width={20}
                   height={20}
-                  onClick={() => fileInputRef.current?.click()}
                   className="stroke-gray-900 w-5 h-5 lg:w-6 lg:h-6 cursor-pointer"
-                />
-                <Image
-                  src="/assets/icons/video.svg"
-                  alt="Image"
-                  width={20}
-                  height={20}
-                  className="stroke-gray-900 w-5 h-5 lg:w-6 lg:h-6 cursor-pointer opacity-40"
-                />
+                /></button>
 
                 <div className="relative">
                   <button
