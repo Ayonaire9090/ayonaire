@@ -59,6 +59,10 @@ export interface LearningReminder {
   name?: string;
   frequency: "Daily" | "Weekly" | "Once";
   time: string;
+  timezone?: string;
+  nextDeliveryAt?: string | null;
+  lastSentAt?: string | null;
+  lastError?: string;
   calendarProvider: "google" | "apple" | "none";
   createdAt: string;
 }
@@ -133,7 +137,7 @@ export const courseInteractionsApi = {
     ),
 
   getReminders: (courseId: string) =>
-    apiClient<ApiResponse<{ reminders: LearningReminder[] }>>(
+    apiClient<ApiResponse<{ reminders: LearningReminder[]; deliveryAvailable: boolean }>>(
       `/api/v1/course-interactions/${courseId}/reminders`,
       { method: "GET", requireAuth: true },
     ),
@@ -144,6 +148,7 @@ export const courseInteractionsApi = {
     frequency: "Daily" | "Weekly" | "Once";
     time: string;
     calendarProvider: "google" | "apple" | "none";
+    timezone: string;
   }) =>
     apiClient<ApiResponse<LearningReminder>>(
       `/api/v1/course-interactions/${payload.courseId}/reminders`,

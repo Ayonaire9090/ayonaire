@@ -65,7 +65,7 @@ export const CourseContentAccordion = ({
   return (
     <div className="w-full flex flex-col h-full overflow-y-auto bg-gray-50/30">
       {modules.map((mod) => {
-        const isOpen = openSections.includes(mod._id) || modules.length === 1;
+        const isOpen = openSections.includes(mod._id);
         const completedCount = mod.lessons.filter((l) => l.isCompleted).length;
 
         return (

@@ -54,8 +54,8 @@ export const announcementsApi = {
       requireAuth: true,
     }),
 
-  getAll: () =>
-    apiClient<ApiResponse<AnnouncementListData>>("/api/v1/announcement", {
+  getAll: (courseId?: string) =>
+    apiClient<ApiResponse<AnnouncementListData>>(`/api/v1/announcement${courseId ? `?course=${encodeURIComponent(courseId)}&limit=100` : ""}`, {
       method: "GET",
       requireAuth: true,
     }),

@@ -31,6 +31,6 @@ export function mapQuizRecordToStudentQuiz(quiz: QuizRecord): StudentQuiz {
     course: quiz.course?.title ?? "Uncategorized",
     marks: "-",
     dueDate: quiz.dueDate ? new Date(quiz.dueDate).toLocaleDateString() : "-",
-    status: quiz.status === "published" ? "Available" : "Draft",
+    status: quiz.status === "active" ? "Available" : "Draft",
   };
 }

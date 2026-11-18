@@ -8,6 +8,7 @@ import { ApiResponse } from "../types";
 export interface QuizRecord {
   _id: string;
   title: string;
+  questions?: QuizQuestion[];
   module?: string;
   course?: { _id: string; title: string } | null;
   randomizeQuestions?: boolean;
@@ -44,9 +45,9 @@ export interface CreateQuizQuestionPayload {
 }
 
 export interface SubmitQuizPayload {
-  quiz: string;
+  quizId: string;
   answers: {
-    question: string;
+    questionId: string;
     selectedOptions: string[];
   }[];
 }

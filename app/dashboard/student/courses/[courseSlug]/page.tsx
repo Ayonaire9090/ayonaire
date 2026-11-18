@@ -36,17 +36,17 @@ export default function StudentCourseLessonPage({
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [selectedLessonId, setSelectedLessonId] = useState<string | undefined>();
 
-  const { data } = useGetEnrolledCourseDetail(courseId);
+  const { data, isError: courseError, isLoading: courseLoading } = useGetEnrolledCourseDetail(courseId);
   const course = data?.data;
   const title = course?.title || "Untitled Course";
 
-  const { data: contentData, isLoading: isContentLoading } = useCourseContent(courseId);
+  const { data: contentData, isLoading: isContentLoading, isError: contentError } = useCourseContent(courseId);
   const modules = contentData?.data?.modules ?? [];
 
   // Resume-last-lesson has its own fallback-to-first-published-lesson logic
   // server-side, so it's the source of truth for which lesson to open by
   // default - once it resolves, seed local selection state with it.
-  const { data: resumeData } = useResumeLastLesson(courseId);
+  const { data: resumeData, isError: resumeError } = useResumeLastLesson(courseId);
   useEffect(() => {
     if (!selectedLessonId && resumeData?.data?.lessonId) {
       setSelectedLessonId(resumeData.data.lessonId);
@@ -60,7 +60,7 @@ export default function StudentCourseLessonPage({
     }
     return undefined;
   }, [modules, selectedLessonId]);
-  const activeVideo = activeLesson?.videos?.[0] ?? course?.introVideo;
+  const activeVideo = activeLesson ? activeLesson.videos?.[0] : course?.introVideo;
 
   // Flat lesson order across all modules, for prev/next navigation.
   const flatLessons = useMemo(
@@ -91,6 +91,9 @@ export default function StudentCourseLessonPage({
     setIsSheetOpen(false);
   };
 
+  if (courseLoading || isContentLoading) return <div className="p-10">Loading course...</div>;
+  if (courseError || contentError || resumeError) return <div className="p-10" role="alert">Unable to load this course. Please refresh or check your enrollment.</div>;
+
   return (
     <>
       <StudentHomeSidebarContent variant="sidebar" collapsible="offcanvas" />
@@ -115,9 +118,11 @@ export default function StudentCourseLessonPage({
               completedLessons={completedLessonsCount}
               totalLessons={flatLessons.length}
               shareUrl={shareUrl}
+              onRate={() => setActiveTab("Reviews")}
             />
             <div className="w-full relative">
               <LessonVideoPlayer
+                key={activeLesson?._id ?? "intro"}
                 lessonId={activeLesson?._id}
                 courseId={courseId}
                 videoUrl={activeVideo?.url}

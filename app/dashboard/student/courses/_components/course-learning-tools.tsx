@@ -1,6 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiClient } from "@/lib/api/client";
+import { queryKeys } from "@/lib/api/query-keys";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { AppSimpleModal } from "@/components/modals/app-simple-modal";
@@ -30,6 +33,20 @@ interface CourseLearningToolsProps {
 type ReminderFrequency = LearningReminder["frequency"];
 type CalendarProvider = LearningReminder["calendarProvider"];
 
+function downloadCalendarReminder(reminder: Pick<LearningReminder, "name" | "time" | "frequency">) {
+  const [hours, minutes] = reminder.time.split(":").map(Number);
+  const start = new Date();
+  start.setHours(hours, minutes, 0, 0);
+  if (start.getTime() <= Date.now()) start.setDate(start.getDate() + 1);
+  const end = new Date(start.getTime() + 30 * 60 * 1000);
+  const stamp = (date: Date) => `${date.getFullYear()}${String(date.getMonth() + 1).padStart(2, "0")}${String(date.getDate()).padStart(2, "0")}T${String(date.getHours()).padStart(2, "0")}${String(date.getMinutes()).padStart(2, "0")}00`;
+  const title = (reminder.name || "Learning reminder").replace(/[\\,;\n\r]/g, " ");
+  const recurrence = reminder.frequency === "Once" ? "" : `RRULE:FREQ=${reminder.frequency === "Daily" ? "DAILY" : "WEEKLY"}\r\n`;
+  const content = `BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Ayonaire//Learning//EN\r\nBEGIN:VEVENT\r\nUID:${crypto.randomUUID()}@ayonaire\r\nDTSTAMP:${new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "")}\r\nDTSTART:${stamp(start)}\r\nDTEND:${stamp(end)}\r\nSUMMARY:${title}\r\n${recurrence}BEGIN:VALARM\r\nTRIGGER:-PT0M\r\nACTION:DISPLAY\r\nDESCRIPTION:Learning reminder\r\nEND:VALARM\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n`;
+  const url = URL.createObjectURL(new Blob([content], { type: "text/calendar;charset=utf-8" }));
+  const link = document.createElement("a"); link.href = url; link.download = "learning-reminder.ics"; link.click(); URL.revokeObjectURL(url);
+}
+
 export const CourseLearningTools = ({
   courseId = "",
   courseTitle = "This course",
@@ -37,6 +54,12 @@ export const CourseLearningTools = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { data, isLoading, isError } = useLearningReminders(courseId);
   const deleteReminder = useDeleteLearningReminderMutation(courseId);
+  const queryClient = useQueryClient();
+  const activateReminder = useMutation({
+    mutationFn: (id: string) => apiClient(`/api/v1/course-interactions/${courseId}/reminders/${id}/activate`, { method: "POST", requireAuth: true, body: JSON.stringify({ timezone: Intl.DateTimeFormat().resolvedOptions().timeZone }) }),
+    onSuccess: () => { queryClient.invalidateQueries({ queryKey: queryKeys.courseInteractions.reminders(courseId) }); toast.success("Email reminders activated"); },
+    onError: (error) => toast.error(error instanceof Error ? error.message : "Could not activate reminder"),
+  });
 
   const reminders = data?.data?.reminders ?? [];
 
@@ -73,6 +96,8 @@ export const CourseLearningTools = ({
             you work through the lessons.
           </p>
           <p className="text-gray-500 text-sm">Course: {courseTitle}</p>
+          <p className="text-gray-500 text-sm">Reminders are emailed to your account. You can also download a calendar event.</p>
+          {data?.data && !data.data.deliveryAvailable && <p role="alert" className="text-sm text-amber-700">Email delivery is not configured on this server. Your reminder will be saved and delivered when email is configured and the worker is running.</p>}
         </div>
 
         {isLoading ? (
@@ -113,6 +138,7 @@ export const CourseLearningTools = ({
                       {reminder.calendarProvider}
                     </span>
                   </div>
+                  {!reminder.timezone ? <div className="mt-2 text-sm text-amber-700">This older reminder needs a time zone. <button className="underline" disabled={activateReminder.isPending} onClick={() => activateReminder.mutate(reminder._id)}>Activate using this device&apos;s time zone</button></div> : <p className="mt-2 text-sm text-gray-500">{reminder.timezone} · {reminder.nextDeliveryAt ? `Next email: ${new Date(reminder.nextDeliveryAt).toLocaleString()}` : reminder.lastSentAt ? "Completed" : "Delivery unavailable"}{reminder.lastError ? ` · ${reminder.lastError}` : ""}</p>}
                 </div>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
@@ -121,6 +147,7 @@ export const CourseLearningTools = ({
                     </button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-[140px]">
+                    <DropdownMenuItem onClick={() => downloadCalendarReminder(reminder)}>Download calendar event</DropdownMenuItem>
                     <DropdownMenuItem
                       onClick={() => handleDelete(reminder._id)}
                       className="text-red-500 focus:text-red-500"
@@ -170,10 +197,12 @@ const LearningRemindersModal = ({
         frequency,
         time,
         calendarProvider,
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
       },
       {
         onSuccess: () => {
           toast.success("Learning reminder saved");
+          if (calendarProvider !== "none") downloadCalendarReminder({ name: name.trim() || courseTitle, frequency, time });
           setName("");
           setFrequency("Daily");
           setTime("09:00");
@@ -234,6 +263,7 @@ const LearningRemindersModal = ({
               onChange={(event) => setTime(event.target.value)}
               className="py-6 rounded-xl border-gray-200"
             />
+            <span className="text-xs text-gray-500">Time zone: {Intl.DateTimeFormat().resolvedOptions().timeZone}</span>
           </div>
 
           <div className="flex flex-col gap-2">

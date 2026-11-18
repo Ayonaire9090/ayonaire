@@ -18,7 +18,7 @@ interface CourseAnnouncementsProps {
 }
 
 export const CourseAnnouncements = ({ courseId }: CourseAnnouncementsProps) => {
-  const { data, isLoading, isError } = useGetAnnouncements();
+  const { data, isLoading, isError } = useGetAnnouncements(courseId);
 
   const courseAnnouncements = (data?.data?.announcement ?? []).filter(
     (a) => a.course === courseId,

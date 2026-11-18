@@ -51,7 +51,7 @@ function StudentCoursesContent() {
   // "Expired"/"Paid" have no backend equivalent (enrollments don't carry a
   // payment or expiry status), so those tabs are left non-functional rather
   // than filtering against a guessed field.
-  const tabs = ["All", "In Progress", "Completed", "Expired", "Paid"];
+  const tabs = ["All", "In Progress", "Completed"];
 
   const { data, isLoading, isError } = useGetEnrolledCourses();
   const {

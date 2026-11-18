@@ -17,10 +17,10 @@ export const useCreateAnnouncementMutation = () => {
   });
 };
 
-export const useGetAnnouncements = () => {
+export const useGetAnnouncements = (courseId?: string) => {
   return useQuery({
-    queryKey: queryKeys.announcements.all,
-    queryFn: () => announcementsApi.getAll(),
+    queryKey: [...queryKeys.announcements.all, courseId ?? "all"],
+    queryFn: () => announcementsApi.getAll(courseId),
   });
 };
 

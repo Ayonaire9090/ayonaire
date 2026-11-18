@@ -31,6 +31,7 @@ interface LessonHeaderProps {
   completedLessons?: number;
   totalLessons?: number;
   shareUrl?: string;
+  onRate?: () => void;
 }
 
 const CourseCompletionDropdownContent = ({
@@ -58,6 +59,7 @@ export const LessonHeader = ({
   completedLessons = 0,
   totalLessons = 0,
   shareUrl = "",
+  onRate,
 }: LessonHeaderProps) => {
   const [isRatingModalOpen, setIsRatingModalOpen] = useState(false);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
@@ -150,7 +152,7 @@ export const LessonHeader = ({
           </DropdownMenu>
 
           <button
-            onClick={() => setIsRatingModalOpen(true)}
+            onClick={onRate}
             className="flex items-center gap-2 text-sm font-medium hover:text-gray-300 transition"
           >
             <Star size={16} fill="white" className="text-white" />
@@ -215,23 +217,12 @@ export const LessonHeader = ({
               className="flex-1 h-12 md:h-14 rounded-xl border-gray-200 px-4 text-base bg-white"
               readOnly
             />
-            <Button className="bg-[#F86432] hover:bg-[#F86432]/90 text-white h-12 md:h-14 px-6 md:px-8 rounded-xl gap-2 shadow-none font-medium text-base shrink-0">
+            <Button onClick={() => navigator.clipboard.writeText(shareUrl)} className="bg-[#F86432] hover:bg-[#F86432]/90 text-white h-12 md:h-14 px-6 md:px-8 rounded-xl gap-2 shadow-none font-medium text-base shrink-0">
               <Copy className="w-5 h-5" />
               Copy
             </Button>
           </div>
 
-          <div className="flex items-center justify-center gap-6">
-            <button className="w-11 h-11 rounded-xl border border-gray-300 flex items-center justify-center text-gray-600 hover:bg-gray-50 transition">
-              <Facebook className="w-5 h-5" />
-            </button>
-            <button className="w-11 h-11 rounded-xl border border-gray-300 flex items-center justify-center text-gray-600 hover:bg-gray-50 transition">
-              <Instagram className="w-5 h-5" />
-            </button>
-            <button className="w-11 h-11 rounded-xl border border-gray-300 flex items-center justify-center text-gray-600 hover:bg-gray-50 transition">
-              <Youtube className="w-5 h-5" />
-            </button>
-          </div>
         </div>
       </AppSimpleModal>
     </>

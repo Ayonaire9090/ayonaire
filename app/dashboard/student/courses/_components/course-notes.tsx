@@ -1,6 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { apiClient } from "@/lib/api/client";
+import { ApiResponse } from "@/lib/api/types";
+import { toast } from "sonner";
 import {
   Plus,
   ChevronDown,
@@ -41,31 +45,6 @@ interface CourseNotesProps {
   lessonTitle?: string;
 }
 
-// Notes only persist to this browser (localStorage) - there's no backend
-// endpoint for notes yet, so they don't sync across devices.
-function storageKey(courseId: string) {
-  return `ayonaire:notes:${courseId}`;
-}
-
-function loadNotes(courseId: string): StoredNote[] {
-  if (typeof window === "undefined") return [];
-  try {
-    const raw = window.localStorage.getItem(storageKey(courseId));
-    return raw ? JSON.parse(raw) : [];
-  } catch {
-    return [];
-  }
-}
-
-function saveNotes(courseId: string, notes: StoredNote[]) {
-  try {
-    window.localStorage.setItem(storageKey(courseId), JSON.stringify(notes));
-  } catch {
-    // localStorage unavailable (private browsing, quota) - fail silently,
-    // notes just won't persist for this session.
-  }
-}
-
 export const CourseNotes = ({
   courseId,
   lessonId,
@@ -79,11 +58,50 @@ export const CourseNotes = ({
     "Sort by most recent" | "Sort by oldest"
   >("Sort by most recent");
   const [noteContent, setNoteContent] = useState("");
-  const [notes, setNotes] = useState<StoredNote[]>([]);
-
+  const [legacyNotes, setLegacyNotes] = useState<StoredNote[]>([]);
+  const [legacyUnreadable, setLegacyUnreadable] = useState(false);
   useEffect(() => {
-    setNotes(loadNotes(courseId));
+    try {
+      const raw = localStorage.getItem(`ayonaire:notes:${courseId}`);
+      const parsed = raw ? JSON.parse(raw) : [];
+      if (!Array.isArray(parsed)) throw new Error("Invalid notes");
+      setLegacyNotes(parsed);
+      setLegacyUnreadable(false);
+    } catch { setLegacyNotes([]); setLegacyUnreadable(true); }
   }, [courseId]);
+  const queryClient = useQueryClient();
+  const key = ["course-notes", courseId];
+  const { data, isLoading, isError } = useQuery({ queryKey: key, queryFn: () => apiClient<ApiResponse<StoredNote[]>>(`/api/v1/course-interactions/${courseId}/notes`, { requireAuth: true }), enabled: !!courseId });
+  const notes = data?.data ?? [];
+  const save = useMutation({ mutationFn: (payload: { lessonId: string; content: string }) => apiClient(`/api/v1/course-interactions/${courseId}/notes`, { method: "POST", requireAuth: true, body: JSON.stringify(payload) }), onSuccess: () => { queryClient.invalidateQueries({ queryKey: key }); setIsEditing(false); setNoteContent(""); }, onError: () => toast.error("Failed to save note") });
+  const remove = useMutation({ mutationFn: (id: string) => apiClient(`/api/v1/course-interactions/${courseId}/notes/${id}`, { method: "DELETE", requireAuth: true }), onSuccess: () => queryClient.invalidateQueries({ queryKey: key }), onError: () => toast.error("Failed to delete note") });
+  const migrate = useMutation({
+    mutationFn: (items: StoredNote[]) => {
+      const unique = items.filter((note) => note && typeof note.id === "string" && items.filter((other) => other?.id === note.id).length === 1);
+      const batch: StoredNote[] = [];
+      for (const item of unique) {
+        if (batch.length >= 500 || new TextEncoder().encode(JSON.stringify({ notes: [...batch, item] })).length > 80000) break;
+        batch.push(item);
+      }
+      if (!batch.length) throw new Error("No importable notes");
+      return apiClient<ApiResponse<{ imported: string[]; failed: string[] }>>(`/api/v1/course-interactions/${courseId}/notes/import`, { method: "POST", requireAuth: true, body: JSON.stringify({ notes: batch }) }).then((result) => ({ result, batch }));
+    },
+    onSuccess: ({ result, batch }) => {
+      const imported = new Set(result.data?.imported ?? []);
+      try {
+        const storageKey = `ayonaire:notes:${courseId}`;
+        const current = JSON.parse(localStorage.getItem(storageKey) ?? "[]");
+        if (!Array.isArray(current)) throw new Error("Invalid notes");
+        const remaining = current.filter((note: StoredNote) => !imported.has(note.id) || !batch.some((item) => JSON.stringify(item) === JSON.stringify(note)));
+        if (remaining.length) localStorage.setItem(storageKey, JSON.stringify(remaining));
+        else localStorage.removeItem(storageKey);
+        setLegacyNotes(remaining);
+        toast.success(`${imported.size} notes imported${remaining.length ? `; ${remaining.length} remain on this browser` : ""}`);
+      } catch { toast.error("Notes were saved, but the browser copy could not be updated. You can safely retry."); }
+      queryClient.invalidateQueries({ queryKey: key });
+    },
+    onError: () => toast.error("Could not import notes. Your browser copy is unchanged."),
+  });
 
   const handleSave = () => {
     if (!noteContent.trim() || !lessonId) {
@@ -91,24 +109,11 @@ export const CourseNotes = ({
       setNoteContent("");
       return;
     }
-    const newNote: StoredNote = {
-      id: crypto.randomUUID(),
-      lessonId,
-      lessonTitle: lessonTitle ?? "Untitled Lesson",
-      content: noteContent.trim(),
-      createdAt: new Date().toISOString(),
-    };
-    const updated = [newNote, ...notes];
-    setNotes(updated);
-    saveNotes(courseId, updated);
-    setIsEditing(false);
-    setNoteContent("");
+    save.mutate({ lessonId, content: noteContent.trim() });
   };
 
   const handleDelete = (id: string) => {
-    const updated = notes.filter((n) => n.id !== id);
-    setNotes(updated);
-    saveNotes(courseId, updated);
+    remove.mutate(id);
   };
 
   const visibleNotes = notes
@@ -205,7 +210,7 @@ export const CourseNotes = ({
       ) : (
         <div className="flex flex-col gap-4">
           <div className="border border-gray-100 rounded-xl overflow-hidden bg-white shadow-sm flex flex-col">
-            <div className="border-b border-gray-100 px-3 py-2.5 flex flex-wrap items-center gap-1 bg-white">
+            <div className="hidden">
               <Button
                 variant="ghost"
                 size="sm"
@@ -350,9 +355,11 @@ export const CourseNotes = ({
         </div>
       )}
 
+      {legacyUnreadable && <p role="alert">The older browser notes could not be read. Their original data has been kept.</p>}
+      {legacyNotes.length > 0 && <div className="rounded-xl bg-orange-50 p-4 text-sm"><p>{legacyNotes.length} older notes were found in this browser. They were not associated with an account, so import them only if they belong to you.</p><Button className="mt-3" onClick={() => migrate.mutate(legacyNotes)} disabled={migrate.isPending}>{migrate.isPending ? "Importing..." : "Import notes to my account"}</Button></div>}
       {renderFilterBar()}
 
-      {visibleNotes.length === 0 ? (
+      {isLoading ? <p>Loading notes...</p> : isError ? <p>Could not load notes.</p> : visibleNotes.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-24 text-center px-4">
           <p className="text-gray-400 text-base md:text-lg">
             Click the &quot;Create a note&quot; box or the &quot;+&quot; button to make your

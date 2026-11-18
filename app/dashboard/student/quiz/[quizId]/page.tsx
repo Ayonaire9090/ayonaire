@@ -11,7 +11,7 @@ import { TakingQuizView } from "./_components/taking-quiz-view";
 import { ReviewQuizView } from "./_components/review-quiz-view";
 import { QuizResultView } from "./_components/quiz-result-view";
 import { AppSimpleModal } from "@/components/modals/app-simple-modal";
-import { useGetQuizById, useGetQuizQuestions, useSubmitQuizMutation } from "@/hooks/api/use-quiz";
+import { useGetQuizById, useSubmitQuizMutation } from "@/hooks/api/use-quiz";
 import { SubmitQuizResponse } from "@/lib/api/endpoints/quiz";
 import { toast } from "sonner";
 
@@ -22,11 +22,10 @@ export default function StudentQuizDetailsPage() {
   const router = useRouter();
 
   const { data: quizRes, isLoading: isLoadingQuiz } = useGetQuizById(quizId);
-  const { data: questionsRes, isLoading: isLoadingQuestions } = useGetQuizQuestions(quizId);
   const submitQuiz = useSubmitQuizMutation();
 
   const quiz = quizRes?.data;
-  const questions = useMemo(() => questionsRes?.questions ?? [], [questionsRes]);
+  const questions = useMemo(() => quiz?.questions ?? [], [quiz]);
 
   const [stage, setStage] = useState<Stage>("instructions");
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -65,9 +64,9 @@ export default function StudentQuizDetailsPage() {
   const handleSubmit = () => {
     submitQuiz.mutate(
       {
-        quiz: quizId,
-        answers: Object.entries(answers).map(([question, selectedOptions]) => ({
-          question,
+        quizId,
+        answers: Object.entries(answers).map(([questionId, selectedOptions]) => ({
+          questionId,
           selectedOptions,
         })),
       },
@@ -84,7 +83,7 @@ export default function StudentQuizDetailsPage() {
     );
   };
 
-  if (isLoadingQuiz || isLoadingQuestions) {
+  if (isLoadingQuiz) {
     return (
       <>
         <StudentHomeSidebarContent variant="sidebar" collapsible="icon" />

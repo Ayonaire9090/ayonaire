@@ -309,6 +309,11 @@ export const LessonVideoPlayer = ({
               View Chapters
             </button>
           )}
+          {lessonId && (
+            <button onClick={() => markCompleted({ lessonId, courseId })} disabled={isMarkingComplete || isMarkedComplete} className="rounded border border-white/30 px-3 py-1.5 text-white disabled:opacity-50">
+              {isMarkedComplete ? "Completed" : "Mark Complete"}
+            </button>
+          )}
         </div>
       </div>
     );

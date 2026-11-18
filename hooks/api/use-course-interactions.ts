@@ -188,7 +188,7 @@ export const useCreateLearningReminderMutation = (courseId: string) => {
 
   return useMutation({
     mutationFn: (
-      payload: Omit<LearningReminder, "_id" | "course" | "user" | "createdAt">,
+      payload: { name?: string; frequency: LearningReminder["frequency"]; time: string; calendarProvider: LearningReminder["calendarProvider"]; timezone: string },
     ) => courseInteractionsApi.createReminder({ ...payload, courseId }),
     onSuccess: () => {
       queryClient.invalidateQueries({
