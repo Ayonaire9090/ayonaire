@@ -24,6 +24,7 @@ import { CourseLearningTools } from "../_components/course-learning-tools";
 import { cn } from "@/lib/utils";
 import { CourseResources } from "../_components/course-resources";
 import { CourseTranscription } from "../_components/course-transcription";
+import { MessageInstructorButton } from "../_components/message-instructor-button";
 
 export default function StudentCourseLessonPage({
   params,
@@ -119,6 +120,7 @@ export default function StudentCourseLessonPage({
               shareUrl={shareUrl}
               onRate={() => setActiveTab("Reviews")}
             />
+            <div className="flex justify-end px-4 pb-3"><MessageInstructorButton courseId={courseId} /></div>
             <div className="w-full relative">
               <LessonVideoPlayer
                 key={activeLesson?._id ?? "intro"}

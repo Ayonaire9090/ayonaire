@@ -2,13 +2,15 @@
 
 import { StudentLoadingSkeleton } from "@/components/dashboard/student-loading-skeleton";
 import { useParams } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { getMessagingSocket } from "@/lib/socket/messaging-socket";
 import { useGetRooms } from "@/hooks/api/use-rooms";
 import {
   useDeleteMessageMutation,
   useGetMessages,
   useReactToMessageMutation,
   useSendMessageMutation,
+  useSearchMessages,
 } from "@/hooks/api/use-messages";
 import { useAuthStore } from "@/store/auth.store";
 import {
@@ -24,6 +26,7 @@ import {
 } from "../_components/student-message-composer";
 import { SidebarInset, useSidebar } from "@/components/ui/sidebar";
 import { StudentMessagesSidebarContent } from "../_components/student-messages-sidebar-content";
+import { StudentGroupSidebar } from "../_components/student-group-sidebar";
 import { ChevronLeft } from "lucide-react";
 import { toast } from "sonner";
 
@@ -34,6 +37,23 @@ export default function StudentMessageDetails() {
   const user = useAuthStore((s) => s.user);
   const { isMobile, setOpenMobile } = useSidebar();
   const [replyTo, setReplyTo] = useState<Message | null>(null);
+  const [detailsOpen, setDetailsOpen] = useState(false);
+  const [search, setSearch] = useState("");
+  const [typingUserId, setTypingUserId] = useState<string | null>(null);
+  const lastTypingSent = useRef(0);
+  useEffect(() => {
+    const socket = getMessagingSocket();
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const receiveTyping = (payload: { roomId: string; userId: string }) => {
+      if (payload.roomId !== roomId || payload.userId === user?._id) return;
+      setTypingUserId(payload.userId);
+      clearTimeout(timer);
+      timer = setTimeout(() => setTypingUserId(null), 3000);
+    };
+    setTypingUserId(null);
+    socket.on("typing:start", receiveTyping);
+    return () => { clearTimeout(timer); socket.off("typing:start", receiveTyping); };
+  }, [roomId, user?._id]);
 
   // Reopening the off-canvas conversation list is how mobile users get
   // back to their inbox - there's no other visible entry point on this page.
@@ -55,9 +75,10 @@ export default function StudentMessageDetails() {
   );
 
   const { data: messagesData, isLoading: isMessagesLoading, isError: isMessagesError, refetch: refetchMessages } = useGetMessages(roomId);
+  const searchResults = useSearchMessages(roomId, search);
   const messages = useMemo(
     () =>
-      (messagesData?.data?.messages ?? [])
+      ((search.trim() ? searchResults.data?.data?.messages : messagesData?.data?.messages) ?? [])
         .slice()
         .sort(
           (a, b) =>
@@ -66,7 +87,7 @@ export default function StudentMessageDetails() {
         .map((m) =>
           mapMessageRecordToMessage(m, user?._id),
       ),
-    [messagesData, user?._id],
+    [messagesData, searchResults.data, search, user?._id],
   );
 
   const { mutateAsync: sendMessage } = useSendMessageMutation();
@@ -147,18 +168,24 @@ export default function StudentMessageDetails() {
           online={conversation.online}
           lastSeen={conversation.lastSeen}
           room={room}
+          detailsOpen={detailsOpen}
+          onToggleDetails={() => setDetailsOpen((open) => !open)}
+          search={search}
+          onSearchChange={setSearch}
         />
         {/* Chat content wrapper */}
-        <div className="flex-1 flex min-h-0 overflow-hidden relative bg-[#f7f5f1]">
+        <div className="flex-1 flex min-h-0 overflow-hidden relative bg-muted/30">
           {/* Main chat column */}
           <div className="flex flex-col flex-1 min-w-0 min-h-0 overflow-hidden">
             {/* Messages list */}
-            {isMessagesLoading ? (
+            {isMessagesLoading || (search.trim() && (searchResults.isFetching || searchResults.isDebouncing)) ? (
               <div className="flex-1 flex items-center justify-center">
                 <StudentLoadingSkeleton variant="messages" />
               </div>
-            ) : isMessagesError ? (
-              <div role="alert" className="flex flex-1 flex-col items-center justify-center gap-3 text-sm text-[#80766e]"><p>Could not load messages.</p><button onClick={() => refetchMessages()} className="font-semibold text-[#df6038] hover:underline">Try again</button></div>
+            ) : isMessagesError || (search.trim() && searchResults.isError) ? (
+              <div role="alert" className="flex flex-1 flex-col items-center justify-center gap-3 text-sm text-muted-foreground"><p>Could not load messages.</p><button onClick={() => search.trim() ? searchResults.refetch() : refetchMessages()} className="font-semibold text-primary hover:underline">Try again</button></div>
+            ) : search.trim() && messages.length === 0 ? (
+              <div className="flex flex-1 items-center justify-center text-sm text-muted-foreground">No matching messages found.</div>
             ) : (
               <StudentMessageList
                 key={roomId}
@@ -170,14 +197,17 @@ export default function StudentMessageDetails() {
               />
             )}
             {/* Message composer */}
+            {typingUserId && <p className="px-5 py-1 text-xs text-muted-foreground" aria-live="polite">{room?.participants.find((participant) => participant.id === typingUserId)?.name ?? "Someone"} is typing…</p>}
             <StudentMessageComposer
               key={roomId}
               isGroup={isGroup}
               onSend={handleSend}
               replyTo={replyTo}
               onCancelReply={() => setReplyTo(null)}
+              onTyping={() => { if (Date.now() - lastTypingSent.current > 1500) { lastTypingSent.current = Date.now(); getMessagingSocket().emit("typing:start", { roomId }); } }}
             />
           </div>
+          {detailsOpen && room && <aside aria-label="Conversation details" className="absolute inset-y-0 right-0 z-10 w-full max-w-sm overflow-y-auto border-l border-border bg-card shadow-lg lg:relative lg:w-80 lg:shrink-0 lg:shadow-none"><StudentGroupSidebar room={room} messages={messagesData?.data?.messages ?? []} /></aside>}
         </div>
       </SidebarInset>
     </>

@@ -14,9 +14,10 @@ interface StudentMessageComposerProps {
   isGroup?: boolean;
   replyTo?: Message | null;
   onCancelReply?: () => void;
+  onTyping?: () => void;
 }
 
-export const StudentMessageComposer = ({ onSend, className, replyTo, onCancelReply }: StudentMessageComposerProps) => {
+export const StudentMessageComposer = ({ onSend, className, replyTo, onCancelReply, onTyping }: StudentMessageComposerProps) => {
   const [message, setMessage] = React.useState("");
   const [attachment, setAttachment] = React.useState<ComposerAttachment | null>(null);
   const [sending, setSending] = React.useState(false);
@@ -70,7 +71,7 @@ export const StudentMessageComposer = ({ onSend, className, replyTo, onCancelRep
         <input ref={fileRef} type="file" className="hidden" onChange={selectFile("file")} />
         <button type="button" disabled={sending} onClick={() => fileRef.current?.click()} aria-label="Attach a file" className="grid size-9 shrink-0 place-items-center rounded-xl text-[#91877e] transition hover:bg-[#faf1eb] hover:text-[#e2633c] disabled:opacity-40"><Paperclip className="size-[18px]" /></button>
         <button type="button" disabled={sending} onClick={() => imageRef.current?.click()} aria-label="Attach an image" className="grid size-9 shrink-0 place-items-center rounded-xl text-[#91877e] transition hover:bg-[#faf1eb] hover:text-[#e2633c] disabled:opacity-40"><ImagePlus className="size-[18px]" /></button>
-        <textarea ref={textareaRef} value={message} rows={1} disabled={sending} onChange={(event) => setMessage(event.target.value)} onKeyDown={(event) => { if (event.key === "Enter" && !event.shiftKey && !event.nativeEvent.isComposing) { event.preventDefault(); void send(); } }} placeholder="Write a message..." aria-label="Write a message" className="min-h-9 max-h-40 min-w-0 flex-1 resize-none overflow-y-auto bg-transparent px-1 py-2 text-sm leading-5 text-[#292420] outline-none placeholder:text-[#aaa199] disabled:opacity-70" />
+        <textarea ref={textareaRef} value={message} rows={1} disabled={sending} onChange={(event) => { setMessage(event.target.value); if (event.target.value.trim()) onTyping?.(); }} onKeyDown={(event) => { if (event.key === "Enter" && !event.shiftKey && !event.nativeEvent.isComposing) { event.preventDefault(); void send(); } }} placeholder="Write a message..." aria-label="Write a message" className="min-h-9 max-h-40 min-w-0 flex-1 resize-none overflow-y-auto bg-transparent px-1 py-2 text-sm leading-5 text-[#292420] outline-none placeholder:text-[#aaa199] disabled:opacity-70" />
         <EmojiPicker onSelect={insertEmoji} triggerClassName="grid size-9 shrink-0 place-items-center rounded-xl text-[#91877e] hover:bg-[#faf1eb] hover:text-[#e2633c]" />
         <button type="button" onClick={() => void send()} disabled={sending || (!message.trim() && !attachment)} aria-label={sending ? "Sending message" : "Send message"} className="grid size-10 shrink-0 place-items-center rounded-xl bg-[#ec7045] text-white transition hover:bg-[#d95f37] active:scale-95 disabled:cursor-not-allowed disabled:opacity-40">{sending ? <span className="h-1.5 w-5 animate-pulse rounded-full bg-white motion-reduce:animate-none" /> : <Send className="size-[18px]" />}</button>
       </div>

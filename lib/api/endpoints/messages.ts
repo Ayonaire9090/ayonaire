@@ -64,9 +64,9 @@ export const messagesApi = {
       },
     ),
 
-  getForRoom: (roomId: string, page = 1, limit = 50) =>
+  getForRoom: (roomId: string, page = 1, limit = 50, search = "") =>
     apiClient<ApiResponse<GetMessagesResult>>(
-      `/api/v1/message/${roomId}?page=${page}&limit=${limit}`,
+      `/api/v1/message/${roomId}?page=${page}&limit=${limit}${search ? `&search=${encodeURIComponent(search)}` : ""}`,
       {
         method: "GET",
         requireAuth: true,

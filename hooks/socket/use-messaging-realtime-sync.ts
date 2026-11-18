@@ -36,8 +36,13 @@ export function useMessagingRealtimeSync() {
 
   useEffect(() => {
     const socket = getMessagingSocket();
+    const rejoinRooms = () => {
+      for (const roomId of joinedRoomIds.current) socket.emit("room:join", { roomId });
+    };
+    socket.on("connect", rejoinRooms);
 
     const handleNewMessage = (message: MessageRecord) => {
+      queryClient.invalidateQueries({ queryKey: ["message-search", message.roomId] });
       queryClient.setQueryData<ApiResponse<GetMessagesResult>>(
         queryKeys.messages.forRoom(message.roomId),
         (old) => {
@@ -81,6 +86,7 @@ export function useMessagingRealtimeSync() {
     };
 
     const handleMessageReaction = (message: MessageRecord) => {
+      queryClient.invalidateQueries({ queryKey: ["message-search", message.roomId] });
       queryClient.setQueryData<ApiResponse<GetMessagesResult>>(
         queryKeys.messages.forRoom(message.roomId),
         (old) => {
@@ -99,6 +105,7 @@ export function useMessagingRealtimeSync() {
     };
 
     const handleMessageDeleted = (payload: { id: string; roomId: string }) => {
+      queryClient.invalidateQueries({ queryKey: ["message-search", payload.roomId] });
       queryClient.setQueryData<ApiResponse<GetMessagesResult>>(
         queryKeys.messages.forRoom(payload.roomId),
         (old) => {
@@ -121,6 +128,7 @@ export function useMessagingRealtimeSync() {
     socket.on("message:reaction", handleMessageReaction);
     socket.on("message:deleted", handleMessageDeleted);
     return () => {
+      socket.off("connect", rejoinRooms);
       socket.off("message:new", handleNewMessage);
       socket.off("message:reaction", handleMessageReaction);
       socket.off("message:deleted", handleMessageDeleted);

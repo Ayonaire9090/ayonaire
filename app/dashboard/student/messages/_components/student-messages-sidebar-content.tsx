@@ -13,7 +13,11 @@ import { cn } from "@/lib/utils";
 import { X, Menu, Search } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { roomsApi } from "@/lib/api/endpoints/rooms";
+import { queryKeys } from "@/lib/api/query-keys";
+import { toast } from "sonner";
 import { useGetRooms } from "@/hooks/api/use-rooms";
 import { useAuthStore } from "@/store/auth.store";
 import {
@@ -28,6 +32,10 @@ export function StudentMessagesSidebarContent({
   const { state, toggleSidebar, isMobile, setOpenMobile } = useSidebar();
   const isCollapsed = state === "collapsed" && !isMobile;
   const pathname = usePathname();
+  const router = useRouter();
+  const queryClient = useQueryClient();
+  const instructors = useQuery({ queryKey: ["assigned-instructors"], queryFn: roomsApi.assignedInstructors });
+  const startInstructorChat = useMutation({ mutationFn: roomsApi.messageInstructor, onSuccess: (result) => { if (result.data) { queryClient.invalidateQueries({ queryKey: queryKeys.rooms.all }); if (isMobile) setOpenMobile(false); router.push(`/dashboard/student/messages/${result.data.id}`); } }, onError: (error) => toast.error(error instanceof Error ? error.message : "Could not open conversation") });
   const user = useAuthStore((s) => s.user);
   const [search, setSearch] = React.useState("");
 
@@ -38,9 +46,8 @@ export function StudentMessagesSidebarContent({
     preview: lastMessagePreview(room),
     timestamp: lastMessageTimestamp(room),
   }));
-  const groupCount = allConversations.filter(({ conv }) => conv.type === "group").length;
+  const conversationCount = allConversations.length;
   const conversations = allConversations
-    .filter(({ conv }) => conv.type === "group")
     .filter(({ conv }) =>
       search.trim()
         ? conv.title.toLowerCase().includes(search.trim().toLowerCase())
@@ -48,8 +55,8 @@ export function StudentMessagesSidebarContent({
     );
 
   return (
-    <Sidebar className="bg-[#fffefa] border-r border-[#eeeae5]" {...props}>
-      <SidebarHeader className="bg-[#fffefa] border-b border-[#f0ece7] px-4 py-5">
+    <Sidebar className="border-r border-border bg-card" {...props}>
+      <SidebarHeader className="border-b border-border bg-card px-4 py-5">
         {isCollapsed ? (
           <div className="flex flex-col items-center gap-4">
             <Image
@@ -70,13 +77,13 @@ export function StudentMessagesSidebarContent({
         ) : (
           <div className="space-y-3">
             <div className="flex items-center justify-between gap-2">
-              <div><p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#e06a43]">Your community</p><h1 className="mt-1 text-xl font-bold tracking-tight text-[#29231f]">Chatrooms</h1></div>
-                <span className="flex size-7 items-center justify-center rounded-full bg-[#fff0e9] text-xs font-bold text-[#e06a43]">
-                  {groupCount}
+              <div><p className="text-[10px] font-bold uppercase tracking-[0.16em] text-primary">Your community</p><h1 className="mt-1 text-xl font-bold tracking-tight text-foreground">Messages</h1></div>
+                <span className="flex size-7 items-center justify-center rounded-full bg-primary/10 text-xs font-bold text-primary">
+                  {conversationCount}
                 </span>
             </div>
 
-            <div className="flex items-center gap-2 rounded-xl border border-[#efeae4] bg-[#f9f7f4] px-3 py-2.5 focus-within:border-[#eaa689]">
+            <div className="flex items-center gap-2 rounded-xl border border-border bg-muted/40 px-3 py-2.5 focus-within:border-primary">
               <Search className="w-4 h-4 text-gray-400 shrink-0" />
               <input
                 value={search}
@@ -89,7 +96,7 @@ export function StudentMessagesSidebarContent({
         )}
       </SidebarHeader>
 
-      <SidebarContent className="bg-[#fffefa] pt-3">
+      <SidebarContent className="bg-card pt-3">
         <div className="flex flex-col gap-2 px-2 pb-4">
           {isLoading ? (
             <div className="flex items-center justify-center py-8">
@@ -117,7 +124,7 @@ export function StudentMessagesSidebarContent({
                 }}
                 className={cn(
                   "flex items-start gap-3 rounded-xl p-3 transition-colors",
-                  isActive ? "bg-[#fff0e9]" : "bg-transparent hover:bg-[#f8f5f1]",
+                  isActive ? "bg-primary/10" : "bg-transparent hover:bg-accent",
                   isCollapsed && "justify-center px-0",
                 )}
               >
@@ -153,14 +160,6 @@ export function StudentMessagesSidebarContent({
                         <AvatarImage src={conv.avatar} />
                         <AvatarFallback>{conv.title[0]}</AvatarFallback>
                       </Avatar>
-                      <span
-                        className={cn(
-                          "absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full border-2 border-white",
-                          conv.online
-                            ? "bg-[#4ADE80]"
-                            : "bg-white border-gray-300",
-                        )}
-                      />
                     </div>
                     {!isCollapsed && (
                       <div className="flex-1 min-w-0">
@@ -184,6 +183,7 @@ export function StudentMessagesSidebarContent({
           })
           )}
         </div>
+        {!isCollapsed && <section className="border-t border-border px-4 py-4"><h2 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Your instructors</h2><p className="mt-1 text-xs text-muted-foreground">From your enrolled courses</p><div className="mt-3 space-y-1">{instructors.isLoading ? <StudentLoadingSkeleton variant="messages" /> : instructors.isError ? <button onClick={() => instructors.refetch()} className="text-xs text-primary underline">Could not load instructors. Retry</button> : !instructors.data?.data?.length ? <p className="text-xs text-muted-foreground">No assigned instructors found.</p> : instructors.data.data.map(({ courseId, courseTitle, instructor }) => <button key={courseId} type="button" disabled={startInstructorChat.isPending} onClick={() => startInstructorChat.mutate(courseId)} className="flex w-full items-center gap-2 rounded-xl p-2 text-left transition hover:bg-accent disabled:opacity-50"><Avatar className="size-9"><AvatarImage src={instructor.profile?.url} /><AvatarFallback className="bg-primary/10 text-primary">{instructor.name.slice(0, 1)}</AvatarFallback></Avatar><span className="min-w-0"><span className="block truncate text-sm font-medium text-foreground">{instructor.name}</span><span className="block truncate text-xs text-muted-foreground">{courseTitle}</span></span></button>)}</div></section>}
       </SidebarContent>
     </Sidebar>
   );

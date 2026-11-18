@@ -30,6 +30,8 @@ export interface RoomRecord {
 }
 
 export const roomsApi = {
+  assignedInstructors: () => apiClient<ApiResponse<{ courseId: string; courseTitle: string; instructor: RoomParticipant }[]>>("/api/v1/room/instructors", { method: "GET", requireAuth: true }),
+  messageInstructor: (courseId: string) => apiClient<ApiResponse<RoomRecord>>(`/api/v1/room/course/${encodeURIComponent(courseId)}/instructor`, { method: "POST", requireAuth: true }),
   list: () =>
     apiClient<ApiResponse<RoomRecord[]>>("/api/v1/room", {
       method: "GET",

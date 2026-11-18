@@ -4,6 +4,7 @@ import { queryKeys } from "@/lib/api/query-keys";
 import { ApiResponse } from "@/lib/api/types";
 import { GetMessagesResult, MessageRecord } from "@/lib/api/endpoints/messages";
 import { useAuthStore } from "@/store/auth.store";
+import { useEffect, useState } from "react";
 
 const sortMessagesByCreatedAt = (messages: MessageRecord[]) =>
   [...messages].sort(
@@ -23,6 +24,13 @@ export const useGetMessages = (roomId: string) => {
     queryFn: () => messagesApi.getForRoom(roomId),
     enabled: !!roomId,
   });
+};
+
+export const useSearchMessages = (roomId: string, search: string) => {
+  const [debounced, setDebounced] = useState("");
+  useEffect(() => { const timer = setTimeout(() => setDebounced(search.trim()), 300); return () => clearTimeout(timer); }, [search]);
+  const query = useQuery({ queryKey: ["message-search", roomId, debounced], queryFn: () => messagesApi.getForRoom(roomId, 1, 50, debounced), enabled: !!roomId && !!debounced });
+  return { ...query, isDebouncing: debounced !== search.trim() };
 };
 
 export const useSendMessageMutation = () => {
@@ -101,6 +109,7 @@ export const useSendMessageMutation = () => {
     },
     onSuccess: (response, _variables, context) => {
       if (!context?.roomId || !context.optimisticId || !response.data) return;
+      queryClient.invalidateQueries({ queryKey: ["message-search", context.roomId] });
       queryClient.setQueryData<ApiResponse<GetMessagesResult>>(
         queryKeys.messages.forRoom(context.roomId),
         (old) => {
@@ -229,6 +238,7 @@ export const useReactToMessageMutation = () => {
     },
     onSuccess: (response) => {
       if (!response.data) return;
+      queryClient.invalidateQueries({ queryKey: ["message-search", response.data.roomId] });
       queryClient.setQueryData<ApiResponse<GetMessagesResult>>(
         queryKeys.messages.forRoom(response.data.roomId),
         (old) => {
@@ -281,6 +291,7 @@ export const useDeleteMessageMutation = () => {
     },
     onSuccess: (response) => {
       if (!response.data) return;
+      queryClient.invalidateQueries({ queryKey: ["message-search", response.data.roomId] });
       queryClient.setQueryData<ApiResponse<GetMessagesResult>>(
         queryKeys.messages.forRoom(response.data.roomId),
         (old) => {
