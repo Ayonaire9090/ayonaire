@@ -1,7 +1,7 @@
 "use client";
 
-import { ThumbsUp, MessageCircle } from "lucide-react";
-import { IoArrowRedoOutline } from "react-icons/io5";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { ThumbsUpIcon, BubbleChatIcon, Share01Icon } from "@hugeicons/core-free-icons";
 import { useLikeFeedMutation, useShareFeedMutation } from "@/hooks/api/use-feeds";
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
@@ -75,16 +75,15 @@ export const FeedInteractPost = ({
               : "text-[#77736f] hover:bg-[#f7f5f2] hover:text-[#282421]"
           }`}
         >
-          <ThumbsUp
+          <HugeiconsIcon icon={ThumbsUpIcon}
             size={20}
-            strokeWidth={2}
-            fill={liked ? "currentColor" : "none"}
+            strokeWidth={1.8}
             className="cursor-pointer opacity-90 group-hover:opacity-100 transition-opacity"
           />
           <span className="text-sm font-semibold">{likeCount} <span className="hidden sm:inline">{likeCount === 1 ? "Like" : "Likes"}</span></span>
         </motion.button>
         <button type="button" onClick={onComment} aria-expanded={commentsOpen} className="flex gap-2 items-center rounded-lg px-2 py-2 text-[#77736f] hover:bg-[#f7f5f2] hover:text-[#282421] transition-colors">
-          <MessageCircle size={20} strokeWidth={2} className="opacity-90" />
+          <HugeiconsIcon icon={BubbleChatIcon} size={20} strokeWidth={1.8} className="opacity-90" />
           <span className="text-sm font-semibold">{comments} <span className="hidden sm:inline">{comments === 1 ? "Comment" : "Comments"}</span></span>
         </button>
       </div>
@@ -97,7 +96,7 @@ export const FeedInteractPost = ({
           title="Share post"
           className="flex items-center gap-1.5 hover:text-gray-900 transition-colors disabled:cursor-default"
         >
-          <IoArrowRedoOutline size={22} className="cursor-pointer" />
+          <HugeiconsIcon icon={Share01Icon} size={20} strokeWidth={1.8} />
           {shares > 0 && (
             <span className="text-[15px] font-medium">{shares}</span>
           )}

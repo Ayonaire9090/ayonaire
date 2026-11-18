@@ -44,9 +44,15 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { FeedCreatePostModal } from "../feed/_components/feed-create-post-modal";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Home01Icon, BubbleChatIcon, BookOpen01Icon } from "@hugeicons/core-free-icons";
+
+const HomeFeedIcon = ({ className }: { className?: string }) => <HugeiconsIcon icon={Home01Icon} className={className} size={20} />;
+const LearningIcon = ({ className }: { className?: string }) => <HugeiconsIcon icon={BookOpen01Icon} className={className} size={20} />;
+const DiscussionIcon = ({ className }: { className?: string }) => <HugeiconsIcon icon={BubbleChatIcon} className={className} size={20} />;
 
 const spacesNav = [
-  { title: "Home feed", url: "/dashboard/student/feed", icon: Home },
+  { title: "Home feed", url: "/dashboard/student/feed", icon: HomeFeedIcon },
   {
     title: "Community",
     url: "/dashboard/student/community",
@@ -65,7 +71,7 @@ const spacesNav = [
   {
     title: "General Discussion",
     url: "/dashboard/student/feed/general-discussion",
-    icon: MessageCircle,
+    icon: DiscussionIcon,
   },
   {
     title: "Leaderboard",
@@ -207,7 +213,7 @@ export function StudentFeedSidebarContent({
         <SidebarGroup>
           {!isCollapsed && <p className="px-3 pb-2 text-[10px] font-bold tracking-[0.16em] text-[#aaa29a]">YOUR LEARNING</p>}
           <SidebarMenu className="gap-1">
-            {[{ title: "My courses", url: "/dashboard/student/courses", icon: BookOpen }, { title: "Messages", url: "/dashboard/student/messages", icon: MessagesSquare }].map((item) => <SidebarMenuItem key={item.title}><SidebarMenuButton asChild tooltip={item.title} className="rounded-xl px-3 py-5 text-[#77716b] hover:bg-[#f7f4ef] hover:text-[#29231f]"><Link href={item.url}><item.icon className="size-5" />{!isCollapsed && <span className="text-sm">{item.title}</span>}</Link></SidebarMenuButton></SidebarMenuItem>)}
+            {[{ title: "My courses", url: "/dashboard/student/courses", icon: LearningIcon }, { title: "Messages", url: "/dashboard/student/messages", icon: MessagesSquare }].map((item) => <SidebarMenuItem key={item.title}><SidebarMenuButton asChild tooltip={item.title} className="rounded-xl px-3 py-5 text-[#77716b] hover:bg-[#f7f4ef] hover:text-[#29231f]"><Link href={item.url}><item.icon className="size-5" />{!isCollapsed && <span className="text-sm">{item.title}</span>}</Link></SidebarMenuButton></SidebarMenuItem>)}
           </SidebarMenu>
         </SidebarGroup>
         {/* SPACES */}

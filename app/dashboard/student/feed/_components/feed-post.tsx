@@ -1,6 +1,7 @@
 "use client";
 import { useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import Card from "@mui/material/Card";
 import { FeedPostHeader } from "./feed-post-header";
 import { FeedPostContent } from "./feed-post-content";
 import { FeedPostPoll } from "./feed-post-poll";
@@ -68,7 +69,7 @@ export const FeedPost = ({
     requestAnimationFrame(() => commentArea.current?.querySelector("textarea")?.focus());
   };
   return (
-    <article className="bg-white rounded-2xl border border-[#ebe8e3] p-4 sm:p-6 flex flex-col w-full shadow-[0_2px_10px_rgba(39,31,23,0.035)]">
+    <Card component="article" elevation={0} className="p-4 sm:p-6 flex flex-col w-full" sx={{ border: "1px solid #ebe8e3", borderRadius: "16px", boxShadow: "0 2px 10px rgba(39,31,23,0.035)" }}>
       {/* Header */}
       <FeedPostHeader
         title={authorName}
@@ -117,6 +118,6 @@ export const FeedPost = ({
           </div>
         </motion.div>}
       </AnimatePresence>
-    </article>
+    </Card>
   );
 };
