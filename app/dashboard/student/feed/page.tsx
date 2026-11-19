@@ -1,15 +1,10 @@
-"use client";
+﻿"use client";
 import { StudentLoadingSkeleton } from "@/components/dashboard/student-loading-skeleton";
 import { useEffect, useState } from "react";
-import { Eye, Copy, Pencil, Trash2 } from "lucide-react";
+import { Eye, Copy, Pencil, Trash2, Search, MessageCircle, Users2, Megaphone } from "lucide-react";
 import { toast } from "sonner";
 import { FeedNewPost } from "./_components/feed-new-post";
-import { FeedLivePost } from "./_components/feed-live-post";
-import { FeedWorkShop } from "./_components/feed-workshop";
 import { FeedPost } from "./_components/feed-post";
-import { FeedUpcomingAnnouncements } from "./_components/feed-upcomming-announcements";
-import { FeedUpcomingWorkShops } from "./_components/feed-upcomming-workshops";
-import { FeedLeaderBoard } from "./_components/feed-leaderboard";
 import { FeedFilter } from "./_components/feed-filter";
 import { FeedReportModal } from "./_components/feed-report-modal";
 import { FeedEditPostModal } from "./_components/feed-edit-post-modal";
@@ -56,14 +51,18 @@ export default function StudentFeedPage() {
   const user = useAuthStore((state) => state.user);
   const reducedMotion = useReducedMotion();
   const [tagFilter, setTagFilter] = useState<string | undefined>(undefined);
+  const [search, setSearch] = useState("");
+  const [sort, setSort] = useState<"latest" | "discussed">("latest");
+  const [limit, setLimit] = useState(20);
   const [reportingFeedId, setReportingFeedId] = useState<string | null>(null);
   const [editingPost, setEditingPost] = useState<{ feedId: string; content: string } | null>(null);
   const [deletingFeedId, setDeletingFeedId] = useState<string | null>(null);
   useFeedRealtimeSync();
-  const { data, isLoading, isError } = useGetFeeds({ tag: tagFilter });
+  const { data, isLoading, isError, refetch, isFetching } = useGetFeeds({ tag: tagFilter, limit });
   const posts = (data?.data ?? []).map((feed) =>
     mapFeedRecordToFeedPost(feed, user?._id),
-  );
+  ).filter((post) => `${post.authorName} ${post.textContent ?? ""} ${(post.tags ?? []).join(" ")}`.toLowerCase().includes(search.trim().toLowerCase()));
+  if (sort === "discussed") posts.sort((a, b) => b.commentsCount - a.commentsCount);
 
   // Deep-link support for "View post" / "Copy link": scroll the target post
   // into view once its data has loaded.
@@ -105,18 +104,14 @@ export default function StudentFeedPage() {
   };
 
   return (
-    <div className="mx-auto w-full max-w-[1500px] px-4 pb-28 pt-6 sm:px-6 lg:px-8 lg:pt-8">
-      <div className="mb-7 flex flex-wrap items-end justify-between gap-4">
-        <div><div className="mb-2 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] text-[#d85c36]"><span className="h-2 w-2 rounded-full bg-[#ed7045]" /> Ayonaire community</div><h1 className="text-[30px] font-bold tracking-[-0.04em] text-[#201d1a] sm:text-[38px]">Your space to grow<span className="text-[#ed7045]">.</span></h1><p className="mt-1 text-sm text-[#817a73]">Learn together, share your progress, and find your people.</p></div>
-        <Link href="/dashboard/student/courses" className="rounded-xl border border-[#e8e3dd] bg-white px-4 py-2.5 text-sm font-semibold text-[#3e3833] transition hover:border-[#ed7045] hover:text-[#d85c36]">My learning <span aria-hidden="true">↗</span></Link>
-      </div>
-      <div className="flex flex-col gap-7 xl:grid xl:grid-cols-[minmax(0,1fr)_310px] xl:items-start">
-      <div className="@container/main flex min-w-0 flex-col gap-5">
+    <div className="mx-auto w-full max-w-[1050px] px-4 pb-28 pt-5 sm:px-6 lg:pt-7">
+      <header className="mb-4 rounded-2xl border border-border bg-card px-5 pt-5 sm:px-7 sm:pt-6"><div className="flex flex-wrap items-end justify-between gap-3"><div><p className="text-xs font-medium text-muted-foreground">Ayonaire / Community</p><h1 className="mt-2 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">Community feed</h1></div></div><nav aria-label="Community spaces" className="mt-5 flex gap-1 overflow-x-auto border-t border-border pt-1 text-sm"><Link href="/dashboard/student/feed" aria-current="page" className="flex shrink-0 items-center gap-2 border-b-2 border-foreground px-3 py-3 font-semibold text-foreground"><MessageCircle className="size-4" />Feed</Link><Link href="/dashboard/student/feed/general-discussion" className="flex shrink-0 items-center gap-2 border-b-2 border-transparent px-3 py-3 text-muted-foreground transition hover:text-foreground"><Users2 className="size-4" />Discussions</Link><Link href="/dashboard/student/feed/ask-for-help" className="shrink-0 border-b-2 border-transparent px-3 py-3 text-muted-foreground transition hover:text-foreground">Ask for help</Link><Link href="/dashboard/student/feed/announcements" className="flex shrink-0 items-center gap-2 border-b-2 border-transparent px-3 py-3 text-muted-foreground transition hover:text-foreground"><Megaphone className="size-4" />Announcements</Link></nav></header>
+      <div className="flex min-w-0 flex-col gap-4">
         <FeedNewPost />
 
-        <div className="flex flex-col gap-4">
-          {/* Feed Filter */}
-          <FeedFilter selectedTag={tagFilter} onApply={setTagFilter} />
+        <div className="flex flex-col gap-3">
+          <div className="flex flex-wrap items-center justify-between gap-3 px-1 pt-2"><div className="flex items-center gap-5" aria-label="Sort posts"><button type="button" onClick={() => setSort("latest")} aria-pressed={sort === "latest"} className={`border-b-2 pb-2 text-sm transition ${sort === "latest" ? "border-foreground font-semibold text-foreground" : "border-transparent text-muted-foreground hover:text-foreground"}`}>Latest</button><button type="button" onClick={() => setSort("discussed")} aria-pressed={sort === "discussed"} className={`border-b-2 pb-2 text-sm transition ${sort === "discussed" ? "border-foreground font-semibold text-foreground" : "border-transparent text-muted-foreground hover:text-foreground"}`}>Most discussed</button></div><div className="flex items-center gap-2"><label className="flex items-center gap-2 rounded-full border border-border bg-card px-3 py-2"><Search className="size-4 text-muted-foreground" /><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search loaded posts" aria-label="Search loaded posts" className="w-28 bg-transparent text-xs text-foreground outline-none placeholder:text-muted-foreground sm:w-40" /></label><FeedFilter selectedTag={tagFilter} onApply={(tag) => { setLimit(20); setTagFilter(tag); }} /></div></div>
+          {sort === "discussed" && <p className="px-1 text-xs text-muted-foreground">Sorted by comments among the posts loaded below.</p>}
 
           {/* Posts */}
           {isLoading ? (
@@ -124,12 +119,12 @@ export default function StudentFeedPage() {
               <StudentLoadingSkeleton variant="feed" />
             </div>
           ) : isError ? (
-            <div className="flex items-center justify-center py-16 text-[15px] text-red-500">
-              Failed to load posts. Please try again.
+            <div role="alert" className="flex flex-col items-center justify-center gap-3 rounded-2xl border border-border bg-card py-16 text-sm text-muted-foreground">
+              <p>Could not load posts.</p><button type="button" onClick={() => refetch()} className="font-semibold text-foreground underline underline-offset-4">Try again</button>
             </div>
           ) : posts.length === 0 ? (
             <div className="flex items-center justify-center py-16 text-[15px] text-gray-500">
-              No posts yet. Be the first to share something!
+              {search ? "No loaded posts match your search." : "No posts here yet. Start the conversation above."}
             </div>
           ) : (
             posts.map((post) => (
@@ -154,18 +149,9 @@ export default function StudentFeedPage() {
               </motion.div>
             ))
           )}
+          {!isLoading && !isError && (data?.data?.length ?? 0) >= limit && <button type="button" disabled={isFetching} onClick={() => setLimit((current) => current + 20)} className="mx-auto my-3 rounded-full border border-border bg-card px-5 py-2 text-sm font-medium text-foreground transition hover:bg-muted disabled:opacity-50">{isFetching ? "Loading…" : "Load more posts"}</button>}
         </div>
       </div>
-
-      {/* Other Feed Page Content (Sidebar on mobile) */}
-      <aside className="flex flex-col gap-4 rounded-xl h-fit xl:sticky xl:top-4">
-        <div className="rounded-2xl border border-[#ebe8e3] bg-[#25221f] p-5 text-white"><p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#ffac88]">Your learning</p><h2 className="mt-3 text-lg font-semibold leading-snug">Ready for your next lesson?</h2><p className="mt-2 text-sm leading-6 text-white/65">Open your courses and continue where you left off.</p><Link href="/dashboard/student/courses" className="mt-4 inline-flex rounded-lg bg-white px-3.5 py-2 text-xs font-semibold text-[#25221f] transition hover:bg-[#fff0e8]">My courses <span className="ml-2">↗</span></Link></div>
-        <FeedLivePost />
-        <FeedWorkShop />
-        <FeedUpcomingAnnouncements />
-        <FeedUpcomingWorkShops />
-        <FeedLeaderBoard />
-      </aside>
       <FeedReportModal
         feedId={reportingFeedId}
         onClose={() => setReportingFeedId(null)}
@@ -179,7 +165,6 @@ export default function StudentFeedPage() {
         feedId={deletingFeedId}
         onClose={() => setDeletingFeedId(null)}
       />
-      </div>
     </div>
   );
 }

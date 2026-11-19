@@ -69,7 +69,7 @@ export const FeedPost = ({
     requestAnimationFrame(() => commentArea.current?.querySelector("textarea")?.focus());
   };
   return (
-    <Card component="article" elevation={0} className="p-4 sm:p-6 flex flex-col w-full" sx={{ border: "1px solid #ebe8e3", borderRadius: "16px", boxShadow: "0 2px 10px rgba(39,31,23,0.035)" }}>
+    <Card component="article" elevation={0} className="flex w-full flex-col p-4 sm:p-5" sx={{ border: "1px solid var(--border)", borderRadius: "16px", boxShadow: "none", backgroundColor: "var(--card)", color: "var(--card-foreground)", fontFamily: "inherit" }}>
       {/* Header */}
       <FeedPostHeader
         title={authorName}

@@ -216,6 +216,7 @@ export function InstructorMessagesSidebarContent({
                       )}
                     </>
                   )}
+                  {!isCollapsed && !!room.unreadCount && <span aria-label={`${room.unreadCount} unread messages`} className="rounded-full bg-primary px-2 py-0.5 text-xs font-semibold text-primary-foreground">{room.unreadCount > 99 ? "99+" : room.unreadCount}</span>}
                 </Link>
               );
             })

@@ -12,6 +12,12 @@ interface StudentMessageListProps {
   onReact?: (messageId: string, emoji: string) => void;
   onReply?: (message: Message) => void;
   onDelete?: (message: Message) => void;
+  onEdit?: (message: Message, text: string) => Promise<void>;
+  onPin?: (message: Message) => void;
+  currentUserId?: string;
+  onLoadOlder?: () => void;
+  loadingOlder?: boolean;
+  onThread?: (message: Message) => void;
 }
 
 export const StudentMessageList = ({
@@ -20,6 +26,12 @@ export const StudentMessageList = ({
   onReact,
   onReply,
   onDelete,
+  onEdit,
+  onPin,
+  currentUserId,
+  onLoadOlder,
+  loadingOlder,
+  onThread,
 }: StudentMessageListProps) => {
   const bottomRef = React.useRef<HTMLDivElement>(null);
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -66,6 +78,7 @@ export const StudentMessageList = ({
         className="flex-1 overflow-y-auto bg-card px-3 py-5 md:px-5"
       >
         <div className="mx-auto flex w-full max-w-[920px] flex-col gap-1">
+          {onLoadOlder && <button type="button" disabled={loadingOlder} onClick={onLoadOlder} className="mx-auto my-2 rounded-full border border-border px-4 py-1.5 text-xs font-medium text-muted-foreground hover:bg-accent disabled:opacity-50">{loadingOlder ? "Loading earlier messages…" : "Load earlier messages"}</button>}
           {messages.length === 0 && <div className="mx-auto mt-20 max-w-sm rounded-2xl border border-border bg-muted/20 p-6 text-center"><p className="text-sm font-semibold text-foreground">Start the conversation</p><p className="mt-2 text-sm leading-6 text-muted-foreground">Share a question or say hello to your chatroom.</p></div>}
           {messages.map((message, index) => {
             const prevMessage = index > 0 ? messages[index - 1] : null;
@@ -92,6 +105,10 @@ export const StudentMessageList = ({
                   onReact={message.id.startsWith("optimistic-") ? undefined : onReact}
                   onReply={message.id.startsWith("optimistic-") ? undefined : onReply}
                   onDelete={message.id.startsWith("optimistic-") ? undefined : onDelete}
+                  onEdit={message.id.startsWith("optimistic-") ? undefined : onEdit}
+                  onPin={message.id.startsWith("optimistic-") ? undefined : onPin}
+                  currentUserId={currentUserId}
+                  onThread={message.id.startsWith("optimistic-") ? undefined : onThread}
                 /></motion.div>
               </React.Fragment>
             );

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -29,6 +29,7 @@ export const FeedNewPost = ({ channel }: FeedNewPostProps = {}) => {
   const createFeedMutation = useCreateFeedMutation();
   const user = useAuthStore((state) => state.user);
   const queryClient = useQueryClient();
+  useEffect(() => () => { if (imagePreview) URL.revokeObjectURL(imagePreview); }, [imagePreview]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -67,8 +68,7 @@ export const FeedNewPost = ({ channel }: FeedNewPostProps = {}) => {
 
   return (
     <>
-      <div className="flex flex-col p-5 sm:p-6 bg-white rounded-2xl border border-[#ebe8e3] shadow-[0_2px_10px_rgba(39,31,23,0.035)] w-full space-y-4">
-        <div className="flex items-center justify-between"><div><h2 className="font-bold text-[17px] tracking-tight text-[#25211e]">Share with your community</h2><p className="mt-1 text-xs text-[#9a9189]">A question, an idea, or a little win.</p></div><span className="rounded-full bg-[#fff2ec] px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[#e5663c]">Your space</span></div>
+      <div className="flex w-full flex-col rounded-2xl border border-border bg-card p-4 sm:p-5">
         {/* User Image And Post Input */}
         <div className="flex gap-2">
           {/* User Image */}
@@ -85,7 +85,7 @@ export const FeedNewPost = ({ channel }: FeedNewPostProps = {}) => {
               value={text}
               onChange={(e) => setText(e.target.value)}
               aria-label="Write a post"
-              className="min-h-[96px] border border-[#f0ece7]! focus-visible:ring-[#ed7045]/30 bg-[#f9f8f6] rounded-xl p-4 text-sm shadow-none"
+              className="min-h-[64px] resize-y rounded-xl border-transparent! bg-muted/40 p-3 text-sm shadow-none focus-visible:border-border! focus-visible:ring-1 focus-visible:ring-ring/20"
               placeholder="What's on your mind?"
             />
 
@@ -107,7 +107,7 @@ export const FeedNewPost = ({ channel }: FeedNewPostProps = {}) => {
             )}
 
             {/* Post Actions */}
-            <div className="flex justify-between items-center flex-wrap py-2 pt-4">
+            <div className="flex flex-wrap items-center justify-between gap-2 pt-3">
               <div className="flex items-center gap-2">
                 <input
                   ref={fileInputRef}
@@ -116,7 +116,7 @@ export const FeedNewPost = ({ channel }: FeedNewPostProps = {}) => {
                   className="hidden"
                   onChange={handleImageChange}
                 />
-                <button type="button" aria-label="Attach an image" onClick={() => fileInputRef.current?.click()} className="rounded-lg p-2 hover:bg-[#f6f3ef]"><Image
+                <button type="button" aria-label="Attach an image" onClick={() => fileInputRef.current?.click()} className="rounded-lg p-2 hover:bg-muted"><Image
                   src="/assets/icons/gallery-icon.svg"
                   alt="Image"
                   width={20}
@@ -174,7 +174,7 @@ export const FeedNewPost = ({ channel }: FeedNewPostProps = {}) => {
               <Button
                 onClick={handlePost}
                 disabled={(!text.trim() && !image) || createFeedMutation.isPending}
-                className="rounded-lg! cursor-pointer bg-[#F86432]! hover:bg-[#F86432]/90 disabled:opacity-60"
+                className="cursor-pointer rounded-full! bg-foreground! px-5 text-background! hover:bg-foreground/85! disabled:opacity-50"
               >
                 {createFeedMutation.isPending ? "Posting..." : "Post"}
               </Button>

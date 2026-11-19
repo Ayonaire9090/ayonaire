@@ -1,6 +1,5 @@
 "use client";
 
-import { useMessagingRealtimeSync } from "@/hooks/socket/use-messaging-realtime-sync";
 import "./messaging.css";
 
 export default function StudentMessagesLayout({
@@ -8,7 +7,6 @@ export default function StudentMessagesLayout({
 }: {
   children: React.ReactNode;
 }) {
-  useMessagingRealtimeSync();
   return (
     <>
       {children}

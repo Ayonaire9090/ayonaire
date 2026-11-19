@@ -40,6 +40,8 @@ export interface Message {
     url: string;
   };
   edited?: boolean;
+  pinnedAt?: string;
+  readBy?: string[];
 }
 
 export interface Conversation {

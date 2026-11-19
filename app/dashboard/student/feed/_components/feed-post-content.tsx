@@ -15,7 +15,7 @@ export const FeedPostContent = ({ text, tags, imageUrl }: FeedPostContentProps) 
           {tags.map((tag, index) => (
             <span
               key={index}
-              className="bg-[#FDF3EE] text-[#F36B36] px-3 py-1.5 rounded-lg text-sm font-medium"
+              className="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground"
             >
               #{tag}
             </span>
@@ -25,7 +25,7 @@ export const FeedPostContent = ({ text, tags, imageUrl }: FeedPostContentProps) 
 
       {/* Main Text Content */}
       {text && (
-        <p className="text-[15px] sm:text-[16px] text-gray-900 leading-relaxed font-medium">
+        <p className="whitespace-pre-wrap break-words text-[15px] leading-relaxed text-foreground">
           {text}
         </p>
       )}

@@ -25,6 +25,10 @@ export interface MessageRecord {
     count: number;
   }[];
   createdAt: string;
+  editedAt?: string;
+  pinnedAt?: string;
+  readBy?: string[];
+  threadRoot?: string;
 }
 
 export interface GetMessagesResult {
@@ -34,10 +38,13 @@ export interface GetMessagesResult {
     page: number;
     limit: number;
     totalPages: number;
+    nextCursor?: string | null;
   };
 }
 
 export const messagesApi = {
+  edit: (messageId: string, text: string) => apiClient<ApiResponse<MessageRecord>>(`/api/v1/message/${messageId}`, { method: "PATCH", body: JSON.stringify({ text }), requireAuth: true }),
+  pin: (messageId: string, pinned: boolean) => apiClient<ApiResponse<MessageRecord>>(`/api/v1/message/${messageId}/pin`, { method: "PUT", body: JSON.stringify({ pinned }), requireAuth: true }),
   send: (formData: FormData) =>
     apiClient<ApiResponse<MessageRecord>>("/api/v1/message/send", {
       method: "POST",
@@ -64,9 +71,9 @@ export const messagesApi = {
       },
     ),
 
-  getForRoom: (roomId: string, page = 1, limit = 50, search = "") =>
+  getForRoom: (roomId: string, page = 1, limit = 50, search = "", before = "") =>
     apiClient<ApiResponse<GetMessagesResult>>(
-      `/api/v1/message/${roomId}?page=${page}&limit=${limit}${search ? `&search=${encodeURIComponent(search)}` : ""}`,
+      `/api/v1/message/${roomId}?page=${page}&limit=${limit}${search ? `&search=${encodeURIComponent(search)}` : ""}${before ? `&before=${encodeURIComponent(before)}` : ""}`,
       {
         method: "GET",
         requireAuth: true,

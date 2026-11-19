@@ -33,6 +33,21 @@ export const useSearchMessages = (roomId: string, search: string) => {
   return { ...query, isDebouncing: debounced !== search.trim() };
 };
 
+export const useLoadOlderMessages = (roomId: string) => {
+  const client = useQueryClient();
+  return useMutation({
+    mutationFn: (before: string) => messagesApi.getForRoom(roomId, 1, 50, "", before),
+    onSuccess: (response) => {
+      if (!response.data) return;
+      client.setQueryData<ApiResponse<GetMessagesResult>>(queryKeys.messages.forRoom(roomId), (old) => {
+        if (!old?.data || !response.data) return old;
+        const seen = new Set(old.data.messages.map((message) => message.id));
+        return { ...old, data: { ...old.data, pagination: response.data.pagination, messages: sortMessagesByCreatedAt([...response.data.messages.filter((message) => !seen.has(message.id)), ...old.data.messages]) } };
+      });
+    },
+  });
+};
+
 export const useSendMessageMutation = () => {
   const queryClient = useQueryClient();
 

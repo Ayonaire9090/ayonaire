@@ -5,12 +5,14 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import { studentFooterNav } from "./_data/student-footer-nav";
 import { StudentLoadingSkeleton } from "@/components/dashboard/student-loading-skeleton";
 import { usePathname } from "next/navigation";
+import { useMessagingRealtimeSync } from "@/hooks/socket/use-messaging-realtime-sync";
 export default function StudentDashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  useMessagingRealtimeSync();
   const isLessonView = /^\/(?:dashboard|preview)\/student\/courses\/[^/]+\/?$/.test(pathname);
   return (
     <AuthGuard allowedRoles={["admin", "student"]} loadingFallback={<div className="mx-auto w-full max-w-6xl p-6"><StudentLoadingSkeleton variant="cards" /></div>}>

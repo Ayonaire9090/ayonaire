@@ -1,7 +1,7 @@
 "use client";
 
 import { HugeiconsIcon } from "@hugeicons/react";
-import { ThumbsUpIcon, BubbleChatIcon, Share01Icon } from "@hugeicons/core-free-icons";
+import { FavouriteIcon, BubbleChatIcon, Share01Icon } from "@hugeicons/core-free-icons";
 import { useLikeFeedMutation, useShareFeedMutation } from "@/hooks/api/use-feeds";
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
@@ -47,20 +47,19 @@ export const FeedInteractPost = ({
     });
   };
 
-  const handleShare = () => {
+  const handleShare = async () => {
     if (!feedId || shareMutation.isPending) return;
-    shareMutation.mutate(feedId, { onSuccess: () => queryClient.invalidateQueries({ queryKey: queryKeys.feeds.all }), onError: () => toast.error("Could not share this post.") });
-
-    if (typeof navigator !== "undefined" && navigator.clipboard) {
-      navigator.clipboard
-        .writeText(`${window.location.origin}/dashboard/student/feed?post=${feedId}`)
-        .then(() => toast.success("Post link copied"))
-        .catch(() => toast.error("Could not copy the post link"));
-    }
+    const url = `${window.location.origin}/dashboard/student/feed?post=${feedId}`;
+    try {
+      if (navigator.share) await navigator.share({ url });
+      else if (navigator.clipboard) { await navigator.clipboard.writeText(url); toast.success("Post link copied"); }
+      else { toast.error("Sharing is unavailable in this browser"); return; }
+      shareMutation.mutate(feedId, { onSuccess: () => queryClient.invalidateQueries({ queryKey: queryKeys.feeds.all }), onError: () => toast.error("The link was shared, but the share count could not be updated.") });
+    } catch (error) { if (!(error instanceof Error && error.name === "AbortError")) toast.error("Could not share the post"); }
   };
 
   return (
-    <div className="flex justify-between items-center border-t border-[#f0eeeb] pt-3">
+    <div className="flex items-center justify-between border-t border-border pt-3">
       {/* Left Stats */}
       <div className="flex items-center gap-5">
         <motion.button
@@ -71,18 +70,18 @@ export const FeedInteractPost = ({
           disabled={!feedId || likeMutation.isPending}
           className={`flex gap-2 items-center rounded-lg px-2 py-2 transition-colors group disabled:cursor-default ${
             liked
-              ? "text-[#e65c32] bg-[#fff2ec]"
-              : "text-[#77736f] hover:bg-[#f7f5f2] hover:text-[#282421]"
+              ? "text-primary bg-primary/5"
+              : "text-muted-foreground hover:bg-muted hover:text-foreground"
           }`}
         >
-          <HugeiconsIcon icon={ThumbsUpIcon}
+          <HugeiconsIcon icon={FavouriteIcon}
             size={20}
             strokeWidth={1.8}
             className="cursor-pointer opacity-90 group-hover:opacity-100 transition-opacity"
           />
           <span className="text-sm font-semibold">{likeCount} <span className="hidden sm:inline">{likeCount === 1 ? "Like" : "Likes"}</span></span>
         </motion.button>
-        <button type="button" onClick={onComment} aria-expanded={commentsOpen} className="flex gap-2 items-center rounded-lg px-2 py-2 text-[#77736f] hover:bg-[#f7f5f2] hover:text-[#282421] transition-colors">
+        <button type="button" onClick={onComment} aria-expanded={commentsOpen} className="flex items-center gap-2 rounded-lg px-2 py-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
           <HugeiconsIcon icon={BubbleChatIcon} size={20} strokeWidth={1.8} className="opacity-90" />
           <span className="text-sm font-semibold">{comments} <span className="hidden sm:inline">{comments === 1 ? "Comment" : "Comments"}</span></span>
         </button>
@@ -91,10 +90,11 @@ export const FeedInteractPost = ({
       {/* Right Share Button */}
       <div className="flex items-center gap-4 text-gray-400">
         <button
-          onClick={handleShare}
+          onClick={() => void handleShare()}
           disabled={!feedId || shareMutation.isPending}
           title="Share post"
-          className="flex items-center gap-1.5 hover:text-gray-900 transition-colors disabled:cursor-default"
+          aria-label="Share post"
+          className="flex items-center gap-1.5 text-muted-foreground transition-colors hover:text-foreground disabled:cursor-default"
         >
           <HugeiconsIcon icon={Share01Icon} size={20} strokeWidth={1.8} />
           {shares > 0 && (

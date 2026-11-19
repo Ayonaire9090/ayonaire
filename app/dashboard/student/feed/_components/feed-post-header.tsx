@@ -60,12 +60,12 @@ export const FeedPostHeader = ({
             <AvatarFallback>{getInitials(title)}</AvatarFallback>
           </Avatar>
           <div className="flex flex-col">
-            <span className="flex gap-2 font-semibold text-[17px] text-gray-900 leading-tight">
+            <span className="flex gap-2 text-[15px] font-semibold leading-tight text-foreground">
               {title}
               <span>{badge && badge}</span>
             </span>
             {description && (
-              <span className="text-[14px] text-gray-500 mt-0.5">
+              <span className="mt-0.5 text-xs text-muted-foreground">
                 {description}
               </span>
             )}
@@ -73,12 +73,13 @@ export const FeedPostHeader = ({
         </div>
 
         {/* Vertical dot button Popover */}
-        <Popover>
+        {(options?.some((option) => option.onClick) || onReport) && <Popover>
           <PopoverTrigger asChild>
             <Button
               variant={"ghost"}
               className="rounded-full h-8 w-8 hover:bg-gray-100 shrink-0"
               size={"icon"}
+              aria-label="Post options"
             >
               <MoreVertical className="text-gray-900 h-5 w-5" />
             </Button>
@@ -90,7 +91,7 @@ export const FeedPostHeader = ({
           >
             <FeedPostActions options={options} onReport={onReport} />
           </PopoverContent>
-        </Popover>
+        </Popover>}
       </div>
     </div>
   );

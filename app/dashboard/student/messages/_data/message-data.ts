@@ -66,6 +66,9 @@ export function mapMessageRecordToMessage(
     // No read-receipt tracking exists on the backend yet - every real
     // message reports "sent" rather than a guessed delivered/seen state.
     status: "sent",
+    edited: !!message.editedAt,
+    pinnedAt: message.pinnedAt,
+    readBy: message.readBy,
     reactions: (message.reactions ?? []).map((reaction) => ({
       emoji: reaction.emoji,
       count: reaction.count,

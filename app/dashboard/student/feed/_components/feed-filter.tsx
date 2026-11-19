@@ -7,6 +7,7 @@ import {
   SheetTrigger,
   SheetContent,
   SheetClose,
+  SheetTitle,
 } from "@/components/ui/sheet";
 import { FEED_TAG_OPTIONS } from "./feed-tags";
 
@@ -25,15 +26,7 @@ export const FeedFilter = ({ selectedTag, onApply }: FeedFilterProps) => {
       }}
     >
       <SheetTrigger asChild>
-        <div className="flex justify-between items-center p-2 lg:p-0">
-          <h2 className="font-semibold text-gray-900 text-lg">Feed</h2>
-          <div className="relative bg-white rounded-full p-2 cursor-pointer transition-colors hover:bg-gray-50">
-            <ListFilter className="w-4 h-4 lg:w-5 lg:h-5 text-gray-900" />
-            {selectedTag && (
-              <span className="absolute top-0 right-0 w-2 h-2 rounded-full bg-[#F86432]" />
-            )}
-          </div>
-        </div>
+        <button type="button" aria-label={selectedTag ? "Filter posts, filter active" : "Filter posts"} className="relative grid size-9 place-items-center rounded-full border border-border bg-card text-muted-foreground transition hover:bg-muted hover:text-foreground"><ListFilter className="size-4" />{selectedTag && <span className="absolute right-1 top-1 size-1.5 rounded-full bg-primary" />}</button>
       </SheetTrigger>
 
       <SheetContent
@@ -41,6 +34,7 @@ export const FeedFilter = ({ selectedTag, onApply }: FeedFilterProps) => {
         hideCloseButton
         className="w-[85%] rounded-tl-3xl rounded-bl-3xl sm:max-w-md p-0 flex flex-col bg-white"
       >
+        <SheetTitle className="sr-only">Filter posts by topic</SheetTitle>
         {/* Custom Header */}
         <div className="flex items-center gap-4 p-6 pb-2 border-b border-transparent">
           <SheetClose className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors">
@@ -96,7 +90,7 @@ export const FeedFilter = ({ selectedTag, onApply }: FeedFilterProps) => {
         <div className="p-6 pt-4 mt-auto flex gap-3">
           <SheetClose asChild>
             <button
-              onClick={() => setPendingTag(undefined)}
+              onClick={() => { setPendingTag(undefined); onApply(undefined); }}
               className="flex-1 py-3.5 px-4 rounded-xl bg-[#F3F4F6] hover:bg-gray-200 text-gray-600 font-medium transition-colors"
             >
               Reset

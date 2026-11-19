@@ -23,6 +23,7 @@ import { cn } from "@/lib/utils";
 import { AppLogo } from "@/components/app-logo";
 import { useAuthStore } from "@/store/auth.store";
 import { DashboardUserDropDown } from "@/components/dashboard/dashboard-user-dropdown";
+import { useGetRooms } from "@/hooks/api/use-rooms";
 
 const headerNav = [
   { title: "Feed", url: "/dashboard/student/feed", icon: LayoutTemplate },
@@ -73,6 +74,8 @@ export const StudentDashboardHeader = ({
   const router = useRouter();
   const pathname = usePathname();
   const { user } = useAuthStore();
+  const rooms = useGetRooms();
+  const unreadMessages = (rooms.data?.data ?? []).reduce((total, room) => total + (room.unreadCount ?? 0), 0);
 
   const isActive = (url: string) => {
     return pathname.startsWith(url);
@@ -100,7 +103,7 @@ export const StudentDashboardHeader = ({
                   : "text-gray-500 hover:text-gray-900",
               )}
             >
-              <item.icon className="h-5 w-5" strokeWidth={active ? 2 : 1.5} />
+              <span className="relative"><item.icon className="h-5 w-5" strokeWidth={active ? 2 : 1.5} />{item.title === "Messages" && unreadMessages > 0 && <span aria-label={`${unreadMessages} unread messages`} className="absolute -right-2 -top-2 rounded-full bg-primary px-1 text-[10px] font-bold text-primary-foreground">{unreadMessages > 99 ? "99+" : unreadMessages}</span>}</span>
               <span
                 className={cn(
                   "text-xs leading-tight whitespace-nowrap",
