@@ -75,6 +75,7 @@ const stringField = (formData: FormData, key: string): string | undefined => {
 // signatures are kept identical to the old REST client so every caller
 // (hooks/api/use-feeds.ts and the components that use it) needed zero changes.
 export const feedsApi = {
+  getById: (feedId: string) => feedSocketRequest<FeedRecord>("feed:get", { feedId }),
   create: async (formData: FormData): Promise<ApiResponse<FeedRecord>> => {
     const mediaFile = extractMediaFile(formData);
     return feedSocketRequest<FeedRecord>("feed:create", {

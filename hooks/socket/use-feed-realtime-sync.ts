@@ -53,16 +53,19 @@ export function useFeedRealtimeSync() {
     };
 
     const handleUpdated = (feed: FeedRecord) => {
+      queryClient.invalidateQueries({ queryKey: ["feed-by-id", feed.id] });
       patchFeedLists(queryClient, (list) =>
         list.map((f) => (f.id === feed.id ? feed : f)),
       );
     };
 
     const handleDeleted = ({ feedId }: { feedId: string }) => {
+      queryClient.invalidateQueries({ queryKey: ["feed-by-id", feedId] });
       patchFeedLists(queryClient, (list) => list.filter((f) => f.id !== feedId));
     };
 
     const handleShared = (result: ShareFeedResult) => {
+      queryClient.invalidateQueries({ queryKey: ["feed-by-id", result.feedId] });
       patchFeedLists(queryClient, (list) =>
         list.map((f) =>
           f.id === result.feedId ? { ...f, shares: result.shares } : f,

@@ -16,9 +16,12 @@ import { useAuthStore } from "@/store/auth.store";
 import { FeedPostData, mapFeedRecordToFeedPost } from "./_components/feed-data";
 import { motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
+import { feedsApi } from "@/lib/api/endpoints/feeds";
 
 const copyPostLink = (feedId: string) => {
   const url = `${window.location.origin}${window.location.pathname}?post=${feedId}`;
+  if (!navigator.clipboard) { toast.error("Copying is unavailable in this browser"); return; }
   navigator.clipboard
     .writeText(url)
     .then(() => toast.success("Link copied"))
@@ -30,6 +33,7 @@ const copyCaption = (textContent?: string) => {
     toast.error("This post has no caption to copy");
     return;
   }
+  if (!navigator.clipboard) { toast.error("Copying is unavailable in this browser"); return; }
   navigator.clipboard
     .writeText(textContent)
     .then(() => toast.success("Caption copied"))
@@ -43,8 +47,8 @@ const viewPost = (feedId: string) => {
     return;
   }
   el.scrollIntoView({ behavior: "smooth", block: "center" });
-  el.classList.add("ring-2", "ring-[#F86432]");
-  setTimeout(() => el.classList.remove("ring-2", "ring-[#F86432]"), 1500);
+  el.classList.add("ring-2", "ring-primary/40");
+  setTimeout(() => el.classList.remove("ring-2", "ring-primary/40"), 1500);
 };
 
 export default function StudentFeedPage() {
@@ -54,12 +58,16 @@ export default function StudentFeedPage() {
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState<"latest" | "discussed">("latest");
   const [limit, setLimit] = useState(20);
+  const [linkedPostId, setLinkedPostId] = useState<string | null>(null);
   const [reportingFeedId, setReportingFeedId] = useState<string | null>(null);
   const [editingPost, setEditingPost] = useState<{ feedId: string; content: string } | null>(null);
   const [deletingFeedId, setDeletingFeedId] = useState<string | null>(null);
   useFeedRealtimeSync();
   const { data, isLoading, isError, refetch, isFetching } = useGetFeeds({ tag: tagFilter, limit });
-  const posts = (data?.data ?? []).map((feed) =>
+  useEffect(() => { setLinkedPostId(new URLSearchParams(window.location.search).get("post")); }, []);
+  const linkedPost = useQuery({ queryKey: ["feed-by-id", linkedPostId], queryFn: () => feedsApi.getById(linkedPostId!), enabled: !!linkedPostId && !isLoading && !(data?.data ?? []).some((feed) => feed.id === linkedPostId) });
+  const records = linkedPost.data?.data && !(data?.data ?? []).some((feed) => feed.id === linkedPost.data?.data?.id) ? [linkedPost.data.data, ...(data?.data ?? [])] : (data?.data ?? []);
+  const posts = records.map((feed) =>
     mapFeedRecordToFeedPost(feed, user?._id),
   ).filter((post) => `${post.authorName} ${post.textContent ?? ""} ${(post.tags ?? []).join(" ")}`.toLowerCase().includes(search.trim().toLowerCase()));
   if (sort === "discussed") posts.sort((a, b) => b.commentsCount - a.commentsCount);
@@ -108,6 +116,7 @@ export default function StudentFeedPage() {
       <header className="mb-4 rounded-2xl border border-border bg-card px-5 pt-5 sm:px-7 sm:pt-6"><div className="flex flex-wrap items-end justify-between gap-3"><div><p className="text-xs font-medium text-muted-foreground">Ayonaire / Community</p><h1 className="mt-2 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">Community feed</h1></div></div><nav aria-label="Community spaces" className="mt-5 flex gap-1 overflow-x-auto border-t border-border pt-1 text-sm"><Link href="/dashboard/student/feed" aria-current="page" className="flex shrink-0 items-center gap-2 border-b-2 border-foreground px-3 py-3 font-semibold text-foreground"><MessageCircle className="size-4" />Feed</Link><Link href="/dashboard/student/feed/general-discussion" className="flex shrink-0 items-center gap-2 border-b-2 border-transparent px-3 py-3 text-muted-foreground transition hover:text-foreground"><Users2 className="size-4" />Discussions</Link><Link href="/dashboard/student/feed/ask-for-help" className="shrink-0 border-b-2 border-transparent px-3 py-3 text-muted-foreground transition hover:text-foreground">Ask for help</Link><Link href="/dashboard/student/feed/announcements" className="flex shrink-0 items-center gap-2 border-b-2 border-transparent px-3 py-3 text-muted-foreground transition hover:text-foreground"><Megaphone className="size-4" />Announcements</Link></nav></header>
       <div className="flex min-w-0 flex-col gap-4">
         <FeedNewPost />
+        {linkedPostId && linkedPost.isError && <div role="alert" className="rounded-xl border border-border bg-card p-4 text-sm text-muted-foreground">Could not open the linked post. It may have been removed.</div>}
 
         <div className="flex flex-col gap-3">
           <div className="flex flex-wrap items-center justify-between gap-3 px-1 pt-2"><div className="flex items-center gap-5" aria-label="Sort posts"><button type="button" onClick={() => setSort("latest")} aria-pressed={sort === "latest"} className={`border-b-2 pb-2 text-sm transition ${sort === "latest" ? "border-foreground font-semibold text-foreground" : "border-transparent text-muted-foreground hover:text-foreground"}`}>Latest</button><button type="button" onClick={() => setSort("discussed")} aria-pressed={sort === "discussed"} className={`border-b-2 pb-2 text-sm transition ${sort === "discussed" ? "border-foreground font-semibold text-foreground" : "border-transparent text-muted-foreground hover:text-foreground"}`}>Most discussed</button></div><div className="flex items-center gap-2"><label className="flex items-center gap-2 rounded-full border border-border bg-card px-3 py-2"><Search className="size-4 text-muted-foreground" /><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search loaded posts" aria-label="Search loaded posts" className="w-28 bg-transparent text-xs text-foreground outline-none placeholder:text-muted-foreground sm:w-40" /></label><FeedFilter selectedTag={tagFilter} onApply={(tag) => { setLimit(20); setTagFilter(tag); }} /></div></div>

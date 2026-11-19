@@ -46,7 +46,7 @@ export const FeedNewPost = ({ channel }: FeedNewPostProps = {}) => {
 
   const handlePost = () => {
     const trimmed = text.trim();
-    if ((!trimmed && !image) || createFeedMutation.isPending) return;
+    if (!trimmed || createFeedMutation.isPending) return;
 
     const formData = new FormData();
     formData.append("content", trimmed);
@@ -105,6 +105,7 @@ export const FeedNewPost = ({ channel }: FeedNewPostProps = {}) => {
                 </button>
               </div>
             )}
+            {image && !text.trim() && <p className="mt-2 text-xs text-muted-foreground">Add a caption to share your image.</p>}
 
             {/* Post Actions */}
             <div className="flex flex-wrap items-center justify-between gap-2 pt-3">
@@ -173,7 +174,7 @@ export const FeedNewPost = ({ channel }: FeedNewPostProps = {}) => {
               {/* Button */}
               <Button
                 onClick={handlePost}
-                disabled={(!text.trim() && !image) || createFeedMutation.isPending}
+                disabled={!text.trim() || createFeedMutation.isPending}
                 className="cursor-pointer rounded-full! bg-foreground! px-5 text-background! hover:bg-foreground/85! disabled:opacity-50"
               >
                 {createFeedMutation.isPending ? "Posting..." : "Post"}
