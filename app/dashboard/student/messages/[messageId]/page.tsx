@@ -164,8 +164,8 @@ export default function StudentMessageDetails() {
       <StudentMessagesSidebarContent variant="sidebar" collapsible="icon" />
       <SidebarInset className="messaging-font bg-background pb-[72px] md:pb-0 flex flex-col h-dvh overflow-hidden">
         {backToConversations}
-
-        {/* Chat header */}
+        <div className="relative flex min-h-0 flex-1 overflow-hidden bg-muted/20">
+          <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden bg-card lg:my-2 lg:ml-2 lg:rounded-xl lg:border lg:border-border/80">
         <StudentGroupMessagesHeader
           messageImage={conversation.avatar}
           messageHeadingTitle={conversation.title}
@@ -184,10 +184,6 @@ export default function StudentMessageDetails() {
           search={search}
           onSearchChange={setSearch}
         />
-        {/* Chat content wrapper */}
-        <div className="flex-1 flex min-h-0 overflow-hidden relative bg-muted/30">
-          {/* Main chat column */}
-          <div className="flex flex-col flex-1 min-w-0 min-h-0 overflow-hidden">
             {/* Messages list */}
             {isMessagesLoading || (search.trim() && (searchResults.isFetching || searchResults.isDebouncing)) ? (
               <div className="flex-1 flex items-center justify-center">
@@ -224,7 +220,7 @@ export default function StudentMessageDetails() {
               onTyping={() => { if (Date.now() - lastTypingSent.current > 1500) { lastTypingSent.current = Date.now(); getMessagingSocket().emit("typing:start", { roomId }); } }}
             /> : <p className="border-t border-border bg-card p-4 text-sm text-muted-foreground">Only the instructor or an administrator can post in this announcement room.</p>}
           </div>
-          {detailsOpen && room && <aside aria-label="Conversation details" className="absolute inset-y-0 right-0 z-10 w-full max-w-sm overflow-y-auto border-l border-border bg-card shadow-lg lg:relative lg:w-80 lg:shrink-0 lg:shadow-none"><StudentGroupSidebar room={room} messages={messagesData?.data?.messages ?? []} /></aside>}
+          {detailsOpen && room && <aside aria-label="Conversation details" className="absolute inset-y-0 right-0 z-10 w-full max-w-sm overflow-y-auto border-l border-border bg-card shadow-lg lg:relative lg:w-72 lg:shrink-0 lg:shadow-none xl:w-80"><StudentGroupSidebar room={room} messages={messagesData?.data?.messages ?? []} onClose={() => setDetailsOpen(false)} /></aside>}
           {threadId && <aside aria-label="Message thread" className="absolute inset-y-0 right-0 z-10 w-full max-w-sm border-l border-border bg-card shadow-lg lg:relative lg:w-96 lg:shrink-0 lg:shadow-none"><MessageThreadPanel key={threadId} roomId={roomId} messageId={threadId} userId={user?._id} canSend={canSend} onClose={() => setThreadId(null)} /></aside>}
         </div>
       </SidebarInset>

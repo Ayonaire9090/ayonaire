@@ -75,7 +75,7 @@ export const StudentMessageList = ({
     <div className="flex-1 min-h-0 relative flex flex-col">
       <div
         ref={containerRef}
-        className="flex-1 overflow-y-auto bg-card px-3 py-5 md:px-5"
+        className="flex-1 overflow-y-auto bg-card px-3 py-4 md:px-4"
       >
         <div className="mx-auto flex w-full max-w-[920px] flex-col gap-1">
           {onLoadOlder && <button type="button" disabled={loadingOlder} onClick={onLoadOlder} className="mx-auto my-2 rounded-full border border-border px-4 py-1.5 text-xs font-medium text-muted-foreground hover:bg-accent disabled:opacity-50">{loadingOlder ? "Loading earlier messages…" : "Load earlier messages"}</button>}
@@ -92,9 +92,9 @@ export const StudentMessageList = ({
               <React.Fragment key={message.id}>
                 {showDayDivider && (
                   <div className="my-3 flex items-center gap-3 text-xs font-medium text-muted-foreground">
-                    <div className="h-px flex-1 bg-border" />
-                    <span className="rounded-full border border-border bg-card px-3 py-1">{dateLabel}</span>
-                    <div className="h-px flex-1 bg-border" />
+                    <div className="flex-1 border-t border-dashed border-border" />
+                    <span>{dateLabel}</span>
+                    <div className="flex-1 border-t border-dashed border-border" />
                   </div>
                 )}
                 <motion.div initial={reducedMotion ? false : { opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.18 }}><StudentMessageBubble
