@@ -1,190 +1,62 @@
 "use client";
 
-import { StudentLoadingSkeleton } from "@/components/dashboard/student-loading-skeleton";
 import * as React from "react";
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarHeader,
-  useSidebar,
-} from "@/components/ui/sidebar";
-import Image from "next/image";
-import { cn } from "@/lib/utils";
-import { X, Menu, Search } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { BookOpen, GraduationCap, Hash, LayoutDashboard, MessageCircle, MessagesSquare, Plus, Search, Users, Video, X } from "lucide-react";
+import { toast } from "sonner";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Sidebar, SidebarContent, SidebarHeader, useSidebar } from "@/components/ui/sidebar";
+import { StudentLoadingSkeleton } from "@/components/dashboard/student-loading-skeleton";
+import { useGetRooms } from "@/hooks/api/use-rooms";
 import { roomsApi } from "@/lib/api/endpoints/rooms";
 import { queryKeys } from "@/lib/api/query-keys";
-import { toast } from "sonner";
-import { useGetRooms } from "@/hooks/api/use-rooms";
 import { useAuthStore } from "@/store/auth.store";
-import {
-  mapRoomToConversation,
-  lastMessagePreview,
-  lastMessageTimestamp,
-} from "../_data/message-data";
+import { cn } from "@/lib/utils";
+import { lastMessagePreview, lastMessageTimestamp, mapRoomToConversation } from "../_data/message-data";
 
-export function StudentMessagesSidebarContent({
-  ...props
-}: React.ComponentProps<typeof Sidebar>) {
-  const { state, toggleSidebar, isMobile, setOpenMobile } = useSidebar();
-  const isCollapsed = state === "collapsed" && !isMobile;
+type Filter = "all" | "direct" | "instructors" | "courses" | "groups";
+const navigation = [
+  { label: "Dashboard", href: "/dashboard/student", icon: LayoutDashboard },
+  { label: "Courses", href: "/dashboard/student/courses", icon: BookOpen },
+  { label: "Workshops", href: "/dashboard/student/workshop", icon: Video },
+  { label: "Community", href: "/dashboard/student/community", icon: Users },
+];
+
+export function StudentMessagesSidebarContent(props: React.ComponentProps<typeof Sidebar>) {
+  const { state, isMobile, setOpenMobile } = useSidebar();
+  const collapsed = state === "collapsed" && !isMobile;
   const pathname = usePathname();
   const router = useRouter();
-  const queryClient = useQueryClient();
-  const instructors = useQuery({ queryKey: ["assigned-instructors"], queryFn: roomsApi.assignedInstructors });
-  const startInstructorChat = useMutation({ mutationFn: roomsApi.messageInstructor, onSuccess: (result) => { if (result.data) { queryClient.invalidateQueries({ queryKey: queryKeys.rooms.all }); if (isMobile) setOpenMobile(false); router.push(`/dashboard/student/messages/${result.data.id}`); } }, onError: (error) => toast.error(error instanceof Error ? error.message : "Could not open conversation") });
+  const client = useQueryClient();
   const user = useAuthStore((s) => s.user);
   const [search, setSearch] = React.useState("");
-
-  const { data: roomsData, isLoading } = useGetRooms();
-  const rooms = roomsData?.data ?? [];
-  const allConversations = rooms.map((room) => ({
-    conv: mapRoomToConversation(room, user?._id),
-    preview: lastMessagePreview(room),
-    timestamp: lastMessageTimestamp(room),
-  }));
-  const conversationCount = allConversations.length;
-  const conversations = allConversations
-    .filter(({ conv }) =>
-      search.trim()
-        ? conv.title.toLowerCase().includes(search.trim().toLowerCase())
-        : true,
-    );
-
-  return (
-    <Sidebar className="border-r border-border bg-card" {...props}>
-      <SidebarHeader className="border-b border-border bg-card px-4 py-5">
-        {isCollapsed ? (
-          <div className="flex flex-col items-center gap-4">
-            <Image
-              src="/assets/logos/logo-dark.png"
-              width={34}
-              height={34}
-              alt="Ayonaire"
-              className="object-contain"
-            />
-            <button
-              onClick={toggleSidebar}
-              className="text-gray-500 hover:text-black transition-colors"
-              aria-label="Toggle Sidebar"
-            >
-              {isMobile ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
-          </div>
-        ) : (
-          <div className="space-y-3">
-            <div className="flex items-center justify-between gap-2">
-              <div><p className="text-[10px] font-bold uppercase tracking-[0.16em] text-primary">Your community</p><h1 className="mt-1 text-xl font-bold tracking-tight text-foreground">Messages</h1></div>
-                <span className="flex size-7 items-center justify-center rounded-full bg-primary/10 text-xs font-bold text-primary">
-                  {conversationCount}
-                </span>
-            </div>
-
-            <div className="flex items-center gap-2 rounded-xl border border-border bg-muted/40 px-3 py-2.5 focus-within:border-primary">
-              <Search className="w-4 h-4 text-gray-400 shrink-0" />
-              <input
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search conversations"
-                className="min-w-0 flex-1 bg-transparent text-[13px] outline-none placeholder:text-gray-400"
-              />
-            </div>
-          </div>
-        )}
-      </SidebarHeader>
-
-      <SidebarContent className="bg-card pt-3">
-        <div className="flex flex-col gap-2 px-2 pb-4">
-          {isLoading ? (
-            <div className="flex items-center justify-center py-8">
-              <StudentLoadingSkeleton variant="messages" />
-            </div>
-          ) : conversations.length === 0 ? (
-            !isCollapsed && (
-              <p className="px-4 py-6 text-sm text-gray-400 text-center">
-                {search.trim() ? `No results for "${search.trim()}".` : "No chatrooms yet."}
-              </p>
-            )
-          ) : (
-          conversations.map(({ conv, preview, timestamp }) => {
-            const isActive = pathname.includes(conv.id);
-
-            return (
-              <Link
-                key={conv.id}
-                href={`/dashboard/student/messages/${conv.id}`}
-                onClick={() => {
-                  // On mobile the conversation list lives inside the
-                  // off-canvas Sheet - close it so the selected thread
-                  // (rendered underneath) becomes visible.
-                  if (isMobile) setOpenMobile(false);
-                }}
-                className={cn(
-                  "flex items-start gap-3 rounded-xl p-3 transition-colors",
-                  isActive ? "bg-primary/10" : "bg-transparent hover:bg-accent",
-                  isCollapsed && "justify-center px-0",
-                )}
-              >
-                {conv.type === "group" ? (
-                  <>
-                    <div className="relative shrink-0">
-                      <Image
-                        src={conv.avatar}
-                        width={40}
-                        height={40}
-                        alt={conv.title}
-                        className="rounded-lg object-cover"
-                      />
-                    </div>
-                    {!isCollapsed && (
-                      <div className="flex-1 min-w-0 flex flex-col justify-center">
-                        <div className="mb-1 flex items-center justify-between gap-2">
-                          <span className="truncate text-sm font-semibold text-gray-900">
-                            {conv.title}
-                          </span>
-                          <span className="shrink-0 text-[11px] text-gray-400">{timestamp}</span>
-                        </div>
-                        <p className="truncate text-[13px] font-medium text-gray-500">
-                          {preview}
-                        </p>
-                      </div>
-                    )}
-                  </>
-                ) : (
-                  <>
-                    <div className="relative shrink-0">
-                      <Avatar className="w-10 h-10 rounded-xl!">
-                        <AvatarImage src={conv.avatar} />
-                        <AvatarFallback>{conv.title[0]}</AvatarFallback>
-                      </Avatar>
-                    </div>
-                    {!isCollapsed && (
-                      <div className="flex-1 min-w-0">
-                        <div className="flex justify-between items-baseline mb-0.5">
-                          <span className="text-[15px] font-medium text-gray-900">
-                            {conv.title}
-                          </span>
-                          <span className="text-xs text-gray-400 shrink-0 ml-2">
-                            {timestamp}
-                          </span>
-                        </div>
-                        <p className="text-[13px] text-gray-500 line-clamp-2 leading-tight">
-                          {preview}
-                        </p>
-                      </div>
-                    )}
-                  </>
-                )}
-              </Link>
-            );
-          })
-          )}
-        </div>
-        {!isCollapsed && <section className="border-t border-border px-4 py-4"><h2 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Your instructors</h2><p className="mt-1 text-xs text-muted-foreground">From your enrolled courses</p><div className="mt-3 space-y-1">{instructors.isLoading ? <StudentLoadingSkeleton variant="messages" /> : instructors.isError ? <button onClick={() => instructors.refetch()} className="text-xs text-primary underline">Could not load instructors. Retry</button> : !instructors.data?.data?.length ? <p className="text-xs text-muted-foreground">No assigned instructors found.</p> : instructors.data.data.map(({ courseId, courseTitle, instructor }) => <button key={courseId} type="button" disabled={startInstructorChat.isPending} onClick={() => startInstructorChat.mutate(courseId)} className="flex w-full items-center gap-2 rounded-xl p-2 text-left transition hover:bg-accent disabled:opacity-50"><Avatar className="size-9"><AvatarImage src={instructor.profile?.url} /><AvatarFallback className="bg-primary/10 text-primary">{instructor.name.slice(0, 1)}</AvatarFallback></Avatar><span className="min-w-0"><span className="block truncate text-sm font-medium text-foreground">{instructor.name}</span><span className="block truncate text-xs text-muted-foreground">{courseTitle}</span></span></button>)}</div></section>}
-      </SidebarContent>
-    </Sidebar>
-  );
+  const [filter, setFilter] = React.useState<Filter>("all");
+  const roomsQuery = useGetRooms();
+  const instructors = useQuery({ queryKey: ["assigned-instructors"], queryFn: roomsApi.assignedInstructors });
+  const startChat = useMutation({ mutationFn: roomsApi.messageInstructor, onSuccess: (result) => { if (result.data) { client.invalidateQueries({ queryKey: queryKeys.rooms.all }); if (isMobile) setOpenMobile(false); router.push(`/dashboard/student/messages/${result.data.id}`); } }, onError: (error) => toast.error(error instanceof Error ? error.message : "Could not open conversation") });
+  const instructorIds = new Set((instructors.data?.data ?? []).map((item) => item.instructor.id));
+  const rooms = (roomsQuery.data?.data ?? []).map((room) => ({ room, conversation: mapRoomToConversation(room, user?._id) })).filter(({ room, conversation }) => {
+    const matchesSearch = `${conversation.title} ${lastMessagePreview(room)}`.toLowerCase().includes(search.trim().toLowerCase());
+    return matchesSearch && (filter === "all" || (filter === "groups" && room.isGroup && !room.course) || (filter === "courses" && room.isGroup && !!room.course) || (filter === "direct" && !room.isGroup) || (filter === "instructors" && !room.isGroup && room.participants.some((member) => instructorIds.has(member.id))));
+  });
+  const filters: { id: Filter; label: string; icon: typeof MessagesSquare }[] = [
+    { id: "all", label: "All conversations", icon: MessagesSquare }, { id: "direct", label: "Direct messages", icon: MessageCircle }, { id: "instructors", label: "Mentor / instructor", icon: GraduationCap }, { id: "courses", label: "Course chatrooms", icon: Hash }, { id: "groups", label: "Group discussions", icon: Users },
+  ];
+  const renderRoom = ({ room, conversation }: (typeof rooms)[number]) => <Link key={room.id} href={`/dashboard/student/messages/${room.id}`} onClick={() => { if (isMobile) setOpenMobile(false); }} aria-current={pathname.endsWith(`/${room.id}`) ? "page" : undefined} className={cn("group flex items-center gap-3 rounded-xl px-2.5 py-2.5 transition-colors hover:bg-accent", pathname.endsWith(`/${room.id}`) && "bg-primary/10 text-primary", collapsed && "justify-center px-0")}>
+    <Avatar className="size-9 shrink-0 rounded-xl"><AvatarImage src={conversation.avatar} /><AvatarFallback className="rounded-xl bg-primary/10 text-xs font-bold text-primary">{conversation.title.slice(0, 2).toUpperCase()}</AvatarFallback></Avatar>
+    {!collapsed && <span className="min-w-0 flex-1"><span className="flex items-center justify-between gap-2"><span className="truncate text-[13px] font-semibold text-foreground">{conversation.title}</span><span className="shrink-0 text-[10px] text-muted-foreground">{lastMessageTimestamp(room)}</span></span><span className="mt-0.5 block truncate text-xs text-muted-foreground">{lastMessagePreview(room)}</span></span>}
+  </Link>;
+  return <Sidebar {...props} className="messaging-font border-r border-border bg-card">
+    <SidebarHeader className="border-b border-border bg-card px-4 py-5">
+      {!collapsed ? <><div className="flex items-center justify-between gap-2"><div><p className="text-[10px] font-bold uppercase tracking-[.16em] text-primary">Ayonaire Academy</p><h1 className="mt-1 text-xl font-bold tracking-tight text-foreground">Messages</h1></div><button type="button" onClick={() => setFilter("instructors")} title="Message an instructor" aria-label="Message an instructor" className="grid size-9 place-items-center rounded-xl border border-border text-primary transition hover:bg-primary/10"><Plus className="size-4" /></button></div><label className="mt-4 flex items-center gap-2 rounded-xl border border-border bg-muted/30 px-3 py-2.5"><Search className="size-4 shrink-0 text-muted-foreground" /><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search conversations" aria-label="Search conversations" className="w-full min-w-0 bg-transparent text-xs text-foreground outline-none placeholder:text-muted-foreground" />{search && <button type="button" onClick={() => setSearch("")} aria-label="Clear search"><X className="size-4 text-muted-foreground" /></button>}</label></> : <span className="mx-auto text-lg font-bold text-primary">A</span>}
+    </SidebarHeader>
+    <SidebarContent className="messaging-font bg-card px-3 py-4">
+      {!collapsed && <nav aria-label="Student dashboard" className="space-y-0.5 border-b border-border pb-4">{navigation.map(({ href, label, icon: Icon }) => <Link key={href} href={href} className="flex items-center gap-3 rounded-lg px-3 py-2 text-[13px] font-medium text-muted-foreground transition hover:bg-accent hover:text-foreground"><Icon className="size-4" />{label}</Link>)}</nav>}
+      {!collapsed && <div className="space-y-1 pt-4"><p className="px-3 pb-1 text-[10px] font-bold uppercase tracking-[.13em] text-muted-foreground">My chats</p>{filters.map(({ id, label, icon: Icon }) => <button key={id} type="button" onClick={() => setFilter(id)} aria-pressed={filter === id} className={cn("flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-[13px] font-medium transition", filter === id ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-accent hover:text-foreground")}><Icon className="size-4" />{label}</button>)}</div>}
+      <section className="mt-5 border-t border-border pt-4"><div className="mb-2 flex items-center justify-between px-2"><h2 className="text-[10px] font-bold uppercase tracking-[.13em] text-muted-foreground">{collapsed ? "Chats" : "Recent conversations"}</h2>{!collapsed && <span className="text-xs text-muted-foreground">{rooms.length}</span>}</div>{roomsQuery.isLoading ? <StudentLoadingSkeleton variant="messages" /> : roomsQuery.isError ? <button className="px-2 text-xs text-primary underline" onClick={() => roomsQuery.refetch()}>Could not load conversations. Retry</button> : rooms.length ? <div className="space-y-1">{rooms.map(renderRoom)}</div> : <p className="px-2 py-3 text-xs leading-5 text-muted-foreground">{search ? "No matching conversations." : "No conversations in this view yet."}</p>}</section>
+      {!collapsed && <section className="mt-5 border-t border-border pt-4"><div className="flex items-center justify-between px-2"><h2 className="text-[10px] font-bold uppercase tracking-[.13em] text-muted-foreground">Your instructors</h2><GraduationCap className="size-4 text-muted-foreground" /></div><p className="px-2 pt-1 text-xs text-muted-foreground">From your enrolled courses</p><div className="mt-2 space-y-1">{instructors.isLoading ? <StudentLoadingSkeleton variant="messages" /> : instructors.isError ? <button onClick={() => instructors.refetch()} className="px-2 text-xs text-primary underline">Could not load instructors. Retry</button> : !instructors.data?.data?.length ? <p className="px-2 py-3 text-xs text-muted-foreground">No assigned instructors yet.</p> : instructors.data.data.map(({ courseId, courseTitle, instructor }) => <button key={courseId} disabled={startChat.isPending} onClick={() => startChat.mutate(courseId)} className="flex w-full items-center gap-3 rounded-xl px-2 py-2 text-left transition hover:bg-accent disabled:opacity-50"><Avatar className="size-9"><AvatarImage src={instructor.profile?.url} /><AvatarFallback className="bg-primary/10 text-xs text-primary">{instructor.name.slice(0, 1)}</AvatarFallback></Avatar><span className="min-w-0"><span className="block truncate text-[13px] font-semibold text-foreground">{instructor.name}</span><span className="block truncate text-xs text-muted-foreground">{courseTitle}</span></span></button>)}</div></section>}
+    </SidebarContent>
+  </Sidebar>;
 }

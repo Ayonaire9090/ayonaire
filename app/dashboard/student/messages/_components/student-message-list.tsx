@@ -63,10 +63,10 @@ export const StudentMessageList = ({
     <div className="flex-1 min-h-0 relative flex flex-col">
       <div
         ref={containerRef}
-        className="flex-1 overflow-y-auto px-3 md:px-6 py-6"
+        className="flex-1 overflow-y-auto bg-card px-3 py-5 md:px-5"
       >
-        <div className="flex flex-col gap-4 w-full max-w-[920px] mx-auto">
-          {messages.length === 0 && <div className="mx-auto mt-20 max-w-sm rounded-2xl border border-[#ece6df] bg-white p-6 text-center"><p className="text-sm font-semibold text-[#302925]">Start the conversation</p><p className="mt-2 text-sm leading-6 text-[#9a9087]">Share a question or say hello to your chatroom.</p></div>}
+        <div className="mx-auto flex w-full max-w-[920px] flex-col gap-1">
+          {messages.length === 0 && <div className="mx-auto mt-20 max-w-sm rounded-2xl border border-border bg-muted/20 p-6 text-center"><p className="text-sm font-semibold text-foreground">Start the conversation</p><p className="mt-2 text-sm leading-6 text-muted-foreground">Share a question or say hello to your chatroom.</p></div>}
           {messages.map((message, index) => {
             const prevMessage = index > 0 ? messages[index - 1] : null;
             const sameSenderAsPrev =
@@ -78,10 +78,10 @@ export const StudentMessageList = ({
             return (
               <React.Fragment key={message.id}>
                 {showDayDivider && (
-                  <div className="flex items-center gap-3 text-xs font-medium text-gray-400">
-                    <div className="flex-1 h-px bg-gray-100" />
-                    {dateLabel}
-                    <div className="flex-1 h-px bg-gray-100" />
+                  <div className="my-3 flex items-center gap-3 text-xs font-medium text-muted-foreground">
+                    <div className="h-px flex-1 bg-border" />
+                    <span className="rounded-full border border-border bg-card px-3 py-1">{dateLabel}</span>
+                    <div className="h-px flex-1 bg-border" />
                   </div>
                 )}
                 <motion.div initial={reducedMotion ? false : { opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.18 }}><StudentMessageBubble
@@ -104,7 +104,7 @@ export const StudentMessageList = ({
       {showScrollBtn && (
         <button
           onClick={scrollToBottom}
-          className="absolute bottom-6 right-6 w-10 h-10 rounded-full bg-white border border-gray-200 shadow-md flex items-center justify-center text-gray-500 hover:text-gray-900 hover:shadow-lg transition-all z-10"
+          className="absolute bottom-6 right-6 z-10 flex size-10 items-center justify-center rounded-full border border-border bg-card text-muted-foreground shadow-md transition-all hover:text-foreground hover:shadow-lg"
           aria-label="Scroll to bottom"
         >
           <ChevronDown className="w-5 h-5" />

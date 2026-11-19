@@ -38,6 +38,7 @@ export default function StudentMessageDetails() {
   const { isMobile, setOpenMobile } = useSidebar();
   const [replyTo, setReplyTo] = useState<Message | null>(null);
   const [detailsOpen, setDetailsOpen] = useState(false);
+  useEffect(() => { setDetailsOpen(window.matchMedia("(min-width: 1024px)").matches); }, []);
   const [search, setSearch] = useState("");
   const [typingUserId, setTypingUserId] = useState<string | null>(null);
   const lastTypingSent = useRef(0);
@@ -60,7 +61,7 @@ export default function StudentMessageDetails() {
   const backToConversations = isMobile && (
     <button
       onClick={() => setOpenMobile(true)}
-      className="md:hidden flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-gray-700 bg-white border-b border-gray-100"
+      className="flex items-center gap-1.5 border-b border-border bg-card px-4 py-2 text-sm font-medium text-foreground md:hidden"
     >
       <ChevronLeft className="w-4 h-4" />
       Conversations
@@ -125,7 +126,7 @@ export default function StudentMessageDetails() {
     return (
       <>
         <StudentMessagesSidebarContent variant="sidebar" collapsible="icon" />
-        <SidebarInset className="bg-[#F6F6F6] pb-[72px] md:pb-0 flex flex-col h-dvh overflow-hidden">
+        <SidebarInset className="messaging-font flex h-dvh flex-col overflow-hidden bg-background pb-[72px] md:pb-0">
           {backToConversations}
           <div className="flex-1 flex items-center justify-center">
             <StudentLoadingSkeleton variant="messages" />
@@ -139,10 +140,10 @@ export default function StudentMessageDetails() {
     return (
       <>
         <StudentMessagesSidebarContent variant="sidebar" collapsible="icon" />
-        <SidebarInset className="bg-[#F6F6F6] pb-[72px] md:pb-0 flex flex-col h-dvh overflow-hidden">
+        <SidebarInset className="messaging-font flex h-dvh flex-col overflow-hidden bg-background pb-[72px] md:pb-0">
           {backToConversations}
           <div className="flex-1 flex items-center justify-center">
-            <p className="text-gray-400">Conversation not found</p>
+            <p className="text-muted-foreground">Conversation not found</p>
           </div>
         </SidebarInset>
       </>
@@ -154,7 +155,7 @@ export default function StudentMessageDetails() {
   return (
     <>
       <StudentMessagesSidebarContent variant="sidebar" collapsible="icon" />
-      <SidebarInset className="bg-white pb-[72px] md:pb-0 flex flex-col h-dvh overflow-hidden">
+      <SidebarInset className="messaging-font bg-background pb-[72px] md:pb-0 flex flex-col h-dvh overflow-hidden">
         {backToConversations}
 
         {/* Chat header */}
@@ -170,6 +171,7 @@ export default function StudentMessageDetails() {
           room={room}
           detailsOpen={detailsOpen}
           onToggleDetails={() => setDetailsOpen((open) => !open)}
+          onOpenFiles={() => { setDetailsOpen(true); setTimeout(() => document.getElementById("messaging-shared-files")?.scrollIntoView({ behavior: "smooth", block: "start" }), 50); }}
           search={search}
           onSearchChange={setSearch}
         />
