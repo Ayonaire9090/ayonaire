@@ -82,7 +82,7 @@ export function StudentHomeSidebarContent({
   const pathname = usePathname();
 
   return (
-    <Sidebar className="bg-[#fffefa] border-r border-[#eeeae4]" {...props}>
+    <Sidebar {...props} variant="floating" className="dashboard-glass-sidebar">
       <SidebarHeader className="bg-transparent">
         <SidebarMenu>
           <SidebarMenuItem>
@@ -139,8 +139,9 @@ export function StudentHomeSidebarContent({
       </SidebarHeader>
       <SidebarContent className="bg-transparent">
         <SidebarGroup><SidebarMenu className="gap-1">{studentHomeSidebarNav.filter((item) => item.title !== "Resources").map((item) => {
-          const active = pathname === item.url || pathname.startsWith(`${item.url}/`);
-          return <SidebarMenuItem key={item.title}><SidebarMenuButton asChild tooltip={item.title} className={cn("rounded-xl px-3 py-5 text-[#77716b] transition-colors hover:bg-[#f7f4ef] hover:text-[#29231f]", active && "bg-[#fff0e9] font-semibold text-[#df6038] hover:bg-[#fff0e9] hover:text-[#df6038]")}><Link href={item.url} onClick={() => { if (isMobile) toggleSidebar(); }}><item.icon className="size-5 shrink-0" />{!isCollapsed && <span className="text-sm">{item.title}</span>}</Link></SidebarMenuButton></SidebarMenuItem>;
+          const matches = pathname === item.url || pathname.startsWith(`${item.url}/`);
+          const active = matches && !studentHomeSidebarNav.some((other) => other.url !== item.url && other.url.startsWith(`${item.url}/`) && (pathname === other.url || pathname.startsWith(`${other.url}/`)));
+          return <SidebarMenuItem key={item.title}><SidebarMenuButton asChild tooltip={item.title} className={cn("dashboard-glass-nav-item", active && "dashboard-glass-nav-active")}><Link href={item.url} onClick={() => { if (isMobile) toggleSidebar(); }}><item.icon className="size-5 shrink-0" />{!isCollapsed && <span className="text-sm">{item.title}</span>}</Link></SidebarMenuButton></SidebarMenuItem>;
         })}</SidebarMenu></SidebarGroup>
       </SidebarContent>
     </Sidebar>

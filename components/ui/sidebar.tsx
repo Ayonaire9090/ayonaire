@@ -192,7 +192,7 @@ function Sidebar({
           data-sidebar="sidebar"
           data-slot="sidebar"
           data-mobile="true"
-          className=" text-sidebar-foreground w-(--sidebar-width) p-0 [&>button]:hidden"
+          className={cn("text-sidebar-foreground w-(--sidebar-width) p-0 [&>button]:hidden", className)}
           style={
             {
               "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
