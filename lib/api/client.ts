@@ -5,7 +5,7 @@ export interface RequestOptions extends RequestInit {
   requireAuth?: boolean; // If true, throws if no token is found (defaults to true for most, but maybe false for some)
 }
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "";
+const API_BASE_URL = "https://ayonaire-8mev.onrender.com/" ;
 
 // Dedupe concurrent 401s during the same expired-token window into a single
 // refresh call, instead of every in-flight request firing its own.
