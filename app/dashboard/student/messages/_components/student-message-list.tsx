@@ -75,9 +75,9 @@ export const StudentMessageList = ({
     <div className="flex-1 min-h-0 relative flex flex-col">
       <div
         ref={containerRef}
-        className="flex-1 overflow-y-auto bg-card px-3 py-4 md:px-4"
+        className="flex-1 overflow-y-auto bg-background px-3 py-5 md:px-5"
       >
-        <div className="mx-auto flex w-full max-w-[920px] flex-col gap-1">
+        <div className="mx-auto flex w-full max-w-[920px] flex-col gap-0.5">
           {onLoadOlder && <button type="button" disabled={loadingOlder} onClick={onLoadOlder} className="mx-auto my-2 rounded-full border border-border px-4 py-1.5 text-xs font-medium text-muted-foreground hover:bg-accent disabled:opacity-50">{loadingOlder ? "Loading earlier messages…" : "Load earlier messages"}</button>}
           {messages.length === 0 && <div className="mx-auto mt-20 max-w-sm rounded-2xl border border-border bg-muted/20 p-6 text-center"><p className="text-sm font-semibold text-foreground">Start the conversation</p><p className="mt-2 text-sm leading-6 text-muted-foreground">Share a question or say hello to your chatroom.</p></div>}
           {messages.map((message, index) => {
@@ -91,10 +91,10 @@ export const StudentMessageList = ({
             return (
               <React.Fragment key={message.id}>
                 {showDayDivider && (
-                  <div className="my-3 flex items-center gap-3 text-xs font-medium text-muted-foreground">
-                    <div className="flex-1 border-t border-dashed border-border" />
-                    <span>{dateLabel}</span>
-                    <div className="flex-1 border-t border-dashed border-border" />
+                  <div className="my-5 flex items-center gap-3 text-xs font-medium text-muted-foreground">
+                    <div className="flex-1 border-t border-border/80" />
+                    <span className="rounded-full border border-border bg-card px-3 py-1">{dateLabel}</span>
+                    <div className="flex-1 border-t border-border/80" />
                   </div>
                 )}
                 <motion.div initial={reducedMotion ? false : { opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.18 }}><StudentMessageBubble
