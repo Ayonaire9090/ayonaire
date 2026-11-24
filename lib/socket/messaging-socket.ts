@@ -1,7 +1,6 @@
 import { io, Socket } from "socket.io-client";
 import { useAuthStore } from "@/store/auth.store";
-
-const SOCKET_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "";
+import { API_BASE_URL } from "@/lib/api/base-url";
 
 let socket: Socket | null = null;
 let connectedToken: string | null = null;
@@ -16,7 +15,7 @@ useAuthStore.subscribe((state) => {
 export const getMessagingSocket = (): Socket => {
   const token = useAuthStore.getState().token;
   if (!socket) {
-    socket = io(SOCKET_BASE_URL, {
+    socket = io(API_BASE_URL, {
       autoConnect: false,
       transports: ["websocket", "polling"],
       auth: { token: token ?? undefined },

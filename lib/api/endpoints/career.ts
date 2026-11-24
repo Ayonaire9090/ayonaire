@@ -2,7 +2,7 @@ import { apiClient } from "../client";
 import { ApiResponse } from "../types";
 
 // All request/response shapes confirmed 2026-07-14 against the live Swagger
-// spec (https://ayonaire.onrender.com/api-docs/) - tags: "Career Accelerator".
+// spec (https://ayonaire-8mev.onrender.com/api-docs/) - tags: "Career Accelerator".
 
 export interface CareerAIResponse {
   generatedText: string;

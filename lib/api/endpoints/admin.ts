@@ -21,7 +21,7 @@ export interface GetAdminUsersParams {
 }
 
 // Paths corrected 2026-07-14 against the live Swagger spec
-// (https://ayonaire.onrender.com/api-docs/) - the previous team had these
+// (https://ayonaire-8mev.onrender.com/api-docs/) - the previous team had these
 // under /api/v1/user/*, but the real routes are under /api/v1/auth/*.
 export const adminApi = {
   getUsers: (params: GetAdminUsersParams = {}) => {

@@ -23,7 +23,7 @@ There is no configured lint or test script in package.json — do not assume `np
 
 ### Data layer: React Query + hand-written fetch client (no next-auth despite the dependency)
 
-- `lib/api/client.ts` — a single `apiClient<T>()` wrapper around `fetch`. Reads the bearer token from the Zustand auth store (`useAuthStore.getState().token`), auto-attaches `Authorization`, and on a `401` clears auth state via `clearAuth()`. Base URL comes from `NEXT_PUBLIC_API_BASE_URL` (an external backend — this Next.js app is primarily a frontend for a separate API).
+- `lib/api/client.ts` — a single `apiClient<T>()` wrapper around `fetch`. Reads the bearer token from the Zustand auth store (`useAuthStore.getState().token`), auto-attaches `Authorization`, and on a `401` clears auth state via `clearAuth()`. The API and sockets share the base URL in `lib/api/base-url.ts`.
 - `lib/api/endpoints/*.ts` — one file per resource (auth, courses, users, enrollment, quiz, workshops, instructor, admin, etc.), each exporting a plain object of functions that call `apiClient`. This is the only place `fetch`/endpoint URLs should be defined.
 - `lib/api/query-keys.ts` — centralized query-key factory (`queryKeys.auth.profile()`, `queryKeys.courses.detail(id)`, etc). Always use this instead of inlining key arrays.
 - `hooks/api/use-*.ts` — React Query hooks (`useQuery`/`useMutation`) that wrap the endpoint functions and query keys. Components should consume these hooks, not `lib/api/endpoints` or `apiClient` directly.

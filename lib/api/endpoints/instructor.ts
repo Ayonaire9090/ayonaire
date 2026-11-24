@@ -2,7 +2,7 @@ import { apiClient } from "../client";
 import { ApiResponse } from "../types";
 
 // Confirmed 2026-07-14 against the live Swagger spec
-// (https://ayonaire.onrender.com/api-docs/) - real routes are under
+// (https://ayonaire-8mev.onrender.com/api-docs/) - real routes are under
 // /api/v1/instructor-management/*, not /api/v1/instructor/*, and the real
 // "Instructor" schema has no name/email - it references a user via
 // instructorId, and the application-state field is applicationStatus, not

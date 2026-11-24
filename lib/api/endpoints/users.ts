@@ -2,7 +2,7 @@ import { apiClient } from "../client";
 import { ApiResponse } from "../types";
 
 // Response shapes confirmed against the live Swagger spec
-// (https://ayonaire.onrender.com/api-docs/) - both endpoints wrap their
+// (https://ayonaire-8mev.onrender.com/api-docs/) - both endpoints wrap their
 // result in the standard { success, data } envelope, not a flat
 // { success, message, profile/user } shape as previously assumed. That
 // mismatch meant onSuccess's `data.profile`/`data.user` checks were always

@@ -1,7 +1,6 @@
 import { io, Socket } from "socket.io-client";
 import { useAuthStore } from "@/store/auth.store";
-
-const SOCKET_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "";
+import { API_BASE_URL } from "@/lib/api/base-url";
 
 export interface SocketAckResponse<T = any> {
   success: boolean;
@@ -19,7 +18,7 @@ export const getFeedSocket = (): Socket => {
   const token = useAuthStore.getState().token;
 
   if (!socket) {
-    socket = io(`${SOCKET_BASE_URL}/feed`, {
+    socket = io(`${API_BASE_URL}/feed`, {
       autoConnect: false,
       transports: ["websocket", "polling"],
       auth: { token: token ?? undefined },
