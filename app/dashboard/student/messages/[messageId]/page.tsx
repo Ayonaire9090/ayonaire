@@ -42,7 +42,6 @@ export default function StudentMessageDetails() {
   const [replyTo, setReplyTo] = useState<Message | null>(null);
   const [threadId, setThreadId] = useState<string | null>(null);
   const [detailsOpen, setDetailsOpen] = useState(false);
-  useEffect(() => { setDetailsOpen(window.matchMedia("(min-width: 1024px)").matches); }, []);
   const [search, setSearch] = useState("");
   const [typingUserId, setTypingUserId] = useState<string | null>(null);
   const lastTypingSent = useRef(0);

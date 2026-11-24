@@ -32,7 +32,7 @@ export function StudentMessagesNavRail() {
   return (
     <nav
       aria-label="Sections"
-      className="hidden md:flex w-16 shrink-0 flex-col items-center bg-white border-r border-gray-200 py-4 gap-1 h-svh"
+      className="hidden md:flex h-svh w-16 shrink-0 flex-col items-center gap-1 border-r border-border bg-sidebar py-4 text-sidebar-foreground"
     >
       <Link href="/dashboard/student/feed" className="mb-4 shrink-0">
         <Image
@@ -56,7 +56,7 @@ export function StudentMessagesNavRail() {
                   "flex items-center justify-center w-10 h-10 rounded-lg transition-colors",
                   active
                     ? "bg-primary/10 text-primary"
-                    : "text-gray-400 hover:bg-gray-100 hover:text-gray-700",
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground",
                 )}
               >
                 <item.icon
@@ -83,7 +83,7 @@ export function StudentMessagesNavRail() {
               "flex items-center justify-center w-10 h-10 rounded-lg transition-colors mb-2",
               isNavActive(pathname, supportUrl)
                 ? "bg-primary/10 text-primary"
-                : "text-gray-400 hover:bg-gray-100 hover:text-gray-700",
+                : "text-muted-foreground hover:bg-muted hover:text-foreground",
             )}
           >
             <LifeBuoy className="w-5 h-5" />
@@ -93,7 +93,7 @@ export function StudentMessagesNavRail() {
       </Tooltip>
 
       <DashboardUserDropDown align="end" side="right">
-        <Avatar className="w-8 h-8 cursor-pointer border border-gray-200">
+        <Avatar className="size-8 cursor-pointer border border-border">
           <AvatarImage src={user?.profile?.url} alt={user?.name ?? "Profile"} />
           <AvatarFallback className="text-[11px]">
             {user?.name ? user.name.slice(0, 2).toUpperCase() : "AY"}
