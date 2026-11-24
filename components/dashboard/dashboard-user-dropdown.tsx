@@ -98,7 +98,7 @@ export const DashboardUserDropDown = ({
             My account
           </button>
         </DropdownMenuItem>
-        <DropdownMenuItem className="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-sm font-medium text-gray-800 hover:bg-white focus:bg-white">
+        <DropdownMenuItem onClick={() => router.push(`/dashboard/${profilePath}/notifications${profilePath === "admin" ? "/inbox" : ""}`)} className="flex items-center gap-3 px-3 py-2.5 rounded-lg cursor-pointer text-sm font-medium text-gray-800 hover:bg-white focus:bg-white">
           <BellDot
             className="bg-[#222222] p-1 rounded-full text-white font-bold w-5.5! h-5.5!"
             strokeWidth={2.7}

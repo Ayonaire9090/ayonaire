@@ -59,9 +59,9 @@ function SelectableOption({
 
 const RECIPIENT_TYPE_MAP: Record<string, string> = {
   "All Users": "all",
-  Students: "student",
-  Instructors: "instructor",
-  "Specific Users": "specific",
+  Students: "students",
+  Instructors: "instructors",
+  "Specific Users": "specific-users",
 };
 
 const TYPE_MAP: Record<string, string> = {
@@ -110,6 +110,7 @@ export default function CreateNotificationPage() {
       name,
       message,
       type: TYPE_MAP[type] ?? "reminder",
+      channel: type === "Email" ? "email" : type === "Both" ? "both" : "in-app",
       recipientType: RECIPIENT_TYPE_MAP[recipientType] ?? "all",
       course: courseId || undefined,
       cohort: cohortId || undefined,
@@ -145,6 +146,10 @@ export default function CreateNotificationPage() {
   };
 
   const handleSend = () => {
+    if (recipientType === "Specific Users") {
+      toast.error("Selecting specific users is not available yet. Choose another audience.");
+      return;
+    }
     if (!name.trim() || !message.trim()) {
       toast.error("Add a name and message before sending.");
       return;

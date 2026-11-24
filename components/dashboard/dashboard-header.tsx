@@ -14,6 +14,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { DashboardUserDropDown } from "./dashboard-user-dropdown";
 import { useAuthStore } from "@/store/auth.store";
+import { useNotificationInbox } from "./notification-inbox";
 
 interface DashboardHeaderProps {
   title?: React.ReactNode;
@@ -29,6 +30,7 @@ export function DashboardHeader({
   const router = useRouter();
   const pathname = usePathname();
   const { user } = useAuthStore();
+  const unreadCount = useNotificationInbox().data?.data?.unreadCount ?? 0;
 
   // Get the profile path based on route (update this later to be session based):
   const profilePath = pathname.includes("/admin")
@@ -39,17 +41,13 @@ export function DashboardHeader({
         ? "student"
         : "";
 
-  // Only admin and instructor have a real notifications page; only admin has
-  // a real settings page. Student has neither, and instructor has no
-  // settings page - those show an honest "not available yet" toast instead
-  // of a dead button or a made-up destination.
   const notificationsPath = pathname.includes("/admin")
     ? pathname.includes("/preview/admin")
       ? "/preview/admin/notifications"
-      : "/dashboard/admin/notifications"
+      : "/dashboard/admin/notifications/inbox"
     : pathname.includes("/instructor")
       ? "/dashboard/instructor/notifications"
-      : null;
+      : pathname.includes("/student") ? "/dashboard/student/notifications" : null;
   const settingsPath = pathname.includes("/admin")
     ? pathname.includes("/preview/admin")
       ? "/preview/admin/system-settings"
@@ -87,12 +85,14 @@ export function DashboardHeader({
           <div className="flex items-center gap-2">
             <button
               onClick={handleNotificationsClick}
-              className="flex h-10 w-10 items-center justify-center rounded-full hover:bg-black/5 transition-colors"
+              aria-label={`Notifications${unreadCount ? `, ${unreadCount} unread` : ""}`}
+              className="relative flex h-10 w-10 items-center justify-center rounded-full hover:bg-black/5 transition-colors"
             >
               <IconBell
                 className="h-[22px] w-[22px] text-gray-800"
                 stroke={1.8}
               />
+              {unreadCount > 0 && <span className="absolute right-1 top-1 h-2.5 w-2.5 rounded-full bg-red-500" />}
             </button>
             <button
               onClick={handleSettingsClick}
@@ -160,9 +160,11 @@ export function DashboardHeader({
             </button>
             <button
               onClick={handleNotificationsClick}
-              className="flex h-12 w-12 items-center justify-center rounded-full bg-white hover:bg-white/80 transition-colors"
+              aria-label={`Notifications${unreadCount ? `, ${unreadCount} unread` : ""}`}
+              className="relative flex h-12 w-12 items-center justify-center rounded-full bg-white hover:bg-white/80 transition-colors"
             >
               <IconBell className="h-5 w-5" />
+              {unreadCount > 0 && <span className="absolute right-1 top-1 h-2.5 w-2.5 rounded-full bg-red-500" />}
             </button>
             <button
               onClick={handleSettingsClick}

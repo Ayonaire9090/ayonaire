@@ -54,6 +54,10 @@ export function useMessagingRealtimeSync() {
     const socket = getMessagingSocket();
     const rejoinRooms = () => {
       for (const roomId of joinedRoomIds.current) socket.emit("room:join", { roomId });
+      // Events emitted while disconnected cannot be replayed by Socket.IO.
+      // Refresh cached conversations after reconnecting to catch up.
+      void queryClient.invalidateQueries({ queryKey: queryKeys.rooms.all });
+      void queryClient.invalidateQueries({ queryKey: queryKeys.messages.all });
     };
     socket.on("connect", rejoinRooms);
 

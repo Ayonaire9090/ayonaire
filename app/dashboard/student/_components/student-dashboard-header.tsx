@@ -24,6 +24,7 @@ import { AppLogo } from "@/components/app-logo";
 import { useAuthStore } from "@/store/auth.store";
 import { DashboardUserDropDown } from "@/components/dashboard/dashboard-user-dropdown";
 import { useGetRooms } from "@/hooks/api/use-rooms";
+import { useNotificationInbox } from "@/components/dashboard/notification-inbox";
 
 const headerNav = [
   { title: "Feed", url: "/dashboard/student/feed", icon: LayoutTemplate },
@@ -75,6 +76,7 @@ export const StudentDashboardHeader = ({
   const pathname = usePathname();
   const { user } = useAuthStore();
   const rooms = useGetRooms();
+  const unreadNotifications = useNotificationInbox().data?.data?.unreadCount ?? 0;
   const unreadMessages = (rooms.data?.data ?? []).reduce((total, room) => total + (room.unreadCount ?? 0), 0);
 
   const isActive = (url: string) => {
@@ -160,11 +162,9 @@ export const StudentDashboardHeader = ({
       </div>
 
       <div className="flex shrink-0 items-center gap-3 lg:gap-4">
-        <button className="relative flex h-11 w-11 items-center justify-center rounded-full bg-white hover:bg-white/80 transition-colors">
+        <button onClick={() => router.push("/dashboard/student/notifications")} aria-label={`Notifications${unreadNotifications ? `, ${unreadNotifications} unread` : ""}`} className="relative flex h-11 w-11 items-center justify-center rounded-full bg-white hover:bg-white/80 transition-colors">
           <Bell className="h-5 w-5 text-black" fill="currentColor" />
-          <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-[#E33B44] text-[10px] font-bold text-white border-2 border-[#F8F9FA]">
-            8
-          </span>
+          {unreadNotifications > 0 && <span className="absolute -top-1 -right-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-[#E33B44] px-1 text-[10px] font-bold text-white border-2 border-[#F8F9FA]">{unreadNotifications > 99 ? "99+" : unreadNotifications}</span>}
         </button>
 
         <DashboardUserDropDown>
