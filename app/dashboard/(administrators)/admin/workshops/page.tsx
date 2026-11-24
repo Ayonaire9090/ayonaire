@@ -15,6 +15,7 @@ import { AdminDashboardUploadLiveClassButton } from "@/components/dashboard/admi
 import { useGetWorkshops, useDeleteWorkshopMutation } from "@/hooks/api/use-workshops";
 import { mapWorkshopRecordToRow, workshopStatusStyles, WorkshopRow } from "./_components/workshops-data";
 import { WorkshopEditModal } from "./_components/workshop-edit-modal";
+import Link from "next/link";
 
 function WorkshopActions({
   workshop,
@@ -120,6 +121,7 @@ export default function AdminWorkshopsPage() {
         <AdminDashboardUploadLiveClassButton />
       </div>
 
+      <Link href="/dashboard/admin/workshops/recordings" className="mt-4 self-start text-sm font-medium text-primary underline">Publish class recordings</Link>
       <div className="mt-4 bg-white p-4 md:p-6 rounded-2xl">
         {isLoading ? (
           <div className="flex items-center justify-center py-16">

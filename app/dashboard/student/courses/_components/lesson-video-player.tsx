@@ -107,7 +107,13 @@ export const LessonVideoPlayer = ({
   const usesEmbeddedPlayer =
     videoSourceType === "url" &&
     !!embedUrl &&
-    ["youtube", "vimeo"].includes(videoProvider ?? "");
+    (["youtube", "vimeo"].includes(videoProvider ?? "") ||
+      (videoProvider === "bunny" && (() => {
+        try {
+          const url = new URL(embedUrl);
+          return url.protocol === "https:" && url.hostname === "player.mediadelivery.net" && url.pathname.startsWith("/embed/");
+        } catch { return false; }
+      })()));
 
   // Reset per-lesson state when the lesson (and therefore the video) changes.
   useEffect(() => {

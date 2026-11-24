@@ -36,6 +36,7 @@ export default function StudentCourseLessonPage({
   const [activeTab, setActiveTab] = useState("Resources");
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [selectedLessonId, setSelectedLessonId] = useState<string | undefined>();
+  const [selectedVideo, setSelectedVideo] = useState<{ lessonId: string; index: number }>();
 
   const { data, isError: courseError, isLoading: courseLoading } = useGetEnrolledCourseDetail(courseId);
   const course = data?.data;
@@ -61,7 +62,7 @@ export default function StudentCourseLessonPage({
     }
     return undefined;
   }, [modules, selectedLessonId]);
-  const activeVideo = activeLesson ? activeLesson.videos?.[0] : course?.introVideo;
+  const activeVideo = activeLesson ? activeLesson.videos?.[selectedVideo?.lessonId === activeLesson._id ? selectedVideo.index : 0] : course?.introVideo;
 
   // Flat lesson order across all modules, for prev/next navigation.
   const flatLessons = useMemo(
@@ -122,8 +123,9 @@ export default function StudentCourseLessonPage({
             />
             <div className="flex justify-end px-4 pb-3"><MessageInstructorButton courseId={courseId} /></div>
             <div className="w-full relative">
+              {(activeLesson?.videos?.length ?? 0) > 1 && <label className="block px-4 pb-2 text-sm text-white">Recording <select className="ml-2 rounded bg-gray-800 p-2 text-white" value={selectedVideo?.lessonId === activeLesson?._id ? selectedVideo?.index ?? 0 : 0} onChange={(event) => setSelectedVideo({ lessonId: activeLesson!._id, index: Number(event.target.value) })}>{activeLesson?.videos.map((video, index) => <option key={video.publicId ?? index} value={index}>{video.title}</option>)}</select></label>}
               <LessonVideoPlayer
-                key={activeLesson?._id ?? "intro"}
+                key={`${activeLesson?._id ?? "intro"}:${selectedVideo?.lessonId === activeLesson?._id ? selectedVideo?.index ?? 0 : 0}`}
                 lessonId={activeLesson?._id}
                 courseId={courseId}
                 videoUrl={activeVideo?.url}
